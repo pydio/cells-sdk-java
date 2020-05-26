@@ -1,0 +1,16 @@
+# Builds
+/.gradle
+/build
+/bin
+
+# VSCode
+.project
+
+# JIdea
+local.properties
+*.iml
+.idea/
+
+# Eclipse
+.classpath
+.settings/

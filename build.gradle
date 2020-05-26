@@ -1,0 +1,144 @@
+plugins {
+    // Build java project
+    id 'java-library'
+
+    // Publish the generated resources as Maven Artifacts
+    // See: https://docs.gradle.org/5.0/userguide/publishing_overview.html#publishing_overview
+    id 'maven-publish'
+
+    // Push the artifact to bintray
+    // See: https://github.com/bintray/gradle-bintray-plugin
+    id 'com.jfrog.bintray' version '1.8.5'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    jcenter()
+}
+
+ext {
+    bintrayUser = System.getProperty("bintray.user")
+    bintrayKey = System.getProperty("bintray.key")
+    //buildNumber = System.getProperty("build.number")
+    
+    githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
+
+}
+
+sourceCompatibility = 1.8
+version = '0.1.0'
+
+dependencies {
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    // api 'org.apache.commons:commons-math3:3.6.1'
+
+    // These dependencies are used internally and not exposed to consumers on their own compile classpath.
+    implementation 'com.metaparadigm:json-rpc:1.0'
+    implementation 'io.swagger:swagger-annotations:1.6.1'
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+    implementation 'com.squareup.okhttp:logging-interceptor:2.7.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'io.gsonfire:gson-fire:1.8.4'
+    implementation 'org.threeten:threetenbp:1.4.4'
+    // updating this cause JWT decoding failure
+    implementation 'commons-codec:commons-codec:1.10'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+
+// Also publish sources and Javadoc
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+// Pre-create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+
+    developers {
+        developer {
+            id "cdujeu"
+            name "Charles du Jeu"
+            email "charles@ajaxplorer.info"
+        }
+
+        developer {
+            id "jabarkarim"
+            name "Jabar Karim"
+            email "jabar@ajaxplorer.info"
+        }
+        
+        developer {
+            id "bsinou"
+            name "Bruno Sinou"
+            email "bruno.sinou@posteo.de"
+        }
+    }
+    
+    scm {
+       url githubUrl
+    }
+}
+
+publishing {
+    publications {
+        CellsSdk(MavenPublication) {
+            from components.java
+            groupId 'com.pydio.cells'
+            artifactId 'cells-sdk-java'
+            version = version
+            
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Provide base java libraries to communicate with the Pydio Cells stack')
+                root.appendNode('name', 'Cells SDK for Java')
+                root.appendNode('url', 'https://pydio.com')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayKey
+
+    pkg {
+        repo = 'cells'
+        name = 'cells-sdk-java'
+        //userOrg = bintrayUser
+        licenses = ['Apache-2.0']
+        vcsUrl = githubUrl
+
+        publications = ['CellsSdk']
+
+        // Version info
+        version {
+            name = version
+            desc = 'First try'
+            released  = new Date()
+            vcsTag = 'v'+version
+            //attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes('Specification-Title': 'Cells SDK for Java',
+                   'Specification-Version': '0.1',
+                   'Specification-Vendor': 'Abstrium SAS',
+                   'Implementation-Title': project.name,
+                   'Implementation-Vendor': 'Abstrium SAS',
+                   'Implementation-Version': project.version)
+    }
+}
