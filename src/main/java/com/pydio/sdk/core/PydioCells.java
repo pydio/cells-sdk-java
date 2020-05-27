@@ -65,6 +65,7 @@ import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.model.Stats;
 import com.pydio.sdk.core.auth.Token;
 import com.pydio.sdk.core.security.Credentials;
+import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.Params;
 import com.pydio.sdk.core.utils.io;
 import com.squareup.okhttp.OkHttpClient;
@@ -101,7 +102,7 @@ public class PydioCells implements Client {
 
     public String URL;
     private String apiURL;
-    protected String JWT;
+    protected String bearerValue;
     private ServerNode serverNode;
     private Credentials credentials;
 
@@ -116,7 +117,7 @@ public class PydioCells implements Client {
 
     protected void getJWT() throws SDKException {
         synchronized (lock) {
-            this.JWT = null;
+            this.bearerValue = null;
             Token t = null;
 
             String subject = String.format("%s@%s", credentials.getLogin(), serverNode.url());
@@ -136,32 +137,47 @@ public class PydioCells implements Client {
                         Base64 base64 = new Base64();
                         String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
 
-
                         request.setHeaders(Params.create("Authorization", "Basic " + auth));
                         request.setEndpoint(cfg.tokenEndpoint);
                         request.setMethod(Method.POST);
 
-                        HttpResponse response = null;
+                        HttpResponse response;
                         try {
                             response = HttpClient.request(request);
-                            String jwt = response.getString();
-                            System.out.println(jwt);
-                            t = Token.decode(jwt);
-
-                            com.pydio.sdk.core.auth.jwt.JWT parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
-                            if (parsedIDToken == null) {
-                                return;
-                            }
-
-                            t.subject = String.format("%s@%s", parsedIDToken.claims.name, this.serverNode.url());
-                            t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
-
-                            if (this.tokenStore != null) {
-                                this.tokenStore.set(t);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                            Log.e("Cells SDK", "Refresh token request failed: " + e.getLocalizedMessage());
+                            return;
                         }
+
+                        String jwt = null;
+                        try {
+                            jwt = response.getString();
+                        } catch (IOException e) {
+                            Log.e("Cells SDK", "Could not get response string body: " + e.getLocalizedMessage());
+                            e.printStackTrace();
+                            return;
+                        }
+
+                        System.out.println(jwt);
+                        try {
+                            t = Token.decodeOauthJWT(jwt);
+                        } catch (ParseException e) {
+                            Log.e("Cells SDK", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
+                            return;
+                        }
+
+                        com.pydio.sdk.core.auth.jwt.JWT parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
+                        if (parsedIDToken == null) {
+                            return;
+                        }
+
+                        t.subject = String.format("%s@%s", parsedIDToken.claims.name, this.serverNode.url());
+                        t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
+
+                        if (this.tokenStore != null) {
+                            this.tokenStore.set(t);
+                        }
+
                     } else {
                         ApiClient apiClient = getApiClient();
                         String password = credentials.getPassword();
@@ -200,9 +216,8 @@ public class PydioCells implements Client {
                 }
             }
 
-
             if (t != null) {
-                this.JWT = t.value;
+                this.bearerValue = t.value;
             }
         }
     }
@@ -431,7 +446,7 @@ public class PydioCells implements Client {
         try {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", "Bearer " + this.JWT);
+            con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
             in = con.getInputStream();
 
         } catch (IOException e) {
@@ -472,7 +487,7 @@ public class PydioCells implements Client {
             throw SDKException.conFailed(e);
         }
 
-        con.setRequestProperty("Authorization", "Bearer " + this.JWT);
+        con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
         InputStream in;
         try {
             in = con.getInputStream();
@@ -516,7 +531,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         try {
             response = api.bulkStatNodes(request);
@@ -542,7 +557,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         RestBulkMetaResponse response;
         try {
@@ -588,7 +603,7 @@ public class PydioCells implements Client {
         this.getJWT();
 
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         SearchServiceApi api = new SearchServiceApi(client);
 
         RestSearchResults results;
@@ -619,7 +634,7 @@ public class PydioCells implements Client {
     public void bookmarks(NodeHandler h) throws SDKException {
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
 
         RestUserBookmarksRequest request = new RestUserBookmarksRequest();
         UserMetaServiceApi api = new UserMetaServiceApi(client);
@@ -704,7 +719,7 @@ public class PydioCells implements Client {
         this.getJWT();
 
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
 
         try {
@@ -731,7 +746,7 @@ public class PydioCells implements Client {
         this.getJWT();
 
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
 
         try {
@@ -769,7 +784,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         JobsServiceApi api = new JobsServiceApi(client);
         try {
             api.userCreateJob("move", request);
@@ -799,7 +814,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         JobsServiceApi api = new JobsServiceApi(client);
         try {
             api.userCreateJob("move", request);
@@ -830,7 +845,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         JobsServiceApi api = new JobsServiceApi(client);
         try {
             api.userCreateJob("copy", request);
@@ -845,7 +860,7 @@ public class PydioCells implements Client {
     public Message bookmark(String ws, String nodeId) throws SDKException {
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
 
         UserMetaServiceApi api = new UserMetaServiceApi(client);
 
@@ -897,7 +912,7 @@ public class PydioCells implements Client {
     public Message unbookmark(String ws, String nodeId) throws SDKException {
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
 
         UserMetaServiceApi api = new UserMetaServiceApi(client);
 
@@ -934,7 +949,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
 
         RestNodesCollection response;
@@ -969,7 +984,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
 
         RestNodesCollection response;
@@ -1014,7 +1029,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         RestBulkMetaResponse response;
         try {
@@ -1045,7 +1060,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         ChangeServiceApi api = new ChangeServiceApi(client);
         RestChangeCollection response;
 
@@ -1110,7 +1125,7 @@ public class PydioCells implements Client {
 
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         ShareServiceApi api = new ShareServiceApi(client);
 
         try {
@@ -1125,7 +1140,7 @@ public class PydioCells implements Client {
     public void unshare(String ws, String file) throws SDKException {
         this.getJWT();
         ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         ShareServiceApi api = new ShareServiceApi(client);
         try {
             api.deleteShareLink(file);
@@ -1138,7 +1153,7 @@ public class PydioCells implements Client {
     public JSONObject shareInfo(String ws, String shareID) throws SDKException {
         ApiClient client = getApiClient();
         this.getJWT();
-        client.addDefaultHeader("Authorization", "Bearer " + this.JWT);
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         ShareServiceApi api = new ShareServiceApi(client);
         try {
             RestShareLink link = api.getShareLink(shareID);
