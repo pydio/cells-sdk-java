@@ -4,6 +4,27 @@
 
 The Pydio Cells Java SDK provides a Java implementation to communicate with a Pydio Cells server (and also with the legacy Pydio 8+ versions). Most of the functions are wrapped into the `com.pydio.sdk.core.Client` class that contains methods to easily manage your files on a Cells server.
 
+## Build
+
+We use gradle as a build and publication tool and we ship the wrapper with the code, simply use `./gradlew <your command>` from within the root folder of the repository.
+
+Main version of the code is maintained for the time being in the main `build.gradle` file.
+
+Useful commands:
+
+```sh
+# Build the project
+./gradlew build
+
+# Publish to local maven repo
+./gradlew publishToMavenLocal
+
+# Publish a release to bintray for public exposure
+# TODO do this automatically via build agent
+# Retrieve your username and key and then:
+gradle bintrayUpload -Dbintray.user=$UNAME -Dbintray.key=$UKEY
+```
+
 ## Configure and resolve a Cells server
 
 Given an URL, we create a ServerNode object to load the server info
