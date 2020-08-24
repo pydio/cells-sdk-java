@@ -40,9 +40,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'io.gsonfire:gson-fire:1.8.4'
     implementation 'org.threeten:threetenbp:1.4.4'
-    // updating this cause JWT decoding failure
-    implementation 'commons-codec:commons-codec:1.10'
 
+    // updating this cause JWT decoding failure
+    // implementation 'commons-codec:commons-codec:1.10'
+    implementation 'commons-codec:commons-codec:20041127.091804'
+   
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
