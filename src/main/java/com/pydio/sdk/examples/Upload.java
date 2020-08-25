@@ -13,15 +13,14 @@ public class Upload {
 
     public static void main(String[] args) {
         ServerNode node = new ServerNode();
-        Error error = node.resolve("https://android-test.pyd.io");
+        Error error = node.resolve("https://server-address");
         if (error != null) {
-            // handle code here
             System.out.println(error);
             return;
         }
 
         Client client = ClientFactory.get().Client(node);
-        client.setCredentials(new Credentials("admin", "P@ssw0rd"));
+        client.setCredentials(new Credentials("login", "password"));
 
 
         String targetWorkspaces = "my-files";
@@ -31,7 +30,6 @@ public class Upload {
         byte[] content = "Hello Pydio!".getBytes();
         ByteArrayInputStream source = new ByteArrayInputStream(content);
 
-        // Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, final TransferProgressListener progressListener) throws SDKException;
         try {
             Message msg = client.upload(source, content.length, targetWorkspaces, targetDir, name, true, (progress) -> {
                 System.out.printf("\r%d bytes written\n", progress);

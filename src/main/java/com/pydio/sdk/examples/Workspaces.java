@@ -13,7 +13,6 @@ public class Workspaces {
         ServerNode node = new ServerNode();
         Error error = node.resolve("https://server-address");
         if (error != null) {
-            // handle code here
             System.out.println(error);
             return;
         }
