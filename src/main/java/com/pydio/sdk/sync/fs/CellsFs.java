@@ -43,6 +43,41 @@ public class CellsFs implements Fs, ContentLoader {
 
     @Override
     public GetChangesResponse getChanges(GetChangeRequest request) {
+
+
+        // PSEUDO ALGORYTHM TO BEGIN WITH 
+        
+        // String currPath = "A/B/C";
+        // ArrayList<TreeNode> remotes = listRemoteNodesWithOrder("A/B/C");
+        // ArrayList<TreeNode> locales = listLocaleNodesWithOrder("A/B/C");
+
+
+        // for (each child) {
+        //     case leftName != rightName {
+        //         case creation
+        //         case delete
+        //     } 
+        //     case md5Left !=  md5Left {
+
+        //     }
+        //     return // same
+        // }
+
+        // recursivly(path, path){
+        
+        //     TreeNode remote =  getRemoteState(path)
+        //     TreeNode local = getLocalState(path)
+        //     List<change> list = compareStates(remote, local)
+        //     if (list != empty){
+        //         mainList = append(List)
+        //         call(sousPath)
+        //     } esle{
+        //         return mainList
+        //     }
+        // }
+
+
+
         GetChangesResponse response = new GetChangesResponse();
         try {
             int reqSeq = (int) request.getSeq();
