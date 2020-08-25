@@ -21,13 +21,6 @@ import java.security.cert.X509Certificate;
 
 public interface Client {
 
-    static Client get(ServerNode node) {
-        if (node.versionName().startsWith("cells")) {
-            return PydioCells.getFactory().get(node);
-        }
-        return new Pydio8(node);
-    }
-
     ServerNode getServerNode();
 
     void setCredentials(Credentials c);

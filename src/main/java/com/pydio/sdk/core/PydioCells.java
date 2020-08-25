@@ -80,7 +80,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -1171,36 +1170,6 @@ public class PydioCells implements Client {
     }
 
     @Override
-    public InputStream getCaptcha() {
-        return null;
-    }
-
-    public interface Factory {
-        PydioCells get(ServerNode node);
-    }
-
-    private static Map<String, Factory> registry = new HashMap<>();
-
-    public static void registerFactory(String name, Factory f) {
-        registry.put(name, f);
-    }
-
-    public static void registerFactory(Factory f) {
-        registry.put("default", f);
-    }
-
-    public static Factory getFactory(String name) {
-        if (registry.containsKey(name)) {
-            return registry.get(name);
-        }
-        return registry.get("default");
-    }
-
-    public static Factory getFactory() {
-        return registry.get("default");
-    }
-
-    @Override
     public JSONObject authenticationInfo() {
         return null;
     }
@@ -1208,5 +1177,17 @@ public class PydioCells implements Client {
     @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
         return delete(ws, new String[]{"/recycle_bin"});
+    }
+
+    @Override
+    public InputStream getCaptcha() {
+        return null;
+    }
+
+    public interface Factory {
+    }
+
+    public PydioCells get(ServerNode node) {
+        return new PydioCells(node);
     }
 }
