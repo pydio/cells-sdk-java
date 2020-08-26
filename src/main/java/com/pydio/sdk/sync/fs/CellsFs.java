@@ -1,5 +1,6 @@
 package com.pydio.sdk.sync.fs;
 
+import com.pydio.sdk.core.Pydio;
 import com.pydio.sdk.core.PydioCells;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Change;
@@ -11,40 +12,41 @@ import com.pydio.sdk.sync.content.ContentLoader;
 import com.pydio.sdk.sync.changes.ProcessChangeRequest;
 import com.pydio.sdk.sync.changes.ProcessChangeResponse;
 import com.pydio.sdk.sync.content.PydioRemoteFileContent;
-
+import com.pydio.sdk.sync.tree.StateManager;
+import com.pydio.sdk.sync.tree.MemoryTree;
+import com.pydio.sdk.sync.tree.Tree;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class CellsFs implements Fs, ContentLoader {
 
     private PydioCells cells;
     private String workspace;
     private String id;
+    private StateManager stateManager;
 
-    public CellsFs(String id, PydioCells cells, String workspace) {
+    public CellsFs(String id, PydioCells cells, String workspace, StateManager manager) {
         this.id = id;
         this.cells = cells;
         this.workspace = workspace;
+        this.stateManager = manager;
     }
 
     @Override
     public String id() {
         return this.id;
     }
-
     @Override
     public List<String> getWatches() {
         return new ArrayList<>();
     }
-
     @Override
     public void addWatch(String path) {
     }
-
     @Override
     public GetChangesResponse getChanges(GetChangeRequest request) {
-
-
         // PSEUDO ALGORYTHM TO BEGIN WITH 
         
         // String currPath = "A/B/C";
@@ -75,72 +77,125 @@ public class CellsFs implements Fs, ContentLoader {
         //         return mainList
         //     }
         // }
-
-
-
         GetChangesResponse response = new GetChangesResponse();
-        try {
-            int reqSeq = (int) request.getSeq();
-            long seq = cells.changes(workspace, request.getPath(), reqSeq, reqSeq == 0, (c) -> {
-                c.setSource(id());
-                c.setTargetSide(request.getSide());
-                response.addChange(c);
-            });
-            response.setLastSeq(seq);
-        } catch (SDKException e) {
-            e.printStackTrace();
-            response.setError(Error.notMounted(""));
+        List<String> queue = new ArrayList<>();
+        queue.add(request.getPath());
+
+        while (queue.size() > 0) {
+            String currentPath = queue.remove(0);
+
+            try {
+                List<Tree> localList = this.stateManager.getState(currentPath).children();
+                List<Tree> remoteList = this.sortedRemoteTree(currentPath);
+                for (Tree rTree: remoteList) {
+                    boolean found = false;
+                    for (Tree lTree: localList) {
+                        int compResult = rTree.getName().compareTo(lTree.getName());
+
+                        if (compResult == 0) {
+                            // label are the same
+                            found = true;
+                            // TODO ETAG
+                            // ETag comparison suits better here
+                            if (rTree.getSize() != lTree.getSize() || rTree.getLastEdit() != lTree.getLastEdit()) {
+                                if (rTree.isLeaf()) {
+                                    String path = currentPath + "/" + rTree.getName();
+                                    Change change = new Change();
+                                    change.setType(Change.TYPE_CONTENT);
+                                    change.setSource(path);
+                                    change.setTarget(path);
+                                    response.addChange(change);
+                                } else {
+                                    String dirFullPath = currentPath + "/" + rTree.getName();
+                                    queue.add(dirFullPath);
+                                }
+                            }
+                            break;
+                        } else if (compResult > 0) {
+                            //
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        String path = currentPath + "/" + rTree.getName();
+                        Change change = new Change();
+                        change.setType(Change.TYPE_CREATE);
+                        change.setTarget(path);
+                        response.addChange(change);
+                    }
+                }
+                for (Tree lTree: localList) {
+                    boolean found = false;
+                    for (Tree rTree: remoteList) {
+                        int compResult = lTree.getName().compareTo(rTree.getName());
+                        if (compResult == 0) {
+                            found = true;
+                            break;
+                        } else if (compResult > 0) {
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        String path = currentPath + "/" + lTree.getName();
+                        Change change = new Change();
+                        change.setType(Change.TYPE_DELETE);
+                        change.setSource(path);
+                        change.setTarget(path);
+                        response.addChange(change);
+                    }
+                }
+
+            } catch (SDKException e) {
+                e.printStackTrace();
+                Error error = new Error();
+                error.setCode(e.code);
+                error.setDetails(e.cause.getMessage());
+                response.setError(error);
+                return response;
+            }
         }
+        response.setSuccess(true);
         return response;
     }
-
     @Override
     public ProcessChangeResponse processChange(ProcessChangeRequest request) {
         return null;
     }
-
     @Override
     public ContentLoader getContentLoader() {
         return this;
     }
-
     @Override
     public boolean receivesEvents() {
         return false;
     }
-
     @Override
     public boolean sendsEvents() {
         return true;
     }
-
     @Override
     public Content getContent(String nodeId) {
         return new PydioRemoteFileContent(cells, workspace, nodeId);
     }
-    
-    private Error mkdir(Change c) {
-        return null;
-    }
 
-    private Error mkfile(Change c) {
-        return null;
+    private List<Tree> sortedRemoteTree(String path) throws SDKException {
+        List<Tree> sortedList = new ArrayList<>();
+        TreeMap<String, Tree> sorterContainer = new TreeMap<>();
+        this.cells.ls(this.workspace, path, (n) -> {
+            MemoryTree t = new MemoryTree();
+            t.setName(n.label());
+            t.setETag("");
+            t.setSize(Long.parseLong(n.getProperty(Pydio.NODE_PROPERTY_BYTESIZE)));
+            // TODO retrieve ETAG from node
+            t.setLeaf("true".equals(n.getProperty(Pydio.NODE_PROPERTY_IS_FILE)));
+            sorterContainer.put(n.label(), t);
+        });
+        Set<String> sortedKeys = sorterContainer.keySet();
+        for (String key: sortedKeys) {
+            sortedList.add(sorterContainer.get(key));
+        }
+        return sortedList;
     }
-
-    private Error delete(Change c) {
-        return null;
-    }
-
-    private Error move(Change c) {
-        return null;
-    }
-
-    private Error download(Change c, ContentLoader loader) {
-        return null;
-    }
-
-    private String md5(String path){
-        return "";
-    }
-
 }

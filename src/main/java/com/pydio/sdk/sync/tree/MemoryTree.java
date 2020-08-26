@@ -1,13 +1,9 @@
 package com.pydio.sdk.sync.tree;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-
-import com.google.gson.Gson;
 
 /**
  * MemoryTree is a representation of node tree in memory
@@ -17,18 +13,13 @@ public class MemoryTree implements Tree {
 
     private TreeMap<String, MemoryTree> children;
     private String eTag;
+    private long size;
     private String name;
-    private boolean isDir;
+    private String path;
+    private boolean isLeaf;
+    private String encoded;
 
-    public MemoryTree() {
-        this.children = new TreeMap<>();
-    }
-
-    public static MemoryTree FromEncoded(String encoded) {
-        return new Gson().fromJson(encoded, MemoryTree.class);
-    }
-
-    public Map<String, MemoryTree> getChildren() {
+    public TreeMap<String, MemoryTree> getChildren() {
         return children;
     }
 
@@ -36,40 +27,65 @@ public class MemoryTree implements Tree {
         this.children = children;
     }
 
-    public String getETag() {
-        return eTag;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setETag(String eTag) {
         this.eTag = eTag;
     }
 
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setLeaf(boolean leaf) {
+        isLeaf = leaf;
+    }
+
+    public void setEncoded(String encoded) {
+        this.encoded = encoded;
+    }
+
+    @Override
+    public long getLastEdit() {
+        return 0;
+    }
+    @Override
+    public long getSize() {
+        return size;
+    }
+    @Override
+    public boolean isLeaf() {
+        return isLeaf;
+    }
+    @Override
+    public String getETag() {
+        return eTag;
+    }
+    @Override
     public String getName() {
         return name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getEncoded() {
+        return encoded;
     }
     @Override
     public List<Tree> children() {
         List<Tree> trees = new ArrayList<>();
         Set<String> sortedKeys = this.children.keySet();
-        for (String key: sortedKeys) {
+        for (String key : sortedKeys) {
             trees.add(this.children.get(key));
         }
         return trees;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isDir() {
-        return isDir;
-    }
-
-    public void setDir(boolean dir) {
-        isDir = dir;
-    }
-
-    public String encode() {
-        return new Gson().toJson(this);
     }
 }
