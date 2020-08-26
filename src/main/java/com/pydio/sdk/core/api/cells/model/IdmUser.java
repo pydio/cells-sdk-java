@@ -13,20 +13,30 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.IdmRole;
+import com.pydio.sdk.core.api.cells.model.ServiceResourcePolicy;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IdmUser
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class IdmUser {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -271,10 +281,10 @@ public class IdmUser {
   }
 
    /**
-   * Get policiesContextEditable
+   * Context-resolved to quickly check if user is editable or not.
    * @return policiesContextEditable
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Context-resolved to quickly check if user is editable or not.")
   public Boolean isPoliciesContextEditable() {
     return policiesContextEditable;
   }
@@ -285,7 +295,7 @@ public class IdmUser {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -336,7 +346,7 @@ public class IdmUser {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

@@ -13,20 +13,29 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
-import org.threeten.bp.OffsetDateTime;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.ActivityObject;
+import com.pydio.sdk.core.api.cells.model.ActivityObjectType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * ActivityObject
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class ActivityObject {
   @SerializedName("jsonLdContext")
   private String jsonLdContext = null;
@@ -67,7 +76,7 @@ public class ActivityObject {
   @SerializedName("published")
   private OffsetDateTime published = null;
 
-    @SerializedName("updated")
+  @SerializedName("updated")
   private OffsetDateTime updated = null;
 
   @SerializedName("duration")
@@ -451,8 +460,8 @@ public class ActivityObject {
   }
 
    /**
-    * Get updated
-    * @return updated
+   * Get updated
+   * @return updated
   **/
   @ApiModelProperty(value = "")
   public OffsetDateTime getUpdated() {
@@ -1319,7 +1328,7 @@ public class ActivityObject {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -1414,7 +1423,7 @@ public class ActivityObject {
     sb.append("    startTime: ").append(toIndentedString(startTime)).append("\n");
     sb.append("    endTime: ").append(toIndentedString(endTime)).append("\n");
     sb.append("    published: ").append(toIndentedString(published)).append("\n");
-      sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
+    sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
     sb.append("    duration: ").append(toIndentedString(duration)).append("\n");
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    mediaType: ").append(toIndentedString(mediaType)).append("\n");
@@ -1470,7 +1479,7 @@ public class ActivityObject {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

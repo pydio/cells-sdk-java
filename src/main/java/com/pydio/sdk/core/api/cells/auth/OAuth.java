@@ -15,10 +15,10 @@ package com.pydio.sdk.core.api.cells.auth;
 
 import com.pydio.sdk.core.api.cells.Pair;
 
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
 public class OAuth implements Authentication {
   private String accessToken;
 

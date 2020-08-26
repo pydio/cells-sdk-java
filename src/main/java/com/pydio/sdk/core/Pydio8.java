@@ -108,6 +108,12 @@ public class Pydio8 implements Client {
     }
 
     @Override
+    public void setSkipOAuthFlag(boolean skipOAuth){
+        throw new RuntimeException("unimplemented method.");
+    }
+
+
+    @Override
     public void setTokenProvider(Token.Provider p) {}
 
     @Override

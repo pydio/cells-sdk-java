@@ -25,6 +25,8 @@ public interface Client {
 
     void setCredentials(Credentials c);
 
+    void setSkipOAuthFlag(boolean skipOAuth);
+
     void setTokenProvider(Token.Provider p);
 
     void setTokenStore(Token.Store s);

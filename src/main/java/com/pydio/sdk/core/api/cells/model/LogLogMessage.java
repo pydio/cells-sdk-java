@@ -13,20 +13,27 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * LogMessage is the format used to transmit log messages to clients via the REST API.
  */
 @ApiModel(description = "LogMessage is the format used to transmit log messages to clients via the REST API.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class LogLogMessage {
   @SerializedName("Ts")
   private Integer ts = null;
@@ -87,6 +94,21 @@ public class LogLogMessage {
 
   @SerializedName("SpanRootUuid")
   private String spanRootUuid = null;
+
+  @SerializedName("OperationUuid")
+  private String operationUuid = null;
+
+  @SerializedName("OperationLabel")
+  private String operationLabel = null;
+
+  @SerializedName("SchedulerJobUuid")
+  private String schedulerJobUuid = null;
+
+  @SerializedName("SchedulerTaskUuid")
+  private String schedulerTaskUuid = null;
+
+  @SerializedName("SchedulerTaskActionPath")
+  private String schedulerTaskActionPath = null;
 
   public LogLogMessage ts(Integer ts) {
     this.ts = ts;
@@ -456,9 +478,99 @@ public class LogLogMessage {
     this.spanRootUuid = spanRootUuid;
   }
 
+  public LogLogMessage operationUuid(String operationUuid) {
+    this.operationUuid = operationUuid;
+    return this;
+  }
+
+   /**
+   * Get operationUuid
+   * @return operationUuid
+  **/
+  @ApiModelProperty(value = "")
+  public String getOperationUuid() {
+    return operationUuid;
+  }
+
+  public void setOperationUuid(String operationUuid) {
+    this.operationUuid = operationUuid;
+  }
+
+  public LogLogMessage operationLabel(String operationLabel) {
+    this.operationLabel = operationLabel;
+    return this;
+  }
+
+   /**
+   * Get operationLabel
+   * @return operationLabel
+  **/
+  @ApiModelProperty(value = "")
+  public String getOperationLabel() {
+    return operationLabel;
+  }
+
+  public void setOperationLabel(String operationLabel) {
+    this.operationLabel = operationLabel;
+  }
+
+  public LogLogMessage schedulerJobUuid(String schedulerJobUuid) {
+    this.schedulerJobUuid = schedulerJobUuid;
+    return this;
+  }
+
+   /**
+   * Get schedulerJobUuid
+   * @return schedulerJobUuid
+  **/
+  @ApiModelProperty(value = "")
+  public String getSchedulerJobUuid() {
+    return schedulerJobUuid;
+  }
+
+  public void setSchedulerJobUuid(String schedulerJobUuid) {
+    this.schedulerJobUuid = schedulerJobUuid;
+  }
+
+  public LogLogMessage schedulerTaskUuid(String schedulerTaskUuid) {
+    this.schedulerTaskUuid = schedulerTaskUuid;
+    return this;
+  }
+
+   /**
+   * Get schedulerTaskUuid
+   * @return schedulerTaskUuid
+  **/
+  @ApiModelProperty(value = "")
+  public String getSchedulerTaskUuid() {
+    return schedulerTaskUuid;
+  }
+
+  public void setSchedulerTaskUuid(String schedulerTaskUuid) {
+    this.schedulerTaskUuid = schedulerTaskUuid;
+  }
+
+  public LogLogMessage schedulerTaskActionPath(String schedulerTaskActionPath) {
+    this.schedulerTaskActionPath = schedulerTaskActionPath;
+    return this;
+  }
+
+   /**
+   * Get schedulerTaskActionPath
+   * @return schedulerTaskActionPath
+  **/
+  @ApiModelProperty(value = "")
+  public String getSchedulerTaskActionPath() {
+    return schedulerTaskActionPath;
+  }
+
+  public void setSchedulerTaskActionPath(String schedulerTaskActionPath) {
+    this.schedulerTaskActionPath = schedulerTaskActionPath;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -485,12 +597,17 @@ public class LogLogMessage {
         Objects.equals(this.wsScope, logLogMessage.wsScope) &&
         Objects.equals(this.spanUuid, logLogMessage.spanUuid) &&
         Objects.equals(this.spanParentUuid, logLogMessage.spanParentUuid) &&
-        Objects.equals(this.spanRootUuid, logLogMessage.spanRootUuid);
+        Objects.equals(this.spanRootUuid, logLogMessage.spanRootUuid) &&
+        Objects.equals(this.operationUuid, logLogMessage.operationUuid) &&
+        Objects.equals(this.operationLabel, logLogMessage.operationLabel) &&
+        Objects.equals(this.schedulerJobUuid, logLogMessage.schedulerJobUuid) &&
+        Objects.equals(this.schedulerTaskUuid, logLogMessage.schedulerTaskUuid) &&
+        Objects.equals(this.schedulerTaskActionPath, logLogMessage.schedulerTaskActionPath);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ts, level, logger, msg, msgId, userName, userUuid, groupPath, profile, roleUuids, remoteAddress, userAgent, httpProtocol, nodeUuid, nodePath, wsUuid, wsScope, spanUuid, spanParentUuid, spanRootUuid);
+    return Objects.hash(ts, level, logger, msg, msgId, userName, userUuid, groupPath, profile, roleUuids, remoteAddress, userAgent, httpProtocol, nodeUuid, nodePath, wsUuid, wsScope, spanUuid, spanParentUuid, spanRootUuid, operationUuid, operationLabel, schedulerJobUuid, schedulerTaskUuid, schedulerTaskActionPath);
   }
 
 
@@ -519,6 +636,11 @@ public class LogLogMessage {
     sb.append("    spanUuid: ").append(toIndentedString(spanUuid)).append("\n");
     sb.append("    spanParentUuid: ").append(toIndentedString(spanParentUuid)).append("\n");
     sb.append("    spanRootUuid: ").append(toIndentedString(spanRootUuid)).append("\n");
+    sb.append("    operationUuid: ").append(toIndentedString(operationUuid)).append("\n");
+    sb.append("    operationLabel: ").append(toIndentedString(operationLabel)).append("\n");
+    sb.append("    schedulerJobUuid: ").append(toIndentedString(schedulerJobUuid)).append("\n");
+    sb.append("    schedulerTaskUuid: ").append(toIndentedString(schedulerTaskUuid)).append("\n");
+    sb.append("    schedulerTaskActionPath: ").append(toIndentedString(schedulerTaskActionPath)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -527,7 +649,7 @@ public class LogLogMessage {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

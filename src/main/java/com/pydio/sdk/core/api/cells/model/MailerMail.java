@@ -13,20 +13,29 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.MailerUser;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * MailerMail
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class MailerMail {
   @SerializedName("From")
   private MailerUser from = null;
@@ -72,6 +81,9 @@ public class MailerMail {
 
   @SerializedName("sendErrors")
   private List<String> sendErrors = null;
+
+  @SerializedName("Sender")
+  private MailerUser sender = null;
 
   public MailerMail from(MailerUser from) {
     this.from = from;
@@ -383,9 +395,27 @@ public class MailerMail {
     this.sendErrors = sendErrors;
   }
 
+  public MailerMail sender(MailerUser sender) {
+    this.sender = sender;
+    return this;
+  }
+
+   /**
+   * Get sender
+   * @return sender
+  **/
+  @ApiModelProperty(value = "")
+  public MailerUser getSender() {
+    return sender;
+  }
+
+  public void setSender(MailerUser sender) {
+    this.sender = sender;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -407,12 +437,13 @@ public class MailerMail {
         Objects.equals(this.templateId, mailerMail.templateId) &&
         Objects.equals(this.templateData, mailerMail.templateData) &&
         Objects.equals(this.retries, mailerMail.retries) &&
-        Objects.equals(this.sendErrors, mailerMail.sendErrors);
+        Objects.equals(this.sendErrors, mailerMail.sendErrors) &&
+        Objects.equals(this.sender, mailerMail.sender);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(from, to, cc, dateSent, subject, contentPlain, contentHtml, contentMarkdown, attachments, threadUuid, threadIndex, templateId, templateData, retries, sendErrors);
+    return Objects.hash(from, to, cc, dateSent, subject, contentPlain, contentHtml, contentMarkdown, attachments, threadUuid, threadIndex, templateId, templateData, retries, sendErrors, sender);
   }
 
 
@@ -436,6 +467,7 @@ public class MailerMail {
     sb.append("    templateData: ").append(toIndentedString(templateData)).append("\n");
     sb.append("    retries: ").append(toIndentedString(retries)).append("\n");
     sb.append("    sendErrors: ").append(toIndentedString(sendErrors)).append("\n");
+    sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -444,7 +476,7 @@ public class MailerMail {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

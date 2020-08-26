@@ -13,18 +13,34 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.JobsAction;
+import com.pydio.sdk.core.api.cells.model.JobsContextMetaFilter;
+import com.pydio.sdk.core.api.cells.model.JobsIdmSelector;
+import com.pydio.sdk.core.api.cells.model.JobsJobParameter;
+import com.pydio.sdk.core.api.cells.model.JobsNodesSelector;
+import com.pydio.sdk.core.api.cells.model.JobsSchedule;
+import com.pydio.sdk.core.api.cells.model.JobsTask;
+import com.pydio.sdk.core.api.cells.model.JobsUsersSelector;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsJob
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class JobsJob {
   @SerializedName("ID")
   private String ID = null;
@@ -59,11 +75,26 @@ public class JobsJob {
   @SerializedName("MaxConcurrency")
   private Integer maxConcurrency = null;
 
-    @SerializedName("TasksSilentUpdate")
-    private Boolean tasksSilentUpdate = null;
+  @SerializedName("TasksSilentUpdate")
+  private Boolean tasksSilentUpdate = null;
 
   @SerializedName("Tasks")
   private List<JobsTask> tasks = null;
+
+  @SerializedName("NodeEventFilter")
+  private JobsNodesSelector nodeEventFilter = null;
+
+  @SerializedName("UserEventFilter")
+  private JobsUsersSelector userEventFilter = null;
+
+  @SerializedName("IdmFilter")
+  private JobsIdmSelector idmFilter = null;
+
+  @SerializedName("ContextMetaFilter")
+  private JobsContextMetaFilter contextMetaFilter = null;
+
+  @SerializedName("Parameters")
+  private List<JobsJobParameter> parameters = null;
 
   public JobsJob ID(String ID) {
     this.ID = ID;
@@ -287,24 +318,23 @@ public class JobsJob {
     this.maxConcurrency = maxConcurrency;
   }
 
-    public JobsJob tasksSilentUpdate(Boolean tasksSilentUpdate) {
-        this.tasksSilentUpdate = tasksSilentUpdate;
-        return this;
-    }
+  public JobsJob tasksSilentUpdate(Boolean tasksSilentUpdate) {
+    this.tasksSilentUpdate = tasksSilentUpdate;
+    return this;
+  }
 
-    /**
-     * Get tasksSilentUpdate
-     *
-     * @return tasksSilentUpdate
-     **/
-    @ApiModelProperty(value = "")
-    public Boolean isTasksSilentUpdate() {
-        return tasksSilentUpdate;
-    }
+   /**
+   * Get tasksSilentUpdate
+   * @return tasksSilentUpdate
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isTasksSilentUpdate() {
+    return tasksSilentUpdate;
+  }
 
-    public void setTasksSilentUpdate(Boolean tasksSilentUpdate) {
-        this.tasksSilentUpdate = tasksSilentUpdate;
-    }
+  public void setTasksSilentUpdate(Boolean tasksSilentUpdate) {
+    this.tasksSilentUpdate = tasksSilentUpdate;
+  }
 
   public JobsJob tasks(List<JobsTask> tasks) {
     this.tasks = tasks;
@@ -332,9 +362,107 @@ public class JobsJob {
     this.tasks = tasks;
   }
 
+  public JobsJob nodeEventFilter(JobsNodesSelector nodeEventFilter) {
+    this.nodeEventFilter = nodeEventFilter;
+    return this;
+  }
+
+   /**
+   * Get nodeEventFilter
+   * @return nodeEventFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsNodesSelector getNodeEventFilter() {
+    return nodeEventFilter;
+  }
+
+  public void setNodeEventFilter(JobsNodesSelector nodeEventFilter) {
+    this.nodeEventFilter = nodeEventFilter;
+  }
+
+  public JobsJob userEventFilter(JobsUsersSelector userEventFilter) {
+    this.userEventFilter = userEventFilter;
+    return this;
+  }
+
+   /**
+   * Get userEventFilter
+   * @return userEventFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsUsersSelector getUserEventFilter() {
+    return userEventFilter;
+  }
+
+  public void setUserEventFilter(JobsUsersSelector userEventFilter) {
+    this.userEventFilter = userEventFilter;
+  }
+
+  public JobsJob idmFilter(JobsIdmSelector idmFilter) {
+    this.idmFilter = idmFilter;
+    return this;
+  }
+
+   /**
+   * Get idmFilter
+   * @return idmFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsIdmSelector getIdmFilter() {
+    return idmFilter;
+  }
+
+  public void setIdmFilter(JobsIdmSelector idmFilter) {
+    this.idmFilter = idmFilter;
+  }
+
+  public JobsJob contextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
+    this.contextMetaFilter = contextMetaFilter;
+    return this;
+  }
+
+   /**
+   * Get contextMetaFilter
+   * @return contextMetaFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsContextMetaFilter getContextMetaFilter() {
+    return contextMetaFilter;
+  }
+
+  public void setContextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
+    this.contextMetaFilter = contextMetaFilter;
+  }
+
+  public JobsJob parameters(List<JobsJobParameter> parameters) {
+    this.parameters = parameters;
+    return this;
+  }
+
+  public JobsJob addParametersItem(JobsJobParameter parametersItem) {
+    if (this.parameters == null) {
+      this.parameters = new ArrayList<JobsJobParameter>();
+    }
+    this.parameters.add(parametersItem);
+    return this;
+  }
+
+   /**
+   * Get parameters
+   * @return parameters
+  **/
+  @ApiModelProperty(value = "")
+  public List<JobsJobParameter> getParameters() {
+    return parameters;
+  }
+
+  public void setParameters(List<JobsJobParameter> parameters) {
+    this.parameters = parameters;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -353,13 +481,18 @@ public class JobsJob {
         Objects.equals(this.autoClean, jobsJob.autoClean) &&
         Objects.equals(this.actions, jobsJob.actions) &&
         Objects.equals(this.maxConcurrency, jobsJob.maxConcurrency) &&
-            Objects.equals(this.tasksSilentUpdate, jobsJob.tasksSilentUpdate) &&
-        Objects.equals(this.tasks, jobsJob.tasks);
+        Objects.equals(this.tasksSilentUpdate, jobsJob.tasksSilentUpdate) &&
+        Objects.equals(this.tasks, jobsJob.tasks) &&
+        Objects.equals(this.nodeEventFilter, jobsJob.nodeEventFilter) &&
+        Objects.equals(this.userEventFilter, jobsJob.userEventFilter) &&
+        Objects.equals(this.idmFilter, jobsJob.idmFilter) &&
+        Objects.equals(this.contextMetaFilter, jobsJob.contextMetaFilter) &&
+        Objects.equals(this.parameters, jobsJob.parameters);
   }
 
   @Override
   public int hashCode() {
-      return Objects.hash(ID, label, owner, inactive, languages, eventNames, schedule, autoStart, autoClean, actions, maxConcurrency, tasksSilentUpdate, tasks);
+    return Objects.hash(ID, label, owner, inactive, languages, eventNames, schedule, autoStart, autoClean, actions, maxConcurrency, tasksSilentUpdate, tasks, nodeEventFilter, userEventFilter, idmFilter, contextMetaFilter, parameters);
   }
 
 
@@ -379,8 +512,13 @@ public class JobsJob {
     sb.append("    autoClean: ").append(toIndentedString(autoClean)).append("\n");
     sb.append("    actions: ").append(toIndentedString(actions)).append("\n");
     sb.append("    maxConcurrency: ").append(toIndentedString(maxConcurrency)).append("\n");
-      sb.append("    tasksSilentUpdate: ").append(toIndentedString(tasksSilentUpdate)).append("\n");
+    sb.append("    tasksSilentUpdate: ").append(toIndentedString(tasksSilentUpdate)).append("\n");
     sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
+    sb.append("    nodeEventFilter: ").append(toIndentedString(nodeEventFilter)).append("\n");
+    sb.append("    userEventFilter: ").append(toIndentedString(userEventFilter)).append("\n");
+    sb.append("    idmFilter: ").append(toIndentedString(idmFilter)).append("\n");
+    sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
+    sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -389,7 +527,7 @@ public class JobsJob {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

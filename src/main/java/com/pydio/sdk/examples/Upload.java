@@ -11,19 +11,24 @@ import java.io.ByteArrayInputStream;
 
 public class Upload {
 
+    private static String serverURL = "http://localhost:8080";
+    private static String login = "admin";
+    private static String pwd = "admin";
+    private static String workspace = "common-files";
+
     public static void main(String[] args) {
         ServerNode node = new ServerNode();
-        Error error = node.resolve("https://server-address");
+        Error error = node.resolve(serverURL);
         if (error != null) {
             System.out.println(error);
             return;
         }
 
         Client client = ClientFactory.get().Client(node);
-        client.setCredentials(new Credentials("login", "password"));
+        client.setCredentials(new Credentials(login, pwd));
+        client.setSkipOAuthFlag(true);
 
 
-        String targetWorkspaces = "my-files";
         String targetDir = "/"; // root
         String name = "hello.txt";
 
@@ -31,10 +36,12 @@ public class Upload {
         ByteArrayInputStream source = new ByteArrayInputStream(content);
 
         try {
-            Message msg = client.upload(source, content.length, targetWorkspaces, targetDir, name, true, (progress) -> {
+            Message msg = client.upload(source, content.length, workspace, targetDir, name, true, (progress) -> {
                 System.out.printf("\r%d bytes written\n", progress);
                 return false;
             });
+            System.out.println("After upload, message: "+msg.message);
+
         } catch (SDKException e) {
             e.printStackTrace();
         }

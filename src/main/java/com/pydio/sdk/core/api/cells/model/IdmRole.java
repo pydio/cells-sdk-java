@@ -13,18 +13,28 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.ServiceResourcePolicy;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
- * IdmRole
+ * Role represents a generic set of permissions that can be applied to any users or groups.
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@ApiModel(description = "Role represents a generic set of permissions that can be applied to any users or groups.")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class IdmRole {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -52,6 +62,9 @@ public class IdmRole {
 
   @SerializedName("PoliciesContextEditable")
   private Boolean policiesContextEditable = null;
+
+  @SerializedName("ForceOverride")
+  private Boolean forceOverride = null;
 
   public IdmRole uuid(String uuid) {
     this.uuid = uuid;
@@ -231,9 +244,27 @@ public class IdmRole {
     this.policiesContextEditable = policiesContextEditable;
   }
 
+  public IdmRole forceOverride(Boolean forceOverride) {
+    this.forceOverride = forceOverride;
+    return this;
+  }
+
+   /**
+   * Is used in a stack of roles, this one will always be applied last.
+   * @return forceOverride
+  **/
+  @ApiModelProperty(value = "Is used in a stack of roles, this one will always be applied last.")
+  public Boolean isForceOverride() {
+    return forceOverride;
+  }
+
+  public void setForceOverride(Boolean forceOverride) {
+    this.forceOverride = forceOverride;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -249,12 +280,13 @@ public class IdmRole {
         Objects.equals(this.lastUpdated, idmRole.lastUpdated) &&
         Objects.equals(this.autoApplies, idmRole.autoApplies) &&
         Objects.equals(this.policies, idmRole.policies) &&
-        Objects.equals(this.policiesContextEditable, idmRole.policiesContextEditable);
+        Objects.equals(this.policiesContextEditable, idmRole.policiesContextEditable) &&
+        Objects.equals(this.forceOverride, idmRole.forceOverride);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policies, policiesContextEditable);
+    return Objects.hash(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policies, policiesContextEditable, forceOverride);
   }
 
 
@@ -272,6 +304,7 @@ public class IdmRole {
     sb.append("    autoApplies: ").append(toIndentedString(autoApplies)).append("\n");
     sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("    policiesContextEditable: ").append(toIndentedString(policiesContextEditable)).append("\n");
+    sb.append("    forceOverride: ").append(toIndentedString(forceOverride)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -280,7 +313,7 @@ public class IdmRole {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

@@ -13,7 +13,6 @@
 
 package com.pydio.sdk.core.api.cells.api;
 
-import com.google.gson.reflect.TypeToken;
 import com.pydio.sdk.core.api.cells.ApiCallback;
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
@@ -22,13 +21,18 @@ import com.pydio.sdk.core.api.cells.Configuration;
 import com.pydio.sdk.core.api.cells.Pair;
 import com.pydio.sdk.core.api.cells.ProgressRequestBody;
 import com.pydio.sdk.core.api.cells.ProgressResponseBody;
+
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+
+
 import com.pydio.sdk.core.api.cells.model.ActivityObject;
 import com.pydio.sdk.core.api.cells.model.ActivitySearchSubscriptionsRequest;
 import com.pydio.sdk.core.api.cells.model.ActivityStreamActivitiesRequest;
 import com.pydio.sdk.core.api.cells.model.ActivitySubscription;
 import com.pydio.sdk.core.api.cells.model.RestSubscriptionsCollection;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +64,7 @@ public class ActivityServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call searchSubscriptionsCall(ActivitySearchSubscriptionsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -90,7 +94,7 @@ public class ActivityServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -122,7 +126,7 @@ public class ActivityServiceApi {
      * 
      * @param body  (required)
      * @return RestSubscriptionsCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestSubscriptionsCollection searchSubscriptions(ActivitySearchSubscriptionsRequest body) throws ApiException {
         ApiResponse<RestSubscriptionsCollection> resp = searchSubscriptionsWithHttpInfo(body);
@@ -134,7 +138,7 @@ public class ActivityServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;RestSubscriptionsCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestSubscriptionsCollection> searchSubscriptionsWithHttpInfo(ActivitySearchSubscriptionsRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchSubscriptionsValidateBeforeCall(body, null, null);
@@ -182,7 +186,7 @@ public class ActivityServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call streamCall(ActivityStreamActivitiesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -212,7 +216,7 @@ public class ActivityServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -244,7 +248,7 @@ public class ActivityServiceApi {
      * 
      * @param body  (required)
      * @return ActivityObject
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ActivityObject stream(ActivityStreamActivitiesRequest body) throws ApiException {
         ApiResponse<ActivityObject> resp = streamWithHttpInfo(body);
@@ -256,7 +260,7 @@ public class ActivityServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;ActivityObject&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<ActivityObject> streamWithHttpInfo(ActivityStreamActivitiesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = streamValidateBeforeCall(body, null, null);
@@ -304,7 +308,7 @@ public class ActivityServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call subscribeCall(ActivitySubscription body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -334,7 +338,7 @@ public class ActivityServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -366,7 +370,7 @@ public class ActivityServiceApi {
      * 
      * @param body  (required)
      * @return ActivitySubscription
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ActivitySubscription subscribe(ActivitySubscription body) throws ApiException {
         ApiResponse<ActivitySubscription> resp = subscribeWithHttpInfo(body);
@@ -378,7 +382,7 @@ public class ActivityServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;ActivitySubscription&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<ActivitySubscription> subscribeWithHttpInfo(ActivitySubscription body) throws ApiException {
         com.squareup.okhttp.Call call = subscribeValidateBeforeCall(body, null, null);

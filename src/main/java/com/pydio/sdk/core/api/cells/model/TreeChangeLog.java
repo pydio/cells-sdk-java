@@ -13,16 +13,25 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.TreeNodeChangeEvent;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * TreeChangeLog
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class TreeChangeLog {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -173,7 +182,7 @@ public class TreeChangeLog {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -185,14 +194,14 @@ public class TreeChangeLog {
         Objects.equals(this.description, treeChangeLog.description) &&
         Objects.equals(this.mtime, treeChangeLog.mtime) &&
         Objects.equals(this.size, treeChangeLog.size) &&
-        Objects.equals(this.data, treeChangeLog.data) &&
+        Arrays.equals(this.data, treeChangeLog.data) &&
         Objects.equals(this.ownerUuid, treeChangeLog.ownerUuid) &&
         Objects.equals(this.event, treeChangeLog.event);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, description, mtime, size, data, ownerUuid, event);
+    return Objects.hash(uuid, description, mtime, size, Arrays.hashCode(data), ownerUuid, event);
   }
 
 
@@ -216,7 +225,7 @@ public class TreeChangeLog {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
