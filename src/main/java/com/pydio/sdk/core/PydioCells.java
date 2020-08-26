@@ -91,13 +91,13 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class PydioCells implements Client {
 
-    private final static Object lock = new Object();
-
     public String URL;
-    private String apiURL;
     protected String bearerValue;
+
     private ServerNode serverNode;
     private Credentials credentials;
+    private String apiURL;
+    private Boolean skipOAuth = false;
 
     private Token.Provider tokenProvider;
     private Token.Store tokenStore;
@@ -108,106 +108,63 @@ public class PydioCells implements Client {
         this.apiURL = node.apiURL();
     }
 
+    private final static Object lock = new Object();
+
     protected void getJWT() throws SDKException {
         synchronized (lock) {
-            this.bearerValue = null;
+
             Token t = null;
+            this.bearerValue = null;
 
             String subject = String.format("%s@%s", credentials.getLogin(), serverNode.url());
             if (tokenProvider != null) {
                 t = tokenProvider.get(subject);
             }
 
-            if (t != null) {
-                if (t.isExpired()) {
-                    if (this.serverNode.supportsOauth()) {
-                        OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
+            boolean shouldAskToken = t == null;
+            if (!shouldAskToken) {
+                shouldAskToken = t.isExpired();
+            }
 
-                        HttpRequest request = new HttpRequest();
-                        Params params = Params.create("grant_type", "refresh_token").set("refresh_token", t.refreshToken);
-                        request.setParams(params);
+            if (shouldAskToken) {
+                if (!skipOAuth && this.serverNode.supportsOauth()) {
+                    t = getTokenWithOAuth();
+                    if (t != null && this.tokenStore != null ) {
+                        this.tokenStore.set(t);
+                    }
+                } else { // Legacy call with credentials
 
-                        Base64 base64 = new Base64();
-                        String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
+                    ApiClient apiClient = getApiClient();
+                    String password = credentials.getPassword();
+                    if (password == null) {
+                        throw new SDKException(Code.authentication_required, new IOException("no password provided"));
+                    }
 
-                        request.setHeaders(Params.create("Authorization", "Basic " + auth));
-                        request.setEndpoint(cfg.tokenEndpoint);
-                        request.setMethod(Method.POST);
+                    RestFrontSessionRequest request = new RestFrontSessionRequest();
+                    request.setClientTime((int) System.currentTimeMillis());
 
-                        HttpResponse response;
-                        try {
-                            response = HttpClient.request(request);
-                        } catch (Exception e) {
-                            Log.e("Cells SDK", "Refresh token request failed: " + e.getLocalizedMessage());
-                            return;
-                        }
+                    Map<String, String> authInfo = new HashMap<>();
+                    authInfo.put("login", credentials.getLogin());
+                    authInfo.put("password", password);
+                    authInfo.put("type", "credentials");
+                    request.authInfo(authInfo);
 
-                        String jwt = null;
-                        try {
-                            jwt = response.getString();
-                        } catch (IOException e) {
-                            Log.e("Cells SDK", "Could not get response string body: " + e.getLocalizedMessage());
-                            e.printStackTrace();
-                            return;
-                        }
+                    FrontendServiceApi api = new FrontendServiceApi(apiClient);
+                    RestFrontSessionResponse response;
+                    try {
+                        response = api.frontSession(request);
+                    } catch (ApiException e) {
+                        throw new SDKException(e);
+                    }
 
-                        System.out.println(jwt);
-                        try {
-                            t = Token.decodeOauthJWT(jwt);
-                        } catch (ParseException e) {
-                            Log.e("Cells SDK", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
-                            return;
-                        }
+                    t = new Token();
+                    t.subject = subject;
+                    t.value = response.getJWT();
+                    long expireIn = (long) response.getExpireTime();
+                    t.expiry = System.currentTimeMillis() / 1000 + expireIn;
 
-                        com.pydio.sdk.core.auth.jwt.JWT parsedIDToken = null;
-
-                        parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
-
-                        if (parsedIDToken == null) {
-                            return;
-                        }
-
-                        t.subject = String.format("%s@%s", parsedIDToken.claims.name, this.serverNode.url());
-                        t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
-
-                        if (this.tokenStore != null) {
-                            this.tokenStore.set(t);
-                        }
-
-                    } else {
-                        ApiClient apiClient = getApiClient();
-                        String password = credentials.getPassword();
-
-                        if (password == null) {
-                            throw new SDKException(Code.authentication_required, new IOException("no password provided"));
-                        }
-
-                        RestFrontSessionRequest request = new RestFrontSessionRequest();
-                        request.setClientTime((int) System.currentTimeMillis());
-
-                        Map<String, String> authInfo = new HashMap<>();
-                        authInfo.put("login", credentials.getLogin());
-                        authInfo.put("password", password);
-                        authInfo.put("type", "credentials");
-                        request.authInfo(authInfo);
-
-                        FrontendServiceApi api = new FrontendServiceApi(apiClient);
-                        RestFrontSessionResponse response;
-                        try {
-                            response = api.frontSession(request);
-                        } catch (ApiException e) {
-                            throw new SDKException(e);
-                        }
-
-                        t = new Token();
-                        t.subject = subject;
-                        t.value = response.getJWT();
-                        long expireIn = (long) response.getExpireTime();
-                        t.expiry = System.currentTimeMillis()/1000 + expireIn;
-
-                        if (this.tokenStore != null) {
-                            this.tokenStore.set(t);
-                        }
+                    if (this.tokenStore != null) {
+                        this.tokenStore.set(t);
                     }
                 }
             }
@@ -216,6 +173,62 @@ public class PydioCells implements Client {
                 this.bearerValue = t.value;
             }
         }
+    }
+
+    private Token getTokenWithOAuth() {
+
+        Token t = null;
+
+        OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
+
+        HttpRequest request = new HttpRequest();
+        Params params = Params.create("grant_type", "refresh_token").set("refresh_token", t.refreshToken);
+        request.setParams(params);
+
+        Base64 base64 = new Base64();
+        String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
+
+        request.setHeaders(Params.create("Authorization", "Basic " + auth));
+        request.setEndpoint(cfg.tokenEndpoint);
+        request.setMethod(Method.POST);
+
+        HttpResponse response;
+        try {
+            response = HttpClient.request(request);
+        } catch (Exception e) {
+            Log.e("Cells SDK", "Refresh token request failed: " + e.getLocalizedMessage());
+            return null;
+        }
+
+        String jwt = null;
+        try {
+            jwt = response.getString();
+        } catch (IOException e) {
+            Log.e("Cells SDK", "Could not get response string body: " + e.getLocalizedMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+        System.out.println(jwt);
+        try {
+            t = Token.decodeOauthJWT(jwt);
+        } catch (ParseException e) {
+            Log.e("Cells SDK", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
+            return null;
+        }
+
+        com.pydio.sdk.core.auth.jwt.JWT parsedIDToken = null;
+
+        parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
+
+        if (parsedIDToken == null) {
+            return null;
+        }
+
+        t.subject = String.format("%s@%s", parsedIDToken.claims.name, this.serverNode.url());
+        t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
+
+        return t;
     }
 
     protected String getS3Endpoint() {
@@ -353,6 +366,11 @@ public class PydioCells implements Client {
     }
 
     @Override
+    public void setSkipOAuthFlag(boolean skipOAuth) {
+        this.skipOAuth = skipOAuth;
+    }
+
+    @Override
     public String getUser() {
         return this.credentials.getLogin();
     }
@@ -380,6 +398,7 @@ public class PydioCells implements Client {
 
     @Override
     public JSONObject userInfo() throws SDKException {
+        // FIXME really ? 
         RestFrontSessionRequest request = new RestFrontSessionRequest();
         request.setLogout(true);
         return null;
@@ -491,23 +510,15 @@ public class PydioCells implements Client {
             e.printStackTrace();
             throw SDKException.conFailed(e);
         }
-        String[] excluded = {
-                Pydio.WORKSPACE_ACCESS_TYPE_CONF,
-                Pydio.WORKSPACE_ACCESS_TYPE_SHARED,
-                Pydio.WORKSPACE_ACCESS_TYPE_MYSQL,
-                Pydio.WORKSPACE_ACCESS_TYPE_IMAP,
-                Pydio.WORKSPACE_ACCESS_TYPE_JSAPI,
-                Pydio.WORKSPACE_ACCESS_TYPE_USER,
-                Pydio.WORKSPACE_ACCESS_TYPE_HOME,
-                Pydio.WORKSPACE_ACCESS_TYPE_HOMEPAGE,
-                Pydio.WORKSPACE_ACCESS_TYPE_SETTINGS,
-                Pydio.WORKSPACE_ACCESS_TYPE_ADMIN,
-                Pydio.WORKSPACE_ACCESS_TYPE_INBOX,
-        };
+        String[] excluded = { Pydio.WORKSPACE_ACCESS_TYPE_CONF, Pydio.WORKSPACE_ACCESS_TYPE_SHARED,
+                Pydio.WORKSPACE_ACCESS_TYPE_MYSQL, Pydio.WORKSPACE_ACCESS_TYPE_IMAP, Pydio.WORKSPACE_ACCESS_TYPE_JSAPI,
+                Pydio.WORKSPACE_ACCESS_TYPE_USER, Pydio.WORKSPACE_ACCESS_TYPE_HOME,
+                Pydio.WORKSPACE_ACCESS_TYPE_HOMEPAGE, Pydio.WORKSPACE_ACCESS_TYPE_SETTINGS,
+                Pydio.WORKSPACE_ACCESS_TYPE_ADMIN, Pydio.WORKSPACE_ACCESS_TYPE_INBOX, };
 
         try {
-            NodeHandler nh = (n) ->  {
-                if (!Arrays.asList(excluded).contains( ((WorkspaceNode) n).getAccessType())) {
+            NodeHandler nh = (n) -> {
+                if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
                     handler.onNode(n);
                 }
             };
@@ -542,7 +553,7 @@ public class PydioCells implements Client {
     @Override
     public FileNode ls(String ws, String folder, NodeHandler handler) throws SDKException {
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        //request.addNodePathsItem(fullPath(ws, folder));
+        // request.addNodePathsItem(fullPath(ws, folder));
         if ("/".equals(folder)) {
             request.addNodePathsItem(ws + "/*");
         } else {
@@ -662,12 +673,14 @@ public class PydioCells implements Client {
     }
 
     @Override
-    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename,
+            TransferProgressListener progressListener) throws SDKException {
         return null;
     }
 
     @Override
-    public Message upload(File source, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+    public Message upload(File source, String ws, String path, String name, boolean autoRename,
+            TransferProgressListener progressListener) throws SDKException {
         return null;
     }
 
@@ -677,12 +690,14 @@ public class PydioCells implements Client {
     }
 
     @Override
-    public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener) throws SDKException {
+    public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener)
+            throws SDKException {
         return 0;
     }
 
     @Override
-    public long download(String ws, String file, File target, TransferProgressListener progressListener) throws SDKException {
+    public long download(String ws, String file, File target, TransferProgressListener progressListener)
+            throws SDKException {
         OutputStream out;
         try {
             out = new FileOutputStream(file);
@@ -838,7 +853,6 @@ public class PydioCells implements Client {
         request.setJobName("copy");
         request.setJsonParameters(o.toString());
 
-
         this.getJWT();
         ApiClient client = getApiClient();
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
@@ -859,7 +873,6 @@ public class PydioCells implements Client {
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
 
         UserMetaServiceApi api = new UserMetaServiceApi(client);
-
 
         IdmUpdateUserMetaRequest request = new IdmUpdateUserMetaRequest();
         request.setOperation(UpdateUserMetaRequestUserMetaOp.PUT);
@@ -894,9 +907,9 @@ public class PydioCells implements Client {
         metas.add(item);
         request.setMetaDatas(metas);
 
-
         try {
-            IdmUpdateUserMetaResponse response = api.updateUserMeta(request);
+            // IdmUpdateUserMetaResponse response =
+            api.updateUserMeta(request);
             return null;
         } catch (ApiException e) {
             e.printStackTrace();
@@ -916,7 +929,6 @@ public class PydioCells implements Client {
         searchRequest.setNamespace("bookmark");
         searchRequest.addNodeUuidsItem(nodeId);
 
-
         try {
             RestUserMetaCollection result = api.searchUserMeta(searchRequest);
 
@@ -924,7 +936,8 @@ public class PydioCells implements Client {
             request.setOperation(UpdateUserMetaRequestUserMetaOp.DELETE);
             request.setMetaDatas(result.getMetadatas());
 
-            IdmUpdateUserMetaResponse response = api.updateUserMeta(request);
+            api.updateUserMeta(request);
+            // IdmUpdateUserMetaResponse response = api.updateUserMeta(request);
             return null;
         } catch (ApiException e) {
             e.printStackTrace();
@@ -941,7 +954,6 @@ public class PydioCells implements Client {
         RestCreateNodesRequest request = new RestCreateNodesRequest();
         request.recursive(false);
         request.addNodesItem(node);
-
 
         this.getJWT();
         ApiClient client = getApiClient();
@@ -967,7 +979,7 @@ public class PydioCells implements Client {
         return msg;
     }
 
-    //@Override
+    // @Override
     public Message mkfile(String ws, String name, String folder) throws SDKException {
 
         TreeNode node = new TreeNode();
@@ -1053,7 +1065,6 @@ public class PydioCells implements Client {
         // request.setSeqID(String.valueOf(seq));
         // request.setFilter("/" + ws + folder);
 
-
         // this.getJWT();
         // ApiClient client = getApiClient();
         // client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
@@ -1061,36 +1072,38 @@ public class PydioCells implements Client {
         // RestChangeCollection response;
 
         // try {
-        //     response = api.getChanges(String.valueOf(seq), request);
+        // response = api.getChanges(String.valueOf(seq), request);
         // } catch (ApiException e) {
-        //     throw new SDKException(e);
+        // throw new SDKException(e);
         // }
 
         // for (TreeSyncChange c : response.getChanges()) {
-        //     Change change = new Change();
-        //     change.setSeq(Long.parseLong(c.getSeq()));
-        //     change.setNodeId(c.getNodeId());
-        //     change.setType(c.getType().toString());
-        //     change.setSource(c.getSource());
-        //     change.setTarget(c.getTarget());
+        // Change change = new Change();
+        // change.setSeq(Long.parseLong(c.getSeq()));
+        // change.setNodeId(c.getNodeId());
+        // change.setType(c.getType().toString());
+        // change.setSource(c.getSource());
+        // change.setTarget(c.getTarget());
 
-        //     ChangeNode node = new ChangeNode();
-        //     change.setNode(node);
+        // ChangeNode node = new ChangeNode();
+        // change.setNode(node);
 
-        //     node.setSize(Long.parseLong(c.getNode().getBytesize()));
-        //     node.setMd5(c.getNode().getMd5());
-        //     node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
-        //     node.setWorkspace(ws);
-        //     node.setmTime(Long.parseLong(c.getNode().getMtime()));
+        // node.setSize(Long.parseLong(c.getNode().getBytesize()));
+        // node.setMd5(c.getNode().getMd5());
+        // node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
+        // node.setWorkspace(ws);
+        // node.setmTime(Long.parseLong(c.getNode().getMtime()));
 
-        //     cp.onChange(change);
+        // cp.onChange(change);
         // }
         // return Long.parseLong(response.getLastSeqId());
         throw new RuntimeException("This must be reimplemented after API update");
     }
 
     @Override
-    public String share(String ws, String uuid, String ws_label, boolean isFolder, String ws_description, String password, int expiration, int download, boolean canPreview, boolean canDownload) throws SDKException {
+    public String share(String ws, String uuid, String ws_label, boolean isFolder, String ws_description,
+            String password, int expiration, int download, boolean canPreview, boolean canDownload)
+            throws SDKException {
         RestPutShareLinkRequest request = new RestPutShareLinkRequest();
         request.createPassword(password);
         request.setCreatePassword(password);
@@ -1171,7 +1184,7 @@ public class PydioCells implements Client {
 
     @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
-        return delete(ws, new String[]{"/recycle_bin"});
+        return delete(ws, new String[] { "/recycle_bin" });
     }
 
     @Override

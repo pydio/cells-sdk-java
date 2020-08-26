@@ -5,6 +5,7 @@
 
 # VSCode
 .project
+.vscode
 
 # JIdea
 local.properties
