@@ -13,16 +13,25 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.TreeNode;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * TreeReadNodeRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class TreeReadNodeRequest {
   @SerializedName("Node")
   private TreeNode node = null;
@@ -32,6 +41,9 @@ public class TreeReadNodeRequest {
 
   @SerializedName("WithExtendedStats")
   private Boolean withExtendedStats = null;
+
+  @SerializedName("ObjectStats")
+  private Boolean objectStats = null;
 
   public TreeReadNodeRequest node(TreeNode node) {
     this.node = node;
@@ -87,9 +99,27 @@ public class TreeReadNodeRequest {
     this.withExtendedStats = withExtendedStats;
   }
 
+  public TreeReadNodeRequest objectStats(Boolean objectStats) {
+    this.objectStats = objectStats;
+    return this;
+  }
+
+   /**
+   * Get objectStats
+   * @return objectStats
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isObjectStats() {
+    return objectStats;
+  }
+
+  public void setObjectStats(Boolean objectStats) {
+    this.objectStats = objectStats;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -99,12 +129,13 @@ public class TreeReadNodeRequest {
     TreeReadNodeRequest treeReadNodeRequest = (TreeReadNodeRequest) o;
     return Objects.equals(this.node, treeReadNodeRequest.node) &&
         Objects.equals(this.withCommits, treeReadNodeRequest.withCommits) &&
-        Objects.equals(this.withExtendedStats, treeReadNodeRequest.withExtendedStats);
+        Objects.equals(this.withExtendedStats, treeReadNodeRequest.withExtendedStats) &&
+        Objects.equals(this.objectStats, treeReadNodeRequest.objectStats);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(node, withCommits, withExtendedStats);
+    return Objects.hash(node, withCommits, withExtendedStats, objectStats);
   }
 
 
@@ -116,6 +147,7 @@ public class TreeReadNodeRequest {
     sb.append("    node: ").append(toIndentedString(node)).append("\n");
     sb.append("    withCommits: ").append(toIndentedString(withCommits)).append("\n");
     sb.append("    withExtendedStats: ").append(toIndentedString(withExtendedStats)).append("\n");
+    sb.append("    objectStats: ").append(toIndentedString(objectStats)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -124,7 +156,7 @@ public class TreeReadNodeRequest {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

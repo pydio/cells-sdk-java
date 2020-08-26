@@ -13,7 +13,6 @@
 
 package com.pydio.sdk.core.api.cells.api;
 
-import com.google.gson.reflect.TypeToken;
 import com.pydio.sdk.core.api.cells.ApiCallback;
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
@@ -22,6 +21,12 @@ import com.pydio.sdk.core.api.cells.Configuration;
 import com.pydio.sdk.core.api.cells.Pair;
 import com.pydio.sdk.core.api.cells.ProgressRequestBody;
 import com.pydio.sdk.core.api.cells.ProgressResponseBody;
+
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+
+
 import com.pydio.sdk.core.api.cells.model.RestBulkMetaResponse;
 import com.pydio.sdk.core.api.cells.model.RestCreateNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestCreateSelectionRequest;
@@ -34,7 +39,6 @@ import com.pydio.sdk.core.api.cells.model.RestNodesCollection;
 import com.pydio.sdk.core.api.cells.model.RestRestoreNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestRestoreNodesResponse;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +70,7 @@ public class TreeServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call bulkStatNodesCall(RestGetBulkMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -96,7 +100,7 @@ public class TreeServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -128,7 +132,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return RestBulkMetaResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestBulkMetaResponse bulkStatNodes(RestGetBulkMetaRequest body) throws ApiException {
         ApiResponse<RestBulkMetaResponse> resp = bulkStatNodesWithHttpInfo(body);
@@ -140,7 +144,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;RestBulkMetaResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestBulkMetaResponse> bulkStatNodesWithHttpInfo(RestGetBulkMetaRequest body) throws ApiException {
         com.squareup.okhttp.Call call = bulkStatNodesValidateBeforeCall(body, null, null);
@@ -188,7 +192,7 @@ public class TreeServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call createNodesCall(RestCreateNodesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -218,7 +222,7 @@ public class TreeServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -250,7 +254,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return RestNodesCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestNodesCollection createNodes(RestCreateNodesRequest body) throws ApiException {
         ApiResponse<RestNodesCollection> resp = createNodesWithHttpInfo(body);
@@ -262,7 +266,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;RestNodesCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestNodesCollection> createNodesWithHttpInfo(RestCreateNodesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createNodesValidateBeforeCall(body, null, null);
@@ -304,15 +308,13 @@ public class TreeServiceApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-
     /**
      * Build call for createSelection
-     *
-     * @param body                    (required)
-     * @param progressListener        Progress listener
+     * @param body  (required)
+     * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call createSelectionCall(RestCreateSelectionRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -328,41 +330,41 @@ public class TreeServiceApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-                "application/json"
+            "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-                "application/json"
+            "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if (progressListener != null) {
+        if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
-                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                            .build();
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
                 }
             });
         }
 
-        String[] localVarAuthNames = new String[]{};
+        String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
 
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call createSelectionValidateBeforeCall(RestCreateSelectionRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-
+        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createSelection(Async)");
         }
-
+        
 
         com.squareup.okhttp.Call call = createSelectionCall(body, progressListener, progressRequestListener);
         return call;
@@ -371,10 +373,10 @@ public class TreeServiceApi {
 
     /**
      * Create a temporary selection for further action (namely download)
-     *
-     * @param body (required)
+     * 
+     * @param body  (required)
      * @return RestCreateSelectionResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestCreateSelectionResponse createSelection(RestCreateSelectionRequest body) throws ApiException {
         ApiResponse<RestCreateSelectionResponse> resp = createSelectionWithHttpInfo(body);
@@ -383,22 +385,21 @@ public class TreeServiceApi {
 
     /**
      * Create a temporary selection for further action (namely download)
-     *
-     * @param body (required)
+     * 
+     * @param body  (required)
      * @return ApiResponse&lt;RestCreateSelectionResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestCreateSelectionResponse> createSelectionWithHttpInfo(RestCreateSelectionRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createSelectionValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<RestCreateSelectionResponse>() {
-        }.getType();
+        Type localVarReturnType = new TypeToken<RestCreateSelectionResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * Create a temporary selection for further action (namely download) (asynchronously)
-     *
-     * @param body     (required)
+     * 
+     * @param body  (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -425,8 +426,7 @@ public class TreeServiceApi {
         }
 
         com.squareup.okhttp.Call call = createSelectionValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<RestCreateSelectionResponse>() {
-        }.getType();
+        Type localVarReturnType = new TypeToken<RestCreateSelectionResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -436,7 +436,7 @@ public class TreeServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call deleteNodesCall(RestDeleteNodesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -466,7 +466,7 @@ public class TreeServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -498,7 +498,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return RestDeleteNodesResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestDeleteNodesResponse deleteNodes(RestDeleteNodesRequest body) throws ApiException {
         ApiResponse<RestDeleteNodesResponse> resp = deleteNodesWithHttpInfo(body);
@@ -510,7 +510,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;RestDeleteNodesResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestDeleteNodesResponse> deleteNodesWithHttpInfo(RestDeleteNodesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = deleteNodesValidateBeforeCall(body, null, null);
@@ -558,14 +558,14 @@ public class TreeServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call headNodeCall(String node, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/tree/stat/{Node}"
-                .replaceAll("\\{" + "Node" + "\\}", apiClient.escapeString(node));
+            .replaceAll("\\{" + "Node" + "\\}", apiClient.escapeString(node.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -589,7 +589,7 @@ public class TreeServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -621,7 +621,7 @@ public class TreeServiceApi {
      * 
      * @param node  (required)
      * @return RestHeadNodeResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestHeadNodeResponse headNode(String node) throws ApiException {
         ApiResponse<RestHeadNodeResponse> resp = headNodeWithHttpInfo(node);
@@ -633,7 +633,7 @@ public class TreeServiceApi {
      * 
      * @param node  (required)
      * @return ApiResponse&lt;RestHeadNodeResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestHeadNodeResponse> headNodeWithHttpInfo(String node) throws ApiException {
         com.squareup.okhttp.Call call = headNodeValidateBeforeCall(node, null, null);
@@ -681,7 +681,7 @@ public class TreeServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call restoreNodesCall(RestRestoreNodesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -711,7 +711,7 @@ public class TreeServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -743,7 +743,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return RestRestoreNodesResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestRestoreNodesResponse restoreNodes(RestRestoreNodesRequest body) throws ApiException {
         ApiResponse<RestRestoreNodesResponse> resp = restoreNodesWithHttpInfo(body);
@@ -755,7 +755,7 @@ public class TreeServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;RestRestoreNodesResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestRestoreNodesResponse> restoreNodesWithHttpInfo(RestRestoreNodesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = restoreNodesValidateBeforeCall(body, null, null);

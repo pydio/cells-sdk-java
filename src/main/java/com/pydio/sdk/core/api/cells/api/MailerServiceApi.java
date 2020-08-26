@@ -13,7 +13,6 @@
 
 package com.pydio.sdk.core.api.cells.api;
 
-import com.google.gson.reflect.TypeToken;
 import com.pydio.sdk.core.api.cells.ApiCallback;
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
@@ -22,10 +21,15 @@ import com.pydio.sdk.core.api.cells.Configuration;
 import com.pydio.sdk.core.api.cells.Pair;
 import com.pydio.sdk.core.api.cells.ProgressRequestBody;
 import com.pydio.sdk.core.api.cells.ProgressResponseBody;
+
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+
+
 import com.pydio.sdk.core.api.cells.model.MailerMail;
 import com.pydio.sdk.core.api.cells.model.MailerSendMailResponse;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +61,7 @@ public class MailerServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call sendCall(MailerMail body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -87,7 +91,7 @@ public class MailerServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -119,7 +123,7 @@ public class MailerServiceApi {
      * 
      * @param body  (required)
      * @return MailerSendMailResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public MailerSendMailResponse send(MailerMail body) throws ApiException {
         ApiResponse<MailerSendMailResponse> resp = sendWithHttpInfo(body);
@@ -131,7 +135,7 @@ public class MailerServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;MailerSendMailResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<MailerSendMailResponse> sendWithHttpInfo(MailerMail body) throws ApiException {
         com.squareup.okhttp.Call call = sendValidateBeforeCall(body, null, null);

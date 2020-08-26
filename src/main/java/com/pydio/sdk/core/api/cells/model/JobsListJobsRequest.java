@@ -13,16 +13,27 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.JobsTaskStatus;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JobsListJobsRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class JobsListJobsRequest {
   @SerializedName("Owner")
   private String owner = null;
@@ -35,6 +46,15 @@ public class JobsListJobsRequest {
 
   @SerializedName("LoadTasks")
   private JobsTaskStatus loadTasks = null;
+
+  @SerializedName("JobIDs")
+  private List<String> jobIDs = null;
+
+  @SerializedName("TasksOffset")
+  private Integer tasksOffset = null;
+
+  @SerializedName("TasksLimit")
+  private Integer tasksLimit = null;
 
   public JobsListJobsRequest owner(String owner) {
     this.owner = owner;
@@ -108,9 +128,71 @@ public class JobsListJobsRequest {
     this.loadTasks = loadTasks;
   }
 
+  public JobsListJobsRequest jobIDs(List<String> jobIDs) {
+    this.jobIDs = jobIDs;
+    return this;
+  }
+
+  public JobsListJobsRequest addJobIDsItem(String jobIDsItem) {
+    if (this.jobIDs == null) {
+      this.jobIDs = new ArrayList<String>();
+    }
+    this.jobIDs.add(jobIDsItem);
+    return this;
+  }
+
+   /**
+   * Get jobIDs
+   * @return jobIDs
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getJobIDs() {
+    return jobIDs;
+  }
+
+  public void setJobIDs(List<String> jobIDs) {
+    this.jobIDs = jobIDs;
+  }
+
+  public JobsListJobsRequest tasksOffset(Integer tasksOffset) {
+    this.tasksOffset = tasksOffset;
+    return this;
+  }
+
+   /**
+   * Get tasksOffset
+   * @return tasksOffset
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getTasksOffset() {
+    return tasksOffset;
+  }
+
+  public void setTasksOffset(Integer tasksOffset) {
+    this.tasksOffset = tasksOffset;
+  }
+
+  public JobsListJobsRequest tasksLimit(Integer tasksLimit) {
+    this.tasksLimit = tasksLimit;
+    return this;
+  }
+
+   /**
+   * Get tasksLimit
+   * @return tasksLimit
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getTasksLimit() {
+    return tasksLimit;
+  }
+
+  public void setTasksLimit(Integer tasksLimit) {
+    this.tasksLimit = tasksLimit;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -121,12 +203,15 @@ public class JobsListJobsRequest {
     return Objects.equals(this.owner, jobsListJobsRequest.owner) &&
         Objects.equals(this.eventsOnly, jobsListJobsRequest.eventsOnly) &&
         Objects.equals(this.timersOnly, jobsListJobsRequest.timersOnly) &&
-        Objects.equals(this.loadTasks, jobsListJobsRequest.loadTasks);
+        Objects.equals(this.loadTasks, jobsListJobsRequest.loadTasks) &&
+        Objects.equals(this.jobIDs, jobsListJobsRequest.jobIDs) &&
+        Objects.equals(this.tasksOffset, jobsListJobsRequest.tasksOffset) &&
+        Objects.equals(this.tasksLimit, jobsListJobsRequest.tasksLimit);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(owner, eventsOnly, timersOnly, loadTasks);
+    return Objects.hash(owner, eventsOnly, timersOnly, loadTasks, jobIDs, tasksOffset, tasksLimit);
   }
 
 
@@ -139,6 +224,9 @@ public class JobsListJobsRequest {
     sb.append("    eventsOnly: ").append(toIndentedString(eventsOnly)).append("\n");
     sb.append("    timersOnly: ").append(toIndentedString(timersOnly)).append("\n");
     sb.append("    loadTasks: ").append(toIndentedString(loadTasks)).append("\n");
+    sb.append("    jobIDs: ").append(toIndentedString(jobIDs)).append("\n");
+    sb.append("    tasksOffset: ").append(toIndentedString(tasksOffset)).append("\n");
+    sb.append("    tasksLimit: ").append(toIndentedString(tasksLimit)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -147,7 +235,7 @@ public class JobsListJobsRequest {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

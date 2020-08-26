@@ -13,18 +13,34 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.ActivityObject;
+import com.pydio.sdk.core.api.cells.model.IdmACL;
+import com.pydio.sdk.core.api.cells.model.IdmRole;
+import com.pydio.sdk.core.api.cells.model.IdmUser;
+import com.pydio.sdk.core.api.cells.model.IdmWorkspace;
+import com.pydio.sdk.core.api.cells.model.JobsActionOutput;
+import com.pydio.sdk.core.api.cells.model.ProtobufAny;
+import com.pydio.sdk.core.api.cells.model.TreeNode;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsActionMessage
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class JobsActionMessage {
   @SerializedName("Event")
   private ProtobufAny event = null;
@@ -34,6 +50,15 @@ public class JobsActionMessage {
 
   @SerializedName("Users")
   private List<IdmUser> users = null;
+
+  @SerializedName("Roles")
+  private List<IdmRole> roles = null;
+
+  @SerializedName("Workspaces")
+  private List<IdmWorkspace> workspaces = null;
+
+  @SerializedName("Acls")
+  private List<IdmACL> acls = null;
 
   @SerializedName("Activities")
   private List<ActivityObject> activities = null;
@@ -111,6 +136,84 @@ public class JobsActionMessage {
     this.users = users;
   }
 
+  public JobsActionMessage roles(List<IdmRole> roles) {
+    this.roles = roles;
+    return this;
+  }
+
+  public JobsActionMessage addRolesItem(IdmRole rolesItem) {
+    if (this.roles == null) {
+      this.roles = new ArrayList<IdmRole>();
+    }
+    this.roles.add(rolesItem);
+    return this;
+  }
+
+   /**
+   * Get roles
+   * @return roles
+  **/
+  @ApiModelProperty(value = "")
+  public List<IdmRole> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(List<IdmRole> roles) {
+    this.roles = roles;
+  }
+
+  public JobsActionMessage workspaces(List<IdmWorkspace> workspaces) {
+    this.workspaces = workspaces;
+    return this;
+  }
+
+  public JobsActionMessage addWorkspacesItem(IdmWorkspace workspacesItem) {
+    if (this.workspaces == null) {
+      this.workspaces = new ArrayList<IdmWorkspace>();
+    }
+    this.workspaces.add(workspacesItem);
+    return this;
+  }
+
+   /**
+   * Get workspaces
+   * @return workspaces
+  **/
+  @ApiModelProperty(value = "")
+  public List<IdmWorkspace> getWorkspaces() {
+    return workspaces;
+  }
+
+  public void setWorkspaces(List<IdmWorkspace> workspaces) {
+    this.workspaces = workspaces;
+  }
+
+  public JobsActionMessage acls(List<IdmACL> acls) {
+    this.acls = acls;
+    return this;
+  }
+
+  public JobsActionMessage addAclsItem(IdmACL aclsItem) {
+    if (this.acls == null) {
+      this.acls = new ArrayList<IdmACL>();
+    }
+    this.acls.add(aclsItem);
+    return this;
+  }
+
+   /**
+   * Get acls
+   * @return acls
+  **/
+  @ApiModelProperty(value = "")
+  public List<IdmACL> getAcls() {
+    return acls;
+  }
+
+  public void setAcls(List<IdmACL> acls) {
+    this.acls = acls;
+  }
+
   public JobsActionMessage activities(List<ActivityObject> activities) {
     this.activities = activities;
     return this;
@@ -165,7 +268,7 @@ public class JobsActionMessage {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -176,13 +279,16 @@ public class JobsActionMessage {
     return Objects.equals(this.event, jobsActionMessage.event) &&
         Objects.equals(this.nodes, jobsActionMessage.nodes) &&
         Objects.equals(this.users, jobsActionMessage.users) &&
+        Objects.equals(this.roles, jobsActionMessage.roles) &&
+        Objects.equals(this.workspaces, jobsActionMessage.workspaces) &&
+        Objects.equals(this.acls, jobsActionMessage.acls) &&
         Objects.equals(this.activities, jobsActionMessage.activities) &&
         Objects.equals(this.outputChain, jobsActionMessage.outputChain);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(event, nodes, users, activities, outputChain);
+    return Objects.hash(event, nodes, users, roles, workspaces, acls, activities, outputChain);
   }
 
 
@@ -194,6 +300,9 @@ public class JobsActionMessage {
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    nodes: ").append(toIndentedString(nodes)).append("\n");
     sb.append("    users: ").append(toIndentedString(users)).append("\n");
+    sb.append("    roles: ").append(toIndentedString(roles)).append("\n");
+    sb.append("    workspaces: ").append(toIndentedString(workspaces)).append("\n");
+    sb.append("    acls: ").append(toIndentedString(acls)).append("\n");
     sb.append("    activities: ").append(toIndentedString(activities)).append("\n");
     sb.append("    outputChain: ").append(toIndentedString(outputChain)).append("\n");
     sb.append("}");
@@ -204,7 +313,7 @@ public class JobsActionMessage {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

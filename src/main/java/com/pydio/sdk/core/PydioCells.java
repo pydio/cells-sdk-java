@@ -3,7 +3,6 @@ package com.pydio.sdk.core;
 import com.google.gson.Gson;
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
-import com.pydio.sdk.core.api.cells.api.ChangeServiceApi;
 import com.pydio.sdk.core.api.cells.api.FrontendServiceApi;
 import com.pydio.sdk.core.api.cells.api.JobsServiceApi;
 import com.pydio.sdk.core.api.cells.api.SearchServiceApi;
@@ -15,8 +14,6 @@ import com.pydio.sdk.core.api.cells.model.IdmUpdateUserMetaRequest;
 import com.pydio.sdk.core.api.cells.model.IdmUpdateUserMetaResponse;
 import com.pydio.sdk.core.api.cells.model.IdmUserMeta;
 import com.pydio.sdk.core.api.cells.model.RestBulkMetaResponse;
-import com.pydio.sdk.core.api.cells.model.RestChangeCollection;
-import com.pydio.sdk.core.api.cells.model.RestChangeRequest;
 import com.pydio.sdk.core.api.cells.model.RestCreateNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestDeleteNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestFrontSessionRequest;
@@ -38,7 +35,6 @@ import com.pydio.sdk.core.api.cells.model.TreeNode;
 import com.pydio.sdk.core.api.cells.model.TreeNodeType;
 import com.pydio.sdk.core.api.cells.model.TreeQuery;
 import com.pydio.sdk.core.api.cells.model.TreeSearchRequest;
-import com.pydio.sdk.core.api.cells.model.TreeSyncChange;
 import com.pydio.sdk.core.api.cells.model.TreeWorkspaceRelativePath;
 import com.pydio.sdk.core.api.cells.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.sdk.core.auth.OauthConfig;
@@ -56,8 +52,6 @@ import com.pydio.sdk.core.model.WorkspaceNode;
 import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
-import com.pydio.sdk.core.model.Change;
-import com.pydio.sdk.core.model.ChangeNode;
 import com.pydio.sdk.core.model.FileNode;
 import com.pydio.sdk.core.model.Message;
 import com.pydio.sdk.core.model.ServerNode;
@@ -1054,44 +1048,45 @@ public class PydioCells implements Client {
 
     @Override
     public long changes(String ws, String folder, int seq, boolean flatten, ChangeHandler cp) throws SDKException {
-        RestChangeRequest request = new RestChangeRequest();
-        request.setFlatten(flatten);
-        request.setSeqID(String.valueOf(seq));
-        request.setFilter("/" + ws + folder);
+        // RestChangeRequest request = new RestChangeRequest();
+        // request.setFlatten(flatten);
+        // request.setSeqID(String.valueOf(seq));
+        // request.setFilter("/" + ws + folder);
 
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        ChangeServiceApi api = new ChangeServiceApi(client);
-        RestChangeCollection response;
+        // this.getJWT();
+        // ApiClient client = getApiClient();
+        // client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
+        // ChangeServiceApi api = new ChangeServiceApi(client);
+        // RestChangeCollection response;
 
-        try {
-            response = api.getChanges(String.valueOf(seq), request);
-        } catch (ApiException e) {
-            throw new SDKException(e);
-        }
+        // try {
+        //     response = api.getChanges(String.valueOf(seq), request);
+        // } catch (ApiException e) {
+        //     throw new SDKException(e);
+        // }
 
-        for (TreeSyncChange c : response.getChanges()) {
-            Change change = new Change();
-            change.setSeq(Long.parseLong(c.getSeq()));
-            change.setNodeId(c.getNodeId());
-            change.setType(c.getType().toString());
-            change.setSource(c.getSource());
-            change.setTarget(c.getTarget());
+        // for (TreeSyncChange c : response.getChanges()) {
+        //     Change change = new Change();
+        //     change.setSeq(Long.parseLong(c.getSeq()));
+        //     change.setNodeId(c.getNodeId());
+        //     change.setType(c.getType().toString());
+        //     change.setSource(c.getSource());
+        //     change.setTarget(c.getTarget());
 
-            ChangeNode node = new ChangeNode();
-            change.setNode(node);
+        //     ChangeNode node = new ChangeNode();
+        //     change.setNode(node);
 
-            node.setSize(Long.parseLong(c.getNode().getBytesize()));
-            node.setMd5(c.getNode().getMd5());
-            node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
-            node.setWorkspace(ws);
-            node.setmTime(Long.parseLong(c.getNode().getMtime()));
+        //     node.setSize(Long.parseLong(c.getNode().getBytesize()));
+        //     node.setMd5(c.getNode().getMd5());
+        //     node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
+        //     node.setWorkspace(ws);
+        //     node.setmTime(Long.parseLong(c.getNode().getMtime()));
 
-            cp.onChange(change);
-        }
-        return Long.parseLong(response.getLastSeqId());
+        //     cp.onChange(change);
+        // }
+        // return Long.parseLong(response.getLastSeqId());
+        throw new RuntimeException("This must be reimplemented after API update");
     }
 
     @Override

@@ -15,8 +15,8 @@ package com.pydio.sdk.core.api.cells.auth;
 
 import com.pydio.sdk.core.api.cells.Pair;
 
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
 public interface Authentication {
     /**

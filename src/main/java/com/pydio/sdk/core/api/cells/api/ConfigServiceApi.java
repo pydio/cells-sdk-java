@@ -13,7 +13,6 @@
 
 package com.pydio.sdk.core.api.cells.api;
 
-import com.google.gson.reflect.TypeToken;
 import com.pydio.sdk.core.api.cells.ApiCallback;
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
@@ -22,6 +21,12 @@ import com.pydio.sdk.core.api.cells.Configuration;
 import com.pydio.sdk.core.api.cells.Pair;
 import com.pydio.sdk.core.api.cells.ProgressRequestBody;
 import com.pydio.sdk.core.api.cells.ProgressResponseBody;
+
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+
+
 import com.pydio.sdk.core.api.cells.model.CtlService;
 import com.pydio.sdk.core.api.cells.model.EncryptionAdminCreateKeyRequest;
 import com.pydio.sdk.core.api.cells.model.EncryptionAdminCreateKeyResponse;
@@ -36,18 +41,24 @@ import com.pydio.sdk.core.api.cells.model.EncryptionAdminListKeysResponse;
 import com.pydio.sdk.core.api.cells.model.ObjectDataSource;
 import com.pydio.sdk.core.api.cells.model.RestConfiguration;
 import com.pydio.sdk.core.api.cells.model.RestControlServiceRequest;
+import com.pydio.sdk.core.api.cells.model.RestCreatePeerFolderRequest;
+import com.pydio.sdk.core.api.cells.model.RestCreatePeerFolderResponse;
 import com.pydio.sdk.core.api.cells.model.RestDataSourceCollection;
 import com.pydio.sdk.core.api.cells.model.RestDeleteDataSourceResponse;
 import com.pydio.sdk.core.api.cells.model.RestDiscoveryResponse;
 import com.pydio.sdk.core.api.cells.model.RestListPeerFoldersRequest;
 import com.pydio.sdk.core.api.cells.model.RestListPeersAddressesResponse;
+import com.pydio.sdk.core.api.cells.model.RestListProcessesRequest;
+import com.pydio.sdk.core.api.cells.model.RestListProcessesResponse;
+import com.pydio.sdk.core.api.cells.model.RestListStorageBucketsRequest;
 import com.pydio.sdk.core.api.cells.model.RestNodesCollection;
 import com.pydio.sdk.core.api.cells.model.RestOpenApiResponse;
+import com.pydio.sdk.core.api.cells.model.RestSchedulerActionFormResponse;
+import com.pydio.sdk.core.api.cells.model.RestSchedulerActionsResponse;
 import com.pydio.sdk.core.api.cells.model.RestServiceCollection;
 import com.pydio.sdk.core.api.cells.model.RestVersioningPolicyCollection;
 import com.pydio.sdk.core.api.cells.model.TreeVersioningPolicy;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,14 +90,14 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call configFormsDiscoveryCall(String serviceName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/config/discovery/forms/{ServiceName}"
-                .replaceAll("\\{" + "ServiceName" + "\\}", apiClient.escapeString(serviceName));
+            .replaceAll("\\{" + "ServiceName" + "\\}", apiClient.escapeString(serviceName.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -110,7 +121,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -142,7 +153,7 @@ public class ConfigServiceApi {
      * 
      * @param serviceName  (required)
      * @return RestDiscoveryResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestDiscoveryResponse configFormsDiscovery(String serviceName) throws ApiException {
         ApiResponse<RestDiscoveryResponse> resp = configFormsDiscoveryWithHttpInfo(serviceName);
@@ -154,7 +165,7 @@ public class ConfigServiceApi {
      * 
      * @param serviceName  (required)
      * @return ApiResponse&lt;RestDiscoveryResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestDiscoveryResponse> configFormsDiscoveryWithHttpInfo(String serviceName) throws ApiException {
         com.squareup.okhttp.Call call = configFormsDiscoveryValidateBeforeCall(serviceName, null, null);
@@ -202,7 +213,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call controlServiceCall(RestControlServiceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -232,7 +243,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -264,7 +275,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return CtlService
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public CtlService controlService(RestControlServiceRequest body) throws ApiException {
         ApiResponse<CtlService> resp = controlServiceWithHttpInfo(body);
@@ -276,7 +287,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;CtlService&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<CtlService> controlServiceWithHttpInfo(RestControlServiceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = controlServiceValidateBeforeCall(body, null, null);
@@ -324,7 +335,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call createEncryptionKeyCall(EncryptionAdminCreateKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -354,7 +365,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -386,7 +397,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return EncryptionAdminCreateKeyResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public EncryptionAdminCreateKeyResponse createEncryptionKey(EncryptionAdminCreateKeyRequest body) throws ApiException {
         ApiResponse<EncryptionAdminCreateKeyResponse> resp = createEncryptionKeyWithHttpInfo(body);
@@ -398,7 +409,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;EncryptionAdminCreateKeyResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<EncryptionAdminCreateKeyResponse> createEncryptionKeyWithHttpInfo(EncryptionAdminCreateKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createEncryptionKeyValidateBeforeCall(body, null, null);
@@ -441,19 +452,20 @@ public class ConfigServiceApi {
         return call;
     }
     /**
-     * Build call for deleteDataSource
-     * @param name  (required)
+     * Build call for createPeerFolder
+     * @param peerAddress  (required)
+     * @param body  (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteDataSourceCall(String name, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
+    public com.squareup.okhttp.Call createPeerFolderCall(String peerAddress, RestCreatePeerFolderRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/config/datasource/{Name}"
-                .replaceAll("\\{" + "Name" + "\\}", apiClient.escapeString(name));
+        String localVarPath = "/config/peers/{PeerAddress}"
+            .replaceAll("\\{" + "PeerAddress" + "\\}", apiClient.escapeString(peerAddress.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -477,7 +489,138 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call createPeerFolderValidateBeforeCall(String peerAddress, RestCreatePeerFolderRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'peerAddress' is set
+        if (peerAddress == null) {
+            throw new ApiException("Missing the required parameter 'peerAddress' when calling createPeerFolder(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling createPeerFolder(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = createPeerFolderCall(peerAddress, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Create a folder on a given path for a given peer (filesystem)
+     * 
+     * @param peerAddress  (required)
+     * @param body  (required)
+     * @return RestCreatePeerFolderResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public RestCreatePeerFolderResponse createPeerFolder(String peerAddress, RestCreatePeerFolderRequest body) throws ApiException {
+        ApiResponse<RestCreatePeerFolderResponse> resp = createPeerFolderWithHttpInfo(peerAddress, body);
+        return resp.getData();
+    }
+
+    /**
+     * Create a folder on a given path for a given peer (filesystem)
+     * 
+     * @param peerAddress  (required)
+     * @param body  (required)
+     * @return ApiResponse&lt;RestCreatePeerFolderResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<RestCreatePeerFolderResponse> createPeerFolderWithHttpInfo(String peerAddress, RestCreatePeerFolderRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = createPeerFolderValidateBeforeCall(peerAddress, body, null, null);
+        Type localVarReturnType = new TypeToken<RestCreatePeerFolderResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Create a folder on a given path for a given peer (filesystem) (asynchronously)
+     * 
+     * @param peerAddress  (required)
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call createPeerFolderAsync(String peerAddress, RestCreatePeerFolderRequest body, final ApiCallback<RestCreatePeerFolderResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = createPeerFolderValidateBeforeCall(peerAddress, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<RestCreatePeerFolderResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for deleteDataSource
+     * @param name  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call deleteDataSourceCall(String name, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/config/datasource/{Name}"
+            .replaceAll("\\{" + "Name" + "\\}", apiClient.escapeString(name.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -509,7 +652,7 @@ public class ConfigServiceApi {
      * 
      * @param name  (required)
      * @return RestDeleteDataSourceResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestDeleteDataSourceResponse deleteDataSource(String name) throws ApiException {
         ApiResponse<RestDeleteDataSourceResponse> resp = deleteDataSourceWithHttpInfo(name);
@@ -521,7 +664,7 @@ public class ConfigServiceApi {
      * 
      * @param name  (required)
      * @return ApiResponse&lt;RestDeleteDataSourceResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestDeleteDataSourceResponse> deleteDataSourceWithHttpInfo(String name) throws ApiException {
         com.squareup.okhttp.Call call = deleteDataSourceValidateBeforeCall(name, null, null);
@@ -569,7 +712,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call deleteEncryptionKeyCall(EncryptionAdminDeleteKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -599,7 +742,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -631,7 +774,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return EncryptionAdminDeleteKeyResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public EncryptionAdminDeleteKeyResponse deleteEncryptionKey(EncryptionAdminDeleteKeyRequest body) throws ApiException {
         ApiResponse<EncryptionAdminDeleteKeyResponse> resp = deleteEncryptionKeyWithHttpInfo(body);
@@ -643,7 +786,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;EncryptionAdminDeleteKeyResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<EncryptionAdminDeleteKeyResponse> deleteEncryptionKeyWithHttpInfo(EncryptionAdminDeleteKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = deleteEncryptionKeyValidateBeforeCall(body, null, null);
@@ -687,11 +830,11 @@ public class ConfigServiceApi {
     }
     /**
      * Build call for endpointsDiscovery
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call endpointsDiscoveryCall(String endpointType, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -723,7 +866,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -748,9 +891,9 @@ public class ConfigServiceApi {
     /**
      * Publish available endpoints
      * 
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @return RestDiscoveryResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestDiscoveryResponse endpointsDiscovery(String endpointType) throws ApiException {
         ApiResponse<RestDiscoveryResponse> resp = endpointsDiscoveryWithHttpInfo(endpointType);
@@ -760,9 +903,9 @@ public class ConfigServiceApi {
     /**
      * Publish available endpoints
      * 
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @return ApiResponse&lt;RestDiscoveryResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestDiscoveryResponse> endpointsDiscoveryWithHttpInfo(String endpointType) throws ApiException {
         com.squareup.okhttp.Call call = endpointsDiscoveryValidateBeforeCall(endpointType, null, null);
@@ -773,7 +916,7 @@ public class ConfigServiceApi {
     /**
      * Publish available endpoints (asynchronously)
      * 
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -810,7 +953,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call exportEncryptionKeyCall(EncryptionAdminExportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -840,7 +983,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -872,7 +1015,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return EncryptionAdminExportKeyResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public EncryptionAdminExportKeyResponse exportEncryptionKey(EncryptionAdminExportKeyRequest body) throws ApiException {
         ApiResponse<EncryptionAdminExportKeyResponse> resp = exportEncryptionKeyWithHttpInfo(body);
@@ -884,7 +1027,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;EncryptionAdminExportKeyResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<EncryptionAdminExportKeyResponse> exportEncryptionKeyWithHttpInfo(EncryptionAdminExportKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = exportEncryptionKeyValidateBeforeCall(body, null, null);
@@ -929,18 +1072,18 @@ public class ConfigServiceApi {
     /**
      * Build call for getConfig
      * @param fullPath  (required)
-     * @param data  (optional)
+     * @param data JSON-encoded data to store. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call getConfigCall(String fullPath, String data, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/config/{FullPath}"
-                .replaceAll("\\{" + "FullPath" + "\\}", apiClient.escapeString(fullPath));
+            .replaceAll("\\{" + "FullPath" + "\\}", apiClient.escapeString(fullPath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -966,7 +1109,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -997,9 +1140,9 @@ public class ConfigServiceApi {
      * Generic config Get using a full path in the config tree
      * 
      * @param fullPath  (required)
-     * @param data  (optional)
+     * @param data JSON-encoded data to store. (optional)
      * @return RestConfiguration
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestConfiguration getConfig(String fullPath, String data) throws ApiException {
         ApiResponse<RestConfiguration> resp = getConfigWithHttpInfo(fullPath, data);
@@ -1010,9 +1153,9 @@ public class ConfigServiceApi {
      * Generic config Get using a full path in the config tree
      * 
      * @param fullPath  (required)
-     * @param data  (optional)
+     * @param data JSON-encoded data to store. (optional)
      * @return ApiResponse&lt;RestConfiguration&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestConfiguration> getConfigWithHttpInfo(String fullPath, String data) throws ApiException {
         com.squareup.okhttp.Call call = getConfigValidateBeforeCall(fullPath, data, null, null);
@@ -1024,7 +1167,7 @@ public class ConfigServiceApi {
      * Generic config Get using a full path in the config tree (asynchronously)
      * 
      * @param fullPath  (required)
-     * @param data  (optional)
+     * @param data JSON-encoded data to store. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1058,34 +1201,34 @@ public class ConfigServiceApi {
     /**
      * Build call for getDataSource
      * @param name  (required)
-     * @param disabled  (optional)
-     * @param storageType  (optional, default to LOCAL)
-     * @param objectsServiceName  (optional)
-     * @param objectsHost  (optional)
-     * @param objectsPort  (optional)
-     * @param objectsSecure  (optional)
-     * @param objectsBucket  (optional)
-     * @param objectsBaseFolder  (optional)
-     * @param apiKey  (optional)
-     * @param apiSecret  (optional)
-     * @param peerAddress  (optional)
-     * @param watch  (optional)
-     * @param encryptionMode  (optional, default to CLEAR)
-     * @param encryptionKey  (optional)
-     * @param versioningPolicyName  (optional)
-     * @param creationDate  (optional)
-     * @param lastSynchronizationDate  (optional)
+     * @param disabled Whether this data source is disabled or running. (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
+     * @param objectsHost Corresponding objects service host. (optional)
+     * @param objectsPort Corresponding objects service port. (optional)
+     * @param objectsSecure Corresponding objects service connection type. (optional)
+     * @param objectsBucket Corresponding objects service bucket. (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
+     * @param apiKey Corresponding objects service api key. (optional)
+     * @param apiSecret Corresponding objects service api secret. (optional)
+     * @param peerAddress Peer address of the data source. (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data. (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
+     * @param creationDate Data Source creation date. (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call getDataSourceCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/config/datasource/{Name}"
-                .replaceAll("\\{" + "Name" + "\\}", apiClient.escapeString(name));
+            .replaceAll("\\{" + "Name" + "\\}", apiClient.escapeString(name.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1143,7 +1286,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -1174,25 +1317,25 @@ public class ConfigServiceApi {
      * Load datasource information
      * 
      * @param name  (required)
-     * @param disabled  (optional)
-     * @param storageType  (optional, default to LOCAL)
-     * @param objectsServiceName  (optional)
-     * @param objectsHost  (optional)
-     * @param objectsPort  (optional)
-     * @param objectsSecure  (optional)
-     * @param objectsBucket  (optional)
-     * @param objectsBaseFolder  (optional)
-     * @param apiKey  (optional)
-     * @param apiSecret  (optional)
-     * @param peerAddress  (optional)
-     * @param watch  (optional)
-     * @param encryptionMode  (optional, default to CLEAR)
-     * @param encryptionKey  (optional)
-     * @param versioningPolicyName  (optional)
-     * @param creationDate  (optional)
-     * @param lastSynchronizationDate  (optional)
+     * @param disabled Whether this data source is disabled or running. (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
+     * @param objectsHost Corresponding objects service host. (optional)
+     * @param objectsPort Corresponding objects service port. (optional)
+     * @param objectsSecure Corresponding objects service connection type. (optional)
+     * @param objectsBucket Corresponding objects service bucket. (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
+     * @param apiKey Corresponding objects service api key. (optional)
+     * @param apiSecret Corresponding objects service api secret. (optional)
+     * @param peerAddress Peer address of the data source. (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data. (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
+     * @param creationDate Data Source creation date. (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
      * @return ObjectDataSource
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ObjectDataSource getDataSource(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
         ApiResponse<ObjectDataSource> resp = getDataSourceWithHttpInfo(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
@@ -1203,25 +1346,25 @@ public class ConfigServiceApi {
      * Load datasource information
      * 
      * @param name  (required)
-     * @param disabled  (optional)
-     * @param storageType  (optional, default to LOCAL)
-     * @param objectsServiceName  (optional)
-     * @param objectsHost  (optional)
-     * @param objectsPort  (optional)
-     * @param objectsSecure  (optional)
-     * @param objectsBucket  (optional)
-     * @param objectsBaseFolder  (optional)
-     * @param apiKey  (optional)
-     * @param apiSecret  (optional)
-     * @param peerAddress  (optional)
-     * @param watch  (optional)
-     * @param encryptionMode  (optional, default to CLEAR)
-     * @param encryptionKey  (optional)
-     * @param versioningPolicyName  (optional)
-     * @param creationDate  (optional)
-     * @param lastSynchronizationDate  (optional)
+     * @param disabled Whether this data source is disabled or running. (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
+     * @param objectsHost Corresponding objects service host. (optional)
+     * @param objectsPort Corresponding objects service port. (optional)
+     * @param objectsSecure Corresponding objects service connection type. (optional)
+     * @param objectsBucket Corresponding objects service bucket. (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
+     * @param apiKey Corresponding objects service api key. (optional)
+     * @param apiSecret Corresponding objects service api secret. (optional)
+     * @param peerAddress Peer address of the data source. (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data. (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
+     * @param creationDate Data Source creation date. (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
      * @return ApiResponse&lt;ObjectDataSource&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<ObjectDataSource> getDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
         com.squareup.okhttp.Call call = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null, null);
@@ -1233,23 +1376,23 @@ public class ConfigServiceApi {
      * Load datasource information (asynchronously)
      * 
      * @param name  (required)
-     * @param disabled  (optional)
-     * @param storageType  (optional, default to LOCAL)
-     * @param objectsServiceName  (optional)
-     * @param objectsHost  (optional)
-     * @param objectsPort  (optional)
-     * @param objectsSecure  (optional)
-     * @param objectsBucket  (optional)
-     * @param objectsBaseFolder  (optional)
-     * @param apiKey  (optional)
-     * @param apiSecret  (optional)
-     * @param peerAddress  (optional)
-     * @param watch  (optional)
-     * @param encryptionMode  (optional, default to CLEAR)
-     * @param encryptionKey  (optional)
-     * @param versioningPolicyName  (optional)
-     * @param creationDate  (optional)
-     * @param lastSynchronizationDate  (optional)
+     * @param disabled Whether this data source is disabled or running. (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
+     * @param objectsHost Corresponding objects service host. (optional)
+     * @param objectsPort Corresponding objects service port. (optional)
+     * @param objectsSecure Corresponding objects service connection type. (optional)
+     * @param objectsBucket Corresponding objects service bucket. (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
+     * @param apiKey Corresponding objects service api key. (optional)
+     * @param apiSecret Corresponding objects service api secret. (optional)
+     * @param peerAddress Peer address of the data source. (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data. (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
+     * @param creationDate Data Source creation date. (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1293,14 +1436,14 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call getVersioningPolicyCall(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/config/versioning/{Uuid}"
-                .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid));
+            .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1338,7 +1481,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -1377,7 +1520,7 @@ public class ConfigServiceApi {
      * @param maxSizePerFile  (optional)
      * @param ignoreFilesGreaterThan  (optional)
      * @return TreeVersioningPolicy
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public TreeVersioningPolicy getVersioningPolicy(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
         ApiResponse<TreeVersioningPolicy> resp = getVersioningPolicyWithHttpInfo(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan);
@@ -1396,7 +1539,7 @@ public class ConfigServiceApi {
      * @param maxSizePerFile  (optional)
      * @param ignoreFilesGreaterThan  (optional)
      * @return ApiResponse&lt;TreeVersioningPolicy&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<TreeVersioningPolicy> getVersioningPolicyWithHttpInfo(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
         com.squareup.okhttp.Call call = getVersioningPolicyValidateBeforeCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, null, null);
@@ -1451,7 +1594,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call importEncryptionKeyCall(EncryptionAdminImportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -1481,7 +1624,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -1513,7 +1656,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return EncryptionAdminImportKeyResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public EncryptionAdminImportKeyResponse importEncryptionKey(EncryptionAdminImportKeyRequest body) throws ApiException {
         ApiResponse<EncryptionAdminImportKeyResponse> resp = importEncryptionKeyWithHttpInfo(body);
@@ -1525,7 +1668,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;EncryptionAdminImportKeyResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<EncryptionAdminImportKeyResponse> importEncryptionKeyWithHttpInfo(EncryptionAdminImportKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = importEncryptionKeyValidateBeforeCall(body, null, null);
@@ -1572,7 +1715,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call listDataSourcesCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -1602,7 +1745,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -1628,7 +1771,7 @@ public class ConfigServiceApi {
      * List all defined datasources
      * 
      * @return RestDataSourceCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestDataSourceCollection listDataSources() throws ApiException {
         ApiResponse<RestDataSourceCollection> resp = listDataSourcesWithHttpInfo();
@@ -1639,7 +1782,7 @@ public class ConfigServiceApi {
      * List all defined datasources
      * 
      * @return ApiResponse&lt;RestDataSourceCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestDataSourceCollection> listDataSourcesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listDataSourcesValidateBeforeCall(null, null);
@@ -1686,7 +1829,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call listEncryptionKeysCall(EncryptionAdminListKeysRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -1716,7 +1859,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -1748,7 +1891,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return EncryptionAdminListKeysResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public EncryptionAdminListKeysResponse listEncryptionKeys(EncryptionAdminListKeysRequest body) throws ApiException {
         ApiResponse<EncryptionAdminListKeysResponse> resp = listEncryptionKeysWithHttpInfo(body);
@@ -1760,7 +1903,7 @@ public class ConfigServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;EncryptionAdminListKeysResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<EncryptionAdminListKeysResponse> listEncryptionKeysWithHttpInfo(EncryptionAdminListKeysRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listEncryptionKeysValidateBeforeCall(body, null, null);
@@ -1809,14 +1952,14 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call listPeerFoldersCall(String peerAddress, RestListPeerFoldersRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/config/peers/{PeerAddress}"
-                .replaceAll("\\{" + "PeerAddress" + "\\}", apiClient.escapeString(peerAddress));
+            .replaceAll("\\{" + "PeerAddress" + "\\}", apiClient.escapeString(peerAddress.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1840,7 +1983,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -1878,7 +2021,7 @@ public class ConfigServiceApi {
      * @param peerAddress  (required)
      * @param body  (required)
      * @return RestNodesCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestNodesCollection listPeerFolders(String peerAddress, RestListPeerFoldersRequest body) throws ApiException {
         ApiResponse<RestNodesCollection> resp = listPeerFoldersWithHttpInfo(peerAddress, body);
@@ -1891,7 +2034,7 @@ public class ConfigServiceApi {
      * @param peerAddress  (required)
      * @param body  (required)
      * @return ApiResponse&lt;RestNodesCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestNodesCollection> listPeerFoldersWithHttpInfo(String peerAddress, RestListPeerFoldersRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listPeerFoldersValidateBeforeCall(peerAddress, body, null, null);
@@ -1939,7 +2082,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call listPeersAddressesCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -1969,7 +2112,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -1995,7 +2138,7 @@ public class ConfigServiceApi {
      * List all detected peers (servers on which the app is running)
      * 
      * @return RestListPeersAddressesResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestListPeersAddressesResponse listPeersAddresses() throws ApiException {
         ApiResponse<RestListPeersAddressesResponse> resp = listPeersAddressesWithHttpInfo();
@@ -2006,7 +2149,7 @@ public class ConfigServiceApi {
      * List all detected peers (servers on which the app is running)
      * 
      * @return ApiResponse&lt;RestListPeersAddressesResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestListPeersAddressesResponse> listPeersAddressesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listPeersAddressesValidateBeforeCall(null, null);
@@ -2048,12 +2191,134 @@ public class ConfigServiceApi {
         return call;
     }
     /**
-     * Build call for listServices
-     * @param statusFilter  (optional, default to ANY)
+     * Build call for listProcesses
+     * @param body  (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call listProcessesCall(RestListProcessesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/config/processes";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call listProcessesValidateBeforeCall(RestListProcessesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling listProcesses(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = listProcessesCall(body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * List running Processes, with option PeerId or ServiceName filter
+     * 
+     * @param body  (required)
+     * @return RestListProcessesResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public RestListProcessesResponse listProcesses(RestListProcessesRequest body) throws ApiException {
+        ApiResponse<RestListProcessesResponse> resp = listProcessesWithHttpInfo(body);
+        return resp.getData();
+    }
+
+    /**
+     * List running Processes, with option PeerId or ServiceName filter
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;RestListProcessesResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<RestListProcessesResponse> listProcessesWithHttpInfo(RestListProcessesRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = listProcessesValidateBeforeCall(body, null, null);
+        Type localVarReturnType = new TypeToken<RestListProcessesResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * List running Processes, with option PeerId or ServiceName filter (asynchronously)
+     * 
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call listProcessesAsync(RestListProcessesRequest body, final ApiCallback<RestListProcessesResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = listProcessesValidateBeforeCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<RestListProcessesResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for listServices
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call listServicesCall(String statusFilter, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -2085,7 +2350,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -2110,9 +2375,9 @@ public class ConfigServiceApi {
     /**
      * List all services and their status
      * 
-     * @param statusFilter  (optional, default to ANY)
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
      * @return RestServiceCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestServiceCollection listServices(String statusFilter) throws ApiException {
         ApiResponse<RestServiceCollection> resp = listServicesWithHttpInfo(statusFilter);
@@ -2122,9 +2387,9 @@ public class ConfigServiceApi {
     /**
      * List all services and their status
      * 
-     * @param statusFilter  (optional, default to ANY)
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
      * @return ApiResponse&lt;RestServiceCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestServiceCollection> listServicesWithHttpInfo(String statusFilter) throws ApiException {
         com.squareup.okhttp.Call call = listServicesValidateBeforeCall(statusFilter, null, null);
@@ -2135,7 +2400,7 @@ public class ConfigServiceApi {
     /**
      * List all services and their status (asynchronously)
      * 
-     * @param statusFilter  (optional, default to ANY)
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2167,11 +2432,133 @@ public class ConfigServiceApi {
         return call;
     }
     /**
+     * Build call for listStorageBuckets
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call listStorageBucketsCall(RestListStorageBucketsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/config/buckets";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call listStorageBucketsValidateBeforeCall(RestListStorageBucketsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling listStorageBuckets(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = listStorageBucketsCall(body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * List Buckets on a given object storage
+     * 
+     * @param body  (required)
+     * @return RestNodesCollection
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public RestNodesCollection listStorageBuckets(RestListStorageBucketsRequest body) throws ApiException {
+        ApiResponse<RestNodesCollection> resp = listStorageBucketsWithHttpInfo(body);
+        return resp.getData();
+    }
+
+    /**
+     * List Buckets on a given object storage
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;RestNodesCollection&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<RestNodesCollection> listStorageBucketsWithHttpInfo(RestListStorageBucketsRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = listStorageBucketsValidateBeforeCall(body, null, null);
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * List Buckets on a given object storage (asynchronously)
+     * 
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call listStorageBucketsAsync(RestListStorageBucketsRequest body, final ApiCallback<RestNodesCollection> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = listStorageBucketsValidateBeforeCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for listVersioningPolicies
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call listVersioningPoliciesCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -2201,7 +2588,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -2227,7 +2614,7 @@ public class ConfigServiceApi {
      * List all defined versioning policies
      * 
      * @return RestVersioningPolicyCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestVersioningPolicyCollection listVersioningPolicies() throws ApiException {
         ApiResponse<RestVersioningPolicyCollection> resp = listVersioningPoliciesWithHttpInfo();
@@ -2238,7 +2625,7 @@ public class ConfigServiceApi {
      * List all defined versioning policies
      * 
      * @return ApiResponse&lt;RestVersioningPolicyCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestVersioningPolicyCollection> listVersioningPoliciesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listVersioningPoliciesValidateBeforeCall(null, null);
@@ -2284,7 +2671,7 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call listVirtualNodesCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -2314,7 +2701,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -2340,7 +2727,7 @@ public class ConfigServiceApi {
      * List all defined virtual nodes
      * 
      * @return RestNodesCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestNodesCollection listVirtualNodes() throws ApiException {
         ApiResponse<RestNodesCollection> resp = listVirtualNodesWithHttpInfo();
@@ -2351,7 +2738,7 @@ public class ConfigServiceApi {
      * List all defined virtual nodes
      * 
      * @return ApiResponse&lt;RestNodesCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestNodesCollection> listVirtualNodesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listVirtualNodesValidateBeforeCall(null, null);
@@ -2394,11 +2781,11 @@ public class ConfigServiceApi {
     }
     /**
      * Build call for openApiDiscovery
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call openApiDiscoveryCall(String endpointType, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -2430,7 +2817,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -2455,9 +2842,9 @@ public class ConfigServiceApi {
     /**
      * Publish available REST APIs
      * 
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @return RestOpenApiResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestOpenApiResponse openApiDiscovery(String endpointType) throws ApiException {
         ApiResponse<RestOpenApiResponse> resp = openApiDiscoveryWithHttpInfo(endpointType);
@@ -2467,9 +2854,9 @@ public class ConfigServiceApi {
     /**
      * Publish available REST APIs
      * 
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @return ApiResponse&lt;RestOpenApiResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestOpenApiResponse> openApiDiscoveryWithHttpInfo(String endpointType) throws ApiException {
         com.squareup.okhttp.Call call = openApiDiscoveryValidateBeforeCall(endpointType, null, null);
@@ -2480,7 +2867,7 @@ public class ConfigServiceApi {
     /**
      * Publish available REST APIs (asynchronously)
      * 
-     * @param endpointType  (optional)
+     * @param endpointType Filter result to a specific endpoint type. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2518,14 +2905,14 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call putConfigCall(String fullPath, RestConfiguration body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/config/{FullPath}"
-                .replaceAll("\\{" + "FullPath" + "\\}", apiClient.escapeString(fullPath));
+            .replaceAll("\\{" + "FullPath" + "\\}", apiClient.escapeString(fullPath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -2549,7 +2936,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -2587,7 +2974,7 @@ public class ConfigServiceApi {
      * @param fullPath  (required)
      * @param body  (required)
      * @return RestConfiguration
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestConfiguration putConfig(String fullPath, RestConfiguration body) throws ApiException {
         ApiResponse<RestConfiguration> resp = putConfigWithHttpInfo(fullPath, body);
@@ -2600,7 +2987,7 @@ public class ConfigServiceApi {
      * @param fullPath  (required)
      * @param body  (required)
      * @return ApiResponse&lt;RestConfiguration&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestConfiguration> putConfigWithHttpInfo(String fullPath, RestConfiguration body) throws ApiException {
         com.squareup.okhttp.Call call = putConfigValidateBeforeCall(fullPath, body, null, null);
@@ -2650,14 +3037,14 @@ public class ConfigServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call putDataSourceCall(String name, ObjectDataSource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/config/datasource/{Name}"
-                .replaceAll("\\{" + "Name" + "\\}", apiClient.escapeString(name));
+            .replaceAll("\\{" + "Name" + "\\}", apiClient.escapeString(name.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -2681,7 +3068,7 @@ public class ConfigServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -2719,7 +3106,7 @@ public class ConfigServiceApi {
      * @param name  (required)
      * @param body  (required)
      * @return ObjectDataSource
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ObjectDataSource putDataSource(String name, ObjectDataSource body) throws ApiException {
         ApiResponse<ObjectDataSource> resp = putDataSourceWithHttpInfo(name, body);
@@ -2732,7 +3119,7 @@ public class ConfigServiceApi {
      * @param name  (required)
      * @param body  (required)
      * @return ApiResponse&lt;ObjectDataSource&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<ObjectDataSource> putDataSourceWithHttpInfo(String name, ObjectDataSource body) throws ApiException {
         com.squareup.okhttp.Call call = putDataSourceValidateBeforeCall(name, body, null, null);
@@ -2772,6 +3159,242 @@ public class ConfigServiceApi {
 
         com.squareup.okhttp.Call call = putDataSourceValidateBeforeCall(name, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<ObjectDataSource>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for schedulerActionFormDiscovery
+     * @param actionName  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call schedulerActionFormDiscoveryCall(String actionName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/config/scheduler/actions/{ActionName}"
+            .replaceAll("\\{" + "ActionName" + "\\}", apiClient.escapeString(actionName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call schedulerActionFormDiscoveryValidateBeforeCall(String actionName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'actionName' is set
+        if (actionName == null) {
+            throw new ApiException("Missing the required parameter 'actionName' when calling schedulerActionFormDiscovery(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = schedulerActionFormDiscoveryCall(actionName, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Publish scheduler action XML form for building screens in frontend
+     * 
+     * @param actionName  (required)
+     * @return RestSchedulerActionFormResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public RestSchedulerActionFormResponse schedulerActionFormDiscovery(String actionName) throws ApiException {
+        ApiResponse<RestSchedulerActionFormResponse> resp = schedulerActionFormDiscoveryWithHttpInfo(actionName);
+        return resp.getData();
+    }
+
+    /**
+     * Publish scheduler action XML form for building screens in frontend
+     * 
+     * @param actionName  (required)
+     * @return ApiResponse&lt;RestSchedulerActionFormResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<RestSchedulerActionFormResponse> schedulerActionFormDiscoveryWithHttpInfo(String actionName) throws ApiException {
+        com.squareup.okhttp.Call call = schedulerActionFormDiscoveryValidateBeforeCall(actionName, null, null);
+        Type localVarReturnType = new TypeToken<RestSchedulerActionFormResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Publish scheduler action XML form for building screens in frontend (asynchronously)
+     * 
+     * @param actionName  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call schedulerActionFormDiscoveryAsync(String actionName, final ApiCallback<RestSchedulerActionFormResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = schedulerActionFormDiscoveryValidateBeforeCall(actionName, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<RestSchedulerActionFormResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for schedulerActionsDiscovery
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call schedulerActionsDiscoveryCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/config/scheduler/actions";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call schedulerActionsDiscoveryValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+
+        com.squareup.okhttp.Call call = schedulerActionsDiscoveryCall(progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Publish scheduler registered actions
+     * 
+     * @return RestSchedulerActionsResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public RestSchedulerActionsResponse schedulerActionsDiscovery() throws ApiException {
+        ApiResponse<RestSchedulerActionsResponse> resp = schedulerActionsDiscoveryWithHttpInfo();
+        return resp.getData();
+    }
+
+    /**
+     * Publish scheduler registered actions
+     * 
+     * @return ApiResponse&lt;RestSchedulerActionsResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<RestSchedulerActionsResponse> schedulerActionsDiscoveryWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = schedulerActionsDiscoveryValidateBeforeCall(null, null);
+        Type localVarReturnType = new TypeToken<RestSchedulerActionsResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Publish scheduler registered actions (asynchronously)
+     * 
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call schedulerActionsDiscoveryAsync(final ApiCallback<RestSchedulerActionsResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = schedulerActionsDiscoveryValidateBeforeCall(progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<RestSchedulerActionsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

@@ -13,19 +13,32 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.TreeGeoQuery;
+import com.pydio.sdk.core.api.cells.model.TreeNodeType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * TreeQuery
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class TreeQuery {
+  @SerializedName("Paths")
+  private List<String> paths = null;
+
   @SerializedName("PathPrefix")
   private List<String> pathPrefix = null;
 
@@ -40,6 +53,9 @@ public class TreeQuery {
 
   @SerializedName("MaxDate")
   private String maxDate = null;
+
+  @SerializedName("DurationDate")
+  private String durationDate = null;
 
   @SerializedName("Type")
   private TreeNodeType type = null;
@@ -58,6 +74,41 @@ public class TreeQuery {
 
   @SerializedName("GeoQuery")
   private TreeGeoQuery geoQuery = null;
+
+  @SerializedName("PathDepth")
+  private Integer pathDepth = null;
+
+  @SerializedName("UUIDs")
+  private List<String> uuIDs = null;
+
+  @SerializedName("Not")
+  private Boolean not = null;
+
+  public TreeQuery paths(List<String> paths) {
+    this.paths = paths;
+    return this;
+  }
+
+  public TreeQuery addPathsItem(String pathsItem) {
+    if (this.paths == null) {
+      this.paths = new ArrayList<String>();
+    }
+    this.paths.add(pathsItem);
+    return this;
+  }
+
+   /**
+   * Get paths
+   * @return paths
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getPaths() {
+    return paths;
+  }
+
+  public void setPaths(List<String> paths) {
+    this.paths = paths;
+  }
 
   public TreeQuery pathPrefix(List<String> pathPrefix) {
     this.pathPrefix = pathPrefix;
@@ -155,6 +206,24 @@ public class TreeQuery {
 
   public void setMaxDate(String maxDate) {
     this.maxDate = maxDate;
+  }
+
+  public TreeQuery durationDate(String durationDate) {
+    this.durationDate = durationDate;
+    return this;
+  }
+
+   /**
+   * Get durationDate
+   * @return durationDate
+  **/
+  @ApiModelProperty(value = "")
+  public String getDurationDate() {
+    return durationDate;
+  }
+
+  public void setDurationDate(String durationDate) {
+    this.durationDate = durationDate;
   }
 
   public TreeQuery type(TreeNodeType type) {
@@ -265,9 +334,71 @@ public class TreeQuery {
     this.geoQuery = geoQuery;
   }
 
+  public TreeQuery pathDepth(Integer pathDepth) {
+    this.pathDepth = pathDepth;
+    return this;
+  }
+
+   /**
+   * Get pathDepth
+   * @return pathDepth
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getPathDepth() {
+    return pathDepth;
+  }
+
+  public void setPathDepth(Integer pathDepth) {
+    this.pathDepth = pathDepth;
+  }
+
+  public TreeQuery uuIDs(List<String> uuIDs) {
+    this.uuIDs = uuIDs;
+    return this;
+  }
+
+  public TreeQuery addUuIDsItem(String uuIDsItem) {
+    if (this.uuIDs == null) {
+      this.uuIDs = new ArrayList<String>();
+    }
+    this.uuIDs.add(uuIDsItem);
+    return this;
+  }
+
+   /**
+   * Get uuIDs
+   * @return uuIDs
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getUuIDs() {
+    return uuIDs;
+  }
+
+  public void setUuIDs(List<String> uuIDs) {
+    this.uuIDs = uuIDs;
+  }
+
+  public TreeQuery not(Boolean not) {
+    this.not = not;
+    return this;
+  }
+
+   /**
+   * Get not
+   * @return not
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isNot() {
+    return not;
+  }
+
+  public void setNot(Boolean not) {
+    this.not = not;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -275,22 +406,27 @@ public class TreeQuery {
       return false;
     }
     TreeQuery treeQuery = (TreeQuery) o;
-    return Objects.equals(this.pathPrefix, treeQuery.pathPrefix) &&
+    return Objects.equals(this.paths, treeQuery.paths) &&
+        Objects.equals(this.pathPrefix, treeQuery.pathPrefix) &&
         Objects.equals(this.minSize, treeQuery.minSize) &&
         Objects.equals(this.maxSize, treeQuery.maxSize) &&
         Objects.equals(this.minDate, treeQuery.minDate) &&
         Objects.equals(this.maxDate, treeQuery.maxDate) &&
+        Objects.equals(this.durationDate, treeQuery.durationDate) &&
         Objects.equals(this.type, treeQuery.type) &&
         Objects.equals(this.fileName, treeQuery.fileName) &&
         Objects.equals(this.content, treeQuery.content) &&
         Objects.equals(this.freeString, treeQuery.freeString) &&
         Objects.equals(this.extension, treeQuery.extension) &&
-        Objects.equals(this.geoQuery, treeQuery.geoQuery);
+        Objects.equals(this.geoQuery, treeQuery.geoQuery) &&
+        Objects.equals(this.pathDepth, treeQuery.pathDepth) &&
+        Objects.equals(this.uuIDs, treeQuery.uuIDs) &&
+        Objects.equals(this.not, treeQuery.not);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pathPrefix, minSize, maxSize, minDate, maxDate, type, fileName, content, freeString, extension, geoQuery);
+    return Objects.hash(paths, pathPrefix, minSize, maxSize, minDate, maxDate, durationDate, type, fileName, content, freeString, extension, geoQuery, pathDepth, uuIDs, not);
   }
 
 
@@ -299,17 +435,22 @@ public class TreeQuery {
     StringBuilder sb = new StringBuilder();
     sb.append("class TreeQuery {\n");
     
+    sb.append("    paths: ").append(toIndentedString(paths)).append("\n");
     sb.append("    pathPrefix: ").append(toIndentedString(pathPrefix)).append("\n");
     sb.append("    minSize: ").append(toIndentedString(minSize)).append("\n");
     sb.append("    maxSize: ").append(toIndentedString(maxSize)).append("\n");
     sb.append("    minDate: ").append(toIndentedString(minDate)).append("\n");
     sb.append("    maxDate: ").append(toIndentedString(maxDate)).append("\n");
+    sb.append("    durationDate: ").append(toIndentedString(durationDate)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    fileName: ").append(toIndentedString(fileName)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    freeString: ").append(toIndentedString(freeString)).append("\n");
     sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
     sb.append("    geoQuery: ").append(toIndentedString(geoQuery)).append("\n");
+    sb.append("    pathDepth: ").append(toIndentedString(pathDepth)).append("\n");
+    sb.append("    uuIDs: ").append(toIndentedString(uuIDs)).append("\n");
+    sb.append("    not: ").append(toIndentedString(not)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -318,7 +459,7 @@ public class TreeQuery {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

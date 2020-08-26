@@ -13,7 +13,6 @@
 
 package com.pydio.sdk.core.api.cells.api;
 
-import com.google.gson.reflect.TypeToken;
 import com.pydio.sdk.core.api.cells.ApiCallback;
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
@@ -22,11 +21,16 @@ import com.pydio.sdk.core.api.cells.Configuration;
 import com.pydio.sdk.core.api.cells.Pair;
 import com.pydio.sdk.core.api.cells.ProgressRequestBody;
 import com.pydio.sdk.core.api.cells.ProgressResponseBody;
+
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+
+
 import com.pydio.sdk.core.api.cells.model.IdmRole;
 import com.pydio.sdk.core.api.cells.model.RestRolesCollection;
 import com.pydio.sdk.core.api.cells.model.RestSearchRoleRequest;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,14 +62,14 @@ public class RoleServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call deleteRoleCall(String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/role/{Uuid}"
-                .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid));
+            .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -89,7 +93,7 @@ public class RoleServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -121,7 +125,7 @@ public class RoleServiceApi {
      * 
      * @param uuid  (required)
      * @return IdmRole
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public IdmRole deleteRole(String uuid) throws ApiException {
         ApiResponse<IdmRole> resp = deleteRoleWithHttpInfo(uuid);
@@ -133,7 +137,7 @@ public class RoleServiceApi {
      * 
      * @param uuid  (required)
      * @return ApiResponse&lt;IdmRole&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<IdmRole> deleteRoleWithHttpInfo(String uuid) throws ApiException {
         com.squareup.okhttp.Call call = deleteRoleValidateBeforeCall(uuid, null, null);
@@ -178,24 +182,25 @@ public class RoleServiceApi {
     /**
      * Build call for getRole
      * @param uuid  (required)
-     * @param label  (optional)
-     * @param isTeam  (optional)
-     * @param groupRole  (optional)
-     * @param userRole  (optional)
-     * @param lastUpdated  (optional)
-     * @param autoApplies  (optional)
-     * @param policiesContextEditable  (optional)
+     * @param label Label of this role. (optional)
+     * @param isTeam Whether this role represents a user team or not. (optional)
+     * @param groupRole Whether this role is attached to a Group object. (optional)
+     * @param userRole Whether this role is attached to a User object. (optional)
+     * @param lastUpdated Last modification date of the role. (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRoleCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getRoleCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/role/{Uuid}"
-                .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid));
+            .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -210,9 +215,11 @@ public class RoleServiceApi {
         if (lastUpdated != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("LastUpdated", lastUpdated));
         if (autoApplies != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "AutoApplies", autoApplies));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "AutoApplies", autoApplies));
         if (policiesContextEditable != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("PoliciesContextEditable", policiesContextEditable));
+        if (forceOverride != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("ForceOverride", forceOverride));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -233,7 +240,7 @@ public class RoleServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -247,7 +254,7 @@ public class RoleServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRoleValidateBeforeCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getRoleValidateBeforeCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
@@ -255,7 +262,7 @@ public class RoleServiceApi {
         }
         
 
-        com.squareup.okhttp.Call call = getRoleCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRoleCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, progressListener, progressRequestListener);
         return call;
 
     }
@@ -264,18 +271,19 @@ public class RoleServiceApi {
      * Get a Role by ID
      * 
      * @param uuid  (required)
-     * @param label  (optional)
-     * @param isTeam  (optional)
-     * @param groupRole  (optional)
-     * @param userRole  (optional)
-     * @param lastUpdated  (optional)
-     * @param autoApplies  (optional)
-     * @param policiesContextEditable  (optional)
+     * @param label Label of this role. (optional)
+     * @param isTeam Whether this role represents a user team or not. (optional)
+     * @param groupRole Whether this role is attached to a Group object. (optional)
+     * @param userRole Whether this role is attached to a User object. (optional)
+     * @param lastUpdated Last modification date of the role. (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @return IdmRole
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public IdmRole getRole(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable) throws ApiException {
-        ApiResponse<IdmRole> resp = getRoleWithHttpInfo(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable);
+    public IdmRole getRole(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride) throws ApiException {
+        ApiResponse<IdmRole> resp = getRoleWithHttpInfo(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride);
         return resp.getData();
     }
 
@@ -283,18 +291,19 @@ public class RoleServiceApi {
      * Get a Role by ID
      * 
      * @param uuid  (required)
-     * @param label  (optional)
-     * @param isTeam  (optional)
-     * @param groupRole  (optional)
-     * @param userRole  (optional)
-     * @param lastUpdated  (optional)
-     * @param autoApplies  (optional)
-     * @param policiesContextEditable  (optional)
+     * @param label Label of this role. (optional)
+     * @param isTeam Whether this role represents a user team or not. (optional)
+     * @param groupRole Whether this role is attached to a Group object. (optional)
+     * @param userRole Whether this role is attached to a User object. (optional)
+     * @param lastUpdated Last modification date of the role. (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @return ApiResponse&lt;IdmRole&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<IdmRole> getRoleWithHttpInfo(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable) throws ApiException {
-        com.squareup.okhttp.Call call = getRoleValidateBeforeCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, null, null);
+    public ApiResponse<IdmRole> getRoleWithHttpInfo(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride) throws ApiException {
+        com.squareup.okhttp.Call call = getRoleValidateBeforeCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, null, null);
         Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -303,18 +312,19 @@ public class RoleServiceApi {
      * Get a Role by ID (asynchronously)
      * 
      * @param uuid  (required)
-     * @param label  (optional)
-     * @param isTeam  (optional)
-     * @param groupRole  (optional)
-     * @param userRole  (optional)
-     * @param lastUpdated  (optional)
-     * @param autoApplies  (optional)
-     * @param policiesContextEditable  (optional)
+     * @param label Label of this role. (optional)
+     * @param isTeam Whether this role represents a user team or not. (optional)
+     * @param groupRole Whether this role is attached to a Group object. (optional)
+     * @param userRole Whether this role is attached to a User object. (optional)
+     * @param lastUpdated Last modification date of the role. (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRoleAsync(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, final ApiCallback<IdmRole> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRoleAsync(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ApiCallback<IdmRole> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -335,7 +345,7 @@ public class RoleServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getRoleValidateBeforeCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRoleValidateBeforeCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -346,7 +356,7 @@ public class RoleServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call searchRolesCall(RestSearchRoleRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -376,7 +386,7 @@ public class RoleServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -408,7 +418,7 @@ public class RoleServiceApi {
      * 
      * @param body  (required)
      * @return RestRolesCollection
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public RestRolesCollection searchRoles(RestSearchRoleRequest body) throws ApiException {
         ApiResponse<RestRolesCollection> resp = searchRolesWithHttpInfo(body);
@@ -420,7 +430,7 @@ public class RoleServiceApi {
      * 
      * @param body  (required)
      * @return ApiResponse&lt;RestRolesCollection&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<RestRolesCollection> searchRolesWithHttpInfo(RestSearchRoleRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchRolesValidateBeforeCall(body, null, null);
@@ -469,14 +479,14 @@ public class RoleServiceApi {
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
-     * @throws ApiException If fail to encode the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call setRoleCall(String uuid, IdmRole body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/role/{Uuid}"
-                .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid));
+            .replaceAll("\\{" + "Uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -500,7 +510,7 @@ public class RoleServiceApi {
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
-                public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
                     return originalResponse.newBuilder()
                     .body(new ProgressResponseBody(originalResponse.body(), progressListener))
@@ -538,7 +548,7 @@ public class RoleServiceApi {
      * @param uuid  (required)
      * @param body  (required)
      * @return IdmRole
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public IdmRole setRole(String uuid, IdmRole body) throws ApiException {
         ApiResponse<IdmRole> resp = setRoleWithHttpInfo(uuid, body);
@@ -551,7 +561,7 @@ public class RoleServiceApi {
      * @param uuid  (required)
      * @param body  (required)
      * @return ApiResponse&lt;IdmRole&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot decode the response body
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<IdmRole> setRoleWithHttpInfo(String uuid, IdmRole body) throws ApiException {
         com.squareup.okhttp.Call call = setRoleValidateBeforeCall(uuid, body, null, null);

@@ -13,23 +13,43 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.JobsAction;
+import com.pydio.sdk.core.api.cells.model.JobsActionOutputFilter;
+import com.pydio.sdk.core.api.cells.model.JobsContextMetaFilter;
+import com.pydio.sdk.core.api.cells.model.JobsIdmSelector;
+import com.pydio.sdk.core.api.cells.model.JobsNodesSelector;
+import com.pydio.sdk.core.api.cells.model.JobsUsersSelector;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsAction
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class JobsAction {
   @SerializedName("ID")
   private String ID = null;
+
+  @SerializedName("Label")
+  private String label = null;
+
+  @SerializedName("Description")
+  private String description = null;
 
   @SerializedName("NodesSelector")
   private JobsNodesSelector nodesSelector = null;
@@ -43,14 +63,26 @@ public class JobsAction {
   @SerializedName("UsersFilter")
   private JobsUsersSelector usersFilter = null;
 
-  @SerializedName("SourceFilter")
-  private JobsSourceFilter sourceFilter = null;
+  @SerializedName("IdmSelector")
+  private JobsIdmSelector idmSelector = null;
+
+  @SerializedName("IdmFilter")
+  private JobsIdmSelector idmFilter = null;
+
+  @SerializedName("ActionOutputFilter")
+  private JobsActionOutputFilter actionOutputFilter = null;
+
+  @SerializedName("ContextMetaFilter")
+  private JobsContextMetaFilter contextMetaFilter = null;
 
   @SerializedName("Parameters")
   private Map<String, String> parameters = null;
 
   @SerializedName("ChainedActions")
   private List<JobsAction> chainedActions = null;
+
+  @SerializedName("FailedFilterActions")
+  private List<JobsAction> failedFilterActions = null;
 
   public JobsAction ID(String ID) {
     this.ID = ID;
@@ -68,6 +100,42 @@ public class JobsAction {
 
   public void setID(String ID) {
     this.ID = ID;
+  }
+
+  public JobsAction label(String label) {
+    this.label = label;
+    return this;
+  }
+
+   /**
+   * Get label
+   * @return label
+  **/
+  @ApiModelProperty(value = "")
+  public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+  public JobsAction description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(value = "")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public JobsAction nodesSelector(JobsNodesSelector nodesSelector) {
@@ -142,22 +210,76 @@ public class JobsAction {
     this.usersFilter = usersFilter;
   }
 
-  public JobsAction sourceFilter(JobsSourceFilter sourceFilter) {
-    this.sourceFilter = sourceFilter;
+  public JobsAction idmSelector(JobsIdmSelector idmSelector) {
+    this.idmSelector = idmSelector;
     return this;
   }
 
    /**
-   * Get sourceFilter
-   * @return sourceFilter
+   * Get idmSelector
+   * @return idmSelector
   **/
   @ApiModelProperty(value = "")
-  public JobsSourceFilter getSourceFilter() {
-    return sourceFilter;
+  public JobsIdmSelector getIdmSelector() {
+    return idmSelector;
   }
 
-  public void setSourceFilter(JobsSourceFilter sourceFilter) {
-    this.sourceFilter = sourceFilter;
+  public void setIdmSelector(JobsIdmSelector idmSelector) {
+    this.idmSelector = idmSelector;
+  }
+
+  public JobsAction idmFilter(JobsIdmSelector idmFilter) {
+    this.idmFilter = idmFilter;
+    return this;
+  }
+
+   /**
+   * Get idmFilter
+   * @return idmFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsIdmSelector getIdmFilter() {
+    return idmFilter;
+  }
+
+  public void setIdmFilter(JobsIdmSelector idmFilter) {
+    this.idmFilter = idmFilter;
+  }
+
+  public JobsAction actionOutputFilter(JobsActionOutputFilter actionOutputFilter) {
+    this.actionOutputFilter = actionOutputFilter;
+    return this;
+  }
+
+   /**
+   * Get actionOutputFilter
+   * @return actionOutputFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsActionOutputFilter getActionOutputFilter() {
+    return actionOutputFilter;
+  }
+
+  public void setActionOutputFilter(JobsActionOutputFilter actionOutputFilter) {
+    this.actionOutputFilter = actionOutputFilter;
+  }
+
+  public JobsAction contextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
+    this.contextMetaFilter = contextMetaFilter;
+    return this;
+  }
+
+   /**
+   * Get contextMetaFilter
+   * @return contextMetaFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsContextMetaFilter getContextMetaFilter() {
+    return contextMetaFilter;
+  }
+
+  public void setContextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
+    this.contextMetaFilter = contextMetaFilter;
   }
 
   public JobsAction parameters(Map<String, String> parameters) {
@@ -212,9 +334,35 @@ public class JobsAction {
     this.chainedActions = chainedActions;
   }
 
+  public JobsAction failedFilterActions(List<JobsAction> failedFilterActions) {
+    this.failedFilterActions = failedFilterActions;
+    return this;
+  }
+
+  public JobsAction addFailedFilterActionsItem(JobsAction failedFilterActionsItem) {
+    if (this.failedFilterActions == null) {
+      this.failedFilterActions = new ArrayList<JobsAction>();
+    }
+    this.failedFilterActions.add(failedFilterActionsItem);
+    return this;
+  }
+
+   /**
+   * Get failedFilterActions
+   * @return failedFilterActions
+  **/
+  @ApiModelProperty(value = "")
+  public List<JobsAction> getFailedFilterActions() {
+    return failedFilterActions;
+  }
+
+  public void setFailedFilterActions(List<JobsAction> failedFilterActions) {
+    this.failedFilterActions = failedFilterActions;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -223,18 +371,24 @@ public class JobsAction {
     }
     JobsAction jobsAction = (JobsAction) o;
     return Objects.equals(this.ID, jobsAction.ID) &&
+        Objects.equals(this.label, jobsAction.label) &&
+        Objects.equals(this.description, jobsAction.description) &&
         Objects.equals(this.nodesSelector, jobsAction.nodesSelector) &&
         Objects.equals(this.usersSelector, jobsAction.usersSelector) &&
         Objects.equals(this.nodesFilter, jobsAction.nodesFilter) &&
         Objects.equals(this.usersFilter, jobsAction.usersFilter) &&
-        Objects.equals(this.sourceFilter, jobsAction.sourceFilter) &&
+        Objects.equals(this.idmSelector, jobsAction.idmSelector) &&
+        Objects.equals(this.idmFilter, jobsAction.idmFilter) &&
+        Objects.equals(this.actionOutputFilter, jobsAction.actionOutputFilter) &&
+        Objects.equals(this.contextMetaFilter, jobsAction.contextMetaFilter) &&
         Objects.equals(this.parameters, jobsAction.parameters) &&
-        Objects.equals(this.chainedActions, jobsAction.chainedActions);
+        Objects.equals(this.chainedActions, jobsAction.chainedActions) &&
+        Objects.equals(this.failedFilterActions, jobsAction.failedFilterActions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ID, nodesSelector, usersSelector, nodesFilter, usersFilter, sourceFilter, parameters, chainedActions);
+    return Objects.hash(ID, label, description, nodesSelector, usersSelector, nodesFilter, usersFilter, idmSelector, idmFilter, actionOutputFilter, contextMetaFilter, parameters, chainedActions, failedFilterActions);
   }
 
 
@@ -244,13 +398,19 @@ public class JobsAction {
     sb.append("class JobsAction {\n");
     
     sb.append("    ID: ").append(toIndentedString(ID)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    nodesSelector: ").append(toIndentedString(nodesSelector)).append("\n");
     sb.append("    usersSelector: ").append(toIndentedString(usersSelector)).append("\n");
     sb.append("    nodesFilter: ").append(toIndentedString(nodesFilter)).append("\n");
     sb.append("    usersFilter: ").append(toIndentedString(usersFilter)).append("\n");
-    sb.append("    sourceFilter: ").append(toIndentedString(sourceFilter)).append("\n");
+    sb.append("    idmSelector: ").append(toIndentedString(idmSelector)).append("\n");
+    sb.append("    idmFilter: ").append(toIndentedString(idmFilter)).append("\n");
+    sb.append("    actionOutputFilter: ").append(toIndentedString(actionOutputFilter)).append("\n");
+    sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("    chainedActions: ").append(toIndentedString(chainedActions)).append("\n");
+    sb.append("    failedFilterActions: ").append(toIndentedString(failedFilterActions)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -259,7 +419,7 @@ public class JobsAction {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

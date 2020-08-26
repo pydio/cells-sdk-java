@@ -13,21 +13,30 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.ServiceQuery;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
- * JobsSourceFilter
+ * JobsActionOutputFilter
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
-public class JobsSourceFilter {
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
+public class JobsActionOutputFilter {
   @SerializedName("Query")
   private ServiceQuery query = null;
 
-  public JobsSourceFilter query(ServiceQuery query) {
+  public JobsActionOutputFilter query(ServiceQuery query) {
     this.query = query;
     return this;
   }
@@ -47,15 +56,15 @@ public class JobsSourceFilter {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    JobsSourceFilter jobsSourceFilter = (JobsSourceFilter) o;
-    return Objects.equals(this.query, jobsSourceFilter.query);
+    JobsActionOutputFilter jobsActionOutputFilter = (JobsActionOutputFilter) o;
+    return Objects.equals(this.query, jobsActionOutputFilter.query);
   }
 
   @Override
@@ -67,7 +76,7 @@ public class JobsSourceFilter {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class JobsSourceFilter {\n");
+    sb.append("class JobsActionOutputFilter {\n");
     
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("}");
@@ -78,7 +87,7 @@ public class JobsSourceFilter {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

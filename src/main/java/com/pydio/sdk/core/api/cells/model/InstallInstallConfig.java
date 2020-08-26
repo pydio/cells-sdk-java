@@ -13,18 +13,28 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.sdk.core.api.cells.model.InstallCheckResult;
+import com.pydio.sdk.core.api.cells.model.InstallProxyConfig;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * InstallInstallConfig
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class InstallInstallConfig {
   @SerializedName("internalUrl")
   private String internalUrl = null;
@@ -68,35 +78,41 @@ public class InstallInstallConfig {
   @SerializedName("dsPort")
   private String dsPort = null;
 
+  @SerializedName("dsType")
+  private String dsType = null;
+
+  @SerializedName("dsS3Custom")
+  private String dsS3Custom = null;
+
+  @SerializedName("dsS3CustomRegion")
+  private String dsS3CustomRegion = null;
+
+  @SerializedName("dsS3ApiKey")
+  private String dsS3ApiKey = null;
+
+  @SerializedName("dsS3ApiSecret")
+  private String dsS3ApiSecret = null;
+
+  @SerializedName("dsS3BucketDefault")
+  private String dsS3BucketDefault = null;
+
+  @SerializedName("dsS3BucketPersonal")
+  private String dsS3BucketPersonal = null;
+
+  @SerializedName("dsS3BucketCells")
+  private String dsS3BucketCells = null;
+
+  @SerializedName("dsS3BucketBinaries")
+  private String dsS3BucketBinaries = null;
+
+  @SerializedName("dsS3BucketThumbs")
+  private String dsS3BucketThumbs = null;
+
+  @SerializedName("dsS3BucketVersions")
+  private String dsS3BucketVersions = null;
+
   @SerializedName("dsFolder")
   private String dsFolder = null;
-
-  @SerializedName("externalMicro")
-  private String externalMicro = null;
-
-  @SerializedName("externalGateway")
-  private String externalGateway = null;
-
-  @SerializedName("externalWebsocket")
-  private String externalWebsocket = null;
-
-  @SerializedName("externalFrontPlugins")
-  private String externalFrontPlugins = null;
-
-  @SerializedName("externalDAV")
-  private String externalDAV = null;
-
-  @SerializedName("externalWOPI")
-  private String externalWOPI = null;
-
-  @SerializedName("externalDex")
-  private String externalDex = null;
-
-  @SerializedName("externalDexID")
-  private String externalDexID = null;
-
-  @SerializedName("externalDexSecret")
-  private String externalDexSecret = null;
 
   @SerializedName("frontendHosts")
   private String frontendHosts = null;
@@ -124,6 +140,9 @@ public class InstallInstallConfig {
 
   @SerializedName("CheckResults")
   private List<InstallCheckResult> checkResults = null;
+
+  @SerializedName("ProxyConfig")
+  private InstallProxyConfig proxyConfig = null;
 
   public InstallInstallConfig internalUrl(String internalUrl) {
     this.internalUrl = internalUrl;
@@ -377,6 +396,204 @@ public class InstallInstallConfig {
     this.dsPort = dsPort;
   }
 
+  public InstallInstallConfig dsType(String dsType) {
+    this.dsType = dsType;
+    return this;
+  }
+
+   /**
+   * Get dsType
+   * @return dsType
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsType() {
+    return dsType;
+  }
+
+  public void setDsType(String dsType) {
+    this.dsType = dsType;
+  }
+
+  public InstallInstallConfig dsS3Custom(String dsS3Custom) {
+    this.dsS3Custom = dsS3Custom;
+    return this;
+  }
+
+   /**
+   * Get dsS3Custom
+   * @return dsS3Custom
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3Custom() {
+    return dsS3Custom;
+  }
+
+  public void setDsS3Custom(String dsS3Custom) {
+    this.dsS3Custom = dsS3Custom;
+  }
+
+  public InstallInstallConfig dsS3CustomRegion(String dsS3CustomRegion) {
+    this.dsS3CustomRegion = dsS3CustomRegion;
+    return this;
+  }
+
+   /**
+   * Get dsS3CustomRegion
+   * @return dsS3CustomRegion
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3CustomRegion() {
+    return dsS3CustomRegion;
+  }
+
+  public void setDsS3CustomRegion(String dsS3CustomRegion) {
+    this.dsS3CustomRegion = dsS3CustomRegion;
+  }
+
+  public InstallInstallConfig dsS3ApiKey(String dsS3ApiKey) {
+    this.dsS3ApiKey = dsS3ApiKey;
+    return this;
+  }
+
+   /**
+   * Get dsS3ApiKey
+   * @return dsS3ApiKey
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3ApiKey() {
+    return dsS3ApiKey;
+  }
+
+  public void setDsS3ApiKey(String dsS3ApiKey) {
+    this.dsS3ApiKey = dsS3ApiKey;
+  }
+
+  public InstallInstallConfig dsS3ApiSecret(String dsS3ApiSecret) {
+    this.dsS3ApiSecret = dsS3ApiSecret;
+    return this;
+  }
+
+   /**
+   * Get dsS3ApiSecret
+   * @return dsS3ApiSecret
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3ApiSecret() {
+    return dsS3ApiSecret;
+  }
+
+  public void setDsS3ApiSecret(String dsS3ApiSecret) {
+    this.dsS3ApiSecret = dsS3ApiSecret;
+  }
+
+  public InstallInstallConfig dsS3BucketDefault(String dsS3BucketDefault) {
+    this.dsS3BucketDefault = dsS3BucketDefault;
+    return this;
+  }
+
+   /**
+   * Get dsS3BucketDefault
+   * @return dsS3BucketDefault
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3BucketDefault() {
+    return dsS3BucketDefault;
+  }
+
+  public void setDsS3BucketDefault(String dsS3BucketDefault) {
+    this.dsS3BucketDefault = dsS3BucketDefault;
+  }
+
+  public InstallInstallConfig dsS3BucketPersonal(String dsS3BucketPersonal) {
+    this.dsS3BucketPersonal = dsS3BucketPersonal;
+    return this;
+  }
+
+   /**
+   * Get dsS3BucketPersonal
+   * @return dsS3BucketPersonal
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3BucketPersonal() {
+    return dsS3BucketPersonal;
+  }
+
+  public void setDsS3BucketPersonal(String dsS3BucketPersonal) {
+    this.dsS3BucketPersonal = dsS3BucketPersonal;
+  }
+
+  public InstallInstallConfig dsS3BucketCells(String dsS3BucketCells) {
+    this.dsS3BucketCells = dsS3BucketCells;
+    return this;
+  }
+
+   /**
+   * Get dsS3BucketCells
+   * @return dsS3BucketCells
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3BucketCells() {
+    return dsS3BucketCells;
+  }
+
+  public void setDsS3BucketCells(String dsS3BucketCells) {
+    this.dsS3BucketCells = dsS3BucketCells;
+  }
+
+  public InstallInstallConfig dsS3BucketBinaries(String dsS3BucketBinaries) {
+    this.dsS3BucketBinaries = dsS3BucketBinaries;
+    return this;
+  }
+
+   /**
+   * Get dsS3BucketBinaries
+   * @return dsS3BucketBinaries
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3BucketBinaries() {
+    return dsS3BucketBinaries;
+  }
+
+  public void setDsS3BucketBinaries(String dsS3BucketBinaries) {
+    this.dsS3BucketBinaries = dsS3BucketBinaries;
+  }
+
+  public InstallInstallConfig dsS3BucketThumbs(String dsS3BucketThumbs) {
+    this.dsS3BucketThumbs = dsS3BucketThumbs;
+    return this;
+  }
+
+   /**
+   * Get dsS3BucketThumbs
+   * @return dsS3BucketThumbs
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3BucketThumbs() {
+    return dsS3BucketThumbs;
+  }
+
+  public void setDsS3BucketThumbs(String dsS3BucketThumbs) {
+    this.dsS3BucketThumbs = dsS3BucketThumbs;
+  }
+
+  public InstallInstallConfig dsS3BucketVersions(String dsS3BucketVersions) {
+    this.dsS3BucketVersions = dsS3BucketVersions;
+    return this;
+  }
+
+   /**
+   * Get dsS3BucketVersions
+   * @return dsS3BucketVersions
+  **/
+  @ApiModelProperty(value = "")
+  public String getDsS3BucketVersions() {
+    return dsS3BucketVersions;
+  }
+
+  public void setDsS3BucketVersions(String dsS3BucketVersions) {
+    this.dsS3BucketVersions = dsS3BucketVersions;
+  }
+
   public InstallInstallConfig dsFolder(String dsFolder) {
     this.dsFolder = dsFolder;
     return this;
@@ -393,168 +610,6 @@ public class InstallInstallConfig {
 
   public void setDsFolder(String dsFolder) {
     this.dsFolder = dsFolder;
-  }
-
-  public InstallInstallConfig externalMicro(String externalMicro) {
-    this.externalMicro = externalMicro;
-    return this;
-  }
-
-   /**
-   * Get externalMicro
-   * @return externalMicro
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalMicro() {
-    return externalMicro;
-  }
-
-  public void setExternalMicro(String externalMicro) {
-    this.externalMicro = externalMicro;
-  }
-
-  public InstallInstallConfig externalGateway(String externalGateway) {
-    this.externalGateway = externalGateway;
-    return this;
-  }
-
-   /**
-   * Get externalGateway
-   * @return externalGateway
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalGateway() {
-    return externalGateway;
-  }
-
-  public void setExternalGateway(String externalGateway) {
-    this.externalGateway = externalGateway;
-  }
-
-  public InstallInstallConfig externalWebsocket(String externalWebsocket) {
-    this.externalWebsocket = externalWebsocket;
-    return this;
-  }
-
-   /**
-   * Get externalWebsocket
-   * @return externalWebsocket
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalWebsocket() {
-    return externalWebsocket;
-  }
-
-  public void setExternalWebsocket(String externalWebsocket) {
-    this.externalWebsocket = externalWebsocket;
-  }
-
-  public InstallInstallConfig externalFrontPlugins(String externalFrontPlugins) {
-    this.externalFrontPlugins = externalFrontPlugins;
-    return this;
-  }
-
-   /**
-   * Get externalFrontPlugins
-   * @return externalFrontPlugins
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalFrontPlugins() {
-    return externalFrontPlugins;
-  }
-
-  public void setExternalFrontPlugins(String externalFrontPlugins) {
-    this.externalFrontPlugins = externalFrontPlugins;
-  }
-
-  public InstallInstallConfig externalDAV(String externalDAV) {
-    this.externalDAV = externalDAV;
-    return this;
-  }
-
-   /**
-   * Get externalDAV
-   * @return externalDAV
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalDAV() {
-    return externalDAV;
-  }
-
-  public void setExternalDAV(String externalDAV) {
-    this.externalDAV = externalDAV;
-  }
-
-  public InstallInstallConfig externalWOPI(String externalWOPI) {
-    this.externalWOPI = externalWOPI;
-    return this;
-  }
-
-   /**
-   * Get externalWOPI
-   * @return externalWOPI
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalWOPI() {
-    return externalWOPI;
-  }
-
-  public void setExternalWOPI(String externalWOPI) {
-    this.externalWOPI = externalWOPI;
-  }
-
-  public InstallInstallConfig externalDex(String externalDex) {
-    this.externalDex = externalDex;
-    return this;
-  }
-
-   /**
-   * Get externalDex
-   * @return externalDex
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalDex() {
-    return externalDex;
-  }
-
-  public void setExternalDex(String externalDex) {
-    this.externalDex = externalDex;
-  }
-
-  public InstallInstallConfig externalDexID(String externalDexID) {
-    this.externalDexID = externalDexID;
-    return this;
-  }
-
-   /**
-   * Get externalDexID
-   * @return externalDexID
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalDexID() {
-    return externalDexID;
-  }
-
-  public void setExternalDexID(String externalDexID) {
-    this.externalDexID = externalDexID;
-  }
-
-  public InstallInstallConfig externalDexSecret(String externalDexSecret) {
-    this.externalDexSecret = externalDexSecret;
-    return this;
-  }
-
-   /**
-   * Get externalDexSecret
-   * @return externalDexSecret
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalDexSecret() {
-    return externalDexSecret;
-  }
-
-  public void setExternalDexSecret(String externalDexSecret) {
-    this.externalDexSecret = externalDexSecret;
   }
 
   public InstallInstallConfig frontendHosts(String frontendHosts) {
@@ -727,9 +782,27 @@ public class InstallInstallConfig {
     this.checkResults = checkResults;
   }
 
+  public InstallInstallConfig proxyConfig(InstallProxyConfig proxyConfig) {
+    this.proxyConfig = proxyConfig;
+    return this;
+  }
+
+   /**
+   * Get proxyConfig
+   * @return proxyConfig
+  **/
+  @ApiModelProperty(value = "")
+  public InstallProxyConfig getProxyConfig() {
+    return proxyConfig;
+  }
+
+  public void setProxyConfig(InstallProxyConfig proxyConfig) {
+    this.proxyConfig = proxyConfig;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -751,16 +824,18 @@ public class InstallInstallConfig {
         Objects.equals(this.dbManualDSN, installInstallConfig.dbManualDSN) &&
         Objects.equals(this.dsName, installInstallConfig.dsName) &&
         Objects.equals(this.dsPort, installInstallConfig.dsPort) &&
+        Objects.equals(this.dsType, installInstallConfig.dsType) &&
+        Objects.equals(this.dsS3Custom, installInstallConfig.dsS3Custom) &&
+        Objects.equals(this.dsS3CustomRegion, installInstallConfig.dsS3CustomRegion) &&
+        Objects.equals(this.dsS3ApiKey, installInstallConfig.dsS3ApiKey) &&
+        Objects.equals(this.dsS3ApiSecret, installInstallConfig.dsS3ApiSecret) &&
+        Objects.equals(this.dsS3BucketDefault, installInstallConfig.dsS3BucketDefault) &&
+        Objects.equals(this.dsS3BucketPersonal, installInstallConfig.dsS3BucketPersonal) &&
+        Objects.equals(this.dsS3BucketCells, installInstallConfig.dsS3BucketCells) &&
+        Objects.equals(this.dsS3BucketBinaries, installInstallConfig.dsS3BucketBinaries) &&
+        Objects.equals(this.dsS3BucketThumbs, installInstallConfig.dsS3BucketThumbs) &&
+        Objects.equals(this.dsS3BucketVersions, installInstallConfig.dsS3BucketVersions) &&
         Objects.equals(this.dsFolder, installInstallConfig.dsFolder) &&
-        Objects.equals(this.externalMicro, installInstallConfig.externalMicro) &&
-        Objects.equals(this.externalGateway, installInstallConfig.externalGateway) &&
-        Objects.equals(this.externalWebsocket, installInstallConfig.externalWebsocket) &&
-        Objects.equals(this.externalFrontPlugins, installInstallConfig.externalFrontPlugins) &&
-        Objects.equals(this.externalDAV, installInstallConfig.externalDAV) &&
-        Objects.equals(this.externalWOPI, installInstallConfig.externalWOPI) &&
-        Objects.equals(this.externalDex, installInstallConfig.externalDex) &&
-        Objects.equals(this.externalDexID, installInstallConfig.externalDexID) &&
-        Objects.equals(this.externalDexSecret, installInstallConfig.externalDexSecret) &&
         Objects.equals(this.frontendHosts, installInstallConfig.frontendHosts) &&
         Objects.equals(this.frontendLogin, installInstallConfig.frontendLogin) &&
         Objects.equals(this.frontendPassword, installInstallConfig.frontendPassword) &&
@@ -769,12 +844,13 @@ public class InstallInstallConfig {
         Objects.equals(this.frontendDefaultLanguage, installInstallConfig.frontendDefaultLanguage) &&
         Objects.equals(this.licenseRequired, installInstallConfig.licenseRequired) &&
         Objects.equals(this.licenseString, installInstallConfig.licenseString) &&
-        Objects.equals(this.checkResults, installInstallConfig.checkResults);
+        Objects.equals(this.checkResults, installInstallConfig.checkResults) &&
+        Objects.equals(this.proxyConfig, installInstallConfig.proxyConfig);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(internalUrl, dbConnectionType, dbTCPHostname, dbTCPPort, dbTCPName, dbTCPUser, dbTCPPassword, dbSocketFile, dbSocketName, dbSocketUser, dbSocketPassword, dbManualDSN, dsName, dsPort, dsFolder, externalMicro, externalGateway, externalWebsocket, externalFrontPlugins, externalDAV, externalWOPI, externalDex, externalDexID, externalDexSecret, frontendHosts, frontendLogin, frontendPassword, frontendRepeatPassword, frontendApplicationTitle, frontendDefaultLanguage, licenseRequired, licenseString, checkResults);
+    return Objects.hash(internalUrl, dbConnectionType, dbTCPHostname, dbTCPPort, dbTCPName, dbTCPUser, dbTCPPassword, dbSocketFile, dbSocketName, dbSocketUser, dbSocketPassword, dbManualDSN, dsName, dsPort, dsType, dsS3Custom, dsS3CustomRegion, dsS3ApiKey, dsS3ApiSecret, dsS3BucketDefault, dsS3BucketPersonal, dsS3BucketCells, dsS3BucketBinaries, dsS3BucketThumbs, dsS3BucketVersions, dsFolder, frontendHosts, frontendLogin, frontendPassword, frontendRepeatPassword, frontendApplicationTitle, frontendDefaultLanguage, licenseRequired, licenseString, checkResults, proxyConfig);
   }
 
 
@@ -797,16 +873,18 @@ public class InstallInstallConfig {
     sb.append("    dbManualDSN: ").append(toIndentedString(dbManualDSN)).append("\n");
     sb.append("    dsName: ").append(toIndentedString(dsName)).append("\n");
     sb.append("    dsPort: ").append(toIndentedString(dsPort)).append("\n");
+    sb.append("    dsType: ").append(toIndentedString(dsType)).append("\n");
+    sb.append("    dsS3Custom: ").append(toIndentedString(dsS3Custom)).append("\n");
+    sb.append("    dsS3CustomRegion: ").append(toIndentedString(dsS3CustomRegion)).append("\n");
+    sb.append("    dsS3ApiKey: ").append(toIndentedString(dsS3ApiKey)).append("\n");
+    sb.append("    dsS3ApiSecret: ").append(toIndentedString(dsS3ApiSecret)).append("\n");
+    sb.append("    dsS3BucketDefault: ").append(toIndentedString(dsS3BucketDefault)).append("\n");
+    sb.append("    dsS3BucketPersonal: ").append(toIndentedString(dsS3BucketPersonal)).append("\n");
+    sb.append("    dsS3BucketCells: ").append(toIndentedString(dsS3BucketCells)).append("\n");
+    sb.append("    dsS3BucketBinaries: ").append(toIndentedString(dsS3BucketBinaries)).append("\n");
+    sb.append("    dsS3BucketThumbs: ").append(toIndentedString(dsS3BucketThumbs)).append("\n");
+    sb.append("    dsS3BucketVersions: ").append(toIndentedString(dsS3BucketVersions)).append("\n");
     sb.append("    dsFolder: ").append(toIndentedString(dsFolder)).append("\n");
-    sb.append("    externalMicro: ").append(toIndentedString(externalMicro)).append("\n");
-    sb.append("    externalGateway: ").append(toIndentedString(externalGateway)).append("\n");
-    sb.append("    externalWebsocket: ").append(toIndentedString(externalWebsocket)).append("\n");
-    sb.append("    externalFrontPlugins: ").append(toIndentedString(externalFrontPlugins)).append("\n");
-    sb.append("    externalDAV: ").append(toIndentedString(externalDAV)).append("\n");
-    sb.append("    externalWOPI: ").append(toIndentedString(externalWOPI)).append("\n");
-    sb.append("    externalDex: ").append(toIndentedString(externalDex)).append("\n");
-    sb.append("    externalDexID: ").append(toIndentedString(externalDexID)).append("\n");
-    sb.append("    externalDexSecret: ").append(toIndentedString(externalDexSecret)).append("\n");
     sb.append("    frontendHosts: ").append(toIndentedString(frontendHosts)).append("\n");
     sb.append("    frontendLogin: ").append(toIndentedString(frontendLogin)).append("\n");
     sb.append("    frontendPassword: ").append(toIndentedString(frontendPassword)).append("\n");
@@ -816,6 +894,7 @@ public class InstallInstallConfig {
     sb.append("    licenseRequired: ").append(toIndentedString(licenseRequired)).append("\n");
     sb.append("    licenseString: ").append(toIndentedString(licenseString)).append("\n");
     sb.append("    checkResults: ").append(toIndentedString(checkResults)).append("\n");
+    sb.append("    proxyConfig: ").append(toIndentedString(proxyConfig)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -824,7 +903,7 @@ public class InstallInstallConfig {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

@@ -13,16 +13,24 @@
 
 package com.pydio.sdk.core.api.cells.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * JobsActionOutput
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-30T14:51:15.861Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+
+
+
 public class JobsActionOutput {
   @SerializedName("Success")
   private Boolean success = null;
@@ -41,6 +49,9 @@ public class JobsActionOutput {
 
   @SerializedName("Ignored")
   private Boolean ignored = null;
+
+  @SerializedName("Time")
+  private Integer time = null;
 
   public JobsActionOutput success(Boolean success) {
     this.success = success;
@@ -150,9 +161,27 @@ public class JobsActionOutput {
     this.ignored = ignored;
   }
 
+  public JobsActionOutput time(Integer time) {
+    this.time = time;
+    return this;
+  }
+
+   /**
+   * Get time
+   * @return time
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getTime() {
+    return time;
+  }
+
+  public void setTime(Integer time) {
+    this.time = time;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -161,16 +190,17 @@ public class JobsActionOutput {
     }
     JobsActionOutput jobsActionOutput = (JobsActionOutput) o;
     return Objects.equals(this.success, jobsActionOutput.success) &&
-        Objects.equals(this.rawBody, jobsActionOutput.rawBody) &&
+        Arrays.equals(this.rawBody, jobsActionOutput.rawBody) &&
         Objects.equals(this.stringBody, jobsActionOutput.stringBody) &&
-        Objects.equals(this.jsonBody, jobsActionOutput.jsonBody) &&
+        Arrays.equals(this.jsonBody, jobsActionOutput.jsonBody) &&
         Objects.equals(this.errorString, jobsActionOutput.errorString) &&
-        Objects.equals(this.ignored, jobsActionOutput.ignored);
+        Objects.equals(this.ignored, jobsActionOutput.ignored) &&
+        Objects.equals(this.time, jobsActionOutput.time);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(success, rawBody, stringBody, jsonBody, errorString, ignored);
+    return Objects.hash(success, Arrays.hashCode(rawBody), stringBody, Arrays.hashCode(jsonBody), errorString, ignored, time);
   }
 
 
@@ -185,6 +215,7 @@ public class JobsActionOutput {
     sb.append("    jsonBody: ").append(toIndentedString(jsonBody)).append("\n");
     sb.append("    errorString: ").append(toIndentedString(errorString)).append("\n");
     sb.append("    ignored: ").append(toIndentedString(ignored)).append("\n");
+    sb.append("    time: ").append(toIndentedString(time)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -193,7 +224,7 @@ public class JobsActionOutput {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
