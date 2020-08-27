@@ -1,7 +1,9 @@
 package com.pydio.sdk.sync.tree;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Map;
 
 import com.pydio.sdk.core.model.TreeNodeInfo;
 
@@ -13,7 +15,7 @@ public class MemoryStateManager implements StateManager {
 
     private TreeMap<String, TreeNodeInfo> nodes;
 
-    public MemoryStateManager(){
+    public MemoryStateManager() {
         nodes = new TreeMap<String, TreeNodeInfo>();
     }
 
@@ -37,19 +39,31 @@ public class MemoryStateManager implements StateManager {
         nodes.remove(path);
     }
 
+    /**
+     * Optimistic vanilla implementation of the getChildren method for the PoC
+     */
     @Override
-    public List<TreeNodeInfo> getChildren(String dir) {
-        // TODO implement
-        // @Override
-        // public List<Tree> children() {
-        // List<Tree> trees = new ArrayList<>();
-        // Set<String> sortedKeys = this.children.keySet();
-        // for (String key : sortedKeys) {
-        // trees.add(this.children.get(key));
-        // }
-        // return trees;
-        // }
-        return null;
+    public List<TreeNodeInfo> getChildren(String path) {
+
+        ArrayList<TreeNodeInfo> children = new ArrayList<>();
+
+        Boolean first = true;
+        for (Map.Entry<String, TreeNodeInfo> currEntry : nodes.tailMap(path).entrySet()){
+            if (first){
+                first = false;
+                continue;
+            }
+            if (!currEntry.getKey().startsWith(path)){
+                break;
+            } else if (currEntry.getKey().indexOf("/", path.length()+1) > 1){
+                // We do not want children of our children. 
+                // TODO enhance, this is not very reliable
+                continue;
+            } else {
+                children.add(currEntry.getValue());
+            }
+        } 
+        return children;
     }
 
 }

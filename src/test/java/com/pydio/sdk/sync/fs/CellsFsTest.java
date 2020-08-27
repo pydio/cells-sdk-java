@@ -1,21 +1,19 @@
-package com.pydio.sdk.examples;
+package com.pydio.sdk.sync.fs;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.common.errors.Error;
-import com.pydio.sdk.core.Client;
-import com.pydio.sdk.core.ClientFactory;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.Message;
-
-import java.io.ByteArrayInputStream;
+import com.pydio.sdk.examples.Credentials;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
+import com.pydio.sdk.sync.changes.GetChangeRequest;
+import com.pydio.sdk.sync.changes.GetChangesResponse;
+import com.pydio.sdk.sync.tree.MemoryStateManager;
+import com.pydio.sdk.core.PydioCells;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
@@ -25,10 +23,11 @@ import java.util.Properties;
  * 
  * <code>gradle test --rerun-tasks  --tests com.pydio.sdk.examples.BasicConnectionTest -i</code>
  */
-public class BasicConnectionTest {
+public class CellsFsTest {
 
     private ServerNode node;
-    private Client cellsClient;
+    private PydioCells cellsClient;
+    private CellsFs cellsFs;
 
     private Boolean skipTests = true;
     private String serverURL, login, pwd, workspace;
@@ -37,7 +36,7 @@ public class BasicConnectionTest {
     public void setup() {
 
         Properties p = new Properties();
-        try (InputStream is = BasicConnectionTest.class.getResourceAsStream("/config.properties")) {
+        try (InputStream is = CellsFsTest.class.getResourceAsStream("/config.properties")) {
             p.load(new InputStreamReader(is));
             skipTests = !("false".equals(p.getProperty("skipIntegrationTests")));
             serverURL = p.getProperty("serverURL");
@@ -62,46 +61,28 @@ public class BasicConnectionTest {
             System.out.println(error);
         }
 
-        cellsClient = ClientFactory.get().Client(node);
+        cellsClient = new PydioCells(node);
         cellsClient.setCredentials(new Credentials(login, pwd));
         cellsClient.setSkipOAuthFlag(true);
+
+        cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
+
     }
 
-    // @Ignore("not yet ready , Please ignore.")
     @Test
-    public void testBasicCRUD() {
+    public void testGetChange() {
 
         if (skipTests) {
             return;
         }
 
-        System.out.println("... Test Listing");
-        try {
-            cellsClient.ls(workspace, "/", (node) -> System.out.println(node.label()));
-        } catch (SDKException e) {
-            e.printStackTrace();
-        }
+        System.out.println("... Test GetChanges");
 
-        System.out.println("... Test Upload");
-        String targetDir = "/"; // root
-        String name = "hello6.txt";
-        byte[] content = "Hello Pydio!".getBytes();
-        ByteArrayInputStream source = new ByteArrayInputStream(content);
-        try {
-            Message msg = cellsClient.upload(source, content.length, workspace, targetDir, name, true, (progress) -> {
-                System.out.printf("\r%d bytes written\n", progress);
-                return false;
-            });
-            if (msg == null)
-                System.out.println("After upload, no message.");
-            else
-                System.out.println("After upload, message: " + msg.message);
-        } catch (SDKException e) {
-            e.printStackTrace();
-        }
+        GetChangeRequest req = new GetChangeRequest();
+        req.setPath("/");
+        GetChangesResponse resp = cellsFs.getChanges(req);
+        System.out.println(" Found " + resp.getChanges().size() + " change(s)");
 
-        // TODO finish implementing the CRUD and corresponding checks. Typically, for
-        // the time being upload fails silently.
     }
 
     @After
