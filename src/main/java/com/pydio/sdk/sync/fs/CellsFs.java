@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.pydio.sdk.core.utils.CellsPath;
+
 public class CellsFs implements Fs, ContentLoader {
 
     private PydioCells cells;
@@ -89,8 +91,7 @@ public class CellsFs implements Fs, ContentLoader {
             try {
 
                 TreeNodeInfo local = stateManager.get(currentPath);
-                TreeNodeInfo remote = this.cells.statNode(workspace, currentPath);
-
+                TreeNodeInfo remote = this.cells.statNode(CellsPath.fullPath(workspace, currentPath));
                 if (local != null && remote != null && remote.getETag().equals(local.getETag())) {
                     // current node is already cached in local with same ETAG, nothing to do.
                     continue;
@@ -206,7 +207,7 @@ public class CellsFs implements Fs, ContentLoader {
         TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
         this.cells.ls(this.workspace, path, (n) -> {
             BasicTreeNodeInfo t = new BasicTreeNodeInfo();
-            t.setName(n.label());
+            t.setPath(n.path());
             t.setETag("");
             t.setSize(Long.parseLong(n.getProperty(Pydio.NODE_PROPERTY_BYTESIZE)));
             // TODO retrieve ETAG from node

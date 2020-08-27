@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.common.errors.Error;
+import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.examples.Credentials;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,7 @@ import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
 import com.pydio.sdk.sync.tree.MemoryStateManager;
 import com.pydio.sdk.core.PydioCells;
+import static com.pydio.sdk.core.utils.CellsPath.fullPath;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
@@ -66,6 +68,23 @@ public class CellsFsTest {
         cellsClient.setSkipOAuthFlag(true);
 
         cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
+
+    }
+
+    @Test
+    public void testCellsClient() {
+
+        if (skipTests) {
+            return;
+        }
+
+        System.out.println("... Test CellsClient");
+
+        try {
+            cellsClient.statNode(fullPath(workspace, "test"));
+        } catch (SDKException e) {
+            // TODO: handle exception
+        }
 
     }
 

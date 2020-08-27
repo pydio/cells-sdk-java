@@ -544,25 +544,27 @@ public class PydioCells implements Client {
         }
     }
 
-    public TreeNodeInfo statNode(String ws, String path) throws SDKException {
-        TreeNode node = internalStatNode(ws, path);
+    public TreeNodeInfo statNode(String fullPath) throws SDKException {
+        TreeNode node = internalStatNode(fullPath);
         if (node != null) {
-            String name = Paths.get(node.getPath()).getFileName().toString();
             Boolean isLeaf = node.getType().equals(TreeNodeType.LEAF);
-            String encoded = node.getMode().toString();
-            return new BasicTreeNodeInfo(node.getEtag(), node.getPath(), name, isLeaf, 0, encoded);
+            return new BasicTreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, 0);
         } else {
             return null;
         }
     }
 
     private TreeNode internalStatNode(String ws, String path) throws SDKException {
+        return internalStatNode(fullPath(ws, path));
+    }
+
+    private TreeNode internalStatNode(String fullPath) throws SDKException {
         this.getJWT();
         ApiClient client = getApiClient();
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         try {
-            return api.headNode(fullPath(ws, path)).getNode();
+            return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
             throw new SDKException(e);
         }

@@ -34,6 +34,8 @@ public interface Node extends Serializable {
 
     void setProperties(Properties p);
 
+
+    /** Returns the serialized version of the current instance */
     String getEncoded();
 
     int compare(Node node);

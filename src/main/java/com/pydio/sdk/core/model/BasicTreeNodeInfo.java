@@ -1,5 +1,6 @@
 package com.pydio.sdk.core.model;
 
+import static com.pydio.sdk.core.utils.CellsPath.nameFromFullPath;
 
 public class BasicTreeNodeInfo implements TreeNodeInfo {
     private String eTag;
@@ -7,22 +8,16 @@ public class BasicTreeNodeInfo implements TreeNodeInfo {
     private String name;
     private String path;
     private boolean isLeaf;
-    private String encoded;
 
     public BasicTreeNodeInfo() {
     }
 
-    public BasicTreeNodeInfo(String eTag, String path, String name, boolean isLeaf, long size, String encoded) {
+    public BasicTreeNodeInfo(String eTag, String path, boolean isLeaf, long size) {
         this.eTag = eTag;
         this.path = path;
-        this.name = name;
+        this.name = nameFromFullPath(path);
         this.isLeaf = isLeaf;
         this.size = size;
-        this.encoded = encoded;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setETag(String eTag) {
@@ -35,14 +30,11 @@ public class BasicTreeNodeInfo implements TreeNodeInfo {
 
     public void setPath(String path) {
         this.path = path;
+        this.name = nameFromFullPath(path);
     }
 
     public void setLeaf(boolean leaf) {
         isLeaf = leaf;
-    }
-
-    public void setEncoded(String encoded) {
-        this.encoded = encoded;
     }
 
     @Override
@@ -72,10 +64,6 @@ public class BasicTreeNodeInfo implements TreeNodeInfo {
 
     public String getPath() {
         return path;
-    }
-
-    public String getEncoded() {
-        return encoded;
     }
 
 }
