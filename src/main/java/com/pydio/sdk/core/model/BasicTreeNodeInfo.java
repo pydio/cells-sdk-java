@@ -1,17 +1,7 @@
-package com.pydio.sdk.sync.tree;
+package com.pydio.sdk.core.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeMap;
 
-/**
- * MemoryTree is a representation of node tree in memory. It provides methods to
- * get node ETag, name and children.
- */
-public class MemoryTree implements Tree {
-
-    private TreeMap<String, MemoryTree> children;
+public class BasicTreeNodeInfo implements TreeNodeInfo {
     private String eTag;
     private long size;
     private String name;
@@ -19,12 +9,16 @@ public class MemoryTree implements Tree {
     private boolean isLeaf;
     private String encoded;
 
-    public TreeMap<String, MemoryTree> getChildren() {
-        return children;
+    public BasicTreeNodeInfo() {
     }
 
-    public void setChildren(TreeMap<String, MemoryTree> children) {
-        this.children = children;
+    public BasicTreeNodeInfo(String eTag, String path, String name, boolean isLeaf, long size, String encoded) {
+        this.eTag = eTag;
+        this.path = path;
+        this.name = name;
+        this.isLeaf = isLeaf;
+        this.size = size;
+        this.encoded = encoded;
     }
 
     public void setName(String name) {
@@ -84,13 +78,4 @@ public class MemoryTree implements Tree {
         return encoded;
     }
 
-    @Override
-    public List<Tree> children() {
-        List<Tree> trees = new ArrayList<>();
-        Set<String> sortedKeys = this.children.keySet();
-        for (String key : sortedKeys) {
-            trees.add(this.children.get(key));
-        }
-        return trees;
-    }
 }

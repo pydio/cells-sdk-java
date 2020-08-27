@@ -19,6 +19,7 @@ import com.pydio.sdk.core.api.cells.model.RestDeleteNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestFrontSessionRequest;
 import com.pydio.sdk.core.api.cells.model.RestFrontSessionResponse;
 import com.pydio.sdk.core.api.cells.model.RestGetBulkMetaRequest;
+import com.pydio.sdk.core.api.cells.model.RestHeadNodeResponse;
 import com.pydio.sdk.core.api.cells.model.RestNodesCollection;
 import com.pydio.sdk.core.api.cells.model.RestPutShareLinkRequest;
 import com.pydio.sdk.core.api.cells.model.RestRestoreNodesRequest;
@@ -62,6 +63,10 @@ import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.Params;
 import com.pydio.sdk.core.utils.io;
 import com.squareup.okhttp.OkHttpClient;
+import java.nio.file.Paths;
+
+import com.pydio.sdk.core.model.BasicTreeNodeInfo;
+import com.pydio.sdk.core.model.TreeNodeInfo;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
@@ -129,7 +134,7 @@ public class PydioCells implements Client {
             if (shouldAskToken) {
                 if (!skipOAuth && this.serverNode.supportsOauth()) {
                     t = getTokenWithOAuth();
-                    if (t != null && this.tokenStore != null ) {
+                    if (t != null && this.tokenStore != null) {
                         this.tokenStore.set(t);
                     }
                 } else { // Legacy call with credentials
@@ -258,6 +263,7 @@ public class PydioCells implements Client {
     }
 
     private FileNode toFileNode(TreeNode node) {
+
         FileNode result = new FileNode();
 
         String[] parts = node.getPath().split("/");
@@ -398,7 +404,7 @@ public class PydioCells implements Client {
 
     @Override
     public JSONObject userInfo() throws SDKException {
-        // FIXME really ? 
+        // FIXME really ?
         RestFrontSessionRequest request = new RestFrontSessionRequest();
         request.setLogout(true);
         return null;
@@ -531,23 +537,37 @@ public class PydioCells implements Client {
 
     @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
-        RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        request.setAllMetaProviders(true);
-        request.addNodePathsItem(fullPath(ws, path));
-        RestBulkMetaResponse response;
+        TreeNode node = internalStatNode(ws, path);
+        if (node != null) {
+            return toFileNode(node);
+        } else {
+            return null;
+        }
+    }
 
+    public TreeNodeInfo statNode(String ws, String path) throws SDKException {
+        TreeNode node = internalStatNode(ws, path);
+        if (node != null) {
+            String name = Paths.get(node.getPath()).getFileName().toString();
+            Boolean isLeaf = node.getType().equals(TreeNodeType.LEAF);
+            String encoded = node.getMode().toString();
+            return new BasicTreeNodeInfo(node.getEtag(), node.getPath(), name, isLeaf, 0, encoded);
+        } else {
+            return null;
+        }
+    }
+
+    private TreeNode internalStatNode(String ws, String path) throws SDKException {
         this.getJWT();
         ApiClient client = getApiClient();
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         try {
-            response = api.bulkStatNodes(request);
+            return api.headNode(fullPath(ws, path)).getNode();
         } catch (ApiException e) {
             throw new SDKException(e);
         }
-
-        TreeNode node = response.getNodes().get(0);
-        return toFileNode(node);
+        // return toFileNode(response.getNode());
     }
 
     @Override

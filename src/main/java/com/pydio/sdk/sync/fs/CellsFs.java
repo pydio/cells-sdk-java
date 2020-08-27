@@ -13,8 +13,8 @@ import com.pydio.sdk.sync.changes.ProcessChangeRequest;
 import com.pydio.sdk.sync.changes.ProcessChangeResponse;
 import com.pydio.sdk.sync.content.PydioRemoteFileContent;
 import com.pydio.sdk.sync.tree.StateManager;
-import com.pydio.sdk.sync.tree.MemoryTree;
-import com.pydio.sdk.sync.tree.Tree;
+import com.pydio.sdk.core.model.BasicTreeNodeInfo;
+import com.pydio.sdk.core.model.TreeNodeInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -87,11 +87,24 @@ public class CellsFs implements Fs, ContentLoader {
             String currentPath = queue.remove(0);
 
             try {
-                List<Tree> localList = this.stateManager.getState(currentPath).children();
-                List<Tree> remoteList = this.sortedRemoteTree(currentPath);
-                for (Tree rTree : remoteList) {
+
+                TreeNodeInfo local = stateManager.get(currentPath);
+                TreeNodeInfo remote = this.cells.statNode(workspace, currentPath);
+
+                if (local != null && remote != null && remote.getETag().equals(local.getETag())) {
+                    // current node is already cached in local with same ETAG, nothing to do.
+                    continue;
+                }
+
+                // TreeNode local = this.stateManager.getState(currentPath);
+                // TreeNode remote = this.sortedRemoteTree(currentPath);
+
+                List<TreeNodeInfo> localList = null; // this.stateManager.getState(currentPath).children();
+                List<TreeNodeInfo> remoteList = this.sortedRemoteChildren(currentPath);
+
+                for (TreeNodeInfo rTree : remoteList) {
                     boolean found = false;
-                    for (Tree lTree : localList) {
+                    for (TreeNodeInfo lTree : localList) {
                         int compResult = rTree.getName().compareTo(lTree.getName());
 
                         if (compResult == 0) {
@@ -107,6 +120,7 @@ public class CellsFs implements Fs, ContentLoader {
                                     change.setSource(path);
                                     change.setTarget(path);
                                     response.addChange(change);
+
                                 } else {
                                     String dirFullPath = currentPath + "/" + rTree.getName();
                                     queue.add(dirFullPath);
@@ -127,9 +141,9 @@ public class CellsFs implements Fs, ContentLoader {
                         response.addChange(change);
                     }
                 }
-                for (Tree lTree : localList) {
+                for (TreeNodeInfo lTree : localList) {
                     boolean found = false;
-                    for (Tree rTree : remoteList) {
+                    for (TreeNodeInfo rTree : remoteList) {
                         int compResult = lTree.getName().compareTo(rTree.getName());
                         if (compResult == 0) {
                             found = true;
@@ -187,11 +201,11 @@ public class CellsFs implements Fs, ContentLoader {
         return new PydioRemoteFileContent(cells, workspace, nodeId);
     }
 
-    private List<Tree> sortedRemoteTree(String path) throws SDKException {
-        List<Tree> sortedList = new ArrayList<>();
-        TreeMap<String, Tree> sorterContainer = new TreeMap<>();
+    private List<TreeNodeInfo> sortedRemoteChildren(String path) throws SDKException {
+        List<TreeNodeInfo> sortedList = new ArrayList<>();
+        TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
         this.cells.ls(this.workspace, path, (n) -> {
-            MemoryTree t = new MemoryTree();
+            BasicTreeNodeInfo t = new BasicTreeNodeInfo();
             t.setName(n.label());
             t.setETag("");
             t.setSize(Long.parseLong(n.getProperty(Pydio.NODE_PROPERTY_BYTESIZE)));
