@@ -27,6 +27,12 @@ public abstract class ClientFactory {
         }
     }
 
+    public static void register(ClientFactory f) {
+        synchronized (lock) {
+            defaultFactory = f;
+        }
+    }
+
     public static ClientFactory get() {
         synchronized (lock) {
             if (defaultFactory == null) {

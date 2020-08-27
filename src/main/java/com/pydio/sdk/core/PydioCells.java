@@ -133,9 +133,11 @@ public class PydioCells implements Client {
 
             if (shouldAskToken) {
                 if (!skipOAuth && this.serverNode.supportsOauth()) {
-                    t = getTokenWithOAuth();
-                    if (t != null && this.tokenStore != null) {
-                        this.tokenStore.set(t);
+                    if (t != null) {
+                        t = getTokenWithOAuth(t);
+                        if (t != null && this.tokenStore != null ) {
+                            this.tokenStore.set(t);
+                        }
                     }
                 } else { // Legacy call with credentials
 
@@ -180,10 +182,7 @@ public class PydioCells implements Client {
         }
     }
 
-    private Token getTokenWithOAuth() {
-
-        Token t = null;
-
+    private Token getTokenWithOAuth(Token t) {
         OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
 
         HttpRequest request = new HttpRequest();
