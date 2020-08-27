@@ -13,9 +13,13 @@ public class MemoryStateManager implements StateManager {
 
     private TreeMap<String, TreeNodeInfo> nodes;
 
-    @Override
-    public void put(String dir, TreeNodeInfo node) {
+    public MemoryStateManager(){
+        nodes = new TreeMap<String, TreeNodeInfo>();
+    }
 
+    @Override
+    public void put(String path, TreeNodeInfo node) {
+        nodes.put(path, node);
     }
 
     @Override
