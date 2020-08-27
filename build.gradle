@@ -26,7 +26,7 @@ ext {
 }
 
 sourceCompatibility = 1.8
-version = '0.1.3-dev.20200826'
+version = '0.1.3-SNAPSHOT'
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.

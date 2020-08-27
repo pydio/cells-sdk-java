@@ -38,44 +38,46 @@ public class CellsFs implements Fs, ContentLoader {
     public String id() {
         return this.id;
     }
+
     @Override
     public List<String> getWatches() {
         return new ArrayList<>();
     }
+
     @Override
     public void addWatch(String path) {
     }
+
     @Override
     public GetChangesResponse getChanges(GetChangeRequest request) {
-        // PSEUDO ALGORYTHM TO BEGIN WITH 
-        
+        // PSEUDO ALGORYTHM TO BEGIN WITH
+
         // String currPath = "A/B/C";
         // ArrayList<TreeNode> remotes = listRemoteNodesWithOrder("A/B/C");
         // ArrayList<TreeNode> locales = listLocaleNodesWithOrder("A/B/C");
 
-
         // for (each child) {
-        //     case leftName != rightName {
-        //         case creation
-        //         case delete
-        //     } 
-        //     case md5Left !=  md5Left {
+        // case leftName != rightName {
+        // case creation
+        // case delete
+        // }
+        // case md5Left != md5Left {
 
-        //     }
-        //     return // same
+        // }
+        // return // same
         // }
 
         // recursivly(path, path){
-        
-        //     TreeNode remote =  getRemoteState(path)
-        //     TreeNode local = getLocalState(path)
-        //     List<change> list = compareStates(remote, local)
-        //     if (list != empty){
-        //         mainList = append(List)
-        //         call(sousPath)
-        //     } esle{
-        //         return mainList
-        //     }
+
+        // TreeNode remote = getRemoteState(path)
+        // TreeNode local = getLocalState(path)
+        // List<change> list = compareStates(remote, local)
+        // if (list != empty){
+        // mainList = append(List)
+        // call(sousPath)
+        // } esle{
+        // return mainList
+        // }
         // }
         GetChangesResponse response = new GetChangesResponse();
         List<String> queue = new ArrayList<>();
@@ -87,9 +89,9 @@ public class CellsFs implements Fs, ContentLoader {
             try {
                 List<Tree> localList = this.stateManager.getState(currentPath).children();
                 List<Tree> remoteList = this.sortedRemoteTree(currentPath);
-                for (Tree rTree: remoteList) {
+                for (Tree rTree : remoteList) {
                     boolean found = false;
-                    for (Tree lTree: localList) {
+                    for (Tree lTree : localList) {
                         int compResult = rTree.getName().compareTo(lTree.getName());
 
                         if (compResult == 0) {
@@ -125,9 +127,9 @@ public class CellsFs implements Fs, ContentLoader {
                         response.addChange(change);
                     }
                 }
-                for (Tree lTree: localList) {
+                for (Tree lTree : localList) {
                     boolean found = false;
-                    for (Tree rTree: remoteList) {
+                    for (Tree rTree : remoteList) {
                         int compResult = lTree.getName().compareTo(rTree.getName());
                         if (compResult == 0) {
                             found = true;
@@ -159,22 +161,27 @@ public class CellsFs implements Fs, ContentLoader {
         response.setSuccess(true);
         return response;
     }
+
     @Override
     public ProcessChangeResponse processChange(ProcessChangeRequest request) {
         return null;
     }
+
     @Override
     public ContentLoader getContentLoader() {
         return this;
     }
+
     @Override
     public boolean receivesEvents() {
         return false;
     }
+
     @Override
     public boolean sendsEvents() {
         return true;
     }
+
     @Override
     public Content getContent(String nodeId) {
         return new PydioRemoteFileContent(cells, workspace, nodeId);
@@ -193,7 +200,7 @@ public class CellsFs implements Fs, ContentLoader {
             sorterContainer.put(n.label(), t);
         });
         Set<String> sortedKeys = sorterContainer.keySet();
-        for (String key: sortedKeys) {
+        for (String key : sortedKeys) {
             sortedList.add(sorterContainer.get(key));
         }
         return sortedList;

@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * MemoryTree is a representation of node tree in memory
- * It provides methods to get node ETag, name and children.
+ * MemoryTree is a representation of node tree in memory. It provides methods to
+ * get node ETag, name and children.
  */
 public class MemoryTree implements Tree {
 
@@ -55,18 +55,22 @@ public class MemoryTree implements Tree {
     public long getLastEdit() {
         return 0;
     }
+
     @Override
     public long getSize() {
         return size;
     }
+
     @Override
     public boolean isLeaf() {
         return isLeaf;
     }
+
     @Override
     public String getETag() {
         return eTag;
     }
+
     @Override
     public String getName() {
         return name;
@@ -79,6 +83,7 @@ public class MemoryTree implements Tree {
     public String getEncoded() {
         return encoded;
     }
+
     @Override
     public List<Tree> children() {
         List<Tree> trees = new ArrayList<>();

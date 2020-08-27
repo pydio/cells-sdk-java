@@ -7,13 +7,13 @@ import java.util.List;
 import com.pydio.sdk.sync.Error;
 
 public class GetChangesResponse {
+    
     private List<Change> changes;
     private long lastSeq;
     private boolean success;
     private Error error;
 
-
-    public GetChangesResponse(){
+    public GetChangesResponse() {
         this.success = true;
     }
 
@@ -26,7 +26,7 @@ public class GetChangesResponse {
     }
 
     public void addChange(Change change) {
-        if(this.changes == null){
+        if (this.changes == null) {
             this.changes = new ArrayList<>();
         }
         this.changes.add(change);

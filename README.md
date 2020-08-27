@@ -90,7 +90,11 @@ try {
 
 ## Examples
 
-Find more examples in [our sample package](./tree/master/src/main/java/com/pydio/sdk/examples).
+Find more examples in [our sample package](./tree/master/src/main/java/com/pydio/sdk/examples) and in the [tests](./tree/master/src/test/java/com/pydio/sdk).
+
+## Legacy note
+
+This reposirtory has been forked from [this legacy repo in Pydio's code base](https://github.com/pydio/pydio-sdk-java-v2).
 
 ## For buidler / maintainer only
 
@@ -120,3 +124,5 @@ cd $GIT_PATH/github.com/pydio/cells-sdk-java/src/main/java/com/pydio/sdk/core/ap
 mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/sdk/core/api/cells .
 
 ```
+
+

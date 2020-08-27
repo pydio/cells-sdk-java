@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
- * Perform basic tests against a running Cells instance. You must first adapt config.properties files to your context
+ * Performs basic tests against a running Cells instance. You must first adapt config.properties files to your context
  * and set the skipTest flag to false.
  * 
  * You can then launch the test with:
@@ -34,7 +34,7 @@ public class BasicConnectionTest {
     private String serverURL, login, pwd, workspace;
 
     @Before
-    public void setupThis() {
+    public void setup() {
 
         Properties p = new Properties();
         try (InputStream is = BasicConnectionTest.class.getResourceAsStream("/config.properties")) {
@@ -69,7 +69,7 @@ public class BasicConnectionTest {
 
     // @Ignore("not yet ready , Please ignore.")
     @Test
-    public void method() {
+    public void testBasicCRUD() {
 
         if (skipTests){
             return;
@@ -104,7 +104,7 @@ public class BasicConnectionTest {
     }
 
     @After
-    public void tearThis() {
+    public void teardown() {
         // do nothing
     }
 
