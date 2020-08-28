@@ -16,7 +16,6 @@ import com.pydio.sdk.sync.changes.ProcessChangeRequest;
 import com.pydio.sdk.sync.changes.ProcessChangeResponse;
 import com.pydio.sdk.sync.content.PydioRemoteFileContent;
 import com.pydio.sdk.sync.tree.StateManager;
-import com.pydio.sdk.core.model.BasicTreeNodeInfo;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -364,7 +363,7 @@ public class CellsFs implements Fs, ContentLoader {
         List<TreeNodeInfo> sortedList = new ArrayList<>();
         TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
         this.cells.ls(this.workspace, path, (n) -> {
-            BasicTreeNodeInfo t = new BasicTreeNodeInfo();
+            TreeNodeInfo t = new TreeNodeInfo();
             t.setPath(n.path());
             t.setETag("");
             t.setSize(Long.parseLong(n.getProperty(Pydio.NODE_PROPERTY_BYTESIZE)));

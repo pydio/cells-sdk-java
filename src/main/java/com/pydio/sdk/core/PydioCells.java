@@ -1,6 +1,32 @@
 package com.pydio.sdk.core;
 
 import com.google.gson.Gson;
+import com.squareup.okhttp.OkHttpClient;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.cert.X509Certificate;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import javax.net.ssl.SSLContext;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import org.apache.commons.codec.binary.Base64;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.xml.sax.helpers.DefaultHandler;
+
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
 import com.pydio.sdk.core.api.cells.api.FrontendServiceApi;
@@ -11,7 +37,6 @@ import com.pydio.sdk.core.api.cells.api.TreeServiceApi;
 import com.pydio.sdk.core.api.cells.api.UserMetaServiceApi;
 import com.pydio.sdk.core.api.cells.model.IdmSearchUserMetaRequest;
 import com.pydio.sdk.core.api.cells.model.IdmUpdateUserMetaRequest;
-import com.pydio.sdk.core.api.cells.model.IdmUpdateUserMetaResponse;
 import com.pydio.sdk.core.api.cells.model.IdmUserMeta;
 import com.pydio.sdk.core.api.cells.model.RestBulkMetaResponse;
 import com.pydio.sdk.core.api.cells.model.RestCreateNodesRequest;
@@ -19,7 +44,6 @@ import com.pydio.sdk.core.api.cells.model.RestDeleteNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestFrontSessionRequest;
 import com.pydio.sdk.core.api.cells.model.RestFrontSessionResponse;
 import com.pydio.sdk.core.api.cells.model.RestGetBulkMetaRequest;
-import com.pydio.sdk.core.api.cells.model.RestHeadNodeResponse;
 import com.pydio.sdk.core.api.cells.model.RestNodesCollection;
 import com.pydio.sdk.core.api.cells.model.RestPutShareLinkRequest;
 import com.pydio.sdk.core.api.cells.model.RestRestoreNodesRequest;
@@ -63,38 +87,7 @@ import com.pydio.sdk.core.security.Credentials;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.Params;
 import com.pydio.sdk.core.utils.io;
-import com.squareup.okhttp.OkHttpClient;
-import java.nio.file.Paths;
-
-import com.pydio.sdk.core.model.BasicTreeNodeInfo;
 import com.pydio.sdk.core.model.TreeNodeInfo;
-
-import org.apache.commons.codec.binary.Base64;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.X509Certificate;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.net.ssl.SSLContext;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 public class PydioCells implements Client {
 
@@ -184,8 +177,6 @@ public class PydioCells implements Client {
         }
     }
 
-
-
     private Token getTokenWithOAuth(Token t) {
         OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
 
@@ -265,12 +256,12 @@ public class PydioCells implements Client {
         return (fullPath + file).replace("//", "/");
     }
 
-    public static TreeNodeInfo toTreeNodeinfo(TreeNode node){
+    public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
         boolean isLeaf = node.getType() == TreeNodeType.LEAF;
         // TODO manage size and last edit
-        long size = 0 ;//node.getSize(), 
-        long lastEdit  = 0 ; // node.getMtime()
-        return  new BasicTreeNodeInfo(node.getEtag(), node.getPath(), isLeaf , size, lastEdit);
+        long size = 0;// node.getSize(),
+        long lastEdit = 0; // node.getMtime()
+        return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
     }
 
     private FileNode toFileNode(TreeNode node) {
@@ -641,7 +632,7 @@ public class PydioCells implements Client {
             throw new SDKException(e);
         }
 
-        if (response != null && response.getNodes() != null ) {
+        if (response != null && response.getNodes() != null) {
             Iterator<TreeNode> nodes = response.getNodes().iterator();
             while (nodes.hasNext()) {
                 handler.onNode(nodes.next());
