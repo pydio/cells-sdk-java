@@ -60,180 +60,48 @@ public class CellsFs implements Fs, ContentLoader {
 
     @Override
     public GetChangesResponse getChanges(GetChangeRequest request) {
-        // PSEUDO ALGORYTHM TO BEGIN WITH
 
-        // String currPath = "A/B/C";
-        // ArrayList<TreeNode> remotes = listRemoteNodesWithOrder("A/B/C");
-        // ArrayList<TreeNode> locales = listLocaleNodesWithOrder("A/B/C");
-
-        // for (each child) {
-        // case leftName != rightName {
-        // case creation
-        // case delete
-        // }
-        // case md5Left != md5Left {
-
-        // }
-        // return // same
-        // }
-
-        // recursivly(path, path){
-
-        // TreeNode remote = getRemoteState(path)
-        // TreeNode local = getLocalState(path)
-        // List<change> list = compareStates(remote, local)
-        // if (list != empty){
-        // mainList = append(List)
-        // call(sousPath)
-        // } esle{
-        // return mainList
-        // }
-        // }
+        TreeMap<String, Change> changes = null;
         GetChangesResponse response = new GetChangesResponse();
-        List<String> queue = new ArrayList<>();
-        queue.add(request.getPath());
+        try {
+            changes = getRawChanges(request.getPath());
+        } catch (SDKException e) {
+            e.printStackTrace();
+            Error error = new Error();
+            error.setCode(e.code);
+            error.setDetails(e.cause.getMessage());
+            response.setError(error);
+            return response;
+        }
 
-        while (queue.size() > 0) {
-            String currentPath = queue.remove(0);
+        // TODO: handle flatten changes
 
-            try {
-
-                TreeNodeInfo local = stateManager.get(currentPath);
-                TreeNodeInfo remote = this.cells.statNode(CellsPath.fullPath(workspace, currentPath));
-                if (local != null && remote != null && remote.getETag().equals(local.getETag())) {
-                    // current node is already cached in local with same ETAG, nothing to do.
-                    continue;
-                }
-
-                // TreeNode local = this.stateManager.getState(currentPath);
-                // TreeNode remote = this.sortedRemoteTree(currentPath);
-
-                List<TreeNodeInfo> localList = null; // this.stateManager.getState(currentPath).children();
-                List<TreeNodeInfo> remoteList = this.sortedRemoteChildren(currentPath);
-
-                for (TreeNodeInfo rTree : remoteList) {
-                    boolean found = false;
-                    for (TreeNodeInfo lTree : localList) {
-                        int compResult = rTree.getName().compareTo(lTree.getName());
-
-                        if (compResult == 0) {
-                            // label are the same
-                            found = true;
-                            // TODO ETAG
-                            // ETag comparison suits better here
-                            if (rTree.getSize() != lTree.getSize() || rTree.getLastEdit() != lTree.getLastEdit()) {
-                                if (rTree.isLeaf()) {
-                                    String path = currentPath + "/" + rTree.getName();
-                                    Change change = new Change();
-                                    change.setType(Change.TYPE_CONTENT);
-                                    change.setSource(path);
-                                    change.setTarget(path);
-                                    response.addChange(change);
-
-                                } else {
-                                    String dirFullPath = currentPath + "/" + rTree.getName();
-                                    queue.add(dirFullPath);
-                                }
-                            }
-                            break;
-                        } else if (compResult > 0) {
-                            //
-                            break;
-                        }
-                    }
-
-                    if (!found) {
-                        String path = currentPath + "/" + rTree.getName();
-                        Change change = new Change();
-                        change.setType(Change.TYPE_CREATE);
-                        change.setTarget(path);
-                        response.addChange(change);
-                    }
-                }
-                for (TreeNodeInfo lTree : localList) {
-                    boolean found = false;
-                    for (TreeNodeInfo rTree : remoteList) {
-                        int compResult = lTree.getName().compareTo(rTree.getName());
-                        if (compResult == 0) {
-                            found = true;
-                            break;
-                        } else if (compResult > 0) {
-                            break;
-                        }
-                    }
-
-                    if (!found) {
-                        String path = currentPath + "/" + lTree.getName();
-                        Change change = new Change();
-                        change.setType(Change.TYPE_DELETE);
-                        change.setSource(path);
-                        change.setTarget(path);
-                        response.addChange(change);
-                    }
-                }
-
-            } catch (SDKException e) {
-                e.printStackTrace();
-                Error error = new Error();
-                error.setCode(e.code);
-                error.setDetails(e.cause.getMessage());
-                response.setError(error);
-                return response;
-            }
+        Iterator<Change> it = changes.descendingMap().values().iterator();
+        while (it.hasNext()) {
+            response.addChange(it.next());
         }
         response.setSuccess(true);
+
         return response;
-    }
-
-    private boolean isUnchanged(String fullPath) throws SDKException {
-
-        TreeNodeInfo remote = cells.statNode(fullPath);
-        TreeNodeInfo local = stateManager.get(fullPath);
-
-        if (local == null && remote == null) {
-            return true;
-        } else if (remote == null || local == null) {
-            return false;
-        } 
-        
-        String remoteEtag = remote.getETag();
-        String localEtag =local.getETag() ;
-        return (remoteEtag != null) && remoteEtag.equals(localEtag);
-
-        // if (remote.getETag().equals()) {
-        //     // current node is already cached in local with same ETAG, nothing to do.
-        //     continue;
-        // } else if (remote != null && remote.isLeaf()) { // Happens when with compute change on a full workspace
-        //     if (local == null) {
-        //         addCreateChange(pathQueue, changes, remote);
-        //     } else {
-        //         addUpdateChange(pathQueue, changes, remote);
-        //         // We should rather record a delete and a create we begin to flatten the
-        //         // changes.
-        //     }
-        //     continue;
-        // }
-
     }
 
     /**
      * Compute a list of changes for a given path within the current implicit
      * workspace
      */
-    public TreeMap<String, Change> getRawChanges(String innerWsPath) throws SDKException {
+    TreeMap<String, Change> getRawChanges(String innerWsPath) throws SDKException {
 
         String basePath = CellsPath.fullPath(workspace, innerWsPath);
-        
+
         // ordered by ETag, Type, Path? to ease flatten.
         TreeMap<String, Change> changes = new TreeMap<>();
 
         List<String> pathQueue = new ArrayList<>();
-        if (!isUnchanged(basePath)){
+        if (!isUnchanged(basePath)) {
             pathQueue.add(basePath);
         }
 
         // TODO Manage case when base path points toward a file.
-
 
         while (pathQueue.size() > 0) {
             String currPath = pathQueue.remove(0);
@@ -248,7 +116,7 @@ public class CellsFs implements Fs, ContentLoader {
 
                 if (local == null) {
                     addPutChange(changes, Change.TYPE_CREATE, remote);
-                    if (!remote.isLeaf()){
+                    if (!remote.isLeaf()) {
                         pathQueue.add(remote.getPath());
                     }
                     continue;
@@ -264,22 +132,24 @@ public class CellsFs implements Fs, ContentLoader {
                     }
 
                     if (order > 0) {
-                        // last local was smaller than next remote, no more potential matches for
-                        // potential next remotes.
+                        // last local is smaller than next remote, no more matches for any next remote
                         local = null;
                     } else if (order == 0) {
-                        if (remote.getETag() != null && remote.getETag().equals(local.getETag())) {// Found a match, no change to report.
+                        if (remote.getETag() != null && remote.getETag().equals(local.getETag())) {
+                            // Found a match, no change to report.
                             local = lit.hasNext() ? lit.next() : null;
                             continue;
-                        } else { // Same name different etag
+                        } else {
+                            // Same name but different Etag => update.
+                            // TODO: Handle type switch
                             addPutChange(changes, Change.TYPE_CONTENT, remote);
-                            if (!remote.isLeaf()){
+                            if (!remote.isLeaf()) {
                                 pathQueue.add(remote.getPath());
                             }
                         }
                     } else {
                         addPutChange(changes, Change.TYPE_CREATE, remote);
-                        if (!remote.isLeaf()){
+                        if (!remote.isLeaf()) {
                             pathQueue.add(remote.getPath());
                         }
                         continue;
@@ -300,14 +170,10 @@ public class CellsFs implements Fs, ContentLoader {
     }
 
     private void addPutChange(TreeMap<String, Change> changes, String type, TreeNodeInfo remote) {
-
-        // We gather changes for both file and folder to insure ETag is tored by the state manager
-
-        // TODO handle corner case when a node at a given path has changed from folder
-        // to file or the contrary
+        // Gather changes for file & folder to insure ETag is stored by the statemanager
         Change change = new Change();
         change.setType(type);
-        change.setTarget("NULL");
+        change.setSource("NULL");
         change.setTarget(remote.getPath());
         ChangeNode node = new ChangeNode();
         node.setWorkspace(this.workspace);
@@ -329,31 +195,21 @@ public class CellsFs implements Fs, ContentLoader {
         changes.put(local.getPath(), change);
     }
 
-    // private void addUpdateChange(List<String> pathQueue, TreeMap<String, Change> changes, TreeNodeInfo remote) {
+    private boolean isUnchanged(String fullPath) throws SDKException {
 
+        TreeNodeInfo remote = cells.statNode(fullPath);
+        TreeNodeInfo local = stateManager.get(fullPath);
 
-    //     Change change = new Change();
-    //     change.setType(Change.TYPE_CONTENT);
-    //     change.setTarget("NULL");
-    //     change.setTarget(remote.getPath());
+        if (local == null && remote == null) {
+            return true;
+        } else if (remote == null || local == null) {
+            return false;
+        }
 
-    //     // Also transmit a change for folders so that the state manager knows he must
-    //     // put the ETag
-    //     ChangeNode node = new ChangeNode();
-    //     node.setWorkspace(this.workspace);
-    //     node.setPath(remote.getPath());
-    //     node.setmTime(remote.getLastEdit());
-    //     node.setMd5(remote.getETag());
-    //     if (remote.isLeaf()) {
-    //         node.setSize(remote.getSize());
-    //     } else {
-    //         // Directory created => walk inside to provide a change for each child
-    //         // recursively.
-    //         pathQueue.add(remote.getPath());
-    //     }
-    //     change.setNode(node);
-    //     changes.put(remote.getPath(), change);
-    // }
+        String remoteEtag = remote.getETag();
+        String localEtag = local.getETag();
+        return (remoteEtag != null) && remoteEtag.equals(localEtag);
+    }
 
     @Override
     public ProcessChangeResponse processChange(ProcessChangeRequest request) {
@@ -366,6 +222,11 @@ public class CellsFs implements Fs, ContentLoader {
     }
 
     @Override
+    public Content getContent(String nodeId) {
+        return new PydioRemoteFileContent(cells, workspace, nodeId);
+    }
+
+    @Override
     public boolean receivesEvents() {
         return false;
     }
@@ -375,50 +236,14 @@ public class CellsFs implements Fs, ContentLoader {
         return true;
     }
 
-    @Override
-    public Content getContent(String nodeId) {
-        return new PydioRemoteFileContent(cells, workspace, nodeId);
-    }
-
-    private List<TreeNodeInfo> sortedRemoteChildren(String path) throws SDKException {
-        List<TreeNodeInfo> sortedList = new ArrayList<>();
-        TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
-        this.cells.ls(this.workspace, path, (n) -> {
-            TreeNodeInfo t = new TreeNodeInfo();
-            t.setPath(n.path());
-            t.setETag("");
-            t.setSize(Long.parseLong(n.getProperty(Pydio.NODE_PROPERTY_BYTESIZE)));
-            // TODO retrieve ETAG from node
-            t.setLeaf("true".equals(n.getProperty(Pydio.NODE_PROPERTY_IS_FILE)));
-            sorterContainer.put(n.label(), t);
-        });
-        Set<String> sortedKeys = sorterContainer.keySet();
-        for (String key : sortedKeys) {
-            sortedList.add(sorterContainer.get(key));
-        }
-        return sortedList;
-    }
-
-    private Set<String> listChildrenPath(String fullPath) throws SDKException {
-        TreeMap<String, String> sorterContainer = new TreeMap<>();
-        cells.listChildren(fullPath, (n) -> {
-            sorterContainer.put(n.getPath(), n.getPath());
-        });
-        return sorterContainer.keySet();
-    }
-
     private Collection<TreeNodeInfo> listChildren(String fullPath) throws SDKException {
         TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
 
-        try {
-            cells.listChildren(fullPath, (n) -> {
-                sorterContainer.put(n.getPath(), PydioCells.toTreeNodeinfo(n));
-            });
-            return sorterContainer.values();
-        } catch (SDKException e) {
-            System.out.println("could not get children: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        cells.listChildren(fullPath, (n) -> {
+            sorterContainer.put(n.getPath(), PydioCells.toTreeNodeinfo(n));
+        });
+
+        return sorterContainer.values();
     }
+
 }

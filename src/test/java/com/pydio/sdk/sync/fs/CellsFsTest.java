@@ -1,6 +1,7 @@
 package com.pydio.sdk.sync.fs;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +14,7 @@ import com.pydio.sdk.examples.Credentials;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.TreeMap;
 
@@ -20,7 +22,6 @@ import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
 import com.pydio.sdk.sync.tree.MemoryStateManager;
 import com.pydio.sdk.core.PydioCells;
-import static com.pydio.sdk.core.utils.CellsPath.fullPath;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
@@ -103,15 +104,29 @@ public class CellsFsTest {
 
             System.out.println("... Listing raw changes at root:");
             TreeMap<String, Change> changes = cellsFs.getRawChanges("/");
-            for (String key : changes.keySet()){
-                System.out.println(key + " - " + changes.get(key).getType());
+            for (String key : changes.keySet()) {
+                System.out.println(changes.get(key).getType() + " - " + key);
             }
 
             System.out.println("... Listing raw changes under 'parent' folder:");
             changes = cellsFs.getRawChanges("parent");
-            for (String key : changes.keySet()){
-                System.out.println(key + " - " + changes.get(key).getType());
+            for (String key : changes.keySet()) {
+                System.out.println(changes.get(key).getType() + " - " + key);
             }
+
+            System.out.println("... High Level listing of changes at root:");
+            GetChangeRequest req = new GetChangeRequest();
+            req.setPath("/");
+            GetChangesResponse response = cellsFs.getChanges(req);
+            Assert.assertTrue(response.isSuccess());
+
+            Iterator<Change> cIt = response.getChanges().iterator();
+            while (cIt.hasNext()) {
+                Change ch = cIt.next();
+                String path = Change.TYPE_CREATE.equals(ch.getType()) || Change.TYPE_CONTENT.equals(ch.getType()) ? ch.getTarget() : ch.getSource();
+                System.out.println(ch.getType() + " - " + path);
+            }
+
         } catch (SDKException e) {
             e.printStackTrace();
             // TODO: handle exception
