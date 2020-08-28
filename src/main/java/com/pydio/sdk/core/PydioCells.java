@@ -65,7 +65,6 @@ import com.pydio.sdk.core.utils.io;
 import com.squareup.okhttp.OkHttpClient;
 import java.nio.file.Paths;
 
-import com.pydio.sdk.core.model.BasicTreeNodeInfo;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 
 import org.apache.commons.codec.binary.Base64;
@@ -548,7 +547,7 @@ public class PydioCells implements Client {
         TreeNode node = internalStatNode(fullPath);
         if (node != null) {
             Boolean isLeaf = node.getType().equals(TreeNodeType.LEAF);
-            return new BasicTreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, 0);
+            return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, 0);
         } else {
             return null;
         }

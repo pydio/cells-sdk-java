@@ -1,16 +1,80 @@
 package com.pydio.sdk.core.model;
 
-public interface TreeNodeInfo {
+import com.google.gson.Gson;
 
-    String getETag();
+import static com.pydio.sdk.core.utils.CellsPath.nameFromFullPath;
 
-    String getName();
+public class TreeNodeInfo {
 
-    String getPath();
+    private String eTag;
+    private long size;
+    private long lastEdit;
+    private String name;
+    private String path;
+    private boolean isLeaf;
 
-    boolean isLeaf();
+    public TreeNodeInfo() {
+    }
 
-    long getSize();
+    public TreeNodeInfo(String eTag, String path, boolean isLeaf, long size, long lastEdit) {
+        this.eTag = eTag;
+        this.path = path;
+        this.name = nameFromFullPath(path);
+        this.isLeaf = isLeaf;
+        this.size = size;
+        this.lastEdit = lastEdit;
+    }
 
-    long getLastEdit();
+    public void setETag(String eTag) {
+        this.eTag = eTag;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+        this.name = nameFromFullPath(path);
+    }
+
+    public void setLeaf(boolean leaf) {
+        isLeaf = leaf;
+    }
+
+    public void setLastEdit(long lastEdit) {
+        this.lastEdit = lastEdit;
+    }
+
+    public long getLastEdit() {
+        return lastEdit;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public boolean isLeaf() {
+        return isLeaf;
+    }
+
+    public String getETag() {
+        return eTag;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String encoded() {
+        return new Gson().toJson(this);
+    }
+
+    public static TreeNodeInfo fromEncoded(String encoded) {
+        return new Gson().fromJson(encoded, TreeNodeInfo.class);
+    }
 }
