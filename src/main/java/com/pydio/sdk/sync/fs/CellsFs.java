@@ -4,6 +4,7 @@ import com.pydio.sdk.core.Pydio;
 import com.pydio.sdk.core.PydioCells;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Change;
+import com.pydio.sdk.core.model.ChangeNode;
 import com.pydio.sdk.sync.Error;
 import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
@@ -260,16 +261,23 @@ public class CellsFs implements Fs, ContentLoader {
             }
         }
         return changes;
-
     }
 
     private void addCreateChange(List<String> pathQueue, TreeMap<String, Change> changes, TreeNodeInfo remote) {
         Change change = new Change();
         change.setType(Change.TYPE_CREATE);
+        change.setTarget("NULL");
         change.setTarget(remote.getPath());
 
         if (remote.isLeaf()) {
             // File Created Change
+            ChangeNode node = new ChangeNode();
+            node.setPath(remote.getPath());
+            node.setSize(remote.getSize());
+            node.setmTime(remote.getLastEdit());
+            node.setMd5(remote.getETag());
+            node.setWorkspace(this.workspace);
+            change.setNode(node);
         } else {
             // Directory created change
             pathQueue.add(remote.getPath());
@@ -282,6 +290,7 @@ public class CellsFs implements Fs, ContentLoader {
         Change change = new Change();
         change.setType(Change.TYPE_DELETE);
         change.setSource(local.getPath());
+        change.setTarget("NULL");
         changes.put(local.getPath(), change);
     }
 
