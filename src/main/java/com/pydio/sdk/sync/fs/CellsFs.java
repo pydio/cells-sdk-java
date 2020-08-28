@@ -274,7 +274,18 @@ public class CellsFs implements Fs, ContentLoader {
             // Directory created change
             pathQueue.add(remote.getPath());
         }
+
+        changes.put(remote.getPath(), change);
     }
+   
+    private void addDeleteChange(List<String> pathQueue, TreeMap<String, Change> changes, TreeNodeInfo local) {
+        Change change = new Change();
+        change.setType(Change.TYPE_DELETE);
+        change.setSource(local.getPath());
+        changes.put(local.getPath(), change);
+    }
+
+
     private void addUpdateChange(List<String> pathQueue, TreeMap<String, Change> changes, TreeNodeInfo remote) {
         
         throw new RuntimeException("TODO implement");
@@ -290,12 +301,6 @@ public class CellsFs implements Fs, ContentLoader {
         // }
     }
 
-    private void addDeleteChange(List<String> pathQueue, TreeMap<String, Change> changes, TreeNodeInfo local) {
-        Change change = new Change();
-        change.setType(Change.TYPE_DELETE);
-        change.setSource(local.getPath());
-        changes.put(local.getPath(), change);
-    }
 
     @Override
     public ProcessChangeResponse processChange(ProcessChangeRequest request) {

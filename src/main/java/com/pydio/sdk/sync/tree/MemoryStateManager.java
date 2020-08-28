@@ -29,10 +29,10 @@ public class MemoryStateManager implements StateManager {
         return nodes.get(path);
     }
 
-    @Override
-    public void update(String path, TreeNodeInfo node) {
-        nodes.put(path, node);
-    }
+    // @Override
+    // public void update(String path, TreeNodeInfo node) {
+    //     nodes.put(path, node);
+    // }
 
     @Override
     public void remove(String path) {
