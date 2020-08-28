@@ -73,7 +73,6 @@ public class CellsFsTest {
         cellsClient.setSkipOAuthFlag(true);
 
         cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
-
     }
 
     @Test
@@ -95,25 +94,28 @@ public class CellsFsTest {
 
     @Test
     public void testGetChange() {
-
         if (skipTests) {
             return;
         }
-        System.out.println("... Test GetChanges");
         // GetChangeRequest req = new GetChangeRequest();
         // req.setPath("/");
         try {
-            TreeMap<String, Change> changes = cellsFs.getRawChanges("/");
 
+            System.out.println("... Listing raw changes at root:");
+            TreeMap<String, Change> changes = cellsFs.getRawChanges("/");
             for (String key : changes.keySet()){
-                System.out.println(key + "" + changes.get(key).getType());
+                System.out.println(key + " - " + changes.get(key).getType());
             }
 
+            System.out.println("... Listing raw changes under 'parent' folder:");
+            changes = cellsFs.getRawChanges("parent");
+            for (String key : changes.keySet()){
+                System.out.println(key + " - " + changes.get(key).getType());
+            }
         } catch (SDKException e) {
             e.printStackTrace();
             // TODO: handle exception
         }
-
     }
 
     @After

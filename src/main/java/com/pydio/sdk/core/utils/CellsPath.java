@@ -9,9 +9,9 @@ public class CellsPath {
     public static String fullPath(String workspace, String path) {
         StringBuilder sb = new StringBuilder(workspace);
         if ("/".equals(path)) {
-            return sb.append("/").toString();
+            return sb.toString();
         } else {
-            sb.append("/").append(path).toString().replace("//", "/");
+            sb.append("/").append(path).toString();
             return sb.toString();
         }
     }
