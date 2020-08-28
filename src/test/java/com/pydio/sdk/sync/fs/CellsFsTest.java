@@ -3,7 +3,10 @@ package com.pydio.sdk.sync.fs;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.ServerNode;
+import com.pydio.sdk.core.utils.CellsPath;
 import com.pydio.sdk.core.common.errors.Error;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.examples.Credentials;
@@ -11,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.TreeMap;
+
 import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
 import com.pydio.sdk.sync.tree.MemoryStateManager;
@@ -81,7 +86,7 @@ public class CellsFsTest {
         System.out.println("... Test CellsClient");
 
         try {
-            cellsClient.statNode(fullPath(workspace, "test"));
+            cellsClient.statNode(CellsPath.fullPath(workspace, "test"));
         } catch (SDKException e) {
             // TODO: handle exception
         }
@@ -94,13 +99,20 @@ public class CellsFsTest {
         if (skipTests) {
             return;
         }
-
         System.out.println("... Test GetChanges");
+        // GetChangeRequest req = new GetChangeRequest();
+        // req.setPath("/");
+        try {
+            TreeMap<String, Change> changes = cellsFs.getRawChanges("/");
 
-        GetChangeRequest req = new GetChangeRequest();
-        req.setPath("/");
-        GetChangesResponse resp = cellsFs.getChanges(req);
-        System.out.println(" Found " + resp.getChanges().size() + " change(s)");
+            for (String key : changes.keySet()){
+                System.out.println(key + "" + changes.get(key).getType());
+            }
+
+        } catch (SDKException e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }
 
     }
 

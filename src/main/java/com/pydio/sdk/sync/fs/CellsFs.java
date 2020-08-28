@@ -2,6 +2,8 @@ package com.pydio.sdk.sync.fs;
 
 import com.pydio.sdk.core.Pydio;
 import com.pydio.sdk.core.PydioCells;
+import com.pydio.sdk.core.api.cells.model.TreeNode;
+import com.pydio.sdk.core.api.cells.model.TreeNodeType;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.ChangeNode;
@@ -17,6 +19,7 @@ import com.pydio.sdk.sync.tree.StateManager;
 import com.pydio.sdk.core.model.BasicTreeNodeInfo;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -196,7 +199,7 @@ public class CellsFs implements Fs, ContentLoader {
 
         if ("/".equals(path)) {
             // Workspace's root nodes have no ETags, go one level deeper
-            pathQueue.addAll(listChildrenPath(workspace, "/"));
+            pathQueue.addAll(listChildrenPath(workspace));
         } else {
             pathQueue.add(CellsPath.fullPath(workspace, path));
         }
@@ -209,9 +212,18 @@ public class CellsFs implements Fs, ContentLoader {
             if (local != null && remote != null && remote.getETag().equals(local.getETag())) {
                 // current node is already cached in local with same ETAG, nothing to do.
                 continue;
+            } else if (remote != null && remote.isLeaf()) { // Happens when with compute change on a full workspace
+                if (local == null) {
+                    addCreateChange(pathQueue, changes, remote);
+                } else {
+                    addUpdateChange(pathQueue, changes, remote);
+                    // We should rather record a delete and a create we begin to flatten the
+                    // changes.
+                }
+                continue;
             }
 
-            Iterator<TreeNodeInfo> rit = sortedRemoteChildren(currPath).iterator();
+            Iterator<TreeNodeInfo> rit = listChildren(currPath).iterator();
             Iterator<TreeNodeInfo> lit = stateManager.getChildren(currPath).iterator();
 
             local = lit.hasNext() ? lit.next() : null;
@@ -252,12 +264,12 @@ public class CellsFs implements Fs, ContentLoader {
             }
 
             // Delete remaining local nodes that have name greater than the last remote node
-            if (local != null){
-                addDeleteChange (pathQueue, changes, local);
+            if (local != null) {
+                addDeleteChange(pathQueue, changes, local);
             }
             while (lit.hasNext()) {
                 local = lit.next();
-                addDeleteChange (pathQueue, changes, local);
+                addDeleteChange(pathQueue, changes, local);
             }
         }
         return changes;
@@ -269,23 +281,24 @@ public class CellsFs implements Fs, ContentLoader {
         change.setTarget("NULL");
         change.setTarget(remote.getPath());
 
+        // Also transmit a change for folders so that the state manager knows he must
+        // put the etag
+        ChangeNode node = new ChangeNode();
+        node.setWorkspace(this.workspace);
+        node.setPath(remote.getPath());
+        node.setmTime(remote.getLastEdit());
+        node.setMd5(remote.getETag());
         if (remote.isLeaf()) {
-            // File Created Change
-            ChangeNode node = new ChangeNode();
-            node.setPath(remote.getPath());
             node.setSize(remote.getSize());
-            node.setmTime(remote.getLastEdit());
-            node.setMd5(remote.getETag());
-            node.setWorkspace(this.workspace);
-            change.setNode(node);
         } else {
-            // Directory created change
+            // Directory created => walk inside to provide a change for each child
+            // recursively.
             pathQueue.add(remote.getPath());
         }
-
+        change.setNode(node);
         changes.put(remote.getPath(), change);
     }
-   
+
     private void addDeleteChange(List<String> pathQueue, TreeMap<String, Change> changes, TreeNodeInfo local) {
         Change change = new Change();
         change.setType(Change.TYPE_DELETE);
@@ -294,22 +307,33 @@ public class CellsFs implements Fs, ContentLoader {
         changes.put(local.getPath(), change);
     }
 
-
     private void addUpdateChange(List<String> pathQueue, TreeMap<String, Change> changes, TreeNodeInfo remote) {
-        
-        throw new RuntimeException("TODO implement");
-        // Change change = new Change();
-        // change.setType(Change.TYPE_CREATE);
-        // change.setTarget(remote.getPath());
 
-        // if (remote.isLeaf()) {
-        //     // File Created Change
-        // } else {
-        //     // Directory created change
-        //     pathQueue.add(remote.getPath());
-        // }
+        // TODO handle corner case when a node at a given path has changed from folder
+        // to file or the contrary
+
+        Change change = new Change();
+        change.setType(Change.TYPE_CONTENT);
+        change.setTarget("NULL");
+        change.setTarget(remote.getPath());
+
+        // Also transmit a change for folders so that the state manager knows he must
+        // put the ETag
+        ChangeNode node = new ChangeNode();
+        node.setWorkspace(this.workspace);
+        node.setPath(remote.getPath());
+        node.setmTime(remote.getLastEdit());
+        node.setMd5(remote.getETag());
+        if (remote.isLeaf()) {
+            node.setSize(remote.getSize());
+        } else {
+            // Directory created => walk inside to provide a change for each child
+            // recursively.
+            pathQueue.add(remote.getPath());
+        }
+        change.setNode(node);
+        changes.put(remote.getPath(), change);
     }
-
 
     @Override
     public ProcessChangeResponse processChange(ProcessChangeRequest request) {
@@ -355,11 +379,27 @@ public class CellsFs implements Fs, ContentLoader {
         return sortedList;
     }
 
-    private Set<String> listChildrenPath(String workspace, String parentPath) throws SDKException {
+    private Set<String> listChildrenPath(String fullPath) throws SDKException {
         TreeMap<String, String> sorterContainer = new TreeMap<>();
-        this.cells.ls(workspace, parentPath, (n) -> {
-            sorterContainer.put(n.path(), n.path());
+        cells.listChildren(fullPath, (n) -> {
+            sorterContainer.put(n.getPath(), n.getPath());
         });
         return sorterContainer.keySet();
+    }
+
+    private Collection<TreeNodeInfo> listChildren(String fullPath) throws SDKException {
+        TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
+        
+        try{
+            cells.listChildren(fullPath, (n) -> {
+                System.out.println("child: " + n.getPath());
+                sorterContainer.put(n.getPath(), PydioCells.toTreeNodeinfo(n));
+            });
+            return sorterContainer.values(); 
+        } catch (SDKException e){
+            System.out.println("could not get children: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

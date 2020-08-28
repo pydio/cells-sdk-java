@@ -8,11 +8,12 @@ public class BasicTreeNodeInfo implements TreeNodeInfo {
     private String name;
     private String path;
     private boolean isLeaf;
+    private long lastEdit; 
 
     public BasicTreeNodeInfo() {
     }
 
-    public BasicTreeNodeInfo(String eTag, String path, boolean isLeaf, long size) {
+    public BasicTreeNodeInfo(String eTag, String path, boolean isLeaf, long size, long lastEdit) {
         this.eTag = eTag;
         this.path = path;
         this.name = nameFromFullPath(path);
@@ -39,7 +40,7 @@ public class BasicTreeNodeInfo implements TreeNodeInfo {
 
     @Override
     public long getLastEdit() {
-        return 0;
+        return lastEdit;
     }
 
     @Override

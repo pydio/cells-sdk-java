@@ -43,6 +43,7 @@ import com.pydio.sdk.core.common.callback.ChangeHandler;
 import com.pydio.sdk.core.common.callback.NodeHandler;
 import com.pydio.sdk.core.common.callback.RegistryItemHandler;
 import com.pydio.sdk.core.common.callback.TransferProgressListener;
+import com.pydio.sdk.core.common.callback.cells.TreeNodeHandler;
 import com.pydio.sdk.core.common.errors.Code;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.common.http.HttpClient;
@@ -87,6 +88,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +137,7 @@ public class PydioCells implements Client {
                 if (!skipOAuth && this.serverNode.supportsOauth()) {
                     if (t != null) {
                         t = getTokenWithOAuth(t);
-                        if (t != null && this.tokenStore != null ) {
+                        if (t != null && this.tokenStore != null) {
                             this.tokenStore.set(t);
                         }
                     }
@@ -181,6 +183,8 @@ public class PydioCells implements Client {
             }
         }
     }
+
+
 
     private Token getTokenWithOAuth(Token t) {
         OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
@@ -259,6 +263,14 @@ public class PydioCells implements Client {
         String fullPath = "";
         fullPath += ws;
         return (fullPath + file).replace("//", "/");
+    }
+
+    public static TreeNodeInfo toTreeNodeinfo(TreeNode node){
+        boolean isLeaf = node.getType() == TreeNodeType.LEAF;
+        // TODO manage size and last edit
+        long size = 0 ;//node.getSize(), 
+        long lastEdit  = 0 ; // node.getMtime()
+        return  new BasicTreeNodeInfo(node.getEtag(), node.getPath(), isLeaf , size, lastEdit);
     }
 
     private FileNode toFileNode(TreeNode node) {
@@ -546,12 +558,7 @@ public class PydioCells implements Client {
 
     public TreeNodeInfo statNode(String fullPath) throws SDKException {
         TreeNode node = internalStatNode(fullPath);
-        if (node != null) {
-            Boolean isLeaf = node.getType().equals(TreeNodeType.LEAF);
-            return new BasicTreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, 0);
-        } else {
-            return null;
-        }
+        return node != null ? toTreeNodeinfo(node) : null;
     }
 
     private TreeNode internalStatNode(String ws, String path) throws SDKException {
@@ -615,6 +622,31 @@ public class PydioCells implements Client {
             }
         }
         return result;
+    }
+
+    public void listChildren(String fullPath, TreeNodeHandler handler) throws SDKException {
+
+        RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
+        request.addNodePathsItem(fullPath + "/*");
+        request.setAllMetaProviders(true);
+
+        this.getJWT();
+        ApiClient client = getApiClient();
+        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
+        TreeServiceApi api = new TreeServiceApi(client);
+        RestBulkMetaResponse response;
+        try {
+            response = api.bulkStatNodes(request);
+        } catch (ApiException e) {
+            throw new SDKException(e);
+        }
+
+        if (response != null && response.getNodes() != null ) {
+            Iterator<TreeNode> nodes = response.getNodes().iterator();
+            while (nodes.hasNext()) {
+                handler.onNode(nodes.next());
+            }
+        }
     }
 
     @Override
