@@ -2,7 +2,6 @@ package com.pydio.sdk.sync.tree;
 
 import java.util.List;
 
-import com.pydio.sdk.core.model.BasicTreeNodeInfo;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 
 import org.junit.Assert;
@@ -25,7 +24,7 @@ public class MemoryStateManagerTest {
 
     @Test
     public void testBasicCrud() {
-        manager.put("common-ws/", new BasicTreeNodeInfo("eTag", "common-ws/", false, 0, 0));
+        manager.put("common-ws/", new TreeNodeInfo("eTag", "common-ws/", false, 0, 0));
         TreeNodeInfo rootInfo = manager.get("common-ws/");
         Assert.assertEquals(rootInfo.getName(), "/");
         Assert.assertEquals(rootInfo.getPath(), "common-ws/");
@@ -35,14 +34,14 @@ public class MemoryStateManagerTest {
 
     @Test
     public void testGetChildren() {
-        manager.put("common-ws/", new BasicTreeNodeInfo("eTag", "common-ws/", false, 0, 0));
-        manager.put("common-ws/parent", new BasicTreeNodeInfo("eTag", "common-ws/parent", false, 0, 0));
-        manager.put("common-ws/parent/child", new BasicTreeNodeInfo("eTag2", "common-ws/parent/child", false, 0, 0));
-        manager.put("common-ws/parent/child/node.txt", new BasicTreeNodeInfo("eTag2", "common-ws/parent/child/node.txt", false, 0, 0));
-        manager.put("common-ws/parent/child/greatchild", new BasicTreeNodeInfo("eTag3", "common-ws/parent/child/greatchild", false, 0, 0));
-        manager.put("common-ws/parent/childother", new BasicTreeNodeInfo("eTag4", "common-ws/parent/childother", false, 0, 0));
-        manager.put("common-ws/parent/child2", new BasicTreeNodeInfo("eTag5", "common-ws/parent/child2", false, 0, 0));
-        manager.put("common-ws/parent/child3", new BasicTreeNodeInfo("eTag6", "common-ws/parent/child3", false, 0, 0));
+        manager.put("common-ws/", new TreeNodeInfo("eTag", "common-ws/", false, 0, 0));
+        manager.put("common-ws/parent", new TreeNodeInfo("eTag", "common-ws/parent", false, 0, 0));
+        manager.put("common-ws/parent/child", new TreeNodeInfo("eTag2", "common-ws/parent/child", false, 0, 0));
+        manager.put("common-ws/parent/child/node.txt", new TreeNodeInfo("eTag2", "common-ws/parent/child/node.txt", false, 0, 0));
+        manager.put("common-ws/parent/child/greatchild", new TreeNodeInfo("eTag3", "common-ws/parent/child/greatchild", false, 0, 0));
+        manager.put("common-ws/parent/childother", new TreeNodeInfo("eTag4", "common-ws/parent/childother", false, 0, 0));
+        manager.put("common-ws/parent/child2", new TreeNodeInfo("eTag5", "common-ws/parent/child2", false, 0, 0));
+        manager.put("common-ws/parent/child3", new TreeNodeInfo("eTag6", "common-ws/parent/child3", false, 0, 0));
 
         TreeNodeInfo nodeInfo = manager.get("common-ws/parent/child");
         Assert.assertEquals(nodeInfo.getName(), "child");
