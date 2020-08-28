@@ -20,6 +20,12 @@ public class DummyExample {
     @Test
     public void method() {
         org.junit.Assert.assertTrue(new ArrayList().isEmpty());
+        int order = "b".compareTo("c");
+        int order2 = "d".compareTo("c");
+        int order3 = "D".compareTo("c");
+        System.out.println("Order: " + order);
+        System.out.println("Order2: " + order2);
+        System.out.println("Order3: " + order3);
     }
 
     @After
