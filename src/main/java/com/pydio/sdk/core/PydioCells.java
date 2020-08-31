@@ -258,9 +258,8 @@ public class PydioCells implements Client {
 
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
         boolean isLeaf = node.getType() == TreeNodeType.LEAF;
-        // TODO manage size and last edit
-        long size = 0;// node.getSize(),
-        long lastEdit = 0; // node.getMtime()
+        long size = Long.parseLong(node.getSize());
+        long lastEdit = Long.parseLong(node.getMtime());  
         return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
     }
 

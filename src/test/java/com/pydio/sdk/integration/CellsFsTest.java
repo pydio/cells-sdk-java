@@ -84,15 +84,10 @@ public class CellsFsTest {
                 System.out.println("Found a node at " + fp);
                 System.out.println(tni.getETag());
                 System.out.println(tni.getLastEdit());
-
             }
-
-            
-
         } catch (SDKException e) {
             // TODO: handle exception
         }
-
     }
 
     @Test
