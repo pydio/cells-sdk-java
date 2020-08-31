@@ -3,15 +3,16 @@
 /build
 /bin
 
-# VSCode
+# Various IDE Specific files
+#VSCode
 .project
 .vscode
-
 # JIdea
-local.properties
 *.iml
 .idea/
-
 # Eclipse
 .classpath
 .settings/
+
+# Stores credentials and setup info: do NOT commit this file.
+local.properties

@@ -1,4 +1,4 @@
-package com.pydio.sdk.examples;
+package com.pydio.sdk.integration;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +10,7 @@ import com.pydio.sdk.core.Client;
 import com.pydio.sdk.core.ClientFactory;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Message;
+import com.pydio.sdk.examples.Credentials;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,18 +20,17 @@ import java.util.Properties;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * config.properties files to your context and set the skipTest flag to false.
+ * the "src/test/resources/config.properties" file to match your setup.
  * 
  * You can then launch the test with:
  * 
- * <code>gradle test --rerun-tasks  --tests com.pydio.sdk.examples.BasicConnectionTest -i</code>
+ * <code>./gradlew build -Dtest.profile=integration</code>
  */
 public class BasicConnectionTest {
 
     private ServerNode node;
     private Client cellsClient;
 
-    private Boolean skipTests = true;
     private String serverURL, login, pwd, workspace;
 
     @Before
@@ -39,7 +39,6 @@ public class BasicConnectionTest {
         Properties p = new Properties();
         try (InputStream is = BasicConnectionTest.class.getResourceAsStream("/config.properties")) {
             p.load(new InputStreamReader(is));
-            skipTests = !("false".equals(p.getProperty("skipIntegrationTests")));
             serverURL = p.getProperty("serverURL");
             login = p.getProperty("login");
             pwd = p.getProperty("pwd");
@@ -50,10 +49,6 @@ public class BasicConnectionTest {
             return;
         }
 
-        if (skipTests) {
-            System.out.println("... SkipTests flag is set => skipping BasicConnectionTest");
-            return;
-        }
 
         node = new ServerNode();
         Error error = node.resolve(serverURL);
@@ -70,10 +65,6 @@ public class BasicConnectionTest {
     // @Ignore("not yet ready , Please ignore.")
     @Test
     public void testBasicCRUD() {
-
-        if (skipTests) {
-            return;
-        }
 
         System.out.println("... Test Listing");
         try {

@@ -89,7 +89,7 @@ public class CellsFs implements Fs, ContentLoader {
      * Compute a list of changes for a given path within the current implicit
      * workspace
      */
-    TreeMap<String, Change> getRawChanges(String innerWsPath) throws SDKException {
+    public TreeMap<String, Change> getRawChanges(String innerWsPath) throws SDKException {
 
         String basePath = CellsPath.fullPath(workspace, innerWsPath);
 
@@ -101,7 +101,7 @@ public class CellsFs implements Fs, ContentLoader {
             pathQueue.add(basePath);
         }
 
-        // TODO Manage case when base path points toward a file.
+        // TODO Manage case when base path points toward a file
 
         while (pathQueue.size() > 0) {
             String currPath = pathQueue.remove(0);

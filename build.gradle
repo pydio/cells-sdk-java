@@ -147,3 +147,10 @@ jar {
                    'Implementation-Version': project.version)
     }
 }
+
+
+test {
+    if (System.properties['test.profile'] != 'integration') {
+    exclude '**/integration/*'
+   }
+}

@@ -1,4 +1,4 @@
-package com.pydio.sdk.sync.fs;
+package com.pydio.sdk.integration;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,9 +7,11 @@ import org.junit.Test;
 
 import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.ServerNode;
+import com.pydio.sdk.core.model.TreeNodeInfo;
 import com.pydio.sdk.core.utils.CellsPath;
 import com.pydio.sdk.core.common.errors.Error;
 import com.pydio.sdk.core.common.errors.SDKException;
+import com.pydio.sdk.sync.fs.CellsFs;
 import com.pydio.sdk.examples.Credentials;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,11 +27,11 @@ import com.pydio.sdk.core.PydioCells;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * config.properties files to your context and set the skipTest flag to false.
+ * the "src/test/resources/config.properties" file to match your setup.
  * 
  * You can then launch the test with:
  * 
- * <code>gradle test --rerun-tasks  --tests com.pydio.sdk.examples.BasicConnectionTest -i</code>
+ * <code>./gradlew build -Dtest.profile=integration</code>
  */
 public class CellsFsTest {
 
@@ -37,7 +39,6 @@ public class CellsFsTest {
     private PydioCells cellsClient;
     private CellsFs cellsFs;
 
-    private Boolean skipTests = true;
     private String serverURL, login, pwd, workspace;
 
     @Before
@@ -46,7 +47,6 @@ public class CellsFsTest {
         Properties p = new Properties();
         try (InputStream is = CellsFsTest.class.getResourceAsStream("/config.properties")) {
             p.load(new InputStreamReader(is));
-            skipTests = !("false".equals(p.getProperty("skipIntegrationTests")));
             serverURL = p.getProperty("serverURL");
             login = p.getProperty("login");
             pwd = p.getProperty("pwd");
@@ -54,11 +54,6 @@ public class CellsFsTest {
         } catch (IOException e) {
             System.out.println("could not retrieve configuration file, cause: ");
             System.out.println(e);
-            return;
-        }
-
-        if (skipTests) {
-            System.out.println("... SkipTests flag is set => skipping BasicConnectionTest");
             return;
         }
 
@@ -79,14 +74,21 @@ public class CellsFsTest {
     @Test
     public void testCellsClient() {
 
-        if (skipTests) {
-            return;
-        }
-
         System.out.println("... Test CellsClient");
 
         try {
-            cellsClient.statNode(CellsPath.fullPath(workspace, "test"));
+            String fp = CellsPath.fullPath(workspace, "parent");
+            TreeNodeInfo tni = cellsClient.statNode(fp);
+            
+            if (tni != null ){
+                System.out.println("Found a node at " + fp);
+                System.out.println(tni.getETag());
+                System.out.println(tni.getLastEdit());
+
+            }
+
+            
+
         } catch (SDKException e) {
             // TODO: handle exception
         }
@@ -95,9 +97,6 @@ public class CellsFsTest {
 
     @Test
     public void testGetChange() {
-        if (skipTests) {
-            return;
-        }
         // GetChangeRequest req = new GetChangeRequest();
         // req.setPath("/");
         try {
@@ -123,7 +122,9 @@ public class CellsFsTest {
             Iterator<Change> cIt = response.getChanges().iterator();
             while (cIt.hasNext()) {
                 Change ch = cIt.next();
-                String path = Change.TYPE_CREATE.equals(ch.getType()) || Change.TYPE_CONTENT.equals(ch.getType()) ? ch.getTarget() : ch.getSource();
+                String path = Change.TYPE_CREATE.equals(ch.getType()) || Change.TYPE_CONTENT.equals(ch.getType())
+                        ? ch.getTarget()
+                        : ch.getSource();
                 System.out.println(ch.getType() + " - " + path);
             }
 
