@@ -22,6 +22,10 @@ public class FileNode implements Node {
         return "false".equals(mime);
     }
 
+    public String getETag() {
+        return properties.getProperty(Pydio.NODE_PROPERTY_ETAG);
+    }
+
     public long lastModified() {
         try {
             return Long.parseLong(properties.getProperty(Pydio.NODE_PROPERTY_AJXP_MODIFTIME));
@@ -112,50 +116,43 @@ public class FileNode implements Node {
         boolean instanceOfNode = o instanceof Node;
         return instanceOfNode && !(compare((Node) o) == different);
     }
-
-    // *********************************************************************************************
-    // Super class: NODE METHODS
-    // *********************************************************************************************
+    @Override
     public String label() {
         return properties.getProperty(Pydio.NODE_PROPERTY_TEXT);
     }
-
+    @Override
     public String path() {
         return properties.getProperty(Pydio.NODE_PROPERTY_FILENAME);
     }
-
+    @Override
     public String getProperty(String name) {
         return properties.getProperty(name);
     }
-
+    @Override
     public int type() {
         return Node.TYPE_REMOTE_NODE;
     }
-
     @Override
     public String id() {
         return properties.getProperty(Pydio.NODE_PROPERTY_UUID);
     }
-
+    @Override
     public void setProperty(String key, String value) {
         if (properties == null) {
             properties = new Properties();
         }
         properties.put(key, value);
     }
-
     @Override
     public void deleteProperty(String key) {
         if (properties != null) {
             properties.remove(key);
         }
     }
-
     @Override
     public void setProperties(Properties p) {
         this.properties = p;
     }
-
     @Override
     public int compare(Node node) {
         if (node == null) {
@@ -179,7 +176,6 @@ public class FileNode implements Node {
 
         return different;
     }
-
     @Override
     public String getEncodedHash() {
         if (properties == null) {
@@ -187,7 +183,6 @@ public class FileNode implements Node {
         }
         return properties.getProperty(Pydio.NODE_PROPERTY_ENCODED_HASH);
     }
-
     @Override
     public String getEncoded() {
         if (properties == null) {

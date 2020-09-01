@@ -46,6 +46,7 @@ public class Pydio {
     public final static String NODE_PROPERTY_IMAGE_TYPE = "image_type";
     public final static String NODE_PROPERTY_IMAGE_THUMB_PATHS = "image_thumb_url_prefix";
     public final static String NODE_PROPERTY_LABEL = "label";
+    public final static String NODE_PROPERTY_ETAG = "etag";
     public final static String NODE_PROPERTY_WORKSPACE_ID = "workspace_id";
     public final static String NODE_PROPERTY_WORKSPACE_UUID = "workspace_id";
     public final static String NODE_PROPERTY_WORKSPACE_SLUG = "workspace_slug";
