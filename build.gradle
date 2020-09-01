@@ -22,9 +22,10 @@ localProperties.load(new FileInputStream(rootProject.file("local.properties")));
 
 def sdkVersion = '0.1.3-SNAPSHOT'
 
+sourceCompatibility = 1.8
+
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
-    sourceCompatibility = 1.8
 }
 
 // Also publish sources and Javadoc
