@@ -91,9 +91,6 @@ public class GetChangesTest {
         } catch (Exception e) {
             Assert.fail("Simple change test throws an error");
             e.printStackTrace();
-        } catch (SDKException e) {
-            Assert.fail("Simple change test throws an error");
-            e.printStackTrace();
         }
     }
 
