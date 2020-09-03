@@ -20,7 +20,7 @@ public class CecWrapper {
         String prepareCmd = Paths.get(basePath, "prepare-cec.sh").toString();
 
         try {
-            ProcessBuilder builder = new ProcessBuilder(prepareCmd, basePath);
+            ProcessBuilder builder = new ProcessBuilder(prepareCmd, TestClient.getOS(), basePath);
             builder.redirectErrorStream(true);
             Process process = builder.start();
 
