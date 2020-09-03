@@ -38,8 +38,15 @@ public class CellsFsTest {
     private ServerNode node;
     private PydioCells cellsClient;
     private CellsFs cellsFs;
+    private CecWrapper cec;
 
     private String serverURL, login, pwd, workspace;
+
+    @Before
+    public void setupCellsClient() {
+        cec = new CecWrapper();
+        cec.setUpCec();
+    }
 
     @Before
     public void setup() {
@@ -69,24 +76,36 @@ public class CellsFsTest {
         cellsClient.setSkipOAuthFlag(true);
 
         cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
+
+    }
+
+    @Test
+    public void testCecBasic() {
+        try {
+            cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test");
+            cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test2");
+            cec.callCommand("ls", workspace + "/from-cec");
+            cec.callCommand("rm", "-f", workspace + "/from-cec-tmp");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testCellsClient() {
-
         System.out.println("... Test CellsClient");
-
         try {
             String fp = CellsPath.fullPath(workspace, "parent");
             TreeNodeInfo tni = cellsClient.statNode(fp);
-            
-            if (tni != null ){
+
+            if (tni != null) {
                 System.out.println("Found a node at " + fp);
                 System.out.println(tni.getETag());
                 System.out.println(tni.getLastEdit());
             }
+
         } catch (SDKException e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 
