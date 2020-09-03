@@ -4,7 +4,10 @@ import com.pydio.sdk.core.api.cells.ApiException;
 
 import java.io.IOException;
 
-public class SDKException extends Throwable {
+@SuppressWarnings("serial")
+    
+public class SDKException extends Exception {
+    
     public int code;
     public Exception cause;
 

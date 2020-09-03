@@ -2,21 +2,15 @@ package com.pydio.sdk.integration;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.pydio.sdk.core.model.ServerNode;
-import com.pydio.sdk.core.common.errors.Error;
-import com.pydio.sdk.core.Client;
-import com.pydio.sdk.core.ClientFactory;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Message;
-import com.pydio.sdk.examples.Credentials;
+import com.pydio.sdk.sync.tree.MemoryStateManager;
+import com.pydio.sdk.sync.tree.StateManager;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Properties;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
@@ -28,47 +22,45 @@ import java.util.Properties;
  */
 public class BasicConnectionTest {
 
-    private ServerNode node;
-    private Client cellsClient;
-
-    private String serverURL, login, pwd, workspace;
+    private TestClient testClient;
+    private StateManager stateManager;
 
     @Before
     public void setup() {
-
-        Properties p = new Properties();
-        try (InputStream is = BasicConnectionTest.class.getResourceAsStream("/config.properties")) {
-            p.load(new InputStreamReader(is));
-            serverURL = p.getProperty("serverURL");
-            login = p.getProperty("login");
-            pwd = p.getProperty("pwd");
-            workspace = p.getProperty("defaultWorkspace");
-        } catch (IOException e) {
-            System.out.println("could not retrieve configuration file, cause: ");
-            System.out.println(e);
-            return;
-        }
-
-
-        node = new ServerNode();
-        Error error = node.resolve(serverURL);
-        if (error != null) {
-            System.out.println("Could not resolve server URL, cause: ");
-            System.out.println(error);
-        }
-
-        cellsClient = ClientFactory.get().Client(node);
-        cellsClient.setCredentials(new Credentials(login, pwd));
-        cellsClient.setSkipOAuthFlag(true);
+        stateManager = new MemoryStateManager();
+        testClient = new TestClient();
+        testClient.setup(stateManager);
     }
 
-    // @Ignore("not yet ready , Please ignore.")
+
+    @After
+    public void teardown() {
+        // do nothing
+    }
+
+
+    @Test
+    public void testSimpleList() {
+        String ws = testClient.getDefaultWorkspace();
+        System.out.println("... Test Listing");
+        try {
+            testClient.getCellsClient().ls(ws, "/",
+                    (node) -> System.out.println(node.label()));
+        } catch (SDKException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Ignore("Enable after implementing crud from Java")
     @Test
     public void testBasicCRUD() {
 
+        String ws = testClient.getDefaultWorkspace();
+        // Skipped test: CRUD is not yet implemented from Java
         System.out.println("... Test Listing");
         try {
-            cellsClient.ls(workspace, "/", (node) -> System.out.println(node.label()));
+            testClient.getCellsClient().ls(ws, "/",
+                    (node) -> System.out.println(node.label()));
         } catch (SDKException e) {
             e.printStackTrace();
         }
@@ -79,7 +71,7 @@ public class BasicConnectionTest {
         byte[] content = "Hello Pydio!".getBytes();
         ByteArrayInputStream source = new ByteArrayInputStream(content);
         try {
-            Message msg = cellsClient.upload(source, content.length, workspace, targetDir, name, true, (progress) -> {
+            Message msg = testClient.getCellsClient().upload(source, content.length, ws, targetDir, name, true, (progress) -> {
                 System.out.printf("\r%d bytes written\n", progress);
                 return false;
             });
@@ -93,11 +85,6 @@ public class BasicConnectionTest {
 
         // TODO finish implementing the CRUD and corresponding checks. Typically, for
         // the time being upload fails silently.
-    }
-
-    @After
-    public void teardown() {
-        // do nothing
     }
 
 }

@@ -197,7 +197,7 @@ public class CellsFs implements Fs, ContentLoader {
 
     private boolean isUnchanged(String fullPath) throws SDKException {
 
-        TreeNodeInfo remote = cells.statNode(fullPath);
+        TreeNodeInfo remote = cells.statOptionalNode(fullPath);
         TreeNodeInfo local = stateManager.get(fullPath);
 
         if (local == null && remote == null) {

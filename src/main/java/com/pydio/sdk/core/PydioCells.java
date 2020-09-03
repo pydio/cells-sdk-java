@@ -551,6 +551,20 @@ public class PydioCells implements Client {
         return node != null ? toTreeNodeinfo(node) : null;
     }
 
+    /** Same as {@link statNode} but rather return null than an {@link SDKException} in case the node is not found*/
+    public TreeNodeInfo statOptionalNode(String fullPath) throws SDKException {
+        TreeNode node = null;
+        try {
+            node = internalStatNode(fullPath);
+        } catch (SDKException e){
+            if (e.code != 404){
+                throw e;
+            }
+        }
+        return node != null ? toTreeNodeinfo(node) : null;
+    }
+
+
     private TreeNode internalStatNode(String ws, String path) throws SDKException {
         return internalStatNode(fullPath(ws, path));
     }
