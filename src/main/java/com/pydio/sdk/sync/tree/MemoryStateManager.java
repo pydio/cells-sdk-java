@@ -47,12 +47,12 @@ public class MemoryStateManager implements StateManager {
 
         ArrayList<TreeNodeInfo> children = new ArrayList<>();
 
-        Boolean first = true;
+        // Boolean first = true;
         for (Map.Entry<String, TreeNodeInfo> currEntry : nodes.tailMap(path).entrySet()){
-            if (first){
-                first = false;
-                continue;
-            }
+            // if (first){
+            //     first = false;
+            //     continue;
+            // }
             if (!currEntry.getKey().startsWith(path)){
                 break;
             } else if (currEntry.getKey().indexOf("/", path.length()+1) > 1){

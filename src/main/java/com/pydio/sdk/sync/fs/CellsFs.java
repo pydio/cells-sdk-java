@@ -101,7 +101,7 @@ public class CellsFs implements Fs, ContentLoader {
             pathQueue.add(basePath);
         }
 
-        // TODO Manage case when base path points toward a file
+        // TODO Manage case when base path points towards a file
 
         while (pathQueue.size() > 0) {
             String currPath = pathQueue.remove(0);
@@ -197,7 +197,7 @@ public class CellsFs implements Fs, ContentLoader {
 
     private boolean isUnchanged(String fullPath) throws SDKException {
 
-        TreeNodeInfo remote = cells.statNode(fullPath);
+        TreeNodeInfo remote = cells.statOptionalNode(fullPath);
         TreeNodeInfo local = stateManager.get(fullPath);
 
         if (local == null && remote == null) {
@@ -206,9 +206,11 @@ public class CellsFs implements Fs, ContentLoader {
             return false;
         }
 
-        String remoteEtag = remote.getETag();
-        String localEtag = local.getETag();
-        return (remoteEtag != null) && remoteEtag.equals(localEtag);
+        // We cannot rely on the ETag at root path
+        // String remoteEtag = remote.getETag();
+        // String localEtag = local.getETag();
+        // return (remoteEtag != null) && remoteEtag.equals(localEtag);
+        return false;
     }
 
     @Override

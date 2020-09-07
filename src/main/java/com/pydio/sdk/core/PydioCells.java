@@ -259,7 +259,7 @@ public class PydioCells implements Client {
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
         boolean isLeaf = node.getType() == TreeNodeType.LEAF;
         long size = Long.parseLong(node.getSize());
-        long lastEdit = Long.parseLong(node.getMtime());  
+        long lastEdit = Long.parseLong(node.getMtime());
         return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
     }
 
@@ -551,6 +551,22 @@ public class PydioCells implements Client {
         return node != null ? toTreeNodeinfo(node) : null;
     }
 
+    /**
+     * Same as {@link statNode} but rather return null than an {@link SDKException}
+     * in case the node is not found
+     */
+    public TreeNodeInfo statOptionalNode(String fullPath) throws SDKException {
+        TreeNode node = null;
+        try {
+            node = internalStatNode(fullPath);
+        } catch (SDKException e) {
+            if (e.code != 404) {
+                throw e;
+            }
+        }
+        return node != null ? toTreeNodeinfo(node) : null;
+    }
+
     private TreeNode internalStatNode(String ws, String path) throws SDKException {
         return internalStatNode(fullPath(ws, path));
     }
@@ -614,6 +630,10 @@ public class PydioCells implements Client {
         return result;
     }
 
+    /**
+     * List children of the node at {@code fullPath}. Note that it does nothing if
+     * no node is found at {@code fullPath}.
+     */
     public void listChildren(String fullPath, TreeNodeHandler handler) throws SDKException {
 
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
@@ -624,11 +644,13 @@ public class PydioCells implements Client {
         ApiClient client = getApiClient();
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
-        RestBulkMetaResponse response;
+        RestBulkMetaResponse response = null;
         try {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
-            throw new SDKException(e);
+            if (e.getCode() != 404) {
+                throw new SDKException(e);
+            }
         }
 
         if (response != null && response.getNodes() != null) {
