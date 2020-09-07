@@ -53,7 +53,7 @@ public class GetChangesTest {
         try {
 
             String ws = testClient.getDefaultWorkspace();
-            final String basePath = testClient.getUniquePath();
+            final String basePath = TestUtils.getUniquePath();
             PydioCells client = testClient.getCellsClient();
 
             // Insure there is nothing at this path
@@ -69,24 +69,43 @@ public class GetChangesTest {
             Assert.assertEquals(changes.size(), 0);
 
             // Create a basic tree
-            String currPrefix = ws + "/" + basePath + "/test";
-            String targetPrefix = "cells://" + currPrefix;
-            cec.callCommand("mkdir", "-p", currPrefix);
+            String basePrefix = ws + "/" + basePath + "/test";
+            String fullPrefix = "cells://" + basePrefix;
+            cec.callCommand("mkdir", "-p", basePrefix);
 
             String localPath = Paths.get(testClient.getWorkingDir().toString(), "images", "Logo1.png").toString();
-            cec.callCommand("scp", "-q", localPath.toString(), targetPrefix);
+            cec.callCommand("scp", "-q", localPath.toString(), fullPrefix);
             localPath = Paths.get(testClient.getWorkingDir().toString(), "images", "Logo2.png").toString();
-            cec.callCommand("scp", "-q", localPath.toString(), targetPrefix);
+            cec.callCommand("scp", "-q", localPath.toString(), fullPrefix);
             localPath = Paths.get(testClient.getWorkingDir().toString(), "images", "Logo3.png").toString();
-            cec.callCommand("scp", "-q", localPath.toString(), targetPrefix);
+            cec.callCommand("scp", "-q", localPath.toString(), fullPrefix);
 
-            cec.callCommand("ls", currPrefix);
+            cec.callCommand("ls", basePrefix);
 
             changes = testClient.getCellsFs().getRawChanges(basePath);
             Assert.assertTrue(changes.size() == 4);
+            Assert.assertTrue(changes.get(changes.firstKey()).getType() == Change.TYPE_CREATE);
+
+            // Stores in state manager
+            TestUtils.dummyProcessChanges(stateManager, changes);
+
+            // Insure the changes have been correctly stored and the next occurence of the
+            // method returns no change
+            changes = testClient.getCellsFs().getRawChanges(basePath);
+            Assert.assertTrue(changes.size() == 0);
+
+            // Delete one node and insure the change is detected
+            cec.callCommand("rm", "-f", basePrefix + "/Logo1.png");
+            changes = testClient.getCellsFs().getRawChanges(basePath);
+            Assert.assertTrue(changes.size() == 2); //
+            Assert.assertTrue(changes.get(basePrefix + "/Logo1.png") != null);
+            Assert.assertTrue(changes.get(basePrefix + "/Logo1.png").getType() == Change.TYPE_DELETE);
+            TestUtils.dummyProcessChanges(stateManager, changes);
+
+            // TODO: implement move of a file, of a folder and update of a file
 
             // Clean current workspace
-            cec.callCommand("rm", "-f", currPrefix);
+            cec.callCommand("rm", "-f", basePrefix);
 
         } catch (Exception e) {
             Assert.fail("Simple change test throws an error");

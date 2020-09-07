@@ -3,7 +3,7 @@
 PROPERTY_FILE=./config.properties
 CEC=./cells-client
 
-OS_TYPE=$1  # MAC, WIN OR LINUX 
+OS_TYPE=$1  # darwin, windows or linux 
 
 BASE_PATH=$2
 
@@ -17,9 +17,9 @@ function get_property
 cd $BASE_PATH
 
 if [ ! -f cells-client ]; then
-    if [ $OS_TYPE = "MAC" ]; then
+    if [ $OS_TYPE = "darwin" ]; then
         wget -q -Ocells-client https://download.pydio.com/latest/cells-client/release/{latest}/darwin-amd64/cec
-    elif [ $OS_TYPE = "LINUX" ]; then
+    elif [ $OS_TYPE = "linux" ]; then
         wget -q -Ocells-client https://download.pydio.com/latest/cells-client/release/{latest}/linux-amd64/cec
     else
         echo "This script only supports Linux and Mac for the time being"

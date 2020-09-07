@@ -27,8 +27,6 @@ public class TestClient {
 
     private Path workingDirPath;
 
-    private final String parentPath = "sdk-tests";
-
     private String serverURL, login, pwd, workspace;
 
     public void setup(StateManager stateManager) {
@@ -84,43 +82,5 @@ public class TestClient {
         return workingDirPath;
     }
 
-    public String getRandomPrefix() {
-        int inf = 97; // letter 'a'
-        int sup = 122; // 'z'
-        int targetStringLength = 6;
-        Random random = new Random();
-
-        String generatedString = random.ints(inf, sup + 1).limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-
-        return generatedString;
-    }
-
-    public String getUniquePath() {
-        return parentPath + "/" + getRandomPrefix();
-    }
-
-    private static String OS = System.getProperty("os.name").toLowerCase();
-
-    public static boolean isWindows() {
-        return (OS.indexOf("win") >= 0);
-    }
-
-    public static boolean isMac() {
-        return (OS.indexOf("mac") >= 0);
-    }
-
-    public static boolean isUnix() {
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
-    }
-
-    public static String getOS() {
-        if (isUnix()) {
-            return "LINUX";
-        } else if (isMac()) {
-            return "MAC";
-        } else
-            throw new RuntimeException("Unsupported");
-    }
-
+ 
 }
