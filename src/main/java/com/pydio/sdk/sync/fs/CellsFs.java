@@ -1,9 +1,6 @@
 package com.pydio.sdk.sync.fs;
 
-import com.pydio.sdk.core.Pydio;
 import com.pydio.sdk.core.PydioCells;
-import com.pydio.sdk.core.api.cells.model.TreeNode;
-import com.pydio.sdk.core.api.cells.model.TreeNodeType;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.ChangeNode;
@@ -14,14 +11,13 @@ import com.pydio.sdk.sync.content.Content;
 import com.pydio.sdk.sync.content.ContentLoader;
 import com.pydio.sdk.sync.changes.ProcessChangeRequest;
 import com.pydio.sdk.sync.changes.ProcessChangeResponse;
-import com.pydio.sdk.sync.content.PydioRemoteFileContent;
+import com.pydio.sdk.sync.content.RemoteFileContent;
 import com.pydio.sdk.sync.tree.StateManager;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
 
 import com.pydio.sdk.core.utils.CellsPath;
@@ -225,7 +221,7 @@ public class CellsFs implements Fs, ContentLoader {
 
     @Override
     public Content getContent(String nodeId) {
-        return new PydioRemoteFileContent(cells, workspace, nodeId);
+        return new RemoteFileContent(cells, workspace, nodeId);
     }
 
     @Override

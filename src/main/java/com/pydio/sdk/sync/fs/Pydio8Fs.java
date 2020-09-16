@@ -10,7 +10,7 @@ import com.pydio.sdk.sync.content.Content;
 import com.pydio.sdk.sync.content.ContentLoader;
 import com.pydio.sdk.sync.changes.ProcessChangeRequest;
 import com.pydio.sdk.sync.changes.ProcessChangeResponse;
-import com.pydio.sdk.sync.content.PydioRemoteFileContent;
+import com.pydio.sdk.sync.content.RemoteFileContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +100,6 @@ public class Pydio8Fs implements Fs, ContentLoader {
 
     @Override
     public Content getContent(String path) {
-        return new PydioRemoteFileContent(client, workspace, path);
+        return new RemoteFileContent(client, workspace, path);
     }
 }

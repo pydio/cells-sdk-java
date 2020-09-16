@@ -13,7 +13,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-public class PydioRemoteFileContent implements Content {
+public class RemoteFileContent implements Content {
 
     private Stats stats;
     private Error error;
@@ -22,7 +22,7 @@ public class PydioRemoteFileContent implements Content {
     private String ws;
     private String path;
 
-    public PydioRemoteFileContent(Client client, String ws, String path){
+    public RemoteFileContent(Client client, String ws, String path){
         this.client = client;
         this.ws = ws;
         this.path = path;
