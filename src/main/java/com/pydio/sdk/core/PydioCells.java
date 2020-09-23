@@ -1,6 +1,7 @@
 package com.pydio.sdk.core;
 
 import com.google.gson.Gson;
+import com.pydio.sdk.core.utils.PageOptions;
 import com.squareup.okhttp.OkHttpClient;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -586,7 +587,7 @@ public class PydioCells implements Client {
     }
 
     @Override
-    public FileNode ls(String ws, String folder, NodeHandler handler) throws SDKException {
+    public FileNode ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
         // request.addNodePathsItem(fullPath(ws, folder));
         if ("/".equals(folder)) {
@@ -596,6 +597,10 @@ public class PydioCells implements Client {
         }
 
         request.setAllMetaProviders(true);
+        if (options != null) {
+            request.setLimit(options.getLimit());
+            request.setOffset(options.getOffset());
+        }
 
         this.getJWT();
         ApiClient client = getApiClient();
@@ -604,6 +609,13 @@ public class PydioCells implements Client {
         RestBulkMetaResponse response;
         try {
             response = api.bulkStatNodes(request);
+            if( options != null) {
+                options.setLimit(response.getPagination().getLimit());
+                options.setOffset(response.getPagination().getCurrentOffset());
+                options.setTotal(response.getPagination().getTotal());
+                options.setCurrentPage(response.getPagination().getCurrentPage());
+                options.setTotalPages(response.getPagination().getTotalPages());
+            }
         } catch (ApiException e) {
             throw new SDKException(e);
         }

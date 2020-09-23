@@ -32,12 +32,10 @@ public class BasicConnectionTest {
         testClient.setup(stateManager);
     }
 
-
     @After
     public void teardown() {
         // do nothing
     }
-
 
     @Test
     public void testSimpleList() {
@@ -45,7 +43,7 @@ public class BasicConnectionTest {
         System.out.println("... Test Listing");
         try {
             testClient.getCellsClient().ls(ws, "/",
-                    (node) -> System.out.println(node.label()));
+                    null, (node) -> System.out.println(node.label()));
         } catch (SDKException e) {
             e.printStackTrace();
         }
@@ -60,7 +58,7 @@ public class BasicConnectionTest {
         System.out.println("... Test Listing");
         try {
             testClient.getCellsClient().ls(ws, "/",
-                    (node) -> System.out.println(node.label()));
+                    null, (node) -> System.out.println(node.label()));
         } catch (SDKException e) {
             e.printStackTrace();
         }
