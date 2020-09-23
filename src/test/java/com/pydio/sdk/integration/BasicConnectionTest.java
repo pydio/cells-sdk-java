@@ -32,12 +32,10 @@ public class BasicConnectionTest {
         testClient.setup(stateManager);
     }
 
-
     @After
     public void teardown() {
         // do nothing
     }
-
 
     @Test
     public void testSimpleList() {
