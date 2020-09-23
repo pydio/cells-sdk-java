@@ -139,6 +139,7 @@ public class PydioCells implements Client {
                     ApiClient apiClient = getApiClient();
                     String password = credentials.getPassword();
                     if (password == null) {
+                        // FIXME we arrive here when we switch accounts between 2 Cells Servers ... 
                         throw new SDKException(Code.authentication_required, new IOException("no password provided"));
                     }
 
