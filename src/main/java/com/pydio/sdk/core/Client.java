@@ -11,6 +11,7 @@ import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.model.Stats;
 import com.pydio.sdk.core.auth.Token;
 import com.pydio.sdk.core.security.Credentials;
+import com.pydio.sdk.core.utils.PageOptions;
 
 import org.json.JSONObject;
 
@@ -51,7 +52,7 @@ public interface Client {
 
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
-    FileNode ls(String ws, String folder, NodeHandler handler) throws SDKException;
+    FileNode ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException;
 
     void search(String ws, String dir, String searched, NodeHandler h) throws SDKException;
 
