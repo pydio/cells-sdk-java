@@ -45,7 +45,7 @@ public class BasicConnectionTest {
         System.out.println("... Test Listing");
         try {
             testClient.getCellsClient().ls(ws, "/",
-                    (node) -> System.out.println(node.label()));
+                    null, (node) -> System.out.println(node.label()));
         } catch (SDKException e) {
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class BasicConnectionTest {
         System.out.println("... Test Listing");
         try {
             testClient.getCellsClient().ls(ws, "/",
-                    (node) -> System.out.println(node.label()));
+                    null, (node) -> System.out.println(node.label()));
         } catch (SDKException e) {
             e.printStackTrace();
         }
