@@ -597,7 +597,7 @@ public class PydioCells implements Client {
 
         request.setAllMetaProviders(true);
         if (options != null) {
-            request.setLimit(options.getItemCount());
+            request.setLimit(options.getLimit());
             request.setOffset(options.getOffset());
         }
 
@@ -608,6 +608,13 @@ public class PydioCells implements Client {
         RestBulkMetaResponse response;
         try {
             response = api.bulkStatNodes(request);
+            if( options != null) {
+                options.setLimit(response.getPagination().getLimit());
+                options.setOffset(response.getPagination().getCurrentOffset());
+                options.setTotal(response.getPagination().getTotal());
+                options.setCurrentPage(response.getPagination().getCurrentPage());
+                options.setTotalPages(response.getPagination().getTotalPages());
+            }
         } catch (ApiException e) {
             throw new SDKException(e);
         }

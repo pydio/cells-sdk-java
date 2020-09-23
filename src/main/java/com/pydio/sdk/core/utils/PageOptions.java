@@ -1,18 +1,18 @@
 package com.pydio.sdk.core.utils;
 
 public class PageOptions {
-    int itemCount;
+    int limit;
     int offset;
     int total;
     int currentPage;
-    int totalPage;
+    int totalPages;
 
-    public int getItemCount() {
-        return itemCount;
+    public int getLimit() {
+        return limit;
     }
 
-    public void setItemCount(int itemCount) {
-        this.itemCount = itemCount;
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 
     public int getOffset() {
@@ -39,11 +39,11 @@ public class PageOptions {
         this.currentPage = currentPage;
     }
 
-    public int getTotalPage() {
-        return totalPage;
+    public int getTotalPages() {
+        return totalPages;
     }
 
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
+    public void setTotalPages(int totalPage) {
+        this.totalPages = totalPage;
     }
 }
