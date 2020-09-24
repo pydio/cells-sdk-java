@@ -1,33 +1,6 @@
 package com.pydio.sdk.core;
 
 import com.google.gson.Gson;
-import com.pydio.sdk.core.utils.PageOptions;
-import com.squareup.okhttp.OkHttpClient;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.X509Certificate;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import javax.net.ssl.SSLContext;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import org.apache.commons.codec.binary.Base64;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.xml.sax.helpers.DefaultHandler;
-
 import com.pydio.sdk.core.api.cells.ApiClient;
 import com.pydio.sdk.core.api.cells.ApiException;
 import com.pydio.sdk.core.api.cells.api.FrontendServiceApi;
@@ -64,6 +37,7 @@ import com.pydio.sdk.core.api.cells.model.TreeSearchRequest;
 import com.pydio.sdk.core.api.cells.model.TreeWorkspaceRelativePath;
 import com.pydio.sdk.core.api.cells.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.sdk.core.auth.OauthConfig;
+import com.pydio.sdk.core.auth.Token;
 import com.pydio.sdk.core.common.callback.ChangeHandler;
 import com.pydio.sdk.core.common.callback.NodeHandler;
 import com.pydio.sdk.core.common.callback.RegistryItemHandler;
@@ -75,20 +49,48 @@ import com.pydio.sdk.core.common.http.HttpClient;
 import com.pydio.sdk.core.common.http.HttpRequest;
 import com.pydio.sdk.core.common.http.HttpResponse;
 import com.pydio.sdk.core.common.http.Method;
-import com.pydio.sdk.core.model.WorkspaceNode;
-import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
-import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
-import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.sdk.core.model.FileNode;
 import com.pydio.sdk.core.model.Message;
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.model.Stats;
-import com.pydio.sdk.core.auth.Token;
+import com.pydio.sdk.core.model.TreeNodeInfo;
+import com.pydio.sdk.core.model.WorkspaceNode;
+import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
+import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
+import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.sdk.core.security.Credentials;
 import com.pydio.sdk.core.utils.Log;
+import com.pydio.sdk.core.utils.PageOptions;
 import com.pydio.sdk.core.utils.Params;
 import com.pydio.sdk.core.utils.io;
-import com.pydio.sdk.core.model.TreeNodeInfo;
+import com.squareup.okhttp.OkHttpClient;
+
+import org.apache.commons.codec.binary.Base64;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.cert.X509Certificate;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.SSLContext;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 public class PydioCells implements Client {
 
@@ -130,7 +132,7 @@ public class PydioCells implements Client {
             if (shouldAskToken) {
                 if (!skipOAuth && this.serverNode.supportsOauth()) {
                     if (t != null) {
-                        t = getTokenWithOAuth(t);
+                        t = refreshOAuthToken(t);
                         if (t != null && this.tokenStore != null) {
                             this.tokenStore.set(t);
                         }
@@ -179,7 +181,7 @@ public class PydioCells implements Client {
         }
     }
 
-    private Token getTokenWithOAuth(Token t) {
+    private Token refreshOAuthToken(Token t) {
         OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
 
         HttpRequest request = new HttpRequest();
@@ -197,7 +199,8 @@ public class PydioCells implements Client {
         try {
             response = HttpClient.request(request);
         } catch (Exception e) {
-            Log.e("Cells SDK", "Refresh token request failed: " + e.getLocalizedMessage());
+            // FIXME refresh token is broken
+            Log.w("Cells SDK", "Refresh token request failed: " + e.getLocalizedMessage());
             return null;
         }
 
@@ -428,27 +431,26 @@ public class PydioCells implements Client {
             throw SDKException.malFormURI(e);
         }
 
-        HttpURLConnection con;
-        InputStream in;
+        HttpURLConnection con = null;
+        InputStream in = null;
+        SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             in = con.getInputStream();
-        } catch (IOException e) {
-            throw SDKException.conFailed(e);
-        }
-
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        try {
-            SAXParser parser = factory.newSAXParser();
-            parser.parse(in, new ServerGeneralRegistrySaxHandler(itemHandler));
-        } catch (Exception e) {
-            throw SDKException.unexpectedContent(e);
-        } finally {
             try {
-                in.close();
-            } catch (IOException ignore) {
+                SAXParser parser = factory.newSAXParser();
+                parser.parse(in, new ServerGeneralRegistrySaxHandler(itemHandler));
+            } catch (Exception e) {
+                Log.w("Connection", "could not parse registry request response");
+                throw SDKException.unexpectedContent(e);
             }
+        } catch (IOException e) {
+            Log.w("Connection", "connction error while retrieving registry");
+            throw SDKException.conFailed(e);
+        } finally {
+            try { in.close(); } catch (IOException ignore) {}
+            con.disconnect();
         }
     }
 
@@ -519,11 +521,11 @@ public class PydioCells implements Client {
             e.printStackTrace();
             throw SDKException.conFailed(e);
         }
-        String[] excluded = { Pydio.WORKSPACE_ACCESS_TYPE_CONF, Pydio.WORKSPACE_ACCESS_TYPE_SHARED,
+        String[] excluded = {Pydio.WORKSPACE_ACCESS_TYPE_CONF, Pydio.WORKSPACE_ACCESS_TYPE_SHARED,
                 Pydio.WORKSPACE_ACCESS_TYPE_MYSQL, Pydio.WORKSPACE_ACCESS_TYPE_IMAP, Pydio.WORKSPACE_ACCESS_TYPE_JSAPI,
                 Pydio.WORKSPACE_ACCESS_TYPE_USER, Pydio.WORKSPACE_ACCESS_TYPE_HOME,
                 Pydio.WORKSPACE_ACCESS_TYPE_HOMEPAGE, Pydio.WORKSPACE_ACCESS_TYPE_SETTINGS,
-                Pydio.WORKSPACE_ACCESS_TYPE_ADMIN, Pydio.WORKSPACE_ACCESS_TYPE_INBOX, };
+                Pydio.WORKSPACE_ACCESS_TYPE_ADMIN, Pydio.WORKSPACE_ACCESS_TYPE_INBOX,};
 
         try {
             NodeHandler nh = (n) -> {
@@ -554,7 +556,7 @@ public class PydioCells implements Client {
     }
 
     /**
-     * Same as {@link statNode} but rather return null than an {@link SDKException}
+     * Same as statNode() but rather return null than an {@link SDKException}
      * in case the node is not found
      */
     public TreeNodeInfo statOptionalNode(String fullPath) throws SDKException {
@@ -609,7 +611,7 @@ public class PydioCells implements Client {
         RestBulkMetaResponse response;
         try {
             response = api.bulkStatNodes(request);
-            if( options != null) {
+            if (options != null) {
                 options.setLimit(response.getPagination().getLimit());
                 options.setOffset(response.getPagination().getCurrentOffset());
                 options.setTotal(response.getPagination().getTotal());
@@ -752,13 +754,13 @@ public class PydioCells implements Client {
 
     @Override
     public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename,
-            TransferProgressListener progressListener) throws SDKException {
+                          TransferProgressListener progressListener) throws SDKException {
         return null;
     }
 
     @Override
     public Message upload(File source, String ws, String path, String name, boolean autoRename,
-            TransferProgressListener progressListener) throws SDKException {
+                          TransferProgressListener progressListener) throws SDKException {
         return null;
     }
 
@@ -1180,7 +1182,7 @@ public class PydioCells implements Client {
 
     @Override
     public String share(String ws, String uuid, String ws_label, boolean isFolder, String ws_description,
-            String password, int expiration, int download, boolean canPreview, boolean canDownload)
+                        String password, int expiration, int download, boolean canPreview, boolean canDownload)
             throws SDKException {
         RestPutShareLinkRequest request = new RestPutShareLinkRequest();
         request.createPassword(password);
@@ -1262,7 +1264,7 @@ public class PydioCells implements Client {
 
     @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
-        return delete(ws, new String[] { "/recycle_bin" });
+        return delete(ws, new String[]{"/recycle_bin"});
     }
 
     @Override
