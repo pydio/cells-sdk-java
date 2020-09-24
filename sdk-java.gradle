@@ -1,0 +1,102 @@
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+
+def vendorName = "Abstrium SAS"
+def sdkJavaRepoURL = 'https://github.com/pydio/cells-sdk-java.git'
+def bintrayRepoName = 'cells'
+def artifactID = 'cells-sdk-java'
+def sdkJavaSpecVersion = '0.1'
+def sdkJavaVersion = ownVersions['java.sdk']
+
+// Also publish sources and Javadoc
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+// Skip integration tests by default
+test {
+    if (System.properties['test.profile'] != 'integration') {
+        exclude '**/integration/*'
+    }
+}
+
+
+publishing {
+    publications {
+        CellsSdk(MavenPublication) {
+            from components.java
+            groupId 'com.pydio.cells'
+            artifactId 'cells-sdk-java'
+            version = sdkJavaVersion
+            
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Provide base java libraries to communicate with the Pydio Cells stack')
+                root.appendNode('name', 'Cells SDK for Java')
+                root.appendNode('url', 'https://pydio.com')
+
+                root.children().last() + rootProject.getBasePom(sdkJavaRepoURL)
+            }
+        }
+    }
+}
+
+bintray {
+    user = configs['bintray.user']
+    key = configs['bintray.key']
+
+    pkg {
+        repo = bintrayRepoName
+        name = artifactID
+        licenses = ['Apache-2.0']
+        vcsUrl = sdkJavaRepoURL
+
+        publications = ['CellsSdk']
+
+        // Version info
+        version {
+            name = sdkJavaVersion
+            desc = 'Refactor Cells SDK for Java to enhance build process'
+            released  = new Date()
+            vcsTag = 'v' + sdkJavaVersion
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes('Specification-Title': 'Cells SDK for Java',
+                   'Specification-Version': sdkJavaSpecVersion,
+                   'Specification-Vendor': vendorName,
+                   'Implementation-Title': artifactID,
+                   'Implementation-Vendor': vendorName,
+                   'Implementation-Version': sdkJavaVersion)
+    }
+}
+
+dependencies {
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    // api 'org.apache.commons:commons-math3:3.6.1'
+    
+    // Necessary when developping / building with a JDK 11
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+    // These dependencies are used internally and not exposed to consumers on their own compile classpath.
+    implementation 'com.metaparadigm:json-rpc:1.0'
+    implementation 'io.swagger:swagger-annotations:1.6.1'
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+    implementation 'com.squareup.okhttp:logging-interceptor:2.7.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'io.gsonfire:gson-fire:1.8.4'
+    implementation 'org.threeten:threetenbp:1.4.4'
+
+    // updating this cause JWT decoding failure
+    // implementation 'commons-codec:commons-codec:1.10'
+    implementation 'commons-codec:commons-codec:20041127.091804'
+   
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.13'
+}
