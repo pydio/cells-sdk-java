@@ -5,7 +5,6 @@ import com.pydio.sdk.core.api.cells.ApiException;
 import java.io.IOException;
 
 @SuppressWarnings("serial")
-    
 public class SDKException extends Exception {
     
     public int code;
@@ -15,18 +14,12 @@ public class SDKException extends Exception {
     }
 
     public SDKException(int code, Exception cause) {
+        this.cause = cause;
         if (cause instanceof ApiException) {
             ApiException ae = (ApiException) cause;
-            if (ae.getCode() == 401) {
-                this.code = Code.authentication_required;
-            } else {
-                this.code = Code.con_failed;
-            }
-
-            this.cause = cause;
+            this.code = ae.getCode() == 401 ? Code.authentication_required : Code.con_failed;
         } else {
             this.code = code;
-            this.cause = cause;
         }
     }
 
