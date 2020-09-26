@@ -92,7 +92,7 @@ import javax.net.ssl.SSLContext;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-public class PydioCells implements Client {
+public class CellsClient implements Client {
 
     public String URL;
     protected String bearerValue;
@@ -105,7 +105,7 @@ public class PydioCells implements Client {
     private Token.Provider tokenProvider;
     private Token.Store tokenStore;
 
-    public PydioCells(ServerNode node) {
+    public CellsClient(ServerNode node) {
         this.serverNode = node;
         this.URL = node.url();
         this.apiURL = node.apiURL();
@@ -1275,7 +1275,7 @@ public class PydioCells implements Client {
     public interface Factory {
     }
 
-    public PydioCells get(ServerNode node) {
-        return new PydioCells(node);
+    public CellsClient get(ServerNode node) {
+        return new CellsClient(node);
     }
 }

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import org.junit.Assert;
 
-import com.pydio.sdk.core.PydioCells;
+import com.pydio.sdk.core.CellsClient;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.Message;
@@ -54,7 +54,7 @@ public class GetChangesTest {
 
             String ws = testClient.getDefaultWorkspace();
             final String basePath = TestUtils.getUniquePath();
-            PydioCells client = testClient.getCellsClient();
+            CellsClient client = testClient.getCellsClient();
 
             // Insure there is nothing at this path
             try {

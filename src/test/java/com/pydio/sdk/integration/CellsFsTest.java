@@ -23,7 +23,7 @@ import java.util.TreeMap;
 import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
 import com.pydio.sdk.sync.tree.MemoryStateManager;
-import com.pydio.sdk.core.PydioCells;
+import com.pydio.sdk.core.CellsClient;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
@@ -36,7 +36,7 @@ import com.pydio.sdk.core.PydioCells;
 public class CellsFsTest {
 
     private ServerNode node;
-    private PydioCells cellsClient;
+    private CellsClient cellsClient;
     private CellsFs cellsFs;
     private CecWrapper cec;
 
@@ -71,7 +71,7 @@ public class CellsFsTest {
             System.out.println(error);
         }
 
-        cellsClient = new PydioCells(node);
+        cellsClient = new CellsClient(node);
         cellsClient.setCredentials(new Credentials(login, pwd));
         cellsClient.setSkipOAuthFlag(true);
 

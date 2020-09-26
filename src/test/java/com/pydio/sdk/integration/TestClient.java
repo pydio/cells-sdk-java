@@ -11,10 +11,9 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.Random;
 
 import com.pydio.sdk.sync.tree.StateManager;
-import com.pydio.sdk.core.PydioCells;
+import com.pydio.sdk.core.CellsClient;
 
 /**
  * Utilitary class to centralise setup of a Cells client for testing purposes.
@@ -22,7 +21,7 @@ import com.pydio.sdk.core.PydioCells;
 public class TestClient {
 
     private ServerNode node;
-    private PydioCells cellsClient;
+    private CellsClient cellsClient;
     private CellsFs cellsFs;
 
     private Path workingDirPath;
@@ -54,7 +53,7 @@ public class TestClient {
             System.out.println(error);
         }
 
-        cellsClient = new PydioCells(node);
+        cellsClient = new CellsClient(node);
         cellsClient.setCredentials(new Credentials(login, pwd));
         cellsClient.setSkipOAuthFlag(true);
 
@@ -66,7 +65,7 @@ public class TestClient {
         return node;
     }
 
-    public PydioCells getCellsClient() {
+    public CellsClient getCellsClient() {
         return cellsClient;
     }
 

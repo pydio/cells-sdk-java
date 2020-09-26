@@ -6,7 +6,7 @@ public class DefaultClientFactory extends ClientFactory {
     @Override
     public Client Client(ServerNode node) {
         if (node.versionName().contains("cells")) {
-            return new PydioCells(node);
+            return new CellsClient(node);
         }
         return new Pydio8(node);
     }
