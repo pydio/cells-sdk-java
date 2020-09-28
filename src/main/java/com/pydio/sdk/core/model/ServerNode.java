@@ -459,7 +459,7 @@ public class ServerNode implements Node {
         return trustHelper;
     }
 
-    @Deprecated(forRemoval = true)
+    @Deprecated
     public ServerNode init(String url) {
         try {
             serverURL = new URL(url);
