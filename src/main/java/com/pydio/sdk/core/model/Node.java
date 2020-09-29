@@ -13,6 +13,7 @@ public interface Node extends Serializable {
     int TYPE_BOOKMARKS = 6;
     int TYPE_ACTIVITY = 7;
     int TYPE_SELECTION = 8;
+    int TYPE_OFFLINE = 9;
 
     int same = 0;
     int content = 1;
