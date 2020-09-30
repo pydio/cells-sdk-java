@@ -5,42 +5,22 @@ import com.pydio.sdk.core.model.ServerNode;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ClientFactory {
+public class ClientFactory {
+    private static CellsClientFactory cellsDefaultFactory = new CellsClientFactory();
+    private static P8ClientFactory p8DefaultFactory = new P8ClientFactory();
 
-    final static Integer lock = 1;
-    private static ClientFactory defaultFactory;
-
-    private static Map<String, ClientFactory> namedFactories = new HashMap<>();
-
-    public static void register(String name, ClientFactory f) {
-        synchronized (lock) {
-            namedFactories.put(name, f);
-        }
+    public static void setCellsFactory(CellsClientFactory f) {
+        cellsDefaultFactory = f;
     }
 
-    public static ClientFactory named(String name) {
-        synchronized (lock) {
-            if (namedFactories.containsKey(name)) {
-                return namedFactories.get(name);
-            }
-            return namedFactories.get("default");
-        }
+    public static void setP8Factory(P8ClientFactory f) {
+        p8DefaultFactory = f;
     }
 
-    public static void register(ClientFactory f) {
-        synchronized (lock) {
-            defaultFactory = f;
+    public static Client get(ServerNode node) {
+        if (node.versionName().contains("cells")) {
+            return cellsDefaultFactory.get(node);
         }
+        return p8DefaultFactory.get(node);
     }
-
-    public static ClientFactory get() {
-        synchronized (lock) {
-            if (defaultFactory == null) {
-                defaultFactory = new DefaultClientFactory();
-            }
-            return defaultFactory;
-        }
-    }
-
-    public abstract Client Client(ServerNode node);
 }

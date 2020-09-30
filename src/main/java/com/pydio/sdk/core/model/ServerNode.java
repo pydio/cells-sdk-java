@@ -37,11 +37,8 @@ import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.TrustManager;
 
-/**
+/*
  * Wraps a server properties
- * 
- * 
- * 
  */
 public class ServerNode implements Node {
 
@@ -65,8 +62,7 @@ public class ServerNode implements Node {
     private CertificateTrust.Helper trustHelper;
     private ServerResolver serverResolver;
 
-    public ServerNode() {
-    }
+    public ServerNode() {}
 
     public static ServerNode fromAddress(String address) throws IOException {
         URL url = new URL(address);

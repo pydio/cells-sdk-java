@@ -24,7 +24,7 @@ public class Upload {
             return;
         }
 
-        Client client = ClientFactory.get().Client(node);
+        Client client = ClientFactory.get(node);
         client.setCredentials(new Credentials(login, pwd));
         client.setSkipOAuthFlag(true);
 

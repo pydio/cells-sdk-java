@@ -15,7 +15,7 @@ public class Workspaces {
             System.out.println(error);
             return;
         }
-        Client client = ClientFactory.get().Client(node);
+        Client client = ClientFactory.get(node);
         client.setCredentials(new Credentials("admin", "admin"));
         client.setSkipOAuthFlag(true);
         try {

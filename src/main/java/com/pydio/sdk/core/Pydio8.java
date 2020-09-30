@@ -47,6 +47,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.ProtocolException;
 import java.rmi.UnknownHostException;
 import java.security.cert.X509Certificate;
+import java.sql.Struct;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,7 +111,7 @@ public class Pydio8 implements Client {
 
     @Override
     public void setSkipOAuthFlag(boolean skipOAuth){
-        throw new RuntimeException("unimplemented method.");
+
     }
 
 
