@@ -171,8 +171,10 @@ public class ServerNode implements Node {
         if (err != Code.unexpected_response) {
             err = downloadBootConf("index.php?get_action=get_boot_conf");
             if (err == 0) {
+                // TODO re-enable this when support for Pydio8 backend is OK
                 //c.onComplete(new Error(Pydio.ERROR_PYDIO_8_SERVER, "found pydio 8 server", null));
-                return null;
+                // return null;
+                return new Error(Code.pydio_server_not_supported);                
             }
         }
         return new Error(err);
