@@ -263,7 +263,9 @@ public class Pydio8 implements Client {
     }
 
     @Override
-    public FileNode ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
+    public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
+        PageOptions nextOptions = new PageOptions();
+
         P8RequestBuilder builder = P8RequestBuilder.ls(ws, folder).setSecureToken(secureToken);
         while (true) {
             P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
@@ -272,8 +274,10 @@ public class Pydio8 implements Client {
                 throw SDKException.fromP8Code(code);
             }
 
+            final int[] count = {0};
             TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
                 n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
+                count[0]++;
                 handler.onNode(n);
             });
             final int resultCode = rsp.saxParse(treeHandler);
@@ -282,13 +286,13 @@ public class Pydio8 implements Client {
             }
 
             if (treeHandler.mPagination) {
-                if (!(treeHandler.mPaginationTotalPage == treeHandler.mPaginationCurrentPage)) {
+                if (treeHandler.mPaginationTotalPage != treeHandler.mPaginationCurrentPage) {
                     builder.setParam(Param.dir, folder + "%23" + (treeHandler.mPaginationCurrentPage + 1));
                 } else {
-                    return treeHandler.mRootNode;
+                    return nextOptions;
                 }
             } else {
-                return treeHandler.mRootNode;
+                return nextOptions;
             }
         }
     }

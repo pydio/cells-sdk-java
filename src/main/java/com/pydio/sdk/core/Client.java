@@ -52,7 +52,7 @@ public interface Client {
 
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
-    FileNode ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException;
+    PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException;
 
     void search(String ws, String dir, String searched, NodeHandler h) throws SDKException;
 

@@ -19,6 +19,7 @@ import com.pydio.sdk.core.api.cells.model.RestFrontSessionRequest;
 import com.pydio.sdk.core.api.cells.model.RestFrontSessionResponse;
 import com.pydio.sdk.core.api.cells.model.RestGetBulkMetaRequest;
 import com.pydio.sdk.core.api.cells.model.RestNodesCollection;
+import com.pydio.sdk.core.api.cells.model.RestPagination;
 import com.pydio.sdk.core.api.cells.model.RestPutShareLinkRequest;
 import com.pydio.sdk.core.api.cells.model.RestRestoreNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestSearchResults;
@@ -589,7 +590,10 @@ public class PydioCells implements Client {
     }
 
     @Override
-    public FileNode ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
+    public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
+
+        PageOptions nextPageOptions = new PageOptions();
+
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
         // request.addNodePathsItem(fullPath(ws, folder));
         if ("/".equals(folder)) {
@@ -611,18 +615,27 @@ public class PydioCells implements Client {
         RestBulkMetaResponse response;
         try {
             response = api.bulkStatNodes(request);
-            if (options != null) {
-                options.setLimit(response.getPagination().getLimit());
-                options.setOffset(response.getPagination().getCurrentOffset());
-                options.setTotal(response.getPagination().getTotal());
-                options.setCurrentPage(response.getPagination().getCurrentPage());
-                options.setTotalPages(response.getPagination().getTotalPages());
+            RestPagination pagination = response.getPagination();
+            if(pagination != null ) {
+                nextPageOptions.setLimit(response.getPagination().getLimit());
+                nextPageOptions.setOffset(response.getPagination().getCurrentOffset());
+                nextPageOptions.setTotal(response.getPagination().getTotal());
+                nextPageOptions.setCurrentPage(response.getPagination().getCurrentPage());
+                nextPageOptions.setTotalPages(response.getPagination().getTotalPages());
+            } else {
+                List<TreeNode> nodes = response.getNodes();
+                if (nodes != null) {
+                    nextPageOptions.setLimit(response.getNodes().size());
+                    nextPageOptions.setTotal(response.getNodes().size());
+                    nextPageOptions.setCurrentPage(1);
+                    nextPageOptions.setTotalPages(1);
+                    nextPageOptions.setOffset(0);
+                }
             }
         } catch (ApiException e) {
             throw new SDKException(e);
         }
 
-        FileNode result = null;
         List<TreeNode> nodes = response.getNodes();
         if (nodes != null) {
             for (TreeNode node : response.getNodes()) {
@@ -632,17 +645,16 @@ public class PydioCells implements Client {
                 } catch (NullPointerException ignored) {
                     continue;
                 }
+
                 if (fileNode != null) {
                     String nodePath = ("/" + node.getPath()).replace("//", "/");
-                    if (nodePath.equals(fullPath(ws, folder))) {
-                        result = fileNode;
-                    } else if (!fileNode.label().startsWith(".")) {
+                    if (!nodePath.equals(fullPath(ws, folder)) && !fileNode.label().startsWith(".")) {
                         handler.onNode(fileNode);
                     }
                 }
             }
         }
-        return result;
+        return nextPageOptions;
     }
 
     /**
