@@ -748,7 +748,6 @@ public class PydioCells implements Client {
                             if (sources != null) {
                                 TreeWorkspaceRelativePath source = sources.get(0);
                                 fileNode.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_UUID, source.getWsUuid());
-                                fileNode.properties.remove(Pydio.NODE_PROPERTY_WORKSPACE_SLUG);
                                 fileNode.setProperty(Pydio.NODE_PROPERTY_FILENAME, "/" + source.getPath());
                                 fileNode.setProperty(Pydio.NODE_PROPERTY_PATH, "/" + source.getPath());
                                 h.onNode(fileNode);
