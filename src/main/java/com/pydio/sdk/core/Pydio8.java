@@ -259,6 +259,7 @@ public class Pydio8 implements Client {
         if (resultCode != Code.ok) {
             throw SDKException.fromP8Code(resultCode);
         }
+        node[0].setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
         return node[0];
     }
 
