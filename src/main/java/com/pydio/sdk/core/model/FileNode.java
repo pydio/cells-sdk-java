@@ -112,6 +112,10 @@ public class FileNode implements Node {
         properties.remove(key);
     }
 
+    public String getWorkspaceSlug() {
+        return this.getProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG);
+    }
+
     public boolean equals(Object o) {
         boolean instanceOfNode = o instanceof Node;
         return instanceOfNode && !(compare((Node) o) == different);

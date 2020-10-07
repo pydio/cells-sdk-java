@@ -179,7 +179,7 @@ public class ServerNode implements Node {
     }
 
     private int downloadBootConf(String apiURLTail) {
-        InputStream in;
+        InputStream in = null;
         HttpURLConnection con;
 
         String apiURL = url();
@@ -258,6 +258,11 @@ public class ServerNode implements Node {
                 return Code.unreachable_host;
             }
             return Code.con_failed;
+        } finally {
+            if (in != null) {
+                io.close(in);
+            }
+            io.close(out);
         }
 
         try {

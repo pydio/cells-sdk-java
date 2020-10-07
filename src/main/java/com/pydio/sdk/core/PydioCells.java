@@ -617,16 +617,21 @@ public class PydioCells implements Client {
             response = api.bulkStatNodes(request);
             RestPagination pagination = response.getPagination();
             if(pagination != null ) {
-                nextPageOptions.setLimit(response.getPagination().getLimit());
-                nextPageOptions.setOffset(response.getPagination().getCurrentOffset());
-                nextPageOptions.setTotal(response.getPagination().getTotal());
-                nextPageOptions.setCurrentPage(response.getPagination().getCurrentPage());
-                nextPageOptions.setTotalPages(response.getPagination().getTotalPages());
+                nextPageOptions.setLimit(pagination.getLimit());
+                if(pagination.getCurrentOffset() == null) {
+                    nextPageOptions.setOffset(0);
+                } else {
+                    nextPageOptions.setOffset(pagination.getCurrentOffset());
+                }
+                nextPageOptions.setTotal(pagination.getTotal());
+                nextPageOptions.setCurrentPage(pagination.getCurrentPage());
+                nextPageOptions.setTotalPages(pagination.getTotalPages());
             } else {
                 List<TreeNode> nodes = response.getNodes();
                 if (nodes != null) {
-                    nextPageOptions.setLimit(response.getNodes().size());
-                    nextPageOptions.setTotal(response.getNodes().size());
+                    int size = nodes.size();
+                    nextPageOptions.setLimit(size);
+                    nextPageOptions.setTotal(size);
                     nextPageOptions.setCurrentPage(1);
                     nextPageOptions.setTotalPages(1);
                     nextPageOptions.setOffset(0);
