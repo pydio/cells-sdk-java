@@ -182,7 +182,7 @@ public class PydioCells implements Client {
         }
     }
 
-    private Token refreshOAuthToken(Token t) {
+    private Token refreshOAuthToken(Token t) throws SDKException {
         OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
 
         HttpRequest request = new HttpRequest();
@@ -205,16 +205,15 @@ public class PydioCells implements Client {
             return null;
         }
 
-        String jwt = null;
+        String jwt;
         try {
             jwt = response.getString();
         } catch (IOException e) {
             Log.e("Cells SDK", "Could not get response string body: " + e.getLocalizedMessage());
             e.printStackTrace();
-            return null;
+            throw new SDKException(Code.authentication_required, new IOException("refresh token failed"));
         }
 
-        System.out.println(jwt);
         try {
             t = Token.decodeOauthJWT(jwt);
         } catch (ParseException e) {
