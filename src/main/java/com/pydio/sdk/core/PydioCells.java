@@ -1198,6 +1198,7 @@ public class PydioCells implements Client {
     public String share(String ws, String uuid, String ws_label, boolean isFolder, String ws_description,
                         String password, int expiration, int download, boolean canPreview, boolean canDownload)
             throws SDKException {
+
         RestPutShareLinkRequest request = new RestPutShareLinkRequest();
         request.createPassword(password);
         request.setCreatePassword(password);

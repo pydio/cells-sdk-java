@@ -24,13 +24,13 @@ public class SDKException extends Exception {
     }
 
     public SDKException(ApiException e){
-        this.code = e.getCode();
+        this.code = Code.fromHttpStatus(e.getCode());
         this.cause = e;
     }
 
     public static SDKException fromP8Code(int p8Code) {
         SDKException e = new SDKException();
-        e.code = p8Code;
+        e.code = Code.fromHttpStatus(p8Code);
         return e;
     }
 
