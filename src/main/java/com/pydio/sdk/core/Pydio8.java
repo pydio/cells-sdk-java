@@ -85,8 +85,6 @@ public class Pydio8 implements Client {
                 login();
                 return P8RequestBuilder.update(req).setSecureToken(secureToken).getRequest();
             }
-        } catch (SDKException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -653,12 +651,11 @@ public class Pydio8 implements Client {
     @Override
     public InputStream previewData(String ws, String file, int dim) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file, dim).setSecureToken(secureToken);
-        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
-            if (rsp.code() != Code.ok) {
-                throw SDKException.fromP8Code(rsp.code());
-            }
-            return rsp.getContent();
+        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
+        if (rsp.code() != Code.ok) {
+            throw SDKException.fromP8Code(rsp.code());
         }
+        return rsp.getContent();
     }
 
     @Override
