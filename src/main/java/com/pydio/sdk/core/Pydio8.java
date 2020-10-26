@@ -153,6 +153,7 @@ public class Pydio8 implements Client {
         try (P8Response rsp = p8.execute(req)) {
             final int code = rsp.code();
             if (code != Code.ok) {
+                rsp.close();
                 throw SDKException.fromP8Code(code);
             }
 
@@ -166,14 +167,18 @@ public class Pydio8 implements Client {
                     } else {
                         loginFailure++;
                         if (result.equals("-4")) {
+                            rsp.close();
                             throw SDKException.fromP8Code(Code.authentication_with_captcha_required);
                         }
+                        rsp.close();
                         throw SDKException.fromP8Code(Code.authentication_required);
                     }
                 } else {
+                    rsp.close();
                     throw SDKException.unexpectedContent(new IOException(doc.toString()));
                 }
             } else {
+                rsp.close();
                 throw SDKException.fromP8Code(Code.authentication_required);
             }
         }
@@ -218,6 +223,7 @@ public class Pydio8 implements Client {
             }
             final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
             if (code != Code.ok) {
+                rsp.close();
                 throw SDKException.fromP8Code(code);
             }
         }
@@ -251,7 +257,6 @@ public class Pydio8 implements Client {
             }, 0, -1));
 
             if (code != Code.ok) {
-                rsp.close();
                 throw SDKException.fromP8Code(code);
             }
         }
@@ -287,10 +292,8 @@ public class Pydio8 implements Client {
                     throw SDKException.fromP8Code(code);
                 }
 
-                final int[] count = {0};
                 TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
                     n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
-                    count[0]++;
                     handler.onNode(n);
                 });
                 final int resultCode = rsp.saxParse(treeHandler);
@@ -508,7 +511,6 @@ public class Pydio8 implements Client {
             try {
                 return rsp.write(target, progressListener);
             } catch (IOException e) {
-                e.printStackTrace();
                 throw SDKException.conReadFailed(e);
             }
         }
@@ -752,9 +754,6 @@ public class Pydio8 implements Client {
 
                 try {
                     json = new JSONObject(line);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    return;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return;
