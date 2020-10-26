@@ -68,6 +68,7 @@ public class P8Client {
         P8Response response = execute(request);
         final int c = response.code();
         if (c == code) {
+            response.close();
             P8Request retryRequest = retry.update(request);
             if (retryRequest != null) {
                 response = execute(retryRequest);
