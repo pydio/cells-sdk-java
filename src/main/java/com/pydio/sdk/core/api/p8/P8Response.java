@@ -14,6 +14,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,9 +33,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-public class P8Response {
+public class P8Response implements Closeable {
     private int code;
     private InputStream concatStream;
+    private InputStream netStream;
     private HttpURLConnection con;
     private ByteArrayOutputStream buffered;
     private boolean concatDone;
@@ -169,23 +171,21 @@ public class P8Response {
 
     private InputStream getInputStream() {
         if (concatStream == null) {
-            try {
-                concatStream = new InputStream() {
-                    InputStream buffered = new ByteArrayInputStream(P8Response.this.buffered.toByteArray());
-                    InputStream in = P8Response.this.con.getInputStream();
+            concatStream = new InputStream() {
+                InputStream buffered = new ByteArrayInputStream(P8Response.this.buffered.toByteArray());
 
-                    @Override
-                    public int read() throws IOException {
-                        int read = buffered.read();
-                        if (read == -1) {
-                            read = in.read();
-                        }
-                        return read;
+                @Override
+                public int read() throws IOException {
+                    if (netStream == null) {
+                        netStream = P8Response.this.con.getInputStream();
                     }
-                };
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    int read = buffered.read();
+                    if (read == -1) {
+                        read = netStream.read();
+                    }
+                    return read;
+                }
+            };
         }
         return concatStream;
     }
@@ -286,5 +286,16 @@ public class P8Response {
                 progressListener.onProgress(progress);
             }
         });
+    }
+
+    @Override
+    public void close() {
+        if (netStream != null) {
+            io.close(netStream);
+        }
+
+        if (concatStream != null) {
+            io.close(concatStream);
+        }
     }
 }

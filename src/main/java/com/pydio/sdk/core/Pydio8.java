@@ -110,16 +110,18 @@ public class Pydio8 implements Client {
     }
 
     @Override
-    public void setSkipOAuthFlag(boolean skipOAuth){
+    public void setSkipOAuthFlag(boolean skipOAuth) {
 
     }
 
 
     @Override
-    public void setTokenProvider(Token.Provider p) {}
+    public void setTokenProvider(Token.Provider p) {
+    }
 
     @Override
-    public void setTokenStore(Token.Store s) {}
+    public void setTokenStore(Token.Store s) {
+    }
 
     @Override
     public String getUser() {
@@ -129,55 +131,58 @@ public class Pydio8 implements Client {
     @Override
     public InputStream getUserData(String binary) throws SDKException {
         P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setSecureToken(secureToken).getRequest();
-        P8Response rsp = p8.execute(req);
-
-        final int code = rsp.code();
-        if (code != Code.ok) {
-            if (code == Code.authentication_required && credentials != null && loginFailure == 0) {
-                loginFailure++;
-                login();
-                return getUserData(binary);
+        try (P8Response rsp = p8.execute(req)) {
+            final int code = rsp.code();
+            if (code != Code.ok) {
+                if (code == Code.authentication_required && credentials != null && loginFailure == 0) {
+                    loginFailure++;
+                    login();
+                    return getUserData(binary);
+                }
+                throw SDKException.fromP8Code(code);
             }
-            throw SDKException.fromP8Code(code);
+            return rsp.getContent();
         }
-        return rsp.getContent();
     }
 
     @Override
     public void login() throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.login(credentials);
         P8Request req = builder.getRequest();
-        P8Response rsp = p8.execute(req);
-        final int code = rsp.code();
-        if (code != Code.ok) {
-            throw SDKException.fromP8Code(code);
-        }
 
-        Document doc = rsp.toXMLDocument();
-        if (doc != null) {
-            if (doc.getElementsByTagName("logging_result").getLength() > 0) {
-                String result = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem("value").getNodeValue();
-                if (result.equals("1")) {
-                    secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(Param.secureToken).getNodeValue();
-                    loginFailure = 0;
-                } else {
-                    loginFailure++;
-                    if (result.equals("-4")) {
-                        throw SDKException.fromP8Code(Code.authentication_with_captcha_required);
+        try (P8Response rsp = p8.execute(req)) {
+            final int code = rsp.code();
+            if (code != Code.ok) {
+                throw SDKException.fromP8Code(code);
+            }
+
+            Document doc = rsp.toXMLDocument();
+            if (doc != null) {
+                if (doc.getElementsByTagName("logging_result").getLength() > 0) {
+                    String result = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem("value").getNodeValue();
+                    if (result.equals("1")) {
+                        secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(Param.secureToken).getNodeValue();
+                        loginFailure = 0;
+                    } else {
+                        loginFailure++;
+                        if (result.equals("-4")) {
+                            throw SDKException.fromP8Code(Code.authentication_with_captcha_required);
+                        }
+                        throw SDKException.fromP8Code(Code.authentication_required);
                     }
-                    throw SDKException.fromP8Code(Code.authentication_required);
+                } else {
+                    throw SDKException.unexpectedContent(new IOException(doc.toString()));
                 }
             } else {
-                throw SDKException.unexpectedContent(new IOException(doc.toString()));
+                throw SDKException.fromP8Code(Code.authentication_required);
             }
-        } else {
-            throw SDKException.fromP8Code(Code.authentication_required);
         }
     }
 
     @Override
     public void logout() {
-        p8.execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
+        P8Response response = p8.execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
+        response.close();
     }
 
     @Override
@@ -193,26 +198,28 @@ public class Pydio8 implements Client {
     @Override
     public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        P8Response rsp = p8.execute(builder.getRequest());
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-        final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
-        if (code != Code.ok) {
-            throw SDKException.fromP8Code(code);
+        try (P8Response rsp = p8.execute(builder.getRequest())) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
+            if (code != Code.ok) {
+                throw SDKException.fromP8Code(code);
+            }
         }
     }
 
     @Override
     public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-        final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-        if (code != Code.ok) {
-            throw SDKException.fromP8Code(code);
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+            if (code != Code.ok) {
+                throw SDKException.fromP8Code(code);
+            }
         }
     }
 
@@ -232,35 +239,37 @@ public class Pydio8 implements Client {
                 Pydio.WORKSPACE_ACCESS_TYPE_INBOX,
         };
         P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-        final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n)->{
-            if (!Arrays.asList(excluded).contains( ((WorkspaceNode) n).getAccessType())) {
-                handler.onNode(n);
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
             }
-        }, 0, -1));
-        if (code != Code.ok) {
-            throw SDKException.fromP8Code(code);
+            final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
+                if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
+                    handler.onNode(n);
+                }
+            }, 0, -1));
+            if (code != Code.ok) {
+                throw SDKException.fromP8Code(code);
+            }
         }
     }
 
     @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.nodeInfo(ws, path).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
 
-        final FileNode[] node = new FileNode[1];
-        final int resultCode = rsp.saxParse(new TreeNodeSaxHandler((n) -> node[0] = (FileNode) n));
-        if (resultCode != Code.ok) {
-            throw SDKException.fromP8Code(resultCode);
+            final FileNode[] node = new FileNode[1];
+            final int resultCode = rsp.saxParse(new TreeNodeSaxHandler((n) -> node[0] = (FileNode) n));
+            if (resultCode != Code.ok) {
+                throw SDKException.fromP8Code(resultCode);
+            }
+            node[0].setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
+            return node[0];
         }
-        node[0].setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
-        return node[0];
     }
 
     @Override
@@ -269,31 +278,32 @@ public class Pydio8 implements Client {
 
         P8RequestBuilder builder = P8RequestBuilder.ls(ws, folder).setSecureToken(secureToken);
         while (true) {
-            P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-            int code = rsp.code();
-            if (code != Code.ok) {
-                throw SDKException.fromP8Code(code);
-            }
+            try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+                int code = rsp.code();
+                if (code != Code.ok) {
+                    throw SDKException.fromP8Code(code);
+                }
 
-            final int[] count = {0};
-            TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
-                n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
-                count[0]++;
-                handler.onNode(n);
-            });
-            final int resultCode = rsp.saxParse(treeHandler);
-            if (resultCode != Code.ok) {
-                throw SDKException.fromP8Code(resultCode);
-            }
+                final int[] count = {0};
+                TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
+                    n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
+                    count[0]++;
+                    handler.onNode(n);
+                });
+                final int resultCode = rsp.saxParse(treeHandler);
+                if (resultCode != Code.ok) {
+                    throw SDKException.fromP8Code(resultCode);
+                }
 
-            if (treeHandler.mPagination) {
-                if (treeHandler.mPaginationTotalPage != treeHandler.mPaginationCurrentPage) {
-                    builder.setParam(Param.dir, folder + "%23" + (treeHandler.mPaginationCurrentPage + 1));
+                if (treeHandler.mPagination) {
+                    if (treeHandler.mPaginationTotalPage != treeHandler.mPaginationCurrentPage) {
+                        builder.setParam(Param.dir, folder + "%23" + (treeHandler.mPaginationCurrentPage + 1));
+                    } else {
+                        return nextOptions;
+                    }
                 } else {
                     return nextOptions;
                 }
-            } else {
-                return nextOptions;
             }
         }
     }
@@ -301,54 +311,56 @@ public class Pydio8 implements Client {
     @Override
     public void search(String ws, String dir, String searchedText, NodeHandler h) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.search(ws, dir, searchedText).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        int code = rsp.code();
-        if (code != Code.ok) {
-            throw SDKException.fromP8Code(code);
-        }
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            int code = rsp.code();
+            if (code != Code.ok) {
+                throw SDKException.fromP8Code(code);
+            }
 
-        final int resultCode = rsp.saxParse(new TreeNodeSaxHandler(h));
-        if (resultCode != Code.ok) {
-            throw SDKException.fromP8Code(resultCode);
+            final int resultCode = rsp.saxParse(new TreeNodeSaxHandler(h));
+            if (resultCode != Code.ok) {
+                throw SDKException.fromP8Code(resultCode);
+            }
         }
     }
 
     @Override
     public void bookmarks(NodeHandler handler) throws SDKException {
-        List<WorkspaceNode> workspaceNodes  = new ArrayList<>(serverNode.workspaces.values());
+        List<WorkspaceNode> workspaceNodes = new ArrayList<>(serverNode.workspaces.values());
         if (workspaceNodes.isEmpty()) {
-            workspaceList((n)-> workspaceNodes.add((WorkspaceNode) n));
+            workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
         }
 
-        for (WorkspaceNode wn: workspaceNodes) {
+        for (WorkspaceNode wn : workspaceNodes) {
             P8RequestBuilder builder = P8RequestBuilder.listBookmarked(wn.id(), "/").setSecureToken(secureToken);
             while (true) {
-                P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-                int code = rsp.code();
-                if (code != Code.ok) {
-                    break;
-                    //throw SDKException.fromP8Code(code);
-                }
+                try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+                    int code = rsp.code();
+                    if (code != Code.ok) {
+                        break;
+                        //throw SDKException.fromP8Code(code);
+                    }
 
-                TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
-                    n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, wn.id());
-                    handler.onNode(n);
-                });
+                    TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
+                        n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, wn.id());
+                        handler.onNode(n);
+                    });
 
-                final int resultCode = rsp.saxParse(treeHandler);
-                if (resultCode != Code.ok) {
-                    //throw SDKException.fromP8Code(resultCode);
-                    break;
-                }
+                    final int resultCode = rsp.saxParse(treeHandler);
+                    if (resultCode != Code.ok) {
+                        //throw SDKException.fromP8Code(resultCode);
+                        break;
+                    }
 
-                if (treeHandler.mPagination) {
-                    if (!(treeHandler.mPaginationTotalPage == treeHandler.mPaginationCurrentPage)) {
-                        builder.setParam(Param.dir, "/" + "%23" + (treeHandler.mPaginationCurrentPage + 1));
+                    if (treeHandler.mPagination) {
+                        if (!(treeHandler.mPaginationTotalPage == treeHandler.mPaginationCurrentPage)) {
+                            builder.setParam(Param.dir, "/" + "%23" + (treeHandler.mPaginationCurrentPage + 1));
+                        } else {
+                            break;
+                        }
                     } else {
                         break;
                     }
-                } else {
-                    break;
                 }
             }
         }
@@ -397,55 +409,59 @@ public class Pydio8 implements Client {
 
         P8Request req = builder.getRequest();
         P8Response rsp = p8.execute(req, this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-
-        while (rsp.code() == Code.ok && !cb.allChunksWritten()) {
-            NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
-            if (diff.updated != null && diff.updated.size() > 0) {
-                name = diff.updated.get(0).label();
-            } else if (diff.added != null && diff.added.size() > 0) {
-                name = diff.added.get(0).label();
-            } else {
-                //todo: stats "name" to get info
+        try {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
             }
-            builder.setParam(Param.appendToUrlencodedPart, name);
-            rsp = p8.execute(builder.getRequest());
-        }
 
-        if (rsp.code() != Code.ok) {
-            return Message.create(Message.ERROR, rsp.toString());
-        }
-
-        NodeDiff diff;
-        Document doc = rsp.toXMLDocument();
-        if (doc != null) {
-            diff = NodeDiff.create(doc);
-            if (diff.added != null) {
-                Node node = diff.added.get(0);
-                String label = node.label();
-                if (!label.equals(cb.getFilename())) {
-                    cb.setFilename(label);
+            while (rsp.code() == Code.ok && !cb.allChunksWritten()) {
+                NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
+                if (diff.updated != null && diff.updated.size() > 0) {
+                    name = diff.updated.get(0).label();
+                } else if (diff.added != null && diff.added.size() > 0) {
+                    name = diff.added.get(0).label();
+                } else {
+                    //todo: stats "name" to get info
                 }
-
-                Message msg = Message.create(Message.SUCCESS, "");
-                msg.added = diff.added;
-                msg.updated = diff.updated;
-                msg.deleted = diff.deleted;
-                return msg;
+                builder.setParam(Param.appendToUrlencodedPart, name);
+                rsp = p8.execute(builder.getRequest());
             }
+
+            if (rsp.code() != Code.ok) {
+                return Message.create(Message.ERROR, rsp.toString());
+            }
+
+            NodeDiff diff;
+            Document doc = rsp.toXMLDocument();
+            if (doc != null) {
+                diff = NodeDiff.create(doc);
+                if (diff.added != null) {
+                    Node node = diff.added.get(0);
+                    String label = node.label();
+                    if (!label.equals(cb.getFilename())) {
+                        cb.setFilename(label);
+                    }
+
+                    Message msg = Message.create(Message.SUCCESS, "");
+                    msg.added = diff.added;
+                    msg.updated = diff.updated;
+                    msg.deleted = diff.deleted;
+                    return msg;
+                }
+            }
+
+
+            FileNode info = nodeInfo(ws, path + "/" + name);
+
+            Message msg = Message.create(Message.SUCCESS, "");
+            if (msg.added == null) {
+                msg.added = new ArrayList<>();
+            }
+            msg.added.add(info);
+            return msg;
+        } finally {
+            rsp.close();
         }
-
-
-        FileNode info = nodeInfo(ws, path + "/" + name);
-
-        Message msg = Message.create(Message.SUCCESS, "");
-        if (msg.added == null) {
-            msg.added = new ArrayList<>();
-        }
-        msg.added.add(info);
-        return msg;
     }
 
     @Override
@@ -481,17 +497,17 @@ public class Pydio8 implements Client {
     @Override
     public long download(String ws, String path, OutputStream target, TransferProgressListener progressListener) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.download(ws, path).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
+        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
 
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-
-        try {
-            return rsp.write(target, progressListener);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw SDKException.conReadFailed(e);
+            try {
+                return rsp.write(target, progressListener);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw SDKException.conReadFailed(e);
+            }
         }
     }
 
@@ -528,19 +544,18 @@ public class Pydio8 implements Client {
     @Override
     public Message delete(String ws, String[] files) throws SDKException {
         Message msg = new Message();
-        for (String file: files) {
+        for (String file : files) {
             P8RequestBuilder builder = P8RequestBuilder.delete(ws, new String[]{file}).setSecureToken(secureToken);
-            P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-            if (rsp.code() != Code.ok) {
-                throw SDKException.fromP8Code(rsp.code());
+            try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+                if (rsp.code() != Code.ok) {
+                    throw SDKException.fromP8Code(rsp.code());
+                }
+                Document xml = rsp.toXMLDocument();
+                Message onDeleteMessage = Message.create(xml);
+                msg.deleted.addAll(onDeleteMessage.deleted);
+                msg.updated.addAll(onDeleteMessage.updated);
+                msg.added.addAll(onDeleteMessage.added);
             }
-
-            Document xml = rsp.toXMLDocument();
-            Message onDeleteMessage = Message.create(xml);
-
-            msg.deleted.addAll(onDeleteMessage.deleted);
-            msg.updated.addAll(onDeleteMessage.updated);
-            msg.added.addAll(onDeleteMessage.added);
         }
         return msg;
     }
@@ -548,89 +563,97 @@ public class Pydio8 implements Client {
     @Override
     public Message restore(String ws, String[] files) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.restore(ws, files).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document xml = rsp.toXMLDocument();
+            return Message.create(xml);
         }
-        Document xml = rsp.toXMLDocument();
-        return Message.create(xml);
     }
 
     @Override
     public Message move(String ws, String[] files, String dstFolder) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.move(ws, files, dstFolder).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)){
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document xml = rsp.toXMLDocument();
+            return Message.create(xml);
         }
-        Document xml = rsp.toXMLDocument();
-        return Message.create(xml);
     }
 
     @Override
     public Message rename(String ws, String srcFile, String dstFile) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.rename(ws, srcFile, new File(dstFile).getName()).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document xml = rsp.toXMLDocument();
+            return Message.create(xml);
         }
-        Document xml = rsp.toXMLDocument();
-        return Message.create(xml);
     }
 
     @Override
     public Message copy(String ws, String[] files, String folder) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.copy(ws, files, folder).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document xml = rsp.toXMLDocument();
+            return Message.create(xml);
         }
-        Document xml = rsp.toXMLDocument();
-        return Message.create(xml);
     }
 
     @Override
     public Message bookmark(String ws, String file) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.bookmark(ws, file).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document xml = rsp.toXMLDocument();
+            return Message.create(xml);
         }
-        Document xml = rsp.toXMLDocument();
-        return Message.create(xml);
     }
 
     @Override
     public Message unbookmark(String ws, String file) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.unbookmark(ws, file).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document xml = rsp.toXMLDocument();
+            return Message.create(xml);
         }
-        Document xml = rsp.toXMLDocument();
-        return Message.create(xml);
     }
 
     @Override
     public Message mkdir(String ws, String parent, String name) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.mkdir(ws, parent, name).setSecureToken(secureToken);
         P8Request req = builder.getRequest();
-        P8Response rsp = p8.execute(req, this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(req, this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document xml = rsp.toXMLDocument();
+            return Message.create(xml);
         }
-        Document xml = rsp.toXMLDocument();
-        return Message.create(xml);
     }
 
     @Override
     public InputStream previewData(String ws, String file, int dim) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file, dim).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            return rsp.getContent();
         }
-        return rsp.getContent();
     }
 
     @Override
@@ -667,129 +690,142 @@ public class Pydio8 implements Client {
         loadSecureToken();
 
         P8RequestBuilder builder = P8RequestBuilder.stats(ws, file, withHash).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-        String h = rsp.getHeaders("Content-Type").get(0);
-        if (!"application/json".equals(h.toLowerCase())) {
-            throw SDKException.unexpectedContent(new IOException(String.format("wrong response content type: %s", h)));
-        }
-
-        try {
-            JSONObject json = new JSONObject(rsp.toString());
-            if (!json.has("hash") && !json.has("mtime") && !json.has("size")) {
-                return null;
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            String h = rsp.getHeaders("Content-Type").get(0);
+            if (!"application/json".equals(h.toLowerCase())) {
+                throw SDKException.unexpectedContent(new IOException(String.format("wrong response content type: %s", h)));
             }
 
-            Stats stats = new Stats();
-            if (withHash) {
-                stats.setHash(json.getString("hash"));
+            try {
+                JSONObject json = new JSONObject(rsp.toString());
+                if (!json.has("hash") && !json.has("mtime") && !json.has("size")) {
+                    return null;
+                }
+
+                Stats stats = new Stats();
+                if (withHash) {
+                    stats.setHash(json.getString("hash"));
+                }
+                stats.setmTime(json.getLong("mtime"));
+                stats.setSize(json.getLong("size"));
+                return stats;
+            } catch (Exception e) {
+                throw SDKException.unexpectedContent(e);
             }
-            stats.setmTime(json.getLong("mtime"));
-            stats.setSize(json.getLong("size"));
-            return stats;
-        } catch (Exception e) {
-            throw SDKException.unexpectedContent(e);
         }
     }
 
     @Override
     public long changes(String ws, String filter, int seq, boolean flatten, ChangeHandler handler) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.changes(ws, filter, seq, flatten).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-
-        String h = rsp.getHeaders("Content-Type").get(0);
-        if (!h.toLowerCase().contains("application/json")) {
-            throw SDKException.unexpectedContent(new IOException(rsp.toString()));
-        }
-
-        final long[] lastSeq = new long[1];
-        final boolean[] readLastLine = {false};
-
-        int lineCount = rsp.lineByLine("UTF-8", "\\n", (line) -> {
-            if (readLastLine[0]) {
-                return;
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
             }
 
-            if (line.toLowerCase().startsWith("last_seq")) {
-                readLastLine[0] = true;
-                lastSeq[0] = Integer.parseInt(line.split(":")[1]);
-                return;
+            String h = rsp.getHeaders("Content-Type").get(0);
+            if (!h.toLowerCase().contains("application/json")) {
+                throw SDKException.unexpectedContent(new IOException(rsp.toString()));
             }
 
-            JSONObject json;
+            final long[] lastSeq = new long[1];
+            final boolean[] readLastLine = {false};
 
-            try {
-                json = new JSONObject(line);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
-
-
-            lastSeq[0] = Math.max(lastSeq[0], json.getLong(Pydio.CHANGE_SEQ));
-            Change change = new Change();
-
-            change.setSeq(json.getLong(Pydio.CHANGE_SEQ));
-            change.setNodeId(json.getString(Pydio.CHANGE_NODE_ID));
-            change.setType(json.getString(Pydio.CHANGE_TYPE));
-            change.setSource(json.getString(Pydio.CHANGE_SOURCE));
-            change.setTarget(json.getString(Pydio.CHANGE_TARGET));
-
-            ChangeNode node = new ChangeNode();
-            change.setNode(node);
-            try{node.setSize(json.getJSONObject(Pydio.CHANGE_NODE).getLong(Pydio.CHANGE_NODE_BYTESIZE));}catch(Exception ignore){}
-            try{node.setMd5(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_MD5));}catch(Exception ignore){}
-            try{node.setmTime(json.getJSONObject(Pydio.CHANGE_NODE).getLong(Pydio.CHANGE_NODE_MTIME));}catch(Exception ignore){}
-            try{node.setPath(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_PATH));}catch(Exception ignore){}
-            node.setWorkspace(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_WORKSPACE));
-
-            handler.onChange(change);
-        });
-
-        if(lineCount == 0 && seq == 0) {
-            Change change = new Change();
-            change.setSeq(seq);
-            change.setNodeId("");
-            change.setSource("");
-
-            ChangeNode node = new ChangeNode();
-            change.setNode(node);
-            node.setWorkspace(ws);
-
-            Stats stats = stats(ws, filter, true);
-            if (stats == null) {
-                change.setType(Change.TYPE_DELETE);
-                change.setTarget("NULL");
-            } else {
-                if("directory".equals(stats.getHash())) {
-                    return seq;
+            int lineCount = rsp.lineByLine("UTF-8", "\\n", (line) -> {
+                if (readLastLine[0]) {
+                    return;
                 }
-                change.setType(Change.TYPE_CONTENT);
-                change.setTarget("");
-                node.setSize(stats.getSize());
-                node.setMd5(stats.getHash());
-                node.setmTime(stats.getmTime());
-                node.setPath("");
-            }
 
-            handler.onChange(change);
-            return seq;
+                if (line.toLowerCase().startsWith("last_seq")) {
+                    readLastLine[0] = true;
+                    lastSeq[0] = Integer.parseInt(line.split(":")[1]);
+                    return;
+                }
+
+                JSONObject json;
+
+                try {
+                    json = new JSONObject(line);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+
+                lastSeq[0] = Math.max(lastSeq[0], json.getLong(Pydio.CHANGE_SEQ));
+                Change change = new Change();
+
+                change.setSeq(json.getLong(Pydio.CHANGE_SEQ));
+                change.setNodeId(json.getString(Pydio.CHANGE_NODE_ID));
+                change.setType(json.getString(Pydio.CHANGE_TYPE));
+                change.setSource(json.getString(Pydio.CHANGE_SOURCE));
+                change.setTarget(json.getString(Pydio.CHANGE_TARGET));
+
+                ChangeNode node = new ChangeNode();
+                change.setNode(node);
+                try {
+                    node.setSize(json.getJSONObject(Pydio.CHANGE_NODE).getLong(Pydio.CHANGE_NODE_BYTESIZE));
+                } catch (Exception ignore) {
+                }
+                try {
+                    node.setMd5(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_MD5));
+                } catch (Exception ignore) {
+                }
+                try {
+                    node.setmTime(json.getJSONObject(Pydio.CHANGE_NODE).getLong(Pydio.CHANGE_NODE_MTIME));
+                } catch (Exception ignore) {
+                }
+                try {
+                    node.setPath(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_PATH));
+                } catch (Exception ignore) {
+                }
+                node.setWorkspace(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_WORKSPACE));
+
+                handler.onChange(change);
+            });
+
+            if (lineCount == 0 && seq == 0) {
+                Change change = new Change();
+                change.setSeq(seq);
+                change.setNodeId("");
+                change.setSource("");
+
+                ChangeNode node = new ChangeNode();
+                change.setNode(node);
+                node.setWorkspace(ws);
+
+                Stats stats = stats(ws, filter, true);
+                if (stats == null) {
+                    change.setType(Change.TYPE_DELETE);
+                    change.setTarget("NULL");
+                } else {
+                    if ("directory".equals(stats.getHash())) {
+                        return seq;
+                    }
+                    change.setType(Change.TYPE_CONTENT);
+                    change.setTarget("");
+                    node.setSize(stats.getSize());
+                    node.setMd5(stats.getHash());
+                    node.setmTime(stats.getmTime());
+                    node.setPath("");
+                }
+
+                handler.onChange(change);
+                return seq;
+            }
+            return Math.max(seq, lastSeq[0]);
         }
-        return Math.max(seq, lastSeq[0]);
     }
 
     @Override
     public String share(String ws, String file, String ws_label, boolean isFolder, String ws_description, String password, int expiration, int download, boolean canPreview, boolean canDownload) throws SDKException {
-        if(secureToken == null) {
+        if (secureToken == null) {
             login();
         }
         P8RequestBuilder builder = P8RequestBuilder.share(ws, file, ws_description).setSecureToken(secureToken);
@@ -805,39 +841,42 @@ public class Pydio8 implements Client {
             builder.setParam(Param.miniSiteLayout, "ajxp_unique_strip");
         }
 
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            return rsp.toString();
         }
-        return rsp.toString();
     }
 
     @Override
     public void unshare(String ws, String file) throws SDKException {
-        if(secureToken == null) {
+        if (secureToken == null) {
             login();
         }
         P8RequestBuilder builder = P8RequestBuilder.unShare(ws, file).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
         }
     }
 
     @Override
     public JSONObject shareInfo(String ws, String file) throws SDKException {
-        if(secureToken == null) {
+        if (secureToken == null) {
             login();
         }
         P8RequestBuilder builder = P8RequestBuilder.shareInfo(ws, file).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
-        }
-        try {
-            return rsp.toJSON();
-        } catch (Exception e) {
-            throw SDKException.unexpectedContent(e);
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            try {
+                return rsp.toJSON();
+            } catch (Exception e) {
+                throw SDKException.unexpectedContent(e);
+            }
         }
     }
 
@@ -849,47 +888,49 @@ public class Pydio8 implements Client {
 
     @Override
     public JSONObject authenticationInfo() throws SDKException {
-        P8Response seedResponse = p8.execute(P8RequestBuilder.getSeed().getRequest());
-        String seed = seedResponse.toString();
-        JSONObject o = new JSONObject();
+        try(P8Response seedResponse = p8.execute(P8RequestBuilder.getSeed().getRequest())) {
+            String seed = seedResponse.toString();
+            JSONObject o = new JSONObject();
 
-        boolean withCaptcha = false;
+            boolean withCaptcha = false;
 
-        if (!"-1".equals(seed)) {
-            seed = seed.trim();
-            if (seed.contains("\"seed\":-1") || seed.contains("\"seed\": -1")) {
-                withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
-                o.put(Param.seed, "-1");
+            if (!"-1".equals(seed)) {
+                seed = seed.trim();
+                if (seed.contains("\"seed\":-1") || seed.contains("\"seed\": -1")) {
+                    withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
+                    o.put(Param.seed, "-1");
 
-            } else {
-                String contentType = seedResponse.getHeaders("Content-Type").get(0);
-                boolean seemsToBePydio = (contentType != null) && (
-                        (contentType.toLowerCase().contains("text/plain"))
-                                | (contentType.toLowerCase().contains("text/xml"))
-                                | (contentType.toLowerCase().contains("text/json"))
-                                | (contentType.toLowerCase().contains("application/json")));
+                } else {
+                    String contentType = seedResponse.getHeaders("Content-Type").get(0);
+                    boolean seemsToBePydio = (contentType != null) && (
+                            (contentType.toLowerCase().contains("text/plain"))
+                                    | (contentType.toLowerCase().contains("text/xml"))
+                                    | (contentType.toLowerCase().contains("text/json"))
+                                    | (contentType.toLowerCase().contains("application/json")));
 
-                if (!seemsToBePydio) {
-                    throw SDKException.unexpectedContent(new IOException(seed));
+                    if (!seemsToBePydio) {
+                        throw SDKException.unexpectedContent(new IOException(seed));
+                    }
+                    o.put(Param.seed, "-1");
                 }
-                o.put(Param.seed, "-1");
             }
-        }
 
-        if (withCaptcha) {
-            o.put(Param.captchaCode, true);
+            if (withCaptcha) {
+                o.put(Param.captchaCode, true);
+            }
+            return o;
         }
-        return o;
     }
 
     @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.emptyRecycle(ws).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
-        if (rsp.code() != Code.ok) {
-            throw SDKException.fromP8Code(rsp.code());
+        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            if (rsp.code() != Code.ok) {
+                throw SDKException.fromP8Code(rsp.code());
+            }
+            Document doc = rsp.toXMLDocument();
+            return null;
         }
-        Document doc = rsp.toXMLDocument();
-        return null;
     }
 }

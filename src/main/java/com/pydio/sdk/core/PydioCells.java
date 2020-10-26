@@ -1063,13 +1063,10 @@ public class PydioCells implements Client {
         }
 
         Message msg = new Message();
-        msg.added = new ArrayList<>();
-
-        List<TreeNode> nodes = response.getChildren();
+        /*List<TreeNode> nodes = response.getChildren();
         node = nodes.get(0);
-
         FileNode fileNode = toFileNode(node);
-        msg.added.add(fileNode);
+        msg.added.add(fileNode); */
         return msg;
     }
 
