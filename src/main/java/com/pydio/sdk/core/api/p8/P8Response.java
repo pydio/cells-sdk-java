@@ -39,7 +39,6 @@ public class P8Response implements Closeable {
     private InputStream netStream;
     private HttpURLConnection con;
     private ByteArrayOutputStream buffered;
-    private boolean concatDone;
 
     public static P8Response error(int code) {
         P8Response rsp = new P8Response();
@@ -51,7 +50,6 @@ public class P8Response implements Closeable {
     }
 
     public P8Response(HttpURLConnection con) {
-        concatDone = false;
         this.con = con;
         try {
             parse();
@@ -67,13 +65,13 @@ public class P8Response implements Closeable {
         }
 
         buffered = new ByteArrayOutputStream();
-        InputStream in = this.con.getInputStream();
+        netStream = this.con.getInputStream();
         int read, left = 32768;
         byte[] buffer = new byte[left];
 
         try {
             for (; left > 0; ) {
-                read = in.read(buffer);
+                read = netStream.read(buffer);
                 if (read == -1) {
                     break;
                 }
@@ -140,7 +138,7 @@ public class P8Response implements Closeable {
                     }
                 }
 
-                public void characters(char ch[], int start, int length) throws SAXException {
+                public void characters(char[] ch, int start, int length) throws SAXException {
                     String str = new String(ch);
                     if (tag_msg) {
                         if (str.toLowerCase().contains("you are not allowed to access")) {
@@ -290,6 +288,10 @@ public class P8Response implements Closeable {
 
     @Override
     public void close() {
+        io.consume(this.netStream);
+
+        try { this.con.disconnect(); } catch (Exception ignore){}
+
         if (netStream != null) {
             io.close(netStream);
         }

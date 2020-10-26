@@ -12,6 +12,13 @@ public class io {
 
     public static int bufferSize = 4096;
 
+    public static void consume(InputStream in) {
+        try {
+            byte[] buffer = new byte[bufferSize];
+            for (int read = 0; read != -1 ; read = in.read(buffer));
+        }catch (Exception ignore) {}
+    }
+
     public static boolean close(InputStream in) {
         try {
             in.close();
