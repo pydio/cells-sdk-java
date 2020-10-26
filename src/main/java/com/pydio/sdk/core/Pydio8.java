@@ -243,12 +243,15 @@ public class Pydio8 implements Client {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
+
             final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
                 if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
                     handler.onNode(n);
                 }
             }, 0, -1));
+
             if (code != Code.ok) {
+                rsp.close();
                 throw SDKException.fromP8Code(code);
             }
         }
