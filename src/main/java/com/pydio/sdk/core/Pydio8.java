@@ -30,6 +30,7 @@ import com.pydio.sdk.core.model.Stats;
 import com.pydio.sdk.core.auth.Token;
 import com.pydio.sdk.core.security.Credentials;
 import com.pydio.sdk.core.server.Prop;
+import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.PageOptions;
 import com.pydio.sdk.core.utils.io;
 
@@ -470,13 +471,15 @@ public class Pydio8 implements Client {
 
     @Override
     public Message upload(File source, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
-        FileInputStream in;
-        try {
-            in = new FileInputStream(source);
+        Message msg = null;
+        try (FileInputStream in = new FileInputStream(source)) {
+            msg = upload(in, source.length(), ws, path, name, autoRename, progressListener);
         } catch (FileNotFoundException e) {
             throw SDKException.notFound(e);
+        } catch (IOException e) {
+            Log.w("IOException", "could not close reader on file at: " + source.getAbsolutePath());
         }
-        return upload(in, source.length(), ws, path, name, autoRename, progressListener);
+        return msg;
     }
 
     @Override
@@ -501,7 +504,7 @@ public class Pydio8 implements Client {
     @Override
     public long download(String ws, String path, OutputStream target, TransferProgressListener progressListener) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.download(ws, path).setSecureToken(secureToken);
-        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -549,7 +552,7 @@ public class Pydio8 implements Client {
         Message msg = new Message();
         for (String file : files) {
             P8RequestBuilder builder = P8RequestBuilder.delete(ws, new String[]{file}).setSecureToken(secureToken);
-            try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+            try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
                 if (rsp.code() != Code.ok) {
                     throw SDKException.fromP8Code(rsp.code());
                 }
@@ -566,7 +569,7 @@ public class Pydio8 implements Client {
     @Override
     public Message restore(String ws, String[] files) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.restore(ws, files).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -578,7 +581,7 @@ public class Pydio8 implements Client {
     @Override
     public Message move(String ws, String[] files, String dstFolder) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.move(ws, files, dstFolder).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)){
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -590,7 +593,7 @@ public class Pydio8 implements Client {
     @Override
     public Message rename(String ws, String srcFile, String dstFile) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.rename(ws, srcFile, new File(dstFile).getName()).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -602,7 +605,7 @@ public class Pydio8 implements Client {
     @Override
     public Message copy(String ws, String[] files, String folder) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.copy(ws, files, folder).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -614,7 +617,7 @@ public class Pydio8 implements Client {
     @Override
     public Message bookmark(String ws, String file) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.bookmark(ws, file).setSecureToken(secureToken);
-        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -626,7 +629,7 @@ public class Pydio8 implements Client {
     @Override
     public Message unbookmark(String ws, String file) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.unbookmark(ws, file).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -639,7 +642,7 @@ public class Pydio8 implements Client {
     public Message mkdir(String ws, String parent, String name) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.mkdir(ws, parent, name).setSecureToken(secureToken);
         P8Request req = builder.getRequest();
-        try(P8Response rsp = p8.execute(req, this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(req, this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -692,7 +695,7 @@ public class Pydio8 implements Client {
         loadSecureToken();
 
         P8RequestBuilder builder = P8RequestBuilder.stats(ws, file, withHash).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -723,7 +726,7 @@ public class Pydio8 implements Client {
     @Override
     public long changes(String ws, String filter, int seq, boolean flatten, ChangeHandler handler) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.changes(ws, filter, seq, flatten).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -840,7 +843,7 @@ public class Pydio8 implements Client {
             builder.setParam(Param.miniSiteLayout, "ajxp_unique_strip");
         }
 
-        try( P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -854,7 +857,7 @@ public class Pydio8 implements Client {
             login();
         }
         P8RequestBuilder builder = P8RequestBuilder.unShare(ws, file).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -867,7 +870,7 @@ public class Pydio8 implements Client {
             login();
         }
         P8RequestBuilder builder = P8RequestBuilder.shareInfo(ws, file).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
@@ -887,7 +890,7 @@ public class Pydio8 implements Client {
 
     @Override
     public JSONObject authenticationInfo() throws SDKException {
-        try(P8Response seedResponse = p8.execute(P8RequestBuilder.getSeed().getRequest())) {
+        try (P8Response seedResponse = p8.execute(P8RequestBuilder.getSeed().getRequest())) {
             String seed = seedResponse.toString();
             JSONObject o = new JSONObject();
 
@@ -924,7 +927,7 @@ public class Pydio8 implements Client {
     @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.emptyRecycle(ws).setSecureToken(secureToken);
-        try(P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
+        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
             if (rsp.code() != Code.ok) {
                 throw SDKException.fromP8Code(rsp.code());
             }
