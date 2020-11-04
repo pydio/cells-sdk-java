@@ -59,7 +59,7 @@ bintray {
         // Version info
         version {
             name = sdkJavaVersion
-            desc = 'Refactor Cells SDK for Java to enhance build process'
+            desc = 'Prepare Cells Android App 2.2 release'
             released  = new Date()
             vcsTag = 'v' + sdkJavaVersion
         }
