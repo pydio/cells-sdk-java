@@ -486,18 +486,18 @@ public class ServerNode implements Node {
     }
 
     public String welcomeMessage() {
-        return welcomeMessage;
+        return this.welcomeMessage;
     }
 
     public String apiURL() {
-        return bootConf.getString("ENDPOINT_REST_API");
+        return this.bootConf.getString("ENDPOINT_REST_API");
     }
 
     public SSLContext getSslContext() {
-        if (sslContext == null) {
+        if (this.sslContext == null) {
             try {
-                sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, new TrustManager[]{trustManager()}, null);
+                this.sslContext = SSLContext.getInstance("TLS");
+                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -505,17 +505,17 @@ public class ServerNode implements Node {
         }
 
         try {
-            sslContext.getSocketFactory();
+            this.sslContext.getSocketFactory();
         } catch (Exception e) {
             try {
-                sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, new TrustManager[]{trustManager()}, null);
+                this.sslContext = SSLContext.getInstance("TLS");
+                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
             } catch (Exception ex) {
                 e.printStackTrace();
                 return null;
             }
         }
-        return sslContext;
+        return this.sslContext;
     }
 
     public boolean equals(Object o) {
@@ -527,8 +527,8 @@ public class ServerNode implements Node {
     }
 
     public WorkspaceNode getWorkspace(String slug) {
-        if (workspaces != null && workspaces.containsKey(slug)) {
-            return workspaces.get(slug);
+        if (this.workspaces != null && this.workspaces.containsKey(slug)) {
+            return this.workspaces.get(slug);
         }
         return null;
     }
@@ -538,11 +538,11 @@ public class ServerNode implements Node {
             return null;
         }
 
-        if (workspaces == null) {
+        if (this.workspaces == null) {
             return null;
         }
 
-        for (WorkspaceNode wn: workspaces.values()) {
+        for (WorkspaceNode wn: this.workspaces.values()) {
             if (id.equals(wn.getProperty(Pydio.WORKSPACE_PROPERTY_ID))) {
                 return wn;
             }
@@ -551,16 +551,15 @@ public class ServerNode implements Node {
     }
 
     public byte[][] getCertificateChain() {
-        return certificateChain;
+        return this.certificateChain;
     }
 
     public boolean supportsOauth() {
-        // return false;
-        return oidc != null;
+        return this.oidc != null;
     }
 
     public JSONObject getOIDCInfo() {
-        return oidc;
+        return this.oidc;
     }
 
     public HostnameVerifier getHostnameVerifier() {
