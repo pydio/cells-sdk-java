@@ -322,7 +322,11 @@ public class Pydio8 implements Client {
                 throw SDKException.fromP8Code(code);
             }
 
-            final int resultCode = rsp.saxParse(new TreeNodeSaxHandler(h));
+            final int resultCode = rsp.saxParse(new TreeNodeSaxHandler(node -> {
+                node.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
+                h.onNode(node);
+            }));
+
             if (resultCode != Code.ok) {
                 throw SDKException.fromP8Code(resultCode);
             }
