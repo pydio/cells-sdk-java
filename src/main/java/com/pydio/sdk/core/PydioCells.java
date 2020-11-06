@@ -342,7 +342,7 @@ public class PydioCells implements Client {
                         int size = item.getInt("size");
                         String format = item.getString("format");
                         String thumbPath = "/" + node.getUuid() + "-" + size + "." + format;
-                        thumbObject.put("" + size, thumbPath);
+                        thumbObject.put(String.valueOf(size), thumbPath);
                     }
                     result.setProperty(Pydio.NODE_PROPERTY_IMAGE_THUMB_PATHS, thumbObject.toString());
                 }
@@ -449,8 +449,13 @@ public class PydioCells implements Client {
             Log.w("Connection", "connction error while retrieving registry");
             throw SDKException.conFailed(e);
         } finally {
-            try { in.close(); } catch (IOException ignore) {}
-            con.disconnect();
+            if (in != null) {
+                try { in.close(); } catch (Exception ignore) {}
+            }
+
+            if (con != null) {
+                con.disconnect();
+            }
         }
     }
 
