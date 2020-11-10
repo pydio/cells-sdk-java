@@ -14,11 +14,6 @@ import com.pydio.sdk.core.common.callback.TransferProgressListener;
 import com.pydio.sdk.core.common.errors.Code;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.common.http.ContentBody;
-import com.pydio.sdk.core.model.WorkspaceNode;
-import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
-import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
-import com.pydio.sdk.core.model.parser.TreeNodeSaxHandler;
-import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.ChangeNode;
 import com.pydio.sdk.core.model.FileNode;
@@ -27,7 +22,11 @@ import com.pydio.sdk.core.model.Node;
 import com.pydio.sdk.core.model.NodeDiff;
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.model.Stats;
-import com.pydio.sdk.core.auth.Token;
+import com.pydio.sdk.core.model.WorkspaceNode;
+import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
+import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
+import com.pydio.sdk.core.model.parser.TreeNodeSaxHandler;
+import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.sdk.core.security.Credentials;
 import com.pydio.sdk.core.server.Prop;
 import com.pydio.sdk.core.utils.Log;
@@ -48,8 +47,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.ProtocolException;
 import java.rmi.UnknownHostException;
 import java.security.cert.X509Certificate;
-import java.sql.Struct;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -111,15 +108,6 @@ public class Pydio8 implements Client {
     @Override
     public void setSkipOAuthFlag(boolean skipOAuth) {
 
-    }
-
-
-    @Override
-    public void setTokenProvider(Token.Provider p) {
-    }
-
-    @Override
-    public void setTokenStore(Token.Store s) {
     }
 
     @Override

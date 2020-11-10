@@ -11,8 +11,6 @@ public class JWT {
     public String signature;
 
     public static JWT parse(String strJwt) {
-        System.out.println(strJwt);
-
         String[] parts = strJwt.split("\\.");
         if (parts.length != 3) {
             return null;

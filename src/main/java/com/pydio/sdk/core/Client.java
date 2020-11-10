@@ -28,10 +28,6 @@ public interface Client {
 
     void setSkipOAuthFlag(boolean skipOAuth);
 
-    void setTokenProvider(Token.Provider p);
-
-    void setTokenStore(Token.Store s);
-
     String getUser();
 
     InputStream getUserData(String binary) throws SDKException;

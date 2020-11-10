@@ -39,6 +39,7 @@ import com.pydio.sdk.core.api.cells.model.TreeWorkspaceRelativePath;
 import com.pydio.sdk.core.api.cells.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.sdk.core.auth.OauthConfig;
 import com.pydio.sdk.core.auth.Token;
+import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.common.callback.ChangeHandler;
 import com.pydio.sdk.core.common.callback.NodeHandler;
 import com.pydio.sdk.core.common.callback.RegistryItemHandler;
@@ -82,6 +83,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -94,17 +97,13 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class PydioCells implements Client {
-
     public String URL;
     protected String bearerValue;
 
-    private ServerNode serverNode;
+    private final ServerNode serverNode;
     private Credentials credentials;
-    private String apiURL;
+    private final String apiURL;
     private Boolean skipOAuth = false;
-
-    private Token.Provider tokenProvider;
-    private Token.Store tokenStore;
 
     public PydioCells(ServerNode node) {
         this.serverNode = node;
@@ -112,135 +111,8 @@ public class PydioCells implements Client {
         this.apiURL = node.apiURL();
     }
 
-    private final static Object lock = new Object();
-
     protected void getJWT() throws SDKException {
-        synchronized (lock) {
-
-            Token t = null;
-            this.bearerValue = null;
-
-            String subject = String.format("%s@%s", credentials.getLogin(), serverNode.url());
-            if (tokenProvider != null) {
-                t = tokenProvider.get(subject);
-            }
-
-            boolean shouldAskToken = t == null;
-            if (!shouldAskToken) {
-                shouldAskToken = t.isExpired();
-            }
-
-            if (shouldAskToken) {
-                if (!skipOAuth && this.serverNode.supportsOauth()) {
-                    if (t != null) {
-                        t = refreshOAuthToken(t);
-                        if (t != null && this.tokenStore != null) {
-                            this.tokenStore.set(t);
-                        }
-                    }
-                } else { // Legacy call with credentials
-
-                    ApiClient apiClient = getApiClient();
-                    String password = credentials.getPassword();
-                    if (password == null) {
-                        // FIXME we arrive here when we switch accounts between 2 Cells Servers ... 
-                        throw new SDKException(Code.authentication_required, new IOException("no password provided"));
-                    }
-
-                    RestFrontSessionRequest request = new RestFrontSessionRequest();
-                    request.setClientTime((int) System.currentTimeMillis());
-
-                    Map<String, String> authInfo = new HashMap<>();
-                    authInfo.put("login", credentials.getLogin());
-                    authInfo.put("password", password);
-                    authInfo.put("type", "credentials");
-                    request.authInfo(authInfo);
-
-                    FrontendServiceApi api = new FrontendServiceApi(apiClient);
-                    RestFrontSessionResponse response;
-                    try {
-                        response = api.frontSession(request);
-                    } catch (ApiException e) {
-                        throw new SDKException(e);
-                    }
-
-                    t = new Token();
-                    t.subject = subject;
-                    t.value = response.getJWT();
-                    long expireIn = (long) response.getExpireTime();
-                    t.expiry = System.currentTimeMillis() / 1000 + expireIn;
-
-                    if (this.tokenStore != null) {
-                        this.tokenStore.set(t);
-                    }
-                }
-            }
-
-            if (t != null) {
-                this.bearerValue = t.value;
-            }
-        }
-    }
-
-    private Token refreshOAuthToken(Token t) throws SDKException {
-        OauthConfig cfg = OauthConfig.fromJSON(serverNode.getOIDCInfo(), "");
-
-        HttpRequest request = new HttpRequest();
-        Params params = Params.create("grant_type", "refresh_token").set("refresh_token", t.refreshToken);
-        request.setParams(params);
-
-        Base64 base64 = new Base64();
-        String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
-
-        request.setHeaders(Params.create("Authorization", "Basic " + auth));
-        request.setEndpoint(cfg.tokenEndpoint);
-        request.setMethod(Method.POST);
-
-        HttpResponse response;
-        try {
-            response = HttpClient.request(request);
-        } catch (Exception e) {
-            // FIXME refresh token is broken
-            Log.w("Cells SDK", "Refresh token request failed: " + e.getLocalizedMessage());
-            return null;
-        }
-
-        String jwt;
-        try {
-            jwt = response.getString();
-        } catch (IOException e) {
-            Log.e("Cells SDK", "Could not get response string body: " + e.getLocalizedMessage());
-            e.printStackTrace();
-            throw new SDKException(Code.authentication_required, new IOException("refresh token failed"));
-        }
-
-        try {
-            t = Token.decodeOauthJWT(jwt);
-        } catch (ParseException e) {
-            Log.e("Cells SDK", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
-            return null;
-        }
-
-        com.pydio.sdk.core.auth.jwt.JWT parsedIDToken = null;
-
-        parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
-
-        if (parsedIDToken == null) {
-            return null;
-        }
-
-        t.subject = String.format("%s@%s", parsedIDToken.claims.name, this.serverNode.url());
-        t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
-
-        return t;
-    }
-
-    protected String getS3Endpoint() {
-        String u = this.URL;
-        if (u.endsWith("/")) {
-            u = u.substring(0, u.length() - 1);
-        }
-        return u;
+        this.bearerValue = TokenService.get(this.serverNode, this.credentials, this.skipOAuth).value;
     }
 
     private ApiClient getApiClient() {
@@ -365,16 +237,6 @@ public class PydioCells implements Client {
     @Override
     public void setCredentials(Credentials c) {
         this.credentials = c;
-    }
-
-    @Override
-    public void setTokenProvider(Token.Provider p) {
-        this.tokenProvider = p;
-    }
-
-    @Override
-    public void setTokenStore(Token.Store s) {
-        this.tokenStore = s;
     }
 
     @Override

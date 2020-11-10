@@ -60,9 +60,6 @@ public class Token {
 
     public interface Store {
         void set(Token t);
-    }
-
-    public interface Provider {
         Token get(String subject);
     }
 }
