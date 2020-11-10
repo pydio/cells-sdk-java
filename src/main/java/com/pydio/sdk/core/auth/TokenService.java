@@ -47,15 +47,13 @@ public class TokenService {
         String subject = String.format("%s@%s", credentials.getLogin(), server.url());
         Token t = this.store.get(subject);
 
-        boolean shouldRequestAToken = t == null;
-        if (!shouldRequestAToken) {
-            shouldRequestAToken = t.isExpired();
+        if (t != null || !t.isExpired()) {
+            return t;
         }
 
-        if (shouldRequestAToken)
-            if (skipOAuth) {
-                throw new SDKException(Code.authentication_required, new IOException("no valid token available"));
-            }
+        if (skipOAuth) {
+            throw new SDKException(Code.authentication_required, new IOException("no valid token available"));
+        }
 
         if (server.supportsOauth()) {
             if (t != null) {
