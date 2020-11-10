@@ -53,8 +53,8 @@ import java.util.List;
 
 public class Pydio8 implements Client {
 
-    private ServerNode serverNode;
-    private P8Client p8;
+    private final ServerNode serverNode;
+    private final P8Client p8;
     private Credentials credentials;
     private String secureToken;
     private int loginFailure;
