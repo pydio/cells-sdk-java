@@ -47,7 +47,7 @@ public class TokenService {
         String subject = String.format("%s@%s", credentials.getLogin(), server.url());
         Token t = this.store.get(subject);
 
-        if (t != null || !t.isExpired()) {
+        if (t != null && !t.isExpired()) {
             return t;
         }
 
@@ -55,11 +55,11 @@ public class TokenService {
             throw new SDKException(Code.authentication_required, new IOException("no valid token available"));
         }
 
+        this.store.delete(subject);
+
         if (server.supportsOauth()) {
             if (t != null) {
-                t = this.refresh(server, t);
-                this.store.set(t);
-                return t;
+                return this.refresh(server, t);
             }
             throw new SDKException(Code.authentication_required, new IOException("no valid token available"));
         } else { // Legacy call with credentials
@@ -114,7 +114,7 @@ public class TokenService {
 
         t.subject = String.format("%s@%s", parsedIDToken.claims.name, server.url());
         t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
-
+        this.store.save(t);
         return t;
     }
 
@@ -158,7 +158,7 @@ public class TokenService {
         long expireIn = (long) response.getExpireTime();
         t.expiry = System.currentTimeMillis() / 1000 + expireIn;
         if (this.store != null) {
-            this.store.set(t);
+            this.store.save(t);
         }
         return t;
     }

@@ -59,7 +59,8 @@ public class Token {
     }
 
     public interface Store {
-        void set(Token t);
+        void save(Token t);
         Token get(String subject);
+        void delete(String subject);
     }
 }
