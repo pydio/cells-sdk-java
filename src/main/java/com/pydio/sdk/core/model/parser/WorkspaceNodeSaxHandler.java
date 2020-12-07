@@ -13,7 +13,7 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
 
     private boolean inside_repo = false, inside_label = false, inside_description = false;
     private String inner_element = "";
-    private NodeHandler handler;
+    private final NodeHandler handler;
     private Properties p = null;
     //String tabs = "";
 
@@ -59,7 +59,7 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
         }
     }
 
-    public void characters(char ch[], int start, int length) {
+    public void characters(char[] ch, int start, int length) {
         if(inside_repo && (inside_label || inside_description)){
             String content = new String(ch, start, length);
             if (!p.containsKey(inner_element)) {
@@ -67,7 +67,6 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
             }
         }
     }
-
 
     public WorkspaceNodeSaxHandler(NodeHandler nodeHandler, int offset, int max){
         this.handler = nodeHandler;
