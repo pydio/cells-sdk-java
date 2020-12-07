@@ -11,10 +11,10 @@ import java.io.ByteArrayInputStream;
 
 public class Upload {
 
-    private static String serverURL = "http://localhost:8080";
-    private static String login = "admin";
-    private static String pwd = "admin";
-    private static String workspace = "common-files";
+    private static final String serverURL = "http://localhost:8080";
+    private static final String login = "admin";
+    private static final String pwd = "admin";
+    private static final String workspace = "common-files";
 
     public static void main(String[] args) {
         ServerNode node = new ServerNode();

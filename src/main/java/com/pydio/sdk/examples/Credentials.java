@@ -1,8 +1,8 @@
 package com.pydio.sdk.examples;
 
 public class Credentials implements com.pydio.sdk.core.security.Credentials {
-    private String login;
-    private String password;
+    private final String login;
+    private final String password;
 
     public Credentials(String login, String password) {
         this.login = login;
