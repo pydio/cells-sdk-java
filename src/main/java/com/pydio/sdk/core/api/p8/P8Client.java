@@ -31,11 +31,15 @@ public class P8Client {
 
     private CookieManager cookies;
 
-    private Configuration config;
+    private final Configuration config;
 
     public P8Client(Configuration config) {
         this.cookies = new CookieManager();
         this.config = config;
+    }
+
+    public void setCookieManager(CookieManager man) {
+        cookies = man;
     }
 
     public P8Response execute(P8Request request) {
@@ -94,7 +98,7 @@ public class P8Client {
             }
         }
 
-        url = url.append("index.php?").append(Param.getAction + "=").append(request.action);
+        url.append("index.php?").append(Param.getAction + "=").append(request.action);
         Iterator<Map.Entry<String, String>> it = request.params.get().entrySet().iterator();
         url.append("&");
         while (it.hasNext()) {
@@ -186,7 +190,6 @@ public class P8Client {
             url = url + "/";
         }
         url = url + "?" + Param.getAction + "=" + request.action;
-
         HttpURLConnection con = getConnection(url, Method.get, request.ignoreCookies);
         if (con == null) {
             return P8Response.error(Code.con_failed);
@@ -224,7 +227,6 @@ public class P8Client {
             request.params.set(Param.getAction, request.action);
         }
 
-        con.setDoOutput(true);
 
         List<HttpCookie> cookies = this.cookies.getCookieStore().getCookies();
         if (cookies.size() > 0) {
@@ -236,6 +238,8 @@ public class P8Client {
             con.setRequestProperty("Cookie", cookieString.substring(1));
         }
         con.setRequestProperty("User-Agent", "Pydio-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode);
+
+        con.setDoOutput(true);
 
         String utf8 = "utf-8";
         String LF = "\r\n";
