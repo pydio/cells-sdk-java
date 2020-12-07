@@ -400,6 +400,10 @@ public class ServerNode implements Node {
         return versionName;
     }
 
+    public boolean hasLicenseFeatures() {
+        return bootConf != null && bootConf.has("license_features");
+    }
+
     private CertificateTrust.Helper getTrustHelper() {
         if (trustHelper == null) {
             return trustHelper = new CertificateTrust.Helper() {
