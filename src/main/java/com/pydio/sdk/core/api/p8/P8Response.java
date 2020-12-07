@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
@@ -66,11 +67,11 @@ public class P8Response implements Closeable {
 
         buffered = new ByteArrayOutputStream();
         netStream = this.con.getInputStream();
-        int read, left = 32768;
+        int read, left = 500;
         byte[] buffer = new byte[left];
 
         try {
-            for (; left > 0; ) {
+            while (left > 0) {
                 read = netStream.read(buffer);
                 if (read == -1) {
                     break;
@@ -82,7 +83,7 @@ public class P8Response implements Closeable {
             }
 
             buffer = buffered.toByteArray();
-            String xmlString = new String(Arrays.copyOfRange(buffer, 0, buffer.length), "utf-8");
+            String xmlString = new String(Arrays.copyOfRange(buffer, 0, buffer.length), StandardCharsets.UTF_8);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
             DefaultHandler dh = new DefaultHandler() {
@@ -114,7 +115,6 @@ public class P8Response implements Closeable {
 
                     boolean registryPart = qName.equals("ajxp_registry_part") && attributes.getValue("xPath") != null;
                     if (registryPart) {
-                        //<?xml version="1.0" encoding="UTF-8"?><ajxp_registry_part xPath="user/repositories" ></ajxp_registry_part>
                         tag_repo = true;
                         String attr = attributes.getValue("xPath");
                         if (attr != null) {
@@ -170,8 +170,7 @@ public class P8Response implements Closeable {
     private InputStream getInputStream() {
         if (concatStream == null) {
             concatStream = new InputStream() {
-                InputStream buffered = new ByteArrayInputStream(P8Response.this.buffered.toByteArray());
-
+                final InputStream buffered = new ByteArrayInputStream(P8Response.this.buffered.toByteArray());
                 @Override
                 public int read() throws IOException {
                     if (netStream == null) {
