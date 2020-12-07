@@ -29,7 +29,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class HttpResponse {
 
-    private HttpURLConnection con;
+    private final HttpURLConnection con;
 
     public HttpResponse(HttpURLConnection con) {
         this.con = con;
