@@ -108,7 +108,14 @@ public class PydioCells implements Client {
     public PydioCells(ServerNode node) {
         this.serverNode = node;
         this.URL = node.url();
-        this.apiURL = node.apiURL();
+        String url = node.apiURL();
+        try {
+            new URL(url);
+        } catch (MalformedURLException e) {
+            // ENDPOINT_REST_API property in server boot conf
+            url = this.URL + url;
+        }
+        this.apiURL = url;
     }
 
     protected void getJWT() throws SDKException {
