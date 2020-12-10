@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.cert.CertPathValidatorException;
 import java.security.cert.Certificate;
@@ -371,7 +372,7 @@ public class ServerNode implements Node {
         }
 
         try {
-            oidc = new JSONObject(new String(out.toByteArray(), "UTF-8"));
+            oidc = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
         } catch (Exception ignored) {
         }
     }
