@@ -282,6 +282,38 @@ public class Pydio8 implements Client {
     }
 
     @Override
+    public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
+        P8Response rsp = p8.execute(builder.getRequest());
+        if (rsp.code() != Code.ok) {
+            throw SDKException.fromP8Code(rsp.code());
+        }
+        return rsp.getContent();
+    }
+
+    @Override
+    public InputStream getWorkspaceRegistry(String ws) throws SDKException {
+        String secureToken = getSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
+        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
+        if (rsp.code() != Code.ok) {
+            throw SDKException.fromP8Code(rsp.code());
+        }
+        return rsp.getContent();
+    }
+
+    @Override
+    public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
+        String secureToken = getSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
+        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required);
+        if (rsp.code() != Code.ok) {
+            throw SDKException.fromP8Code(rsp.code());
+        }
+        return rsp.getContent();
+    }
+
+    @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
         String secureToken = getSecureToken();
         P8RequestBuilder builder = P8RequestBuilder.nodeInfo(ws, path).setSecureToken(secureToken);

@@ -46,6 +46,12 @@ public interface Client {
 
     void workspaceList(final NodeHandler handler) throws SDKException;
 
+    InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException;
+
+    InputStream getWorkspaceRegistry(String ws) throws SDKException;
+
+    InputStream getServerRegistryAsAuthenticatedUser() throws SDKException;
+
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
     PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException;

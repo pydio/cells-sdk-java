@@ -415,6 +415,81 @@ public class PydioCells implements Client {
     }
 
     @Override
+    public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
+        String fullURI = this.URL + "/a/frontend/state/?ws=login";
+        URL url = null;
+        try {
+            url = new URL(fullURI);
+        } catch (MalformedURLException e) {
+            throw SDKException.malFormURI(e);
+        }
+
+        HttpURLConnection con = null;
+        InputStream in = null;
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        try {
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            return con.getInputStream();
+        } catch (IOException e) {
+            Log.w("Connection", "connction error while retrieving registry");
+            throw SDKException.conFailed(e);
+        }
+    }
+
+    @Override
+    public InputStream getWorkspaceRegistry(String ws) throws SDKException {
+        String fullURI = this.URL + "/a/frontend/state/?ws=" + ws;
+        URL url;
+        try {
+            url = new URL(fullURI);
+        } catch (MalformedURLException e) {
+            throw SDKException.malFormURI(e);
+        }
+
+        this.getJWT();
+
+        HttpURLConnection con;
+        InputStream in;
+        try {
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
+            return con.getInputStream();
+
+        } catch (IOException e) {
+            throw SDKException.conFailed(e);
+        }
+    }
+
+    @Override
+    public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
+        URL url;
+        try {
+            url = new URL(this.URL + "/a/frontend/state");
+        } catch (MalformedURLException e) {
+            throw SDKException.malFormURI(e);
+        }
+
+        this.getJWT();
+        HttpURLConnection con;
+        try {
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+        } catch (IOException e) {
+            throw SDKException.conFailed(e);
+        }
+
+        con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
+        try {
+            return con.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw SDKException.conFailed(e);
+        }
+    }
+
+    @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
         TreeNode node = internalStatNode(ws, path);
         if (node != null) {

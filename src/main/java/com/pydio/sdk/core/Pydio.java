@@ -61,6 +61,7 @@ public class Pydio {
     public final static String WORKSPACE_PROPERTY_META_SYNC = "meta_syncable_REPO_SYNCABLE";
     public final static String WORKSPACE_PROPERTY_SLUG = "repositorySlug";
     public final static String WORKSPACE_PROPERTY_ACL = "acl";
+    public final static String WORKSPACE_PROPERTY_REPO_TYPE = "repository_type";
     public final static String WORKSPACE_DESCRIPTION = "description";
     public final static String WORKSPACE_IS_PUBLIC = "is_public";
 
