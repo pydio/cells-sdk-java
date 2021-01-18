@@ -10,7 +10,11 @@ public class WorkspaceNode implements Node {
     private Properties properties;
     private Properties preferences;
     private List<Plugin> plugins;
+
+    //@deprecated
     private List<String> actions;
+
+    private List<Action> availableActions;
 
     public boolean allowsCrossCopy() {
         return "true".equals(properties.getProperty(Pydio.WORKSPACE_PROPERTY_CROSS_COPY));
@@ -53,52 +57,53 @@ public class WorkspaceNode implements Node {
         return "true".equals(pub);
     }
 
-    public boolean isReadOnly() {
+    public boolean isReadable() {
         return "r".equals(acl());
     }
 
-    public boolean readableWritable() {
-        return "rw".equals(acl());
+    public boolean isWriteable() {
+        String acl = acl();
+        return "rw".equals(acl) || "w".equals(acl);
     }
 
     public boolean isSyncable() {
         return "true".equals(getProperty(Pydio.WORKSPACE_PROPERTY_META_SYNC));
     }
 
-    public boolean isActionDisabled(String action) {
-        if (actions == null || actions.size() == 0) {
-            return false;
+    public boolean isReadActionAllowed(String action) {
+        if (availableActions == null || availableActions.size() == 0) {
+            return true;
         }
 
-        for (String a : actions) {
-            String[] items = a.split(":");
-            String actionName = items[0];
-
-            if (action.equals(actionName)) {
-                String[] rights = items[1].split(":");
-                boolean readChecked = true, writeChecked = true;
-                try {
-                    if ("false".equals(rights[0])) {
-                        readChecked = acl().contains("r");
-                    }
-                    if ("false".equals(rights[1])) {
-                        writeChecked = acl().contains("w");
-                    }
-                    return readChecked && writeChecked;
-                } catch (Exception e) {
-                    return false;
-                }
+        for (Action a : availableActions) {
+            if (action.equals(a.name)) {
+                return a.read & isReadable();
             }
         }
-        return false;
+
+        return true;
+    }
+
+    public boolean isWriteActionAllowed(String action) {
+        if (availableActions == null || availableActions.size() == 0) {
+            return true;
+        }
+
+        for (Action a : availableActions) {
+            if (action.equals(a.name)) {
+                return a.write & isWriteable();
+            }
+        }
+
+        return true;
     }
 
     public boolean isShared() {
         return "true".equals(properties.getProperty(Pydio.NODE_PROPERTY_AJXP_SHARED)) || "shared".equals(properties.getProperty(Pydio.WORKSPACE_PROPERTY_OWNER));
     }
 
-    public void setActions(List<String> actions) {
-        this.actions = actions;
+    public void setActions(List<Action> actions) {
+        this.availableActions = actions;
     }
 
     public void setPreferences(Properties prefs) {
