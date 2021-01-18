@@ -2,15 +2,15 @@ package com.pydio.sdk.core.model;
 
 public class Action {
     final public String name;
-    final public boolean dirDefault;
-    final public boolean fileDefault;
-    final public boolean write;
-    final public boolean read;
-    final public boolean adminOnly;
-    final public boolean noUser;
-    final public boolean userLogged;
+    final public Boolean dirDefault;
+    final public Boolean fileDefault;
+    final public Boolean write;
+    final public Boolean read;
+    final public Boolean adminOnly;
+    final public Boolean noUser;
+    final public Boolean userLogged;
 
-    public Action(String name, boolean dirDefault, boolean fileDefault, boolean write, boolean read, boolean adminOnly, boolean userLogged, boolean noUser) {
+    public Action(String name, Boolean dirDefault, Boolean fileDefault, Boolean write, Boolean read, Boolean adminOnly, Boolean userLogged, Boolean noUser) {
         this.name = name;
         this.dirDefault = dirDefault;
         this.fileDefault = fileDefault;
