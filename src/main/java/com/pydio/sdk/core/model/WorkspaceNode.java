@@ -58,12 +58,13 @@ public class WorkspaceNode implements Node {
     }
 
     public boolean isReadable() {
-        return "r".equals(acl());
+        String acl = acl();
+        return "r".equals(acl()) || "rw".equals(acl);
     }
 
     public boolean isWriteable() {
         String acl = acl();
-        return "rw".equals(acl) || "w".equals(acl);
+        return "w".equals(acl) || "rw".equals(acl);
     }
 
     public boolean isSyncable() {
@@ -77,10 +78,9 @@ public class WorkspaceNode implements Node {
 
         for (Action a : availableActions) {
             if (action.equals(a.name)) {
-                return a.read & isReadable();
+                return a.read != null ? a.read : isReadable();
             }
         }
-
         return true;
     }
 
@@ -91,10 +91,9 @@ public class WorkspaceNode implements Node {
 
         for (Action a : availableActions) {
             if (action.equals(a.name)) {
-                return a.write & isWriteable();
+                return a.write != null ? a.write : isWriteable();
             }
         }
-
         return true;
     }
 
@@ -114,13 +113,13 @@ public class WorkspaceNode implements Node {
         this.plugins = plugins;
     }
 
-    public Plugin getPlugin(String id){
+    public Plugin getPlugin(String id) {
         if (this.plugins == null){
             return null;
         }
 
         for(Plugin p: this.plugins){
-            if(p.id.equals(id)){
+            if(id.equals(p.id)){
                 return p;
             }
         }
