@@ -10,28 +10,26 @@ public class SDKException extends Exception {
     public int code;
     public Exception cause;
 
-    private SDKException() {
-    }
+    private SDKException() {}
 
     public SDKException(int code, Exception cause) {
         this.cause = cause;
+        this.code = code;
         if (cause instanceof ApiException) {
             ApiException ae = (ApiException) cause;
-            this.code = ae.getCode() == 401 ? Code.authentication_required : Code.con_failed;
-        } else {
-            this.code = code;
+            if (ae.getCode() == 401) {
+                this.code = Code.authentication_required;
+            }
         }
+    }
+
+    public SDKException(int code) {
+        this.code = code;
     }
 
     public SDKException(ApiException e){
         this.code = Code.fromHttpStatus(e.getCode());
         this.cause = e;
-    }
-
-    public static SDKException fromP8Code(int p8Code) {
-        SDKException e = new SDKException();
-        e.code = Code.fromHttpStatus(p8Code);
-        return e;
     }
 
     public static SDKException fromHttpCode(int httpCode) {
