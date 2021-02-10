@@ -4,7 +4,6 @@ import com.pydio.sdk.core.api.cells.ApiException;
 
 import java.io.IOException;
 
-@SuppressWarnings("serial")
 public class SDKException extends Exception {
     
     public int code;
@@ -15,12 +14,6 @@ public class SDKException extends Exception {
     public SDKException(int code, Exception cause) {
         this.cause = cause;
         this.code = code;
-        if (cause instanceof ApiException) {
-            ApiException ae = (ApiException) cause;
-            if (ae.getCode() == 401) {
-                this.code = Code.authentication_required;
-            }
-        }
     }
 
     public SDKException(int code) {
@@ -30,12 +23,6 @@ public class SDKException extends Exception {
     public SDKException(ApiException e){
         this.code = Code.fromHttpStatus(e.getCode());
         this.cause = e;
-    }
-
-    public static SDKException fromHttpCode(int httpCode) {
-        SDKException e = new SDKException();
-        e.code = httpCode;
-        return e;
     }
 
     public static SDKException malFormURI(Exception e) {

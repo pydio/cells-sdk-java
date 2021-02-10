@@ -25,6 +25,8 @@ public class Code {
     public static final int con_closed = 21;
     public static final int not_found = 22;
     public static final int no_internet = 23;
+    public static final int token_expired = 24;
+    public static final int no_token_available = 25;
 
     public static int fromHttpStatus(int status) {
 
