@@ -55,8 +55,6 @@ public class TokenService {
             throw new SDKException(Code.token_expired, new IOException("no valid token available"));
         }
 
-        //this.store.delete(subject);
-
         if (server.supportsOauth()) {
             if (t != null) {
                 return this.refresh(server, t);
@@ -87,7 +85,7 @@ public class TokenService {
             response = HttpClient.request(request);
         } catch (Exception e) {
             Log.w("Token Service", " token request failed: " + e.getLocalizedMessage());
-            return null;
+            throw new SDKException(Code.con_failed);
         }
 
         String jwt;
@@ -109,7 +107,7 @@ public class TokenService {
         com.pydio.sdk.core.auth.jwt.JWT parsedIDToken;
         parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
         if (parsedIDToken == null) {
-            return null;
+            throw new SDKException(Code.no_token_available);
         }
 
         t.subject = String.format("%s@%s", parsedIDToken.claims.name, server.url());

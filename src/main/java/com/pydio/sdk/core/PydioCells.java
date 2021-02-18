@@ -119,7 +119,12 @@ public class PydioCells implements Client {
     }
 
     protected void getJWT() throws SDKException {
-        this.bearerValue = TokenService.get(this.serverNode, this.credentials, this.skipOAuth).value;
+        Token token = TokenService.get(this.serverNode, this.credentials, this.skipOAuth);
+        if (token != null) {
+            this.bearerValue = token.value;
+        } else {
+            this.bearerValue = "";
+        }
     }
 
     private ApiClient getApiClient() {
@@ -454,7 +459,9 @@ public class PydioCells implements Client {
         try {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
+            if (!"".equals(this.bearerValue)) {
+                con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
+            }
             return con.getInputStream();
 
         } catch (IOException e) {
