@@ -1,5 +1,7 @@
 package com.pydio.sdk.integration;
 
+import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -15,15 +17,20 @@ import java.io.ByteArrayInputStream;
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
  * the "src/test/resources/config.properties" file to match your setup.
- * 
+ * <p>
  * You can then launch the test with:
- * 
+ *
  * <code>./gradlew build -Dtest.profile=integration</code>
  */
 public class BasicConnectionTest {
 
     private TestClient testClient;
     private StateManager stateManager;
+
+    @Before
+    public void setupServices() {
+        TokenService.init(new TokenMemoryStore());
+    }
 
     @Before
     public void setup() {

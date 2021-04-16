@@ -2,6 +2,8 @@ package com.pydio.sdk.sync.tree;
 
 import java.util.List;
 
+import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 
 import org.junit.Assert;
@@ -16,6 +18,11 @@ import org.junit.Test;
 public class MemoryStateManagerTest {
 
     private StateManager manager;
+
+    @Before
+    public void setupServices() {
+        TokenService.init(new TokenMemoryStore());
+    }
 
     @Before
     public void setup() {

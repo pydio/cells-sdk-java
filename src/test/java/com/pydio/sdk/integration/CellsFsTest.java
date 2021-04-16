@@ -1,5 +1,7 @@
 package com.pydio.sdk.integration;
 
+import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,6 +43,11 @@ public class CellsFsTest {
     private CecWrapper cec;
 
     private String serverURL, login, pwd, workspace;
+
+    @Before
+    public void setupServices() {
+        TokenService.init(new TokenMemoryStore());
+    }
 
     @Before
     public void setupCellsClient() {

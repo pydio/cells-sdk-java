@@ -51,11 +51,11 @@ public class TokenService {
             return t;
         }
 
-        if (skipOAuth) {
+        /* if (skipOAuth) {
             throw new SDKException(Code.token_expired, new IOException("no valid token available"));
-        }
+        } */
 
-        if (server.supportsOauth()) {
+        if (server.supportsOauth() && !skipOAuth) {
             if (t != null) {
                 return this.refresh(server, t);
             }
