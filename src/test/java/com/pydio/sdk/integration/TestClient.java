@@ -13,7 +13,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.Random;
 
 import com.pydio.sdk.sync.tree.StateManager;
 import com.pydio.sdk.core.PydioCells;
@@ -90,5 +89,4 @@ public class TestClient {
         return workingDirPath;
     }
 
- 
 }
