@@ -1,5 +1,7 @@
 package com.pydio.sdk.integration;
 
+import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.common.errors.Error;
 import com.pydio.sdk.sync.fs.CellsFs;
@@ -15,6 +17,7 @@ import java.util.Random;
 
 import com.pydio.sdk.sync.tree.StateManager;
 import com.pydio.sdk.core.PydioCells;
+import org.junit.Before;
 
 /**
  * Utilitary class to centralise setup of a Cells client for testing purposes.
@@ -28,6 +31,11 @@ public class TestClient {
     private Path workingDirPath;
 
     private String serverURL, login, pwd, workspace;
+
+    @Before
+    public void setupServices() {
+        TokenService.init(new TokenMemoryStore());
+    }
 
     public void setup(StateManager stateManager) {
 

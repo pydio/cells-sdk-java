@@ -1,5 +1,7 @@
 package com.pydio.sdk.integration;
 
+import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -31,6 +33,11 @@ public class GetChangesTest {
     private TestClient testClient;
     private StateManager stateManager;
     private CecWrapper cec;
+
+    @Before
+    public void setupServices() {
+        TokenService.init(new TokenMemoryStore());
+    }
 
     @Before
     public void setup() {
