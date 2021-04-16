@@ -25,7 +25,7 @@ public class CecWrapper {
             Process process = builder.start();
 
             int returnValue = process.waitFor();
-            System.out.println("Returned with code: " + returnValue);
+            System.out.println("## After runnning prepare-cec script. Exit code: " + returnValue);
 
             displayOutput(process);
 

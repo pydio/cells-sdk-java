@@ -89,7 +89,12 @@ public class GetChangesTest {
 
             cec.callCommand("ls", basePrefix);
 
+            System.out.println("In tests simple change B4 getting the changes");
+
             changes = testClient.getCellsFs().getRawChanges(basePath);
+
+            System.out.println("... Retrieved " + changes.size() + " changes");
+
             Assert.assertTrue(changes.size() == 4);
             Assert.assertTrue(changes.get(changes.firstKey()).getType() == Change.TYPE_CREATE);
 
@@ -115,8 +120,10 @@ public class GetChangesTest {
             cec.callCommand("rm", "-f", basePrefix);
 
         } catch (Exception e) {
-            Assert.fail("Simple change test throws an error");
+            System.out.println("Simple change test as failed with an exception: ");
             e.printStackTrace();
+            System.out.println("==========================");
+            Assert.fail("Simple change test failed. See stack above");
         }
     }
 

@@ -7,7 +7,7 @@ OS_TYPE=$1  # darwin, windows or linux
 
 BASE_PATH=$2
 
-echo "... Executing script at $BASE_PATH"
+echo "... Executing script at [${BASE_PATH}]"
 
 function get_property
 {
@@ -39,6 +39,6 @@ pwd=$(get_property pwd)
 wks=$(get_property defaultWorkspace)
 
 echo "... Configuring connection"
-$CEC configure client-auth -l $login -p $pwd -u "${url}"
+$CEC configure client-auth --login $login --password $pwd --url "${url}"
 
 exit 0
