@@ -33,12 +33,13 @@ public class GetChangesTest {
     private TestClient testClient;
     private StateManager stateManager;
     private CecWrapper cec;
-
+    @Ignore
     @Before
     public void setupServices() {
         TokenService.init(new TokenMemoryStore());
     }
 
+    @Ignore
     @Before
     public void setup() {
         stateManager = new MemoryStateManager();
@@ -49,11 +50,13 @@ public class GetChangesTest {
         cec.setUpCec();
     }
 
+    @Ignore
     @After
     public void teardown() {
         // do nothing
     }
 
+    @Ignore
     @Test
     public void testSimpleChange() {
 
