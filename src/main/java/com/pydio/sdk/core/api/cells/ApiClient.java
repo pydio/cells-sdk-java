@@ -86,7 +86,16 @@ public class ApiClient {
         json = new JSON();
 
         // Set default User-Agent.
-        setUserAgent(String.format(Locale.US, "%s-%s/%d/Client", ApplicationData.name, ApplicationData.version, ApplicationData.versionCode));
+        String userAgent = String.format(Locale.US, "%s-%s/%d", ApplicationData.name, ApplicationData.version, ApplicationData.versionCode);
+        if (!ApplicationData.platform.equals("")) {
+            userAgent = ApplicationData.platform + "/" + userAgent;
+        }
+
+        if (!ApplicationData.packageID.equals("")) {
+            userAgent = userAgent + "/" + ApplicationData.packageID;
+        }
+
+        setUserAgent(userAgent);
 
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
