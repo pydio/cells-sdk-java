@@ -13,6 +13,7 @@
 
 package com.pydio.sdk.core.api.cells;
 
+import com.pydio.sdk.core.ApplicationData;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
@@ -85,7 +86,7 @@ public class ApiClient {
         json = new JSON();
 
         // Set default User-Agent.
-        setUserAgent("Swagger-Codegen/1.0.0/java");
+        setUserAgent(String.format(Locale.US, "%s-%s/%d/Client", ApplicationData.name, ApplicationData.version, ApplicationData.versionCode));
 
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
