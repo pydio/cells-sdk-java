@@ -568,6 +568,15 @@ public class PydioCells implements Client {
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         RestBulkMetaResponse response;
+
+        try {
+            response = api.bulkStatNodes(request);
+        } catch (ApiException e){
+            if (e.getCode() == 404 ){
+                throw SDKException.notFound(e);
+            }
+            throw new SDKException(e);
+        }
         try {
             response = api.bulkStatNodes(request);
             RestPagination pagination = response.getPagination();
@@ -593,6 +602,7 @@ public class PydioCells implements Client {
                 }
             }
         } catch (ApiException e) {
+            e.printStackTrace();
             throw new SDKException(e);
         }
 

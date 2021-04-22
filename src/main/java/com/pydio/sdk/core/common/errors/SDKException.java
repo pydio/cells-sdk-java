@@ -9,18 +9,32 @@ public class SDKException extends Exception {
     public int code;
     public Exception cause;
 
-    private SDKException() {}
+    public SDKException(String message) {
+        super(message);
+    }
+
+    public SDKException(Throwable cause) {
+        super(cause);
+    }
+
+    public SDKException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
     public SDKException(int code, Exception cause) {
+        this("Error "+ code, cause);
         this.cause = cause;
         this.code = code;
     }
 
+
     public SDKException(int code) {
+        this("Error "+ code);
         this.code = code;
     }
 
     public SDKException(ApiException e){
+        this("Error "+ Code.fromHttpStatus(e.getCode()), e);
         this.code = Code.fromHttpStatus(e.getCode());
         this.cause = e;
     }
@@ -60,4 +74,8 @@ public class SDKException extends Exception {
     public static SDKException notFound(Exception e){
         return new SDKException(Code.not_found, e);
     }
+
+
+    private SDKException() {}
+
 }
