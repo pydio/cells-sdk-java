@@ -2,6 +2,7 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
+sourceCompatibility = 1.8
 
 def vendorName = "Abstrium SAS"
 def sdkJavaRepoURL = 'https://github.com/pydio/cells-sdk-java.git'
