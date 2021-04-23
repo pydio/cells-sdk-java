@@ -16,7 +16,6 @@ import com.pydio.sdk.core.api.cells.model.RestBulkMetaResponse;
 import com.pydio.sdk.core.api.cells.model.RestCreateNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestDeleteNodesRequest;
 import com.pydio.sdk.core.api.cells.model.RestFrontSessionRequest;
-import com.pydio.sdk.core.api.cells.model.RestFrontSessionResponse;
 import com.pydio.sdk.core.api.cells.model.RestGetBulkMetaRequest;
 import com.pydio.sdk.core.api.cells.model.RestNodesCollection;
 import com.pydio.sdk.core.api.cells.model.RestPagination;
@@ -37,7 +36,6 @@ import com.pydio.sdk.core.api.cells.model.TreeQuery;
 import com.pydio.sdk.core.api.cells.model.TreeSearchRequest;
 import com.pydio.sdk.core.api.cells.model.TreeWorkspaceRelativePath;
 import com.pydio.sdk.core.api.cells.model.UpdateUserMetaRequestUserMetaOp;
-import com.pydio.sdk.core.auth.OauthConfig;
 import com.pydio.sdk.core.auth.Token;
 import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.common.callback.ChangeHandler;
@@ -45,12 +43,7 @@ import com.pydio.sdk.core.common.callback.NodeHandler;
 import com.pydio.sdk.core.common.callback.RegistryItemHandler;
 import com.pydio.sdk.core.common.callback.TransferProgressListener;
 import com.pydio.sdk.core.common.callback.cells.TreeNodeHandler;
-import com.pydio.sdk.core.common.errors.Code;
 import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.common.http.HttpClient;
-import com.pydio.sdk.core.common.http.HttpRequest;
-import com.pydio.sdk.core.common.http.HttpResponse;
-import com.pydio.sdk.core.common.http.Method;
 import com.pydio.sdk.core.model.FileNode;
 import com.pydio.sdk.core.model.Message;
 import com.pydio.sdk.core.model.ServerNode;
@@ -63,11 +56,9 @@ import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.sdk.core.security.Credentials;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.PageOptions;
-import com.pydio.sdk.core.utils.Params;
 import com.pydio.sdk.core.utils.io;
 import com.squareup.okhttp.OkHttpClient;
 
-import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.sax.helpers.DefaultHandler;
@@ -83,13 +74,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
@@ -97,13 +86,16 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class PydioCells implements Client {
+
     public String URL;
     protected String bearerValue;
 
-    private final ServerNode serverNode;
     private Credentials credentials;
-    private final String apiURL;
     private Boolean skipOAuth = false;
+    private String userAgent;
+
+    private final ServerNode serverNode;
+    private final String apiURL;
 
     public PydioCells(ServerNode node) {
         this.serverNode = node;
@@ -127,17 +119,6 @@ public class PydioCells implements Client {
         }
     }
 
-    private ApiClient getApiClient() {
-        ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath(apiURL);
-        if (this.serverNode.isSSLUnverified()) {
-            SSLContext context = this.serverNode.getSslContext();
-            OkHttpClient c = apiClient.getHttpClient();
-            c.setSslSocketFactory(context.getSocketFactory());
-            c.setHostnameVerifier((s, sslSession) -> URL.contains(s));
-        }
-        return apiClient;
-    }
 
     protected String fullPath(String ws, String file) {
         String fullPath = "";
@@ -1250,4 +1231,37 @@ public class PydioCells implements Client {
     public PydioCells get(ServerNode node) {
         return new PydioCells(node);
     }
+
+    // Local Helpers
+
+    private String getUserAgent() {
+        if (userAgent != null) {
+            return userAgent;
+        }
+
+        userAgent = String.format(Locale.US, "%s-%s/%d", ApplicationData.name, ApplicationData.version, ApplicationData.versionCode);
+        if (!ApplicationData.platform.equals("")) {
+            userAgent = ApplicationData.platform + "/" + userAgent;
+        }
+
+        if (!ApplicationData.packageID.equals("")) {
+            userAgent = userAgent + "/" + ApplicationData.packageID;
+        }
+        return userAgent;
+    }
+
+    private ApiClient getApiClient() {
+        ApiClient apiClient = new ApiClient();
+        apiClient.setBasePath(apiURL);
+        apiClient.setUserAgent(getUserAgent());
+
+        if (this.serverNode.isSSLUnverified()) {
+            SSLContext context = this.serverNode.getSslContext();
+            OkHttpClient c = apiClient.getHttpClient();
+            c.setSslSocketFactory(context.getSocketFactory());
+            c.setHostnameVerifier((s, sslSession) -> URL.contains(s));
+        }
+        return apiClient;
+    }
+
 }
