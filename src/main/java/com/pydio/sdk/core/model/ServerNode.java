@@ -59,12 +59,14 @@ public class ServerNode implements Node {
     private boolean sslUnverified = false;
     private SSLContext sslContext;
     private Properties properties = null;
-    private JSONObject bootConf, oidc;
+    private JSONObject bootConf;
+    private JSONObject oidc;
     private byte[][] certificateChain;
     private CertificateTrust.Helper trustHelper;
     private ServerResolver serverResolver;
 
-    public ServerNode() {}
+    public ServerNode() {
+    }
 
     public static ServerNode fromAddress(String address) throws IOException {
         URL url = new URL(address);
@@ -83,6 +85,7 @@ public class ServerNode implements Node {
         if (properties == null) return null;
         return properties.getProperty(key);
     }
+
     @Override
     public void setProperty(String key, String value) {
         if (properties == null) {
@@ -90,24 +93,29 @@ public class ServerNode implements Node {
         }
         properties.setProperty(key, value);
     }
+
     @Override
     public void deleteProperty(String key) {
         if (properties != null && properties.contains(key)) {
             properties.remove(key);
         }
     }
+
     @Override
     public String path() {
         return path;
     }
+
     @Override
     public String label() {
         return label;
     }
+
     @Override
     public int type() {
         return Node.TYPE_SERVER;
     }
+
     @Override
     public String id() {
         String id = scheme + "://" + host;
@@ -117,18 +125,22 @@ public class ServerNode implements Node {
         id = id + path;
         return id;
     }
+
     @Override
     public void setProperties(Properties p) {
         properties = p;
     }
+
     @Override
     public String getEncoded() {
         return null;
     }
+
     @Override
     public String getEncodedHash() {
         return null;
     }
+
     @Override
     public int compare(Node node) {
         return 0;
@@ -268,7 +280,7 @@ public class ServerNode implements Node {
         }
 
         try {
-            bootConf = new JSONObject(new String(out.toByteArray(), "UTF-8"));
+            bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
         } catch (Exception ignored) {
             return Code.unexpected_response;
         }
@@ -485,7 +497,7 @@ public class ServerNode implements Node {
     }
 
     public String getOriginalURL() {
-        if( originalUrl == null) {
+        if (originalUrl == null) {
             originalUrl = url();
         }
         return originalUrl;
@@ -562,7 +574,7 @@ public class ServerNode implements Node {
             return null;
         }
 
-        for (WorkspaceNode wn: this.workspaces.values()) {
+        for (WorkspaceNode wn : this.workspaces.values()) {
             if (id.equals(wn.getProperty(Pydio.WORKSPACE_PROPERTY_ID))) {
                 return wn;
             }

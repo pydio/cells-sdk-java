@@ -23,6 +23,9 @@ import org.junit.Before;
  */
 public class TestClient {
 
+    // You must adapt this file depending on your setup in "src/test/resources" to run the tests 
+    private final String confPath = "/config.properties";
+
     private ServerNode node;
     private PydioCells cellsClient;
     private CellsFs cellsFs;
@@ -31,18 +34,13 @@ public class TestClient {
 
     private String serverURL, login, pwd, workspace;
 
-    @Before
-    public void setupServices() {
-        TokenService.init(new TokenMemoryStore());
-    }
-
     public void setup(StateManager stateManager) {
 
-        URL url = TestClient.class.getResource("/config.properties");
+        URL url = TestClient.class.getResource(confPath);
         workingDirPath = Paths.get(url.getPath()).getParent();
 
         Properties p = new Properties();
-        try (InputStream is = TestClient.class.getResourceAsStream("/config.properties")) {
+        try (InputStream is = TestClient.class.getResourceAsStream(confPath)) {
             p.load(new InputStreamReader(is));
             serverURL = p.getProperty("serverURL");
             login = p.getProperty("login");

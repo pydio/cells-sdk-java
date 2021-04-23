@@ -5,9 +5,10 @@ import com.pydio.sdk.core.auth.Token;
 import java.util.HashMap;
 import java.util.Map;
 
+/** Optimistic simple implementation of the Token store mainly for testing purposes */
 public class TokenMemoryStore implements Token.Store {
 
-    final Map map = new HashMap();
+    final HashMap<String, Token> map = new HashMap<String, Token>();
 
     @Override
     public void save(Token t) {
@@ -16,11 +17,7 @@ public class TokenMemoryStore implements Token.Store {
 
     @Override
     public Token get(String subject) {
-        Object o =  map.get(subject);
-        if (o != null) {
-            return (Token) o;
-        }
-        return null;
+        return map.get(subject);
     }
 
     @Override

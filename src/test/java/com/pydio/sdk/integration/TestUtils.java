@@ -36,7 +36,7 @@ public class TestUtils {
         } else if (isMac()) {
             return OS_MAC;
         } else
-            throw new RuntimeException("Unsupported");
+            throw new RuntimeException("Unsupported OS");
     }
 
     public static String getRandomPrefix() {

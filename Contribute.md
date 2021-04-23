@@ -35,12 +35,10 @@ mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/sdk/core/api/cells .
 
 ### Various
 
-- We use git submodules to ease dayto day see [this interresting post](https://blog.bitsrc.io/how-to-utilize-submodules-within-git-repos-5dfdd1c62d09)
+- We use git submodules to ease dayto day see [this interesting post](https://blog.bitsrc.io/how-to-utilize-submodules-within-git-repos-5dfdd1c62d09)
 
 ### Temporary Tips
 
 #### For refactoring
 
-- We might want to change the package that is used by the swagger generated model and rename packages in a future proof way. We will go trough a temporar phase where we put generated methods at 2 distinct locations while deprecating the legacy one. See:
-https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java
-
+- We might want to change the package that is used by the swagger generated model and rename packages in a future proof way. We will go trough a temporar phase where we put generated methods at 2 distinct locations while deprecating the legacy one. Some solution can be found in [this stackoverflow question](https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java).
