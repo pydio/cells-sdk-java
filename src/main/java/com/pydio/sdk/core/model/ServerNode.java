@@ -508,23 +508,21 @@ public class ServerNode implements Node {
     }
 
     public String apiURL() {
-        return this.bootConf.getString("ENDPOINT_REST_API");
+        if (apiURL != null) {
+            return apiURL;
+        }
 
-//        if (this.apiURL != null) {
-//            return this.apiURL;
-//        }
-//
-//        String urlPath = this.bootConf.getString("ENDPOINT_REST_API");
-//        if (urlPath.startsWith("/")) {
-//            urlPath = urlPath.substring(1);
-//        }
-//
-//        this.apiURL = url;
-//        if (!this.apiURL.endsWith("/")) {
-//            this.apiURL = this.apiURL + "/";
-//        }
-//
-//        return this.apiURL = this.apiURL + urlPath;
+        if (bootConf == null) {
+            System.out.println("[ERROR] cannot retrieve API URL before bootconf is enabled.");
+            return null;
+        }
+        apiURL = bootConf.getString("ENDPOINT_REST_API");
+
+        if (!apiURL.startsWith("http")) {
+            String apiPath = apiURL.startsWith("/") ? apiURL.substring(1) : apiURL;
+            apiURL = url + apiPath;
+        }
+        return apiURL;
     }
 
     public SSLContext getSslContext() {
