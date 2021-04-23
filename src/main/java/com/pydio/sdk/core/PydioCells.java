@@ -324,7 +324,10 @@ public class PydioCells implements Client {
             throw SDKException.conFailed(e);
         } finally {
             if (in != null) {
-                try { in.close(); } catch (Exception ignore) {}
+                try {
+                    in.close();
+                } catch (Exception ignore) {
+                }
             }
 
             if (con != null) {
@@ -568,12 +571,13 @@ public class PydioCells implements Client {
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         RestBulkMetaResponse response;
+
         try {
             response = api.bulkStatNodes(request);
             RestPagination pagination = response.getPagination();
-            if(pagination != null ) {
+            if (pagination != null) {
                 nextPageOptions.setLimit(pagination.getLimit());
-                if(pagination.getCurrentOffset() == null) {
+                if (pagination.getCurrentOffset() == null) {
                     nextPageOptions.setOffset(0);
                 } else {
                     nextPageOptions.setOffset(pagination.getCurrentOffset());
