@@ -31,7 +31,7 @@ import java.util.List;
  * Role represents a generic set of permissions that can be applied to any users or groups.
  */
 @ApiModel(description = "Role represents a generic set of permissions that can be applied to any users or groups.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 

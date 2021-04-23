@@ -28,13 +28,19 @@ import java.io.IOException;
 /**
  * JobsActionOutputFilter
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
 public class JobsActionOutputFilter {
   @SerializedName("Query")
   private ServiceQuery query = null;
+
+  @SerializedName("Label")
+  private String label = null;
+
+  @SerializedName("Description")
+  private String description = null;
 
   public JobsActionOutputFilter query(ServiceQuery query) {
     this.query = query;
@@ -54,6 +60,42 @@ public class JobsActionOutputFilter {
     this.query = query;
   }
 
+  public JobsActionOutputFilter label(String label) {
+    this.label = label;
+    return this;
+  }
+
+   /**
+   * Get label
+   * @return label
+  **/
+  @ApiModelProperty(value = "")
+  public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+  public JobsActionOutputFilter description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(value = "")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -64,12 +106,14 @@ public class JobsActionOutputFilter {
       return false;
     }
     JobsActionOutputFilter jobsActionOutputFilter = (JobsActionOutputFilter) o;
-    return Objects.equals(this.query, jobsActionOutputFilter.query);
+    return Objects.equals(this.query, jobsActionOutputFilter.query) &&
+        Objects.equals(this.label, jobsActionOutputFilter.label) &&
+        Objects.equals(this.description, jobsActionOutputFilter.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(query);
+    return Objects.hash(query, label, description);
   }
 
 
@@ -79,6 +123,8 @@ public class JobsActionOutputFilter {
     sb.append("class JobsActionOutputFilter {\n");
     
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }

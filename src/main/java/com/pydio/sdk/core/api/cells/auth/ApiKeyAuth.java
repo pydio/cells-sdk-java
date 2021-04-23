@@ -18,7 +18,7 @@ import com.pydio.sdk.core.api.cells.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;

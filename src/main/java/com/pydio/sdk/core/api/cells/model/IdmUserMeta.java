@@ -21,6 +21,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.pydio.sdk.core.api.cells.model.ServiceResourcePolicy;
+import com.pydio.sdk.core.api.cells.model.TreeNode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * IdmUserMeta
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -52,6 +53,9 @@ public class IdmUserMeta {
 
   @SerializedName("PoliciesContextEditable")
   private Boolean policiesContextEditable = null;
+
+  @SerializedName("ResolvedNode")
+  private TreeNode resolvedNode = null;
 
   public IdmUserMeta uuid(String uuid) {
     this.uuid = uuid;
@@ -169,6 +173,24 @@ public class IdmUserMeta {
     this.policiesContextEditable = policiesContextEditable;
   }
 
+  public IdmUserMeta resolvedNode(TreeNode resolvedNode) {
+    this.resolvedNode = resolvedNode;
+    return this;
+  }
+
+   /**
+   * Get resolvedNode
+   * @return resolvedNode
+  **/
+  @ApiModelProperty(value = "")
+  public TreeNode getResolvedNode() {
+    return resolvedNode;
+  }
+
+  public void setResolvedNode(TreeNode resolvedNode) {
+    this.resolvedNode = resolvedNode;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -184,12 +206,13 @@ public class IdmUserMeta {
         Objects.equals(this.namespace, idmUserMeta.namespace) &&
         Objects.equals(this.jsonValue, idmUserMeta.jsonValue) &&
         Objects.equals(this.policies, idmUserMeta.policies) &&
-        Objects.equals(this.policiesContextEditable, idmUserMeta.policiesContextEditable);
+        Objects.equals(this.policiesContextEditable, idmUserMeta.policiesContextEditable) &&
+        Objects.equals(this.resolvedNode, idmUserMeta.resolvedNode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, nodeUuid, namespace, jsonValue, policies, policiesContextEditable);
+    return Objects.hash(uuid, nodeUuid, namespace, jsonValue, policies, policiesContextEditable, resolvedNode);
   }
 
 
@@ -204,6 +227,7 @@ public class IdmUserMeta {
     sb.append("    jsonValue: ").append(toIndentedString(jsonValue)).append("\n");
     sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("    policiesContextEditable: ").append(toIndentedString(policiesContextEditable)).append("\n");
+    sb.append("    resolvedNode: ").append(toIndentedString(resolvedNode)).append("\n");
     sb.append("}");
     return sb.toString();
   }

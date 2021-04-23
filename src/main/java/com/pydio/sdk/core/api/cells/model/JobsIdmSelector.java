@@ -29,7 +29,7 @@ import java.io.IOException;
 /**
  * JobsIdmSelector
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -45,6 +45,12 @@ public class JobsIdmSelector {
 
   @SerializedName("Collect")
   private Boolean collect = null;
+
+  @SerializedName("Label")
+  private String label = null;
+
+  @SerializedName("Description")
+  private String description = null;
 
   public JobsIdmSelector type(JobsIdmSelectorType type) {
     this.type = type;
@@ -118,6 +124,42 @@ public class JobsIdmSelector {
     this.collect = collect;
   }
 
+  public JobsIdmSelector label(String label) {
+    this.label = label;
+    return this;
+  }
+
+   /**
+   * Get label
+   * @return label
+  **/
+  @ApiModelProperty(value = "")
+  public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+  public JobsIdmSelector description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(value = "")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -131,12 +173,14 @@ public class JobsIdmSelector {
     return Objects.equals(this.type, jobsIdmSelector.type) &&
         Objects.equals(this.all, jobsIdmSelector.all) &&
         Objects.equals(this.query, jobsIdmSelector.query) &&
-        Objects.equals(this.collect, jobsIdmSelector.collect);
+        Objects.equals(this.collect, jobsIdmSelector.collect) &&
+        Objects.equals(this.label, jobsIdmSelector.label) &&
+        Objects.equals(this.description, jobsIdmSelector.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, all, query, collect);
+    return Objects.hash(type, all, query, collect, label, description);
   }
 
 
@@ -149,6 +193,8 @@ public class JobsIdmSelector {
     sb.append("    all: ").append(toIndentedString(all)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    collect: ").append(toIndentedString(collect)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }

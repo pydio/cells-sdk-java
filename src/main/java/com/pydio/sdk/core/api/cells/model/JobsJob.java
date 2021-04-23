@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * JobsJob
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -53,6 +53,9 @@ public class JobsJob {
 
   @SerializedName("Inactive")
   private Boolean inactive = null;
+
+  @SerializedName("Custom")
+  private Boolean custom = null;
 
   @SerializedName("Languages")
   private List<String> languages = null;
@@ -166,6 +169,24 @@ public class JobsJob {
 
   public void setInactive(Boolean inactive) {
     this.inactive = inactive;
+  }
+
+  public JobsJob custom(Boolean custom) {
+    this.custom = custom;
+    return this;
+  }
+
+   /**
+   * Get custom
+   * @return custom
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isCustom() {
+    return custom;
+  }
+
+  public void setCustom(Boolean custom) {
+    this.custom = custom;
   }
 
   public JobsJob languages(List<String> languages) {
@@ -474,6 +495,7 @@ public class JobsJob {
         Objects.equals(this.label, jobsJob.label) &&
         Objects.equals(this.owner, jobsJob.owner) &&
         Objects.equals(this.inactive, jobsJob.inactive) &&
+        Objects.equals(this.custom, jobsJob.custom) &&
         Objects.equals(this.languages, jobsJob.languages) &&
         Objects.equals(this.eventNames, jobsJob.eventNames) &&
         Objects.equals(this.schedule, jobsJob.schedule) &&
@@ -492,7 +514,7 @@ public class JobsJob {
 
   @Override
   public int hashCode() {
-    return Objects.hash(ID, label, owner, inactive, languages, eventNames, schedule, autoStart, autoClean, actions, maxConcurrency, tasksSilentUpdate, tasks, nodeEventFilter, userEventFilter, idmFilter, contextMetaFilter, parameters);
+    return Objects.hash(ID, label, owner, inactive, custom, languages, eventNames, schedule, autoStart, autoClean, actions, maxConcurrency, tasksSilentUpdate, tasks, nodeEventFilter, userEventFilter, idmFilter, contextMetaFilter, parameters);
   }
 
 
@@ -505,6 +527,7 @@ public class JobsJob {
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    inactive: ").append(toIndentedString(inactive)).append("\n");
+    sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    eventNames: ").append(toIndentedString(eventNames)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");

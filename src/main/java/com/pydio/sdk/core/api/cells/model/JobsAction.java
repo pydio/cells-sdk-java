@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * JobsAction
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -50,6 +50,12 @@ public class JobsAction {
 
   @SerializedName("Description")
   private String description = null;
+
+  @SerializedName("Bypass")
+  private Boolean bypass = null;
+
+  @SerializedName("BreakAfter")
+  private Boolean breakAfter = null;
 
   @SerializedName("NodesSelector")
   private JobsNodesSelector nodesSelector = null;
@@ -136,6 +142,42 @@ public class JobsAction {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public JobsAction bypass(Boolean bypass) {
+    this.bypass = bypass;
+    return this;
+  }
+
+   /**
+   * Get bypass
+   * @return bypass
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isBypass() {
+    return bypass;
+  }
+
+  public void setBypass(Boolean bypass) {
+    this.bypass = bypass;
+  }
+
+  public JobsAction breakAfter(Boolean breakAfter) {
+    this.breakAfter = breakAfter;
+    return this;
+  }
+
+   /**
+   * Get breakAfter
+   * @return breakAfter
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isBreakAfter() {
+    return breakAfter;
+  }
+
+  public void setBreakAfter(Boolean breakAfter) {
+    this.breakAfter = breakAfter;
   }
 
   public JobsAction nodesSelector(JobsNodesSelector nodesSelector) {
@@ -373,6 +415,8 @@ public class JobsAction {
     return Objects.equals(this.ID, jobsAction.ID) &&
         Objects.equals(this.label, jobsAction.label) &&
         Objects.equals(this.description, jobsAction.description) &&
+        Objects.equals(this.bypass, jobsAction.bypass) &&
+        Objects.equals(this.breakAfter, jobsAction.breakAfter) &&
         Objects.equals(this.nodesSelector, jobsAction.nodesSelector) &&
         Objects.equals(this.usersSelector, jobsAction.usersSelector) &&
         Objects.equals(this.nodesFilter, jobsAction.nodesFilter) &&
@@ -388,7 +432,7 @@ public class JobsAction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(ID, label, description, nodesSelector, usersSelector, nodesFilter, usersFilter, idmSelector, idmFilter, actionOutputFilter, contextMetaFilter, parameters, chainedActions, failedFilterActions);
+    return Objects.hash(ID, label, description, bypass, breakAfter, nodesSelector, usersSelector, nodesFilter, usersFilter, idmSelector, idmFilter, actionOutputFilter, contextMetaFilter, parameters, chainedActions, failedFilterActions);
   }
 
 
@@ -400,6 +444,8 @@ public class JobsAction {
     sb.append("    ID: ").append(toIndentedString(ID)).append("\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    bypass: ").append(toIndentedString(bypass)).append("\n");
+    sb.append("    breakAfter: ").append(toIndentedString(breakAfter)).append("\n");
     sb.append("    nodesSelector: ").append(toIndentedString(nodesSelector)).append("\n");
     sb.append("    usersSelector: ").append(toIndentedString(usersSelector)).append("\n");
     sb.append("    nodesFilter: ").append(toIndentedString(nodesFilter)).append("\n");

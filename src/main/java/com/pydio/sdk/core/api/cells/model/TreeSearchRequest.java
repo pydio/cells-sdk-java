@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * TreeSearchRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -44,9 +44,6 @@ public class TreeSearchRequest {
 
   @SerializedName("Details")
   private Boolean details = null;
-
-  @SerializedName("Facet")
-  private String facet = null;
 
   public TreeSearchRequest query(TreeQuery query) {
     this.query = query;
@@ -120,24 +117,6 @@ public class TreeSearchRequest {
     this.details = details;
   }
 
-  public TreeSearchRequest facet(String facet) {
-    this.facet = facet;
-    return this;
-  }
-
-   /**
-   * Get facet
-   * @return facet
-  **/
-  @ApiModelProperty(value = "")
-  public String getFacet() {
-    return facet;
-  }
-
-  public void setFacet(String facet) {
-    this.facet = facet;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -151,13 +130,12 @@ public class TreeSearchRequest {
     return Objects.equals(this.query, treeSearchRequest.query) &&
         Objects.equals(this.size, treeSearchRequest.size) &&
         Objects.equals(this.from, treeSearchRequest.from) &&
-        Objects.equals(this.details, treeSearchRequest.details) &&
-        Objects.equals(this.facet, treeSearchRequest.facet);
+        Objects.equals(this.details, treeSearchRequest.details);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(query, size, from, details, facet);
+    return Objects.hash(query, size, from, details);
   }
 
 
@@ -170,7 +148,6 @@ public class TreeSearchRequest {
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("    from: ").append(toIndentedString(from)).append("\n");
     sb.append("    details: ").append(toIndentedString(details)).append("\n");
-    sb.append("    facet: ").append(toIndentedString(facet)).append("\n");
     sb.append("}");
     return sb.toString();
   }

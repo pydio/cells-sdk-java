@@ -32,19 +32,16 @@ import java.util.List;
 /**
  * InstallProxyConfig
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
 public class InstallProxyConfig {
-  @SerializedName("BindURL")
-  private String bindURL = null;
+  @SerializedName("Binds")
+  private List<String> binds = null;
 
-  @SerializedName("ExternalURL")
-  private String externalURL = null;
-
-  @SerializedName("RedirectURLs")
-  private List<String> redirectURLs = null;
+  @SerializedName("ReverseProxyURL")
+  private String reverseProxyURL = null;
 
   @SerializedName("SelfSigned")
   private InstallTLSSelfSigned selfSigned = null;
@@ -55,66 +52,57 @@ public class InstallProxyConfig {
   @SerializedName("Certificate")
   private InstallTLSCertificate certificate = null;
 
-  public InstallProxyConfig bindURL(String bindURL) {
-    this.bindURL = bindURL;
+  @SerializedName("SSLRedirect")
+  private Boolean ssLRedirect = null;
+
+  @SerializedName("Maintenance")
+  private Boolean maintenance = null;
+
+  @SerializedName("MaintenanceConditions")
+  private List<String> maintenanceConditions = null;
+
+  public InstallProxyConfig binds(List<String> binds) {
+    this.binds = binds;
     return this;
   }
 
-   /**
-   * Get bindURL
-   * @return bindURL
-  **/
-  @ApiModelProperty(value = "")
-  public String getBindURL() {
-    return bindURL;
-  }
-
-  public void setBindURL(String bindURL) {
-    this.bindURL = bindURL;
-  }
-
-  public InstallProxyConfig externalURL(String externalURL) {
-    this.externalURL = externalURL;
-    return this;
-  }
-
-   /**
-   * Get externalURL
-   * @return externalURL
-  **/
-  @ApiModelProperty(value = "")
-  public String getExternalURL() {
-    return externalURL;
-  }
-
-  public void setExternalURL(String externalURL) {
-    this.externalURL = externalURL;
-  }
-
-  public InstallProxyConfig redirectURLs(List<String> redirectURLs) {
-    this.redirectURLs = redirectURLs;
-    return this;
-  }
-
-  public InstallProxyConfig addRedirectURLsItem(String redirectURLsItem) {
-    if (this.redirectURLs == null) {
-      this.redirectURLs = new ArrayList<String>();
+  public InstallProxyConfig addBindsItem(String bindsItem) {
+    if (this.binds == null) {
+      this.binds = new ArrayList<String>();
     }
-    this.redirectURLs.add(redirectURLsItem);
+    this.binds.add(bindsItem);
     return this;
   }
 
    /**
-   * Get redirectURLs
-   * @return redirectURLs
+   * Get binds
+   * @return binds
   **/
   @ApiModelProperty(value = "")
-  public List<String> getRedirectURLs() {
-    return redirectURLs;
+  public List<String> getBinds() {
+    return binds;
   }
 
-  public void setRedirectURLs(List<String> redirectURLs) {
-    this.redirectURLs = redirectURLs;
+  public void setBinds(List<String> binds) {
+    this.binds = binds;
+  }
+
+  public InstallProxyConfig reverseProxyURL(String reverseProxyURL) {
+    this.reverseProxyURL = reverseProxyURL;
+    return this;
+  }
+
+   /**
+   * Get reverseProxyURL
+   * @return reverseProxyURL
+  **/
+  @ApiModelProperty(value = "")
+  public String getReverseProxyURL() {
+    return reverseProxyURL;
+  }
+
+  public void setReverseProxyURL(String reverseProxyURL) {
+    this.reverseProxyURL = reverseProxyURL;
   }
 
   public InstallProxyConfig selfSigned(InstallTLSSelfSigned selfSigned) {
@@ -171,6 +159,68 @@ public class InstallProxyConfig {
     this.certificate = certificate;
   }
 
+  public InstallProxyConfig ssLRedirect(Boolean ssLRedirect) {
+    this.ssLRedirect = ssLRedirect;
+    return this;
+  }
+
+   /**
+   * Get ssLRedirect
+   * @return ssLRedirect
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isSsLRedirect() {
+    return ssLRedirect;
+  }
+
+  public void setSsLRedirect(Boolean ssLRedirect) {
+    this.ssLRedirect = ssLRedirect;
+  }
+
+  public InstallProxyConfig maintenance(Boolean maintenance) {
+    this.maintenance = maintenance;
+    return this;
+  }
+
+   /**
+   * Get maintenance
+   * @return maintenance
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isMaintenance() {
+    return maintenance;
+  }
+
+  public void setMaintenance(Boolean maintenance) {
+    this.maintenance = maintenance;
+  }
+
+  public InstallProxyConfig maintenanceConditions(List<String> maintenanceConditions) {
+    this.maintenanceConditions = maintenanceConditions;
+    return this;
+  }
+
+  public InstallProxyConfig addMaintenanceConditionsItem(String maintenanceConditionsItem) {
+    if (this.maintenanceConditions == null) {
+      this.maintenanceConditions = new ArrayList<String>();
+    }
+    this.maintenanceConditions.add(maintenanceConditionsItem);
+    return this;
+  }
+
+   /**
+   * Get maintenanceConditions
+   * @return maintenanceConditions
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getMaintenanceConditions() {
+    return maintenanceConditions;
+  }
+
+  public void setMaintenanceConditions(List<String> maintenanceConditions) {
+    this.maintenanceConditions = maintenanceConditions;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -181,17 +231,19 @@ public class InstallProxyConfig {
       return false;
     }
     InstallProxyConfig installProxyConfig = (InstallProxyConfig) o;
-    return Objects.equals(this.bindURL, installProxyConfig.bindURL) &&
-        Objects.equals(this.externalURL, installProxyConfig.externalURL) &&
-        Objects.equals(this.redirectURLs, installProxyConfig.redirectURLs) &&
+    return Objects.equals(this.binds, installProxyConfig.binds) &&
+        Objects.equals(this.reverseProxyURL, installProxyConfig.reverseProxyURL) &&
         Objects.equals(this.selfSigned, installProxyConfig.selfSigned) &&
         Objects.equals(this.letsEncrypt, installProxyConfig.letsEncrypt) &&
-        Objects.equals(this.certificate, installProxyConfig.certificate);
+        Objects.equals(this.certificate, installProxyConfig.certificate) &&
+        Objects.equals(this.ssLRedirect, installProxyConfig.ssLRedirect) &&
+        Objects.equals(this.maintenance, installProxyConfig.maintenance) &&
+        Objects.equals(this.maintenanceConditions, installProxyConfig.maintenanceConditions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(bindURL, externalURL, redirectURLs, selfSigned, letsEncrypt, certificate);
+    return Objects.hash(binds, reverseProxyURL, selfSigned, letsEncrypt, certificate, ssLRedirect, maintenance, maintenanceConditions);
   }
 
 
@@ -200,12 +252,14 @@ public class InstallProxyConfig {
     StringBuilder sb = new StringBuilder();
     sb.append("class InstallProxyConfig {\n");
     
-    sb.append("    bindURL: ").append(toIndentedString(bindURL)).append("\n");
-    sb.append("    externalURL: ").append(toIndentedString(externalURL)).append("\n");
-    sb.append("    redirectURLs: ").append(toIndentedString(redirectURLs)).append("\n");
+    sb.append("    binds: ").append(toIndentedString(binds)).append("\n");
+    sb.append("    reverseProxyURL: ").append(toIndentedString(reverseProxyURL)).append("\n");
     sb.append("    selfSigned: ").append(toIndentedString(selfSigned)).append("\n");
     sb.append("    letsEncrypt: ").append(toIndentedString(letsEncrypt)).append("\n");
     sb.append("    certificate: ").append(toIndentedString(certificate)).append("\n");
+    sb.append("    ssLRedirect: ").append(toIndentedString(ssLRedirect)).append("\n");
+    sb.append("    maintenance: ").append(toIndentedString(maintenance)).append("\n");
+    sb.append("    maintenanceConditions: ").append(toIndentedString(maintenanceConditions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

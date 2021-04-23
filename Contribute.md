@@ -4,7 +4,7 @@ We gather here info and tips for curret and future developers of the Java SDK.
 
 ## Regenerate the SDK
 
-We use [swagger-codegen]() to generate the java client.
+We use [swagger-codegen](https://swagger.io/docs/open-source-tools/swagger-codegen/) to generate the java client.
 
 _**WARNING:** This is work in progress, in order to regain control on the generation of the SDK from the swagger spec_
 
@@ -22,20 +22,27 @@ SWAGGER_VERSION=2.4.15
 wget https://oss.sonatype.org/content/repositories/releases/io/swagger/swagger-codegen-cli/${SWAGGER_VERSION}/swagger-codegen-cli-${SWAGGER_VERSION}.jar
 mv swagger-codegen-cli-${SWAGGER_VERSION}.jar swagger-codegen-cli.jar
 
-java -jar swagger-codegen-cli.jar generate -l java -i https://raw.githubusercontent.com/pydio/cells/stable/common/proto/rest/rest.swagger.json  --api-package com.pydio.sdk.core.api.cells.api   --invoker-package com.pydio.sdk.core.api.cells --model-package com.pydio.sdk.core.api.cells.model
+# WARNING: Update
+SDK_DEFAULT_AGENT="PydioCells/v2.2.6/JavaSDK/v0.2.0"
 
-rm -rf $GIT_PATH/github.com/pydio/cells-sdk-java/src/main/java/com/pydio/sdk/core/api/cells
+java -jar swagger-codegen-cli.jar generate -l java -i https://raw.githubusercontent.com/pydio/cells/stable/common/proto/rest/rest.swagger.json \
+    --api-package com.pydio.sdk.core.api.cells.api --invoker-package com.pydio.sdk.core.api.cells --model-package com.pydio.sdk.core.api.cells.model \
+    --http-user-agent ${SDK_DEFAULT_AGENT}
 
-cd $GIT_PATH/github.com/pydio/cells-sdk-java/src/main/java/com/pydio/sdk/core/api/
+cd $GITPATH/github.com/pydio/cells-android-client/sdk-java/src/main/java/com/pydio/sdk/core/api/
+rm -rf ./cells
+
 mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/sdk/core/api/cells .
 
+# For the record, more details about the possible options:
+java -jar swagger-codegen-cli.jar help generate
 ```
 
 ## Developer Tips
 
 ### Various
 
-- We use git submodules to ease dayto day see [this interesting post](https://blog.bitsrc.io/how-to-utilize-submodules-within-git-repos-5dfdd1c62d09)
+- We use git submodules to ease day-to-day development work, see [this interesting post](https://blog.bitsrc.io/how-to-utilize-submodules-within-git-repos-5dfdd1c62d09)
 
 ### Temporary Tips
 

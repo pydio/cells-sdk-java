@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * IdmUserSingleQuery
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -68,6 +68,9 @@ public class IdmUserSingleQuery {
 
   @SerializedName("HasProfile")
   private String hasProfile = null;
+
+  @SerializedName("ConnectedSince")
+  private String connectedSince = null;
 
   @SerializedName("not")
   private Boolean not = null;
@@ -288,6 +291,24 @@ public class IdmUserSingleQuery {
     this.hasProfile = hasProfile;
   }
 
+  public IdmUserSingleQuery connectedSince(String connectedSince) {
+    this.connectedSince = connectedSince;
+    return this;
+  }
+
+   /**
+   * Get connectedSince
+   * @return connectedSince
+  **/
+  @ApiModelProperty(value = "")
+  public String getConnectedSince() {
+    return connectedSince;
+  }
+
+  public void setConnectedSince(String connectedSince) {
+    this.connectedSince = connectedSince;
+  }
+
   public IdmUserSingleQuery not(Boolean not) {
     this.not = not;
     return this;
@@ -328,12 +349,13 @@ public class IdmUserSingleQuery {
         Objects.equals(this.hasRole, idmUserSingleQuery.hasRole) &&
         Objects.equals(this.nodeType, idmUserSingleQuery.nodeType) &&
         Objects.equals(this.hasProfile, idmUserSingleQuery.hasProfile) &&
+        Objects.equals(this.connectedSince, idmUserSingleQuery.connectedSince) &&
         Objects.equals(this.not, idmUserSingleQuery.not);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, login, password, groupPath, recursive, fullPath, attributeName, attributeValue, attributeAnyValue, hasRole, nodeType, hasProfile, not);
+    return Objects.hash(uuid, login, password, groupPath, recursive, fullPath, attributeName, attributeValue, attributeAnyValue, hasRole, nodeType, hasProfile, connectedSince, not);
   }
 
 
@@ -354,6 +376,7 @@ public class IdmUserSingleQuery {
     sb.append("    hasRole: ").append(toIndentedString(hasRole)).append("\n");
     sb.append("    nodeType: ").append(toIndentedString(nodeType)).append("\n");
     sb.append("    hasProfile: ").append(toIndentedString(hasProfile)).append("\n");
+    sb.append("    connectedSince: ").append(toIndentedString(connectedSince)).append("\n");
     sb.append("    not: ").append(toIndentedString(not)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * RestActionDescription
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -50,6 +50,12 @@ public class RestActionDescription {
   @SerializedName("HasForm")
   private Boolean hasForm = null;
 
+  @SerializedName("FormModule")
+  private String formModule = null;
+
+  @SerializedName("FormModuleProps")
+  private String formModuleProps = null;
+
   @SerializedName("Category")
   private String category = null;
 
@@ -61,6 +67,9 @@ public class RestActionDescription {
 
   @SerializedName("OutputDescription")
   private String outputDescription = null;
+
+  @SerializedName("IsInternal")
+  private Boolean isInternal = null;
 
   public RestActionDescription name(String name) {
     this.name = name;
@@ -170,6 +179,42 @@ public class RestActionDescription {
     this.hasForm = hasForm;
   }
 
+  public RestActionDescription formModule(String formModule) {
+    this.formModule = formModule;
+    return this;
+  }
+
+   /**
+   * Get formModule
+   * @return formModule
+  **/
+  @ApiModelProperty(value = "")
+  public String getFormModule() {
+    return formModule;
+  }
+
+  public void setFormModule(String formModule) {
+    this.formModule = formModule;
+  }
+
+  public RestActionDescription formModuleProps(String formModuleProps) {
+    this.formModuleProps = formModuleProps;
+    return this;
+  }
+
+   /**
+   * Get formModuleProps
+   * @return formModuleProps
+  **/
+  @ApiModelProperty(value = "")
+  public String getFormModuleProps() {
+    return formModuleProps;
+  }
+
+  public void setFormModuleProps(String formModuleProps) {
+    this.formModuleProps = formModuleProps;
+  }
+
   public RestActionDescription category(String category) {
     this.category = category;
     return this;
@@ -242,6 +287,24 @@ public class RestActionDescription {
     this.outputDescription = outputDescription;
   }
 
+  public RestActionDescription isInternal(Boolean isInternal) {
+    this.isInternal = isInternal;
+    return this;
+  }
+
+   /**
+   * If action is declared internal, it is hidden to avoid polluting the list.
+   * @return isInternal
+  **/
+  @ApiModelProperty(value = "If action is declared internal, it is hidden to avoid polluting the list.")
+  public Boolean isIsInternal() {
+    return isInternal;
+  }
+
+  public void setIsInternal(Boolean isInternal) {
+    this.isInternal = isInternal;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -258,15 +321,18 @@ public class RestActionDescription {
         Objects.equals(this.description, restActionDescription.description) &&
         Objects.equals(this.summaryTemplate, restActionDescription.summaryTemplate) &&
         Objects.equals(this.hasForm, restActionDescription.hasForm) &&
+        Objects.equals(this.formModule, restActionDescription.formModule) &&
+        Objects.equals(this.formModuleProps, restActionDescription.formModuleProps) &&
         Objects.equals(this.category, restActionDescription.category) &&
         Objects.equals(this.tint, restActionDescription.tint) &&
         Objects.equals(this.inputDescription, restActionDescription.inputDescription) &&
-        Objects.equals(this.outputDescription, restActionDescription.outputDescription);
+        Objects.equals(this.outputDescription, restActionDescription.outputDescription) &&
+        Objects.equals(this.isInternal, restActionDescription.isInternal);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, icon, label, description, summaryTemplate, hasForm, category, tint, inputDescription, outputDescription);
+    return Objects.hash(name, icon, label, description, summaryTemplate, hasForm, formModule, formModuleProps, category, tint, inputDescription, outputDescription, isInternal);
   }
 
 
@@ -281,10 +347,13 @@ public class RestActionDescription {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    summaryTemplate: ").append(toIndentedString(summaryTemplate)).append("\n");
     sb.append("    hasForm: ").append(toIndentedString(hasForm)).append("\n");
+    sb.append("    formModule: ").append(toIndentedString(formModule)).append("\n");
+    sb.append("    formModuleProps: ").append(toIndentedString(formModuleProps)).append("\n");
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    tint: ").append(toIndentedString(tint)).append("\n");
     sb.append("    inputDescription: ").append(toIndentedString(inputDescription)).append("\n");
     sb.append("    outputDescription: ").append(toIndentedString(outputDescription)).append("\n");
+    sb.append("    isInternal: ").append(toIndentedString(isInternal)).append("\n");
     sb.append("}");
     return sb.toString();
   }

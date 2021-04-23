@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * InstallInstallConfig
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -71,6 +71,9 @@ public class InstallInstallConfig {
 
   @SerializedName("dbManualDSN")
   private String dbManualDSN = null;
+
+  @SerializedName("dbUseDefaults")
+  private Boolean dbUseDefaults = null;
 
   @SerializedName("dsName")
   private String dsName = null;
@@ -358,6 +361,24 @@ public class InstallInstallConfig {
 
   public void setDbManualDSN(String dbManualDSN) {
     this.dbManualDSN = dbManualDSN;
+  }
+
+  public InstallInstallConfig dbUseDefaults(Boolean dbUseDefaults) {
+    this.dbUseDefaults = dbUseDefaults;
+    return this;
+  }
+
+   /**
+   * Get dbUseDefaults
+   * @return dbUseDefaults
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDbUseDefaults() {
+    return dbUseDefaults;
+  }
+
+  public void setDbUseDefaults(Boolean dbUseDefaults) {
+    this.dbUseDefaults = dbUseDefaults;
   }
 
   public InstallInstallConfig dsName(String dsName) {
@@ -822,6 +843,7 @@ public class InstallInstallConfig {
         Objects.equals(this.dbSocketUser, installInstallConfig.dbSocketUser) &&
         Objects.equals(this.dbSocketPassword, installInstallConfig.dbSocketPassword) &&
         Objects.equals(this.dbManualDSN, installInstallConfig.dbManualDSN) &&
+        Objects.equals(this.dbUseDefaults, installInstallConfig.dbUseDefaults) &&
         Objects.equals(this.dsName, installInstallConfig.dsName) &&
         Objects.equals(this.dsPort, installInstallConfig.dsPort) &&
         Objects.equals(this.dsType, installInstallConfig.dsType) &&
@@ -850,7 +872,7 @@ public class InstallInstallConfig {
 
   @Override
   public int hashCode() {
-    return Objects.hash(internalUrl, dbConnectionType, dbTCPHostname, dbTCPPort, dbTCPName, dbTCPUser, dbTCPPassword, dbSocketFile, dbSocketName, dbSocketUser, dbSocketPassword, dbManualDSN, dsName, dsPort, dsType, dsS3Custom, dsS3CustomRegion, dsS3ApiKey, dsS3ApiSecret, dsS3BucketDefault, dsS3BucketPersonal, dsS3BucketCells, dsS3BucketBinaries, dsS3BucketThumbs, dsS3BucketVersions, dsFolder, frontendHosts, frontendLogin, frontendPassword, frontendRepeatPassword, frontendApplicationTitle, frontendDefaultLanguage, licenseRequired, licenseString, checkResults, proxyConfig);
+    return Objects.hash(internalUrl, dbConnectionType, dbTCPHostname, dbTCPPort, dbTCPName, dbTCPUser, dbTCPPassword, dbSocketFile, dbSocketName, dbSocketUser, dbSocketPassword, dbManualDSN, dbUseDefaults, dsName, dsPort, dsType, dsS3Custom, dsS3CustomRegion, dsS3ApiKey, dsS3ApiSecret, dsS3BucketDefault, dsS3BucketPersonal, dsS3BucketCells, dsS3BucketBinaries, dsS3BucketThumbs, dsS3BucketVersions, dsFolder, frontendHosts, frontendLogin, frontendPassword, frontendRepeatPassword, frontendApplicationTitle, frontendDefaultLanguage, licenseRequired, licenseString, checkResults, proxyConfig);
   }
 
 
@@ -871,6 +893,7 @@ public class InstallInstallConfig {
     sb.append("    dbSocketUser: ").append(toIndentedString(dbSocketUser)).append("\n");
     sb.append("    dbSocketPassword: ").append(toIndentedString(dbSocketPassword)).append("\n");
     sb.append("    dbManualDSN: ").append(toIndentedString(dbManualDSN)).append("\n");
+    sb.append("    dbUseDefaults: ").append(toIndentedString(dbUseDefaults)).append("\n");
     sb.append("    dsName: ").append(toIndentedString(dsName)).append("\n");
     sb.append("    dsPort: ").append(toIndentedString(dsPort)).append("\n");
     sb.append("    dsType: ").append(toIndentedString(dsType)).append("\n");

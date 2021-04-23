@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * IdmUser
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -64,6 +64,9 @@ public class IdmUser {
 
   @SerializedName("GroupLabel")
   private String groupLabel = null;
+
+  @SerializedName("LastConnected")
+  private Integer lastConnected = null;
 
   @SerializedName("Policies")
   private List<ServiceResourcePolicy> policies = null;
@@ -249,6 +252,24 @@ public class IdmUser {
     this.groupLabel = groupLabel;
   }
 
+  public IdmUser lastConnected(Integer lastConnected) {
+    this.lastConnected = lastConnected;
+    return this;
+  }
+
+   /**
+   * Get lastConnected
+   * @return lastConnected
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getLastConnected() {
+    return lastConnected;
+  }
+
+  public void setLastConnected(Integer lastConnected) {
+    this.lastConnected = lastConnected;
+  }
+
   public IdmUser policies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
     return this;
@@ -312,13 +333,14 @@ public class IdmUser {
         Objects.equals(this.oldPassword, idmUser.oldPassword) &&
         Objects.equals(this.isGroup, idmUser.isGroup) &&
         Objects.equals(this.groupLabel, idmUser.groupLabel) &&
+        Objects.equals(this.lastConnected, idmUser.lastConnected) &&
         Objects.equals(this.policies, idmUser.policies) &&
         Objects.equals(this.policiesContextEditable, idmUser.policiesContextEditable);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, groupPath, attributes, roles, login, password, oldPassword, isGroup, groupLabel, policies, policiesContextEditable);
+    return Objects.hash(uuid, groupPath, attributes, roles, login, password, oldPassword, isGroup, groupLabel, lastConnected, policies, policiesContextEditable);
   }
 
 
@@ -336,6 +358,7 @@ public class IdmUser {
     sb.append("    oldPassword: ").append(toIndentedString(oldPassword)).append("\n");
     sb.append("    isGroup: ").append(toIndentedString(isGroup)).append("\n");
     sb.append("    groupLabel: ").append(toIndentedString(groupLabel)).append("\n");
+    sb.append("    lastConnected: ").append(toIndentedString(lastConnected)).append("\n");
     sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("    policiesContextEditable: ").append(toIndentedString(policiesContextEditable)).append("\n");
     sb.append("}");

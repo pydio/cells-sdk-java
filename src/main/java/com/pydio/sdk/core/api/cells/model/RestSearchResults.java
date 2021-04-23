@@ -21,6 +21,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.pydio.sdk.core.api.cells.model.TreeNode;
+import com.pydio.sdk.core.api.cells.model.TreeSearchFacet;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
@@ -30,13 +31,16 @@ import java.util.List;
 /**
  * RestSearchResults
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
 public class RestSearchResults {
   @SerializedName("Results")
   private List<TreeNode> results = null;
+
+  @SerializedName("Facets")
+  private List<TreeSearchFacet> facets = null;
 
   @SerializedName("Total")
   private Integer total = null;
@@ -65,6 +69,32 @@ public class RestSearchResults {
 
   public void setResults(List<TreeNode> results) {
     this.results = results;
+  }
+
+  public RestSearchResults facets(List<TreeSearchFacet> facets) {
+    this.facets = facets;
+    return this;
+  }
+
+  public RestSearchResults addFacetsItem(TreeSearchFacet facetsItem) {
+    if (this.facets == null) {
+      this.facets = new ArrayList<TreeSearchFacet>();
+    }
+    this.facets.add(facetsItem);
+    return this;
+  }
+
+   /**
+   * Get facets
+   * @return facets
+  **/
+  @ApiModelProperty(value = "")
+  public List<TreeSearchFacet> getFacets() {
+    return facets;
+  }
+
+  public void setFacets(List<TreeSearchFacet> facets) {
+    this.facets = facets;
   }
 
   public RestSearchResults total(Integer total) {
@@ -96,12 +126,13 @@ public class RestSearchResults {
     }
     RestSearchResults restSearchResults = (RestSearchResults) o;
     return Objects.equals(this.results, restSearchResults.results) &&
+        Objects.equals(this.facets, restSearchResults.facets) &&
         Objects.equals(this.total, restSearchResults.total);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(results, total);
+    return Objects.hash(results, facets, total);
   }
 
 
@@ -111,6 +142,7 @@ public class RestSearchResults {
     sb.append("class RestSearchResults {\n");
     
     sb.append("    results: ").append(toIndentedString(results)).append("\n");
+    sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    total: ").append(toIndentedString(total)).append("\n");
     sb.append("}");
     return sb.toString();

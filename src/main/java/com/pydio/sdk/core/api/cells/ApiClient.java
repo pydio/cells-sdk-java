@@ -13,7 +13,6 @@
 
 package com.pydio.sdk.core.api.cells;
 
-import com.pydio.sdk.core.ApplicationData;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
@@ -86,16 +85,7 @@ public class ApiClient {
         json = new JSON();
 
         // Set default User-Agent.
-        String userAgent = String.format(Locale.US, "%s-%s/%d", ApplicationData.name, ApplicationData.version, ApplicationData.versionCode);
-        if (!ApplicationData.platform.equals("")) {
-            userAgent = ApplicationData.platform + "/" + userAgent;
-        }
-
-        if (!ApplicationData.packageID.equals("")) {
-            userAgent = userAgent + "/" + ApplicationData.packageID;
-        }
-
-        setUserAgent(userAgent);
+        setUserAgent("PydioCells/v2.2.6/JavaSDK/v0.2.0");
 
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();

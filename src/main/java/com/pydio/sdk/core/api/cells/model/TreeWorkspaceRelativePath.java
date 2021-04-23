@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * TreeWorkspaceRelativePath
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -43,6 +43,9 @@ public class TreeWorkspaceRelativePath {
 
   @SerializedName("WsSlug")
   private String wsSlug = null;
+
+  @SerializedName("WsScope")
+  private String wsScope = null;
 
   public TreeWorkspaceRelativePath wsUuid(String wsUuid) {
     this.wsUuid = wsUuid;
@@ -116,6 +119,24 @@ public class TreeWorkspaceRelativePath {
     this.wsSlug = wsSlug;
   }
 
+  public TreeWorkspaceRelativePath wsScope(String wsScope) {
+    this.wsScope = wsScope;
+    return this;
+  }
+
+   /**
+   * Get wsScope
+   * @return wsScope
+  **/
+  @ApiModelProperty(value = "")
+  public String getWsScope() {
+    return wsScope;
+  }
+
+  public void setWsScope(String wsScope) {
+    this.wsScope = wsScope;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -129,12 +150,13 @@ public class TreeWorkspaceRelativePath {
     return Objects.equals(this.wsUuid, treeWorkspaceRelativePath.wsUuid) &&
         Objects.equals(this.wsLabel, treeWorkspaceRelativePath.wsLabel) &&
         Objects.equals(this.path, treeWorkspaceRelativePath.path) &&
-        Objects.equals(this.wsSlug, treeWorkspaceRelativePath.wsSlug);
+        Objects.equals(this.wsSlug, treeWorkspaceRelativePath.wsSlug) &&
+        Objects.equals(this.wsScope, treeWorkspaceRelativePath.wsScope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(wsUuid, wsLabel, path, wsSlug);
+    return Objects.hash(wsUuid, wsLabel, path, wsSlug, wsScope);
   }
 
 
@@ -147,6 +169,7 @@ public class TreeWorkspaceRelativePath {
     sb.append("    wsLabel: ").append(toIndentedString(wsLabel)).append("\n");
     sb.append("    path: ").append(toIndentedString(path)).append("\n");
     sb.append("    wsSlug: ").append(toIndentedString(wsSlug)).append("\n");
+    sb.append("    wsScope: ").append(toIndentedString(wsScope)).append("\n");
     sb.append("}");
     return sb.toString();
   }

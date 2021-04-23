@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * TreeQuery
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -65,6 +65,9 @@ public class TreeQuery {
 
   @SerializedName("Content")
   private String content = null;
+
+  @SerializedName("FileNameOrContent")
+  private String fileNameOrContent = null;
 
   @SerializedName("FreeString")
   private String freeString = null;
@@ -280,6 +283,24 @@ public class TreeQuery {
     this.content = content;
   }
 
+  public TreeQuery fileNameOrContent(String fileNameOrContent) {
+    this.fileNameOrContent = fileNameOrContent;
+    return this;
+  }
+
+   /**
+   * Get fileNameOrContent
+   * @return fileNameOrContent
+  **/
+  @ApiModelProperty(value = "")
+  public String getFileNameOrContent() {
+    return fileNameOrContent;
+  }
+
+  public void setFileNameOrContent(String fileNameOrContent) {
+    this.fileNameOrContent = fileNameOrContent;
+  }
+
   public TreeQuery freeString(String freeString) {
     this.freeString = freeString;
     return this;
@@ -416,6 +437,7 @@ public class TreeQuery {
         Objects.equals(this.type, treeQuery.type) &&
         Objects.equals(this.fileName, treeQuery.fileName) &&
         Objects.equals(this.content, treeQuery.content) &&
+        Objects.equals(this.fileNameOrContent, treeQuery.fileNameOrContent) &&
         Objects.equals(this.freeString, treeQuery.freeString) &&
         Objects.equals(this.extension, treeQuery.extension) &&
         Objects.equals(this.geoQuery, treeQuery.geoQuery) &&
@@ -426,7 +448,7 @@ public class TreeQuery {
 
   @Override
   public int hashCode() {
-    return Objects.hash(paths, pathPrefix, minSize, maxSize, minDate, maxDate, durationDate, type, fileName, content, freeString, extension, geoQuery, pathDepth, uuIDs, not);
+    return Objects.hash(paths, pathPrefix, minSize, maxSize, minDate, maxDate, durationDate, type, fileName, content, fileNameOrContent, freeString, extension, geoQuery, pathDepth, uuIDs, not);
   }
 
 
@@ -445,6 +467,7 @@ public class TreeQuery {
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    fileName: ").append(toIndentedString(fileName)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
+    sb.append("    fileNameOrContent: ").append(toIndentedString(fileNameOrContent)).append("\n");
     sb.append("    freeString: ").append(toIndentedString(freeString)).append("\n");
     sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
     sb.append("    geoQuery: ").append(toIndentedString(geoQuery)).append("\n");

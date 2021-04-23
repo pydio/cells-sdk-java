@@ -189,13 +189,14 @@ public class UserServiceApi {
      * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
      * @param isGroup Whether this object is a group or a user. (optional)
      * @param groupLabel Label of the group, field is empty for users. (optional)
+     * @param lastConnected Last successful connection timestamp. (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getUserCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Boolean policiesContextEditable, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getUserCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -216,6 +217,8 @@ public class UserServiceApi {
         localVarQueryParams.addAll(apiClient.parameterToPair("IsGroup", isGroup));
         if (groupLabel != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("GroupLabel", groupLabel));
+        if (lastConnected != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("LastConnected", lastConnected));
         if (policiesContextEditable != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("PoliciesContextEditable", policiesContextEditable));
 
@@ -252,7 +255,7 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getUserValidateBeforeCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Boolean policiesContextEditable, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getUserValidateBeforeCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'login' is set
         if (login == null) {
@@ -260,7 +263,7 @@ public class UserServiceApi {
         }
         
 
-        com.squareup.okhttp.Call call = getUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, policiesContextEditable, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, progressListener, progressRequestListener);
         return call;
 
     }
@@ -275,12 +278,13 @@ public class UserServiceApi {
      * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
      * @param isGroup Whether this object is a group or a user. (optional)
      * @param groupLabel Label of the group, field is empty for users. (optional)
+     * @param lastConnected Last successful connection timestamp. (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public IdmUser getUser(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Boolean policiesContextEditable) throws ApiException {
-        ApiResponse<IdmUser> resp = getUserWithHttpInfo(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, policiesContextEditable);
+    public IdmUser getUser(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+        ApiResponse<IdmUser> resp = getUserWithHttpInfo(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable);
         return resp.getData();
     }
 
@@ -294,12 +298,13 @@ public class UserServiceApi {
      * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
      * @param isGroup Whether this object is a group or a user. (optional)
      * @param groupLabel Label of the group, field is empty for users. (optional)
+     * @param lastConnected Last successful connection timestamp. (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<IdmUser> getUserWithHttpInfo(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Boolean policiesContextEditable) throws ApiException {
-        com.squareup.okhttp.Call call = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, policiesContextEditable, null, null);
+    public ApiResponse<IdmUser> getUserWithHttpInfo(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+        com.squareup.okhttp.Call call = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, null, null);
         Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -314,12 +319,13 @@ public class UserServiceApi {
      * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
      * @param isGroup Whether this object is a group or a user. (optional)
      * @param groupLabel Label of the group, field is empty for users. (optional)
+     * @param lastConnected Last successful connection timestamp. (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getUserAsync(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Boolean policiesContextEditable, final ApiCallback<IdmUser> callback) throws ApiException {
+    public com.squareup.okhttp.Call getUserAsync(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback<IdmUser> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -340,7 +346,7 @@ public class UserServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, policiesContextEditable, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

@@ -24,11 +24,14 @@ import com.pydio.sdk.core.api.cells.model.JobsCommand;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * JobsCtrlCommand
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -44,6 +47,9 @@ public class JobsCtrlCommand {
 
   @SerializedName("OwnerId")
   private String ownerId = null;
+
+  @SerializedName("RunParameters")
+  private Map<String, String> runParameters = null;
 
   public JobsCtrlCommand cmd(JobsCommand cmd) {
     this.cmd = cmd;
@@ -117,6 +123,32 @@ public class JobsCtrlCommand {
     this.ownerId = ownerId;
   }
 
+  public JobsCtrlCommand runParameters(Map<String, String> runParameters) {
+    this.runParameters = runParameters;
+    return this;
+  }
+
+  public JobsCtrlCommand putRunParametersItem(String key, String runParametersItem) {
+    if (this.runParameters == null) {
+      this.runParameters = new HashMap<String, String>();
+    }
+    this.runParameters.put(key, runParametersItem);
+    return this;
+  }
+
+   /**
+   * Get runParameters
+   * @return runParameters
+  **/
+  @ApiModelProperty(value = "")
+  public Map<String, String> getRunParameters() {
+    return runParameters;
+  }
+
+  public void setRunParameters(Map<String, String> runParameters) {
+    this.runParameters = runParameters;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -130,12 +162,13 @@ public class JobsCtrlCommand {
     return Objects.equals(this.cmd, jobsCtrlCommand.cmd) &&
         Objects.equals(this.jobId, jobsCtrlCommand.jobId) &&
         Objects.equals(this.taskId, jobsCtrlCommand.taskId) &&
-        Objects.equals(this.ownerId, jobsCtrlCommand.ownerId);
+        Objects.equals(this.ownerId, jobsCtrlCommand.ownerId) &&
+        Objects.equals(this.runParameters, jobsCtrlCommand.runParameters);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cmd, jobId, taskId, ownerId);
+    return Objects.hash(cmd, jobId, taskId, ownerId, runParameters);
   }
 
 
@@ -148,6 +181,7 @@ public class JobsCtrlCommand {
     sb.append("    jobId: ").append(toIndentedString(jobId)).append("\n");
     sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
     sb.append("    ownerId: ").append(toIndentedString(ownerId)).append("\n");
+    sb.append("    runParameters: ").append(toIndentedString(runParameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

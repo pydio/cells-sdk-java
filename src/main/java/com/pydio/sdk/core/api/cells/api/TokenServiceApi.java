@@ -27,6 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.pydio.sdk.core.api.cells.model.RestDocumentAccessTokenRequest;
+import com.pydio.sdk.core.api.cells.model.RestDocumentAccessTokenResponse;
 import com.pydio.sdk.core.api.cells.model.RestResetPasswordRequest;
 import com.pydio.sdk.core.api.cells.model.RestResetPasswordResponse;
 import com.pydio.sdk.core.api.cells.model.RestResetPasswordTokenResponse;
@@ -58,6 +60,128 @@ public class TokenServiceApi {
         this.apiClient = apiClient;
     }
 
+    /**
+     * Build call for generateDocumentAccessToken
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call generateDocumentAccessTokenCall(RestDocumentAccessTokenRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/auth/token/document";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call generateDocumentAccessTokenValidateBeforeCall(RestDocumentAccessTokenRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling generateDocumentAccessToken(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = generateDocumentAccessTokenCall(body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Generate a temporary access token for a specific document for the current user
+     * 
+     * @param body  (required)
+     * @return RestDocumentAccessTokenResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public RestDocumentAccessTokenResponse generateDocumentAccessToken(RestDocumentAccessTokenRequest body) throws ApiException {
+        ApiResponse<RestDocumentAccessTokenResponse> resp = generateDocumentAccessTokenWithHttpInfo(body);
+        return resp.getData();
+    }
+
+    /**
+     * Generate a temporary access token for a specific document for the current user
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;RestDocumentAccessTokenResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<RestDocumentAccessTokenResponse> generateDocumentAccessTokenWithHttpInfo(RestDocumentAccessTokenRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = generateDocumentAccessTokenValidateBeforeCall(body, null, null);
+        Type localVarReturnType = new TypeToken<RestDocumentAccessTokenResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Generate a temporary access token for a specific document for the current user (asynchronously)
+     * 
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call generateDocumentAccessTokenAsync(RestDocumentAccessTokenRequest body, final ApiCallback<RestDocumentAccessTokenResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = generateDocumentAccessTokenValidateBeforeCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<RestDocumentAccessTokenResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
     /**
      * Build call for resetPassword
      * @param body  (required)

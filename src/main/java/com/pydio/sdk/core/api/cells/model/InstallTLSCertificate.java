@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * InstallTLSCertificate
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
@@ -37,6 +37,9 @@ public class InstallTLSCertificate {
 
   @SerializedName("KeyFile")
   private String keyFile = null;
+
+  @SerializedName("CellsRootCA")
+  private String cellsRootCA = null;
 
   public InstallTLSCertificate certFile(String certFile) {
     this.certFile = certFile;
@@ -74,6 +77,24 @@ public class InstallTLSCertificate {
     this.keyFile = keyFile;
   }
 
+  public InstallTLSCertificate cellsRootCA(String cellsRootCA) {
+    this.cellsRootCA = cellsRootCA;
+    return this;
+  }
+
+   /**
+   * Get cellsRootCA
+   * @return cellsRootCA
+  **/
+  @ApiModelProperty(value = "")
+  public String getCellsRootCA() {
+    return cellsRootCA;
+  }
+
+  public void setCellsRootCA(String cellsRootCA) {
+    this.cellsRootCA = cellsRootCA;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -85,12 +106,13 @@ public class InstallTLSCertificate {
     }
     InstallTLSCertificate installTLSCertificate = (InstallTLSCertificate) o;
     return Objects.equals(this.certFile, installTLSCertificate.certFile) &&
-        Objects.equals(this.keyFile, installTLSCertificate.keyFile);
+        Objects.equals(this.keyFile, installTLSCertificate.keyFile) &&
+        Objects.equals(this.cellsRootCA, installTLSCertificate.cellsRootCA);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(certFile, keyFile);
+    return Objects.hash(certFile, keyFile, cellsRootCA);
   }
 
 
@@ -101,6 +123,7 @@ public class InstallTLSCertificate {
     
     sb.append("    certFile: ").append(toIndentedString(certFile)).append("\n");
     sb.append("    keyFile: ").append(toIndentedString(keyFile)).append("\n");
+    sb.append("    cellsRootCA: ").append(toIndentedString(cellsRootCA)).append("\n");
     sb.append("}");
     return sb.toString();
   }

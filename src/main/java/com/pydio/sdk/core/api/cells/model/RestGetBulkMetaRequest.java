@@ -29,16 +29,13 @@ import java.util.List;
 /**
  * RestGetBulkMetaRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-08-26T11:16:15.623+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
 
 
 
 public class RestGetBulkMetaRequest {
   @SerializedName("NodePaths")
   private List<String> nodePaths = null;
-
-  @SerializedName("NodeUuids")
-  private List<String> nodeUuids = null;
 
   @SerializedName("AllMetaProviders")
   private Boolean allMetaProviders = null;
@@ -76,32 +73,6 @@ public class RestGetBulkMetaRequest {
 
   public void setNodePaths(List<String> nodePaths) {
     this.nodePaths = nodePaths;
-  }
-
-  public RestGetBulkMetaRequest nodeUuids(List<String> nodeUuids) {
-    this.nodeUuids = nodeUuids;
-    return this;
-  }
-
-  public RestGetBulkMetaRequest addNodeUuidsItem(String nodeUuidsItem) {
-    if (this.nodeUuids == null) {
-      this.nodeUuids = new ArrayList<String>();
-    }
-    this.nodeUuids.add(nodeUuidsItem);
-    return this;
-  }
-
-   /**
-   * Get nodeUuids
-   * @return nodeUuids
-  **/
-  @ApiModelProperty(value = "")
-  public List<String> getNodeUuids() {
-    return nodeUuids;
-  }
-
-  public void setNodeUuids(List<String> nodeUuids) {
-    this.nodeUuids = nodeUuids;
   }
 
   public RestGetBulkMetaRequest allMetaProviders(Boolean allMetaProviders) {
@@ -187,7 +158,6 @@ public class RestGetBulkMetaRequest {
     }
     RestGetBulkMetaRequest restGetBulkMetaRequest = (RestGetBulkMetaRequest) o;
     return Objects.equals(this.nodePaths, restGetBulkMetaRequest.nodePaths) &&
-        Objects.equals(this.nodeUuids, restGetBulkMetaRequest.nodeUuids) &&
         Objects.equals(this.allMetaProviders, restGetBulkMetaRequest.allMetaProviders) &&
         Objects.equals(this.versions, restGetBulkMetaRequest.versions) &&
         Objects.equals(this.offset, restGetBulkMetaRequest.offset) &&
@@ -196,7 +166,7 @@ public class RestGetBulkMetaRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(nodePaths, nodeUuids, allMetaProviders, versions, offset, limit);
+    return Objects.hash(nodePaths, allMetaProviders, versions, offset, limit);
   }
 
 
@@ -206,7 +176,6 @@ public class RestGetBulkMetaRequest {
     sb.append("class RestGetBulkMetaRequest {\n");
     
     sb.append("    nodePaths: ").append(toIndentedString(nodePaths)).append("\n");
-    sb.append("    nodeUuids: ").append(toIndentedString(nodeUuids)).append("\n");
     sb.append("    allMetaProviders: ").append(toIndentedString(allMetaProviders)).append("\n");
     sb.append("    versions: ").append(toIndentedString(versions)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
