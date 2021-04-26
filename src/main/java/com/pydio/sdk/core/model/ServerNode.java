@@ -519,8 +519,14 @@ public class ServerNode implements Node {
         apiURL = bootConf.getString("ENDPOINT_REST_API");
 
         if (!apiURL.startsWith("http")) {
+            //System.out.println("[WARNING] API URL does not contain FQDN: "+apiURL);
+            //System.out.println("[Debug] Printing stack trace");
+            //Thread.dumpStack();
+            //System.out.println("[Debug] stack trace end ##############################");
             String apiPath = apiURL.startsWith("/") ? apiURL.substring(1) : apiURL;
-            apiURL = url + apiPath;
+            // FIXME ugly fix until we handle the URL cleanly
+            String fqdn = url.endsWith("/") ? url : url + "/";
+            apiURL = fqdn + apiPath;
         }
         return apiURL;
     }
