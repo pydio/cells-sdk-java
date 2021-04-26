@@ -28,12 +28,10 @@ public class BasicConnectionTest {
     private StateManager stateManager;
 
     @Before
-    public void setupServices() {
-        TokenService.init(new TokenMemoryStore());
-    }
-
-    @Before
     public void setup() {
+
+        TokenService.init(new TokenMemoryStore());
+
         stateManager = new MemoryStateManager();
         testClient = new TestClient();
         testClient.setup(stateManager);

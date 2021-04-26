@@ -45,17 +45,6 @@ public class CellsFsTest {
     private String serverURL, login, pwd, workspace;
 
     @Before
-    public void setupServices() {
-        TokenService.init(new TokenMemoryStore());
-    }
-
-    @Before
-    public void setupCellsClient() {
-        cec = new CecWrapper();
-        cec.setUpCec();
-    }
-
-    @Before
     public void setup() {
 
         Properties p = new Properties();
@@ -84,6 +73,12 @@ public class CellsFsTest {
 
         cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
 
+        // Services
+        TokenService.init(new TokenMemoryStore());
+
+        // CellsClient
+        cec = new CecWrapper();
+        cec.setUpCec();
     }
 
     @Test
