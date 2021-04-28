@@ -1234,7 +1234,7 @@ public class PydioCells implements Client {
 
     // Local Helpers
 
-    private String getUserAgent() {
+    protected String getUserAgent() {
         if (userAgent != null) {
             return userAgent;
         }
