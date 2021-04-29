@@ -1,7 +1,7 @@
 package com.pydio.sdk.api;
 
 import com.pydio.sdk.core.common.callback.ChangeHandler;
-import com.pydio.sdk.core.common.callback.NodeHandler;
+import com.pydio.sdk.api.callbacks.NodeHandler;
 import com.pydio.sdk.core.common.callback.RegistryItemHandler;
 import com.pydio.sdk.core.common.callback.TransferProgressListener;
 import com.pydio.sdk.core.common.errors.SDKException;
@@ -56,7 +56,7 @@ public interface Client {
 
     void search(String ws, String dir, String searched, NodeHandler h) throws SDKException;
 
-    void bookmarks(NodeHandler h) throws SDKException;
+    void getBookmarks(NodeHandler h) throws SDKException;
 
     Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, final TransferProgressListener progressListener) throws SDKException;
 

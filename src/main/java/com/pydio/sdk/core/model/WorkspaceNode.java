@@ -21,7 +21,7 @@ public class WorkspaceNode implements com.pydio.sdk.api.Node, SdkNames {
         return "true".equals(properties.getProperty(WORKSPACE_PROPERTY_CROSS_COPY));
     }
 
-    public String slug() {
+    public String getSlug() {
         return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
     }
 
@@ -37,13 +37,13 @@ public class WorkspaceNode implements com.pydio.sdk.api.Node, SdkNames {
         return "true".equals(getProperty(WORKSPACE_PROPERTY_META_SYNC));
     }
 
-    public String label() {
+    public String getLabel() {
         return properties.getProperty(NODE_PROPERTY_LABEL);
     }
 
-    public String getId() {
-        return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
-    }
+    //   public String getId() {
+    //       return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
+    //   }
 
     public String acl() {
         return properties.getProperty(WORKSPACE_PROPERTY_ACL);
@@ -110,17 +110,17 @@ public class WorkspaceNode implements com.pydio.sdk.api.Node, SdkNames {
         this.preferences = prefs;
     }
 
-    public void setPlugins(List<Plugin> plugins){
+    public void setPlugins(List<Plugin> plugins) {
         this.plugins = plugins;
     }
 
     public Plugin getPlugin(String id) {
-        if (this.plugins == null){
+        if (this.plugins == null) {
             return null;
         }
 
-        for(Plugin p: this.plugins){
-            if(id.equals(p.id)){
+        for (Plugin p : this.plugins) {
+            if (id.equals(p.id)) {
                 return p;
             }
         }
@@ -131,6 +131,7 @@ public class WorkspaceNode implements com.pydio.sdk.api.Node, SdkNames {
     public boolean isLoaded() {
         return this.actions != null && this.preferences != null && this.plugins != null;
     }
+
     //********************************************************************************************
     //                  Super class: NODE METHODS
     //********************************************************************************************
@@ -154,30 +155,30 @@ public class WorkspaceNode implements com.pydio.sdk.api.Node, SdkNames {
 
     @Override
     public void deleteProperty(String key) {
-        if(properties != null && properties.contains(key)){
+        if (properties != null && properties.contains(key)) {
             properties.remove(key);
         }
     }
 
     @Override
-    public int type() {
+    public int getType() {
         return com.pydio.sdk.api.Node.TYPE_WORKSPACE;
     }
 
     @Override
-    public String id() {
-        return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
+    public String getId() {
+        return getSlug();
     }
 
     @Override
-    public String path() {
+    public String getPath() {
         return "/";
     }
 
     @Override
     public boolean equals(Object o) {
         try {
-            return this == o || (o instanceof WorkspaceNode) && ((WorkspaceNode) o).getId() == getId() && ((WorkspaceNode) o).label() == label();
+            return this == o || (o instanceof WorkspaceNode) && ((WorkspaceNode) o).getId() == getId() && ((WorkspaceNode) o).getLabel() == getLabel();
         } catch (NullPointerException e) {
             return false;
         }

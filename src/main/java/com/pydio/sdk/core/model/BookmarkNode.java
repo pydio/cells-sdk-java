@@ -15,22 +15,22 @@ public class BookmarkNode implements com.pydio.sdk.api.Node {
     }
 
     @Override
-    public int type() {
-        return TYPE_BOOKMARKS;
+    public int getType() {
+        return TYPE_BOOKMARK;
     }
 
     @Override
-    public String id() {
+    public String getId() {
         return null;
     }
 
     @Override
-    public String label() {
+    public String getLabel() {
         return label;
     }
 
     @Override
-    public String path() {
+    public String getPath() {
         return "/";
     }
 
@@ -64,7 +64,7 @@ public class BookmarkNode implements com.pydio.sdk.api.Node {
         if (node == null) {
             return com.pydio.sdk.api.Node.different;
         }
-        if (!this.label.equals(node.label())) {
+        if (!this.label.equals(node.getLabel())) {
             return com.pydio.sdk.api.Node.different;
         }
         return Node.same;

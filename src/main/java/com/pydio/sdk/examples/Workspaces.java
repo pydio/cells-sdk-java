@@ -19,7 +19,7 @@ public class Workspaces {
         client.setCredentials(new Credentials("admin", "admin"));
         client.setSkipOAuthFlag(true);
         try {
-            client.workspaceList((n) -> System.out.println(n.label()));
+            client.workspaceList((n) -> System.out.println(n.getLabel()));
         } catch (SDKException e) {
             e.printStackTrace();
         }

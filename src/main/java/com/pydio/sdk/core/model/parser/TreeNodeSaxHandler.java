@@ -1,7 +1,7 @@
 package com.pydio.sdk.core.model.parser;
 
 import com.pydio.sdk.api.SdkNames;
-import com.pydio.sdk.core.common.callback.NodeHandler;
+import com.pydio.sdk.api.callbacks.NodeHandler;
 import com.pydio.sdk.core.model.FileNode;
 import com.pydio.sdk.api.Node;
 import com.pydio.sdk.core.model.NodeFactory;
@@ -62,7 +62,7 @@ public class TreeNodeSaxHandler extends DefaultHandler {
             if(p != null) {
                 Node node = NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
                 if(node != null){
-                    node.setProperty(SdkNames.NODE_PROPERTY_UUID, node.path());
+                    node.setProperty(SdkNames.NODE_PROPERTY_UUID, node.getPath());
                     mHandler.onNode(node);
                 }
                 p = null;

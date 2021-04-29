@@ -9,7 +9,7 @@ import com.pydio.sdk.generated.p8.P8Response;
 import com.pydio.sdk.generated.p8.consts.Action;
 import com.pydio.sdk.generated.p8.consts.Param;
 import com.pydio.sdk.core.common.callback.ChangeHandler;
-import com.pydio.sdk.core.common.callback.NodeHandler;
+import com.pydio.sdk.api.callbacks.NodeHandler;
 import com.pydio.sdk.core.common.callback.RegistryItemHandler;
 import com.pydio.sdk.core.common.callback.TransferProgressListener;
 import com.pydio.sdk.core.common.errors.Code;
@@ -390,7 +390,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public void bookmarks(NodeHandler handler) throws SDKException {
+    public void getBookmarks(NodeHandler handler) throws SDKException {
         String secureToken = getSecureToken();
         List<WorkspaceNode> workspaceNodes = new ArrayList<>(serverNode.workspaces.values());
         if (workspaceNodes.isEmpty()) {
@@ -398,7 +398,7 @@ public class P8Client implements Client, SdkNames {
         }
 
         for (WorkspaceNode wn : workspaceNodes) {
-            P8RequestBuilder builder = P8RequestBuilder.listBookmarked(wn.id(), "/").setSecureToken(secureToken);
+            P8RequestBuilder builder = P8RequestBuilder.listBookmarked(wn.getId(), "/").setSecureToken(secureToken);
             while (true) {
                 try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, Code.authentication_required)) {
                     int code = rsp.code();
@@ -408,7 +408,7 @@ public class P8Client implements Client, SdkNames {
                     }
 
                     TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
-                        n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, wn.id());
+                        n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, wn.getId());
                         handler.onNode(n);
                     });
 
@@ -484,9 +484,9 @@ public class P8Client implements Client, SdkNames {
             while (rsp.code() == Code.ok && !cb.allChunksWritten()) {
                 NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
                 if (diff.updated != null && diff.updated.size() > 0) {
-                    name = diff.updated.get(0).label();
+                    name = diff.updated.get(0).getLabel();
                 } else if (diff.added != null && diff.added.size() > 0) {
-                    name = diff.added.get(0).label();
+                    name = diff.added.get(0).getLabel();
                 } else {
                     //todo: stats "name" to get info
                 }
@@ -504,7 +504,7 @@ public class P8Client implements Client, SdkNames {
                 diff = NodeDiff.create(doc);
                 if (diff.added != null) {
                     Node node = diff.added.get(0);
-                    String label = node.label();
+                    String label = node.getLabel();
                     if (!label.equals(cb.getFilename())) {
                         cb.setFilename(label);
                     }

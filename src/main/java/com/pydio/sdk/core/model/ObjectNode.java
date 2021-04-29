@@ -36,29 +36,29 @@ public class ObjectNode implements com.pydio.sdk.api.Node {
     }
 
     @Override
-    public int type() {
+    public int getType() {
         return com.pydio.sdk.api.Node.TYPE_LOCAL_NODE;
     }
 
     @Override
-    public String id() {
+    public String getId() {
         return null;
     }
 
     @Override
-    public String path() {
+    public String getPath() {
         return path;
     }
 
     @Override
-    public String label() {
+    public String getLabel() {
         return label;
     }
 
     @Override
     public boolean equals(Object o) {
         try {
-            return this == o || (o instanceof com.pydio.sdk.api.Node) && ((com.pydio.sdk.api.Node) o).type() == type() && label().equals(((com.pydio.sdk.api.Node) o).label()) && path().equals(((com.pydio.sdk.api.Node) o).path());
+            return this == o || (o instanceof com.pydio.sdk.api.Node) && ((com.pydio.sdk.api.Node) o).getType() == getType() && getLabel().equals(((com.pydio.sdk.api.Node) o).getLabel()) && getPath().equals(((com.pydio.sdk.api.Node) o).getPath());
         } catch (NullPointerException e) {
             return false;
         }

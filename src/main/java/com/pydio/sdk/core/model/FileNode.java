@@ -5,9 +5,103 @@ import com.pydio.sdk.api.SdkNames;
 
 import java.util.Properties;
 
-public class FileNode implements com.pydio.sdk.api.Node, SdkNames {
+public class FileNode implements Node, SdkNames {
 
     public Properties properties = new Properties();
+
+    @Override
+    public void setProperties(Properties p) {
+        this.properties = p;
+    }
+
+    @Override
+    public void setProperty(String key, String value) {
+        if (properties == null) {
+            properties = new Properties();
+        }
+        properties.put(key, value);
+    }
+
+    @Override
+    public void deleteProperty(String key) {
+        if (properties != null) {
+            properties.remove(key);
+        }
+    }
+
+
+    /* Helpers to manipulate path */
+
+    public static String getNameFromPath(String path) {
+        int index = path.lastIndexOf("/");
+        if (index < 0) {
+            return path;
+        }
+        return path.substring(index + 1);
+    }
+
+    public static String nameFromTreeNodePath(String path) {
+        return path.substring(path.lastIndexOf("/") + 1);
+    }
+
+    public static String slugFromTreeNodePath(String path) {
+        return path.substring(0, path.indexOf("/"));
+    }
+
+    public static String pathFromTreeNodePath(String path) {
+        String[] parts = path.substring(path.indexOf("/") + 1).split("/");
+        StringBuilder pathBuilder = new StringBuilder();
+        for (String part : parts) {
+            pathBuilder.append("/").append(part);
+        }
+        return pathBuilder.toString();
+    }
+
+    public static String  toTreeNodePath(String ws, String path) {
+        return new StringBuilder(ws).append(path).toString();
+    }
+
+    /* Comparators */
+
+    @Override
+    public int compare(Node node) {
+        if (node == null) {
+            return different;
+        }
+
+        String workspaceSlug = getWorkspaceSlug();
+        String nWorkspaceSlug = node.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
+
+        if (!workspaceSlug.equals(nWorkspaceSlug)) {
+            return different;
+        }
+
+        String path = getPath();
+        String nPath = node.getPath();
+
+        if (nPath.equals(path)) {
+            return same;
+        }
+
+        return different;
+    }
+
+    public boolean equals(Object o) {
+        boolean instanceOfNode = o instanceof Node;
+        if (!instanceOfNode) {
+            return false;
+        }
+
+        Node node = (Node) o;
+
+        String workspaceSlug = getWorkspaceSlug();
+        String nWorkspaceSlug = node.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
+
+        String path = getPath();
+        String nPath = node.getPath();
+
+        return workspaceSlug.equals(nWorkspaceSlug) && nPath.equals(path);
+    }
 
     public boolean isImage() {
         return Boolean.parseBoolean(properties.getProperty(NODE_PROPERTY_IS_IMAGE))
@@ -46,31 +140,15 @@ public class FileNode implements com.pydio.sdk.api.Node, SdkNames {
         return this.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
     }
 
-    public boolean equals(Object o) {
-        boolean instanceOfNode = o instanceof com.pydio.sdk.api.Node;
-        if (!instanceOfNode) {
-            return false;
-        }
-
-        com.pydio.sdk.api.Node node = (com.pydio.sdk.api.Node) o;
-
-        String workspaceSlug = getWorkspaceSlug();
-        String nWorkspaceSlug = node.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
-
-        String path = path();
-        String nPath = node.path();
-
-        return workspaceSlug.equals(nWorkspaceSlug) && nPath.equals(path);
-    }
 
     @Override
-    public String label() {
+    public String getLabel() {
         return properties.getProperty(NODE_PROPERTY_TEXT);
     }
 
     @Override
-    public String path() {
-        return properties.getProperty(NODE_PROPERTY_FILENAME);
+    public String getPath() {
+        return properties.getProperty(NODE_PROPERTY_PATH);
     }
 
     @Override
@@ -79,56 +157,13 @@ public class FileNode implements com.pydio.sdk.api.Node, SdkNames {
     }
 
     @Override
-    public int type() {
+    public int getType() {
         return com.pydio.sdk.api.Node.TYPE_REMOTE_NODE;
     }
 
     @Override
-    public String id() {
+    public String getId() {
         return properties.getProperty(NODE_PROPERTY_UUID);
-    }
-
-    @Override
-    public void setProperty(String key, String value) {
-        if (properties == null) {
-            properties = new Properties();
-        }
-        properties.put(key, value);
-    }
-
-    @Override
-    public void deleteProperty(String key) {
-        if (properties != null) {
-            properties.remove(key);
-        }
-    }
-
-    @Override
-    public void setProperties(Properties p) {
-        this.properties = p;
-    }
-
-    @Override
-    public int compare(Node node) {
-        if (node == null) {
-            return different;
-        }
-
-        String workspaceSlug = getWorkspaceSlug();
-        String nWorkspaceSlug = node.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
-
-        if (!workspaceSlug.equals(nWorkspaceSlug)) {
-            return different;
-        }
-
-        String path = path();
-        String nPath = node.path();
-
-        if (nPath.equals(path)) {
-            return same;
-        }
-
-        return different;
     }
 
     @Override

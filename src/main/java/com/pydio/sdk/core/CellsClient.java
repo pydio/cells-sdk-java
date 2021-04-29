@@ -2,7 +2,28 @@ package com.pydio.sdk.core;
 
 import com.google.gson.Gson;
 import com.pydio.sdk.api.Client;
+import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.SdkNames;
+import com.pydio.sdk.api.callbacks.NodeHandler;
+import com.pydio.sdk.core.auth.Token;
+import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.core.common.callback.ChangeHandler;
+import com.pydio.sdk.core.common.callback.RegistryItemHandler;
+import com.pydio.sdk.core.common.callback.TransferProgressListener;
+import com.pydio.sdk.core.common.callback.cells.TreeNodeHandler;
+import com.pydio.sdk.core.common.errors.SDKException;
+import com.pydio.sdk.core.model.FileNode;
+import com.pydio.sdk.core.model.Message;
+import com.pydio.sdk.core.model.ServerNode;
+import com.pydio.sdk.core.model.Stats;
+import com.pydio.sdk.core.model.TreeNodeInfo;
+import com.pydio.sdk.core.model.WorkspaceNode;
+import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
+import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
+import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
+import com.pydio.sdk.core.utils.Log;
+import com.pydio.sdk.core.utils.PageOptions;
+import com.pydio.sdk.core.utils.io;
 import com.pydio.sdk.generated.cells.ApiClient;
 import com.pydio.sdk.generated.cells.ApiException;
 import com.pydio.sdk.generated.cells.api.FrontendServiceApi;
@@ -38,27 +59,6 @@ import com.pydio.sdk.generated.cells.model.TreeQuery;
 import com.pydio.sdk.generated.cells.model.TreeSearchRequest;
 import com.pydio.sdk.generated.cells.model.TreeWorkspaceRelativePath;
 import com.pydio.sdk.generated.cells.model.UpdateUserMetaRequestUserMetaOp;
-import com.pydio.sdk.core.auth.Token;
-import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.common.callback.ChangeHandler;
-import com.pydio.sdk.core.common.callback.NodeHandler;
-import com.pydio.sdk.core.common.callback.RegistryItemHandler;
-import com.pydio.sdk.core.common.callback.TransferProgressListener;
-import com.pydio.sdk.core.common.callback.cells.TreeNodeHandler;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.FileNode;
-import com.pydio.sdk.core.model.Message;
-import com.pydio.sdk.core.model.ServerNode;
-import com.pydio.sdk.core.model.Stats;
-import com.pydio.sdk.core.model.TreeNodeInfo;
-import com.pydio.sdk.core.model.WorkspaceNode;
-import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
-import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
-import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
-import com.pydio.sdk.api.Credentials;
-import com.pydio.sdk.core.utils.Log;
-import com.pydio.sdk.core.utils.PageOptions;
-import com.pydio.sdk.core.utils.io;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONArray;
@@ -121,11 +121,6 @@ public class CellsClient implements Client, SdkNames {
         }
     }
 
-    protected String fullPath(String ws, String file) {
-        String fullPath = "";
-        fullPath += ws;
-        return (fullPath + file).replace("//", "/");
-    }
 
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
         boolean isLeaf = node.getType() == TreeNodeType.LEAF;
@@ -134,22 +129,34 @@ public class CellsClient implements Client, SdkNames {
         return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
     }
 
+
     private FileNode toFileNode(TreeNode node) {
 
-        FileNode result = new FileNode();
-
-        String[] parts = node.getPath().split("/");
-        String workspaceSlug = parts[0];
-        String[] rest = Arrays.copyOfRange(parts, 1, parts.length);
-        StringBuilder pathBuilder = new StringBuilder();
-        for (String part : rest) {
-            pathBuilder.append("/").append(part);
+        String uuid = node.getUuid();
+        if (uuid == null) {
+            return null;
         }
-        String path = pathBuilder.toString();
 
+        FileNode result = new FileNode();
+        String tnPath = node.getPath();
         Map<String, String> meta = node.getMetaStore();
-        result.setProperty(NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
+
+        String slug = FileNode.slugFromTreeNodePath(tnPath);
+        String path = FileNode.pathFromTreeNodePath(tnPath);
+        String name = FileNode.nameFromTreeNodePath(tnPath);
+
+        result.setProperty(NODE_PROPERTY_UUID, node.getUuid());
+        result.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, slug);
+        result.setProperty(NODE_PROPERTY_PATH, path);
+        result.setProperty(NODE_PROPERTY_FILENAME, path);
+
+        result.setProperty(NODE_PROPERTY_TEXT, name);
+        result.setProperty(NODE_PROPERTY_LABEL, name);
+
         boolean isFile = node.getType() == TreeNodeType.LEAF;
+        result.setProperty(NODE_PROPERTY_IS_FILE, String.valueOf(isFile));
+
+        result.setProperty(NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
         String isImage = meta.get("is_image") == null ? "false" : meta.get("is_image");
         String ws_shares = meta.get("workspaces_shares");
         if (ws_shares != null) {
@@ -163,40 +170,32 @@ public class CellsClient implements Client, SdkNames {
             } catch (ParseException ignored) {
             }
         }
-        String uuid = node.getUuid();
-        if (uuid == null) {
-            return null;
-        }
 
         String bookmark = meta.get("bookmark");
         if (bookmark != null && bookmark.length() > 0) {
+            //  TODO why do we need to sanitize this way?
             result.setProperty(NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
         }
 
-        result.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, workspaceSlug);
-        result.setProperty(NODE_PROPERTY_UUID, node.getUuid());
-        result.setProperty(NODE_PROPERTY_TEXT, new File(node.getPath()).getName());
-        result.setProperty(NODE_PROPERTY_LABEL, new File(node.getPath()).getName());
         String nodeSize = node.getSize();
         if (nodeSize == null) {
             if (!isFile) {
                 result.setProperty(NODE_PROPERTY_BYTESIZE, "4096");
             }
         } else {
-            result.setProperty(NODE_PROPERTY_BYTESIZE, node.getSize());
+            result.setProperty(NODE_PROPERTY_BYTESIZE, nodeSize);
         }
-        result.setProperty(NODE_PROPERTY_PATH, path);
-        result.setProperty(NODE_PROPERTY_FILENAME, path);
-        result.setProperty(NODE_PROPERTY_IS_FILE, String.valueOf(isFile));
-        result.setProperty(NODE_PROPERTY_IS_IMAGE, isImage);
+
         result.setProperty(NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
         String mtime = node.getMtime();
         if (mtime != null) {
             result.setProperty(NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
         }
+
+        result.setProperty(NODE_PROPERTY_IS_IMAGE, isImage);
         if (isImage.equals("true")) {
+            result.setProperty(NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_width"));
             result.setProperty(NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
-            result.setProperty(NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_height"));
             try {
                 JSONObject thumb = new JSONObject(meta.get("ImageThumbnails"));
                 boolean processing = thumb.getBoolean("Processing");
@@ -220,6 +219,7 @@ public class CellsClient implements Client, SdkNames {
         String encoded = new Gson().toJson(node);
         result.setProperty(NODE_PROPERTY_ENCODED, encoded);
         result.setProperty(NODE_PROPERTY_ENCODING, "gson");
+
         return result;
     }
 
@@ -513,7 +513,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     private TreeNode internalStatNode(String ws, String path) throws SDKException {
-        return internalStatNode(fullPath(ws, path));
+        return internalStatNode(FileNode.toTreeNodePath(ws, path));
     }
 
     private TreeNode internalStatNode(String fullPath) throws SDKException {
@@ -530,18 +530,10 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
-
-        PageOptions nextPageOptions = new PageOptions();
+    public PageOptions ls(String ws, String path, PageOptions options, NodeHandler handler) throws SDKException {
 
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        // request.addNodePathsItem(fullPath(ws, folder));
-        if ("/".equals(folder)) {
-            request.addNodePathsItem(ws + "/*");
-        } else {
-            request.addNodePathsItem(fullPath(ws, folder + "/*"));
-        }
-
+        request.addNodePathsItem(FileNode.toTreeNodePath(ws, "/".equals(path) ? "/*" : path + "/*"));
         request.setAllMetaProviders(true);
         if (options != null) {
             request.setLimit(options.getLimit());
@@ -553,6 +545,8 @@ public class CellsClient implements Client, SdkNames {
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
         TreeServiceApi api = new TreeServiceApi(client);
         RestBulkMetaResponse response;
+
+        PageOptions nextPageOptions = new PageOptions();
 
         try {
             response = api.bulkStatNodes(request);
@@ -594,7 +588,7 @@ public class CellsClient implements Client, SdkNames {
 
                 if (fileNode != null) {
                     String nodePath = ("/" + node.getPath()).replace("//", "/");
-                    if (!nodePath.equals(fullPath(ws, folder)) && !fileNode.label().startsWith(".")) {
+                    if (!nodePath.equals(FileNode.toTreeNodePath(ws, path)) && !fileNode.getLabel().startsWith(".")) {
                         handler.onNode(fileNode);
                     }
                 }
@@ -676,7 +670,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public void bookmarks(NodeHandler h) throws SDKException {
+    public void getBookmarks(NodeHandler h) throws SDKException {
         this.getJWT();
         ApiClient client = getApiClient();
         client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
@@ -692,13 +686,18 @@ public class CellsClient implements Client, SdkNames {
                         if (fileNode != null) {
                             List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
                             if (sources != null) {
-                                TreeWorkspaceRelativePath source = sources.get(0);
-                                fileNode.setProperty(NODE_PROPERTY_FILENAME, source.getPath());
-                                fileNode.setProperty(NODE_PROPERTY_PATH, source.getPath());
+                                // Not very clean: the path to the source of the bookmark has no leading slash
+                                // We can tweak here because that's the only location where we use this object.
+                                // Also bookmarks can only refer to **one** source
+                                String path = "/" + sources.get(0).getPath();
+                                fileNode.setProperty(NODE_PROPERTY_PATH, path);
+                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNode.getNameFromPath(path));
                                 h.onNode(fileNode);
                             }
                         }
-                    } catch (NullPointerException ignored) {
+                    } catch (NullPointerException e) {
+                        Log.e("GET_BOOKMARKS", "Unexpected NPE");
+                        e.printStackTrace();
                     }
                 }
             }
@@ -756,7 +755,7 @@ public class CellsClient implements Client, SdkNames {
         List<TreeNode> nodes = new ArrayList<>();
         for (String file : files) {
             TreeNode node = new TreeNode();
-            node.setPath(fullPath(ws, file));
+            node.setPath(FileNode.toTreeNodePath(ws, file));
             nodes.add(node);
         }
 
@@ -783,7 +782,7 @@ public class CellsClient implements Client, SdkNames {
         List<TreeNode> nodes = new ArrayList<>();
         for (String file : files) {
             TreeNode node = new TreeNode();
-            node.setPath(fullPath(ws, file));
+            node.setPath(FileNode.toTreeNodePath(ws, file));
             nodes.add(node);
         }
 
@@ -810,7 +809,7 @@ public class CellsClient implements Client, SdkNames {
         RestUserJobRequest request = new RestUserJobRequest();
 
         JSONArray nodes = new JSONArray();
-        String path = fullPath(ws, srcFile);
+        String path = FileNode.toTreeNodePath(ws, srcFile);
         nodes.put(path);
 
         String parent = new File(srcFile).getParentFile().getPath();
@@ -823,7 +822,7 @@ public class CellsClient implements Client, SdkNames {
 
         JSONObject o = new JSONObject();
         o.put("nodes", nodes);
-        o.put("target", fullPath(ws, dstFile));
+        o.put("target", FileNode.toTreeNodePath(ws, dstFile));
         o.put("targetParent", false);
 
         request.setJobName("move");
@@ -1065,7 +1064,7 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        request.addNodePathsItem(fullPath(ws, file));
+        request.addNodePathsItem(FileNode.toTreeNodePath(ws, file));
         request.setAllMetaProviders(true);
 
         this.getJWT();

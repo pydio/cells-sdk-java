@@ -103,22 +103,22 @@ public class ServerNode implements com.pydio.sdk.api.Node {
     }
 
     @Override
-    public String path() {
+    public String getPath() {
         return path;
     }
 
     @Override
-    public String label() {
+    public String getLabel() {
         return label;
     }
 
     @Override
-    public int type() {
+    public int getType() {
         return com.pydio.sdk.api.Node.TYPE_SERVER;
     }
 
     @Override
-    public String id() {
+    public String getId() {
         String id = scheme + "://" + host;
         if (port != 80) {
             id = id + ":" + port;
@@ -490,7 +490,7 @@ public class ServerNode implements com.pydio.sdk.api.Node {
         if (port > 0 && port != 80) {
             path += ":" + port;
         }
-        path += path();
+        path += getPath();
         if (!path.endsWith("/")) {
             return path + "/";
         }
@@ -559,7 +559,7 @@ public class ServerNode implements com.pydio.sdk.api.Node {
 
     public boolean equals(Object o) {
         try {
-            return this == o || (o instanceof com.pydio.sdk.api.Node) && ((com.pydio.sdk.api.Node) o).type() == type() && label().equals(((com.pydio.sdk.api.Node) o).label()) && path().equals(((Node) o).path());
+            return this == o || (o instanceof com.pydio.sdk.api.Node) && ((com.pydio.sdk.api.Node) o).getType() == getType() && getLabel().equals(((com.pydio.sdk.api.Node) o).getLabel()) && getPath().equals(((Node) o).getPath());
         } catch (NullPointerException e) {
             return false;
         }

@@ -68,7 +68,7 @@ public class GetChangesTest {
 
             // Insure there is nothing at this path
             try {
-                client.ls(ws, "/" + basePath, null, (node) -> System.out.println(node.label()));
+                client.ls(ws, "/" + basePath, null, (node) -> System.out.println(node.getLabel()));
                 Assert.fail("We expect a not found exception at " + basePath + ". Exiting...");
             } catch (SDKException e) {
                 // Expected. Do nothing.
@@ -138,7 +138,7 @@ public class GetChangesTest {
         // Skipped test: CRUD is not yet implemented from Java
         System.out.println("... Test Listing");
         try {
-            testClient.getCellsClient().ls(ws, "/", null, (node) -> System.out.println(node.label()));
+            testClient.getCellsClient().ls(ws, "/", null, (node) -> System.out.println(node.getLabel()));
         } catch (SDKException e) {
             e.printStackTrace();
         }
