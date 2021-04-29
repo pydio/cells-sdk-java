@@ -1,48 +1,48 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 
 import java.util.Properties;
 
-public class FileNode implements Node {
+public class FileNode implements Node, SdkNames {
 
     public Properties properties = new Properties();
 
     public boolean isImage() {
-        return Boolean.parseBoolean(properties.getProperty(Pydio.NODE_PROPERTY_IS_IMAGE))
-                || "1".equals(properties.getProperty(Pydio.NODE_PROPERTY_IS_IMAGE));
+        return Boolean.parseBoolean(properties.getProperty(NODE_PROPERTY_IS_IMAGE))
+                || "1".equals(properties.getProperty(NODE_PROPERTY_IS_IMAGE));
     }
 
     public boolean isFile() {
-        return Boolean.parseBoolean(properties.getProperty(Pydio.NODE_PROPERTY_IS_FILE));
+        return Boolean.parseBoolean(properties.getProperty(NODE_PROPERTY_IS_FILE));
     }
 
     public boolean isFolder() {
-        String mime = getProperty(Pydio.NODE_PROPERTY_IS_FILE);
+        String mime = getProperty(NODE_PROPERTY_IS_FILE);
         return "false".equals(mime);
     }
 
     public String getETag() {
-        return properties.getProperty(Pydio.NODE_PROPERTY_ETAG);
+        return properties.getProperty(NODE_PROPERTY_ETAG);
     }
 
     public long lastModified() {
         try {
-            return Long.parseLong(properties.getProperty(Pydio.NODE_PROPERTY_AJXP_MODIFTIME));
+            return Long.parseLong(properties.getProperty(NODE_PROPERTY_AJXP_MODIFTIME));
         } catch (Exception e) {
             return 0;
         }
     }
 
     public long size() {
-        String strSize = properties.getProperty(Pydio.NODE_PROPERTY_BYTESIZE);
+        String strSize = properties.getProperty(NODE_PROPERTY_BYTESIZE);
         if (strSize == null || "".equals(strSize))
             return 0;
         return Long.parseLong(strSize);
     }
 
     public String getWorkspaceSlug() {
-        return this.getProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG);
+        return this.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
     }
 
     public boolean equals(Object o) {
@@ -54,7 +54,7 @@ public class FileNode implements Node {
         Node node = (Node) o;
 
         String workspaceSlug = getWorkspaceSlug();
-        String nWorkspaceSlug = node.getProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG);
+        String nWorkspaceSlug = node.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
 
         String path = path();
         String nPath = node.path();
@@ -64,12 +64,12 @@ public class FileNode implements Node {
 
     @Override
     public String label() {
-        return properties.getProperty(Pydio.NODE_PROPERTY_TEXT);
+        return properties.getProperty(NODE_PROPERTY_TEXT);
     }
 
     @Override
     public String path() {
-        return properties.getProperty(Pydio.NODE_PROPERTY_FILENAME);
+        return properties.getProperty(NODE_PROPERTY_FILENAME);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class FileNode implements Node {
 
     @Override
     public String id() {
-        return properties.getProperty(Pydio.NODE_PROPERTY_UUID);
+        return properties.getProperty(NODE_PROPERTY_UUID);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class FileNode implements Node {
         }
 
         String workspaceSlug = getWorkspaceSlug();
-        String nWorkspaceSlug = node.getProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG);
+        String nWorkspaceSlug = node.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
 
         if (!workspaceSlug.equals(nWorkspaceSlug)) {
             return different;
@@ -135,7 +135,7 @@ public class FileNode implements Node {
         if (properties == null) {
             return null;
         }
-        return properties.getProperty(Pydio.NODE_PROPERTY_ENCODED_HASH);
+        return properties.getProperty(NODE_PROPERTY_ENCODED_HASH);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class FileNode implements Node {
         if (properties == null) {
             return null;
         }
-        return properties.getProperty(Pydio.NODE_PROPERTY_ENCODED);
+        return properties.getProperty(NODE_PROPERTY_ENCODED);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.pydio.sdk.core;
 
 import com.pydio.sdk.core.api.p8.Configuration;
-import com.pydio.sdk.core.api.p8.P8Client;
 import com.pydio.sdk.core.api.p8.P8Request;
 import com.pydio.sdk.core.api.p8.P8RequestBuilder;
 import com.pydio.sdk.core.api.p8.P8Response;
@@ -54,17 +53,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Pydio8 implements Client {
+public class P8Client implements Client, SdkNames {
 
     private final static Map<String, String> secureTokens = new ConcurrentHashMap<>();
     private final static Map<String, CookieManager> cookieManagers = new ConcurrentHashMap<>();
 
     private final ServerNode serverNode;
-    private final P8Client p8;
+    private final com.pydio.sdk.core.api.p8.P8Client p8;
     private Credentials credentials;
     private int loginFailure;
 
-    public Pydio8(ServerNode node) {
+    public P8Client(ServerNode node) {
         this.serverNode = node;
         loginFailure = 0;
 
@@ -75,7 +74,7 @@ public class Pydio8 implements Client {
             config.sslContext = serverNode.getSslContext();
             config.hostnameVerifier = serverNode.getHostnameVerifier();
         }
-        p8 = new P8Client(config);
+        p8 = new com.pydio.sdk.core.api.p8.P8Client(config);
     }
 
     private P8Request refreshSecureToken(P8Request req) {
@@ -249,17 +248,17 @@ public class Pydio8 implements Client {
     @Override
     public void workspaceList(NodeHandler handler) throws SDKException {
         String[] excluded = {
-                Pydio.WORKSPACE_ACCESS_TYPE_CONF,
-                Pydio.WORKSPACE_ACCESS_TYPE_SHARED,
-                Pydio.WORKSPACE_ACCESS_TYPE_MYSQL,
-                Pydio.WORKSPACE_ACCESS_TYPE_IMAP,
-                Pydio.WORKSPACE_ACCESS_TYPE_JSAPI,
-                Pydio.WORKSPACE_ACCESS_TYPE_USER,
-                Pydio.WORKSPACE_ACCESS_TYPE_HOME,
-                Pydio.WORKSPACE_ACCESS_TYPE_HOMEPAGE,
-                Pydio.WORKSPACE_ACCESS_TYPE_SETTINGS,
-                Pydio.WORKSPACE_ACCESS_TYPE_ADMIN,
-                Pydio.WORKSPACE_ACCESS_TYPE_INBOX,
+                WORKSPACE_ACCESS_TYPE_CONF,
+                WORKSPACE_ACCESS_TYPE_SHARED,
+                WORKSPACE_ACCESS_TYPE_MYSQL,
+                WORKSPACE_ACCESS_TYPE_IMAP,
+                WORKSPACE_ACCESS_TYPE_JSAPI,
+                WORKSPACE_ACCESS_TYPE_USER,
+                WORKSPACE_ACCESS_TYPE_HOME,
+                WORKSPACE_ACCESS_TYPE_HOMEPAGE,
+                WORKSPACE_ACCESS_TYPE_SETTINGS,
+                WORKSPACE_ACCESS_TYPE_ADMIN,
+                WORKSPACE_ACCESS_TYPE_INBOX,
         };
 
         String secureToken = getSecureToken();
@@ -327,7 +326,7 @@ public class Pydio8 implements Client {
             if (resultCode != Code.ok) {
                 throw new SDKException(resultCode);
             }
-            node[0].setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
+            node[0].setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
             return node[0];
         }
     }
@@ -346,7 +345,7 @@ public class Pydio8 implements Client {
                 }
 
                 TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
-                    n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
+                    n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
                     handler.onNode(n);
                 });
                 final int resultCode = rsp.saxParse(treeHandler);
@@ -378,7 +377,7 @@ public class Pydio8 implements Client {
             }
 
             final int resultCode = rsp.saxParse(new TreeNodeSaxHandler(node -> {
-                node.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, ws);
+                node.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
                 h.onNode(node);
             }));
 
@@ -407,7 +406,7 @@ public class Pydio8 implements Client {
                     }
 
                     TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
-                        n.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, wn.id());
+                        n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, wn.id());
                         handler.onNode(n);
                     });
 
@@ -834,34 +833,34 @@ public class Pydio8 implements Client {
                 }
 
 
-                lastSeq[0] = Math.max(lastSeq[0], json.getLong(Pydio.CHANGE_SEQ));
+                lastSeq[0] = Math.max(lastSeq[0], json.getLong(CHANGE_SEQ));
                 Change change = new Change();
 
-                change.setSeq(json.getLong(Pydio.CHANGE_SEQ));
-                change.setNodeId(json.getString(Pydio.CHANGE_NODE_ID));
-                change.setType(json.getString(Pydio.CHANGE_TYPE));
-                change.setSource(json.getString(Pydio.CHANGE_SOURCE));
-                change.setTarget(json.getString(Pydio.CHANGE_TARGET));
+                change.setSeq(json.getLong(CHANGE_SEQ));
+                change.setNodeId(json.getString(CHANGE_NODE_ID));
+                change.setType(json.getString(CHANGE_TYPE));
+                change.setSource(json.getString(CHANGE_SOURCE));
+                change.setTarget(json.getString(CHANGE_TARGET));
 
                 ChangeNode node = new ChangeNode();
                 change.setNode(node);
                 try {
-                    node.setSize(json.getJSONObject(Pydio.CHANGE_NODE).getLong(Pydio.CHANGE_NODE_BYTESIZE));
+                    node.setSize(json.getJSONObject(CHANGE_NODE).getLong(CHANGE_NODE_BYTESIZE));
                 } catch (Exception ignore) {
                 }
                 try {
-                    node.setMd5(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_MD5));
+                    node.setMd5(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_MD5));
                 } catch (Exception ignore) {
                 }
                 try {
-                    node.setmTime(json.getJSONObject(Pydio.CHANGE_NODE).getLong(Pydio.CHANGE_NODE_MTIME));
+                    node.setmTime(json.getJSONObject(CHANGE_NODE).getLong(CHANGE_NODE_MTIME));
                 } catch (Exception ignore) {
                 }
                 try {
-                    node.setPath(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_PATH));
+                    node.setPath(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_PATH));
                 } catch (Exception ignore) {
                 }
-                node.setWorkspace(json.getJSONObject(Pydio.CHANGE_NODE).getString(Pydio.CHANGE_NODE_WORKSPACE));
+                node.setWorkspace(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_WORKSPACE));
 
                 handler.onChange(change);
             });

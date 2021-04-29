@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 
 import org.w3c.dom.Document;
 
@@ -57,15 +57,15 @@ public class Message implements Serializable{
 			return empty();
 		}
 
-		org.w3c.dom.Node xml_message = doc.getElementsByTagName(Pydio.XML_MESSAGE).item(0);
+		org.w3c.dom.Node xml_message = doc.getElementsByTagName(SdkNames.XML_MESSAGE).item(0);
 		Message msg = new Message();
 
 		if(xml_message != null){
 			msg.setMessage(xml_message.getTextContent());
-			msg.setType(xml_message.getAttributes().getNamedItem(Pydio.MESSAGE_PROPERTY_TYPE).getNodeValue());
+			msg.setType(xml_message.getAttributes().getNamedItem(SdkNames.MESSAGE_PROPERTY_TYPE).getNodeValue());
 		}
 
-        org.w3c.dom.Node diff = doc.getElementsByTagName(Pydio.XML_NODES_DIFF).item(0);
+        org.w3c.dom.Node diff = doc.getElementsByTagName(SdkNames.XML_NODES_DIFF).item(0);
         if(diff != null) {
             for (int i = 0; i < diff.getChildNodes().getLength(); i++) {
                 org.w3c.dom.Node child = diff.getChildNodes().item(i);
@@ -73,17 +73,17 @@ public class Message implements Serializable{
 
                 List<Node> list = null;
 
-                if (Pydio.NODE_DIFF_REMOVE.equals(tag)) {
+                if (SdkNames.NODE_DIFF_REMOVE.equals(tag)) {
                     if (msg.deleted == null) {
                         msg.deleted = new ArrayList<>();
                     }
                     list = msg.deleted;
-                } else if (Pydio.NODE_DIFF_ADD.equals(tag)) {
+                } else if (SdkNames.NODE_DIFF_ADD.equals(tag)) {
                     if (msg.added == null) {
                         msg.added = new ArrayList<>();
                     }
                     list = msg.added;
-                } else if (Pydio.NODE_DIFF_UPDATE.equals(tag)) {
+                } else if (SdkNames.NODE_DIFF_UPDATE.equals(tag)) {
                     if (msg.updated == null) {
                         msg.updated = new ArrayList<>();
                     }

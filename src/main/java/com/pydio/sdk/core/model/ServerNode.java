@@ -1,7 +1,7 @@
 package com.pydio.sdk.core.model;
 
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 import com.pydio.sdk.core.common.callback.ServerResolver;
 import com.pydio.sdk.core.common.errors.Code;
 import com.pydio.sdk.core.common.errors.Error;
@@ -185,7 +185,7 @@ public class ServerNode implements Node {
         if (err != Code.unexpected_response) {
             err = downloadBootConf("index.php?get_action=get_boot_conf");
             if (err == 0) {
-                //c.onComplete(new Error(Pydio.ERROR_PYDIO_8_SERVER, "found pydio 8 server", null));
+                //c.onComplete(new Error(SdkNames.ERROR_PYDIO_8_SERVER, "found pydio 8 server", null));
                 return null;
             }
         }
@@ -581,7 +581,7 @@ public class ServerNode implements Node {
         }
 
         for (WorkspaceNode wn : this.workspaces.values()) {
-            if (id.equals(wn.getProperty(Pydio.WORKSPACE_PROPERTY_ID))) {
+            if (id.equals(wn.getProperty(SdkNames.WORKSPACE_PROPERTY_ID))) {
                 return wn;
             }
         }

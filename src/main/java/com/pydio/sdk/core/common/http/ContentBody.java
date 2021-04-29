@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.common.http;
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -102,14 +102,14 @@ public class ContentBody {
     public void writeTo(OutputStream out) throws IOException {
 
         long limit = mChunkSize;
-        long bufsize = Math.min(Pydio.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize);
+        long bufsize = Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize);
         long start = mChunkIndex * mChunkSize, totalRead = start;
 
         if (mChunkCount > 1) {
 
 
             if (mFile != null) {
-                byte[] buffer = new byte[(int) Math.min(Pydio.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
+                byte[] buffer = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
 
                 if (mChunkIndex == (mChunkCount - 1)) {
                     limit = mLastChunkSize;
@@ -133,7 +133,7 @@ public class ContentBody {
 
             } else {
 
-                byte[] buffer = new byte[(int) Math.min(Pydio.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
+                byte[] buffer = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
                 if (mChunkIndex == (mChunkCount - 1)) {
                     limit = mLastChunkSize;
                 }
@@ -158,7 +158,7 @@ public class ContentBody {
                 mInStream = new FileInputStream(mFile);
             }
 
-            byte[] buf = new byte[(int) Math.min(Pydio.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mLength)];
+            byte[] buf = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mLength)];
             int len;
             while ((len = mInStream.read(buf)) > 0) {
                 out.write(buf, 0, len);
@@ -177,7 +177,7 @@ public class ContentBody {
 
     public int writeTo(OutputStream out, long len) throws IOException {
         long writtenCount = 0;
-        int bufsize = (int) Math.min(Math.min(Pydio.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, len), available());
+        int bufsize = (int) Math.min(Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, len), available());
         byte[] buffer = new byte[bufsize];
 
         int read, maximumToRead = (int) Math.min(len, available());

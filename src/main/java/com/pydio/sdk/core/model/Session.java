@@ -1,10 +1,10 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 
 import java.util.Properties;
 
-public class Session {
+public class Session implements SdkNames{
 
     public long id;
     public String user, name, serverAddress, legacyId, displayName;
@@ -16,23 +16,23 @@ public class Session {
     }
 
     public Session(ContentValues values){
-        serverAddress = values.getAsString(Pydio.ADDRESS);
-        id = values.getAsLong(Pydio.SESSION_ID);
-        user = values.getAsString(Pydio.LOGIN);
-        displayName = values.getAsString(Pydio.DISPLAYED_NAME);
+        serverAddress = values.getAsString(ADDRESS);
+        id = values.getAsLong(SESSION_ID);
+        user = values.getAsString(LOGIN);
+        displayName = values.getAsString(DISPLAYED_NAME);
         legacyId = user + "@" + serverAddress.replace("://", "+").replace("/","&");
-        name = values.getAsString(Pydio.SESSION_NAME);
-        logo = values.getAsByteArray(Pydio.LOGO);
+        name = values.getAsString(SESSION_NAME);
+        logo = values.getAsByteArray(LOGO);
         properties = new Properties();
     }
 
     public ContentValues values(){
         ContentValues values = new ContentValues();
-        values.put(Pydio.ADDRESS, serverAddress);
-        values.put(Pydio.DISPLAYED_NAME, displayName);
-        values.put(Pydio.LOGIN, user);
-        values.put(Pydio.LOGO, logo);
-        values.put(Pydio.SESSION_NAME, name);
+        values.put(ADDRESS, serverAddress);
+        values.put(DISPLAYED_NAME, displayName);
+        values.put(LOGIN, user);
+        values.put(LOGO, logo);
+        values.put(SESSION_NAME, name);
         return values;
     }
 }

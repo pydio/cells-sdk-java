@@ -1,6 +1,6 @@
 package com.pydio.sdk.sync.fs;
 
-import com.pydio.sdk.core.Pydio8;
+import com.pydio.sdk.core.P8Client;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.ChangeNode;
 import com.pydio.sdk.sync.Error;
@@ -17,13 +17,13 @@ import java.util.List;
 
 public class Pydio8Fs implements Fs, ContentLoader {
 
-    private Pydio8 client;
+    private P8Client client;
     private String workspace;
     private String id;
 
-    public Pydio8Fs(String id, Pydio8 pydio8, String workspace) {
+    public Pydio8Fs(String id, P8Client p8Client, String workspace) {
         this.id = id;
-        this.client = pydio8;
+        this.client = p8Client;
         this.workspace = workspace;
     }
 

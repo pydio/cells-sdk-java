@@ -338,7 +338,7 @@ public class P8Client {
         }
         con.setDoOutput(true);
 
-        con.setRequestProperty("User-Agent", "Pydio-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode);
+        con.setRequestProperty("User-Agent", "SdkNames-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode);
         con.setRequestProperty("Content-Type", "application/octet-stream");
         try {
             OutputStream out = con.getOutputStream();

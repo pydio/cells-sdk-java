@@ -85,7 +85,7 @@ import javax.net.ssl.SSLContext;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-public class PydioCells implements Client {
+public class CellsClient implements Client, SdkNames {
 
     public String URL;
     protected String bearerValue;
@@ -97,7 +97,7 @@ public class PydioCells implements Client {
     private final ServerNode serverNode;
     private final String apiURL;
 
-    public PydioCells(ServerNode node) {
+    public CellsClient(ServerNode node) {
         this.serverNode = node;
         this.URL = node.url();
         String url = node.apiURL();
@@ -118,7 +118,6 @@ public class PydioCells implements Client {
             this.bearerValue = "";
         }
     }
-
 
     protected String fullPath(String ws, String file) {
         String fullPath = "";
@@ -147,18 +146,18 @@ public class PydioCells implements Client {
         String path = pathBuilder.toString();
 
         Map<String, String> meta = node.getMetaStore();
-        result.setProperty(Pydio.NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
+        result.setProperty(NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
         boolean isFile = node.getType() == TreeNodeType.LEAF;
         String isImage = meta.get("is_image") == null ? "false" : meta.get("is_image");
         String ws_shares = meta.get("workspaces_shares");
         if (ws_shares != null) {
-            result.setProperty(Pydio.NODE_PROPERTY_AJXP_SHARED, "true");
-            result.setProperty(Pydio.NODE_PROPERTY_SHARE_JSON_INFO, ws_shares);
+            result.setProperty(NODE_PROPERTY_AJXP_SHARED, "true");
+            result.setProperty(NODE_PROPERTY_SHARE_JSON_INFO, ws_shares);
             try {
                 JSONArray shareWorkspaces = new JSONArray(ws_shares);
                 JSONObject shareWs = (JSONObject) shareWorkspaces.get(0);
                 String shareUUID = shareWs.getString("UUID");
-                result.setProperty(Pydio.NODE_PROPERTY_SHARE_UUID, shareUUID);
+                result.setProperty(NODE_PROPERTY_SHARE_UUID, shareUUID);
             } catch (ParseException ignored) {
             }
         }
@@ -169,33 +168,33 @@ public class PydioCells implements Client {
 
         String bookmark = meta.get("bookmark");
         if (bookmark != null && bookmark.length() > 0) {
-            result.setProperty(Pydio.NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
+            result.setProperty(NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
         }
 
-        result.setProperty(Pydio.NODE_PROPERTY_WORKSPACE_SLUG, workspaceSlug);
-        result.setProperty(Pydio.NODE_PROPERTY_UUID, node.getUuid());
-        result.setProperty(Pydio.NODE_PROPERTY_TEXT, new File(node.getPath()).getName());
-        result.setProperty(Pydio.NODE_PROPERTY_LABEL, new File(node.getPath()).getName());
+        result.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, workspaceSlug);
+        result.setProperty(NODE_PROPERTY_UUID, node.getUuid());
+        result.setProperty(NODE_PROPERTY_TEXT, new File(node.getPath()).getName());
+        result.setProperty(NODE_PROPERTY_LABEL, new File(node.getPath()).getName());
         String nodeSize = node.getSize();
         if (nodeSize == null) {
             if (!isFile) {
-                result.setProperty(Pydio.NODE_PROPERTY_BYTESIZE, "4096");
+                result.setProperty(NODE_PROPERTY_BYTESIZE, "4096");
             }
         } else {
-            result.setProperty(Pydio.NODE_PROPERTY_BYTESIZE, node.getSize());
+            result.setProperty(NODE_PROPERTY_BYTESIZE, node.getSize());
         }
-        result.setProperty(Pydio.NODE_PROPERTY_PATH, path);
-        result.setProperty(Pydio.NODE_PROPERTY_FILENAME, path);
-        result.setProperty(Pydio.NODE_PROPERTY_IS_FILE, String.valueOf(isFile));
-        result.setProperty(Pydio.NODE_PROPERTY_IS_IMAGE, isImage);
-        result.setProperty(Pydio.NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
+        result.setProperty(NODE_PROPERTY_PATH, path);
+        result.setProperty(NODE_PROPERTY_FILENAME, path);
+        result.setProperty(NODE_PROPERTY_IS_FILE, String.valueOf(isFile));
+        result.setProperty(NODE_PROPERTY_IS_IMAGE, isImage);
+        result.setProperty(NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
         String mtime = node.getMtime();
         if (mtime != null) {
-            result.setProperty(Pydio.NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
+            result.setProperty(NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
         }
         if (isImage.equals("true")) {
-            result.setProperty(Pydio.NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
-            result.setProperty(Pydio.NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_height"));
+            result.setProperty(NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
+            result.setProperty(NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_height"));
             try {
                 JSONObject thumb = new JSONObject(meta.get("ImageThumbnails"));
                 boolean processing = thumb.getBoolean("Processing");
@@ -209,7 +208,7 @@ public class PydioCells implements Client {
                         String thumbPath = "/" + node.getUuid() + "-" + size + "." + format;
                         thumbObject.put(String.valueOf(size), thumbPath);
                     }
-                    result.setProperty(Pydio.NODE_PROPERTY_IMAGE_THUMB_PATHS, thumbObject.toString());
+                    result.setProperty(NODE_PROPERTY_IMAGE_THUMB_PATHS, thumbObject.toString());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -217,8 +216,8 @@ public class PydioCells implements Client {
         }
 
         String encoded = new Gson().toJson(node);
-        result.setProperty(Pydio.NODE_PROPERTY_ENCODED, encoded);
-        result.setProperty(Pydio.NODE_PROPERTY_ENCODING, "gson");
+        result.setProperty(NODE_PROPERTY_ENCODED, encoded);
+        result.setProperty(NODE_PROPERTY_ENCODING, "gson");
         return result;
     }
 
@@ -384,11 +383,11 @@ public class PydioCells implements Client {
             e.printStackTrace();
             throw SDKException.conFailed(e);
         }
-        String[] excluded = {Pydio.WORKSPACE_ACCESS_TYPE_CONF, Pydio.WORKSPACE_ACCESS_TYPE_SHARED,
-                Pydio.WORKSPACE_ACCESS_TYPE_MYSQL, Pydio.WORKSPACE_ACCESS_TYPE_IMAP, Pydio.WORKSPACE_ACCESS_TYPE_JSAPI,
-                Pydio.WORKSPACE_ACCESS_TYPE_USER, Pydio.WORKSPACE_ACCESS_TYPE_HOME,
-                Pydio.WORKSPACE_ACCESS_TYPE_HOMEPAGE, Pydio.WORKSPACE_ACCESS_TYPE_SETTINGS,
-                Pydio.WORKSPACE_ACCESS_TYPE_ADMIN, Pydio.WORKSPACE_ACCESS_TYPE_INBOX,};
+        String[] excluded = {WORKSPACE_ACCESS_TYPE_CONF, WORKSPACE_ACCESS_TYPE_SHARED,
+                WORKSPACE_ACCESS_TYPE_MYSQL, WORKSPACE_ACCESS_TYPE_IMAP, WORKSPACE_ACCESS_TYPE_JSAPI,
+                WORKSPACE_ACCESS_TYPE_USER, WORKSPACE_ACCESS_TYPE_HOME,
+                WORKSPACE_ACCESS_TYPE_HOMEPAGE, WORKSPACE_ACCESS_TYPE_SETTINGS,
+                WORKSPACE_ACCESS_TYPE_ADMIN, WORKSPACE_ACCESS_TYPE_INBOX,};
 
         try {
             NodeHandler nh = (n) -> {
@@ -692,8 +691,8 @@ public class PydioCells implements Client {
                             List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
                             if (sources != null) {
                                 TreeWorkspaceRelativePath source = sources.get(0);
-                                fileNode.setProperty(Pydio.NODE_PROPERTY_FILENAME, source.getPath());
-                                fileNode.setProperty(Pydio.NODE_PROPERTY_PATH, source.getPath());
+                                fileNode.setProperty(NODE_PROPERTY_FILENAME, source.getPath());
+                                fileNode.setProperty(NODE_PROPERTY_PATH, source.getPath());
                                 h.onNode(fileNode);
                             }
                         }
@@ -1228,8 +1227,8 @@ public class PydioCells implements Client {
     public interface Factory {
     }
 
-    public PydioCells get(ServerNode node) {
-        return new PydioCells(node);
+    public CellsClient get(ServerNode node) {
+        return new CellsClient(node);
     }
 
     // Local Helpers

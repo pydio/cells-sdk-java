@@ -1,12 +1,12 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 import com.pydio.sdk.core.server.Plugin;
 
 import java.util.List;
 import java.util.Properties;
 
-public class WorkspaceNode implements Node {
+public class WorkspaceNode implements Node, SdkNames {
     private Properties properties;
     private Properties preferences;
     private List<Plugin> plugins;
@@ -17,43 +17,43 @@ public class WorkspaceNode implements Node {
     private List<Action> availableActions;
 
     public boolean allowsCrossCopy() {
-        return "true".equals(properties.getProperty(Pydio.WORKSPACE_PROPERTY_CROSS_COPY));
+        return "true".equals(properties.getProperty(WORKSPACE_PROPERTY_CROSS_COPY));
     }
 
     public String slug() {
-        return properties.getProperty(Pydio.WORKSPACE_PROPERTY_SLUG);
+        return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
     }
 
     public String getDescription() {
-        return properties.getProperty(Pydio.NODE_PROPERTY_DESCRIPTION);
+        return properties.getProperty(NODE_PROPERTY_DESCRIPTION);
     }
 
     public String getAccessType() {
-        return properties.getProperty(Pydio.WORKSPACE_PROPERTY_ACCESS_TYPE);
+        return properties.getProperty(WORKSPACE_PROPERTY_ACCESS_TYPE);
     }
 
     public boolean syncable() {
-        return "true".equals(getProperty(Pydio.WORKSPACE_PROPERTY_META_SYNC));
+        return "true".equals(getProperty(WORKSPACE_PROPERTY_META_SYNC));
     }
 
     public String label() {
-        return properties.getProperty(Pydio.NODE_PROPERTY_LABEL);
+        return properties.getProperty(NODE_PROPERTY_LABEL);
     }
 
     public String getId() {
-        return properties.getProperty(Pydio.WORKSPACE_PROPERTY_SLUG);
+        return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
     }
 
     public String acl() {
-        return properties.getProperty(Pydio.WORKSPACE_PROPERTY_ACL);
+        return properties.getProperty(WORKSPACE_PROPERTY_ACL);
     }
 
     public String owner() {
-        return properties.getProperty(Pydio.WORKSPACE_PROPERTY_OWNER);
+        return properties.getProperty(WORKSPACE_PROPERTY_OWNER);
     }
 
     public boolean isPublic() {
-        String pub = properties.getProperty(Pydio.WORKSPACE_IS_PUBLIC);
+        String pub = properties.getProperty(WORKSPACE_IS_PUBLIC);
         return "true".equals(pub);
     }
 
@@ -68,7 +68,7 @@ public class WorkspaceNode implements Node {
     }
 
     public boolean isSyncable() {
-        return "true".equals(getProperty(Pydio.WORKSPACE_PROPERTY_META_SYNC));
+        return "true".equals(getProperty(WORKSPACE_PROPERTY_META_SYNC));
     }
 
     public boolean isReadActionAllowed(String action) {
@@ -98,7 +98,7 @@ public class WorkspaceNode implements Node {
     }
 
     public boolean isShared() {
-        return "true".equals(properties.getProperty(Pydio.NODE_PROPERTY_AJXP_SHARED)) || "shared".equals(properties.getProperty(Pydio.WORKSPACE_PROPERTY_OWNER));
+        return "true".equals(properties.getProperty(NODE_PROPERTY_AJXP_SHARED)) || "shared".equals(properties.getProperty(WORKSPACE_PROPERTY_OWNER));
     }
 
     public void setActions(List<Action> actions) {
@@ -165,7 +165,7 @@ public class WorkspaceNode implements Node {
 
     @Override
     public String id() {
-        return properties.getProperty(Pydio.WORKSPACE_PROPERTY_SLUG);
+        return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
     }
 
     @Override

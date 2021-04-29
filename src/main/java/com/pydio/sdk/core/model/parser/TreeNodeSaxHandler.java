@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.model.parser;
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 import com.pydio.sdk.core.common.callback.NodeHandler;
 import com.pydio.sdk.core.model.FileNode;
 import com.pydio.sdk.core.model.Node;
@@ -42,8 +42,8 @@ public class TreeNodeSaxHandler extends DefaultHandler {
                 p.setProperty(attributes.getLocalName(i), attributes.getValue(i));
             }
             if(mParsedCount == 1){
-                if("".equals(p.getProperty(Pydio.NODE_PROPERTY_FILENAME))){
-                    p.setProperty(Pydio.NODE_PROPERTY_FILENAME, "/");
+                if("".equals(p.getProperty(SdkNames.NODE_PROPERTY_FILENAME))){
+                    p.setProperty(SdkNames.NODE_PROPERTY_FILENAME, "/");
                 }
                 mRootNode = (FileNode) NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
                 p = null;
@@ -62,7 +62,7 @@ public class TreeNodeSaxHandler extends DefaultHandler {
             if(p != null) {
                 Node node = NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
                 if(node != null){
-                    node.setProperty(Pydio.NODE_PROPERTY_UUID, node.path());
+                    node.setProperty(SdkNames.NODE_PROPERTY_UUID, node.path());
                     mHandler.onNode(node);
                 }
                 p = null;

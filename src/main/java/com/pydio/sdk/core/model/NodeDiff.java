@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.Pydio;
+import com.pydio.sdk.core.SdkNames;
 
 import org.w3c.dom.Document;
 
@@ -14,7 +14,7 @@ public class NodeDiff {
 
     public static NodeDiff create(Document doc){
         NodeDiff nodeDiff = new NodeDiff();
-        org.w3c.dom.Node diff = doc.getElementsByTagName(Pydio.XML_NODES_DIFF).item(0);
+        org.w3c.dom.Node diff = doc.getElementsByTagName(SdkNames.XML_NODES_DIFF).item(0);
 
         if(diff != null) {
             for (int i = 0; i < diff.getChildNodes().getLength(); i++) {
@@ -23,11 +23,11 @@ public class NodeDiff {
 
                 ArrayList<Node> list = null;
 
-                if (Pydio.NODE_DIFF_REMOVE.equals(tag)) {
+                if (SdkNames.NODE_DIFF_REMOVE.equals(tag)) {
                     list = nodeDiff.deleted;
-                } else if (Pydio.NODE_DIFF_ADD.equals(tag)) {
+                } else if (SdkNames.NODE_DIFF_ADD.equals(tag)) {
                     list = nodeDiff.added;
-                } else if (Pydio.NODE_DIFF_UPDATE.equals(tag)) {
+                } else if (SdkNames.NODE_DIFF_UPDATE.equals(tag)) {
                     list = nodeDiff.updated;
                 }
 

@@ -1,6 +1,6 @@
 package com.pydio.sdk.sync.fs;
 
-import com.pydio.sdk.core.PydioCells;
+import com.pydio.sdk.core.CellsClient;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.ChangeNode;
@@ -24,7 +24,7 @@ import com.pydio.sdk.core.utils.CellsPath;
 
 public class CellsFs implements Fs, ContentLoader {
 
-    private PydioCells cells;
+    private CellsClient cells;
     private String workspace;
     private String id;
     private StateManager stateManager;
@@ -33,7 +33,7 @@ public class CellsFs implements Fs, ContentLoader {
     private final static int ADD = 2;
     private final static int DELETE = 3;
 
-    public CellsFs(String id, PydioCells cells, String workspace, StateManager manager) {
+    public CellsFs(String id, CellsClient cells, String workspace, StateManager manager) {
         this.id = id;
         this.cells = cells;
         this.workspace = workspace;
@@ -238,7 +238,7 @@ public class CellsFs implements Fs, ContentLoader {
         TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
 
         cells.listChildren(fullPath, (n) -> {
-            sorterContainer.put(n.getPath(), PydioCells.toTreeNodeinfo(n));
+            sorterContainer.put(n.getPath(), CellsClient.toTreeNodeinfo(n));
         });
 
         return sorterContainer.values();

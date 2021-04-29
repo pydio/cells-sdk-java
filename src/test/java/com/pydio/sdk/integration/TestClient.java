@@ -1,7 +1,6 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
+import com.pydio.sdk.core.CellsClient;
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.common.errors.Error;
 import com.pydio.sdk.sync.fs.CellsFs;
@@ -15,8 +14,6 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 import com.pydio.sdk.sync.tree.StateManager;
-import com.pydio.sdk.core.PydioCells;
-import org.junit.Before;
 
 /**
  * Utilitary class to centralise setup of a Cells client for testing purposes.
@@ -27,7 +24,7 @@ public class TestClient {
     private final String confPath = "/config.properties";
 
     private ServerNode node;
-    private PydioCells cellsClient;
+    private CellsClient cellsClient;
     private CellsFs cellsFs;
 
     private Path workingDirPath;
@@ -59,7 +56,7 @@ public class TestClient {
             System.out.println(error);
         }
 
-        cellsClient = new PydioCells(node);
+        cellsClient = new CellsClient(node);
         cellsClient.setCredentials(new Credentials(login, pwd));
         cellsClient.setSkipOAuthFlag(true);
 
@@ -71,7 +68,7 @@ public class TestClient {
         return node;
     }
 
-    public PydioCells getCellsClient() {
+    public CellsClient getCellsClient() {
         return cellsClient;
     }
 
@@ -86,5 +83,4 @@ public class TestClient {
     public Path getWorkingDir() {
         return workingDirPath;
     }
-
 }
