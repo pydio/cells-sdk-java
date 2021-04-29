@@ -1,6 +1,7 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.Node;
+import com.pydio.sdk.api.SdkNames;
 
 import org.w3c.dom.Document;
 
@@ -17,9 +18,9 @@ public class Message implements Serializable{
 	public String message;
 	private String type = EMPTY;
 
-    public List<Node> deleted = new ArrayList<>();
-    public List<Node> added = new ArrayList<>();
-    public List<Node> updated = new ArrayList<>();
+    public List<com.pydio.sdk.api.Node> deleted = new ArrayList<>();
+    public List<com.pydio.sdk.api.Node> added = new ArrayList<>();
+    public List<com.pydio.sdk.api.Node> updated = new ArrayList<>();
 
 
 	public String type() {

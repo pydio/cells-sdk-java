@@ -1,9 +1,9 @@
 package com.pydio.sdk.core.model.parser;
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.core.common.callback.NodeHandler;
 import com.pydio.sdk.core.model.FileNode;
-import com.pydio.sdk.core.model.Node;
+import com.pydio.sdk.api.Node;
 import com.pydio.sdk.core.model.NodeFactory;
 
 import org.xml.sax.Attributes;

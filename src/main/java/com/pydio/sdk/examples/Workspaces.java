@@ -1,6 +1,6 @@
 package com.pydio.sdk.examples;
 
-import com.pydio.sdk.core.Client;
+import com.pydio.sdk.api.Client;
 import com.pydio.sdk.core.ClientFactory;
 import com.pydio.sdk.core.common.errors.Error;
 import com.pydio.sdk.core.common.errors.SDKException;

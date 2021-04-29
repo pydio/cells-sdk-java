@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.SdkNames;
 
 import java.util.Properties;
 

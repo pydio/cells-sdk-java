@@ -1,6 +1,6 @@
 package com.pydio.sdk.examples;
 
-public class Credentials implements com.pydio.sdk.core.security.Credentials {
+public class Credentials implements com.pydio.sdk.api.Credentials {
     private final String login;
     private final String password;
 

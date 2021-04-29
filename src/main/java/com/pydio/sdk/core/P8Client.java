@@ -1,11 +1,13 @@
 package com.pydio.sdk.core;
 
-import com.pydio.sdk.core.api.p8.Configuration;
-import com.pydio.sdk.core.api.p8.P8Request;
-import com.pydio.sdk.core.api.p8.P8RequestBuilder;
-import com.pydio.sdk.core.api.p8.P8Response;
-import com.pydio.sdk.core.api.p8.consts.Action;
-import com.pydio.sdk.core.api.p8.consts.Param;
+import com.pydio.sdk.api.Client;
+import com.pydio.sdk.api.SdkNames;
+import com.pydio.sdk.generated.p8.Configuration;
+import com.pydio.sdk.generated.p8.P8Request;
+import com.pydio.sdk.generated.p8.P8RequestBuilder;
+import com.pydio.sdk.generated.p8.P8Response;
+import com.pydio.sdk.generated.p8.consts.Action;
+import com.pydio.sdk.generated.p8.consts.Param;
 import com.pydio.sdk.core.common.callback.ChangeHandler;
 import com.pydio.sdk.core.common.callback.NodeHandler;
 import com.pydio.sdk.core.common.callback.RegistryItemHandler;
@@ -17,7 +19,7 @@ import com.pydio.sdk.core.model.Change;
 import com.pydio.sdk.core.model.ChangeNode;
 import com.pydio.sdk.core.model.FileNode;
 import com.pydio.sdk.core.model.Message;
-import com.pydio.sdk.core.model.Node;
+import com.pydio.sdk.api.Node;
 import com.pydio.sdk.core.model.NodeDiff;
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.model.Stats;
@@ -26,7 +28,7 @@ import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.TreeNodeSaxHandler;
 import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
-import com.pydio.sdk.core.security.Credentials;
+import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.core.server.Prop;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.PageOptions;
@@ -59,7 +61,7 @@ public class P8Client implements Client, SdkNames {
     private final static Map<String, CookieManager> cookieManagers = new ConcurrentHashMap<>();
 
     private final ServerNode serverNode;
-    private final com.pydio.sdk.core.api.p8.P8Client p8;
+    private final com.pydio.sdk.generated.p8.P8Client p8;
     private Credentials credentials;
     private int loginFailure;
 
@@ -74,7 +76,7 @@ public class P8Client implements Client, SdkNames {
             config.sslContext = serverNode.getSslContext();
             config.hostnameVerifier = serverNode.getHostnameVerifier();
         }
-        p8 = new com.pydio.sdk.core.api.p8.P8Client(config);
+        p8 = new com.pydio.sdk.generated.p8.P8Client(config);
     }
 
     private P8Request refreshSecureToken(P8Request req) {

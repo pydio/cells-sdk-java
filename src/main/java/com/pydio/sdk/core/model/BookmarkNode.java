@@ -1,8 +1,10 @@
 package com.pydio.sdk.core.model;
 
+import com.pydio.sdk.api.Node;
+
 import java.util.Properties;
 
-public class BookmarkNode implements Node {
+public class BookmarkNode implements com.pydio.sdk.api.Node {
 
     private String label;
     private Properties properties;
@@ -58,12 +60,12 @@ public class BookmarkNode implements Node {
     }
 
     @Override
-    public int compare(Node node) {
+    public int compare(com.pydio.sdk.api.Node node) {
         if (node == null) {
-            return Node.different;
+            return com.pydio.sdk.api.Node.different;
         }
         if (!this.label.equals(node.label())) {
-            return Node.different;
+            return com.pydio.sdk.api.Node.different;
         }
         return Node.same;
     }

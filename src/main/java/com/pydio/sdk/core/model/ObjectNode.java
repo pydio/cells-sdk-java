@@ -1,8 +1,10 @@
 package com.pydio.sdk.core.model;
 
+import com.pydio.sdk.api.Node;
+
 import java.util.Properties;
 
-public class ObjectNode implements Node {
+public class ObjectNode implements com.pydio.sdk.api.Node {
 
     protected String path;
     protected String label;
@@ -35,7 +37,7 @@ public class ObjectNode implements Node {
 
     @Override
     public int type() {
-        return Node.TYPE_LOCAL_NODE;
+        return com.pydio.sdk.api.Node.TYPE_LOCAL_NODE;
     }
 
     @Override
@@ -56,7 +58,7 @@ public class ObjectNode implements Node {
     @Override
     public boolean equals(Object o) {
         try {
-            return this == o || (o instanceof Node) && ((Node) o).type() == type() && label().equals(((Node) o).label()) && path().equals(((Node) o).path());
+            return this == o || (o instanceof com.pydio.sdk.api.Node) && ((com.pydio.sdk.api.Node) o).type() == type() && label().equals(((com.pydio.sdk.api.Node) o).label()) && path().equals(((com.pydio.sdk.api.Node) o).path());
         } catch (NullPointerException e) {
             return false;
         }

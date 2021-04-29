@@ -1,10 +1,10 @@
 package com.pydio.sdk.core.auth;
 
-import com.pydio.sdk.core.api.cells.ApiClient;
-import com.pydio.sdk.core.api.cells.ApiException;
-import com.pydio.sdk.core.api.cells.api.FrontendServiceApi;
-import com.pydio.sdk.core.api.cells.model.RestFrontSessionRequest;
-import com.pydio.sdk.core.api.cells.model.RestFrontSessionResponse;
+import com.pydio.sdk.generated.cells.ApiClient;
+import com.pydio.sdk.generated.cells.ApiException;
+import com.pydio.sdk.generated.cells.api.FrontendServiceApi;
+import com.pydio.sdk.generated.cells.model.RestFrontSessionRequest;
+import com.pydio.sdk.generated.cells.model.RestFrontSessionResponse;
 import com.pydio.sdk.core.common.errors.Code;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.common.http.HttpClient;
@@ -12,7 +12,7 @@ import com.pydio.sdk.core.common.http.HttpRequest;
 import com.pydio.sdk.core.common.http.HttpResponse;
 import com.pydio.sdk.core.common.http.Method;
 import com.pydio.sdk.core.model.ServerNode;
-import com.pydio.sdk.core.security.Credentials;
+import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.Params;
 import com.squareup.okhttp.OkHttpClient;

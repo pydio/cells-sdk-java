@@ -1,10 +1,11 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.Node;
+import com.pydio.sdk.api.SdkNames;
 
 import java.util.Properties;
 
-public class FileNode implements Node, SdkNames {
+public class FileNode implements com.pydio.sdk.api.Node, SdkNames {
 
     public Properties properties = new Properties();
 
@@ -46,12 +47,12 @@ public class FileNode implements Node, SdkNames {
     }
 
     public boolean equals(Object o) {
-        boolean instanceOfNode = o instanceof Node;
+        boolean instanceOfNode = o instanceof com.pydio.sdk.api.Node;
         if (!instanceOfNode) {
             return false;
         }
 
-        Node node = (Node) o;
+        com.pydio.sdk.api.Node node = (com.pydio.sdk.api.Node) o;
 
         String workspaceSlug = getWorkspaceSlug();
         String nWorkspaceSlug = node.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
@@ -79,7 +80,7 @@ public class FileNode implements Node, SdkNames {
 
     @Override
     public int type() {
-        return Node.TYPE_REMOTE_NODE;
+        return com.pydio.sdk.api.Node.TYPE_REMOTE_NODE;
     }
 
     @Override

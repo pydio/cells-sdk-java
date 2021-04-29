@@ -1,6 +1,7 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.Node;
+import com.pydio.sdk.api.SdkNames;
 
 import org.w3c.dom.Document;
 
@@ -8,9 +9,9 @@ import java.util.ArrayList;
 
 public class NodeDiff {
 
-    public ArrayList<Node> deleted = null;
-    public ArrayList<Node> added = null;
-    public ArrayList<Node> updated = null;
+    public ArrayList<com.pydio.sdk.api.Node> deleted = null;
+    public ArrayList<com.pydio.sdk.api.Node> added = null;
+    public ArrayList<com.pydio.sdk.api.Node> updated = null;
 
     public static NodeDiff create(Document doc){
         NodeDiff nodeDiff = new NodeDiff();
@@ -21,7 +22,7 @@ public class NodeDiff {
                 org.w3c.dom.Node child = diff.getChildNodes().item(i);
                 String tag = child.getNodeName();
 
-                ArrayList<Node> list = null;
+                ArrayList<com.pydio.sdk.api.Node> list = null;
 
                 if (SdkNames.NODE_DIFF_REMOVE.equals(tag)) {
                     list = nodeDiff.deleted;

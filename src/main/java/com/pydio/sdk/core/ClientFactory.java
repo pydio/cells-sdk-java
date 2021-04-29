@@ -1,5 +1,6 @@
 package com.pydio.sdk.core;
 
+import com.pydio.sdk.api.Client;
 import com.pydio.sdk.core.model.ServerNode;
 
 public class ClientFactory {

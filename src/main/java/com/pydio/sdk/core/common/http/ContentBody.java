@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.common.http;
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.SdkNames;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

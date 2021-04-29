@@ -1,6 +1,6 @@
 package com.pydio.sdk.sync.content;
 
-import com.pydio.sdk.core.Client;
+import com.pydio.sdk.api.Client;
 import com.pydio.sdk.core.common.errors.SDKException;
 import com.pydio.sdk.core.model.ServerNode;
 import com.pydio.sdk.core.model.Stats;

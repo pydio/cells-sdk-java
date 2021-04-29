@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.common.errors;
 
-import com.pydio.sdk.core.api.cells.ApiException;
+import com.pydio.sdk.generated.cells.ApiException;
 
 import java.io.IOException;
 

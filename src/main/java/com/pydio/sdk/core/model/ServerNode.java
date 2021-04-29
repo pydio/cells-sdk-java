@@ -1,7 +1,8 @@
 package com.pydio.sdk.core.model;
 
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.Node;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.core.common.callback.ServerResolver;
 import com.pydio.sdk.core.common.errors.Code;
 import com.pydio.sdk.core.common.errors.Error;
@@ -41,7 +42,7 @@ import javax.net.ssl.TrustManager;
 /*
  * Wraps a server properties
  */
-public class ServerNode implements Node {
+public class ServerNode implements com.pydio.sdk.api.Node {
 
     public Map<String, WorkspaceNode> workspaces;
     private String scheme = null;
@@ -113,7 +114,7 @@ public class ServerNode implements Node {
 
     @Override
     public int type() {
-        return Node.TYPE_SERVER;
+        return com.pydio.sdk.api.Node.TYPE_SERVER;
     }
 
     @Override
@@ -142,7 +143,7 @@ public class ServerNode implements Node {
     }
 
     @Override
-    public int compare(Node node) {
+    public int compare(com.pydio.sdk.api.Node node) {
         return 0;
     }
 
@@ -558,7 +559,7 @@ public class ServerNode implements Node {
 
     public boolean equals(Object o) {
         try {
-            return this == o || (o instanceof Node) && ((Node) o).type() == type() && label().equals(((Node) o).label()) && path().equals(((Node) o).path());
+            return this == o || (o instanceof com.pydio.sdk.api.Node) && ((com.pydio.sdk.api.Node) o).type() == type() && label().equals(((com.pydio.sdk.api.Node) o).label()) && path().equals(((Node) o).path());
         } catch (NullPointerException e) {
             return false;
         }

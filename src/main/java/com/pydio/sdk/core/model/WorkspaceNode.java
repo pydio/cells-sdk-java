@@ -1,12 +1,13 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.core.SdkNames;
+import com.pydio.sdk.api.Node;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.core.server.Plugin;
 
 import java.util.List;
 import java.util.Properties;
 
-public class WorkspaceNode implements Node, SdkNames {
+public class WorkspaceNode implements com.pydio.sdk.api.Node, SdkNames {
     private Properties properties;
     private Properties preferences;
     private List<Plugin> plugins;
@@ -160,7 +161,7 @@ public class WorkspaceNode implements Node, SdkNames {
 
     @Override
     public int type() {
-        return Node.TYPE_WORKSPACE;
+        return com.pydio.sdk.api.Node.TYPE_WORKSPACE;
     }
 
     @Override
