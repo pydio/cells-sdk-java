@@ -2,10 +2,8 @@ package com.pydio.sdk.core;
 
 import com.pydio.sdk.core.model.ServerNode;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ClientFactory {
+
     private static CellsClientFactory cellsDefaultFactory = new CellsClientFactory();
     private static P8ClientFactory p8DefaultFactory = new P8ClientFactory();
 
