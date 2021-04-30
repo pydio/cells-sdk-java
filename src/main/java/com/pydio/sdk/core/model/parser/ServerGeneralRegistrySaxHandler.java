@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.model.parser;
 
-import com.pydio.sdk.core.common.callback.RegistryItemHandler;
+import com.pydio.sdk.api.callbacks.RegistryItemHandler;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -57,45 +57,47 @@ public class ServerGeneralRegistrySaxHandler extends DefaultHandler {
 
     };
 
-    public ServerGeneralRegistrySaxHandler(RegistryItemHandler handler){
+    public ServerGeneralRegistrySaxHandler(RegistryItemHandler handler) {
         this.handler = handler;
     }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
 
-        if("ajxpcore".equals(qName) && "core.uploader".equals(attributes.getValue("id"))){
+        if ("ajxpcore".equals(qName) && "core.uploader".equals(attributes.getValue("id"))) {
             insideCoreUploader = true;
             return;
         }
 
 
-        if("ajxp_plugin".equals(qName) && "admin".equals(attributes.getValue("name"))){
+        if ("ajxp_plugin".equals(qName) && "admin".equals(attributes.getValue("name"))) {
             insideAdminPlugin = true;
             return;
         }
 
 
-        if("plugin_configs".equals(qName) && (insideAdminPlugin || insideCoreUploader)){
+        if ("plugin_configs".equals(qName) && (insideAdminPlugin || insideCoreUploader)) {
             insideConfigs = true;
             return;
         }
 
-        if("property".equals(qName) && insideConfigs){
+        if ("property".equals(qName) && insideConfigs) {
             properties = attributes.getValue("name");
             return;
         }
         properties = null;
     }
+
     @Override
     public void characters(char[] ch, int start, int length) {
-        if(properties != null && insideConfigs && Arrays.asList(allowedProperties).contains(properties)){
+        if (properties != null && insideConfigs && Arrays.asList(allowedProperties).contains(properties)) {
             String content = new String(ch, start, length);
-            if(handler != null){
-                if(content.startsWith("\"")){
+            if (handler != null) {
+                if (content.startsWith("\"")) {
                     content = content.substring(1);
                 }
 
-                if(content.endsWith("\"")){
+                if (content.endsWith("\"")) {
                     content = content.substring(0, content.length() - 1);
                 }
                 handler.onPref(properties, content);
@@ -103,15 +105,16 @@ public class ServerGeneralRegistrySaxHandler extends DefaultHandler {
             properties = null;
         }
     }
+
     @Override
     public void endElement(String uri, String localName, String qName) {
 
-        if("plugin_configs".equals(qName) && insideConfigs){
+        if ("plugin_configs".equals(qName) && insideConfigs) {
             insideConfigs = false;
             return;
         }
 
-        if(("ajxp_plugin".equals(qName) || "ajxpcore".equals(qName)) && insideAdminPlugin){
+        if (("ajxp_plugin".equals(qName) || "ajxpcore".equals(qName)) && insideAdminPlugin) {
             insideAdminPlugin = false;
         }
     }

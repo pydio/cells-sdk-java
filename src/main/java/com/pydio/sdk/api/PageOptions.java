@@ -1,4 +1,4 @@
-package com.pydio.sdk.core.utils;
+package com.pydio.sdk.api;
 
 public class PageOptions {
 

@@ -1,8 +1,8 @@
 package com.pydio.sdk.generated.p8;
 
-import com.pydio.sdk.core.common.callback.StringHandler;
-import com.pydio.sdk.core.common.callback.TransferProgressListener;
-import com.pydio.sdk.core.common.errors.Code;
+import com.pydio.sdk.api.ErrorCodes;
+import com.pydio.sdk.api.callbacks.StringHandler;
+import com.pydio.sdk.api.callbacks.TransferProgressListener;
 import com.pydio.sdk.core.utils.io;
 
 import org.json.JSONObject;
@@ -55,13 +55,13 @@ public class P8Response implements Closeable {
         try {
             parse();
         } catch (IOException e) {
-            code = Code.con_failed;
+            code = ErrorCodes.con_failed;
         }
     }
 
     private void parse() throws IOException {
-        this.code = Code.fromHttpStatus(this.con.getResponseCode());
-        if (this.code != Code.ok) {
+        this.code = ErrorCodes.fromHttpStatus(this.con.getResponseCode());
+        if (this.code != ErrorCodes.ok) {
             return;
         }
 
@@ -103,7 +103,7 @@ public class P8Response implements Closeable {
 
                     if (tag_auth) {
                         if (qName.equals("message")) {
-                            P8Response.this.code = Code.authentication_required;
+                            P8Response.this.code = ErrorCodes.authentication_required;
                             throw new SAXException("auth");
                         }
                         return;
@@ -128,12 +128,12 @@ public class P8Response implements Closeable {
 
                 public void endElement(String uri, String localName, String qName) throws SAXException {
                     if (tag_repo && xpathUser && !repoHasContent) {
-                        P8Response.this.code = Code.authentication_required;//P8Client.this.auth_step = "LOG-USER";
+                        P8Response.this.code = ErrorCodes.authentication_required;//P8Client.this.auth_step = "LOG-USER";
                         throw new SAXException("auth");
                     }
 
                     if (tag_auth && qName.equals("require_auth")) {
-                        P8Response.this.code = Code.authentication_required;//P8Client.this.auth_step = "LOG-USER";
+                        P8Response.this.code = ErrorCodes.authentication_required;//P8Client.this.auth_step = "LOG-USER";
                         throw new SAXException("auth");
                     }
                 }
@@ -142,7 +142,7 @@ public class P8Response implements Closeable {
                     String str = new String(ch);
                     if (tag_msg) {
                         if (str.toLowerCase().contains("you are not allowed to access")) {
-                            P8Response.this.code = Code.authentication_required; //P8Client.this.auth_step = "RENEW-TOKEN";
+                            P8Response.this.code = ErrorCodes.authentication_required; //P8Client.this.auth_step = "RENEW-TOKEN";
                             throw new SAXException("token");
                         }
                     }
@@ -157,11 +157,11 @@ public class P8Response implements Closeable {
         } catch (SAXException e) {
             String m = e.getMessage();
             if ("auth".equalsIgnoreCase(m)) {
-                this.code = Code.authentication_required;
+                this.code = ErrorCodes.authentication_required;
             } else if ("token".equalsIgnoreCase(m)) {
-                this.code = Code.authentication_with_captcha_required;
+                this.code = ErrorCodes.authentication_with_captcha_required;
             } else if (m.startsWith("redirect=")) {
-                this.code = Code.redirect;
+                this.code = ErrorCodes.redirect;
             }
         } catch (Exception ignored) {
         }
@@ -267,9 +267,9 @@ public class P8Response implements Closeable {
         try {
             SAXParser parser = factory.newSAXParser();
             parser.parse(new InputSource(new StringReader(content)), handler);
-            return Code.ok;
+            return ErrorCodes.ok;
         } catch (Exception e) {
-            return Code.unexpected_content;
+            return ErrorCodes.unexpected_content;
         }
     }
 

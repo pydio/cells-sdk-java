@@ -1,21 +1,26 @@
 package com.pydio.sdk.integration;
 
+import com.pydio.sdk.api.Change;
+import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.core.CellsClient;
 import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
+import com.pydio.sdk.api.Error;
+import com.pydio.sdk.api.nodes.ServerNode;
+import com.pydio.sdk.core.model.ServerNodeImpl;
+import com.pydio.sdk.core.model.TreeNodeInfo;
+import com.pydio.sdk.core.utils.CellsPath;
+import com.pydio.sdk.examples.Credentials;
+import com.pydio.sdk.sync.changes.GetChangeRequest;
+import com.pydio.sdk.sync.changes.GetChangesResponse;
+import com.pydio.sdk.sync.fs.CellsFs;
+import com.pydio.sdk.sync.tree.MemoryStateManager;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.pydio.sdk.core.model.Change;
-import com.pydio.sdk.core.model.ServerNode;
-import com.pydio.sdk.core.model.TreeNodeInfo;
-import com.pydio.sdk.core.utils.CellsPath;
-import com.pydio.sdk.core.common.errors.Error;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.sync.fs.CellsFs;
-import com.pydio.sdk.examples.Credentials;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,16 +28,12 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import com.pydio.sdk.sync.changes.GetChangeRequest;
-import com.pydio.sdk.sync.changes.GetChangesResponse;
-import com.pydio.sdk.sync.tree.MemoryStateManager;
-
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
  * the "src/test/resources/config.properties" file to match your setup.
- * 
+ * <p>
  * You can then launch the test with:
- * 
+ *
  * <code>./gradlew build -Dtest.profile=integration</code>
  */
 public class CellsFsTest {
@@ -60,7 +61,7 @@ public class CellsFsTest {
             return;
         }
 
-        node = new ServerNode();
+        node = new ServerNodeImpl();
         Error error = node.resolve(serverURL);
         if (error != null) {
             System.out.println("Could not resolve server URL, cause: ");

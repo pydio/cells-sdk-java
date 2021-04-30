@@ -1,5 +1,7 @@
-package com.pydio.sdk.api;
+package com.pydio.sdk.api.nodes;
 
+import com.pydio.sdk.api.Error;
+import com.pydio.sdk.api.Node;
 import com.pydio.sdk.api.callbacks.ServerResolver;
 
 import org.json.JSONObject;

@@ -1,6 +1,7 @@
 package com.pydio.sdk.core.model;
 
 public class Action {
+
     final public String name;
     final public Boolean dirDefault;
     final public Boolean fileDefault;

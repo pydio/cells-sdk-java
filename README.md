@@ -40,10 +40,10 @@ ServerNode node = new ServerNode();
 Error error = node.resolve();
 if (error != null) {
     // error.code could be one of:
-    // Code.ssl_error
-    // Code.pydio_server_not_supported
-    // Code.con_failed
-    // Code.ssl_certificate_not_signed
+    // ErrorCodes.ssl_error
+    // ErrorCodes.pydio_server_not_supported
+    // ErrorCodes.con_failed
+    // ErrorCodes.ssl_certificate_not_signed
     System.out.println("failed to resolve server");
     return;
 }
@@ -81,10 +81,10 @@ try {
     e.printStackTrace();
     Error error = Error.fromException(e)
     // error.code could be one of:
-    // Code.ssl_error or
-    // Code.pydio_server_not_supported
-    // Code.con_failed
-    // Code.ssl_certificate_not_signed
+    // ErrorCodes.ssl_error or
+    // ErrorCodes.pydio_server_not_supported
+    // ErrorCodes.con_failed
+    // ErrorCodes.ssl_certificate_not_signed
 }
 ```
 

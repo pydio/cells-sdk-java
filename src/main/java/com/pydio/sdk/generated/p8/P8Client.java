@@ -1,8 +1,8 @@
 package com.pydio.sdk.generated.p8;
 
+import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.core.ApplicationData;
 import com.pydio.sdk.generated.p8.consts.Param;
-import com.pydio.sdk.core.common.errors.Code;
 import com.pydio.sdk.core.utils.Params;
 
 import java.io.ByteArrayOutputStream;
@@ -192,7 +192,7 @@ public class P8Client {
         url = url + "?" + Param.getAction + "=" + request.action;
         HttpURLConnection con = getConnection(url, com.pydio.sdk.generated.p8.Method.get, request.ignoreCookies);
         if (con == null) {
-            return com.pydio.sdk.generated.p8.P8Response.error(Code.con_failed);
+            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
         }
 
         com.pydio.sdk.generated.p8.P8Response response = new com.pydio.sdk.generated.p8.P8Response(con);
@@ -218,7 +218,7 @@ public class P8Client {
 
         HttpURLConnection con = getConnection(url, com.pydio.sdk.generated.p8.Method.post, request.ignoreCookies);
         if (con == null) {
-            return com.pydio.sdk.generated.p8.P8Response.error(Code.con_failed);
+            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
         }
 
         if (request.params == null) {
@@ -319,7 +319,7 @@ public class P8Client {
             return response;
         } catch (IOException e) {
             e.printStackTrace();
-            return com.pydio.sdk.generated.p8.P8Response.error(Code.con_failed);
+            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
         }
     }
 
@@ -329,12 +329,12 @@ public class P8Client {
             url = getURL(request);
         } catch (IOException e) {
             e.printStackTrace();
-            return com.pydio.sdk.generated.p8.P8Response.error(Code.con_failed);
+            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
         }
 
         HttpURLConnection con = getConnection(url, Method.put, request.ignoreCookies);
         if (con == null) {
-            return com.pydio.sdk.generated.p8.P8Response.error(Code.con_failed);
+            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
         }
         con.setDoOutput(true);
 
@@ -357,7 +357,7 @@ public class P8Client {
             return response;
         } catch (IOException e) {
             e.printStackTrace();
-            return P8Response.error(Code.con_failed);
+            return P8Response.error(ErrorCodes.con_failed);
         }
     }
 }

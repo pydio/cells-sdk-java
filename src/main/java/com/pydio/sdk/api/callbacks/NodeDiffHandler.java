@@ -1,4 +1,4 @@
-package com.pydio.sdk.core.common.callback;
+package com.pydio.sdk.api.callbacks;
 
 import com.pydio.sdk.core.model.NodeDiff;
 

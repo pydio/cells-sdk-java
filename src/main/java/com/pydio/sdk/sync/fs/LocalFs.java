@@ -1,6 +1,6 @@
 package com.pydio.sdk.sync.fs;
 
-import com.pydio.sdk.core.model.Change;
+import com.pydio.sdk.api.Change;
 import com.pydio.sdk.core.utils.io;
 import com.pydio.sdk.sync.Error;
 import com.pydio.sdk.sync.changes.GetChangeRequest;

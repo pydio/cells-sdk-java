@@ -3,11 +3,13 @@ package com.pydio.sdk.core.model;
 import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.api.Node;
 import com.pydio.sdk.api.SdkNames;
+import com.pydio.sdk.api.nodes.ServerNode;
+import com.pydio.sdk.api.nodes.WorkspaceNode;
 import com.pydio.sdk.api.callbacks.ServerResolver;
-import com.pydio.sdk.core.common.errors.Error;
+import com.pydio.sdk.api.Error;
 import com.pydio.sdk.core.security.CertificateTrust;
 import com.pydio.sdk.core.security.CertificateTrustManager;
-import com.pydio.sdk.core.service.ServerResolution;
+import com.pydio.sdk.core.utils.ServerResolution;
 import com.pydio.sdk.core.utils.io;
 
 import org.json.JSONObject;
@@ -41,15 +43,15 @@ import javax.net.ssl.TrustManager;
 /*
  * Wraps a server properties
  */
-public class ServerNode implements com.pydio.sdk.api.Node {
+public class ServerNodeImpl implements ServerNode {
 
-    public Map<String, WorkspaceNode> workspaces;
+    private Map<String, WorkspaceNode> workspaces;
     private String scheme = null;
     private String host = null;
     private int port = 80;
     private String path = null;
     private String version = null;
-    private String versionName = null;
+    private String serverType;
     private String iconURL;
     private String welcomeMessage;
     private String label = null;
@@ -65,12 +67,12 @@ public class ServerNode implements com.pydio.sdk.api.Node {
     private CertificateTrust.Helper trustHelper;
     private ServerResolver serverResolver;
 
-    public ServerNode() {
+    public ServerNodeImpl() {
     }
 
-    public static ServerNode fromAddress(String address) throws IOException {
+    public static ServerNodeImpl fromAddress(String address) throws IOException {
         URL url = new URL(address);
-        ServerNode node = new ServerNode();
+        ServerNodeImpl node = new ServerNodeImpl();
         node.scheme = url.getProtocol();
         node.host = url.getHost();
         node.port = url.getPort();
@@ -104,7 +106,12 @@ public class ServerNode implements com.pydio.sdk.api.Node {
         return null;
     }
 
-    public ServerNode init(String url) {
+    public Map<String, WorkspaceNode> getWorkspaces(){
+        return workspaces;
+    }
+
+
+    public ServerNodeImpl init(String url) {
         if (!url.endsWith("/")) {
             url += "/";
         }
@@ -117,12 +124,12 @@ public class ServerNode implements com.pydio.sdk.api.Node {
         return this;
     }
 
-    public ServerNode setLabel(String label) {
+    public ServerNodeImpl setLabel(String label) {
         this.label = label;
         return this;
     }
 
-    public ServerNode setWorkspaces(List<WorkspaceNode> nodes) {
+    public ServerNodeImpl setWorkspaces(List<WorkspaceNode> nodes) {
         if (this.workspaces == null) {
             this.workspaces = new HashMap<>();
         } else {
@@ -139,6 +146,17 @@ public class ServerNode implements com.pydio.sdk.api.Node {
 
     public Error resolve(String address) {
         return resolveRemote(address);
+    }
+
+    @Override
+    public String getServerType() {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public boolean isLegacy() {
+        return TYPE_LEGACY_P8.equals(getServerType());
     }
 
     /* Node methods */
@@ -181,7 +199,7 @@ public class ServerNode implements com.pydio.sdk.api.Node {
 
     @Override
     public int getType() {
-        return com.pydio.sdk.api.Node.TYPE_SERVER;
+        return Node.TYPE_SERVER;
     }
 
     @Override
@@ -205,7 +223,7 @@ public class ServerNode implements com.pydio.sdk.api.Node {
     }
 
     @Override
-    public int compare(com.pydio.sdk.api.Node node) {
+    public int compare(Node node) {
         return 0;
     }
 
@@ -345,8 +363,8 @@ public class ServerNode implements com.pydio.sdk.api.Node {
         }
 
         boolean isCells = bootConf.has("backend");
+        serverType = isCells ? TYPE_CELLS : TYPE_LEGACY_P8;
         version = bootConf.getString("ajxpVersion");
-        versionName = isCells ? "cells" : "pydio";
 
         JSONObject customWordings = bootConf.getJSONObject("customWording");
         label = customWordings.getString("title");
@@ -457,20 +475,18 @@ public class ServerNode implements com.pydio.sdk.api.Node {
 
     public String version() {
         if (version == null) {
-            boolean isCells = bootConf.has("backend");
-            version = bootConf.getString("ajxpVersion");
-            versionName = isCells ? "cells" : "pydio";
+            throw new RuntimeException("Trying to retrieve AJXP Version param before the server has been instantiated");
         }
         return version;
     }
 
-    public String versionName() {
-        if (versionName == null) {
-            boolean isCells = bootConf.has("backend");
-            version = bootConf.getString("ajxpVersion");
-            versionName = isCells ? "cells" : "pydio";
+    @Override
+    @Deprecated
+    public String getVersionName() {
+        if (serverType == null) {
+            throw new RuntimeException("Trying to retrieve server type before it has been instantiated");
         }
-        return versionName;
+        return serverType;
     }
 
     public boolean hasLicenseFeatures() {
@@ -483,7 +499,7 @@ public class ServerNode implements com.pydio.sdk.api.Node {
                 @Override
                 public boolean isServerTrusted(X509Certificate[] chain) {
                     for (X509Certificate c : chain) {
-                        for (byte[] trusted : ServerNode.this.certificateChain) {
+                        for (byte[] trusted : ServerNodeImpl.this.certificateChain) {
                             try {
                                 c.checkValidity();
                                 MessageDigest hash = MessageDigest.getInstance("MD5");
@@ -604,7 +620,7 @@ public class ServerNode implements com.pydio.sdk.api.Node {
 
     public boolean equals(Object o) {
         try {
-            return this == o || (o instanceof com.pydio.sdk.api.Node) && ((com.pydio.sdk.api.Node) o).getType() == getType() && getLabel().equals(((com.pydio.sdk.api.Node) o).getLabel()) && getPath().equals(((Node) o).getPath());
+            return this == o || (o instanceof Node) && ((Node) o).getType() == getType() && getLabel().equals(((Node) o).getLabel()) && getPath().equals(((Node) o).getPath());
         } catch (NullPointerException e) {
             return false;
         }
@@ -623,6 +639,9 @@ public class ServerNode implements com.pydio.sdk.api.Node {
         return this.oidc;
     }
 
+
+
+
     public HostnameVerifier getHostnameVerifier() {
         return (s, sslSession) -> true;
     }
@@ -633,8 +652,7 @@ public class ServerNode implements com.pydio.sdk.api.Node {
 
     // Setters
 
-    public ServerNode setUnverifiedSSL(boolean unverified) {
+    public void setUnverifiedSSL(boolean unverified) {
         sslUnverified = unverified;
-        return this;
     }
 }

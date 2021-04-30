@@ -5,13 +5,13 @@ import com.pydio.sdk.generated.cells.ApiException;
 import com.pydio.sdk.generated.cells.api.FrontendServiceApi;
 import com.pydio.sdk.generated.cells.model.RestFrontSessionRequest;
 import com.pydio.sdk.generated.cells.model.RestFrontSessionResponse;
-import com.pydio.sdk.core.common.errors.Code;
-import com.pydio.sdk.core.common.errors.SDKException;
+import com.pydio.sdk.api.ErrorCodes;
+import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.core.common.http.HttpClient;
 import com.pydio.sdk.core.common.http.HttpRequest;
 import com.pydio.sdk.core.common.http.HttpResponse;
 import com.pydio.sdk.core.common.http.Method;
-import com.pydio.sdk.core.model.ServerNode;
+import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.Params;
@@ -52,14 +52,14 @@ public class TokenService {
         }
 
         /* if (skipOAuth) {
-            throw new SDKException(Code.token_expired, new IOException("no valid token available"));
+            throw new SDKException(ErrorCodes.token_expired, new IOException("no valid token available"));
         } */
 
         if (server.supportsOauth() && !skipOAuth) {
             if (t != null) {
                 return this.refresh(server, t);
             }
-            throw new SDKException(Code.no_token_available, new IOException("no valid token available"));
+            throw new SDKException(ErrorCodes.no_token_available, new IOException("no valid token available"));
         } else { // Legacy call with credentials
             return this.loginPasswordGetToken(server, credentials);
         }
@@ -85,7 +85,7 @@ public class TokenService {
             response = HttpClient.request(request);
         } catch (Exception e) {
             Log.w("Token Service", " token request failed: " + e.getLocalizedMessage());
-            throw new SDKException(Code.con_failed);
+            throw new SDKException(ErrorCodes.con_failed);
         }
 
         String jwt;
@@ -94,20 +94,20 @@ public class TokenService {
         } catch (IOException e) {
             Log.e("Refresh Token Service", "Could not get response string body: " + e.getLocalizedMessage());
             e.printStackTrace();
-            throw new SDKException(Code.no_token_available, new IOException("refresh token failed"));
+            throw new SDKException(ErrorCodes.no_token_available, new IOException("refresh token failed"));
         }
 
         try {
             t = Token.decodeOauthJWT(jwt);
         } catch (ParseException e) {
             Log.e("Refresh Token Service", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
-            throw new SDKException(Code.no_token_available, new IOException("could not decode server response"));
+            throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
         }
 
         com.pydio.sdk.core.auth.jwt.JWT parsedIDToken;
         parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
         if (parsedIDToken == null) {
-            throw new SDKException(Code.no_token_available);
+            throw new SDKException(ErrorCodes.no_token_available);
         }
 
         t.subject = String.format("%s@%s", parsedIDToken.claims.name, server.url());
@@ -119,7 +119,7 @@ public class TokenService {
     private Token loginPasswordGetToken(ServerNode server, Credentials credentials) throws SDKException {
         String password = credentials.getPassword();
         if (password == null) {
-            throw new SDKException(Code.no_token_available, new IOException("no password provided"));
+            throw new SDKException(ErrorCodes.no_token_available, new IOException("no password provided"));
         }
 
         ApiClient apiClient = new ApiClient();
@@ -145,7 +145,7 @@ public class TokenService {
         try {
             response = api.frontSession(request);
         } catch (ApiException e) {
-            throw new SDKException(Code.no_token_available, new IOException("no password provided"));
+            throw new SDKException(ErrorCodes.no_token_available, new IOException("no password provided"));
         }
 
         String subject = String.format("%s@%s", credentials.getLogin(), server.url());

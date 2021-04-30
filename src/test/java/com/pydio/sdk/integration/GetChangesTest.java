@@ -10,9 +10,9 @@ import org.junit.Test;
 import org.junit.Assert;
 
 import com.pydio.sdk.core.CellsClient;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.Change;
-import com.pydio.sdk.core.model.Message;
+import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.Change;
+import com.pydio.sdk.api.Message;
 import com.pydio.sdk.sync.tree.MemoryStateManager;
 import com.pydio.sdk.sync.tree.StateManager;
 

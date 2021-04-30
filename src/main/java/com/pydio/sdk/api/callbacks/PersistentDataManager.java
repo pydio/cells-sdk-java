@@ -1,8 +1,8 @@
-package com.pydio.sdk.core.common.callback;
+package com.pydio.sdk.api.callbacks;
 
 import com.pydio.sdk.api.Change;
-import com.pydio.sdk.api.ServerNode;
-import com.pydio.sdk.core.model.Session;
+import com.pydio.sdk.api.nodes.ServerNode;
+import com.pydio.sdk.api.Session;
 
 import java.security.cert.X509Certificate;
 

@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.Message;
+import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.Message;
 import com.pydio.sdk.sync.tree.MemoryStateManager;
 import com.pydio.sdk.sync.tree.StateManager;
 

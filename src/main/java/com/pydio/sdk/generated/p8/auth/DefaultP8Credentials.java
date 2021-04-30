@@ -1,6 +1,6 @@
 package com.pydio.sdk.generated.p8.auth;
 
-import com.pydio.sdk.core.common.callback.PasswordLoader;
+import com.pydio.sdk.api.callbacks.PasswordLoader;
 import com.pydio.sdk.api.Credentials;
 
 public class DefaultP8Credentials implements Credentials {

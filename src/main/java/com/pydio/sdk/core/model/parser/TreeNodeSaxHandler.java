@@ -1,9 +1,9 @@
 package com.pydio.sdk.core.model.parser;
 
+import com.pydio.sdk.api.nodes.FileNode;
+import com.pydio.sdk.api.Node;
 import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.api.callbacks.NodeHandler;
-import com.pydio.sdk.core.model.FileNode;
-import com.pydio.sdk.api.Node;
 import com.pydio.sdk.core.model.NodeFactory;
 
 import org.xml.sax.Attributes;
@@ -27,7 +27,7 @@ public class TreeNodeSaxHandler extends DefaultHandler {
     Properties p = null;
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
-        if("pagination".equals(qName)){
+        if ("pagination".equals(qName)) {
             mPagination = true;
             mPaginationTotalItem = Integer.parseInt(attributes.getValue("count"));
             mPaginationTotalPage = Integer.parseInt(attributes.getValue("total"));
@@ -38,11 +38,11 @@ public class TreeNodeSaxHandler extends DefaultHandler {
             mInsideTree = true;
             mParsedCount++;
             p = new Properties();
-            for(int i = 0; i < attributes.getLength(); i++){
+            for (int i = 0; i < attributes.getLength(); i++) {
                 p.setProperty(attributes.getLocalName(i), attributes.getValue(i));
             }
-            if(mParsedCount == 1){
-                if("".equals(p.getProperty(SdkNames.NODE_PROPERTY_FILENAME))){
+            if (mParsedCount == 1) {
+                if ("".equals(p.getProperty(SdkNames.NODE_PROPERTY_FILENAME))) {
                     p.setProperty(SdkNames.NODE_PROPERTY_FILENAME, "/");
                 }
                 mRootNode = (FileNode) NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
@@ -50,18 +50,18 @@ public class TreeNodeSaxHandler extends DefaultHandler {
             }
         }
 
-        if(!mInsideTree) return;
+        if (!mInsideTree) return;
 
-        if("label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())){
+        if ("label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())) {
             mInnerElement = qName;
         }
     }
 
     public void endElement(String uri, String localName, String qName) {
         if (mInsideTree && "tree".equals(qName)) {
-            if(p != null) {
+            if (p != null) {
                 Node node = NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
-                if(node != null){
+                if (node != null) {
                     node.setProperty(SdkNames.NODE_PROPERTY_UUID, node.getPath());
                     mHandler.onNode(node);
                 }
@@ -73,7 +73,7 @@ public class TreeNodeSaxHandler extends DefaultHandler {
     }
 
     public void characters(char ch[], int start, int length) {
-        if(mInsideTree && p != null){
+        if (mInsideTree && p != null) {
             p.setProperty(mInnerElement, new String(ch, start, length));
         }
     }
@@ -81,7 +81,7 @@ public class TreeNodeSaxHandler extends DefaultHandler {
     public void endDocument() {
     }
 
-    public TreeNodeSaxHandler(NodeHandler nodeHandler){
+    public TreeNodeSaxHandler(NodeHandler nodeHandler) {
         this.mHandler = nodeHandler;
     }
 }

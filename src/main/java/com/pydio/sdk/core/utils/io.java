@@ -1,5 +1,7 @@
 package com.pydio.sdk.core.utils;
 
+import com.pydio.sdk.api.callbacks.ProgressListener;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -15,8 +17,9 @@ public class io {
     public static void consume(InputStream in) {
         try {
             byte[] buffer = new byte[bufferSize];
-            for (int read = 0; read != -1 ; read = in.read(buffer));
-        }catch (Exception ignore) {}
+            for (int read = 0; read != -1; read = in.read(buffer)) ;
+        } catch (Exception ignore) {
+        }
     }
 
     public static boolean close(InputStream in) {

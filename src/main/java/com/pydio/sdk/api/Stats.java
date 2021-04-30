@@ -1,6 +1,11 @@
-package com.pydio.sdk.core.model;
+package com.pydio.sdk.api;
 
+/**
+ * Represents the simplified result of a stat request to the server at a given path,
+ * only keeping useful information
+ */
 public class Stats {
+
     private String hash;
     private long size;
     private long mTime;

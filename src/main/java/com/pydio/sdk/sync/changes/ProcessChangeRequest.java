@@ -1,6 +1,6 @@
 package com.pydio.sdk.sync.changes;
 
-import com.pydio.sdk.core.model.Change;
+import com.pydio.sdk.api.Change;
 import com.pydio.sdk.sync.content.ContentLoader;
 
 public class ProcessChangeRequest {

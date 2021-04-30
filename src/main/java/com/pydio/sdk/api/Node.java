@@ -34,9 +34,9 @@ public interface Node extends Serializable {
 
     String getId();
 
-    String getLabel();
-
     String getPath();
+
+    String getLabel();
 
     int compare(Node node);
 

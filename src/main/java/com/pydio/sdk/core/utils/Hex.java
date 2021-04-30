@@ -1,4 +1,4 @@
-package com.pydio.sdk.core.common.codec;
+package com.pydio.sdk.core.utils;
 
 public class Hex {
 

@@ -1,6 +1,4 @@
-package com.pydio.sdk.core.common.errors;
-
-import com.pydio.sdk.api.SDKException;
+package com.pydio.sdk.api;
 
 public class Error {
 

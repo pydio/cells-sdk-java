@@ -3,7 +3,7 @@ package com.pydio.sdk.core.model;
 import java.io.ByteArrayOutputStream;
 import java.util.Properties;
 
-public class ResolutionServer extends ServerNode {
+public class ResolutionServer extends ServerNodeImpl {
 
     public static final String EXPIRATION_DATE = "expiration";
 

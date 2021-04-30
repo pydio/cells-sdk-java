@@ -1,32 +1,33 @@
 package com.pydio.sdk.api;
 
-public interface Code {
-    public static final int ok = 0;
-    public static final int bad_uri = 1;
-    public static final int con_failed = 2;
-    public static final int authentication_required = 3;
-    public static final int authentication_with_captcha_required = 4;
-    public static final int resource_found = 5;
-    public static final int ssl_error = 6;
-    public static final int ssl_certificate_not_signed = 7;
-    public static final int tls_init = 8;
-    public static final int unsupported_method = 9;
-    public static final int unsupported_scheme = 10;
-    public static final int redirect = 11;
-    public static final int unexpected_content = 12;
-    public static final int unexpected_response = 13;
-    public static final int unreachable_host = 14;
-    public static final int bad_config = 15;
-    public static final int pydio_server_not_supported = 16;
-    public static final int not_pydio_server = 17;
-    public static final int encoding_failed = 18;
-    public static final int con_read_failed = 19;
-    public static final int con_write_failed = 20;
-    public static final int con_closed = 21;
-    public static final int not_found = 22;
-    public static final int no_internet = 23;
-    public static final int token_expired = 24;
-    public static final int no_token_available = 25;
+public interface ErrorCodes {
+
+    int ok = 0;
+    int bad_uri = 1;
+    int con_failed = 2;
+    int authentication_required = 3;
+    int authentication_with_captcha_required = 4;
+    int resource_found = 5;
+    int ssl_error = 6;
+    int ssl_certificate_not_signed = 7;
+    int tls_init = 8;
+    int unsupported_method = 9;
+    int unsupported_scheme = 10;
+    int redirect = 11;
+    int unexpected_content = 12;
+    int unexpected_response = 13;
+    int unreachable_host = 14;
+    int bad_config = 15;
+    int pydio_server_not_supported = 16;
+    int not_pydio_server = 17;
+    int encoding_failed = 18;
+    int con_read_failed = 19;
+    int con_write_failed = 20;
+    int con_closed = 21;
+    int not_found = 22;
+    int no_internet = 23;
+    int token_expired = 24;
+    int no_token_available = 25;
 
 
     /**

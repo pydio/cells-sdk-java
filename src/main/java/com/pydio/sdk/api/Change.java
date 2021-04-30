@@ -1,4 +1,6 @@
-package com.pydio.sdk.core.model;
+package com.pydio.sdk.api;
+
+import com.pydio.sdk.api.nodes.ChangeNode;
 
 import java.io.Serializable;
 
@@ -16,7 +18,7 @@ public class Change implements Serializable {
     private String source;
     private String target;
     private String nodeId;
-    private ChangeNode node;
+    private com.pydio.sdk.api.nodes.ChangeNode node;
 
     public String getSourceSide() {
         return sourceSide;
@@ -74,7 +76,7 @@ public class Change implements Serializable {
         this.nodeId = nodeId;
     }
 
-    public ChangeNode getNode() {
+    public com.pydio.sdk.api.nodes.ChangeNode getNode() {
         return node;
     }
 

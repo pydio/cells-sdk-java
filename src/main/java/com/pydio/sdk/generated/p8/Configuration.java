@@ -1,6 +1,6 @@
 package com.pydio.sdk.generated.p8;
 
-import com.pydio.sdk.core.common.callback.ServerResolver;
+import com.pydio.sdk.api.callbacks.ServerResolver;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;

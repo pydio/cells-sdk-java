@@ -1,6 +1,6 @@
 package com.pydio.sdk.core;
 
-import com.pydio.sdk.core.common.callback.PersistentDataManager;
+import com.pydio.sdk.api.callbacks.PersistentDataManager;
 
 public class ApplicationData {
 

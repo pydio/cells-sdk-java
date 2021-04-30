@@ -1,5 +1,7 @@
 package com.pydio.sdk.core.utils;
 
+import com.pydio.sdk.api.callbacks.ProgressListener;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -8,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/* Work in progress: new version of the utilitary static methods to solve resource exhaustion issues*/ 
+/* Work in progress: new version of the utilitary static methods to solve resource exhaustion issues*/
 public class IoHelpers {
 
     public static int bufferSize = 4096;
@@ -35,7 +37,7 @@ public class IoHelpers {
         byte[] buffer = new byte[bufferSize];
         long total_read = 0;
         int read;
-        for (;;) {
+        for (; ; ) {
             read = in.read(buffer);
             if (read == -1)
                 break;
@@ -50,7 +52,7 @@ public class IoHelpers {
         byte[] buffer = new byte[bufferSize];
         long total_read = 0;
         int read;
-        for (;;) {
+        for (; ; ) {
             read = in.read(buffer);
             if (read == -1)
                 break;
@@ -66,7 +68,7 @@ public class IoHelpers {
         byte[] buffer = new byte[bufferSize];
         long total_read = 0;
         int read;
-        for (;;) {
+        for (; ; ) {
             read = in.read(buffer);
             if (read == -1)
                 break;
@@ -83,7 +85,7 @@ public class IoHelpers {
         byte[] buffer = new byte[bufferSize];
         long total_read = 0;
         int read;
-        for (;;) {
+        for (; ; ) {
             read = in.read(buffer);
             if (read == -1)
                 break;
@@ -100,7 +102,7 @@ public class IoHelpers {
         byte[] buffer = new byte[bufferSize];
         long total_read = 0;
         int read;
-        for (;;) {
+        for (; ; ) {
             read = in.read(buffer);
             if (read == -1)
                 break;
@@ -116,7 +118,7 @@ public class IoHelpers {
         try (OutputStream out = new FileOutputStream(filepath)) {
             byte[] buffer = new byte[bufferSize];
             int read;
-            for (;;) {
+            for (; ; ) {
                 read = in.read(buffer);
                 if (read == -1)
                     break;

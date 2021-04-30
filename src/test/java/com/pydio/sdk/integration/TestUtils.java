@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
 
-import com.pydio.sdk.core.model.Change;
-import com.pydio.sdk.core.model.ChangeNode;
+import com.pydio.sdk.api.Change;
+import com.pydio.sdk.api.nodes.ChangeNode;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 import com.pydio.sdk.sync.tree.StateManager;
 

@@ -1,8 +1,9 @@
 package com.pydio.sdk.integration;
 
 import com.pydio.sdk.core.CellsClient;
-import com.pydio.sdk.core.model.ServerNode;
-import com.pydio.sdk.core.common.errors.Error;
+import com.pydio.sdk.api.nodes.ServerNode;
+import com.pydio.sdk.api.Error;
+import com.pydio.sdk.core.model.ServerNodeImpl;
 import com.pydio.sdk.sync.fs.CellsFs;
 import com.pydio.sdk.examples.Credentials;
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class TestClient {
             return;
         }
 
-        node = new ServerNode();
+        node = new ServerNodeImpl();
         Error error = node.resolve(serverURL);
         if (error != null) {
             System.out.println("Could not resolve server URL, cause: ");

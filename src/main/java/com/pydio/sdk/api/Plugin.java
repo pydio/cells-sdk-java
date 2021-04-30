@@ -1,4 +1,4 @@
-package com.pydio.sdk.core.server;
+package com.pydio.sdk.api;
 
 import java.util.Properties;
 

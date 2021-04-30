@@ -1,15 +1,11 @@
 package com.pydio.sdk.api;
 
-import com.pydio.sdk.core.common.callback.ChangeHandler;
+import com.pydio.sdk.api.callbacks.ChangeHandler;
 import com.pydio.sdk.api.callbacks.NodeHandler;
-import com.pydio.sdk.core.common.callback.RegistryItemHandler;
-import com.pydio.sdk.core.common.callback.TransferProgressListener;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.FileNode;
-import com.pydio.sdk.core.model.Message;
-import com.pydio.sdk.core.model.ServerNode;
-import com.pydio.sdk.core.model.Stats;
-import com.pydio.sdk.core.utils.PageOptions;
+import com.pydio.sdk.api.callbacks.RegistryItemHandler;
+import com.pydio.sdk.api.callbacks.TransferProgressListener;
+import com.pydio.sdk.api.nodes.FileNode;
+import com.pydio.sdk.api.nodes.ServerNode;
 
 import org.json.JSONObject;
 

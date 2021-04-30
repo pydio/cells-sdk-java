@@ -1,4 +1,4 @@
-package com.pydio.sdk.core.service;
+package com.pydio.sdk.core.utils;
 
 import com.pydio.sdk.api.callbacks.ServerResolver;
 

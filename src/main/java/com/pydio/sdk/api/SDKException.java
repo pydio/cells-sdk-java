@@ -1,6 +1,4 @@
-package com.pydio.sdk.core.common.errors;
-
-import com.pydio.sdk.api.ErrorCodes;
+package com.pydio.sdk.api;
 
 import java.io.IOException;
 
@@ -12,8 +10,9 @@ import java.io.IOException;
  */
 public class SDKException extends Exception {
 
-    public int code;
-    public Exception cause;
+    private int code;
+    private String message;
+    private Exception cause;
 
     public SDKException(String message) {
         super(message);
@@ -29,6 +28,12 @@ public class SDKException extends Exception {
 
     // Legacy inherited SDK specific constructors => ease implementation of the Android app.
 
+    public SDKException(int code, String message, Exception cause) {
+        this(ErrorCodes.toMessage(code), cause);
+        this.cause = cause;
+        this.code = code;
+    }
+
     public SDKException(int code, Exception cause) {
         this(ErrorCodes.toMessage(code), cause);
         this.cause = cause;
@@ -39,6 +44,27 @@ public class SDKException extends Exception {
         this(ErrorCodes.toMessage(code));
         this.code = code;
     }
+
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        if (message == null){
+            return  super.getMessage();
+        }
+        return message;
+    }
+
+    @Override
+    public Throwable getCause() {
+        if (cause == null){
+            return  super.getCause();
+        }
+        return cause;
+    }
+
 
     /* Boiler plate shortcuts */
 

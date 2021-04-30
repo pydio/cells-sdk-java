@@ -3,26 +3,27 @@ package com.pydio.sdk.core;
 import com.google.gson.Gson;
 import com.pydio.sdk.api.Client;
 import com.pydio.sdk.api.Credentials;
+import com.pydio.sdk.api.ErrorCodes;
+import com.pydio.sdk.api.nodes.FileNode;
+import com.pydio.sdk.api.Message;
+import com.pydio.sdk.api.PageOptions;
+import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.SdkNames;
+import com.pydio.sdk.api.nodes.ServerNode;
+import com.pydio.sdk.api.Stats;
+import com.pydio.sdk.api.nodes.WorkspaceNode;
+import com.pydio.sdk.api.callbacks.ChangeHandler;
 import com.pydio.sdk.api.callbacks.NodeHandler;
+import com.pydio.sdk.api.callbacks.RegistryItemHandler;
+import com.pydio.sdk.api.callbacks.TransferProgressListener;
 import com.pydio.sdk.core.auth.Token;
 import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.common.callback.ChangeHandler;
-import com.pydio.sdk.core.common.callback.RegistryItemHandler;
-import com.pydio.sdk.core.common.callback.TransferProgressListener;
-import com.pydio.sdk.core.common.callback.cells.TreeNodeHandler;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.FileNode;
-import com.pydio.sdk.core.model.Message;
-import com.pydio.sdk.core.model.ServerNode;
-import com.pydio.sdk.core.model.Stats;
 import com.pydio.sdk.core.model.TreeNodeInfo;
-import com.pydio.sdk.core.model.WorkspaceNode;
 import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
+import com.pydio.sdk.core.utils.FileNodeUtils;
 import com.pydio.sdk.core.utils.Log;
-import com.pydio.sdk.core.utils.PageOptions;
 import com.pydio.sdk.core.utils.io;
 import com.pydio.sdk.generated.cells.ApiClient;
 import com.pydio.sdk.generated.cells.ApiException;
@@ -81,7 +82,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.xml.parsers.SAXParser;
@@ -112,115 +112,11 @@ public class CellsClient implements Client, SdkNames {
         this.apiURL = url;
     }
 
-    protected void getJWT() throws SDKException {
-        Token token = TokenService.get(this.serverNode, this.credentials, this.skipOAuth);
-        if (token != null) {
-            this.bearerValue = token.value;
-        } else {
-            this.bearerValue = "";
-        }
-    }
-
-
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
         boolean isLeaf = node.getType() == TreeNodeType.LEAF;
         long size = Long.parseLong(node.getSize());
         long lastEdit = Long.parseLong(node.getMtime());
         return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
-    }
-
-
-    private FileNode toFileNode(TreeNode node) {
-
-        String uuid = node.getUuid();
-        if (uuid == null) {
-            return null;
-        }
-
-        FileNode result = new FileNode();
-        String tnPath = node.getPath();
-        Map<String, String> meta = node.getMetaStore();
-
-        String slug = FileNode.slugFromTreeNodePath(tnPath);
-        String path = FileNode.pathFromTreeNodePath(tnPath);
-        String name = FileNode.nameFromTreeNodePath(tnPath);
-
-        result.setProperty(NODE_PROPERTY_UUID, node.getUuid());
-        result.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, slug);
-        result.setProperty(NODE_PROPERTY_PATH, path);
-        result.setProperty(NODE_PROPERTY_FILENAME, path);
-
-        result.setProperty(NODE_PROPERTY_TEXT, name);
-        result.setProperty(NODE_PROPERTY_LABEL, name);
-
-        boolean isFile = node.getType() == TreeNodeType.LEAF;
-        result.setProperty(NODE_PROPERTY_IS_FILE, String.valueOf(isFile));
-
-        result.setProperty(NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
-        String isImage = meta.get("is_image") == null ? "false" : meta.get("is_image");
-        String ws_shares = meta.get("workspaces_shares");
-        if (ws_shares != null) {
-            result.setProperty(NODE_PROPERTY_AJXP_SHARED, "true");
-            result.setProperty(NODE_PROPERTY_SHARE_JSON_INFO, ws_shares);
-            try {
-                JSONArray shareWorkspaces = new JSONArray(ws_shares);
-                JSONObject shareWs = (JSONObject) shareWorkspaces.get(0);
-                String shareUUID = shareWs.getString("UUID");
-                result.setProperty(NODE_PROPERTY_SHARE_UUID, shareUUID);
-            } catch (ParseException ignored) {
-            }
-        }
-
-        String bookmark = meta.get("bookmark");
-        if (bookmark != null && bookmark.length() > 0) {
-            //  TODO why do we need to sanitize this way?
-            result.setProperty(NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
-        }
-
-        String nodeSize = node.getSize();
-        if (nodeSize == null) {
-            if (!isFile) {
-                result.setProperty(NODE_PROPERTY_BYTESIZE, "4096");
-            }
-        } else {
-            result.setProperty(NODE_PROPERTY_BYTESIZE, nodeSize);
-        }
-
-        result.setProperty(NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
-        String mtime = node.getMtime();
-        if (mtime != null) {
-            result.setProperty(NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
-        }
-
-        result.setProperty(NODE_PROPERTY_IS_IMAGE, isImage);
-        if (isImage.equals("true")) {
-            result.setProperty(NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_width"));
-            result.setProperty(NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
-            try {
-                JSONObject thumb = new JSONObject(meta.get("ImageThumbnails"));
-                boolean processing = thumb.getBoolean("Processing");
-                if (!processing) {
-                    JSONArray details = thumb.getJSONArray("thumbnails");
-                    JSONObject thumbObject = new JSONObject();
-                    for (int i = 0; i < details.length(); i++) {
-                        JSONObject item = (JSONObject) details.get(i);
-                        int size = item.getInt("size");
-                        String format = item.getString("format");
-                        String thumbPath = "/" + node.getUuid() + "-" + size + "." + format;
-                        thumbObject.put(String.valueOf(size), thumbPath);
-                    }
-                    result.setProperty(NODE_PROPERTY_IMAGE_THUMB_PATHS, thumbObject.toString());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        String encoded = new Gson().toJson(node);
-        result.setProperty(NODE_PROPERTY_ENCODED, encoded);
-        result.setProperty(NODE_PROPERTY_ENCODING, "gson");
-
-        return result;
     }
 
     @Override
@@ -485,7 +381,7 @@ public class CellsClient implements Client, SdkNames {
     public FileNode nodeInfo(String ws, String path) throws SDKException {
         TreeNode node = internalStatNode(ws, path);
         if (node != null) {
-            return toFileNode(node);
+            return FileNodeUtils.toFileNode(node);
         } else {
             return null;
         }
@@ -505,7 +401,7 @@ public class CellsClient implements Client, SdkNames {
         try {
             node = internalStatNode(fullPath);
         } catch (SDKException e) {
-            if (e.code != 404) {
+            if (e.getCode() != 404) {
                 throw e;
             }
         }
@@ -513,14 +409,12 @@ public class CellsClient implements Client, SdkNames {
     }
 
     private TreeNode internalStatNode(String ws, String path) throws SDKException {
-        return internalStatNode(FileNode.toTreeNodePath(ws, path));
+        return internalStatNode(FileNodeUtils.toTreeNodePath(ws, path));
     }
 
     private TreeNode internalStatNode(String fullPath) throws SDKException {
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         try {
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
@@ -533,17 +427,14 @@ public class CellsClient implements Client, SdkNames {
     public PageOptions ls(String ws, String path, PageOptions options, NodeHandler handler) throws SDKException {
 
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        request.addNodePathsItem(FileNode.toTreeNodePath(ws, "/".equals(path) ? "/*" : path + "/*"));
+        request.addNodePathsItem(FileNodeUtils.toTreeNodePath(ws, "/".equals(path) ? "/*" : path + "/*"));
         request.setAllMetaProviders(true);
         if (options != null) {
             request.setLimit(options.getLimit());
             request.setOffset(options.getOffset());
         }
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         RestBulkMetaResponse response;
 
         PageOptions nextPageOptions = new PageOptions();
@@ -581,14 +472,14 @@ public class CellsClient implements Client, SdkNames {
             for (TreeNode node : response.getNodes()) {
                 FileNode fileNode;
                 try {
-                    fileNode = toFileNode(node);
+                    fileNode = FileNodeUtils.toFileNode(node);
                 } catch (NullPointerException ignored) {
                     continue;
                 }
 
                 if (fileNode != null) {
                     String nodePath = ("/" + node.getPath()).replace("//", "/");
-                    if (!nodePath.equals(FileNode.toTreeNodePath(ws, path)) && !fileNode.getLabel().startsWith(".")) {
+                    if (!nodePath.equals(FileNodeUtils.toTreeNodePath(ws, path)) && !fileNode.getLabel().startsWith(".")) {
                         handler.onNode(fileNode);
                     }
                 }
@@ -607,10 +498,7 @@ public class CellsClient implements Client, SdkNames {
         request.addNodePathsItem(fullPath + "/*");
         request.setAllMetaProviders(true);
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         RestBulkMetaResponse response = null;
         try {
             response = api.bulkStatNodes(request);
@@ -639,12 +527,8 @@ public class CellsClient implements Client, SdkNames {
         TreeSearchRequest request = new TreeSearchRequest();
         request.setSize(50);
         request.setQuery(query);
-        this.getJWT();
 
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        SearchServiceApi api = new SearchServiceApi(client);
-
+        SearchServiceApi api = new SearchServiceApi(authenticatedClient());
         RestSearchResults results;
         try {
             results = api.nodes(request);
@@ -657,7 +541,7 @@ public class CellsClient implements Client, SdkNames {
             for (TreeNode node : nodes) {
                 FileNode fileNode;
                 try {
-                    fileNode = toFileNode(node);
+                    fileNode = FileNodeUtils.toFileNode(node);
                 } catch (NullPointerException ignored) {
                     continue;
                 }
@@ -671,18 +555,15 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void getBookmarks(NodeHandler h) throws SDKException {
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
 
         RestUserBookmarksRequest request = new RestUserBookmarksRequest();
-        UserMetaServiceApi api = new UserMetaServiceApi(client);
+        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
             RestBulkMetaResponse response = api.userBookmarks(request);
             if (response.getNodes() != null) {
                 for (TreeNode node : response.getNodes()) {
                     try {
-                        FileNode fileNode = toFileNode(node);
+                        FileNode fileNode = FileNodeUtils.toFileNode(node);
                         if (fileNode != null) {
                             List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
                             if (sources != null) {
@@ -691,7 +572,7 @@ public class CellsClient implements Client, SdkNames {
                                 // Also bookmarks can only refer to **one** source
                                 String path = "/" + sources.get(0).getPath();
                                 fileNode.setProperty(NODE_PROPERTY_PATH, path);
-                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNode.getNameFromPath(path));
+                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
                                 h.onNode(fileNode);
                             }
                         }
@@ -755,18 +636,14 @@ public class CellsClient implements Client, SdkNames {
         List<TreeNode> nodes = new ArrayList<>();
         for (String file : files) {
             TreeNode node = new TreeNode();
-            node.setPath(FileNode.toTreeNodePath(ws, file));
+            node.setPath(FileNodeUtils.toTreeNodePath(ws, file));
             nodes.add(node);
         }
 
         RestDeleteNodesRequest request = new RestDeleteNodesRequest();
         request.setNodes(nodes);
 
-        this.getJWT();
-
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
 
         try {
             api.deleteNodes(request);
@@ -782,18 +659,14 @@ public class CellsClient implements Client, SdkNames {
         List<TreeNode> nodes = new ArrayList<>();
         for (String file : files) {
             TreeNode node = new TreeNode();
-            node.setPath(FileNode.toTreeNodePath(ws, file));
+            node.setPath(FileNodeUtils.toTreeNodePath(ws, file));
             nodes.add(node);
         }
 
         RestRestoreNodesRequest request = new RestRestoreNodesRequest();
         request.setNodes(nodes);
 
-        this.getJWT();
-
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
 
         try {
             api.restoreNodes(request);
@@ -809,7 +682,7 @@ public class CellsClient implements Client, SdkNames {
         RestUserJobRequest request = new RestUserJobRequest();
 
         JSONArray nodes = new JSONArray();
-        String path = FileNode.toTreeNodePath(ws, srcFile);
+        String path = FileNodeUtils.toTreeNodePath(ws, srcFile);
         nodes.put(path);
 
         String parent = new File(srcFile).getParentFile().getPath();
@@ -822,16 +695,13 @@ public class CellsClient implements Client, SdkNames {
 
         JSONObject o = new JSONObject();
         o.put("nodes", nodes);
-        o.put("target", FileNode.toTreeNodePath(ws, dstFile));
+        o.put("target", FileNodeUtils.toTreeNodePath(ws, dstFile));
         o.put("targetParent", false);
 
         request.setJobName("move");
         request.setJsonParameters(o.toString());
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        JobsServiceApi api = new JobsServiceApi(client);
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
         try {
             api.userCreateJob("move", request);
         } catch (ApiException e) {
@@ -858,10 +728,7 @@ public class CellsClient implements Client, SdkNames {
         request.setJobName("move");
         request.setJsonParameters(o.toString());
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        JobsServiceApi api = new JobsServiceApi(client);
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
         try {
             api.userCreateJob("move", request);
         } catch (ApiException e) {
@@ -888,10 +755,7 @@ public class CellsClient implements Client, SdkNames {
         request.setJobName("copy");
         request.setJsonParameters(o.toString());
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        JobsServiceApi api = new JobsServiceApi(client);
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
         try {
             api.userCreateJob("copy", request);
         } catch (ApiException e) {
@@ -903,11 +767,8 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public Message bookmark(String ws, String nodeId) throws SDKException {
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
 
-        UserMetaServiceApi api = new UserMetaServiceApi(client);
+        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
 
         IdmUpdateUserMetaRequest request = new IdmUpdateUserMetaRequest();
         request.setOperation(UpdateUserMetaRequestUserMetaOp.PUT);
@@ -954,11 +815,8 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public Message unbookmark(String ws, String nodeId) throws SDKException {
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
 
-        UserMetaServiceApi api = new UserMetaServiceApi(client);
+        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
 
         IdmSearchUserMetaRequest searchRequest = new IdmSearchUserMetaRequest();
         searchRequest.setNamespace("bookmark");
@@ -990,10 +848,7 @@ public class CellsClient implements Client, SdkNames {
         request.recursive(false);
         request.addNodesItem(node);
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
 
         RestNodesCollection response;
         try {
@@ -1022,10 +877,7 @@ public class CellsClient implements Client, SdkNames {
         request.recursive(false);
         request.addNodesItem(node);
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
 
         RestNodesCollection response;
         try {
@@ -1041,7 +893,7 @@ public class CellsClient implements Client, SdkNames {
         List<TreeNode> nodes = response.getChildren();
         node = nodes.get(0);
 
-        FileNode fileNode = toFileNode(node);
+        FileNode fileNode = FileNodeUtils.toFileNode(node);
         msg.added.add(fileNode);
         return msg;
     }
@@ -1064,13 +916,10 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        request.addNodePathsItem(FileNode.toTreeNodePath(ws, file));
+        request.addNodePathsItem(FileNodeUtils.toTreeNodePath(ws, file));
         request.setAllMetaProviders(true);
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        TreeServiceApi api = new TreeServiceApi(client);
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         RestBulkMetaResponse response;
         try {
             response = api.bulkStatNodes(request);
@@ -1166,10 +1015,7 @@ public class CellsClient implements Client, SdkNames {
         sl.setViewTemplateName("pydio_unique_strip");
         request.setShareLink(sl);
 
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        ShareServiceApi api = new ShareServiceApi(client);
+        ShareServiceApi api = new ShareServiceApi(authenticatedClient());
 
         try {
             RestShareLink link = api.putShareLink(request);
@@ -1181,10 +1027,7 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void unshare(String ws, String file) throws SDKException {
-        this.getJWT();
-        ApiClient client = getApiClient();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        ShareServiceApi api = new ShareServiceApi(client);
+        ShareServiceApi api = new ShareServiceApi(authenticatedClient());
         try {
             api.deleteShareLink(file);
         } catch (ApiException e) {
@@ -1194,10 +1037,7 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public JSONObject shareInfo(String ws, String shareID) throws SDKException {
-        ApiClient client = getApiClient();
-        this.getJWT();
-        client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        ShareServiceApi api = new ShareServiceApi(client);
+        ShareServiceApi api = new ShareServiceApi(authenticatedClient());
         try {
             RestShareLink link = api.getShareLink(shareID);
             Gson gs = new Gson();
@@ -1263,5 +1103,54 @@ public class CellsClient implements Client, SdkNames {
         }
         return apiClient;
     }
+
+    private ApiClient authenticatedClient() throws SDKException {
+
+        ApiClient apiClient = new ApiClient();
+        apiClient.setBasePath(apiURL);
+        apiClient.setUserAgent(getUserAgent());
+
+        if (this.serverNode.isSSLUnverified()) {
+            SSLContext context = this.serverNode.getSslContext();
+            OkHttpClient c = apiClient.getHttpClient();
+            c.setSslSocketFactory(context.getSocketFactory());
+            c.setHostnameVerifier((s, sslSession) -> URL.contains(s));
+        }
+
+        apiClient.addDefaultHeader("Authorization", "Bearer " + getToken());
+        return apiClient;
+    }
+
+
+    protected String getToken() throws SDKException {
+        // TODO use tokenCache
+        Token token = TokenService.get(serverNode, credentials, skipOAuth);
+        if (token != null) {
+            return token.value;
+        } else {
+            // TODO throw an exception
+            return "";
+        }
+    }
+
+    protected void getJWT() throws SDKException {
+        bearerValue = getToken();
+    }
+
+    private static SDKException fromApiException(ApiException e) {
+        int code = ErrorCodes.fromHttpStatus(e.getCode());
+        return new SDKException(code, e);
+    }
+
+
+    /**
+     * This is necessary until min version is 24: we cannot use the consumer pattern:
+     * public void listChildren(String fullPath, Consumer<TreeNode> consumer) throws SDKException {
+     * ... consumer.onNode(nodes.next());
+     */
+    public interface TreeNodeHandler {
+        void onNode(TreeNode node);
+    }
+
 
 }

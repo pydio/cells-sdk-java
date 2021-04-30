@@ -1,6 +1,6 @@
 package com.pydio.sdk.sync;
 
-import com.pydio.sdk.core.model.Change;
+import com.pydio.sdk.api.Change;
 
 public interface MergeActivityListener {
     void onActionCompleted(Change c);

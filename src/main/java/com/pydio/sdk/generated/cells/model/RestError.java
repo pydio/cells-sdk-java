@@ -30,7 +30,7 @@ import java.util.Map;
 
 
 public class RestError {
-  @SerializedName("Code")
+  @SerializedName("ErrorCodes")
   private String code = null;
 
   @SerializedName("Title")

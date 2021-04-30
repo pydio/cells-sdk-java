@@ -1,9 +1,9 @@
 package com.pydio.sdk.sync.fs;
 
 import com.pydio.sdk.core.CellsClient;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.Change;
-import com.pydio.sdk.core.model.ChangeNode;
+import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.Change;
+import com.pydio.sdk.api.nodes.ChangeNode;
 import com.pydio.sdk.sync.Error;
 import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
@@ -64,8 +64,8 @@ public class CellsFs implements Fs, ContentLoader {
         } catch (SDKException e) {
             e.printStackTrace();
             Error error = new Error();
-            error.setCode(e.code);
-            error.setDetails(e.cause.getMessage());
+            error.setCode(e.getCode());
+            error.setDetails(e.getCause().getMessage());
             response.setError(error);
             return response;
         }

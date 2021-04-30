@@ -1,5 +1,8 @@
-package com.pydio.sdk.api;
+package com.pydio.sdk.api.nodes;
 
+import com.pydio.sdk.api.Node;
+import com.pydio.sdk.api.Plugin;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.core.model.Action;
 
 import java.util.List;

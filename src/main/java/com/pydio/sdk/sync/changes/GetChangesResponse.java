@@ -1,6 +1,6 @@
 package com.pydio.sdk.sync.changes;
 
-import com.pydio.sdk.core.model.Change;
+import com.pydio.sdk.api.Change;
 
 import java.util.ArrayList;
 import java.util.List;

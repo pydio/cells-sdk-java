@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.common.http;
 
-import com.pydio.sdk.core.common.callback.ServerResolver;
+import com.pydio.sdk.api.callbacks.ServerResolver;
 import com.pydio.sdk.core.utils.Params;
 
 import java.net.CookieManager;

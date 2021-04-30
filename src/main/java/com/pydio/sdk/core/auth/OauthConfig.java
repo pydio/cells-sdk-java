@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.auth;
 
-import com.pydio.sdk.core.common.codec.Hex;
+import com.pydio.sdk.core.utils.Hex;
 
 import org.json.JSONObject;
 

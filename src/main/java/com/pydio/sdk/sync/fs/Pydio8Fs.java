@@ -1,8 +1,8 @@
 package com.pydio.sdk.sync.fs;
 
 import com.pydio.sdk.core.P8Client;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.ChangeNode;
+import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.nodes.ChangeNode;
 import com.pydio.sdk.sync.Error;
 import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;

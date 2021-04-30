@@ -1,4 +1,4 @@
-package com.pydio.sdk.api;
+package com.pydio.sdk.api.nodes;
 
 public class ChangeNode {
 

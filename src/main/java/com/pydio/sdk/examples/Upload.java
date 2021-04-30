@@ -2,10 +2,11 @@ package com.pydio.sdk.examples;
 
 import com.pydio.sdk.api.Client;
 import com.pydio.sdk.core.ClientFactory;
-import com.pydio.sdk.core.common.errors.Error;
-import com.pydio.sdk.core.common.errors.SDKException;
-import com.pydio.sdk.core.model.Message;
-import com.pydio.sdk.core.model.ServerNode;
+import com.pydio.sdk.api.Error;
+import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.Message;
+import com.pydio.sdk.api.nodes.ServerNode;
+import com.pydio.sdk.core.model.ServerNodeImpl;
 
 import java.io.ByteArrayInputStream;
 
@@ -17,7 +18,7 @@ public class Upload {
     private static final String workspace = "common-files";
 
     public static void main(String[] args) {
-        ServerNode node = new ServerNode();
+        ServerNode node = new ServerNodeImpl();
         Error error = node.resolve(serverURL);
         if (error != null) {
             System.out.println(error);

@@ -1,8 +1,8 @@
 package com.pydio.sdk.core.common.http;
 
-import com.pydio.sdk.core.common.callback.StringHandler;
-import com.pydio.sdk.core.common.errors.Code;
-import com.pydio.sdk.core.utils.ProgressListener;
+import com.pydio.sdk.api.callbacks.StringHandler;
+import com.pydio.sdk.api.ErrorCodes;
+import com.pydio.sdk.api.callbacks.ProgressListener;
 import com.pydio.sdk.core.utils.io;
 
 import org.json.JSONObject;
@@ -114,9 +114,9 @@ public class HttpResponse {
         try {
             SAXParser parser = factory.newSAXParser();
             parser.parse(new InputSource(new StringReader(content)), handler);
-            return Code.ok;
+            return ErrorCodes.ok;
         } catch (Exception e) {
-            return Code.unexpected_content;
+            return ErrorCodes.unexpected_content;
         }
     }
 

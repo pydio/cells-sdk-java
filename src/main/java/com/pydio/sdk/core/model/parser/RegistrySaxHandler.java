@@ -1,7 +1,7 @@
 package com.pydio.sdk.core.model.parser;
 
-import com.pydio.sdk.core.common.callback.RegistryItemHandler;
-import com.pydio.sdk.core.server.Plugin;
+import com.pydio.sdk.api.Plugin;
+import com.pydio.sdk.api.callbacks.RegistryItemHandler;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -34,83 +34,82 @@ public class RegistrySaxHandler extends DefaultHandler {
     private Properties p;
     private String inner_element;
 
-    public RegistrySaxHandler(RegistryItemHandler handler){
+    public RegistrySaxHandler(RegistryItemHandler handler) {
         this.handler = handler;
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
-        if("user".equals(qName) && mUser == null){
+        if ("user".equals(qName) && mUser == null) {
             hasUserElement = true;
             mUser = attributes.getValue("id");
             return;
         }
 
-        if("action".equals(qName)){
+        if ("action".equals(qName)) {
             inside_action = true;
             action = attributes.getValue("name");
             return;
         }
 
-        if("property".equals(qName) && insidePluginConfigs) {
+        if ("property".equals(qName) && insidePluginConfigs) {
             pluginProperty = attributes.getValue(attributes.getIndex("name"));
         }
 
-        if("rightsContext".equals(qName) && inside_action){
+        if ("rightsContext".equals(qName) && inside_action) {
             actionRead = attributes.getValue("read");
             actionWrite = attributes.getValue("write");
             return;
         }
 
-
-        if("action".equals(qName) && inside_actions){
+        if ("action".equals(qName) && inside_actions) {
             action = attributes.getValue(attributes.getIndex("name"));
             return;
         }
 
-        if("pref".equals(qName) && inside_preferences){
+        if ("pref".equals(qName) && inside_preferences) {
             handler.onPref(attributes.getValue(attributes.getIndex("name")), attributes.getValue(attributes.getIndex("value")));
         }
 
-        if("plugin_configs".equals(qName) && insideAjxpPlugin) {
+        if ("plugin_configs".equals(qName) && insideAjxpPlugin) {
             insidePluginConfigs = true;
         }
 
-        if("repo".equals(qName) && inside_repositories){
+        if ("repo".equals(qName) && inside_repositories) {
             inside_repo = true;
             p = new Properties();
-            for(int i = 0; i < attributes.getLength(); i++){
+            for (int i = 0; i < attributes.getLength(); i++) {
                 p.setProperty(attributes.getLocalName(i), attributes.getValue(i));
             }
             return;
         }
 
-        if(inside_repo && "label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())){
+        if (inside_repo && "label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())) {
             inner_element = qName;
             return;
         }
 
-        if("actions".equals(qName)){
+        if ("actions".equals(qName)) {
             inside_actions = true;
             return;
         }
 
-        if("plugins".equals(qName)){
+        if ("plugins".equals(qName)) {
             inside_plugins = true;
             return;
         }
 
-        if("repositories".equals(qName)){
+        if ("repositories".equals(qName)) {
             inside_repositories = true;
             return;
         }
 
-        if("preferences".equals(qName)){
+        if ("preferences".equals(qName)) {
             inside_preferences = true;
             return;
         }
 
-        if("ajxp_plugin".equals(qName) || "plugin".equals(qName)){
+        if ("ajxp_plugin".equals(qName) || "plugin".equals(qName)) {
             insideAjxpPlugin = true;
             currentPlugin = new Plugin();
             currentPlugin.id = attributes.getValue("id");
@@ -120,7 +119,7 @@ public class RegistrySaxHandler extends DefaultHandler {
             currentPlugin.configs = new Properties();
         }
 
-        if(inside_repositories && "repo".equals(qName)){
+        if (inside_repositories && "repo".equals(qName)) {
             inside_repo = true;
             return;
         }
@@ -129,14 +128,14 @@ public class RegistrySaxHandler extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) {
         String content = new String(ch, start, length);
-        if(inside_repo && inner_element != null && inner_element.length() != 0){
+        if (inside_repo && inner_element != null && inner_element.length() != 0) {
             p.setProperty(inner_element, content);
             return;
         }
 
-        if(insidePluginConfigs && pluginProperty != null){
-            if(currentPlugin != null) {
-                if(currentPlugin.configs == null){
+        if (insidePluginConfigs && pluginProperty != null) {
+            if (currentPlugin != null) {
+                if (currentPlugin.configs == null) {
                     currentPlugin.configs = new Properties();
                 }
                 currentPlugin.configs.put(pluginProperty, content);
@@ -146,40 +145,40 @@ public class RegistrySaxHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) {
-        if(inside_action && "action".equals(qName)){
+        if (inside_action && "action".equals(qName)) {
             inside_action = false;
             handler.onAction(action, actionRead, actionWrite);
             actionRead = actionWrite = null;
             return;
         }
 
-        if(inside_plugins && "plugins".equals(qName)){
+        if (inside_plugins && "plugins".equals(qName)) {
             inside_plugins = false;
             return;
         }
 
-        if(inside_repositories && "repositories".equals(qName)){
+        if (inside_repositories && "repositories".equals(qName)) {
             inside_repositories = false;
             return;
         }
 
-        if(inside_actions && "actions".equals(qName)){
+        if (inside_actions && "actions".equals(qName)) {
             inside_actions = false;
             return;
         }
 
-        if(inside_preferences && "preferences".equals(qName)){
-           inside_preferences = false;
+        if (inside_preferences && "preferences".equals(qName)) {
+            inside_preferences = false;
             return;
         }
 
-        if(inside_repo){
-            if("label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())){
+        if (inside_repo) {
+            if ("label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())) {
                 inner_element = "";
                 return;
             }
 
-            if("repo".equals(qName)){
+            if ("repo".equals(qName)) {
                 inside_repo = false;
                 handler.onWorkspace(p);
                 p = null;
@@ -187,12 +186,12 @@ public class RegistrySaxHandler extends DefaultHandler {
             }
         }
 
-        if(insidePluginConfigs && "plugin_configs".equals(qName)) {
+        if (insidePluginConfigs && "plugin_configs".equals(qName)) {
             insidePluginConfigs = false;
         }
 
         if ("ajxp_plugin".equals(qName) || "plugin".equals(qName)) {
-            if(currentPlugin != null){
+            if (currentPlugin != null) {
                 handler.onPlugin(currentPlugin);
                 currentPlugin = null;
             }

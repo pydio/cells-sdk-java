@@ -1,7 +1,7 @@
 package com.pydio.sdk.core;
 
 import com.pydio.sdk.api.Client;
-import com.pydio.sdk.core.model.ServerNode;
+import com.pydio.sdk.api.nodes.ServerNode;
 
 public class ClientFactory {
 
@@ -17,9 +17,9 @@ public class ClientFactory {
     }
 
     public static Client get(ServerNode node) {
-        if (node.versionName().contains("cells")) {
-            return cellsDefaultFactory.get(node);
+        if (node.isLegacy()){
+            return p8DefaultFactory.get(node);
         }
-        return p8DefaultFactory.get(node);
+            return cellsDefaultFactory.get(node);
     }
 }

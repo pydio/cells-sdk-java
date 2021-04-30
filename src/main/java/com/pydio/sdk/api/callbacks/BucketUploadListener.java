@@ -1,4 +1,4 @@
-package com.pydio.sdk.core.common.callback;
+package com.pydio.sdk.api.callbacks;
 
 public interface BucketUploadListener {
     boolean onNext(int count, int total);

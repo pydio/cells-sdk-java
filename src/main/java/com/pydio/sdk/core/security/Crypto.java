@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.security;
 
-import com.pydio.sdk.core.common.codec.Hex;
+import com.pydio.sdk.core.utils.Hex;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

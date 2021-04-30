@@ -1,6 +1,6 @@
 package com.pydio.sdk.core.security;
 
-import com.pydio.sdk.core.common.callback.PasswordLoader;
+import com.pydio.sdk.api.callbacks.PasswordLoader;
 
 public class Passwords {
     public static PasswordLoader Loader;

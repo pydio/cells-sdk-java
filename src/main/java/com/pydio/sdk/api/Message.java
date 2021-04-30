@@ -1,7 +1,6 @@
-package com.pydio.sdk.core.model;
+package com.pydio.sdk.api;
 
-import com.pydio.sdk.api.Node;
-import com.pydio.sdk.api.SdkNames;
+import com.pydio.sdk.core.model.NodeFactory;
 
 import org.w3c.dom.Document;
 
@@ -9,65 +8,66 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message implements Serializable{
+public class Message implements Serializable {
 
-	public final static String SUCCESS = "SUCCESS";
-	public final static String ERROR 	= "ERROR";
-	public final static String EMPTY 	= "EMPTY";
+    public final static String SUCCESS = "SUCCESS";
+    public final static String ERROR = "ERROR";
+    public final static String EMPTY = "EMPTY";
 
-	public String message;
-	private String type = EMPTY;
+    public String message;
+    private String type = EMPTY;
 
-    public List<com.pydio.sdk.api.Node> deleted = new ArrayList<>();
-    public List<com.pydio.sdk.api.Node> added = new ArrayList<>();
-    public List<com.pydio.sdk.api.Node> updated = new ArrayList<>();
+    public List<Node> deleted = new ArrayList<>();
+    public List<Node> added = new ArrayList<>();
+    public List<Node> updated = new ArrayList<>();
 
+    public String type() {
+        return type;
+    }
 
-	public String type() {
-		return type;
-	}
-	
-	public String text() {
-		return message;
-	}
-	
-	public void setMessage(String message){
-		this.message = message;
-	}
-	
-	public void setType(String type){
-		this.type = type;
-	}
+    public String text() {
+        return message;
+    }
 
-	public boolean hasEvents() {
-		return this.added.size() > 0 || this.deleted.size() > 0 || this.updated.size() > 0;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	private static Message empty(){
-		Message m = new Message();
-		m.type = ERROR;
-		return m;
-	}
-	/**
-	 * create a message from the given XML Document and fire associated event
-	 * @param doc An instance of XML Document
-	 * @return An instance of a Message
-	 */
-	public static Message create(Document doc){
-		if(doc == null){
-			return empty();
-		}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-		org.w3c.dom.Node xml_message = doc.getElementsByTagName(SdkNames.XML_MESSAGE).item(0);
-		Message msg = new Message();
+    public boolean hasEvents() {
+        return this.added.size() > 0 || this.deleted.size() > 0 || this.updated.size() > 0;
+    }
 
-		if(xml_message != null){
-			msg.setMessage(xml_message.getTextContent());
-			msg.setType(xml_message.getAttributes().getNamedItem(SdkNames.MESSAGE_PROPERTY_TYPE).getNodeValue());
-		}
+    private static Message empty() {
+        Message m = new Message();
+        m.type = ERROR;
+        return m;
+    }
+
+    /**
+     * create a message from the given XML Document and fire associated event
+     *
+     * @param doc An instance of XML Document
+     * @return An instance of a Message
+     */
+    public static Message create(Document doc) {
+        if (doc == null) {
+            return empty();
+        }
+
+        org.w3c.dom.Node xml_message = doc.getElementsByTagName(SdkNames.XML_MESSAGE).item(0);
+        Message msg = new Message();
+
+        if (xml_message != null) {
+            msg.setMessage(xml_message.getTextContent());
+            msg.setType(xml_message.getAttributes().getNamedItem(SdkNames.MESSAGE_PROPERTY_TYPE).getNodeValue());
+        }
 
         org.w3c.dom.Node diff = doc.getElementsByTagName(SdkNames.XML_NODES_DIFF).item(0);
-        if(diff != null) {
+        if (diff != null) {
             for (int i = 0; i < diff.getChildNodes().getLength(); i++) {
                 org.w3c.dom.Node child = diff.getChildNodes().item(i);
                 String tag = child.getNodeName();
@@ -97,13 +97,13 @@ public class Message implements Serializable{
             }
         }
         return msg;
-	}
-	
-	public static Message create(String type, String message){
-		Message m = new Message();
-		m.type = type;
-		m.message = message;
-		return m;
-	}
-	
+    }
+
+    public static Message create(String type, String message) {
+        Message m = new Message();
+        m.type = type;
+        m.message = message;
+        return m;
+    }
+
 }
