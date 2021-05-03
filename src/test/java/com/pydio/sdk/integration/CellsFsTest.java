@@ -15,6 +15,7 @@ import com.pydio.sdk.sync.fs.CellsFs;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -83,6 +84,7 @@ public class CellsFsTest {
         }
     }
 
+    @Ignore
     @Test
     public void testCellsClient() {
         System.out.println("... Test CellsClient");
@@ -101,6 +103,7 @@ public class CellsFsTest {
         }
     }
 
+    @Ignore
     @Test
     public void testGetChange() {
         // GetChangeRequest req = new GetChangeRequest();

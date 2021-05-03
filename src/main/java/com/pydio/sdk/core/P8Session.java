@@ -31,8 +31,6 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import jdk.internal.net.http.common.Log;
-
 public class P8Session implements ILegacySession, SdkNames {
 
     private final static Map<String, String> secureTokens = new ConcurrentHashMap<>();
@@ -102,7 +100,7 @@ public class P8Session implements ILegacySession, SdkNames {
             JSONObject info = authenticationInfo();
             return info.has(Param.captchaCode);
         } catch (SDKException se){
-            Log.logError("FIXME: Unexpected SDK error while checking if we use Captcha", se);
+            System.out.println("FIXME: Unexpected SDK error while checking if we use Captcha");
             se.printStackTrace();
         }
         return  false;
