@@ -1,5 +1,8 @@
 package com.pydio.sdk.integration;
 
+import com.pydio.sdk.api.ISession;
+import com.pydio.sdk.api.ServerURL;
+import com.pydio.sdk.core.ServerURLImpl;
 import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
 import org.junit.After;
@@ -22,7 +25,7 @@ import java.util.TreeMap;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * the "src/test/resources/config.properties" file to match your setup.
+ * the "src/test/resources/default-target-server.properties" file to match your setup.
  * 
  * You can then launch the test with:
  * 
@@ -33,38 +36,40 @@ public class GetChangesTest {
     private TestClient testClient;
     private StateManager stateManager;
     private CecWrapper cec;
-    @Ignore
-    @Before
-    public void setupServices() {
-        TokenService.init(new TokenMemoryStore());
-    }
 
-    @Ignore
+    private TokenService tokens;
+    private TestConfiguration config;
+
     @Before
     public void setup() {
-        stateManager = new MemoryStateManager();
-        testClient = new TestClient();
-        testClient.setup(stateManager);
+        tokens = new TokenService(new TokenMemoryStore());
+        config = new TestConfiguration();
 
         cec = new CecWrapper();
         cec.setUpCec();
     }
 
-    @Ignore
     @After
     public void teardown() {
         // do nothing
     }
 
+    /*
+
+    FIXME This must be completely adapted after refactoring
     @Ignore
     @Test
     public void testSimpleChange() {
 
-        try {
+        TestConfiguration.ServerConfig conf = config.getDefaultServer();
 
-            String ws = testClient.getDefaultWorkspace();
+        try {
+            ServerURL sURL = ServerURLImpl.fromAddress(conf.serverURL);
+            ISession session = config.openSession(tokens, sURL, conf.login, conf.pwd);
+
+            String ws = conf.defaultWS;
             final String basePath = TestUtils.getUniquePath();
-            CellsClient client = testClient.getCellsClient();
+            CellsClient client = (CellsClient)session.getClient();
 
             // Insure there is nothing at this path
             try {
@@ -165,5 +170,7 @@ public class GetChangesTest {
         // TODO finish implementing the CRUD and corresponding checks. Typically, for
         // the time being upload fails silently.
     }
+
+    */
 
 }

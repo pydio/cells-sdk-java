@@ -3,18 +3,14 @@ package com.pydio.sdk.integration;
 import com.pydio.sdk.api.Change;
 import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.core.CellsClient;
+import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
-import com.pydio.sdk.api.Error;
-import com.pydio.sdk.api.nodes.ServerNode;
-import com.pydio.sdk.core.model.ServerNodeImpl;
 import com.pydio.sdk.core.model.TreeNodeInfo;
 import com.pydio.sdk.core.utils.CellsPath;
-import com.pydio.sdk.examples.Credentials;
 import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
 import com.pydio.sdk.sync.fs.CellsFs;
-import com.pydio.sdk.sync.tree.MemoryStateManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -30,7 +26,7 @@ import java.util.TreeMap;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * the "src/test/resources/config.properties" file to match your setup.
+ * the "src/test/resources/default-target-server.properties" file to match your setup.
  * <p>
  * You can then launch the test with:
  *
@@ -45,41 +41,34 @@ public class CellsFsTest {
 
     private String serverURL, login, pwd, workspace;
 
+    private TokenService tokens;
+    private TestConfiguration config;
+
     @Before
     public void setup() {
+        tokens = new TokenService(new TokenMemoryStore());
+        config = new TestConfiguration();
 
-        Properties p = new Properties();
-        try (InputStream is = CellsFsTest.class.getResourceAsStream("/config.properties")) {
-            p.load(new InputStreamReader(is));
-            serverURL = p.getProperty("serverURL");
-            login = p.getProperty("login");
-            pwd = p.getProperty("pwd");
-            workspace = p.getProperty("defaultWorkspace");
-        } catch (IOException e) {
-            System.out.println("could not retrieve configuration file, cause: ");
-            System.out.println(e);
-            return;
-        }
 
-        node = new ServerNodeImpl();
-        Error error = node.resolve(serverURL);
-        if (error != null) {
-            System.out.println("Could not resolve server URL, cause: ");
-            System.out.println(error);
-        }
-
-        cellsClient = new CellsClient(node);
-        cellsClient.setCredentials(new Credentials(login, pwd));
-        cellsClient.setSkipOAuthFlag(true);
-
-        cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
-
-        // Services
-        TokenService.init(new TokenMemoryStore());
-
-        // CellsClient
-        cec = new CecWrapper();
-        cec.setUpCec();
+//        node = new ServerNodeImpl();
+//        Error error = node.resolve(serverURL);
+//        if (error != null) {
+//            System.out.println("Could not resolve server URL, cause: ");
+//            System.out.println(error);
+//        }
+//
+//        cellsClient = new CellsClient(node);
+//        cellsClient.setCredentials(new PasswordCredentials(login, pwd));
+//        cellsClient.setSkipOAuthFlag(true);
+//
+//        cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
+//
+//        // Services
+//        TokenService.init(new TokenMemoryStore());
+//
+//        // CellsClient
+//        cec = new CecWrapper();
+//        cec.setUpCec();
     }
 
     @Test

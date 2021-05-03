@@ -19,10 +19,10 @@ public class MemoryStateManagerTest {
 
     private StateManager manager;
 
-    @Before
-    public void setupServices() {
-        TokenService.init(new TokenMemoryStore());
-    }
+ //   @Before
+//    public void setupServices() {
+//        TokenService.init(new TokenMemoryStore());
+//    }
 
     @Before
     public void setup() {

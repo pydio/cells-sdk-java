@@ -13,7 +13,7 @@ public class CecWrapper {
 
     public void setUpCec() {
 
-        URL url = CecWrapper.class.getResource("/config.properties");
+        URL url = CecWrapper.class.getResource("/default-target-server.properties");
         basePath = Paths.get(url.getPath()).getParent().toString();
         cecCmd = Paths.get(basePath, "cells-client").toString();
 
@@ -76,5 +76,4 @@ public class CecWrapper {
             }
         }
     }
-
 }
