@@ -64,7 +64,8 @@ public class NodeFactory {
             case Node.TYPE_WORKSPACE:
                 return new WorkspaceNode();
             case Node.TYPE_SERVER:
-                return new ServerNodeImpl();
+                throw new RuntimeException("Broken after refactoring cannot create server node object without URL ");
+                // return new ServerNodeImpl();
             case Node.TYPE_LOCAL_NODE:
                 return new ObjectNode();
             default:

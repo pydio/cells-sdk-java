@@ -1,10 +1,12 @@
-package com.pydio.sdk.examples;
+package com.pydio.sdk.core.security;
 
-public class Credentials implements com.pydio.sdk.api.Credentials {
+import com.pydio.sdk.api.Credentials;
+
+public class PasswordCredentials implements Credentials {
     private final String login;
     private final String password;
 
-    public Credentials(String login, String password) {
+    public PasswordCredentials(String login, String password) {
         this.login = login;
         this.password = password;
     }

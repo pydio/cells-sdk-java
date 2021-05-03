@@ -1,83 +1,71 @@
 package com.pydio.sdk.core.auth;
 
+import com.pydio.sdk.api.Credentials;
+import com.pydio.sdk.api.ErrorCodes;
+import com.pydio.sdk.api.ICellsSession;
+import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.core.CellsSession;
+import com.pydio.sdk.core.common.http.HttpClient;
+import com.pydio.sdk.core.common.http.HttpRequest;
+import com.pydio.sdk.core.common.http.HttpResponse;
+import com.pydio.sdk.core.common.http.Method;
+import com.pydio.sdk.core.utils.Log;
+import com.pydio.sdk.core.utils.Params;
 import com.pydio.sdk.generated.cells.ApiClient;
 import com.pydio.sdk.generated.cells.ApiException;
 import com.pydio.sdk.generated.cells.api.FrontendServiceApi;
 import com.pydio.sdk.generated.cells.model.RestFrontSessionRequest;
 import com.pydio.sdk.generated.cells.model.RestFrontSessionResponse;
-import com.pydio.sdk.api.ErrorCodes;
-import com.pydio.sdk.api.SDKException;
-import com.pydio.sdk.core.common.http.HttpClient;
-import com.pydio.sdk.core.common.http.HttpRequest;
-import com.pydio.sdk.core.common.http.HttpResponse;
-import com.pydio.sdk.core.common.http.Method;
-import com.pydio.sdk.api.nodes.ServerNode;
-import com.pydio.sdk.api.Credentials;
-import com.pydio.sdk.core.utils.Log;
-import com.pydio.sdk.core.utils.Params;
-import com.squareup.okhttp.OkHttpClient;
-
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.net.ssl.SSLContext;
-
 public class TokenService {
 
-    private static TokenService instance;
+    private final Token.Store store;
 
-    public static void init(Token.Store store) {
-        instance = new TokenService();
-        instance.store = store;
+    public TokenService(Token.Store store) {
+        this.store = store;
     }
 
-    public static Token get(ServerNode server, Credentials credentials, boolean skipOAuth) throws SDKException {
-        return instance.resolve(server, credentials, skipOAuth);
-    }
+    public Token get(CellsSession session, String login, String address) throws SDKException {
+        String subject = String.format("%s@%s", login, address);
 
-    private Token.Store store;
+        Token t = store.get(subject);
+        if (t == null) {
+            throw new SDKException(ErrorCodes.no_token_available, "Please login first", null);
+        }
 
-    private TokenService() {}
-
-    private synchronized Token resolve(ServerNode server, Credentials credentials, boolean skipOAuth) throws SDKException {
-        String subject = String.format("%s@%s", credentials.getLogin(), server.url());
-        Token t = this.store.get(subject);
-
-        if (t != null && !t.isExpired()) {
+        if (!t.isExpired()) {
             return t;
+        } else {
+            t = refresh(session, t, login, address);
+            store.save(t);
         }
 
-        /* if (skipOAuth) {
-            throw new SDKException(ErrorCodes.token_expired, new IOException("no valid token available"));
-        } */
-
-        if (server.supportsOauth() && !skipOAuth) {
-            if (t != null) {
-                return this.refresh(server, t);
-            }
-            throw new SDKException(ErrorCodes.no_token_available, new IOException("no valid token available"));
-        } else { // Legacy call with credentials
-            return this.loginPasswordGetToken(server, credentials);
-        }
+        return t;
     }
 
-    private Token refresh(ServerNode server, Token t) throws SDKException {
+    public void register(Token token) throws SDKException {
+        store.save(token);
+    }
+
+
+    private Token refresh(CellsSession session, Token t, String login, String address) throws SDKException {
         Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
-        OauthConfig cfg = OauthConfig.fromJSON(server.getOIDCInfo(), "");
 
         HttpRequest request = new HttpRequest();
         Params params = Params.create("grant_type", "refresh_token").set("refresh_token", t.refreshToken);
         request.setParams(params);
 
-        Base64 base64 = new Base64();
-        String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
+        // Legacy deprecated refresh method
+        // Base64 base64 = new Base64();
+        // String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
+        // request.setHeaders(Params.create("Authorization", "Basic " + auth));
 
-        request.setHeaders(Params.create("Authorization", "Basic " + auth));
-        request.setEndpoint(cfg.tokenEndpoint);
+        request.setEndpoint(session.getOAuthConfig().tokenEndpoint);
         request.setMethod(Method.POST);
 
         HttpResponse response;
@@ -110,54 +98,42 @@ public class TokenService {
             throw new SDKException(ErrorCodes.no_token_available);
         }
 
-        t.subject = String.format("%s@%s", parsedIDToken.claims.name, server.url());
+        t.subject = String.format("%s@%s", parsedIDToken.claims.name, address);
         t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
-        this.store.save(t);
+        if (store != null) {
+            store.save(t);
+        }
         return t;
     }
 
-    private Token loginPasswordGetToken(ServerNode server, Credentials credentials) throws SDKException {
-        String password = credentials.getPassword();
-        if (password == null) {
-            throw new SDKException(ErrorCodes.no_token_available, new IOException("no password provided"));
-        }
 
-        ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath(server.apiURL());
-        if (server.isSSLUnverified()) {
-            SSLContext context = server.getSslContext();
-            OkHttpClient c = apiClient.getHttpClient();
-            c.setSslSocketFactory(context.getSocketFactory());
-            c.setHostnameVerifier((s, sslSession) -> server.url().contains(s));
-        }
-
-        RestFrontSessionRequest request = new RestFrontSessionRequest();
-        request.setClientTime((int) System.currentTimeMillis());
+    public Token legacyLogin(CellsSession session, Credentials credentials) throws SDKException {
 
         Map<String, String> authInfo = new HashMap<>();
         authInfo.put("login", credentials.getLogin());
-        authInfo.put("password", password);
+        authInfo.put("password",credentials.getPassword());
         authInfo.put("type", "credentials");
+
+        RestFrontSessionRequest request = new RestFrontSessionRequest();
+        request.setClientTime((int) System.currentTimeMillis());
         request.authInfo(authInfo);
 
-        FrontendServiceApi api = new FrontendServiceApi(apiClient);
+        FrontendServiceApi api = new FrontendServiceApi(session.getApiClient());
         RestFrontSessionResponse response;
         try {
             response = api.frontSession(request);
+
+            Token t = new Token();
+            String subject = String.format("%s@%s", credentials.getLogin(), session.getServerNode().getServerURL().getId());
+            t.subject = subject;
+            t.value = response.getJWT();
+            long expireIn = (long) response.getExpireTime();
+            t.expiry = System.currentTimeMillis() / 1000 + expireIn;
+            store.save(t);
+
+            return t;
         } catch (ApiException e) {
-            throw new SDKException(ErrorCodes.no_token_available, new IOException("no password provided"));
+            throw new SDKException(ErrorCodes.no_token_available, new IOException("login or password incorrect"));
         }
-
-        String subject = String.format("%s@%s", credentials.getLogin(), server.url());
-
-        Token t = new Token();
-        t.subject = subject;
-        t.value = response.getJWT();
-        long expireIn = (long) response.getExpireTime();
-        t.expiry = System.currentTimeMillis() / 1000 + expireIn;
-        if (this.store != null) {
-            this.store.save(t);
-        }
-        return t;
     }
 }

@@ -1,30 +1,32 @@
 package com.pydio.sdk.sync.fs;
 
-import com.pydio.sdk.core.CellsClient;
-import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.Change;
+import com.pydio.sdk.api.ISession;
+import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.nodes.ChangeNode;
+import com.pydio.sdk.core.CellsClient;
+import com.pydio.sdk.core.model.TreeNodeInfo;
+import com.pydio.sdk.core.utils.CellsPath;
 import com.pydio.sdk.sync.Error;
 import com.pydio.sdk.sync.changes.GetChangeRequest;
 import com.pydio.sdk.sync.changes.GetChangesResponse;
-import com.pydio.sdk.sync.content.Content;
-import com.pydio.sdk.sync.content.ContentLoader;
 import com.pydio.sdk.sync.changes.ProcessChangeRequest;
 import com.pydio.sdk.sync.changes.ProcessChangeResponse;
+import com.pydio.sdk.sync.content.Content;
+import com.pydio.sdk.sync.content.ContentLoader;
 import com.pydio.sdk.sync.content.RemoteFileContent;
 import com.pydio.sdk.sync.tree.StateManager;
-import com.pydio.sdk.core.model.TreeNodeInfo;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
-import com.pydio.sdk.core.utils.CellsPath;
-
 public class CellsFs implements Fs, ContentLoader {
 
-    private CellsClient cells;
+    // private CellsClient cells;
+    private ISession session;
     private String workspace;
     private String id;
     private StateManager stateManager;
@@ -33,9 +35,9 @@ public class CellsFs implements Fs, ContentLoader {
     private final static int ADD = 2;
     private final static int DELETE = 3;
 
-    public CellsFs(String id, CellsClient cells, String workspace, StateManager manager) {
+    public CellsFs(String id, ISession session, String workspace, StateManager manager) {
         this.id = id;
-        this.cells = cells;
+        this.session = session;
         this.workspace = workspace;
         this.stateManager = manager;
     }
@@ -192,21 +194,30 @@ public class CellsFs implements Fs, ContentLoader {
     }
 
     private boolean isUnchanged(String fullPath) throws SDKException {
-
-        TreeNodeInfo remote = cells.statOptionalNode(fullPath);
-        TreeNodeInfo local = stateManager.get(fullPath);
-
-        if (local == null && remote == null) {
-            return true;
-        } else if (remote == null || local == null) {
-            return false;
-        }
-
-        // We cannot rely on the ETag at root path
-        // String remoteEtag = remote.getETag();
-        // String localEtag = local.getETag();
-        // return (remoteEtag != null) && remoteEtag.equals(localEtag);
-        return false;
+        throw new RuntimeException("Broken after refactoring");
+        //TreeNodeInfo remote;
+//
+        //try {
+        //    remote = session.getClient().statNode(fullPath);
+        //} catch (SDKException e) {
+        //    if (e.getCode() != ErrorCodes.not_found) {
+        //        throw e;
+        //    }
+        //    remote = null;
+        //}
+        //TreeNodeInfo local = stateManager.get(fullPath);
+//
+        //if (local == null && remote == null) {
+        //    return true;
+        //} else if (remote == null || local == null) {
+        //    return false;
+        //}
+//
+        //// We cannot rely on the ETag at root path
+        //// String remoteEtag = remote.getETag();
+        //// String localEtag = local.getETag();
+        //// return (remoteEtag != null) && remoteEtag.equals(localEtag);
+        //return false;
     }
 
     @Override
@@ -221,7 +232,9 @@ public class CellsFs implements Fs, ContentLoader {
 
     @Override
     public Content getContent(String nodeId) {
-        return new RemoteFileContent(cells, workspace, nodeId);
+        throw new RuntimeException("Broken after refactoring");
+
+        // return new RemoteFileContent(cells, workspace, nodeId);
     }
 
     @Override
@@ -237,11 +250,13 @@ public class CellsFs implements Fs, ContentLoader {
     private Collection<TreeNodeInfo> listChildren(String fullPath) throws SDKException {
         TreeMap<String, TreeNodeInfo> sorterContainer = new TreeMap<>();
 
-        cells.listChildren(fullPath, (n) -> {
-            sorterContainer.put(n.getPath(), CellsClient.toTreeNodeinfo(n));
-        });
+        throw new RuntimeException("Broken after refactoring");
 
-        return sorterContainer.values();
+        //cells.listChildren(fullPath, (n) -> {
+        //    sorterContainer.put(n.getPath(), CellsClient.toTreeNodeinfo(n));
+        //});
+//
+        //return sorterContainer.values();
     }
 
 }

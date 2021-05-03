@@ -3,6 +3,8 @@ package com.pydio.sdk.core;
 import com.pydio.sdk.api.Client;
 import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.ErrorCodes;
+import com.pydio.sdk.api.ILegacySession;
+import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.Node;
 import com.pydio.sdk.api.PropNames;
 import com.pydio.sdk.api.SdkNames;
@@ -57,194 +59,25 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class P8Client implements Client, SdkNames {
 
-    private final static Map<String, String> secureTokens = new ConcurrentHashMap<>();
-    private final static Map<String, CookieManager> cookieManagers = new ConcurrentHashMap<>();
-
-    private final ServerNode serverNode;
     private final com.pydio.sdk.generated.p8.P8Client p8;
-    private Credentials credentials;
-    private int loginFailure;
+    private final ILegacySession session;
 
-    public P8Client(ServerNode node) {
-        this.serverNode = node;
-        loginFailure = 0;
-
-        Configuration config = new Configuration();
-        config.endpoint = serverNode.url();
-        config.resolver = serverNode.getServerResolver();
-        if (config.selfSigned = serverNode.isSSLUnverified()) {
-            config.sslContext = serverNode.getSslContext();
-            config.hostnameVerifier = serverNode.getHostnameVerifier();
-        }
-        p8 = new com.pydio.sdk.generated.p8.P8Client(config);
+    public P8Client(ISession session) {
+        this.session = (ILegacySession) session;
+        p8 = new com.pydio.sdk.generated.p8.P8Client(session);
     }
 
     private P8Request refreshSecureToken(P8Request req) {
         try {
-            JSONObject info = authenticationInfo();
-            if (!info.has(Param.captchaCode)) {
-                login();
-                String secureToken = getSecureToken();
-                return P8RequestBuilder.update(req).setSecureToken(secureToken).getRequest();
+            if (!session.useCaptcha()) {
+                session.login();
+                String secureToken = session.getToken();
+                return P8RequestBuilder.update(req).setToken(session).getRequest();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private void loadSecureToken() throws SDKException {
-        String secureToken = getSecureToken();
-        if (null == secureToken || "".equals(secureToken)) {
-            login();
-        }
-    }
-
-    private void saveSecureToken(String secureToken) {
-        String id = this.credentials.getLogin() + "@" + this.serverNode.url();
-        secureTokens.put(id, secureToken);
-    }
-
-    private String getSecureToken() {
-        String id = this.credentials.getLogin() + "@" + this.serverNode.url();
-        return secureTokens.get(id);
-    }
-
-    private CookieManager getCookieManager() {
-        String id = this.credentials.getLogin() + "@" + this.serverNode.url();
-        CookieManager cm = cookieManagers.get(id);
-        if (cm == null) {
-            cm = new CookieManager();
-            cookieManagers.put(id, cm);
-        }
-        return cm;
-    }
-
-    @Override
-    public ServerNode getServerNode() {
-        return serverNode;
-    }
-
-    @Override
-    public void setCredentials(Credentials c) {
-        this.credentials = c;
-        CookieManager cookieManager = getCookieManager();
-        p8.setCookieManager(cookieManager);
-    }
-
-    @Override
-    public void setSkipOAuthFlag(boolean skipOAuth) {
-
-    }
-
-    @Override
-    public String getUser() {
-        return this.credentials.getLogin();
-    }
-
-    @Override
-    public InputStream getUserData(String binary) throws SDKException {
-        String secureToken = getSecureToken();
-        P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setSecureToken(secureToken).getRequest();
-        try (P8Response rsp = p8.execute(req)) {
-            final int code = rsp.code();
-            if (code != ErrorCodes.ok) {
-                if (code == ErrorCodes.authentication_required && credentials != null && loginFailure == 0) {
-                    loginFailure++;
-                    login();
-                    return getUserData(binary);
-                }
-                throw new SDKException(code);
-            }
-            return rsp.getContent();
-        }
-    }
-
-    @Override
-    public void login() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.login(credentials);
-        P8Request req = builder.getRequest();
-
-        try (P8Response rsp = p8.execute(req)) {
-            final int code = rsp.code();
-            if (code != ErrorCodes.ok) {
-                rsp.close();
-                throw new SDKException(code);
-            }
-
-            Document doc = rsp.toXMLDocument();
-            if (doc != null) {
-                if (doc.getElementsByTagName("logging_result").getLength() > 0) {
-                    String result = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem("value").getNodeValue();
-                    if (result.equals("1")) {
-                        String secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(Param.secureToken).getNodeValue();
-                        this.saveSecureToken(secureToken);
-                        loginFailure = 0;
-                    } else {
-                        loginFailure++;
-                        if (result.equals("-4")) {
-                            rsp.close();
-                            throw new SDKException(ErrorCodes.authentication_with_captcha_required);
-                        }
-                        rsp.close();
-                        throw new SDKException(ErrorCodes.authentication_required);
-                    }
-                } else {
-                    rsp.close();
-                    throw SDKException.unexpectedContent(new IOException(doc.toString()));
-                }
-            } else {
-                rsp.close();
-                throw new SDKException(ErrorCodes.authentication_required);
-            }
-        }
-    }
-
-    @Override
-    public void logout() {
-        String secureToken = getSecureToken();
-        P8Response response = p8.execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
-        response.close();
-    }
-
-    @Override
-    public JSONObject userInfo() throws SDKException {
-        return null;
-    }
-
-    @Override
-    public X509Certificate[] remoteCertificateChain() {
-        return new X509Certificate[0];
-    }
-
-    @Override
-    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        try (P8Response rsp = p8.execute(builder.getRequest())) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
-            if (code != ErrorCodes.ok) {
-                throw new SDKException(code);
-            }
-        }
-    }
-
-    @Override
-    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-            if (code != ErrorCodes.ok) {
-                rsp.close();
-                throw new SDKException(code);
-            }
-        }
     }
 
     @Override
@@ -263,8 +96,7 @@ public class P8Client implements Client, SdkNames {
                 WORKSPACE_ACCESS_TYPE_INBOX,
         };
 
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -283,41 +115,8 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        P8Response rsp = p8.execute(builder.getRequest());
-        if (rsp.code() != ErrorCodes.ok) {
-            throw new SDKException(rsp.code());
-        }
-        return rsp.getContent();
-    }
-
-    @Override
-    public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
-        if (rsp.code() != ErrorCodes.ok) {
-            throw new SDKException(rsp.code());
-        }
-        return rsp.getContent();
-    }
-
-    @Override
-    public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
-        if (rsp.code() != ErrorCodes.ok) {
-            throw new SDKException(rsp.code());
-        }
-        return rsp.getContent();
-    }
-
-    @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.nodeInfo(ws, path).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.nodeInfo(ws, path).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -337,8 +136,7 @@ public class P8Client implements Client, SdkNames {
     public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
         PageOptions nextOptions = new PageOptions();
 
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.ls(ws, folder).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.ls(ws, folder).setToken(session);
         while (true) {
             try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
                 int code = rsp.code();
@@ -370,8 +168,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void search(String ws, String dir, String searchedText, NodeHandler h) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.search(ws, dir, searchedText).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.search(ws, dir, searchedText).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             int code = rsp.code();
             if (code != ErrorCodes.ok) {
@@ -391,14 +188,23 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void getBookmarks(NodeHandler handler) throws SDKException {
-        String secureToken = getSecureToken();
-        List<WorkspaceNode> workspaceNodes = new ArrayList<>(serverNode.getWorkspaces().values());
-        if (workspaceNodes.isEmpty()) {
+
+        List<WorkspaceNode> workspaceNodes = new ArrayList<>();
+
+        if (session.isOffline()){
+            workspaceNodes.addAll(session.getCachedWorkspaces().values());
+        } else {
             workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
+
         }
 
+        // List<WorkspaceNode> workspaceNodes = new ArrayList<>(serverNode.getWorkspaces().values());
+        // if (workspaceNodes.isEmpty()) {
+        //     workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
+        // }
+
         for (WorkspaceNode wn : workspaceNodes) {
-            P8RequestBuilder builder = P8RequestBuilder.listBookmarked(wn.getId(), "/").setSecureToken(secureToken);
+            P8RequestBuilder builder = P8RequestBuilder.listBookmarked(wn.getId(), "/").setToken(session);
             while (true) {
                 try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
                     int code = rsp.code();
@@ -437,13 +243,15 @@ public class P8Client implements Client, SdkNames {
         stats(ws, path, false);
 
         long maxChunkSize = 2 * 1024 * 1204; // Default apache in most php init configs
-        String maxSize = this.serverNode.getProperty(PropNames.UPLOAD_MAX_SIZE);
-        if (maxSize != null && !"".equals(maxSize)) {
-            try {
-                maxChunkSize = Long.parseLong(maxSize);
-            } catch (Exception ignored) {
-            }
-        }
+
+        // TODO reimplement max size support for P8
+        // String maxSize = session.getServerNode().getProperty(PropNames.UPLOAD_MAX_SIZE);
+        // if (maxSize != null && !"".equals(maxSize)) {
+        //     try {
+        //         maxChunkSize = Long.parseLong(maxSize);
+        //    } catch (Exception ignored) {
+        //     }
+       //  }
 
         ContentBody cb = new ContentBody(source, name, length, maxChunkSize);
         if (progressListener != null) {
@@ -467,8 +275,7 @@ public class P8Client implements Client, SdkNames {
 
         P8RequestBuilder builder;
         try {
-            String secureToken = getSecureToken();
-            builder = P8RequestBuilder.upload(ws, path, name, autoRename, cb).setSecureToken(secureToken);
+            builder = P8RequestBuilder.upload(ws, path, name, autoRename, cb).setToken(session);
         } catch (IOException e) {
             e.printStackTrace();
             throw SDKException.encoding(e);
@@ -546,7 +353,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
-        loadSecureToken();
+        // loadSecureToken();
         try {
             P8RequestBuilder builder = null;
             try {
@@ -565,8 +372,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public long download(String ws, String path, OutputStream target, TransferProgressListener progressListener) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.download(ws, path).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.download(ws, path).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -598,9 +404,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String downloadURL(String ws, String file) throws SDKException {
-        loadSecureToken();
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.download(ws, file).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.download(ws, file).setToken(session);
         try {
             return p8.getURL(builder.getRequest());
         } catch (ProtocolException | UnknownHostException e) {
@@ -614,8 +418,7 @@ public class P8Client implements Client, SdkNames {
     public Message delete(String ws, String[] files) throws SDKException {
         Message msg = new Message();
         for (String file : files) {
-            String secureToken = getSecureToken();
-            P8RequestBuilder builder = P8RequestBuilder.delete(ws, new String[]{file}).setSecureToken(secureToken);
+            P8RequestBuilder builder = P8RequestBuilder.delete(ws, new String[]{file}).setToken(session);
             try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
                 if (rsp.code() != ErrorCodes.ok) {
                     throw new SDKException(rsp.code());
@@ -632,8 +435,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message restore(String ws, String[] files) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.restore(ws, files).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.restore(ws, files).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -645,8 +447,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message move(String ws, String[] files, String dstFolder) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.move(ws, files, dstFolder).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.move(ws, files, dstFolder).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -658,8 +459,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message rename(String ws, String srcFile, String dstFile) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.rename(ws, srcFile, new File(dstFile).getName()).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.rename(ws, srcFile, new File(dstFile).getName()).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -671,8 +471,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message copy(String ws, String[] files, String folder) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.copy(ws, files, folder).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.copy(ws, files, folder).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -684,8 +483,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message bookmark(String ws, String file) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.bookmark(ws, file).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.bookmark(ws, file).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -697,8 +495,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message unbookmark(String ws, String file) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.unbookmark(ws, file).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.unbookmark(ws, file).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -710,8 +507,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message mkdir(String ws, String parent, String name) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.mkdir(ws, parent, name).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.mkdir(ws, parent, name).setToken(session);
         P8Request req = builder.getRequest();
         try (P8Response rsp = p8.execute(req, this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
@@ -724,8 +520,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public InputStream previewData(String ws, String file, int dim) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file, dim).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file, dim).setToken(session);
         P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
         if (rsp.code() != ErrorCodes.ok) {
             throw new SDKException(rsp.code());
@@ -735,9 +530,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String streamingAudioURL(String ws, String file) throws SDKException {
-        loadSecureToken();
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.streamingAudio(ws, file).setSecureToken(secureToken);
+        // loadSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.streamingAudio(ws, file).setToken(session);
         try {
             return p8.getURL(builder.getRequest());
         } catch (ProtocolException | UnknownHostException e) {
@@ -749,10 +543,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String streamingVideoURL(String ws, String file) throws SDKException {
-        loadSecureToken();
-        String secureToken = getSecureToken();
-
-        P8RequestBuilder builder = P8RequestBuilder.streamingVideo(ws, file).setSecureToken(secureToken);
+        // loadSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.streamingVideo(ws, file).setToken(session);
         try {
             return p8.getURL(builder.getRequest());
         } catch (ProtocolException | UnknownHostException e) {
@@ -765,10 +557,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
-        loadSecureToken();
-        String secureToken = getSecureToken();
-
-        P8RequestBuilder builder = P8RequestBuilder.stats(ws, file, withHash).setSecureToken(secureToken);
+        // loadSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.stats(ws, file, withHash).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -799,8 +589,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public long changes(String ws, String filter, int seq, boolean flatten, ChangeHandler handler) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.changes(ws, filter, seq, flatten).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.changes(ws, filter, seq, flatten).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -902,10 +691,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String share(String ws, String file, String ws_label, boolean isFolder, String ws_description, String password, int expiration, int download, boolean canPreview, boolean canDownload) throws SDKException {
-        loadSecureToken();
-        String secureToken = getSecureToken();
-
-        P8RequestBuilder builder = P8RequestBuilder.share(ws, file, ws_description).setSecureToken(secureToken);
+       //  loadSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.share(ws, file, ws_description).setToken(session);
         if (password != null && !"".equals(password)) {
             builder.setParam(Param.shareGuestUserPassword, password);
         }
@@ -928,9 +715,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void unshare(String ws, String file) throws SDKException {
-        loadSecureToken();
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.unShare(ws, file).setSecureToken(secureToken);
+        // loadSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.unShare(ws, file).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -940,9 +726,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public JSONObject shareInfo(String ws, String file) throws SDKException {
-        loadSecureToken();
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.shareInfo(ws, file).setSecureToken(secureToken);
+        // loadSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.shareInfo(ws, file).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -956,51 +741,8 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public InputStream getCaptcha() {
-        P8Request request = new P8RequestBuilder().setAction(Action.getCaptcha).getRequest();
-        return p8.execute(request).getContent();
-    }
-
-    @Override
-    public JSONObject authenticationInfo() throws SDKException {
-        try (P8Response seedResponse = p8.execute(P8RequestBuilder.getSeed().getRequest())) {
-            String seed = seedResponse.toString();
-            JSONObject o = new JSONObject();
-
-            boolean withCaptcha = false;
-
-            if (!"-1".equals(seed)) {
-                seed = seed.trim();
-                if (seed.contains("\"seed\":-1") || seed.contains("\"seed\": -1")) {
-                    withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
-                    o.put(Param.seed, "-1");
-
-                } else {
-                    String contentType = seedResponse.getHeaders("Content-Type").get(0);
-                    boolean seemsToBePydio = (contentType != null) && (
-                            (contentType.toLowerCase().contains("text/plain"))
-                                    | (contentType.toLowerCase().contains("text/xml"))
-                                    | (contentType.toLowerCase().contains("text/json"))
-                                    | (contentType.toLowerCase().contains("application/json")));
-
-                    if (!seemsToBePydio) {
-                        throw SDKException.unexpectedContent(new IOException(seed));
-                    }
-                    o.put(Param.seed, "-1");
-                }
-            }
-
-            if (withCaptcha) {
-                o.put(Param.captchaCode, true);
-            }
-            return o;
-        }
-    }
-
-    @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.emptyRecycle(ws).setSecureToken(secureToken);
+        P8RequestBuilder builder = P8RequestBuilder.emptyRecycle(ws).setToken(session);
         try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());

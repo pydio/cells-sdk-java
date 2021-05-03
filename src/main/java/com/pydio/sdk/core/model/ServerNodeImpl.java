@@ -2,11 +2,14 @@ package com.pydio.sdk.core.model;
 
 import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.api.Node;
+import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.SdkNames;
+import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.nodes.WorkspaceNode;
 import com.pydio.sdk.api.callbacks.ServerResolver;
 import com.pydio.sdk.api.Error;
+import com.pydio.sdk.core.ServerURLImpl;
 import com.pydio.sdk.core.security.CertificateTrust;
 import com.pydio.sdk.core.security.CertificateTrustManager;
 import com.pydio.sdk.core.utils.ServerResolution;
@@ -45,6 +48,8 @@ import javax.net.ssl.TrustManager;
  */
 public class ServerNodeImpl implements ServerNode {
 
+    private final ServerURL serverURL;
+
     private Map<String, WorkspaceNode> workspaces;
     private String scheme = null;
     private String host = null;
@@ -67,18 +72,25 @@ public class ServerNodeImpl implements ServerNode {
     private CertificateTrust.Helper trustHelper;
     private ServerResolver serverResolver;
 
-    public ServerNodeImpl() {
+    public ServerNodeImpl(ServerURL serverURL) {
+        this.serverURL = serverURL;
     }
 
-    public static ServerNodeImpl fromAddress(String address) throws IOException {
-        URL url = new URL(address);
-        ServerNodeImpl node = new ServerNodeImpl();
-        node.scheme = url.getProtocol();
-        node.host = url.getHost();
-        node.port = url.getPort();
-        node.path = url.getPath();
-        node.url = address;
-        return node;
+    public static ServerNodeImpl fromServerURL(ServerURL serverURL) {
+        return new ServerNodeImpl(serverURL);
+    }
+
+    public static ServerNodeImpl fromAddress(String address) throws SDKException, MalformedURLException {
+        return fromServerURL(ServerURLImpl.fromAddress(address));
+    }
+
+    @Override
+    public ServerURL getServerURL(String path) throws MalformedURLException {
+        return serverURL.withPath(path);
+    }
+
+    public ServerURL getServerURL() {
+        return serverURL;
     }
 
     /* Server Node methods */
@@ -109,6 +121,7 @@ public class ServerNodeImpl implements ServerNode {
     public Map<String, WorkspaceNode> getWorkspaces(){
         return workspaces;
     }
+
 
 
     public ServerNodeImpl init(String url) {

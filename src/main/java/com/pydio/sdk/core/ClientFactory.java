@@ -1,6 +1,7 @@
 package com.pydio.sdk.core;
 
 import com.pydio.sdk.api.Client;
+import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.nodes.ServerNode;
 
 public class ClientFactory {
@@ -16,10 +17,10 @@ public class ClientFactory {
         p8DefaultFactory = f;
     }
 
-    public static Client get(ServerNode node) {
-        if (node.isLegacy()){
-            return p8DefaultFactory.get(node);
+    public static Client get(ISession session) {
+        if (session.getServerNode().isLegacy()){
+            return p8DefaultFactory.get(session);
         }
-            return cellsDefaultFactory.get(node);
+            return cellsDefaultFactory.get(session);
     }
 }

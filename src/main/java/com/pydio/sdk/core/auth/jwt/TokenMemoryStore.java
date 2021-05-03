@@ -12,7 +12,12 @@ public class TokenMemoryStore implements Token.Store {
 
     @Override
     public void save(Token t) {
-        map.put(t.subject, t);
+        save(t.subject, t);
+    }
+
+    @Override
+    public void save(String subject, Token t) {
+        map.put(subject, t);
     }
 
     @Override

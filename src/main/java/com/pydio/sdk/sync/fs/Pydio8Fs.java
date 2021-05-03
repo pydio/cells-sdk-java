@@ -100,6 +100,10 @@ public class Pydio8Fs implements Fs, ContentLoader {
 
     @Override
     public Content getContent(String path) {
-        return new RemoteFileContent(client, workspace, path);
+
+        // FIXME adapt after refactoring
+        throw new RuntimeException("Broken after refactoring");
+
+        // return new RemoteFileContent(client, workspace, path);
     }
 }

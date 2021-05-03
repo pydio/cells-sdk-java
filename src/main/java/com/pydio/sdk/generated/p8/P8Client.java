@@ -1,9 +1,10 @@
 package com.pydio.sdk.generated.p8;
 
 import com.pydio.sdk.api.ErrorCodes;
+import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.core.ApplicationData;
-import com.pydio.sdk.generated.p8.consts.Param;
 import com.pydio.sdk.core.utils.Params;
+import com.pydio.sdk.generated.p8.consts.Param;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,26 +24,33 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * This class handle a session with a pydio server
- *
- * @author pydio
+ * This class handle a session with a Pydio server
  */
 public class P8Client {
 
     private CookieManager cookies;
 
-    private final com.pydio.sdk.generated.p8.Configuration config;
+    private final Configuration config;
 
-    public P8Client(Configuration config) {
+    public P8Client(ISession session) {
         this.cookies = new CookieManager();
-        this.config = config;
+
+        config = new Configuration();
+        config.endpoint = session.getServerNode().getApiURL();
+        config.resolver = null;
+        // config.resolver = session.getServerNode().getServerResolver();
+
+        if (config.selfSigned = session.getServerNode().isSSLUnverified()) {
+            config.sslContext = session.getServerNode().getSslContext();
+            config.hostnameVerifier = session.getServerNode().getHostnameVerifier();
+        }
     }
 
     public void setCookieManager(CookieManager man) {
         cookies = man;
     }
 
-    public com.pydio.sdk.generated.p8.P8Response execute(com.pydio.sdk.generated.p8.P8Request request) {
+    public P8Response execute(P8Request request) {
         if (request.method != null) {
             switch (request.method) {
                 case com.pydio.sdk.generated.p8.Method.get:
@@ -68,12 +76,12 @@ public class P8Client {
         return post(request);
     }
 
-    public com.pydio.sdk.generated.p8.P8Response execute(com.pydio.sdk.generated.p8.P8Request request, RetryCallback retry, int code) {
-        com.pydio.sdk.generated.p8.P8Response response = execute(request);
+    public P8Response execute(P8Request request, RetryCallback retry, int code) {
+        P8Response response = execute(request);
         final int c = response.code();
         if (c == code) {
             response.close();
-            com.pydio.sdk.generated.p8.P8Request retryRequest = retry.update(request);
+            P8Request retryRequest = retry.update(request);
             if (retryRequest != null) {
                 response = execute(retryRequest);
             }
@@ -81,7 +89,7 @@ public class P8Client {
         return response;
     }
 
-    public String getURL(com.pydio.sdk.generated.p8.P8Request request) throws ProtocolException, UnsupportedEncodingException, UnknownHostException {
+    public String getURL(P8Request request) throws ProtocolException, UnsupportedEncodingException, UnknownHostException {
         String u = this.config.endpoint;
         if (!u.endsWith("/")) {
             u += "/";
@@ -184,7 +192,7 @@ public class P8Client {
         return con;
     }
 
-    private com.pydio.sdk.generated.p8.P8Response get(com.pydio.sdk.generated.p8.P8Request request) {
+    private P8Response get(P8Request request) {
         String url = config.endpoint;
         if (!url.endsWith("/")) {
             url = url + "/";
@@ -210,7 +218,7 @@ public class P8Client {
         return response;
     }
 
-    private com.pydio.sdk.generated.p8.P8Response post(com.pydio.sdk.generated.p8.P8Request request) {
+    private P8Response post(P8Request request) {
         String url = config.endpoint;
         if (!url.endsWith("/")) {
             url = url + "/";
@@ -305,7 +313,7 @@ public class P8Client {
                 out.write(postDataBytes);
             }
 
-            com.pydio.sdk.generated.p8.P8Response response = new com.pydio.sdk.generated.p8.P8Response(con);
+            P8Response response = new P8Response(con);
             Map<String, List<String>> headerFields = con.getHeaderFields();
             List<String> cookiesHeader = headerFields.get("Set-Cookie");
             if (cookiesHeader != null) {
@@ -319,22 +327,22 @@ public class P8Client {
             return response;
         } catch (IOException e) {
             e.printStackTrace();
-            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
+            return P8Response.error(ErrorCodes.con_failed);
         }
     }
 
-    private com.pydio.sdk.generated.p8.P8Response put(P8Request request) {
+    private P8Response put(P8Request request) {
         String url;
         try {
             url = getURL(request);
         } catch (IOException e) {
             e.printStackTrace();
-            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
+            return P8Response.error(ErrorCodes.con_failed);
         }
 
         HttpURLConnection con = getConnection(url, Method.put, request.ignoreCookies);
         if (con == null) {
-            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
+            return P8Response.error(ErrorCodes.con_failed);
         }
         con.setDoOutput(true);
 
@@ -343,7 +351,7 @@ public class P8Client {
         try {
             OutputStream out = con.getOutputStream();
             request.body.writeTo(out);
-            com.pydio.sdk.generated.p8.P8Response response = new com.pydio.sdk.generated.p8.P8Response(con);
+            P8Response response = new P8Response(con);
             Map<String, List<String>> headerFields = con.getHeaderFields();
             List<String> cookiesHeader = headerFields.get("Set-Cookie");
             if (cookiesHeader != null) {

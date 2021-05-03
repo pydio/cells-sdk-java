@@ -1,11 +1,14 @@
 package com.pydio.sdk.generated.p8;
 
+import com.pydio.sdk.api.Credentials;
+import com.pydio.sdk.api.ILegacySession;
+import com.pydio.sdk.api.ISession;
+import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.core.common.http.ContentBody;
+import com.pydio.sdk.core.utils.Params;
 import com.pydio.sdk.generated.p8.consts.Action;
 import com.pydio.sdk.generated.p8.consts.Const;
 import com.pydio.sdk.generated.p8.consts.Param;
-import com.pydio.sdk.core.common.http.ContentBody;
-import com.pydio.sdk.api.Credentials;
-import com.pydio.sdk.core.utils.Params;
 
 import java.io.File;
 import java.io.IOException;
@@ -387,7 +390,16 @@ public class P8RequestBuilder {
     }
 
     public P8RequestBuilder setSecureToken(String token) {
-        if(token != null) {
+        if (token != null) {
+            request.secureToken = token;
+            setParam(Param.secureToken, token);
+        }
+        return this;
+    }
+
+    public P8RequestBuilder setToken(ISession session) throws SDKException {
+        String token = ((ILegacySession) session).getToken();
+        if (token != null) {
             request.secureToken = token;
             setParam(Param.secureToken, token);
         }

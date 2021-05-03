@@ -16,7 +16,9 @@ public class ResolutionServer extends ServerNodeImpl {
     public Properties[] mEndpoints;
     public ByteArrayOutputStream mImage;
 
-    public ResolutionServer(String id, String resolverName){
+    public ResolutionServer(String id, String resolverName) {
+        // FIXME this does not work yet (but was also broken before refactoring)
+        super(null);
         clientID = id;
         name = resolverName;
     }
@@ -26,21 +28,22 @@ public class ResolutionServer extends ServerNodeImpl {
         return resolvedUrl;
     }
 
-    public boolean urlExpired(){
+    public boolean urlExpired() {
         String expiration = getProperty("expiration");
-        if(expiration == null){}
+        if (expiration == null) {
+        }
         return false;
     }
 
-    public String resolverName(){
+    public String resolverName() {
         return name;
     }
 
-    public String clientID(){
+    public String clientID() {
         return clientID;
     }
 
-    public void setResolvedUrl(String url){
+    public void setResolvedUrl(String url) {
         resolvedUrl = url;
     }
 }

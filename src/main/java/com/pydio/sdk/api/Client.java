@@ -2,49 +2,18 @@ package com.pydio.sdk.api;
 
 import com.pydio.sdk.api.callbacks.ChangeHandler;
 import com.pydio.sdk.api.callbacks.NodeHandler;
-import com.pydio.sdk.api.callbacks.RegistryItemHandler;
 import com.pydio.sdk.api.callbacks.TransferProgressListener;
 import com.pydio.sdk.api.nodes.FileNode;
-import com.pydio.sdk.api.nodes.ServerNode;
 
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.cert.X509Certificate;
 
 public interface Client {
 
-    ServerNode getServerNode();
-
-    void setCredentials(Credentials c);
-
-    void setSkipOAuthFlag(boolean skipOAuth);
-
-    String getUser();
-
-    InputStream getUserData(String binary) throws SDKException;
-
-    void login() throws SDKException;
-
-    void logout() throws SDKException;
-
-    JSONObject userInfo() throws SDKException;
-
-    X509Certificate[] remoteCertificateChain();
-
-    void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException;
-
-    void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException;
-
     void workspaceList(final NodeHandler handler) throws SDKException;
-
-    InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException;
-
-    InputStream getWorkspaceRegistry(String ws) throws SDKException;
-
-    InputStream getServerRegistryAsAuthenticatedUser() throws SDKException;
 
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
@@ -97,10 +66,6 @@ public interface Client {
     void unshare(String ws, String file) throws SDKException;
 
     JSONObject shareInfo(String ws, String file) throws SDKException;
-
-    InputStream getCaptcha() throws SDKException;
-
-    JSONObject authenticationInfo() throws SDKException;
 
     Message emptyRecycleBin(String ws) throws SDKException;
 }

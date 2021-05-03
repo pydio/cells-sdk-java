@@ -1,7 +1,10 @@
 package com.pydio.sdk.sync.content;
 
 import com.pydio.sdk.api.Client;
+import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.Server;
+import com.pydio.sdk.api.Session;
 import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.Stats;
 import com.pydio.sdk.sync.Error;
@@ -15,15 +18,18 @@ import javax.net.ssl.SSLContext;
 
 public class RemoteFileContent implements Content {
 
+    private final ISession session;
+    private final Client client;
+    private final String ws;
+    private final String path;
+
     private Stats stats;
     private Error error;
 
-    private Client client;
-    private String ws;
-    private String path;
+    public RemoteFileContent(ISession session, String ws, String path){
 
-    public RemoteFileContent(Client client, String ws, String path){
-        this.client = client;
+        this.session = session;
+        client = session.getClient();
         this.ws = ws;
         this.path = path;
 
@@ -66,12 +72,13 @@ public class RemoteFileContent implements Content {
             return null;
         }
 
-        ServerNode serverNode = client.getServerNode();
+        Server serverNode = session.getServerNode();
         if(serverNode.isSSLUnverified()) {
             SSLContext sslContext = serverNode.getSslContext();
             HttpsURLConnection c = (HttpsURLConnection) new URL(url).openConnection();
             c.setSSLSocketFactory(sslContext.getSocketFactory());
-            c.setHostnameVerifier((host, sslSession) -> serverNode.host().equals(host));
+            final String serverUrl = serverNode.getServerURL().getURL().toString();
+            c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
             return c.getInputStream();
         } else {
             return new java.net.URL(url).openStream();

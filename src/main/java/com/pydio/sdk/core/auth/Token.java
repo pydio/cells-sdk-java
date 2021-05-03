@@ -60,6 +60,7 @@ public class Token {
 
     public interface Store {
         void save(Token t);
+        void save(String subject, Token t);
         Token get(String subject);
         void delete(String subject);
     }

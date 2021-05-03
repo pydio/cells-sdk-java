@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import java.security.SecureRandom;
 
 public class OauthConfig {
+
     public String state;
-    public String baseURL;
     public String clientID;
     public String audience;
     public String clientSecret;
@@ -30,16 +30,15 @@ public class OauthConfig {
         cfg.tokenEndpoint = o.getString("token_endpoint");
         cfg.authorizeEndpoint = o.getString("authorization_endpoint");
         cfg.revokeEndpoint = o.getString("revocation_endpoint");
-        if ("".equals(scope)) {
-            cfg.scope = "openid email offline profile pydio";
-        } else {
-            cfg.scope = scope;
-        }
-
+        cfg.scope = scope;
 
         byte[] bytes = new byte[8];
         new SecureRandom().nextBytes(bytes);
         cfg.state = Hex.toString(bytes);
         return cfg;
+    }
+
+    public static OauthConfig fromJSON(JSONObject o) {
+        return  fromJSON(o, "openid email offline profile pydio");
     }
 }

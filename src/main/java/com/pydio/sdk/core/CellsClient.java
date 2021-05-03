@@ -4,30 +4,24 @@ import com.google.gson.Gson;
 import com.pydio.sdk.api.Client;
 import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.ErrorCodes;
-import com.pydio.sdk.api.nodes.FileNode;
+import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.Message;
 import com.pydio.sdk.api.PageOptions;
 import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.SdkNames;
-import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.Stats;
-import com.pydio.sdk.api.nodes.WorkspaceNode;
 import com.pydio.sdk.api.callbacks.ChangeHandler;
 import com.pydio.sdk.api.callbacks.NodeHandler;
-import com.pydio.sdk.api.callbacks.RegistryItemHandler;
 import com.pydio.sdk.api.callbacks.TransferProgressListener;
-import com.pydio.sdk.core.auth.Token;
-import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.api.nodes.FileNode;
+import com.pydio.sdk.api.nodes.WorkspaceNode;
 import com.pydio.sdk.core.model.TreeNodeInfo;
-import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
-import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.sdk.core.utils.FileNodeUtils;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.io;
 import com.pydio.sdk.generated.cells.ApiClient;
 import com.pydio.sdk.generated.cells.ApiException;
-import com.pydio.sdk.generated.cells.api.FrontendServiceApi;
 import com.pydio.sdk.generated.cells.api.JobsServiceApi;
 import com.pydio.sdk.generated.cells.api.SearchServiceApi;
 import com.pydio.sdk.generated.cells.api.ShareServiceApi;
@@ -39,7 +33,6 @@ import com.pydio.sdk.generated.cells.model.IdmUserMeta;
 import com.pydio.sdk.generated.cells.model.RestBulkMetaResponse;
 import com.pydio.sdk.generated.cells.model.RestCreateNodesRequest;
 import com.pydio.sdk.generated.cells.model.RestDeleteNodesRequest;
-import com.pydio.sdk.generated.cells.model.RestFrontSessionRequest;
 import com.pydio.sdk.generated.cells.model.RestGetBulkMetaRequest;
 import com.pydio.sdk.generated.cells.model.RestNodesCollection;
 import com.pydio.sdk.generated.cells.model.RestPagination;
@@ -60,7 +53,6 @@ import com.pydio.sdk.generated.cells.model.TreeQuery;
 import com.pydio.sdk.generated.cells.model.TreeSearchRequest;
 import com.pydio.sdk.generated.cells.model.TreeWorkspaceRelativePath;
 import com.pydio.sdk.generated.cells.model.UpdateUserMetaRequestUserMetaOp;
-import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -73,43 +65,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
-import javax.net.ssl.SSLContext;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class CellsClient implements Client, SdkNames {
 
-    public String URL;
-    protected String bearerValue;
+    private final CellsSession session;
 
     private Credentials credentials;
     private Boolean skipOAuth = false;
-    private String userAgent;
 
-    private final ServerNode serverNode;
-    private final String apiURL;
-
-    public CellsClient(ServerNode node) {
-        this.serverNode = node;
-        this.URL = node.url();
-        String url = node.apiURL();
-        try {
-            new URL(url);
-        } catch (MalformedURLException e) {
-            // ENDPOINT_REST_API property in server boot conf
-            url = this.URL + url;
-        }
-        this.apiURL = url;
+    public CellsClient(ISession session) {
+        this.session = (CellsSession) session;
     }
 
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
@@ -120,162 +92,14 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public ServerNode getServerNode() {
-        return serverNode;
-    }
-
-    @Override
-    public void setCredentials(Credentials c) {
-        this.credentials = c;
-    }
-
-    @Override
-    public void setSkipOAuthFlag(boolean skipOAuth) {
-        this.skipOAuth = skipOAuth;
-    }
-
-    @Override
-    public String getUser() {
-        return this.credentials.getLogin();
-    }
-
-    @Override
-    public InputStream getUserData(String binary) {
-        return null;
-    }
-
-    @Override
-    public void login() throws SDKException {
-        this.getJWT();
-    }
-
-    @Override
-    public void logout() throws SDKException {
-        RestFrontSessionRequest request = new RestFrontSessionRequest();
-        request.setLogout(true);
-        try {
-            new FrontendServiceApi(getApiClient()).frontSession(request);
-        } catch (ApiException e) {
-            throw new SDKException(e);
-        }
-    }
-
-    @Override
-    public JSONObject userInfo() throws SDKException {
-        // FIXME really ?
-        RestFrontSessionRequest request = new RestFrontSessionRequest();
-        request.setLogout(true);
-        return null;
-    }
-
-    @Override
-    public X509Certificate[] remoteCertificateChain() {
-        return new X509Certificate[0];
-    }
-
-    @Override
-    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-        String fullURI = this.URL + "/a/frontend/state/?ws=login";
-        URL url = null;
-        try {
-            url = new URL(fullURI);
-        } catch (MalformedURLException e) {
-            throw SDKException.malFormURI(e);
-        }
+    public void workspaceList(NodeHandler handler) throws SDKException {
 
         HttpURLConnection con = null;
         InputStream in = null;
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
-            con = (HttpURLConnection) url.openConnection();
+            con = session.openApiConnection("/frontend/state");
             con.setRequestMethod("GET");
-            in = con.getInputStream();
-            try {
-                SAXParser parser = factory.newSAXParser();
-                parser.parse(in, new ServerGeneralRegistrySaxHandler(itemHandler));
-            } catch (Exception e) {
-                Log.w("Connection", "could not parse registry request response");
-                throw SDKException.unexpectedContent(e);
-            }
-        } catch (IOException e) {
-            Log.w("Connection", "connction error while retrieving registry");
-            throw SDKException.conFailed(e);
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (Exception ignore) {
-                }
-            }
-
-            if (con != null) {
-                con.disconnect();
-            }
-        }
-    }
-
-    @Override
-    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-
-        String fullURI = this.URL + "/a/frontend/state/?ws=" + ws;
-        URL url;
-        try {
-            url = new URL(fullURI);
-        } catch (MalformedURLException e) {
-            throw SDKException.malFormURI(e);
-        }
-
-        this.getJWT();
-
-        HttpURLConnection con;
-        InputStream in;
-        try {
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
-            in = con.getInputStream();
-
-        } catch (IOException e) {
-            throw SDKException.conFailed(e);
-        }
-
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        try {
-            SAXParser parser = factory.newSAXParser();
-            parser.parse(in, new RegistrySaxHandler(itemHandler));
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw SDKException.unexpectedContent(e);
-        } finally {
-            io.close(in);
-        }
-    }
-
-    @Override
-    public void workspaceList(NodeHandler handler) throws SDKException {
-        URL url;
-        try {
-            if (this.URL.endsWith("/")) {
-                url = new URL(this.URL + "a/frontend/state");
-            } else {
-                url = new URL(this.URL + "/a/frontend/state");
-            }
-        } catch (MalformedURLException e) {
-            throw SDKException.malFormURI(e);
-        }
-
-        this.getJWT();
-        HttpURLConnection con = null;
-        try {
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-        } catch (IOException e) {
-            throw SDKException.conFailed(e);
-        }
-
-        con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
-        InputStream in;
-        try {
             in = con.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
@@ -301,83 +125,6 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
-        String fullURI = this.URL + "/a/frontend/state/?ws=login";
-        URL url = null;
-        try {
-            url = new URL(fullURI);
-        } catch (MalformedURLException e) {
-            throw SDKException.malFormURI(e);
-        }
-
-        HttpURLConnection con = null;
-        InputStream in = null;
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        try {
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            return con.getInputStream();
-        } catch (IOException e) {
-            Log.w("Connection", "connction error while retrieving registry");
-            throw SDKException.conFailed(e);
-        }
-    }
-
-    @Override
-    public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-        String fullURI = this.URL + "/a/frontend/state/?ws=" + ws;
-        URL url;
-        try {
-            url = new URL(fullURI);
-        } catch (MalformedURLException e) {
-            throw SDKException.malFormURI(e);
-        }
-
-        this.getJWT();
-
-        HttpURLConnection con;
-        InputStream in;
-        try {
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            if (!"".equals(this.bearerValue)) {
-                con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
-            }
-            return con.getInputStream();
-
-        } catch (IOException e) {
-            throw SDKException.conFailed(e);
-        }
-    }
-
-    @Override
-    public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
-        URL url;
-        try {
-            url = new URL(this.URL + "/a/frontend/state");
-        } catch (MalformedURLException e) {
-            throw SDKException.malFormURI(e);
-        }
-
-        this.getJWT();
-        HttpURLConnection con;
-        try {
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-        } catch (IOException e) {
-            throw SDKException.conFailed(e);
-        }
-
-        con.setRequestProperty("Authorization", "Bearer " + this.bearerValue);
-        try {
-            return con.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw SDKException.conFailed(e);
-        }
-    }
-
-    @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
         TreeNode node = internalStatNode(ws, path);
         if (node != null) {
@@ -396,7 +143,7 @@ public class CellsClient implements Client, SdkNames {
      * Same as statNode() but rather return null than an {@link SDKException}
      * in case the node is not found
      */
-    public TreeNodeInfo statOptionalNode(String fullPath) throws SDKException {
+    private TreeNodeInfo statOptionalNode(String fullPath) throws SDKException {
         TreeNode node = null;
         try {
             node = internalStatNode(fullPath);
@@ -782,7 +529,7 @@ public class CellsClient implements Client, SdkNames {
         policy.setAction(ServiceResourcePolicyAction.OWNER);
         policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
         policy.setResource(nodeId);
-        policy.setSubject("user:" + getUser());
+        policy.setSubject("user:" + session.getUser());
         item.addPoliciesItem(policy);
         metas.add(item);
 
@@ -790,7 +537,7 @@ public class CellsClient implements Client, SdkNames {
         policy.setAction(ServiceResourcePolicyAction.READ);
         policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
         policy.setResource(nodeId);
-        policy.setSubject("user:" + getUser());
+        policy.setSubject("user:" + session.getUser());
         item.addPoliciesItem(policy);
         metas.add(item);
 
@@ -798,7 +545,7 @@ public class CellsClient implements Client, SdkNames {
         policy.setAction(ServiceResourcePolicyAction.WRITE);
         policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
         policy.setResource(nodeId);
-        policy.setSubject("user:" + getUser());
+        policy.setSubject("user:" + session.getUser());
         item.addPoliciesItem(policy);
         metas.add(item);
         request.setMetaDatas(metas);
@@ -1051,97 +798,42 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public JSONObject authenticationInfo() {
-        return null;
-    }
-
-    @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
         return delete(ws, new String[]{"/recycle_bin"});
-    }
-
-    @Override
-    public InputStream getCaptcha() {
-        return null;
     }
 
     public interface Factory {
     }
 
-    public CellsClient get(ServerNode node) {
-        return new CellsClient(node);
+    public CellsClient get(ISession session) {
+        return new CellsClient(session);
     }
 
     // Local Helpers
+    //  protected String getToken() throws SDKException {
+    //      // TODO use tokenCache
+    //      Token token = TokenService.get(serverNode, credentials, skipOAuth);
+    //      if (token != null) {
+    //          return token.value;
+    //      } else {
+    //          // TODO throw an exception
+    //          return "";
+    //      }
+    //  }
 
-    protected String getUserAgent() {
-        if (userAgent != null) {
-            return userAgent;
-        }
-
-        userAgent = String.format(Locale.US, "%s-%s/%d", ApplicationData.name, ApplicationData.version, ApplicationData.versionCode);
-        if (!ApplicationData.platform.equals("")) {
-            userAgent = ApplicationData.platform + "/" + userAgent;
-        }
-
-        if (!ApplicationData.packageID.equals("")) {
-            userAgent = userAgent + "/" + ApplicationData.packageID;
-        }
-        return userAgent;
-    }
-
-    private ApiClient getApiClient() {
-        ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath(apiURL);
-        apiClient.setUserAgent(getUserAgent());
-
-        if (this.serverNode.isSSLUnverified()) {
-            SSLContext context = this.serverNode.getSslContext();
-            OkHttpClient c = apiClient.getHttpClient();
-            c.setSslSocketFactory(context.getSocketFactory());
-            c.setHostnameVerifier((s, sslSession) -> URL.contains(s));
-        }
-        return apiClient;
-    }
-
-    private ApiClient authenticatedClient() throws SDKException {
-
-        ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath(apiURL);
-        apiClient.setUserAgent(getUserAgent());
-
-        if (this.serverNode.isSSLUnverified()) {
-            SSLContext context = this.serverNode.getSslContext();
-            OkHttpClient c = apiClient.getHttpClient();
-            c.setSslSocketFactory(context.getSocketFactory());
-            c.setHostnameVerifier((s, sslSession) -> URL.contains(s));
-        }
-
-        apiClient.addDefaultHeader("Authorization", "Bearer " + getToken());
-        return apiClient;
-    }
-
-
-    protected String getToken() throws SDKException {
-        // TODO use tokenCache
-        Token token = TokenService.get(serverNode, credentials, skipOAuth);
-        if (token != null) {
-            return token.value;
-        } else {
-            // TODO throw an exception
-            return "";
-        }
-    }
-
-    protected void getJWT() throws SDKException {
-        bearerValue = getToken();
-    }
+//    protected void getJWT() throws SDKException {
+//        bearerValue = getToken();
+//    }
 
     private static SDKException fromApiException(ApiException e) {
         int code = ErrorCodes.fromHttpStatus(e.getCode());
         return new SDKException(code, e);
     }
 
+
+    private ApiClient authenticatedClient() throws SDKException {
+        return session.authenticatedClient();
+    }
 
     /**
      * This is necessary until min version is 24: we cannot use the consumer pattern:
@@ -1151,6 +843,4 @@ public class CellsClient implements Client, SdkNames {
     public interface TreeNodeHandler {
         void onNode(TreeNode node);
     }
-
-
 }

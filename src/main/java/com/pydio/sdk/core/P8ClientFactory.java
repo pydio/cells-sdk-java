@@ -1,9 +1,9 @@
 package com.pydio.sdk.core;
 
-import com.pydio.sdk.api.nodes.ServerNode;
+import com.pydio.sdk.api.ISession;
 
 public class P8ClientFactory {
-    public P8Client get(ServerNode node) {
-        return new P8Client(node);
+    public P8Client get(ISession session) {
+        return new P8Client(session);
     }
 }

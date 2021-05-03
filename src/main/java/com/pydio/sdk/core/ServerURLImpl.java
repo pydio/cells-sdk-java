@@ -30,17 +30,44 @@ public class ServerURLImpl implements ServerURL {
         this.skipVerify = skipVerify;
     }
 
-    public static ServerURL fromAddress(String urlString, boolean skipVerify, boolean checkReachable) throws MalformedURLException, SDKException {
+    public static ServerURL fromAddress(String urlString, boolean skipVerify) throws MalformedURLException{
+        // URL url = URI.create(urlString).toURL();
         URL url = new URL(urlString);
-        ServerURLImpl serverURL = new ServerURLImpl(url, skipVerify);
-        if (checkReachable)  {
-            serverURL.canReachServer();
+        switch (url.getPath()) {
+            case "/":
+            case "":
+                url = new URL(url.getProtocol() + "://" + url.getAuthority());
+                break;
+            default:
+                throw new MalformedURLException("unsupported server path, this is not yet implemented in Cells API");
         }
+
+        ServerURLImpl serverURL = new ServerURLImpl(url, skipVerify);
         return serverURL;
     }
 
-    public static ServerURL fromAddress(String urlString, boolean skipVerify) throws MalformedURLException, SDKException {
-        return fromAddress(urlString, skipVerify, false);
+    public static ServerURL fromAddress(String urlString) throws MalformedURLException, SDKException {
+        return fromAddress(urlString, false);
+    }
+
+    @Override
+    public void ping() throws Exception {
+        HttpURLConnection connection = openConnection();
+        connection.setRequestMethod("GET");
+        if (connection.getResponseCode() != 200) {
+            throw new RuntimeException("unvalid response code: " + connection.getResponseCode());
+        }
+    }
+
+
+    @Override
+    public ServerURL withPath(String path) throws MalformedURLException {
+        return new ServerURLImpl(new URL(url, path), skipVerify);
+    }
+
+    @Override
+    public URL getURL() {
+        return url;
     }
 
     public String getBaseUrlAsString() {
@@ -66,15 +93,6 @@ public class ServerURLImpl implements ServerURL {
     }
 
 
-    public boolean canReachServer() throws SDKException {
-        try {
-            HttpURLConnection connection = openConnection();
-            connection.setRequestMethod("GET");
-            return connection.getResponseCode() == 200;
-        } catch (Exception e) {
-            throw new SDKException(ErrorCodes.unreachable_host, "could not reach server at " + getBaseUrlAsString(), e);
-        }
-    }
 
     /*
 
@@ -200,9 +218,7 @@ public class ServerURLImpl implements ServerURL {
       Thanks to https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check */
 
     private void setAcceptAllVerifier(HttpsURLConnection connection) throws SDKException {
-
         try {
-
             // Create the socket factory.
             // Reusing the same socket factory allows sockets to be reused, supporting persistent connections.
             if (null == sslSocketFactory) {
@@ -216,7 +232,6 @@ public class ServerURLImpl implements ServerURL {
             connection.setHostnameVerifier(SKIP_HOSTNAME_VERIFIER);
         } catch (Exception e) {
             throw new SDKException(ErrorCodes.bad_config, "Could not initialise SkipVerify objects", e);
-
         }
     }
 
@@ -239,6 +254,5 @@ public class ServerURLImpl implements ServerURL {
             return true;
         }
     };
-
 
 }
