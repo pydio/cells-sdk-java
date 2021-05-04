@@ -29,7 +29,7 @@ public class SDKException extends Exception {
     // Legacy inherited SDK specific constructors => ease implementation of the Android app.
 
     public SDKException(int code, String message, Exception cause) {
-        this(ErrorCodes.toMessage(code), cause);
+        this(ErrorCodes.toMessage(code)+": "+message, cause);
         this.cause = cause;
         this.code = code;
     }

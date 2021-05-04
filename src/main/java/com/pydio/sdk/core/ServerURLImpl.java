@@ -1,12 +1,15 @@
 package com.pydio.sdk.core;
 
-import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.ServerURL;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HostnameVerifier;
@@ -30,7 +33,7 @@ public class ServerURLImpl implements ServerURL {
         this.skipVerify = skipVerify;
     }
 
-    public static ServerURL fromAddress(String urlString, boolean skipVerify) throws MalformedURLException{
+    public static ServerURL fromAddress(String urlString, boolean skipVerify) throws MalformedURLException {
         // URL url = URI.create(urlString).toURL();
         URL url = new URL(urlString);
         switch (url.getPath()) {
@@ -51,11 +54,15 @@ public class ServerURLImpl implements ServerURL {
     }
 
     @Override
-    public void ping() throws Exception {
+    public void ping() throws IOException {
         HttpURLConnection connection = openConnection();
-        connection.setRequestMethod("GET");
-        if (connection.getResponseCode() != 200) {
-            throw new RuntimeException("unvalid response code: " + connection.getResponseCode());
+        try {
+            connection.setRequestMethod("GET");
+            if (connection.getResponseCode() != 200) {
+                throw new IOException("Unvalid response code: " + connection.getResponseCode());
+            }
+        } catch (ProtocolException pe) {
+            throw new RuntimeException("Unvalid protocol GET...", pe);
         }
     }
 
@@ -70,24 +77,16 @@ public class ServerURLImpl implements ServerURL {
         return url;
     }
 
-    public String getBaseUrlAsString() {
-        return url.getProtocol() + "://" + url.getAuthority();
-    }
-
-
-    public HttpURLConnection openConnection() throws SDKException {
+    @Override
+    public HttpURLConnection openConnection() throws IOException {
         HttpURLConnection connection = null;
-        try {
-            if ("http".equals(url.getProtocol())) {
-                connection = (HttpURLConnection) url.openConnection();
-            } else if ("https".equals(url.getProtocol())) {
-                connection = (HttpsURLConnection) url.openConnection();
-                if (skipVerify) {
-                    setAcceptAllVerifier((HttpsURLConnection) connection);
-                }
+        if ("http".equals(url.getProtocol())) {
+            connection = (HttpURLConnection) url.openConnection();
+        } else if ("https".equals(url.getProtocol())) {
+            connection = (HttpsURLConnection) url.openConnection();
+            if (skipVerify) {
+                setAcceptAllVerifier((HttpsURLConnection) connection);
             }
-        } catch (Exception e) {
-            throw new SDKException(ErrorCodes.unreachable_host, "could not open connection to " + getBaseUrlAsString(), e);
         }
         return connection;
     }
@@ -217,7 +216,7 @@ public class ServerURLImpl implements ServerURL {
     /* Manage self signed on a URL by URL Basis.
       Thanks to https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check */
 
-    private void setAcceptAllVerifier(HttpsURLConnection connection) throws SDKException {
+    private void setAcceptAllVerifier(HttpsURLConnection connection) {
         try {
             // Create the socket factory.
             // Reusing the same socket factory allows sockets to be reused, supporting persistent connections.
@@ -230,8 +229,10 @@ public class ServerURLImpl implements ServerURL {
 
             // Since we may be using a cert with a different name, we need to ignore the hostname as well.
             connection.setHostnameVerifier(SKIP_HOSTNAME_VERIFIER);
-        } catch (Exception e) {
-            throw new SDKException(ErrorCodes.bad_config, "Could not initialise SkipVerify objects", e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Unexpected error while initializing SSL context", e);
+        } catch (KeyManagementException e) {
+            throw new RuntimeException("Unexpected error while initializing SSL context", e);
         }
     }
 

@@ -132,13 +132,21 @@ public class CellsSession implements ICellsSession, SdkNames {
     }
 
     @Override
-    public HttpURLConnection openConnection(String path) throws SDKException, MalformedURLException {
+    public HttpURLConnection openConnection(String path) throws SDKException, IOException {
         return withAuth(server.newURL(path).openConnection());
     }
 
     @Override
-    public HttpURLConnection openAnonConnection(String path) throws SDKException, MalformedURLException {
+    public HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
         return server.newURL(path).openConnection();
+    }
+
+    public HttpURLConnection openApiConnection(String path) throws SDKException, MalformedURLException, IOException {
+        return withAuth(server.newURL(API_PREFIX + path).openConnection());
+    }
+
+    public HttpURLConnection openAnonApiConnection(String path) throws SDKException, MalformedURLException, IOException {
+        return server.newURL(API_PREFIX + path).openConnection();
     }
 
     public ApiClient authenticatedClient() throws SDKException {
@@ -146,7 +154,6 @@ public class CellsSession implements ICellsSession, SdkNames {
         apiClient.addDefaultHeader("Authorization", "Bearer " + getToken());
         return apiClient;
     }
-
 
     public OauthConfig getOAuthConfig() {
         return oidc;
@@ -162,13 +169,6 @@ public class CellsSession implements ICellsSession, SdkNames {
         return tokenStr;
     }
 
-    public HttpURLConnection openApiConnection(String path) throws SDKException, MalformedURLException {
-        return withAuth(server.newURL(API_PREFIX + path).openConnection());
-    }
-
-    public HttpURLConnection openAnonApiConnection(String path) throws SDKException, MalformedURLException {
-        return server.newURL(API_PREFIX + path).openConnection();
-    }
 
     @Override
     public void login() throws SDKException {
@@ -281,7 +281,7 @@ public class CellsSession implements ICellsSession, SdkNames {
             con.setRequestMethod("GET");
             return con.getInputStream();
         } catch (IOException e) {
-            Log.w("Connection", "connction error while retrieving registry");
+            Log.w("Connection", "connection error while retrieving registry");
             throw SDKException.conFailed(e);
         }
     }

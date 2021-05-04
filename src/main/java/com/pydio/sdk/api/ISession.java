@@ -6,6 +6,7 @@ import com.pydio.sdk.api.nodes.WorkspaceNode;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.security.cert.X509Certificate;
@@ -46,6 +47,8 @@ public interface ISession {
     InputStream getServerRegistryAsAuthenticatedUser() throws SDKException;
 
     boolean isOffline();
+
+    HttpURLConnection openAnonConnection(String path) throws SDKException, IOException;
 
     Map<String, WorkspaceNode> getCachedWorkspaces();
 }

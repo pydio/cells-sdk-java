@@ -4,50 +4,78 @@ import com.pydio.sdk.api.Client;
 import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.api.ILegacySession;
-import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.api.Server;
+import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.api.callbacks.RegistryItemHandler;
-import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.nodes.WorkspaceNode;
+import com.pydio.sdk.core.auth.TokenService;
+import com.pydio.sdk.core.model.P8Server;
 import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
-import com.pydio.sdk.generated.p8.Configuration;
+import com.pydio.sdk.core.security.P8Credentials;
+import com.pydio.sdk.generated.p8.Method;
 import com.pydio.sdk.generated.p8.P8Request;
 import com.pydio.sdk.generated.p8.P8RequestBuilder;
 import com.pydio.sdk.generated.p8.P8Response;
-import com.pydio.sdk.generated.p8.consts.Action;
-import com.pydio.sdk.generated.p8.consts.Param;
+import com.pydio.sdk.generated.p8.RetryCallback;
+import com.pydio.sdk.generated.p8.consts.ActionNames;
+import com.pydio.sdk.generated.p8.consts.P8Names;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.CookieManager;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URLEncoder;
 import java.security.cert.X509Certificate;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class P8Session implements ILegacySession, SdkNames {
 
-    private final static Map<String, String> secureTokens = new ConcurrentHashMap<>();
-    private final static Map<String, CookieManager> cookieManagers = new ConcurrentHashMap<>();
+    private final Map<String, String> secureTokens = new ConcurrentHashMap<>();
+    // private TokenService tokens;
+    // private final Map<String, CookieManager> cookieManagers = new ConcurrentHashMap<>();
 
+    private CookieManager cookieManager;
     private final Server server;
-    private final com.pydio.sdk.generated.p8.P8Client p8;
+
     private Credentials credentials;
     private int loginFailure;
 
-    public P8Session(Server server) {
+    public P8Session(Server server, CookieManager manager) {
         this.server = server;
+        cookieManager = manager;
         loginFailure = 0;
-
-        p8 = new com.pydio.sdk.generated.p8.P8Client(this);
     }
 
+    public P8Session(Server server) {
+        this(server, new CookieManager());
+    }
+
+    public void setCookieManager(CookieManager man) {
+        cookieManager = man;
+    }
+
+
+    public void restore(TokenService tokens) throws SDKException {
+        // TODO rather use this than the local concurrent hashmap.
+        // this.tokens = tokens;
+        server.init(this);
+        // TODO more init
+    }
 
     @Override
     public Server getServerNode() {
@@ -56,30 +84,7 @@ public class P8Session implements ILegacySession, SdkNames {
 
     @Override
     public Client getClient() {
-        return new CellsClient(this);
-    }
-
-    private P8Request refreshSecureToken(P8Request req) {
-        try {
-            JSONObject info = authenticationInfo();
-            if (!info.has(Param.captchaCode)) {
-                login();
-                String secureToken = getSecureToken();
-                return P8RequestBuilder.update(req).setSecureToken(secureToken).getRequest();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public String getToken() throws SDKException {
-        String secureToken = getSecureToken();
-        if (null == secureToken || "".equals(secureToken)) {
-            login();
-            secureToken = getSecureToken();
-        }
-        return  secureToken;
+        return new P8Client(this);
     }
 
     @Override
@@ -98,53 +103,43 @@ public class P8Session implements ILegacySession, SdkNames {
     public boolean useCaptcha() {
         try {
             JSONObject info = authenticationInfo();
-            return info.has(Param.captchaCode);
-        } catch (SDKException se){
+            return info.has(P8Names.captchaCode);
+        } catch (SDKException se) {
             System.out.println("FIXME: Unexpected SDK error while checking if we use Captcha");
             se.printStackTrace();
         }
-        return  false;
+        return false;
     }
 
-
-
-    //private void loadSecureToken() throws SDKException {
-    //    String secureToken = getSecureToken();
-    //    if (null == secureToken || "".equals(secureToken)) {
-    //        login();
-    //    }
-    //}
-
-    private void saveSecureToken(String secureToken) {
-        String id = credentials.getLogin() + "@" + server.getServerURL().getId();
-        secureTokens.put(id, secureToken);
-    }
-
-    private String getSecureToken() {
-        String id = credentials.getLogin() + "@" + server.getServerURL().getId();
-        return secureTokens.get(id);
+    @Override
+    public String getToken() throws SDKException {
+        String secureToken = getSecureToken();
+        if (null == secureToken || "".equals(secureToken)) {
+            login();
+            secureToken = getSecureToken();
+        }
+        return secureToken;
     }
 
     private CookieManager getCookieManager() {
-        String id = credentials.getLogin() + "@" + server.getServerURL().getId();
-        CookieManager cm = cookieManagers.get(id);
-        if (cm == null) {
-            cm = new CookieManager();
-            cookieManagers.put(id, cm);
-        }
-        return cm;
+        return cookieManager;
     }
 
     @Override
     public String getUserAgent() {
-        return null;
+        // FIXME do we want to be able to override the default string ?
+        // if (this.config.userAgent != null) {
+        //     con.setRequestProperty("User-Agent", this.config.userAgent);
+        // } else {
+        return "Pydio-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode;
     }
 
     @Override
     public void setCredentials(Credentials c) {
-        this.credentials = c;
-        CookieManager cookieManager = getCookieManager();
-        p8.setCookieManager(cookieManager);
+        if (c instanceof P8Credentials) {
+            this.credentials = c;
+        } else
+            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
     }
 
     @Override
@@ -161,7 +156,7 @@ public class P8Session implements ILegacySession, SdkNames {
     public InputStream getUserData(String binary) throws SDKException {
         String secureToken = getSecureToken();
         P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setSecureToken(secureToken).getRequest();
-        try (P8Response rsp = p8.execute(req)) {
+        try (P8Response rsp = execute(req)) {
             final int code = rsp.code();
             if (code != ErrorCodes.ok) {
                 if (code == ErrorCodes.authentication_required && credentials != null && loginFailure == 0) {
@@ -180,7 +175,7 @@ public class P8Session implements ILegacySession, SdkNames {
         P8RequestBuilder builder = P8RequestBuilder.login(credentials);
         P8Request req = builder.getRequest();
 
-        try (P8Response rsp = p8.execute(req)) {
+        try (P8Response rsp = execute(req)) {
             final int code = rsp.code();
             if (code != ErrorCodes.ok) {
                 rsp.close();
@@ -192,7 +187,7 @@ public class P8Session implements ILegacySession, SdkNames {
                 if (doc.getElementsByTagName("logging_result").getLength() > 0) {
                     String result = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem("value").getNodeValue();
                     if (result.equals("1")) {
-                        String secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(Param.secureToken).getNodeValue();
+                        String secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(P8Names.secureToken).getNodeValue();
                         this.saveSecureToken(secureToken);
                         loginFailure = 0;
                     } else {
@@ -215,11 +210,15 @@ public class P8Session implements ILegacySession, SdkNames {
         }
     }
 
-    @Override
-    public void logout() {
+    public void logout() throws SDKException {
         String secureToken = getSecureToken();
-        P8Response response = p8.execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
+        P8Response response = execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
         response.close();
+    }
+
+    @Override
+    public HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
+        return server.newURL(path).openConnection();
     }
 
     @Override
@@ -235,7 +234,7 @@ public class P8Session implements ILegacySession, SdkNames {
     @Override
     public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        try (P8Response rsp = p8.execute(builder.getRequest())) {
+        try (P8Response rsp = execute(builder.getRequest())) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
@@ -250,7 +249,7 @@ public class P8Session implements ILegacySession, SdkNames {
     public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
         String secureToken = getSecureToken();
         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        try (P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+        try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
@@ -265,7 +264,7 @@ public class P8Session implements ILegacySession, SdkNames {
     @Override
     public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        P8Response rsp = p8.execute(builder.getRequest());
+        P8Response rsp = execute(builder.getRequest());
         if (rsp.code() != ErrorCodes.ok) {
             throw new SDKException(rsp.code());
         }
@@ -276,7 +275,7 @@ public class P8Session implements ILegacySession, SdkNames {
     public InputStream getWorkspaceRegistry(String ws) throws SDKException {
         String secureToken = getSecureToken();
         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
+        P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
         if (rsp.code() != ErrorCodes.ok) {
             throw new SDKException(rsp.code());
         }
@@ -287,7 +286,7 @@ public class P8Session implements ILegacySession, SdkNames {
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
         String secureToken = getSecureToken();
         P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
-        P8Response rsp = p8.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
+        P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
         if (rsp.code() != ErrorCodes.ok) {
             throw new SDKException(rsp.code());
         }
@@ -296,14 +295,14 @@ public class P8Session implements ILegacySession, SdkNames {
 
     @Override
     public InputStream getCaptcha() {
-        P8Request request = new P8RequestBuilder().setAction(Action.getCaptcha).getRequest();
-        return p8.execute(request).getContent();
+        P8Request request = new P8RequestBuilder().setAction(ActionNames.getCaptcha).getRequest();
+        return execute(request).getContent();
     }
 
     @Override
     public JSONObject authenticationInfo() throws SDKException {
-        try (P8Response seedResponse = p8.execute(P8RequestBuilder.getSeed().getRequest())) {
-            String seed = seedResponse.toString();
+        try (P8Response seedResponse = execute(P8RequestBuilder.getSeed().getRequest())) {
+            String seed = seedResponse.asString();
             JSONObject o = new JSONObject();
 
             boolean withCaptcha = false;
@@ -312,7 +311,7 @@ public class P8Session implements ILegacySession, SdkNames {
                 seed = seed.trim();
                 if (seed.contains("\"seed\":-1") || seed.contains("\"seed\": -1")) {
                     withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
-                    o.put(Param.seed, "-1");
+                    o.put(P8Names.seed, "-1");
 
                 } else {
                     String contentType = seedResponse.getHeaders("Content-Type").get(0);
@@ -325,15 +324,342 @@ public class P8Session implements ILegacySession, SdkNames {
                     if (!seemsToBePydio) {
                         throw SDKException.unexpectedContent(new IOException(seed));
                     }
-                    o.put(Param.seed, "-1");
+                    o.put(P8Names.seed, "-1");
                 }
             }
 
             if (withCaptcha) {
-                o.put(Param.captchaCode, true);
+                o.put(P8Names.captchaCode, true);
             }
             return o;
         }
     }
+
+    public P8Response execute(P8Request request) {
+
+        try {
+            switch (request.getMethod()) {
+                case Method.get:
+                    return doGet(request);
+                case Method.post:
+                    return doPost(request);
+                case Method.put:
+                    return doPut(request);
+                default:
+                    throw new RuntimeException("Unsupported method type: "+request.getMethod());
+            }
+        } catch (IOException ioe) {
+            // FIXME temporary
+            System.out.println("#######   Could not execute "+ioe.getMessage());
+            ioe.printStackTrace();
+            // TODO finer management needed here
+            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
+        }
+
+    }
+
+    public P8Response execute(P8Request request, RetryCallback retry, int code)  {
+        // FIXME this will never work after refactoring
+        P8Response response = execute(request);
+        final int c = response.code();
+        if (c == code) {
+            response.close();
+            P8Request retryRequest = retry.update(request);
+            if (retryRequest != null) {
+                response = execute(retryRequest);
+            }
+        }
+        return response;
+    }
+
+
+    /* HTTP Methods */
+
+    private P8Response doGet(P8Request request) throws IOException {
+
+        StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
+        appendParam(builder, P8Names.getAction, request.getAction());
+
+        ServerURL currURL = null;
+        try {
+            currURL = server.newURL(builder.toString());
+        } catch (MalformedURLException mue) {
+            throw new RuntimeException("Unexpected Malformed URL for path: " + builder.toString(), mue);
+        }
+
+        HttpURLConnection con = currURL.openConnection();
+
+        // TODO still manage this ?
+        // c.setSSLSocketFactory(config.sslContext.getSocketFactory());
+        // c.setHostnameVerifier(config.hostnameVerifier);
+
+        con.setRequestMethod("GET");
+        P8Response response = new P8Response(con);
+        storeReturnedSetCookies(con.getHeaderFields());
+
+        return response;
+    }
+
+    private P8Response doPost(P8Request request) throws IOException {
+
+        // Prepare query
+        StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
+        appendParam(builder, P8Names.getAction, request.getAction());
+
+        ServerURL currURL = null;
+        try {
+            currURL = server.newURL(builder.toString());
+        } catch (MalformedURLException mue) {
+            throw new RuntimeException("Unexpected Malformed URL for path: " + builder.toString(), mue);
+        }
+
+        HttpURLConnection con = currURL.openConnection();
+        con.setRequestMethod("POST");
+        if (!request.getIgnoreCookies()) {
+            withCookies(con);
+        }
+        withUserAgent(con);
+        // TODO remove
+        con.setDoOutput(true);
+
+        // Populate Body or Params
+        if (request.getBody() != null) {
+            populatePostBody(request, con);
+        } else {
+            // Add Params
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String, String> entry : request.getParams().get().entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(URLEncoder.encode(entry.getKey(), UTF_8));
+                postData.append('=');
+                postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));
+            }
+            byte[] postDataBytes = postData.toString().getBytes(UTF_8);
+
+            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postData.length()));
+            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "application/x-www-form-urlencoded; charset=" + UTF_8);
+            OutputStream out = con.getOutputStream();
+            out.write(postDataBytes);
+        }
+
+        // Pre-Handle response
+        P8Response response = new P8Response(con);
+        storeReturnedSetCookies(con.getHeaderFields());
+        return response;
+    }
+
+    private P8Response doPut(P8Request request) throws IOException {
+
+        // Build effective URL request
+        String queryStr = buildPutQuery(request);
+
+        ServerURL currURL = null;
+        try {
+            currURL = server.newURL(queryStr);
+        } catch (MalformedURLException mue) {
+            throw new RuntimeException("Unexpected Malformed URL for path: " + queryStr, mue);
+        }
+
+        HttpURLConnection con = currURL.openConnection();
+        // TODO remove: useless, or we will get an exception here
+        if (con == null) {
+            return P8Response.error(ErrorCodes.con_failed);
+        }
+        // TODO remove: useless, this is the default
+        con.setDoOutput(true);
+
+        con.setRequestMethod("PUT");
+        if (!request.getIgnoreCookies()) {
+            withCookies(con);
+        }
+        withReqProp(con, P8Names.REQ_PROP_CONTENT_TYPE, P8Names.CONTENT_TYPE_OCTET_STREAM);
+        withUserAgent(con);
+
+        // Handle the response
+        OutputStream out = con.getOutputStream();
+        storeReturnedSetCookies(con.getHeaderFields());
+        request.getBody().writeTo(out);
+        P8Response response = new P8Response(con);
+
+        return response;
+    }
+
+
+    /**
+     * Simply generate the full path (**file** + query) from the passed P8Request
+     *
+     * @return a string that look like:  "/index.php?get_action=action&param1=john&param2=doo"
+     */
+    private String buildPutQuery(P8Request request) {
+        // TODO where do we still use this
+        // StringBuilder url = new StringBuilder(u);
+        // if (!url.toString().startsWith("http")) {
+        //     if (this.config.resolver == null) {
+        //         throw new ProtocolException(url.toString());
+        //     }
+        //     try {
+        //         url = new StringBuilder(this.config.resolver.resolve(url.toString(), false));
+        //     } catch (IOException e) {
+        //         throw new UnknownHostException(url.toString());
+        //     }
+        // }
+
+        StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
+        appendParam(builder, P8Names.getAction, request.getAction());
+
+        Iterator<Map.Entry<String, String>> it = request.getParams().get().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> entry = it.next();
+            andAppendEncodedParam(builder, entry.getKey(), entry.getValue());
+        }
+
+        for (HttpCookie c : cookieManager.getCookieStore().getCookies()) {
+            andAppendEncodedParam(builder, P8Names.COOKIE_KEY, c.getValue());
+        }
+
+        return builder.toString();
+    }
+
+    private final byte[] LF = "\r\n".getBytes();
+    private final byte[] DLF = "\r\n\r\n".getBytes();
+
+
+    private void populatePostBody(P8Request request, HttpURLConnection con) throws IOException {
+
+        String boundary = "----" + System.currentTimeMillis();
+        con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "multipart/form-data; boundary=" + boundary);
+
+        try (ByteArrayOutputStream partHeaderBuffer = new ByteArrayOutputStream()) {
+
+            partHeaderBuffer.write(("--" + boundary).getBytes());
+            partHeaderBuffer.write(LF);
+
+            Iterator<Map.Entry<String, String>> it = request.getParams().get().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, String> entry = it.next();
+                String name = entry.getKey();
+                String value = entry.getValue();
+                partHeaderBuffer.write(("Content-Disposition: form-data; name=\"" + URLEncoder.encode(name, UTF_8) + "\"").getBytes());
+                partHeaderBuffer.write(LF);
+                partHeaderBuffer.write(("Content-Type: text/plain; charset=" + UTF_8).getBytes());
+                partHeaderBuffer.write(DLF);
+                partHeaderBuffer.write(value.getBytes(UTF_8));
+                partHeaderBuffer.write(LF);
+                partHeaderBuffer.write(("--" + boundary).getBytes());
+                partHeaderBuffer.write(LF);
+            }
+
+            partHeaderBuffer.write(("Content-Disposition: form-data; name=\"userfile_0\"; filename=" + URLEncoder.encode(request.getBody().getFilename(), UTF_8)).getBytes());
+            partHeaderBuffer.write(LF);
+            partHeaderBuffer.write(("Content-Type: " + request.getBody().getContentType()).getBytes());
+
+            partHeaderBuffer.write(DLF);
+            byte[] partHeaderBytes = partHeaderBuffer.toByteArray();
+            byte[] lastBoundaryBytes = ("\r\n--" + boundary + "--\r\n").getBytes();
+
+            int rest = partHeaderBytes.length + lastBoundaryBytes.length;
+            int contentSupposedBodyLength = (int) (request.getBody().maxChunkSize() - rest);
+            int contentBodyActualLength = (int) Math.min(contentSupposedBodyLength, request.getBody().available());
+            con.setFixedLengthStreamingMode(contentBodyActualLength + rest);
+
+            OutputStream out = con.getOutputStream();
+            out.write(partHeaderBytes);
+            request.getBody().writeTo(out, contentBodyActualLength);
+            out.write(lastBoundaryBytes);
+        }
+    }
+
+
+    private HttpURLConnection withCookies(HttpURLConnection con) {
+        List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+        if (cookies.size() > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (HttpCookie cookie : cookies) {
+                builder.append(";").append(cookie.toString());
+            }
+            con.setRequestProperty(P8Names.REQ_PROP_COOKIE, builder.substring(1));
+        }
+        return con;
+    }
+
+    private HttpURLConnection withUserAgent(HttpURLConnection con) {
+        con.setRequestProperty(P8Names.REQ_PROP_USER_AGENT, getUserAgent());
+        return con;
+    }
+
+    private HttpURLConnection withReqProp(HttpURLConnection con, String key, String value) {
+        con.setRequestProperty(key, value);
+        return con;
+    }
+
+    private void storeReturnedSetCookies(Map<String, List<String>> headerFields) {
+        List<String> cookiesHeader = headerFields.get(P8Names.HEADER_SET_COOKIE);
+        if (cookiesHeader != null) {
+            for (String cookie : cookiesHeader) {
+                List<HttpCookie> cs = HttpCookie.parse(cookie);
+                for (HttpCookie hc : cs) {
+                    cookieManager.getCookieStore().add(null, hc);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Token Management
+     */
+
+    private P8Request refreshSecureToken(P8Request req) {
+        try {
+            JSONObject info = authenticationInfo();
+            if (!info.has(P8Names.captchaCode)) {
+                login();
+                String secureToken = getSecureToken();
+                return P8RequestBuilder.update(req).setSecureToken(secureToken).getRequest();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void saveSecureToken(String secureToken) {
+        String id = credentials.getLogin() + "@" + server.getServerURL().getId();
+        secureTokens.put(id, secureToken);
+    }
+
+    private String getSecureToken() throws SDKException {
+        String id = credentials.getLogin() + "@" + server.getServerURL().getId();
+
+        String secureToken = secureTokens.get(id);
+        if (null == secureToken || "".equals(secureToken)) {
+            login();
+        }
+        return secureTokens.get(id);
+    }
+
+    /**
+     * String manipulation Helpers
+     */
+    private StringBuilder appendParam(StringBuilder builder, String key, String value) {
+        builder.append(key).append("=").append(value);
+        return builder;
+    }
+
+    private StringBuilder andAppendParam(StringBuilder builder, String key, String value) {
+        builder.append("&").append(key).append("=").append(value);
+        return builder;
+    }
+
+    private StringBuilder appendEncodedParam(StringBuilder builder, String key, String value) {
+        builder.append(key).append("=").append(URLEncoder.encode(value, UTF_8));
+        return builder;
+    }
+
+    private StringBuilder andAppendEncodedParam(StringBuilder builder, String key, String value) {
+        builder.append("&").append(key).append("=").append(URLEncoder.encode(value, UTF_8));
+        return builder;
+    }
+
 
 }

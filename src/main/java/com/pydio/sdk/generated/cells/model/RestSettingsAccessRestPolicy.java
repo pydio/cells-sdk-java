@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 public class RestSettingsAccessRestPolicy {
-  @SerializedName("Action")
+  @SerializedName("ActionNames")
   private String action = null;
 
   @SerializedName("Resource")

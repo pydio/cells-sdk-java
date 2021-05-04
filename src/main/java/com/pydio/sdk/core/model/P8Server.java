@@ -6,10 +6,13 @@ import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.core.CellsSession;
+import com.pydio.sdk.core.P8Session;
 import com.pydio.sdk.core.security.CertificateTrust;
 import com.pydio.sdk.core.security.CertificateTrustManager;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.io;
+import com.pydio.sdk.generated.p8.consts.ActionNames;
+import com.pydio.sdk.generated.p8.consts.P8Names;
 
 import org.json.JSONObject;
 
@@ -27,13 +30,12 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
-public class CellsServer implements Server {
+public class P8Server implements Server {
 
-    public final static String API_PREFIX = "/a";
-    public final static String OIDC_WELLKNOWN_PATH = "/oidc/.well-known/openid-configuration";
-    public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
+    public final static String API_PREFIX = "/index.php?";
+    public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + ActionNames.GET_BOOT_CONF;
 
-    private String serverType = IServerFactory.TYPE_CELLS;
+    private String serverType = IServerFactory.TYPE_LEGACY_P8;
     private String version = null;
 
     private final ServerURL serverURL;
@@ -56,17 +58,17 @@ public class CellsServer implements Server {
 
     // private JSONObject bootConf;
 
-    public CellsServer(ServerURL serverURL) {
+    public P8Server(ServerURL serverURL) {
         this.serverURL = serverURL;
     }
 
-    public static CellsServer fromServerURL(ServerURL serverURL) {
-        return new CellsServer(serverURL);
+    public static P8Server fromServerURL(ServerURL serverURL) {
+        return new P8Server(serverURL);
     }
 
     @Override
     public Server init(ISession session) throws SDKException {
-        refreshBootConf((CellsSession) session);
+        refreshBootConf((P8Session) session);
         return null;
     }
 
@@ -82,12 +84,12 @@ public class CellsServer implements Server {
 
     @Override
     public String getApiURL() {
-        try {
-            return serverURL.withPath(API_PREFIX).getURL().toString();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Getting API URL for " + getId(), e);
-        }
-
+        return getId();
+        // try {
+        //     return serverURL.withPath(API_PREFIX).getURL().toString();
+        // } catch (MalformedURLException e) {
+        //     throw new RuntimeException("Getting API URL for " + getId(), e);
+        // }
     }
 
 
@@ -96,8 +98,13 @@ public class CellsServer implements Server {
         return serverType;
     }
 
-    public CellsServer init(String url) {
+    public P8Server init(String url) {
+
         return this;
+    }
+
+    public String getServerType() {
+        return serverType;
     }
 
     @Override
@@ -107,7 +114,7 @@ public class CellsServer implements Server {
 
     /* Node methods */
 
-    private void refreshBootConf(CellsSession session) {
+    private void refreshBootConf(ISession session) {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         InputStream in = null;
@@ -158,7 +165,7 @@ public class CellsServer implements Server {
                 @Override
                 public boolean isServerTrusted(X509Certificate[] chain) {
                     for (X509Certificate c : chain) {
-                        for (byte[] trusted : CellsServer.this.certificateChain) {
+                        for (byte[] trusted : P8Server.this.certificateChain) {
                             try {
                                 c.checkValidity();
                                 MessageDigest hash = MessageDigest.getInstance("MD5");
@@ -226,10 +233,10 @@ public class CellsServer implements Server {
 
         if (this == obj) return true;
 
-        if (obj == null || !(obj instanceof CellsServer))
+        if (obj == null || !(obj instanceof P8Server))
             return false;
 
-        return getId().equals(((CellsServer) obj).getServerURL().getId());
+        return getId().equals(((P8Server) obj).getServerURL().getId());
     }
 
 

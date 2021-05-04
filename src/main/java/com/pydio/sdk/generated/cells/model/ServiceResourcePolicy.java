@@ -33,7 +33,7 @@ public class ServiceResourcePolicy {
   @SerializedName("Resource")
   private String resource = null;
 
-  @SerializedName("Action")
+  @SerializedName("ActionNames")
   private com.pydio.sdk.generated.cells.model.ServiceResourcePolicyAction action = null;
 
   @SerializedName("Subject")

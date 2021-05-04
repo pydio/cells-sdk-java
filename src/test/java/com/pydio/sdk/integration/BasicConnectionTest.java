@@ -1,20 +1,19 @@
 package com.pydio.sdk.integration;
 
+import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.core.CellsSession;
+import com.pydio.sdk.core.ServerFactory;
 import com.pydio.sdk.core.ServerURLImpl;
-import com.pydio.sdk.core.auth.Token;
 import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
-import com.pydio.sdk.core.model.CellsServer;
+import com.pydio.sdk.core.security.P8Credentials;
 import com.pydio.sdk.core.security.PasswordCredentials;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Map;
@@ -31,12 +30,16 @@ import javax.net.ssl.SSLHandshakeException;
  */
 public class BasicConnectionTest {
 
-    private TokenService tokens;
+    private ServerFactory factory;
     private TestConfiguration config;
+
+
 
     @Before
     public void setup() {
-        tokens = new TokenService(new TokenMemoryStore());
+        TokenService tokens = new TokenService(new TokenMemoryStore());
+        factory = new ServerFactory(tokens);
+
         config = new TestConfiguration();
     }
 
@@ -59,7 +62,15 @@ public class BasicConnectionTest {
     private void listDefaultWSRoot(String id, TestConfiguration.ServerConfig conf) {
         try {
             ServerURL sURL = ServerURLImpl.fromAddress(conf.serverURL);
-            ISession session = config.openSession(tokens, sURL, conf.login, conf.pwd);
+            Server server = factory.register(sURL);
+            Credentials credentials;
+            if (ServerFactory.TYPE_LEGACY_P8.equals(server.getRemoteType())){
+                credentials = new P8Credentials(conf.login,  conf.pwd);
+            } else {
+                credentials = new PasswordCredentials(conf.login,  conf.pwd);
+            }
+
+            ISession session = factory.registerAccount(sURL, credentials);
             session.getClient().ls(conf.defaultWS, "/",
                     null, (node) -> System.out.println(node.getLabel()));
         } catch (Exception e) {

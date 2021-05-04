@@ -32,7 +32,7 @@ public class IdmACL {
   @SerializedName("ID")
   private String ID = null;
 
-  @SerializedName("Action")
+  @SerializedName("ActionNames")
   private IdmACLAction action = null;
 
   @SerializedName("RoleID")

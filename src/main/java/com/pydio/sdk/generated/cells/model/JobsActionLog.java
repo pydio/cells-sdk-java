@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 public class JobsActionLog {
-  @SerializedName("Action")
+  @SerializedName("ActionNames")
   private com.pydio.sdk.generated.cells.model.JobsAction action = null;
 
   @SerializedName("InputMessage")

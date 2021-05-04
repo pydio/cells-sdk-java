@@ -9,17 +9,18 @@ public interface Server {
 
     ServerURL getServerURL();
 
-    default ServerURL newURL(String path) throws MalformedURLException {
-        return getServerURL().withPath(path);
-    }
+    Server init(ISession session) throws SDKException;
 
     String getApiURL();
-
-    Server init(ISession session) throws SDKException;
 
     String getRemoteType();
 
     boolean isLegacy();
+
+    default ServerURL newURL(String path) throws MalformedURLException {
+        return getServerURL().withPath(path);
+    }
+
 
     boolean isSSLUnverified();
 

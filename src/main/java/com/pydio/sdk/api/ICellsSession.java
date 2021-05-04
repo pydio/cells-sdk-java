@@ -7,6 +7,7 @@ import com.pydio.sdk.core.auth.Token;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -17,10 +18,6 @@ public interface ICellsSession extends ISession {
 
     HttpURLConnection withAuth(HttpURLConnection con) throws SDKException;
 
-    HttpURLConnection openConnection(String path) throws SDKException, MalformedURLException;
-
-    HttpURLConnection openAnonConnection(String path) throws SDKException, MalformedURLException;
-
-    // Token getToken() throws SDKException;
+    HttpURLConnection openConnection(String path) throws SDKException, IOException;
 
 }

@@ -1,5 +1,6 @@
 package com.pydio.sdk.api;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,7 +13,6 @@ public interface ServerURL {
     default String getId() {
         return getURL().getProtocol() + "://" + getURL().getAuthority();
     }
-
 
     /**
      * Returns the underlying URL Object to perform various checks and/or access to its properties.
@@ -27,7 +27,7 @@ public interface ServerURL {
      */
     ServerURL withPath(String path) throws MalformedURLException;
 
-    void ping() throws Exception;
+    void ping() throws IOException;
 
-    HttpURLConnection openConnection() throws SDKException;
+    HttpURLConnection openConnection() throws IOException;
 }
