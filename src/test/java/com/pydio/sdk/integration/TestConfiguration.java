@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * Utilitary class to centralise test configuration retrieval.
@@ -80,14 +81,6 @@ public class TestConfiguration {
         }
     }
 
-    // TODO refactorize and finalize this
-    public ISession openSession(TokenService tokenService, ServerURL serverURL, String login, String pwd) throws SDKException {
-        Server backend = new CellsServer(serverURL);
-        CellsSession session = new CellsSession(backend, login);
-        session.restore(tokenService);
-        tokenService.legacyLogin(session, new PasswordCredentials(login, pwd));
-        return session;
-    }
 
     public ServerConfig getServer(String id) {
         return servers.get(id);
@@ -104,6 +97,7 @@ public class TestConfiguration {
     public Path getWorkingDir() {
         return resourceDirPath;
     }
+
 
     /* Local helpers */
 

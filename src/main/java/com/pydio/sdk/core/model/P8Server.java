@@ -109,7 +109,7 @@ public class P8Server implements Server {
 
     @Override
     public boolean isLegacy() {
-        return false;
+        return true;
     }
 
     /* Node methods */

@@ -2,7 +2,6 @@ package com.pydio.sdk.core.auth;
 
 import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.ErrorCodes;
-import com.pydio.sdk.api.ICellsSession;
 import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.core.CellsSession;
 import com.pydio.sdk.core.common.http.HttpClient;
@@ -11,7 +10,6 @@ import com.pydio.sdk.core.common.http.HttpResponse;
 import com.pydio.sdk.core.common.http.Method;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.Params;
-import com.pydio.sdk.generated.cells.ApiClient;
 import com.pydio.sdk.generated.cells.ApiException;
 import com.pydio.sdk.generated.cells.api.FrontendServiceApi;
 import com.pydio.sdk.generated.cells.model.RestFrontSessionRequest;
@@ -124,7 +122,7 @@ public class TokenService {
             response = api.frontSession(request);
 
             Token t = new Token();
-            String subject = String.format("%s@%s", credentials.getLogin(), session.getServerNode().getServerURL().getId());
+            String subject = String.format("%s@%s", credentials.getLogin(), session.getServer().getServerURL().getId());
             t.subject = subject;
             t.value = response.getJWT();
             long expireIn = (long) response.getExpireTime();

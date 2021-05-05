@@ -165,17 +165,10 @@ public class P8Response implements Closeable {
     }
 
     public int saxParse(DefaultHandler handler) throws IOException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-
-            // FIXME use temporary string to ease debugging.
-            // String tmpStr = asString();
-            // System.out.println("Before Sax parse, content is: " + tmpStr);
-            // InputStream inputStream = new ByteArrayInputStream(tmpStr.getBytes());
-            // parser.parse(new InputSource(inputStream), handler);
             parser.parse(new InputSource(getInputStream()), handler);
-
             return ErrorCodes.ok;
         } catch (ParserConfigurationException | SAXException e) {
             return ErrorCodes.internal_error;

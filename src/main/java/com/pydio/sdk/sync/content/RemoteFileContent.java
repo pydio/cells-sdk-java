@@ -4,8 +4,6 @@ import com.pydio.sdk.api.Client;
 import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.Server;
-import com.pydio.sdk.api.Session;
-import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.Stats;
 import com.pydio.sdk.sync.Error;
 
@@ -72,7 +70,7 @@ public class RemoteFileContent implements Content {
             return null;
         }
 
-        Server serverNode = session.getServerNode();
+        Server serverNode = session.getServer();
         if(serverNode.isSSLUnverified()) {
             SSLContext sslContext = serverNode.getSslContext();
             HttpsURLConnection c = (HttpsURLConnection) new URL(url).openConnection();

@@ -1,21 +1,23 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.ISession;
-import com.pydio.sdk.api.Server;
+import com.pydio.sdk.api.Message;
 import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.core.ServerFactory;
 import com.pydio.sdk.core.ServerURLImpl;
 import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
-import com.pydio.sdk.core.security.P8Credentials;
-import com.pydio.sdk.core.security.PasswordCredentials;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -32,15 +34,17 @@ public class BasicConnectionTest {
 
     private ServerFactory factory;
     private TestConfiguration config;
-
-
+    private String testRunID;
 
     @Before
     public void setup() {
+
+        testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new TokenMemoryStore());
         factory = new ServerFactory(tokens);
 
         config = new TestConfiguration();
+
     }
 
     @After
@@ -50,7 +54,8 @@ public class BasicConnectionTest {
 
     @Test
     public void testSimpleList() {
-        config.getDefinedServers().forEach((k, v) -> listDefaultWSRoot(k, v));
+        config.getDefinedServers().forEach(this::listDefaultWSRoot);
+        config.getDefinedServers().forEach(this::basicCRUD);
 
         // For the time being only P8 upload is implemented in plain Java
         TestConfiguration.ServerConfig p8Conf = config.getServer("p8");
@@ -61,49 +66,87 @@ public class BasicConnectionTest {
 
     private void listDefaultWSRoot(String id, TestConfiguration.ServerConfig conf) {
         try {
-            ServerURL sURL = ServerURLImpl.fromAddress(conf.serverURL);
-            Server server = factory.register(sURL);
-            Credentials credentials;
-            if (ServerFactory.TYPE_LEGACY_P8.equals(server.getRemoteType())){
-                credentials = new P8Credentials(conf.login,  conf.pwd);
-            } else {
-                credentials = new PasswordCredentials(conf.login,  conf.pwd);
-            }
-
-            ISession session = factory.registerAccount(sURL, credentials);
+            ISession session = TestUtils.getSession(factory, conf);
             session.getClient().ls(conf.defaultWS, "/",
                     null, (node) -> System.out.println(node.getLabel()));
         } catch (Exception e) {
+            Assert.assertNull("Listing of default workspace root failed for " + id + ": " + e.getMessage(), e);
             e.printStackTrace();
-            Assert.assertNull(e);
         }
-
     }
 
     public void basicCRUD(String id, TestConfiguration.ServerConfig conf) {
+        ISession session = null;
+        try {
+            session = TestUtils.getSession(factory, conf);
+            System.out.println("... Testing CRUD for " + session.getId());
 
-            String ws = conf.defaultWS;
+            String baseDir = "/";
+            final String name = "hello-" + testRunID + ".txt";
+            String message = "Hello Pydio! - this is a message from test run #" + testRunID;
 
-            //        System.out.println("... Test Upload");
-//        String targetDir = "/"; // root
-//        String name = "hello6.txt";
-//        byte[] content = "Hello Pydio!".getBytes();
-//        ByteArrayInputStream source = new ByteArrayInputStream(content);
-//        try {
-//            Message msg = testClient.getCellsClient().upload(source, content.length, ws, targetDir, name, true, (progress) -> {
-//                System.out.printf("\r%d bytes written\n", progress);
-//                return false;
-//            });
-//            if (msg == null)
-//                System.out.println("After upload, no message.");
-//            else
-//                System.out.println("After upload, message: " + msg.message);
-//        } catch (SDKException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // TODO finish implementing the CRUD and corresponding checks. Typically, for
-//        // the time being upload fails silently.
+            // Upload
+            byte[] content = message.getBytes();
+            ByteArrayInputStream source = new ByteArrayInputStream(content);
+            Message msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
+                System.out.printf("\r%d bytes written\n", progress);
+                return false;
+            });
+            Assert.assertNotNull(msg);
+            Assert.assertEquals("SUCCESS", msg.type());
+
+            // Read
+            try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+                session.getClient().download(conf.defaultWS, baseDir+name, out, null);
+                out.flush();
+                byte[] byteArray = out.toByteArray();
+                String retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
+                System.out.println("Retrieved: "+ retrievedMsg);
+                Assert.assertEquals(message, retrievedMsg);
+            }
+
+            // Update fails in P8
+            if (!session.getServer().isLegacy()) {
+                System.out.println("Legacy, for sure ?");
+
+                message += " -- Add with some additional content";
+                content = message.getBytes();
+                source = new ByteArrayInputStream(content);
+                msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
+                    System.out.printf("\r%d bytes written\n", progress);
+                    return false;
+                });
+                Assert.assertNotNull(msg);
+                Assert.assertEquals("SUCCESS", msg.type());
+
+                // Read updated
+                try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+                    session.getClient().download(conf.defaultWS, baseDir + name, out, null);
+                    out.flush();
+                    byte[] byteArray = out.toByteArray();
+                    String retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
+                    System.out.println("Retrieved: " + retrievedMsg);
+                    Assert.assertEquals(message, retrievedMsg);
+                }
+            }
+            // Delete
+            msg = session.getClient().delete(conf.defaultWS, new String[]{"/"+ name});
+            Assert.assertNotNull(msg);
+            Assert.assertEquals("EMPTY", msg.type());
+
+            // Check if uploaded files is still there
+            final List<String> founds = new ArrayList<>();
+            session.getClient().ls(conf.defaultWS, baseDir,
+                    null, (node) -> { if (name.equals(node.getLabel())) founds.add(name);});
+            Assert.assertEquals(0, founds.size());
+
+        } catch (Exception e) {
+            Assert.assertNull("CRUD failed for " + session == null ? id : session.getId() + ": " + e.getMessage(), e);
+            e.printStackTrace();
+        }
+
+        // TODO finish implementing the CRUD and corresponding checks. Typically, for
+        // the time being upload fails silently.
     }
 
 
@@ -114,7 +157,7 @@ public class BasicConnectionTest {
             for (String key : servers.keySet()) {
 
                 TestConfiguration.ServerConfig currConf = servers.get(key);
-                if (!currConf.skipVerify){
+                if (!currConf.skipVerify) {
                     continue;
                 }
 
@@ -122,7 +165,7 @@ public class BasicConnectionTest {
                 ServerURL currURL;
                 try {
                     currURL = ServerURLImpl.fromAddress(currConf.serverURL);
-                    // => Selfsigned: ping fails
+                    // => Self-signed: ping fails
                     currURL.ping();
                 } catch (Exception e) {
                     Assert.assertTrue(e instanceof SSLHandshakeException);
@@ -139,5 +182,6 @@ public class BasicConnectionTest {
             Assert.assertNull(e);
         }
     }
+
 
 }

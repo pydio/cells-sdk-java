@@ -82,7 +82,7 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     @Override
-    public Server getServerNode() {
+    public Server getServer() {
         return server;
     }
 
@@ -155,7 +155,7 @@ public class P8Session implements ILegacySession, SdkNames {
                 useCaptcha();
                 login();
             } catch (SDKException e) {
-                Log.e("Login Error", "Could not log as " + getUser() + "@" + getServerNode().getServerURL().getId());
+                Log.e("Login Error", "Could not log as " + getUser() + "@" + getServer().getServerURL().getId());
                 e.printStackTrace();
             }
         } else

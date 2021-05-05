@@ -30,6 +30,7 @@ public interface ErrorCodes {
     int no_token_available = 25;
     int panic = 100;
     int internal_error = 101;
+    int configuration_error = 102;
 
 
     /**

@@ -67,7 +67,7 @@ public class CellsSession implements ICellsSession, SdkNames {
     }
 
     @Override
-    public Server getServerNode() {
+    public Server getServer() {
         return server;
     }
 
@@ -188,14 +188,14 @@ public class CellsSession implements ICellsSession, SdkNames {
 
     public ApiClient getApiClient() {
         ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath(getServerNode().getApiURL());
+        apiClient.setBasePath(getServer().getApiURL());
         apiClient.setUserAgent(getUserAgent());
 
-        if (getServerNode().isSSLUnverified()) {
-            SSLContext context = getServerNode().getSslContext();
+        if (getServer().isSSLUnverified()) {
+            SSLContext context = getServer().getSslContext();
             OkHttpClient c = apiClient.getHttpClient();
             c.setSslSocketFactory(context.getSocketFactory());
-            final String serverUrl = getServerNode().getServerURL().getURL().toString();
+            final String serverUrl = getServer().getServerURL().getURL().toString();
             c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
         }
         return apiClient;

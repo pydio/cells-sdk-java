@@ -1,7 +1,6 @@
 package com.pydio.sdk.api;
 
 import com.pydio.sdk.api.callbacks.RegistryItemHandler;
-import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.nodes.WorkspaceNode;
 
 import org.json.JSONObject;
@@ -14,7 +13,12 @@ import java.util.Map;
 
 public interface ISession {
 
-    Server getServerNode();
+
+    default String getId(){
+        return getUser()+"@"+ getServer().getServerURL().getId();
+    }
+
+    Server getServer();
 
     Client getClient();
 
