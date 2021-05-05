@@ -62,7 +62,7 @@ public class GetChangesTest {
 
         try {
 
-            String ws = testClient.getDefaultWorkspace();
+            String ws = testClient.getCellsDefaultWS();
             final String basePath = TestUtils.getUniquePath();
             PydioCells client = testClient.getCellsClient();
 
@@ -134,7 +134,7 @@ public class GetChangesTest {
     @Test
     public void testBasicCRUD() {
 
-        String ws = testClient.getDefaultWorkspace();
+        String ws = testClient.getCellsDefaultWS();
         // Skipped test: CRUD is not yet implemented from Java
         System.out.println("... Test Listing");
         try {

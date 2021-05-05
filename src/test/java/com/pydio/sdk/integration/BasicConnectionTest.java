@@ -46,11 +46,21 @@ public class BasicConnectionTest {
 
     @Test
     public void testSimpleList() {
-        String ws = testClient.getDefaultWorkspace();
-        System.out.println("... Test Listing");
         try {
-            testClient.getCellsClient().ls(ws, "/",
-                    null, (node) -> System.out.println(node.label()));
+            if (testClient.getCellsClient() != null){
+                System.out.println("... Test Cells Listing");
+                String ws = testClient.getCellsDefaultWS();
+                testClient.getCellsClient().ls(ws, "/",
+                        null, (node) -> System.out.println(node.label()));
+            }
+
+            if (testClient.getP8Client() != null){
+                System.out.println("... Test Pydio 8 Listing");
+                String ws = testClient.getP8DefaultWS();
+                testClient.getP8Client().ls(ws, "/",
+                        null, (node) -> System.out.println(node.label()));
+            }
+
         } catch (SDKException e) {
             e.printStackTrace();
         }
@@ -60,7 +70,7 @@ public class BasicConnectionTest {
     @Test
     public void testBasicCRUD() {
 
-        String ws = testClient.getDefaultWorkspace();
+        String ws = testClient.getCellsDefaultWS();
         // Skipped test: CRUD is not yet implemented from Java
         System.out.println("... Test Listing");
         try {
