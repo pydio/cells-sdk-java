@@ -3,7 +3,8 @@ package com.pydio.sdk.generated.p8;
 import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.api.callbacks.StringHandler;
 import com.pydio.sdk.api.callbacks.TransferProgressListener;
-import com.pydio.sdk.core.utils.io;
+import com.pydio.sdk.core.utils.IoHelpers;
+import com.pydio.sdk.core.utils.Log;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -12,14 +13,19 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
@@ -32,15 +38,23 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
+/**
+ * Wraps the connection InputStream to ease implementation.
+ * <p>
+ * Upon creation we locally retrieve at max 512 bytes that we try to parse with Sax to insure
+ * we do not have an error response: the Pydio 8 API returns an HTTP status 200 with an XML
+ * error message in case something goes wrong.
+ *
+ * WARNING: this means that the connection is effectively opened upon P8Response instantiation.
+ */
 public class P8Response implements Closeable {
 
+    private final HttpURLConnection con;
     private int code;
+
+    private ByteArrayOutputStream buffered;
     private InputStream concatStream;
     private InputStream netStream;
-    private HttpURLConnection con;
-    private ByteArrayOutputStream buffered;
 
     public static P8Response error(int code) {
         P8Response rsp = new P8Response();
@@ -49,64 +63,40 @@ public class P8Response implements Closeable {
     }
 
     private P8Response() {
+        con = null;
     }
 
     public P8Response(HttpURLConnection con) {
         this.con = con;
         try {
-            parse();
+            code = ErrorCodes.fromHttpStatus(con.getResponseCode());
+            if (code != ErrorCodes.ok) {
+                return;
+            }
+            parseFirstBytes();
+
         } catch (IOException e) {
-            code = ErrorCodes.con_failed;
-        }
-    }
-
-    private void parse() throws IOException {
-        code = ErrorCodes.fromHttpStatus(con.getResponseCode());
-        if (code != ErrorCodes.ok) {
-            return;
-        }
-
-        buffered = new ByteArrayOutputStream();
-        netStream = con.getInputStream();
-        int read = -1;
-        int left = 512;
-        byte[] buffer = new byte[left];
-
-        try {
-            while (left > 0) {
-                read = netStream.read(buffer);
-                if (read == -1) {
-                    break;
-                }
-                left -= read;
-                if (read > 0) {
-                    buffered.write(buffer, 0, read);
-                }
-            }
-
-            buffer = buffered.toByteArray();
-            String xmlString = new String(Arrays.copyOfRange(buffer, 0, buffer.length), UTF_8);
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
-            DefaultHandler handler = new RegistryHandler();
-            parser.parse(new InputSource(new StringReader(xmlString)), handler);
-        } catch (IOException | ParserConfigurationException e) {
+            Log.w("Unexpected runtime error", "Could not retrieve response code from connection: " + e.getMessage());
             e.printStackTrace();
-        } catch (SAXException e) {
-            String m = e.getMessage();
-            if ("auth".equalsIgnoreCase(m)) {
-                this.code = ErrorCodes.authentication_required;
-            } else if ("token".equalsIgnoreCase(m)) {
-                this.code = ErrorCodes.authentication_with_captcha_required;
-            } else if (m.startsWith("redirect=")) {
-                this.code = ErrorCodes.redirect;
-            }
-        } catch (Exception ignored) {
+            code = -1;
         }
     }
 
-    private InputStream getInputStream() {
+    public int code() {
+        return code;
+    }
+
+    public List<String> getHeaders(String key) {
+        try {
+            return this.con.getHeaderFields().get(key);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public InputStream getInputStream() {
         if (concatStream == null) {
+            // Concat already read bytes with the remaining ones from the original stream
             concatStream = new InputStream() {
                 final InputStream buffered = new ByteArrayInputStream(P8Response.this.buffered.toByteArray());
 
@@ -126,31 +116,77 @@ public class P8Response implements Closeable {
         return concatStream;
     }
 
-    public InputStream getContent() {
-        return getInputStream();
-    }
+    /**
+     * This workarounds the fact that errors are returned as XML and not with HTTP status by the
+     * Pydio 8 API. We read the first 512 bytes (that is usually enough) and check if it is a known error message
+     */
+    private void parseFirstBytes() throws IOException {
 
-    public int code() {
-        return code;
-    }
+        code = ErrorCodes.fromHttpStatus(con.getResponseCode());
+        if (code != ErrorCodes.ok) {
+            return;
+        }
 
-    public List<String> getHeaders(String key) {
+        buffered = new ByteArrayOutputStream();
+        netStream = con.getInputStream();
+        int left = 512, read;
+        byte[] buffer = new byte[left];
+
         try {
-            return this.con.getHeaderFields().get(key);
-        } catch (Exception e) {
-            return null;
+            while (left > 0) {
+                read = netStream.read(buffer);
+                if (read == -1) {
+                    break;
+                }
+                left -= read;
+                if (read > 0) {
+                    buffered.write(buffer, 0, read);
+                }
+            }
+
+            buffer = buffered.toByteArray();
+            String xmlString = new String(Arrays.copyOfRange(buffer, 0, buffer.length), StandardCharsets.UTF_8);
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
+            parser.parse(new InputSource(new StringReader(xmlString)), new ErrorMessageHandler());
+
+        } catch (IOException | ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            String m = e.getMessage();
+            if ("auth".equalsIgnoreCase(m)) {
+                this.code = ErrorCodes.authentication_required;
+            } else if ("token".equalsIgnoreCase(m)) {
+                this.code = ErrorCodes.authentication_with_captcha_required;
+            } else if (m.startsWith("redirect=")) {
+                this.code = ErrorCodes.redirect;
+            }
         }
     }
 
-    public JSONObject toJSON() throws ParseException {
-        return new JSONObject(asString());
+    public int saxParse(DefaultHandler handler) throws IOException {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        try {
+            SAXParser parser = factory.newSAXParser();
+
+            // FIXME use temporary string to ease debugging.
+            // String tmpStr = asString();
+            // System.out.println("Before Sax parse, content is: " + tmpStr);
+            // InputStream inputStream = new ByteArrayInputStream(tmpStr.getBytes());
+            // parser.parse(new InputSource(inputStream), handler);
+            parser.parse(new InputSource(getInputStream()), handler);
+
+            return ErrorCodes.ok;
+        } catch (ParserConfigurationException | SAXException e) {
+            return ErrorCodes.internal_error;
+        }
     }
 
     public Document toXMLDocument() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = dbf.newDocumentBuilder();
-            InputStream in = con.getInputStream();
+            InputStream in = getInputStream();
             return builder.parse(in);
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,44 +194,8 @@ public class P8Response implements Closeable {
         }
     }
 
-    /**
-     * Simply dump the outstream in a string as shortcut when the expected answer should be shorter than...
-     */
-    public String asString() {
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            InputStream in = getInputStream();
-            io.pipeRead(in, out);
-            byte[] buffer = out.toByteArray();
-            return new String(buffer, UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public String toString() {
-
-        return asString();
-
-//        System.out.println("###### TO STRING CALLED");
-//        Thread.dumpStack();
-//        return super.toString();
-        //  ByteArrayOutputStream out = new ByteArrayOutputStream();
-        //  InputStream in = getInputStream();
-        //  try {
-        //      io.pipeRead(in, out);
-        //  } catch (IOException e) {
-        //      e.printStackTrace();
-        //      return null;
-        //  }
-//
-        //  byte[] buffer = out.toByteArray();
-        //  String charset = "UTF-8";
-        //  try {
-        //      return new String(buffer, charset);
-        //  } catch (UnsupportedEncodingException e) {
-        //      return new String(buffer);
-        //  }
+    public JSONObject toJSON() throws ParseException, IOException {
+        return new JSONObject(asString());
     }
 
     public int lineByLine(String charset, String delimiter, StringHandler h) {
@@ -221,50 +221,53 @@ public class P8Response implements Closeable {
         }
     }
 
-    public int saxParse(DefaultHandler handler) {
-        String content = asString();
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        try {
-            SAXParser parser = factory.newSAXParser();
-            parser.parse(new InputSource(new StringReader(content)), handler);
-            return ErrorCodes.ok;
-        } catch (Exception e) {
-            return ErrorCodes.unexpected_content;
-        }
-    }
-
     public long write(OutputStream out) throws IOException {
-        return io.pipeRead(getContent(), out);
+        return IoHelpers.pipeRead(getInputStream(), out);
     }
 
     public long write(OutputStream out, TransferProgressListener progressListener) throws IOException {
-        return io.pipeReadWithProgress(getContent(), out, (progress) -> {
+        return IoHelpers.pipeReadWithProgress(getInputStream(), out, (progress) -> {
             if (progressListener != null) {
                 progressListener.onProgress(progress);
             }
         });
     }
 
-    @Override
-    public void close() {
-        io.consume(this.netStream);
-
-        try {
-            this.con.disconnect();
-        } catch (Exception ignore) {
+    /**
+     * Simply dumps the connection InputStream to a string
+     */
+    public String asString() throws IOException {
+        StringBuilder builder = new StringBuilder();
+        try (Reader reader = new BufferedReader(new InputStreamReader
+                (getInputStream(), Charset.forName(StandardCharsets.UTF_8.name())))) {
+            int c = 0;
+            while ((c = reader.read()) != -1) {
+                builder.append((char) c);
+            }
         }
 
+        return builder.toString();
+    }
+
+    @Override
+    public void close() {
+
         if (netStream != null) {
-            io.close(netStream);
+            IoHelpers.quietlyClose(netStream);
         }
 
         if (concatStream != null) {
-            io.close(concatStream);
+            IoHelpers.quietlyClose(concatStream);
+        }
+        try {
+            con.disconnect();
+        } catch (Exception ignore) {
+            Log.w("Warning", "Could not correctly disconnect connection for P8Response");
         }
     }
 
-
-    private class RegistryHandler extends DefaultHandler {
+    /* This is used to parse the beginning of the returned InputStream and check for API errors */
+    private class ErrorMessageHandler extends DefaultHandler {
 
         boolean tag_auth = false;
         boolean tag_msg = false;
@@ -283,6 +286,7 @@ public class P8Response implements Closeable {
                 if (qName.equals("message")) {
                     P8Response.this.code = ErrorCodes.authentication_required;
                     throw new SAXException("auth");
+                    // throw new SAXException("Found error message ["+ attributes.getValue("message")+ "], breaking.");.");
                 }
                 return;
             }
@@ -300,18 +304,19 @@ public class P8Response implements Closeable {
                     xpathUser = "user".equals(splits[0]);
                 }
             }
+
             tag_auth = qName.equals("require_auth");
             tag_msg = qName.equals("message");
         }
 
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if (tag_repo && xpathUser && !repoHasContent) {
-                P8Response.this.code = ErrorCodes.authentication_required;//P8Client.this.auth_step = "LOG-USER";
+                P8Response.this.code = ErrorCodes.authentication_required;
                 throw new SAXException("auth");
             }
 
             if (tag_auth && qName.equals("require_auth")) {
-                P8Response.this.code = ErrorCodes.authentication_required;//P8Client.this.auth_step = "LOG-USER";
+                P8Response.this.code = ErrorCodes.authentication_required;
                 throw new SAXException("auth");
             }
         }

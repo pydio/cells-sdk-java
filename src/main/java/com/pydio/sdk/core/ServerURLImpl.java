@@ -79,6 +79,7 @@ public class ServerURLImpl implements ServerURL {
 
     @Override
     public HttpURLConnection openConnection() throws IOException {
+
         HttpURLConnection connection = null;
         if ("http".equals(url.getProtocol())) {
             connection = (HttpURLConnection) url.openConnection();
@@ -91,6 +92,51 @@ public class ServerURLImpl implements ServerURL {
         return connection;
     }
 
+    // TODO finalize self-signed management.
+
+
+    /* Manage self signed on a URL by URL Basis.
+      Thanks to https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check */
+
+      private void setAcceptAllVerifier(HttpsURLConnection connection) {
+        try {
+            // Create the socket factory.
+            // Reusing the same socket factory allows sockets to be reused, supporting persistent connections.
+            if (null == sslSocketFactory) {
+                SSLContext sc = SSLContext.getInstance("SSL");
+                sc.init(null, SKIP_VERIFY_TRUST_MANAGER, new java.security.SecureRandom());
+                sslSocketFactory = sc.getSocketFactory();
+            }
+            connection.setSSLSocketFactory(sslSocketFactory);
+
+            // Since we may be using a cert with a different name, we need to ignore the hostname as well.
+            connection.setHostnameVerifier(SKIP_HOSTNAME_VERIFIER);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Unexpected error while initializing SSL context", e);
+        } catch (KeyManagementException e) {
+            throw new RuntimeException("Unexpected error while initializing SSL context", e);
+        }
+    }
+
+    private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+    };
+
+    private static final HostnameVerifier SKIP_HOSTNAME_VERIFIER = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
 
 
     /*
@@ -213,47 +259,6 @@ public class ServerURLImpl implements ServerURL {
 */
 
 
-    /* Manage self signed on a URL by URL Basis.
-      Thanks to https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check */
 
-    private void setAcceptAllVerifier(HttpsURLConnection connection) {
-        try {
-            // Create the socket factory.
-            // Reusing the same socket factory allows sockets to be reused, supporting persistent connections.
-            if (null == sslSocketFactory) {
-                SSLContext sc = SSLContext.getInstance("SSL");
-                sc.init(null, SKIP_VERIFY_TRUST_MANAGER, new java.security.SecureRandom());
-                sslSocketFactory = sc.getSocketFactory();
-            }
-            connection.setSSLSocketFactory(sslSocketFactory);
-
-            // Since we may be using a cert with a different name, we need to ignore the hostname as well.
-            connection.setHostnameVerifier(SKIP_HOSTNAME_VERIFIER);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Unexpected error while initializing SSL context", e);
-        } catch (KeyManagementException e) {
-            throw new RuntimeException("Unexpected error while initializing SSL context", e);
-        }
-    }
-
-    private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
-            new X509TrustManager() {
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
-
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                }
-            }
-    };
-
-    private static final HostnameVerifier SKIP_HOSTNAME_VERIFIER = new HostnameVerifier() {
-        public boolean verify(String hostname, SSLSession session) {
-            return true;
-        }
-    };
 
 }

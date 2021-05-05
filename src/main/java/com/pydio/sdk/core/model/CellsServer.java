@@ -54,8 +54,6 @@ public class CellsServer implements Server {
     private CertificateTrust.Helper trustHelper;
 
 
-    // private JSONObject bootConf;
-
     public CellsServer(ServerURL serverURL) {
         this.serverURL = serverURL;
     }
@@ -64,15 +62,14 @@ public class CellsServer implements Server {
         return new CellsServer(serverURL);
     }
 
+    public CellsServer init(String url) {
+        return this;
+    }
+
     @Override
     public Server init(ISession session) throws SDKException {
         refreshBootConf((CellsSession) session);
         return null;
-    }
-
-    // Local shortcut
-    private String getId() {
-        return serverURL.getId();
     }
 
     @Override
@@ -90,14 +87,9 @@ public class CellsServer implements Server {
 
     }
 
-
     @Override
     public String getRemoteType() {
         return serverType;
-    }
-
-    public CellsServer init(String url) {
-        return this;
     }
 
     @Override
@@ -108,7 +100,6 @@ public class CellsServer implements Server {
     /* Node methods */
 
     private void refreshBootConf(CellsSession session) {
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         InputStream in = null;
         HttpURLConnection con;
@@ -133,13 +124,6 @@ public class CellsServer implements Server {
         }
     }
 
-
-    // Getters
-
-    private TrustManager trustManager() {
-        return new CertificateTrustManager(getTrustHelper());
-    }
-
     public String version() {
         if (version == null) {
             throw new RuntimeException("Trying to retrieve AJXP Version param before the server has been instantiated");
@@ -147,9 +131,85 @@ public class CellsServer implements Server {
         return version;
     }
 
-
     public boolean hasLicenseFeatures() {
         return bootConf != null && bootConf.has("license_features");
+    }
+
+    public boolean isSSLUnverified() {
+        return sslUnverified;
+    }
+
+    @Override
+    public String getIconURL() {
+        return null;
+    }
+
+    @Override
+    public String getWelcomeMessage() {
+        return null;
+    }
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public String welcomeMessage() {
+        return this.welcomeMessage;
+    }
+
+    public boolean supportsOauth() {
+        return this.oidc != null;
+    }
+
+    public JSONObject getOIDCInfo() {
+        return this.oidc;
+    }
+
+    public void setUnverifiedSSL(boolean unverified) {
+        sslUnverified = unverified;
+    }
+
+    public SSLContext getSslContext() {
+        if (this.sslContext == null) {
+            try {
+                this.sslContext = SSLContext.getInstance("TLS");
+                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        try {
+            this.sslContext.getSocketFactory();
+        } catch (Exception e) {
+            try {
+                this.sslContext = SSLContext.getInstance("TLS");
+                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
+            } catch (Exception ex) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return this.sslContext;
+    }
+
+    public byte[][] getCertificateChain() {
+        return this.certificateChain;
+    }
+
+    public HostnameVerifier getHostnameVerifier() {
+        return (s, sslSession) -> true;
+    }
+
+    /*  Local helpers */
+
+    private TrustManager trustManager() {
+        return new CertificateTrustManager(getTrustHelper());
+    }
+
+    private String getId() {
+        return serverURL.getId();
     }
 
     private CertificateTrust.Helper getTrustHelper() {
@@ -184,43 +244,6 @@ public class CellsServer implements Server {
         return trustHelper;
     }
 
-    public boolean isSSLUnverified() {
-        return sslUnverified;
-    }
-
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    public String welcomeMessage() {
-        return this.welcomeMessage;
-    }
-
-    public SSLContext getSslContext() {
-        if (this.sslContext == null) {
-            try {
-                this.sslContext = SSLContext.getInstance("TLS");
-                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        try {
-            this.sslContext.getSocketFactory();
-        } catch (Exception e) {
-            try {
-                this.sslContext = SSLContext.getInstance("TLS");
-                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception ex) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return this.sslContext;
-    }
 
     public boolean equals(Object obj) {
 
@@ -232,38 +255,4 @@ public class CellsServer implements Server {
         return getId().equals(((CellsServer) obj).getServerURL().getId());
     }
 
-
-    public byte[][] getCertificateChain() {
-        return this.certificateChain;
-    }
-
-    public boolean supportsOauth() {
-        return this.oidc != null;
-    }
-
-    public JSONObject getOIDCInfo() {
-        return this.oidc;
-    }
-
-
-    public HostnameVerifier getHostnameVerifier() {
-        return (s, sslSession) -> true;
-    }
-
-
-    @Override
-    public String getIconURL() {
-        return null;
-    }
-
-    @Override
-    public String getWelcomeMessage() {
-        return null;
-    }
-
-    // Setters
-
-    public void setUnverifiedSSL(boolean unverified) {
-        sslUnverified = unverified;
-    }
 }

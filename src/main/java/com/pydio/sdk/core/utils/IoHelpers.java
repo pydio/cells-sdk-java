@@ -10,12 +10,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/* Work in progress: new version of the utilitary static methods to solve resource exhaustion issues*/
+/* Work in progress: new version of the utilitary static methods
+to solve resource exhaustion issues*/
 public class IoHelpers {
 
     public static int bufferSize = 4096;
 
-    public static boolean close(InputStream in) {
+    public static void consume(InputStream in) throws IOException {
+        byte[] buffer = new byte[bufferSize];
+        for (int read = 0; read != -1; read = in.read(buffer)) ;
+    }
+
+    public static boolean quietlyClose(InputStream in) {
         try {
             in.close();
             return true;
@@ -24,7 +30,7 @@ public class IoHelpers {
         }
     }
 
-    public static boolean close(OutputStream out) {
+    public static boolean quietlyClose(OutputStream out) {
         try {
             out.close();
             return true;

@@ -4,7 +4,7 @@ import com.pydio.sdk.api.Node;
 
 import java.util.Properties;
 
-public class BookmarkNode implements com.pydio.sdk.api.Node {
+public class BookmarkNode implements Node {
 
     private String label;
     private Properties properties;
@@ -60,12 +60,13 @@ public class BookmarkNode implements com.pydio.sdk.api.Node {
     }
 
     @Override
-    public int compare(com.pydio.sdk.api.Node node) {
+    public int compare(Node node) {
+        // TODO implement
         if (node == null) {
-            return com.pydio.sdk.api.Node.different;
+            return Node.different;
         }
-        if (!this.label.equals(node.getLabel())) {
-            return com.pydio.sdk.api.Node.different;
+        if (!label.equals(node.getLabel())) {
+            return Node.different;
         }
         return Node.same;
     }

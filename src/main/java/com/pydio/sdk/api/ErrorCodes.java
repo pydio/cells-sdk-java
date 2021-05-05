@@ -29,6 +29,7 @@ public interface ErrorCodes {
     int token_expired = 24;
     int no_token_available = 25;
     int panic = 100;
+    int internal_error = 101;
 
 
     /**

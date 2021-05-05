@@ -3,6 +3,7 @@ package com.pydio.sdk.generated.p8;
 import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.core.common.http.ContentBody;
 import com.pydio.sdk.core.utils.Params;
+import com.pydio.sdk.generated.p8.consts.P8Names;
 
 public class P8Request {
 
@@ -20,7 +21,7 @@ public class P8Request {
     }
 
     public String getMethod() {
-        
+
         if (method != null && !"".equals(method)) {
             return method;
         }
@@ -73,6 +74,7 @@ public class P8Request {
 
     public void setAction(String action) {
         this.action = action;
+        setParam(P8Names.getAction, action);
     }
 
     public void setParam(String name, String value) {

@@ -27,6 +27,7 @@ public class ServerFactory implements IServerFactory {
 
     public ServerFactory(TokenService tokenService) {
         this.tokenService = tokenService;
+        initAppData();
     }
 
     @Override
@@ -90,8 +91,8 @@ public class ServerFactory implements IServerFactory {
 
         } else if (TYPE_LEGACY_P8.equals(server.getRemoteType())) {
             session = new P8Session(server);
-            ((P8Session)session).restore(tokenService);
-            ((P8Session)session).setCredentials(credentials);
+            ((P8Session) session).restore(tokenService);
+            ((P8Session) session).setCredentials(credentials);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
@@ -118,6 +119,15 @@ public class ServerFactory implements IServerFactory {
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
         return session;
+    }
+
+    private void initAppData() {
+
+        ApplicationData.packageID = this.getClass().getPackage().getName();
+        ApplicationData.name = "CellsJavaClient";
+        ApplicationData.version = "0.2.0-dev";
+        ApplicationData.platform = "Java";
+
     }
 
 }

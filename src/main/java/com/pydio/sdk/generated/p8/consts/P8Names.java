@@ -6,10 +6,10 @@ public interface P8Names {
     String HEADER_SET_COOKIE =  "Set-Cookie";
 
     /** Known Request Properties */
-    String REQ_PROP_COOKIE  = "Cookie";
-    String REQ_PROP_USER_AGENT  = "User-Agent";
-    String REQ_PROP_CONTENT_TYPE  = "Content-Type";
-    String REQ_PROP_CONTENT_LENGTH  = "Content-Length";
+    String REQ_PROP_COOKIE  = "cookie";
+    String REQ_PROP_USER_AGENT  = "user-agent";
+    String REQ_PROP_CONTENT_TYPE  = "content-type";
+    String REQ_PROP_CONTENT_LENGTH  = "content-length";
 
     /** Supported content types */
     String CONTENT_TYPE_OCTET_STREAM = "application/octet-stream";

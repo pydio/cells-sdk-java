@@ -7,11 +7,13 @@ import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.Message;
 import com.pydio.sdk.api.Node;
 import com.pydio.sdk.api.PageOptions;
+import com.pydio.sdk.api.Plugin;
 import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.api.Stats;
 import com.pydio.sdk.api.callbacks.ChangeHandler;
 import com.pydio.sdk.api.callbacks.NodeHandler;
+import com.pydio.sdk.api.callbacks.RegistryItemHandler;
 import com.pydio.sdk.api.callbacks.TransferProgressListener;
 import com.pydio.sdk.api.nodes.ChangeNode;
 import com.pydio.sdk.api.nodes.FileNode;
@@ -37,12 +39,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.ProtocolException;
-import java.rmi.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 public class P8Client implements Client, SdkNames {
 
@@ -55,8 +55,6 @@ public class P8Client implements Client, SdkNames {
     private P8Request refreshSecureToken(P8Request req) {
         try {
             if (!session.useCaptcha()) {
-                session.login();
-                String secureToken = session.getToken();
                 return P8RequestBuilder.update(req).setToken(session).getRequest();
             }
         } catch (Exception e) {
@@ -96,6 +94,8 @@ public class P8Client implements Client, SdkNames {
             if (code != ErrorCodes.ok) {
                 throw new SDKException(code);
             }
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
         }
     }
 
@@ -114,16 +114,51 @@ public class P8Client implements Client, SdkNames {
             }
             node[0].setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
             return node[0];
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
         }
     }
 
+
+    private class RIH extends RegistryItemHandler {
+
+        public void onPref(String name, String value) {
+            System.out.println("OnPref: "+ name);
+        }
+
+        public void onAction(String action, String read, String write) {
+            System.out.println("OnAction: "+ action);
+        }
+
+        public void onWorkspace(Properties p) {
+            System.out.println("OnWS ");
+
+        }
+
+        public void onPlugin(Plugin p) {
+            System.out.println("OnPlugin: "+ p.name);
+        }
+    }
+
+
+
     @Override
     public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
+
+/*
+        // Dirty hack to debug
+
+        session.downloadWorkspaceRegistry(ws, new RIH());
+
+        System.out.println("After list, fixme");
+        return null;
+*/
         PageOptions nextOptions = new PageOptions();
 
         P8RequestBuilder builder = P8RequestBuilder.ls(ws, folder).setToken(session);
         while (true) {
             try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+//                try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, 0)) {
                 int code = rsp.code();
                 if (code != ErrorCodes.ok) {
                     throw new SDKException(code);
@@ -147,8 +182,12 @@ public class P8Client implements Client, SdkNames {
                 } else {
                     return nextOptions;
                 }
+            } catch (IOException ioe) {
+                throw new SDKException(ioe);
             }
         }
+
+
     }
 
     @Override
@@ -168,6 +207,8 @@ public class P8Client implements Client, SdkNames {
             if (resultCode != ErrorCodes.ok) {
                 throw new SDKException(resultCode);
             }
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
         }
     }
 
@@ -218,6 +259,8 @@ public class P8Client implements Client, SdkNames {
                     } else {
                         break;
                     }
+                } catch (IOException ioe) {
+                    throw new SDKException(ioe);
                 }
             }
         }
@@ -318,6 +361,8 @@ public class P8Client implements Client, SdkNames {
             }
             msg.added.add(info);
             return msg;
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
         } finally {
             rsp.close();
         }
@@ -514,11 +559,14 @@ public class P8Client implements Client, SdkNames {
     @Override
     public InputStream previewData(String ws, String file, int dim) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file, dim).setToken(session);
-        P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
-        if (rsp.code() != ErrorCodes.ok) {
-            throw new SDKException(rsp.code());
+        try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            return rsp.getInputStream();
+   //     } catch (IOException ioe) {
+   //         throw new SDKException(ioe);
         }
-        return rsp.getContent();
     }
 
     @Override
@@ -687,6 +735,8 @@ public class P8Client implements Client, SdkNames {
                 return seq;
             }
             return Math.max(seq, lastSeq[0]);
+        } catch (IOException e) {
+            throw new SDKException(e);
         }
     }
 
@@ -711,6 +761,8 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
             return rsp.asString();
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
         }
     }
 

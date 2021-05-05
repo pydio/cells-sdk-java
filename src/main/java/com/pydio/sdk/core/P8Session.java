@@ -15,6 +15,7 @@ import com.pydio.sdk.core.model.P8Server;
 import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.sdk.core.security.P8Credentials;
+import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.generated.p8.Method;
 import com.pydio.sdk.generated.p8.P8Request;
 import com.pydio.sdk.generated.p8.P8RequestBuilder;
@@ -55,6 +56,8 @@ public class P8Session implements ILegacySession, SdkNames {
     private Credentials credentials;
     private int loginFailure;
 
+    private Boolean useCaptcha;
+
     public P8Session(Server server, CookieManager manager) {
         this.server = server;
         cookieManager = manager;
@@ -74,6 +77,7 @@ public class P8Session implements ILegacySession, SdkNames {
         // TODO rather use this than the local concurrent hashmap.
         // this.tokens = tokens;
         server.init(this);
+
         // TODO more init
     }
 
@@ -94,21 +98,12 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     @Override
-    public Map<String, WorkspaceNode> getCachedWorkspaces() {
-        // TODO implement
-        return null;
-    }
-
-    @Override
-    public boolean useCaptcha() {
-        try {
-            JSONObject info = authenticationInfo();
-            return info.has(P8Names.captchaCode);
-        } catch (SDKException se) {
-            System.out.println("FIXME: Unexpected SDK error while checking if we use Captcha");
-            se.printStackTrace();
-        }
-        return false;
+    public String getUserAgent() {
+        // FIXME do we want to be able to override the default string ?
+        // if (this.config.userAgent != null) {
+        //     con.setRequestProperty("User-Agent", this.config.userAgent);
+        // } else {
+        return "Pydio-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode;
     }
 
     @Override
@@ -121,99 +116,54 @@ public class P8Session implements ILegacySession, SdkNames {
         return secureToken;
     }
 
-    private CookieManager getCookieManager() {
-        return cookieManager;
+    @Override
+    public String getUser() {
+        return credentials.getLogin();
     }
 
     @Override
-    public String getUserAgent() {
-        // FIXME do we want to be able to override the default string ?
-        // if (this.config.userAgent != null) {
-        //     con.setRequestProperty("User-Agent", this.config.userAgent);
-        // } else {
-        return "Pydio-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode;
+    public Map<String, WorkspaceNode> getCachedWorkspaces() {
+        // TODO implement
+        return null;
+    }
+
+    @Override
+    public boolean useCaptcha() {
+        if (useCaptcha != null) {
+            return useCaptcha.booleanValue();
+        }
+
+        try {
+            JSONObject info = authenticationInfo();
+            useCaptcha = Boolean.valueOf(info.has(P8Names.captchaCode));
+            return useCaptcha.booleanValue();
+        } catch (SDKException se) {
+            System.out.println("FIXME: Unexpected SDK error while checking if we use Captcha");
+            se.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public void setCredentials(Credentials c) {
         if (c instanceof P8Credentials) {
             this.credentials = c;
+            // P8 token never expire so it is much easier and good enough for legacy
+            // to retrieve auth info and login at this point
+            // and then always rely on the objects that are stored in memory.
+            try {
+                useCaptcha();
+                login();
+            } catch (SDKException e) {
+                Log.e("Login Error", "Could not log as " + getUser() + "@" + getServerNode().getServerURL().getId());
+                e.printStackTrace();
+            }
         } else
             throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
     }
 
     @Override
     public void setSkipOAuthFlag(boolean skipOAuth) {
-
-    }
-
-    @Override
-    public String getUser() {
-        return this.credentials.getLogin();
-    }
-
-    @Override
-    public InputStream getUserData(String binary) throws SDKException {
-        String secureToken = getSecureToken();
-        P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setSecureToken(secureToken).getRequest();
-        try (P8Response rsp = execute(req)) {
-            final int code = rsp.code();
-            if (code != ErrorCodes.ok) {
-                if (code == ErrorCodes.authentication_required && credentials != null && loginFailure == 0) {
-                    loginFailure++;
-                    login();
-                    return getUserData(binary);
-                }
-                throw new SDKException(code);
-            }
-            return rsp.getContent();
-        }
-    }
-
-    @Override
-    public void login() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.login(credentials);
-        P8Request req = builder.getRequest();
-
-        try (P8Response rsp = execute(req)) {
-            final int code = rsp.code();
-            if (code != ErrorCodes.ok) {
-                rsp.close();
-                throw new SDKException(code);
-            }
-
-            Document doc = rsp.toXMLDocument();
-            if (doc != null) {
-                if (doc.getElementsByTagName("logging_result").getLength() > 0) {
-                    String result = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem("value").getNodeValue();
-                    if (result.equals("1")) {
-                        String secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(P8Names.secureToken).getNodeValue();
-                        this.saveSecureToken(secureToken);
-                        loginFailure = 0;
-                    } else {
-                        loginFailure++;
-                        if (result.equals("-4")) {
-                            rsp.close();
-                            throw new SDKException(ErrorCodes.authentication_with_captcha_required);
-                        }
-                        rsp.close();
-                        throw new SDKException(ErrorCodes.authentication_required);
-                    }
-                } else {
-                    rsp.close();
-                    throw SDKException.unexpectedContent(new IOException(doc.toString()));
-                }
-            } else {
-                rsp.close();
-                throw new SDKException(ErrorCodes.authentication_required);
-            }
-        }
-    }
-
-    public void logout() throws SDKException {
-        String secureToken = getSecureToken();
-        P8Response response = execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
-        response.close();
     }
 
     @Override
@@ -221,82 +171,14 @@ public class P8Session implements ILegacySession, SdkNames {
         return server.newURL(path).openConnection();
     }
 
-    @Override
-    public JSONObject userInfo() throws SDKException {
-        return null;
-    }
+    /* Retrieved from server */
 
     @Override
-    public X509Certificate[] remoteCertificateChain() {
-        return new X509Certificate[0];
-    }
-
-    @Override
-    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        try (P8Response rsp = execute(builder.getRequest())) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
-            if (code != ErrorCodes.ok) {
-                throw new SDKException(code);
-            }
-        }
-    }
-
-    @Override
-    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-            if (code != ErrorCodes.ok) {
-                rsp.close();
-                throw new SDKException(code);
-            }
-        }
-    }
-
-    @Override
-    public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        P8Response rsp = execute(builder.getRequest());
-        if (rsp.code() != ErrorCodes.ok) {
-            throw new SDKException(rsp.code());
-        }
-        return rsp.getContent();
-    }
-
-    @Override
-    public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
-        if (rsp.code() != ErrorCodes.ok) {
-            throw new SDKException(rsp.code());
-        }
-        return rsp.getContent();
-    }
-
-    @Override
-    public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
-        P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
-        if (rsp.code() != ErrorCodes.ok) {
-            throw new SDKException(rsp.code());
-        }
-        return rsp.getContent();
-    }
-
-    @Override
-    public InputStream getCaptcha() {
+    public InputStream getCaptcha() throws SDKException {
         P8Request request = new P8RequestBuilder().setAction(ActionNames.getCaptcha).getRequest();
-        return execute(request).getContent();
+        try (P8Response captchaResponse = execute(request)) {
+            return captchaResponse.getInputStream();
+        }
     }
 
     @Override
@@ -332,8 +214,157 @@ public class P8Session implements ILegacySession, SdkNames {
                 o.put(P8Names.captchaCode, true);
             }
             return o;
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
         }
     }
+
+    @Override
+    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
+        try (P8Response rsp = execute(builder.getRequest())) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
+            if (code != ErrorCodes.ok) {
+                throw new SDKException(code);
+            }
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
+        }
+
+    }
+
+    @Override
+    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
+        try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+            if (code != ErrorCodes.ok) {
+                rsp.close();
+                throw new SDKException(code);
+            }
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
+        }
+    }
+
+    @Override
+    public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
+        try (P8Response rsp = execute(builder.getRequest())) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            return rsp.getInputStream();
+//        } catch (IOException ioe) {
+//            throw new SDKException(ioe);
+        }
+    }
+
+    @Override
+    public InputStream getWorkspaceRegistry(String ws) throws SDKException {
+        String secureToken = getSecureToken();
+        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
+        try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            return rsp.getInputStream();
+//        } catch (IOException ioe) {
+//            throw new SDKException(ioe);
+        }
+    }
+
+    @Override
+    public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(getSecureToken());
+        try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            return rsp.getInputStream();
+  //      } catch (IOException ioe) {
+  //          throw new SDKException(ioe);
+        }
+    }
+
+    @Override
+    public InputStream getUserData(String binary) throws SDKException {
+        P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setSecureToken(getSecureToken()).getRequest();
+        try (P8Response rsp = execute(req)) {
+            final int code = rsp.code();
+            if (code != ErrorCodes.ok) {
+                if (code == ErrorCodes.authentication_required && credentials != null && loginFailure == 0) {
+                    loginFailure++;
+                    login();
+                    return getUserData(binary);
+                }
+                throw new SDKException(code);
+            }
+            return rsp.getInputStream();
+    //    } catch (IOException ioe) {
+    //        throw new SDKException(ioe);
+        }
+    }
+
+    @Override
+    public void login() throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.login(credentials);
+        P8Request req = builder.getRequest();
+
+        try (P8Response rsp = execute(req)) {
+            final int code = rsp.code();
+            if (code != ErrorCodes.ok) {
+                rsp.close();
+                throw new SDKException(code);
+            }
+
+            Document doc = rsp.toXMLDocument();
+            if (doc != null) {
+                if (doc.getElementsByTagName("logging_result").getLength() > 0) {
+                    String result = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem("value").getNodeValue();
+                    if (result.equals("1")) {
+                        String secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(P8Names.secureToken).getNodeValue();
+                        saveSecureToken(secureToken);
+                        loginFailure = 0;
+                    } else {
+                        loginFailure++;
+                        if (result.equals("-4")) {
+                            throw new SDKException(ErrorCodes.authentication_with_captcha_required);
+                        }
+                        throw new SDKException(ErrorCodes.authentication_required);
+                    }
+                } else {
+                    throw SDKException.unexpectedContent(new IOException(doc.toString()));
+                }
+            } else {
+                throw new SDKException(ErrorCodes.authentication_required);
+            }
+        }
+    }
+
+    @Override
+    public void logout() throws SDKException {
+        String secureToken = getSecureToken();
+        P8Response response = execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
+        response.close();
+    }
+
+    @Override
+    public JSONObject userInfo() throws SDKException {
+        return null;
+    }
+
+    @Override
+    public X509Certificate[] remoteCertificateChain() {
+        return new X509Certificate[0];
+    }
+
 
     public P8Response execute(P8Request request) {
 
@@ -346,19 +377,19 @@ public class P8Session implements ILegacySession, SdkNames {
                 case Method.put:
                     return doPut(request);
                 default:
-                    throw new RuntimeException("Unsupported method type: "+request.getMethod());
+                    throw new RuntimeException("Unsupported method type: " + request.getMethod());
             }
         } catch (IOException ioe) {
             // FIXME temporary
-            System.out.println("#######   Could not execute "+ioe.getMessage());
+            System.out.println("#######   Could not execute " + ioe.getMessage());
             ioe.printStackTrace();
             // TODO finer management needed here
-            return com.pydio.sdk.generated.p8.P8Response.error(ErrorCodes.con_failed);
+            return P8Response.error(ErrorCodes.con_failed);
         }
 
     }
 
-    public P8Response execute(P8Request request, RetryCallback retry, int code)  {
+    public P8Response execute(P8Request request, RetryCallback retry, int code) {
         // FIXME this will never work after refactoring
         P8Response response = execute(request);
         final int c = response.code();
@@ -412,15 +443,14 @@ public class P8Session implements ILegacySession, SdkNames {
         } catch (MalformedURLException mue) {
             throw new RuntimeException("Unexpected Malformed URL for path: " + builder.toString(), mue);
         }
-
         HttpURLConnection con = currURL.openConnection();
         con.setRequestMethod("POST");
+        con.setDoOutput(true);
+
         if (!request.getIgnoreCookies()) {
             withCookies(con);
         }
         withUserAgent(con);
-        // TODO remove
-        con.setDoOutput(true);
 
         // Populate Body or Params
         if (request.getBody() != null) {
@@ -436,13 +466,13 @@ public class P8Session implements ILegacySession, SdkNames {
             }
             byte[] postDataBytes = postData.toString().getBytes(UTF_8);
 
-            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postData.length()));
+            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postDataBytes.length));
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "application/x-www-form-urlencoded; charset=" + UTF_8);
+
             OutputStream out = con.getOutputStream();
             out.write(postDataBytes);
         }
 
-        // Pre-Handle response
         P8Response response = new P8Response(con);
         storeReturnedSetCookies(con.getHeaderFields());
         return response;
@@ -633,6 +663,7 @@ public class P8Session implements ILegacySession, SdkNames {
 
         String secureToken = secureTokens.get(id);
         if (null == secureToken || "".equals(secureToken)) {
+            System.out.println("No token found for " + id + ", about to background login.");
             login();
         }
         return secureTokens.get(id);
@@ -660,6 +691,5 @@ public class P8Session implements ILegacySession, SdkNames {
         builder.append("&").append(key).append("=").append(URLEncoder.encode(value, UTF_8));
         return builder;
     }
-
 
 }
