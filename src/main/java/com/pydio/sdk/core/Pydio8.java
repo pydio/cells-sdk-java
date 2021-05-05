@@ -494,7 +494,7 @@ public class Pydio8 implements Client {
             }
 
             if (rsp.code() != Code.ok) {
-                return Message.create(Message.ERROR, rsp.toString());
+                return Message.create(Message.ERROR, rsp.asString());
             }
 
             NodeDiff diff;
@@ -778,7 +778,7 @@ public class Pydio8 implements Client {
             } */
 
             try {
-                JSONObject json = new JSONObject(rsp.toString());
+                JSONObject json = new JSONObject(rsp.asString());
                 if (!json.has("hash") && !json.has("mtime") && !json.has("size")) {
                     return null;
                 }
@@ -807,7 +807,7 @@ public class Pydio8 implements Client {
 
             String h = rsp.getHeaders("Content-Type").get(0);
             if (!h.toLowerCase().contains("application/json")) {
-                throw SDKException.unexpectedContent(new IOException(rsp.toString()));
+                throw SDKException.unexpectedContent(new IOException(rsp.asString()));
             }
 
             final long[] lastSeq = new long[1];
@@ -921,7 +921,7 @@ public class Pydio8 implements Client {
             if (rsp.code() != Code.ok) {
                 throw new SDKException(rsp.code());
             }
-            return rsp.toString();
+            return rsp.asString();
         }
     }
 
@@ -963,7 +963,7 @@ public class Pydio8 implements Client {
     @Override
     public JSONObject authenticationInfo() throws SDKException {
         try (P8Response seedResponse = p8.execute(P8RequestBuilder.getSeed().getRequest())) {
-            String seed = seedResponse.toString();
+            String seed = seedResponse.asString();
             JSONObject o = new JSONObject();
 
             boolean withCaptcha = false;

@@ -204,7 +204,7 @@ public class P8Response implements Closeable {
     }
 
     public JSONObject toJSON() throws ParseException {
-        return new JSONObject(toString());
+        return new JSONObject(asString());
     }
 
     public Document toXMLDocument() {
@@ -219,7 +219,7 @@ public class P8Response implements Closeable {
         }
     }
 
-    public String toString() {
+    public String asString() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         InputStream in = getInputStream();
         try {
@@ -262,7 +262,7 @@ public class P8Response implements Closeable {
     }
 
     public int saxParse(DefaultHandler handler) {
-        String content = toString();
+        String content = asString();
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             SAXParser parser = factory.newSAXParser();
