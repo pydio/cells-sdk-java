@@ -7,6 +7,7 @@ import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.core.CellsSession;
 import com.pydio.sdk.core.P8Session;
+import com.pydio.sdk.core.auth.OauthConfig;
 import com.pydio.sdk.core.security.CertificateTrust;
 import com.pydio.sdk.core.security.CertificateTrustManager;
 import com.pydio.sdk.core.utils.Log;
@@ -84,7 +85,8 @@ public class P8Server implements Server {
 
     @Override
     public String getApiURL() {
-        return getId();
+        // FIXME should not be used for P8
+        return url();
         // try {
         //     return serverURL.withPath(API_PREFIX).getURL().toString();
         // } catch (MalformedURLException e) {
@@ -110,6 +112,11 @@ public class P8Server implements Server {
     @Override
     public boolean isLegacy() {
         return true;
+    }
+
+    @Override
+    public boolean supportsOauth() {
+        return false;
     }
 
     /* Node methods */
@@ -143,9 +150,9 @@ public class P8Server implements Server {
 
     // Getters
 
-    private TrustManager trustManager() {
-        return new CertificateTrustManager(getTrustHelper());
-    }
+//    private TrustManager trustManager() {
+//        return new CertificateTrustManager(getTrustHelper());
+//    }
 
     public String version() {
         if (version == null) {
@@ -154,47 +161,46 @@ public class P8Server implements Server {
         return version;
     }
 
+    public String versionName() {
+        // FIXME clean this
+        return version();
+    }
 
     public boolean hasLicenseFeatures() {
         return bootConf != null && bootConf.has("license_features");
     }
 
-    private CertificateTrust.Helper getTrustHelper() {
-        if (trustHelper == null) {
-            return trustHelper = new CertificateTrust.Helper() {
-                @Override
-                public boolean isServerTrusted(X509Certificate[] chain) {
-                    for (X509Certificate c : chain) {
-                        for (byte[] trusted : P8Server.this.certificateChain) {
-                            try {
-                                c.checkValidity();
-                                MessageDigest hash = MessageDigest.getInstance("MD5");
-                                byte[] c1 = hash.digest(trusted);
-                                byte[] c2 = hash.digest(c.getEncoded());
-                                if (Arrays.equals(c1, c2)) {
-                                    return true;
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    return false;
-                }
-
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-            };
-        }
-        return trustHelper;
-    }
-
-    public boolean isSSLUnverified() {
-        return sslUnverified;
-    }
-
+//    private CertificateTrust.Helper getTrustHelper() {
+//        if (trustHelper == null) {
+//            return trustHelper = new CertificateTrust.Helper() {
+//                @Override
+//                public boolean isServerTrusted(X509Certificate[] chain) {
+//                    for (X509Certificate c : chain) {
+//                        for (byte[] trusted : P8Server.this.certificateChain) {
+//                            try {
+//                                c.checkValidity();
+//                                MessageDigest hash = MessageDigest.getInstance("MD5");
+//                                byte[] c1 = hash.digest(trusted);
+//                                byte[] c2 = hash.digest(c.getEncoded());
+//                                if (Arrays.equals(c1, c2)) {
+//                                    return true;
+//                                }
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    return false;
+//                }
+//
+//                @Override
+//                public X509Certificate[] getAcceptedIssuers() {
+//                    return null;
+//                }
+//            };
+//        }
+//        return trustHelper;
+//    }
 
     public String getIconPath() {
         return iconPath;
@@ -204,30 +210,30 @@ public class P8Server implements Server {
         return this.welcomeMessage;
     }
 
-    public SSLContext getSslContext() {
-        if (this.sslContext == null) {
-            try {
-                this.sslContext = SSLContext.getInstance("TLS");
-                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        try {
-            this.sslContext.getSocketFactory();
-        } catch (Exception e) {
-            try {
-                this.sslContext = SSLContext.getInstance("TLS");
-                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception ex) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return this.sslContext;
-    }
+//    public SSLContext getSslContext() {
+//        if (this.sslContext == null) {
+//            try {
+//                this.sslContext = SSLContext.getInstance("TLS");
+//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+//
+//        try {
+//            this.sslContext.getSocketFactory();
+//        } catch (Exception e) {
+//            try {
+//                this.sslContext = SSLContext.getInstance("TLS");
+//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
+//            } catch (Exception ex) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+//        return this.sslContext;
+//    }
 
     public boolean equals(Object obj) {
 
@@ -236,26 +242,26 @@ public class P8Server implements Server {
         if (obj == null || !(obj instanceof P8Server))
             return false;
 
-        return getId().equals(((P8Server) obj).getServerURL().getId());
+        return url().equals(((P8Server) obj).url());
     }
 
 
-    public byte[][] getCertificateChain() {
-        return this.certificateChain;
-    }
-
-    public boolean supportsOauth() {
-        return this.oidc != null;
-    }
+//    public byte[][] getCertificateChain() {
+//        return this.certificateChain;
+//    }
+//
+//    public boolean supportsOauth() {
+//        return this.oidc != null;
+//    }
 
     public JSONObject getOIDCInfo() {
         return this.oidc;
     }
 
 
-    public HostnameVerifier getHostnameVerifier() {
-        return (s, sslSession) -> true;
-    }
+//    public HostnameVerifier getHostnameVerifier() {
+//        return (s, sslSession) -> true;
+//    }
 
 
     @Override
@@ -268,9 +274,19 @@ public class P8Server implements Server {
         return null;
     }
 
+    @Override
+    public String getVersionName() {
+        return null;
+    }
+
     // Setters
 
     public void setUnverifiedSSL(boolean unverified) {
         sslUnverified = unverified;
     }
+
+    public OauthConfig getOAuthConfig(){
+        throw new RuntimeException("Pydio 8 server does not support OAuth credential flows.");
+    }
+
 }

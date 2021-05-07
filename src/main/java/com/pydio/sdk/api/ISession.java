@@ -8,14 +8,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.security.cert.X509Certificate;
 import java.util.Map;
 
 public interface ISession {
 
-
-    default String getId(){
-        return getUser()+"@"+ getServer().getServerURL().getId();
+    default String getId() {
+        return getUser() + "@" + getServer().getServerURL().getId();
     }
 
     Server getServer();
@@ -32,13 +30,9 @@ public interface ISession {
 
     String getUser();
 
-    void setSkipOAuthFlag(boolean skipOAuth);
-
     InputStream getUserData(String binary) throws SDKException;
 
     JSONObject userInfo() throws SDKException;
-
-    X509Certificate[] remoteCertificateChain();
 
     void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException;
 
@@ -52,7 +46,10 @@ public interface ISession {
 
     boolean isOffline();
 
+
     HttpURLConnection openAnonConnection(String path) throws SDKException, IOException;
+
+    HttpURLConnection openConnection(String path) throws SDKException, IOException;
 
     Map<String, WorkspaceNode> getCachedWorkspaces();
 }

@@ -51,6 +51,7 @@ public class TokenService {
     }
 
 
+    // TODO rather move this in the ISession class
     private Token refresh(CellsSession session, Token t, String login, String address) throws SDKException {
         Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
 
@@ -63,7 +64,7 @@ public class TokenService {
         // String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
         // request.setHeaders(Params.create("Authorization", "Basic " + auth));
 
-        request.setEndpoint(session.getOAuthConfig().tokenEndpoint);
+        request.setEndpoint(session.getServer().getOAuthConfig().tokenEndpoint);
         request.setMethod(Method.POST);
 
         HttpResponse response;

@@ -1,7 +1,8 @@
 package com.pydio.sdk.core;
 
-import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.ServerURL;
+import com.pydio.sdk.core.security.CertificateTrust;
+import com.pydio.sdk.core.security.CertificateTrustManager;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -9,8 +10,10 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.security.KeyManagementException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -22,10 +25,30 @@ import javax.net.ssl.X509TrustManager;
 
 public class ServerURLImpl implements ServerURL {
 
-    private final URL url;
+    private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
 
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+    };
+    private static final HostnameVerifier SKIP_HOSTNAME_VERIFIER = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
+    private final URL url;
     // To Manage self-signed servers
     private final boolean skipVerify;
+    private byte[][] certificateChain;
+    private SSLContext sslContext;
+    private CertificateTrust.Helper trustHelper;
     private SSLSocketFactory sslSocketFactory = null;
 
     private ServerURLImpl(URL url, boolean skipVerify) {
@@ -49,32 +72,16 @@ public class ServerURLImpl implements ServerURL {
         return serverURL;
     }
 
-    public static ServerURL fromAddress(String urlString) throws MalformedURLException, SDKException {
-        return fromAddress(urlString, false);
-    }
-
-    @Override
-    public void ping() throws IOException {
-        HttpURLConnection connection = openConnection();
+    public static ServerURL withSkipverify(ServerURL serverURL) {
         try {
-            connection.setRequestMethod("GET");
-            if (connection.getResponseCode() != 200) {
-                throw new IOException("Unvalid response code: " + connection.getResponseCode());
-            }
-        } catch (ProtocolException pe) {
-            throw new RuntimeException("Unvalid protocol GET...", pe);
-        }
+            return new ServerURLImpl(new URL(serverURL.getId()), true);
+        } catch (MalformedURLException ignore){} // OK at this point
+        return null;
     }
 
 
-    @Override
-    public ServerURL withPath(String path) throws MalformedURLException {
-        return new ServerURLImpl(new URL(url, path), skipVerify);
-    }
-
-    @Override
-    public URL getURL() {
-        return url;
+    public static ServerURL fromAddress(String urlString) throws MalformedURLException {
+        return fromAddress(urlString, false);
     }
 
     @Override
@@ -92,13 +99,72 @@ public class ServerURLImpl implements ServerURL {
         return connection;
     }
 
+    @Override
+    public ServerURL withPath(String path) throws MalformedURLException {
+        return new ServerURLImpl(new URL(url, path), skipVerify);
+    }
+
+    @Override
+    public URL getURL() {
+        return url;
+    }
+
     // TODO finalize self-signed management.
 
+    @Override
+    public boolean skipVerify() {
+        return skipVerify;
+    }
 
     /* Manage self signed on a URL by URL Basis.
       Thanks to https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check */
 
-      private void setAcceptAllVerifier(HttpsURLConnection connection) {
+    @Override
+    public void ping() throws IOException {
+        HttpURLConnection connection = openConnection();
+        try {
+            connection.setRequestMethod("GET");
+            if (connection.getResponseCode() != 200) {
+                throw new IOException("Unvalid response code: " + connection.getResponseCode());
+            }
+        } catch (ProtocolException pe) {
+            throw new RuntimeException("Unvalid protocol GET...", pe);
+        }
+    }
+
+    @Override
+    public byte[][] getCertificateChain() {
+        return certificateChain;
+    }
+
+    @Override
+    public SSLContext getSSLContext() {
+        if (sslContext == null) {
+            try {
+                sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(null, new TrustManager[]{trustManager()}, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        try {
+            sslContext.getSocketFactory();
+        } catch (Exception e) {
+            try {
+                sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(null, new TrustManager[]{trustManager()}, null);
+            } catch (Exception ex) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return sslContext;
+    }
+
+
+    private void setAcceptAllVerifier(HttpsURLConnection connection) {
         try {
             // Create the socket factory.
             // Reusing the same socket factory allows sockets to be reused, supporting persistent connections.
@@ -118,25 +184,41 @@ public class ServerURLImpl implements ServerURL {
         }
     }
 
-    private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
-            new X509TrustManager() {
+    private TrustManager trustManager() {
+        return new CertificateTrustManager(getTrustHelper());
+    }
+
+    private CertificateTrust.Helper getTrustHelper() {
+        if (trustHelper == null) {
+            return trustHelper = new CertificateTrust.Helper() {
+                @Override
+                public boolean isServerTrusted(X509Certificate[] chain) {
+                    for (X509Certificate c : chain) {
+                        for (byte[] trusted : ServerURLImpl.this.certificateChain) {
+                            try {
+                                c.checkValidity();
+                                MessageDigest hash = MessageDigest.getInstance("MD5");
+                                byte[] c1 = hash.digest(trusted);
+                                byte[] c2 = hash.digest(c.getEncoded());
+                                if (Arrays.equals(c1, c2)) {
+                                    return true;
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    return false;
+                }
+
+                @Override
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
                 }
-
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
-
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                }
-            }
-    };
-
-    private static final HostnameVerifier SKIP_HOSTNAME_VERIFIER = new HostnameVerifier() {
-        public boolean verify(String hostname, SSLSession session) {
-            return true;
+            };
         }
-    };
+        return trustHelper;
+    }
 
 
     /*
@@ -257,8 +339,6 @@ public class ServerURLImpl implements ServerURL {
         return 0;
     }
 */
-
-
 
 
 }

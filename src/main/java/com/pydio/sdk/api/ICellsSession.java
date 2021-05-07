@@ -1,23 +1,12 @@
 package com.pydio.sdk.api;
 
-import com.pydio.sdk.api.callbacks.RegistryItemHandler;
-import com.pydio.sdk.api.nodes.ServerNode;
-import com.pydio.sdk.api.nodes.WorkspaceNode;
-import com.pydio.sdk.core.auth.Token;
-
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.security.cert.X509Certificate;
-import java.util.Map;
 
+/**
+ * Enriches the base ISession interface with new methods
+ * that are not meant to ever be supported by the legacy Pydio 8
+ */
 public interface ICellsSession extends ISession {
 
     HttpURLConnection withAuth(HttpURLConnection con) throws SDKException;
-
-    HttpURLConnection openConnection(String path) throws SDKException, IOException;
-
 }

@@ -382,7 +382,7 @@ public class P8RequestBuilder {
 
     public P8RequestBuilder setSecureToken(String token) {
         if (token != null) {
-            request.setSecureToken(token);
+            request.setSecureToken(token); // Superstition ?
             setParam(P8Names.secureToken, token);
         }
         return this;

@@ -3,16 +3,11 @@ package com.pydio.sdk.sync.content;
 import com.pydio.sdk.api.Client;
 import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
-import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.Stats;
 import com.pydio.sdk.sync.Error;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
 
 public class RemoteFileContent implements Content {
 
@@ -63,23 +58,27 @@ public class RemoteFileContent implements Content {
     public InputStream getInputStream() throws IOException {
         String url;
         try {
-            url = client.downloadURL(ws, path);
+            url = client.downloadPath(ws, path);
         } catch (SDKException e) {
             e.printStackTrace();
             this.error = Error.notMounted("");
             return null;
         }
 
-        Server serverNode = session.getServer();
-        if(serverNode.isSSLUnverified()) {
-            SSLContext sslContext = serverNode.getSslContext();
-            HttpsURLConnection c = (HttpsURLConnection) new URL(url).openConnection();
-            c.setSSLSocketFactory(sslContext.getSocketFactory());
-            final String serverUrl = serverNode.getServerURL().getURL().toString();
-            c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
-            return c.getInputStream();
-        } else {
-            return new java.net.URL(url).openStream();
-        }
+        // TODO this must be adapted or removed after refactoring is done.
+        // Anyhow the cells java client cannot download yet.
+        return  null;
+//        ServerURL targetURL = session.getServer().getServerURL();
+//
+//        if(serverURL.skipVerify()) {
+//            SSLContext sslContext = serverURL.getSslContext();
+//            HttpsURLConnection c = (HttpsURLConnection) new URL(url).openConnection();
+//            c.setSSLSocketFactory(sslContext.getSocketFactory());
+//            final String serverUrl = server.getServerURL().getURL().toString();
+//            c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
+//            return c.getInputStream();
+//        } else {
+//            return new java.net.URL(url).openStream();
+//        }
     }
 }

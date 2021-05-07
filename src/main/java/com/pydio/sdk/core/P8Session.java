@@ -36,7 +36,6 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.security.cert.X509Certificate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -163,12 +162,24 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     @Override
-    public void setSkipOAuthFlag(boolean skipOAuth) {
+    public HttpURLConnection openAnonConnection(String path) throws IOException {
+        return server.newURL(path).openConnection();
     }
 
+
     @Override
-    public HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
-        return server.newURL(path).openConnection();
+    public HttpURLConnection openConnection(String path) throws IOException, SDKException {
+        path = appendAuth(path);
+        return withUserAgent(server.newURL(path).openConnection());
+    }
+
+    public String appendAuth(String path) throws  SDKException {
+        StringBuilder builder = new StringBuilder(path);
+        builder.append("&");
+        builder.append(P8Names.REQ_PROP_TOKEN);
+        builder.append("=");
+        builder.append(URLEncoder.encode(getSecureToken(), UTF_8));
+        return builder.toString();
     }
 
     /* Retrieved from server */
@@ -194,7 +205,6 @@ public class P8Session implements ILegacySession, SdkNames {
                 if (seed.contains("\"seed\":-1") || seed.contains("\"seed\": -1")) {
                     withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
                     o.put(P8Names.seed, "-1");
-
                 } else {
                     String contentType = seedResponse.getHeaders("Content-Type").get(0);
                     boolean seemsToBePydio = (contentType != null) && (
@@ -261,8 +271,6 @@ public class P8Session implements ILegacySession, SdkNames {
                 throw new SDKException(rsp.code());
             }
             return rsp.getInputStream();
-//        } catch (IOException ioe) {
-//            throw new SDKException(ioe);
         }
     }
 
@@ -275,8 +283,6 @@ public class P8Session implements ILegacySession, SdkNames {
                 throw new SDKException(rsp.code());
             }
             return rsp.getInputStream();
-//        } catch (IOException ioe) {
-//            throw new SDKException(ioe);
         }
     }
 
@@ -288,8 +294,6 @@ public class P8Session implements ILegacySession, SdkNames {
                 throw new SDKException(rsp.code());
             }
             return rsp.getInputStream();
-  //      } catch (IOException ioe) {
-  //          throw new SDKException(ioe);
         }
     }
 
@@ -307,8 +311,6 @@ public class P8Session implements ILegacySession, SdkNames {
                 throw new SDKException(code);
             }
             return rsp.getInputStream();
-    //    } catch (IOException ioe) {
-    //        throw new SDKException(ioe);
         }
     }
 
@@ -360,12 +362,6 @@ public class P8Session implements ILegacySession, SdkNames {
         return null;
     }
 
-    @Override
-    public X509Certificate[] remoteCertificateChain() {
-        return new X509Certificate[0];
-    }
-
-
     public P8Response execute(P8Request request) {
 
         try {
@@ -390,7 +386,6 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     public P8Response execute(P8Request request, RetryCallback retry, int code) {
-        // FIXME this will never work after refactoring
         P8Response response = execute(request);
         final int c = response.code();
         if (c == code) {
@@ -402,7 +397,6 @@ public class P8Session implements ILegacySession, SdkNames {
         }
         return response;
     }
-
 
     /* HTTP Methods */
 
@@ -419,8 +413,8 @@ public class P8Session implements ILegacySession, SdkNames {
         }
 
         HttpURLConnection con = currURL.openConnection();
+        withUserAgent(con);
 
-        // TODO still manage this ?
         // c.setSSLSocketFactory(config.sslContext.getSocketFactory());
         // c.setHostnameVerifier(config.hostnameVerifier);
 
@@ -481,7 +475,7 @@ public class P8Session implements ILegacySession, SdkNames {
     private P8Response doPut(P8Request request) throws IOException {
 
         // Build effective URL request
-        String queryStr = buildPutQuery(request);
+        String queryStr = pathFromRequest(request);
 
         ServerURL currURL = null;
         try {
@@ -491,12 +485,12 @@ public class P8Session implements ILegacySession, SdkNames {
         }
 
         HttpURLConnection con = currURL.openConnection();
+        con.setDoOutput(true);
+
         // TODO remove: useless, or we will get an exception here
         if (con == null) {
             return P8Response.error(ErrorCodes.con_failed);
         }
-        // TODO remove: useless, this is the default
-        con.setDoOutput(true);
 
         con.setRequestMethod("PUT");
         if (!request.getIgnoreCookies()) {
@@ -514,25 +508,12 @@ public class P8Session implements ILegacySession, SdkNames {
         return response;
     }
 
-
     /**
      * Simply generate the full path (**file** + query) from the passed P8Request
      *
      * @return a string that look like:  "/index.php?get_action=action&param1=john&param2=doo"
      */
-    private String buildPutQuery(P8Request request) {
-        // TODO where do we still use this
-        // StringBuilder url = new StringBuilder(u);
-        // if (!url.toString().startsWith("http")) {
-        //     if (this.config.resolver == null) {
-        //         throw new ProtocolException(url.toString());
-        //     }
-        //     try {
-        //         url = new StringBuilder(this.config.resolver.resolve(url.toString(), false));
-        //     } catch (IOException e) {
-        //         throw new UnknownHostException(url.toString());
-        //     }
-        // }
+    protected String pathFromRequest(P8Request request) {
 
         StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
         appendParam(builder, P8Names.getAction, request.getAction());
@@ -552,7 +533,6 @@ public class P8Session implements ILegacySession, SdkNames {
 
     private final byte[] LF = "\r\n".getBytes();
     private final byte[] DLF = "\r\n\r\n".getBytes();
-
 
     private void populatePostBody(P8Request request, HttpURLConnection con) throws IOException {
 
@@ -633,7 +613,6 @@ public class P8Session implements ILegacySession, SdkNames {
             }
         }
     }
-
 
     /**
      * Token Management

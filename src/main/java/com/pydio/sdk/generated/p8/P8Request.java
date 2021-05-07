@@ -26,6 +26,7 @@ public class P8Request {
             return method;
         }
 
+        // Local hack to have a reasonable default if method is not set.
         if (body == null && params == null) {
             return "GET";
         } else if (params == null) {

@@ -46,7 +46,6 @@ public class CellsSession implements ICellsSession, SdkNames {
 
     private final Server server;
     private final String login;
-    private OauthConfig oidc;
 
     private TokenService tokens;
     private Credentials credentials;
@@ -61,7 +60,6 @@ public class CellsSession implements ICellsSession, SdkNames {
 
     public void restore(TokenService tokens) throws SDKException {
         this.tokens = tokens;
-        downloadOIDCConfiguration();
         server.init(this);
         // TODO more init
     }
@@ -110,20 +108,15 @@ public class CellsSession implements ICellsSession, SdkNames {
     }
 
     @Override
-    public void setSkipOAuthFlag(boolean skipOAuth) {
-        this.skipOAuth = skipOAuth;
-    }
-
-    @Override
     public String getUser() {
         return this.credentials.getLogin();
     }
 
     @Override
     public InputStream getUserData(String binary) {
+        // FIXME  implement
         return null;
     }
-
 
     @Override
     public HttpURLConnection withAuth(HttpURLConnection con) throws SDKException {
@@ -153,10 +146,6 @@ public class CellsSession implements ICellsSession, SdkNames {
         ApiClient apiClient = getApiClient();
         apiClient.addDefaultHeader("Authorization", "Bearer " + getToken());
         return apiClient;
-    }
-
-    public OauthConfig getOAuthConfig() {
-        return oidc;
     }
 
     public String getToken() throws SDKException {
@@ -192,7 +181,7 @@ public class CellsSession implements ICellsSession, SdkNames {
         apiClient.setUserAgent(getUserAgent());
 
         if (getServer().isSSLUnverified()) {
-            SSLContext context = getServer().getSslContext();
+            SSLContext context = getServer().getServerURL().getSSLContext();
             OkHttpClient c = apiClient.getHttpClient();
             c.setSslSocketFactory(context.getSocketFactory());
             final String serverUrl = getServer().getServerURL().getURL().toString();
@@ -207,11 +196,6 @@ public class CellsSession implements ICellsSession, SdkNames {
         RestFrontSessionRequest request = new RestFrontSessionRequest();
         request.setLogout(true);
         return null;
-    }
-
-    @Override
-    public X509Certificate[] remoteCertificateChain() {
-        return new X509Certificate[0];
     }
 
     @Override
@@ -234,7 +218,7 @@ public class CellsSession implements ICellsSession, SdkNames {
                 throw SDKException.unexpectedContent(e);
             }
         } catch (IOException e) {
-            Log.w("Connection", "connction error while retrieving registry");
+            Log.w("Connection", "connection error while retrieving registry");
             throw SDKException.conFailed(e);
         } finally {
             if (in != null) {
@@ -311,24 +295,6 @@ public class CellsSession implements ICellsSession, SdkNames {
         }
     }
 
-    private void downloadOIDCConfiguration() throws SDKException {
-        HttpURLConnection con;
-        InputStream in;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-            con = server.newURL(CellsServer.OIDC_WELLKNOWN_PATH).openConnection();
-            con.setRequestMethod("GET");
-            in = con.getInputStream();
-            io.pipeRead(in, out);
-            JSONObject oidcJson = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-            oidc = OauthConfig.fromJSON(oidcJson, "");
-        } catch (Exception e) {
-            // TODO manage errors
-
-            Log.w("Connection", "connection error while OIDC conf");
-            throw SDKException.unexpectedContent(e);
-        }
-    }
 
 
     private static SDKException fromApiException(ApiException e) {

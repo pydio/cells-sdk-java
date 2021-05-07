@@ -10,6 +10,7 @@ public interface P8Names {
     String REQ_PROP_USER_AGENT  = "user-agent";
     String REQ_PROP_CONTENT_TYPE  = "content-type";
     String REQ_PROP_CONTENT_LENGTH  = "content-length";
+    String REQ_PROP_TOKEN  = "secure_token";
 
     /** Supported content types */
     String CONTENT_TYPE_OCTET_STREAM = "application/octet-stream";

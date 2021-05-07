@@ -9,6 +9,7 @@ import com.pydio.sdk.api.nodes.ServerNode;
 import com.pydio.sdk.api.nodes.WorkspaceNode;
 import com.pydio.sdk.api.callbacks.ServerResolver;
 import com.pydio.sdk.api.Error;
+import com.pydio.sdk.core.ServerFactory;
 import com.pydio.sdk.core.ServerURLImpl;
 import com.pydio.sdk.core.security.CertificateTrust;
 import com.pydio.sdk.core.security.CertificateTrustManager;
@@ -169,7 +170,7 @@ public class ServerNodeImpl implements ServerNode {
 
     @Override
     public boolean isLegacy() {
-        return TYPE_LEGACY_P8.equals(getServerType());
+        return ServerFactory.TYPE_LEGACY_P8.equals(getServerType());
     }
 
     /* Node methods */
@@ -376,7 +377,7 @@ public class ServerNodeImpl implements ServerNode {
         }
 
         boolean isCells = bootConf.has("backend");
-        serverType = isCells ? TYPE_CELLS : TYPE_LEGACY_P8;
+        serverType = isCells ? ServerFactory.TYPE_CELLS : ServerFactory.TYPE_LEGACY_P8;
         version = bootConf.getString("ajxpVersion");
 
         JSONObject customWordings = bootConf.getJSONObject("customWording");

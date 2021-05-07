@@ -1,9 +1,8 @@
 package com.pydio.sdk.api;
 
-import java.net.MalformedURLException;
+import com.pydio.sdk.core.auth.OauthConfig;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
+import java.net.MalformedURLException;
 
 public interface Server {
 
@@ -11,35 +10,40 @@ public interface Server {
 
     Server init(ISession session) throws SDKException;
 
+    /**
+     * returns the canonical URL of the server as String for various persistence processes.
+     * This should not be used to create another URL object to try to connect to the server
+     * => it will by-pass management of self-signed URLs.
+     */
+    default String url() {
+        return getServerURL().getId();
+    }
+
     String getApiURL();
 
     String getRemoteType();
 
     boolean isLegacy();
 
+    @Deprecated
+    boolean supportsOauth();
+
+    OauthConfig getOAuthConfig();
+
     default ServerURL newURL(String path) throws MalformedURLException {
         return getServerURL().withPath(path);
     }
 
-
-    boolean isSSLUnverified();
+    default boolean isSSLUnverified() {
+        return getServerURL().skipVerify();
+    }
 
     String getIconURL();
 
     String getWelcomeMessage();
 
-    SSLContext getSslContext();
+    String getVersionName();
 
-    @Deprecated
-    HostnameVerifier getHostnameVerifier();
-
-    @Deprecated
-    byte[][] getCertificateChain();
-
-    @Deprecated
-    void setUnverifiedSSL(boolean isVerified);
-
-    @Deprecated
     boolean hasLicenseFeatures();
 
 }

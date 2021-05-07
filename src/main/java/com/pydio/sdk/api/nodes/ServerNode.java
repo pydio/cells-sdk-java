@@ -19,8 +19,8 @@ import javax.net.ssl.SSLContext;
  */
 public interface ServerNode extends Node {
 
-    String TYPE_CELLS = "cells";
-    String TYPE_LEGACY_P8 = "pydio";
+//    String TYPE_CELLS = "cells";
+//    String TYPE_LEGACY_P8 = "pydio";
 
     ServerURL getServerURL(String path) throws MalformedURLException;
 

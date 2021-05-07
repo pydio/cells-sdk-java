@@ -21,7 +21,6 @@ import java.util.Map;
  */
 public class ServerFactory implements IServerFactory {
 
-
     private final TokenService tokenService;
     private Map<String, Server> servers = new HashMap<>();
 
@@ -30,11 +29,32 @@ public class ServerFactory implements IServerFactory {
         initAppData();
     }
 
+    protected Map<String, Server> getServers(){
+        return servers;
+    }
+
+    protected Server getServer(String id){
+        return servers.get(id);
+    }
+
+    protected Server putServer(String id, Server server){
+        return servers.put(id, server);
+    }
+
+    protected Server removeServer(String id){
+        return servers.remove(id);
+    }
+
+    protected TokenService getTokenService(){
+        return tokenService;
+    }
+
+
     @Override
     public Server register(ServerURL serverURL) throws SDKException {
 
-        if (servers.get(serverURL.getId()) != null) {
-            return servers.get(serverURL.getId());
+        if (getServer(serverURL.getId()) != null) {
+            return getServer(serverURL.getId());
         }
 
         String type = checkServer(serverURL);
@@ -48,7 +68,7 @@ public class ServerFactory implements IServerFactory {
             throw new SDKException(ErrorCodes.not_pydio_server);
         }
 
-        servers.put(serverURL.getId(), server);
+        putServer(serverURL.getId(), server);
         return server;
     }
 
@@ -74,7 +94,7 @@ public class ServerFactory implements IServerFactory {
     @Override
     public ISession registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
 
-        Server server = servers.get(serverURL.getId());
+        Server server = getServer(serverURL.getId());
         if (server == null) {
             server = register(serverURL);
         }
@@ -103,7 +123,7 @@ public class ServerFactory implements IServerFactory {
     @Override
     public ISession getSession(ServerURL serverURL, String login) throws SDKException {
 
-        Server server = servers.get(serverURL.getId());
+        Server server = getServer(serverURL.getId());
         if (server == null) {
             server = register(serverURL);
         }

@@ -65,6 +65,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,6 +73,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.SAXParserFactory;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class CellsClient implements Client, SdkNames {
 
@@ -374,7 +377,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public String downloadURL(String ws, String file) throws SDKException {
+    public String downloadPath(String ws, String file) throws SDKException {
         return null;
     }
 
@@ -651,12 +654,12 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public String streamingAudioURL(String ws, String file) {
+    public String streamingAudioURL(String ws, String file) throws SDKException {
         return null;
     }
 
     @Override
-    public String streamingVideoURL(String ws, String file) {
+    public String streamingVideoURL(String ws, String file) throws SDKException {
         return null;
     }
 
@@ -824,6 +827,12 @@ public class CellsClient implements Client, SdkNames {
 //    protected void getJWT() throws SDKException {
 //        bearerValue = getToken();
 //    }
+
+
+    // Simple shortcut to encode URLs
+    protected String utf8Encode(String value) {
+        return URLEncoder.encode(value, UTF_8);
+    }
 
     private static SDKException fromApiException(ApiException e) {
         int code = ErrorCodes.fromHttpStatus(e.getCode());

@@ -6,6 +6,7 @@ import com.pydio.sdk.api.SDKException;
 import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.core.CellsSession;
+import com.pydio.sdk.core.auth.OauthConfig;
 import com.pydio.sdk.core.security.CertificateTrust;
 import com.pydio.sdk.core.security.CertificateTrustManager;
 import com.pydio.sdk.core.utils.Log;
@@ -14,6 +15,7 @@ import com.pydio.sdk.core.utils.io;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -35,6 +37,7 @@ public class CellsServer implements Server {
 
     private String serverType = IServerFactory.TYPE_CELLS;
     private String version = null;
+    private String versionName = null;
 
     private final ServerURL serverURL;
     private String apiPath = null;
@@ -43,16 +46,9 @@ public class CellsServer implements Server {
     private String welcomeMessage;
     private String iconPath;
 
-
     // Legacy objects TODO remove
-    private boolean sslUnverified = false;
-    private SSLContext sslContext;
-    private Properties properties = null;
     private JSONObject bootConf;
-    private JSONObject oidc;
-    private byte[][] certificateChain;
-    private CertificateTrust.Helper trustHelper;
-
+    private OauthConfig oidc;
 
     public CellsServer(ServerURL serverURL) {
         this.serverURL = serverURL;
@@ -68,8 +64,9 @@ public class CellsServer implements Server {
 
     @Override
     public Server init(ISession session) throws SDKException {
-        refreshBootConf((CellsSession) session);
-        return null;
+        refreshBootConf();
+        downloadOIDCConfiguration();
+        return this;
     }
 
     @Override
@@ -82,9 +79,8 @@ public class CellsServer implements Server {
         try {
             return serverURL.withPath(API_PREFIX).getURL().toString();
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Getting API URL for " + getId(), e);
+            throw new RuntimeException("Getting API URL for " + url(), e);
         }
-
     }
 
     @Override
@@ -99,13 +95,17 @@ public class CellsServer implements Server {
 
     /* Node methods */
 
-    private void refreshBootConf(CellsSession session) {
+    public HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
+        return newURL(path).openConnection();
+    }
+
+    private void refreshBootConf() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         InputStream in = null;
         HttpURLConnection con;
 
         try {
-            con = session.openAnonConnection(BOOTCONF_PATH);
+            con = openAnonConnection(BOOTCONF_PATH);
             in = con.getInputStream();
             io.pipeRead(in, out);
             JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
@@ -119,10 +119,33 @@ public class CellsServer implements Server {
             }
         } catch (Exception e) {
             // TODO handle error
-            Log.w("Unimplemented", "Error while retrieving bootconf for " + getId());
+            Log.w("Unimplemented", "Error while retrieving bootconf for " + url());
             e.printStackTrace();
         }
     }
+
+    private void downloadOIDCConfiguration() throws SDKException {
+        HttpURLConnection con;
+        InputStream in;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            con = newURL(OIDC_WELLKNOWN_PATH).openConnection();
+            con.setRequestMethod("GET");
+            in = con.getInputStream();
+            io.pipeRead(in, out);
+            JSONObject oidcJson = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
+            oidc = OauthConfig.fromJSON(oidcJson, "");
+        } catch (Exception e) {
+            // TODO manage errors
+
+            Log.w("Connection", "connection error while OIDC conf");
+            throw SDKException.unexpectedContent(e);
+        }
+    }
+
+
+
+
 
     public String version() {
         if (version == null) {
@@ -135,10 +158,6 @@ public class CellsServer implements Server {
         return bootConf != null && bootConf.has("license_features");
     }
 
-    public boolean isSSLUnverified() {
-        return sslUnverified;
-    }
-
     @Override
     public String getIconURL() {
         return null;
@@ -146,6 +165,11 @@ public class CellsServer implements Server {
 
     @Override
     public String getWelcomeMessage() {
+        return null;
+    }
+
+    @Override
+    public String getVersionName() {
         return null;
     }
 
@@ -161,88 +185,89 @@ public class CellsServer implements Server {
         return this.oidc != null;
     }
 
-    public JSONObject getOIDCInfo() {
+    @Override
+    public OauthConfig getOAuthConfig() {
         return this.oidc;
     }
 
-    public void setUnverifiedSSL(boolean unverified) {
-        sslUnverified = unverified;
-    }
-
-    public SSLContext getSslContext() {
-        if (this.sslContext == null) {
-            try {
-                this.sslContext = SSLContext.getInstance("TLS");
-                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        try {
-            this.sslContext.getSocketFactory();
-        } catch (Exception e) {
-            try {
-                this.sslContext = SSLContext.getInstance("TLS");
-                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception ex) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return this.sslContext;
-    }
-
-    public byte[][] getCertificateChain() {
-        return this.certificateChain;
-    }
-
-    public HostnameVerifier getHostnameVerifier() {
-        return (s, sslSession) -> true;
-    }
+//    public void setUnverifiedSSL(boolean unverified) {
+//        sslUnverified = unverified;
+//    }
+//
+//    public SSLContext getSslContext() {
+//        if (this.sslContext == null) {
+//            try {
+//                this.sslContext = SSLContext.getInstance("TLS");
+//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+//
+//        try {
+//            this.sslContext.getSocketFactory();
+//        } catch (Exception e) {
+//            try {
+//                this.sslContext = SSLContext.getInstance("TLS");
+//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
+//            } catch (Exception ex) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+//        return this.sslContext;
+//    }
+//
+//    public byte[][] getCertificateChain() {
+//        return this.certificateChain;
+//    }
+//
+//    public HostnameVerifier getHostnameVerifier() {
+//        return (s, sslSession) -> true;
+//    }
 
     /*  Local helpers */
 
-    private TrustManager trustManager() {
-        return new CertificateTrustManager(getTrustHelper());
-    }
+//    private TrustManager trustManager() {
+//        return new CertificateTrustManager(getTrustHelper());
+//    }
 
-    private String getId() {
-        return serverURL.getId();
-    }
+//    private String getId() {
+//        return serverURL.getId();
+//    }
 
-    private CertificateTrust.Helper getTrustHelper() {
-        if (trustHelper == null) {
-            return trustHelper = new CertificateTrust.Helper() {
-                @Override
-                public boolean isServerTrusted(X509Certificate[] chain) {
-                    for (X509Certificate c : chain) {
-                        for (byte[] trusted : CellsServer.this.certificateChain) {
-                            try {
-                                c.checkValidity();
-                                MessageDigest hash = MessageDigest.getInstance("MD5");
-                                byte[] c1 = hash.digest(trusted);
-                                byte[] c2 = hash.digest(c.getEncoded());
-                                if (Arrays.equals(c1, c2)) {
-                                    return true;
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    return false;
-                }
-
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-            };
-        }
-        return trustHelper;
-    }
+//    private CertificateTrust.Helper getTrustHelper() {
+//        if (trustHelper == null) {
+//            return trustHelper = new CertificateTrust.Helper() {
+//                @Override
+//                public boolean isServerTrusted(X509Certificate[] chain) {
+//                    for (X509Certificate c : chain) {
+//                        for (byte[] trusted : CellsServer.this.certificateChain) {
+//                            try {
+//                                c.checkValidity();
+//                                MessageDigest hash = MessageDigest.getInstance("MD5");
+//                                byte[] c1 = hash.digest(trusted);
+//                                byte[] c2 = hash.digest(c.getEncoded());
+//                                if (Arrays.equals(c1, c2)) {
+//                                    return true;
+//                                }
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    return false;
+//                }
+//
+//                @Override
+//                public X509Certificate[] getAcceptedIssuers() {
+//                    return null;
+//                }
+//            };
+//        }
+//        return trustHelper;
+//    }
 
 
     public boolean equals(Object obj) {
@@ -252,7 +277,7 @@ public class CellsServer implements Server {
         if (obj == null || !(obj instanceof CellsServer))
             return false;
 
-        return getId().equals(((CellsServer) obj).getServerURL().getId());
+        return url().equals(((CellsServer) obj).url());
     }
 
 }

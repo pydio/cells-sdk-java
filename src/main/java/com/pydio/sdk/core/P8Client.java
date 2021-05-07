@@ -437,12 +437,11 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public String downloadURL(String ws, String file) throws SDKException {
-        // FIXME
-        Thread.dumpStack();
-        throw new RuntimeException("Reimplement");
+    public String downloadPath(String ws, String file) throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.download(ws, file);
+        return session.pathFromRequest(builder.getRequest());
 
-//        P8RequestBuilder builder = P8RequestBuilder.download(ws, file).setToken(session);
+//
 //        try {
 //            return session.getURL(builder.getRequest());
 //        } catch (ProtocolException | UnknownHostException e) {

@@ -33,7 +33,7 @@ public interface Client {
 
     long download(String ws, String file, File target, TransferProgressListener progressListener) throws SDKException;
 
-    String downloadURL(String ws, String file) throws SDKException;
+    String downloadPath(String ws, String file) throws SDKException;
 
     Message delete(String ws, String[] files) throws SDKException;
 
