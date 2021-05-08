@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /* Work in progress: new version of the utilitary static methods
 to solve resource exhaustion issues*/
@@ -133,5 +135,16 @@ public class IoHelpers {
             }
         }
         return total_read;
+    }
+
+    // Simple shortcut to encode URLs
+    public static String utf8Encode(String value) {
+        // TODO this method throws an exception in android context but not in the sdk-java, why ?
+        try {
+            return URLEncoder.encode(value, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Unexpected encodin issue", e);
+        }
+        //return super.utf8Encode(value);
     }
 }

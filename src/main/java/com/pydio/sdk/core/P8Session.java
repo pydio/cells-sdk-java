@@ -16,6 +16,7 @@ import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.sdk.core.security.P8Credentials;
 import com.pydio.sdk.core.utils.Log;
+import static com.pydio.sdk.core.utils.IoHelpers.utf8Encode;
 import com.pydio.sdk.generated.p8.Method;
 import com.pydio.sdk.generated.p8.P8Request;
 import com.pydio.sdk.generated.p8.P8RequestBuilder;
@@ -40,8 +41,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class P8Session implements ILegacySession, SdkNames {
 
@@ -71,11 +70,10 @@ public class P8Session implements ILegacySession, SdkNames {
         cookieManager = man;
     }
 
-
     public void restore(TokenService tokens) throws SDKException {
         // TODO rather use this than the local concurrent hashmap.
         // this.tokens = tokens;
-        server.init(this);
+        server.init();
 
         // TODO more init
     }
@@ -145,7 +143,10 @@ public class P8Session implements ILegacySession, SdkNames {
 
     @Override
     public void setCredentials(Credentials c) {
-        if (c instanceof P8Credentials) {
+        // TODO re-enable when ready.
+        //if (c instanceof P8Credentials) {
+            if (c instanceof Credentials) {
+
             this.credentials = c;
             // P8 token never expire so it is much easier and good enough for legacy
             // to retrieve auth info and login at this point
@@ -178,7 +179,7 @@ public class P8Session implements ILegacySession, SdkNames {
         builder.append("&");
         builder.append(P8Names.REQ_PROP_TOKEN);
         builder.append("=");
-        builder.append(URLEncoder.encode(getSecureToken(), UTF_8));
+        builder.append(utf8Encode(getSecureToken()));
         return builder.toString();
     }
 
@@ -316,6 +317,13 @@ public class P8Session implements ILegacySession, SdkNames {
 
     @Override
     public void login() throws SDKException {
+
+        // FIXME not very clean.
+        // In P8 token never expires, so we only need to login once.
+        String existingToken = secureTokens.get(getTokenId());
+        if (existingToken != null && !"".equals(existingToken))
+            return;
+
         P8RequestBuilder builder = P8RequestBuilder.login(credentials);
         P8Request req = builder.getRequest();
 
@@ -454,14 +462,15 @@ public class P8Session implements ILegacySession, SdkNames {
             StringBuilder postData = new StringBuilder();
             for (Map.Entry<String, String> entry : request.getParams().get().entrySet()) {
                 if (postData.length() != 0) postData.append('&');
-                postData.append(URLEncoder.encode(entry.getKey(), UTF_8));
+                postData.append(utf8Encode(entry.getKey()));
                 postData.append('=');
-                postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));
+                postData.append(utf8Encode(String.valueOf(entry.getValue())));
+                //postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));
             }
-            byte[] postDataBytes = postData.toString().getBytes(UTF_8);
+            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postDataBytes.length));
-            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "application/x-www-form-urlencoded; charset=" + UTF_8);
+            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "application/x-www-form-urlencoded; charset=utf-8");
 
             OutputStream out = con.getOutputStream();
             out.write(postDataBytes);
@@ -549,17 +558,17 @@ public class P8Session implements ILegacySession, SdkNames {
                 Map.Entry<String, String> entry = it.next();
                 String name = entry.getKey();
                 String value = entry.getValue();
-                partHeaderBuffer.write(("Content-Disposition: form-data; name=\"" + URLEncoder.encode(name, UTF_8) + "\"").getBytes());
+                partHeaderBuffer.write(("Content-Disposition: form-data; name=\"" + utf8Encode(name) + "\"").getBytes());
                 partHeaderBuffer.write(LF);
-                partHeaderBuffer.write(("Content-Type: text/plain; charset=" + UTF_8).getBytes());
+                partHeaderBuffer.write(("Content-Type: text/plain; charset=utf-8").getBytes());
                 partHeaderBuffer.write(DLF);
-                partHeaderBuffer.write(value.getBytes(UTF_8));
+                partHeaderBuffer.write(value.getBytes("UTF-8"));
                 partHeaderBuffer.write(LF);
                 partHeaderBuffer.write(("--" + boundary).getBytes());
                 partHeaderBuffer.write(LF);
             }
 
-            partHeaderBuffer.write(("Content-Disposition: form-data; name=\"userfile_0\"; filename=" + URLEncoder.encode(request.getBody().getFilename(), UTF_8)).getBytes());
+            partHeaderBuffer.write(("Content-Disposition: form-data; name=\"userfile_0\"; filename=" + utf8Encode(request.getBody().getFilename())).getBytes());
             partHeaderBuffer.write(LF);
             partHeaderBuffer.write(("Content-Type: " + request.getBody().getContentType()).getBytes());
 
@@ -633,13 +642,11 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     private void saveSecureToken(String secureToken) {
-        String id = credentials.getLogin() + "@" + server.getServerURL().getId();
-        secureTokens.put(id, secureToken);
+        secureTokens.put(getTokenId(), secureToken);
     }
 
     private String getSecureToken() throws SDKException {
-        String id = credentials.getLogin() + "@" + server.getServerURL().getId();
-
+        String id = getTokenId();
         String secureToken = secureTokens.get(id);
         if (null == secureToken || "".equals(secureToken)) {
             System.out.println("No token found for " + id + ", about to background login.");
@@ -648,9 +655,12 @@ public class P8Session implements ILegacySession, SdkNames {
         return secureTokens.get(id);
     }
 
-    /**
-     * String manipulation Helpers
-     */
+    /* String manipulation Helpers */
+
+    private String getTokenId(){
+        return credentials.getLogin() + "@" + server.getServerURL().getId();
+    }
+
     private StringBuilder appendParam(StringBuilder builder, String key, String value) {
         builder.append(key).append("=").append(value);
         return builder;
@@ -662,12 +672,12 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     private StringBuilder appendEncodedParam(StringBuilder builder, String key, String value) {
-        builder.append(key).append("=").append(URLEncoder.encode(value, UTF_8));
+        builder.append(key).append("=").append(utf8Encode(value));
         return builder;
     }
 
     private StringBuilder andAppendEncodedParam(StringBuilder builder, String key, String value) {
-        builder.append("&").append(key).append("=").append(URLEncoder.encode(value, UTF_8));
+        builder.append("&").append(key).append("=").append(utf8Encode(value));
         return builder;
     }
 
