@@ -25,6 +25,7 @@ public class ServerFactory implements IServerFactory {
 
     private final TokenService tokenService;
     private Map<String, Server> servers = new HashMap<>();
+    private Map<String, ISession> sessions = new HashMap<>();
 
     public ServerFactory(TokenService tokenService) {
         this.tokenService = tokenService;
@@ -38,7 +39,7 @@ public class ServerFactory implements IServerFactory {
             ServerURL currURL = serverURL.withPath(CellsServer.BOOTCONF_PATH);
             currURL.ping();
             return SdkNames.TYPE_CELLS;
-        } catch (ConnectException ce){
+        } catch (ConnectException ce) {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
         } catch (IOException e) {
             try {
@@ -100,12 +101,28 @@ public class ServerFactory implements IServerFactory {
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
+        sessions.put(accountID(credentials.getLogin(), serverURL), session);
+
         return session;
+    }
+
+    public void unregisterAccount(String accountID) throws SDKException {
+        // TODO rather introduce another layer to ease use of a persistent store.
+        sessions.remove(accountID);
+    }
+
+
+    public void unregisterAccount(String login, ServerURL serverURL) throws SDKException {
+        unregisterAccount(accountID(login, serverURL));
     }
 
 
     @Override
-    public ISession getSession(ServerURL serverURL, String login) throws SDKException {
+    public ISession getSession(String login, ServerURL serverURL) throws SDKException {
+
+        if (sessions.containsKey(accountID(login, serverURL))) {
+            return sessions.get(accountID(login, serverURL));
+        }
 
         Server server = getServer(serverURL.getId());
         if (server == null) {
@@ -122,27 +139,42 @@ public class ServerFactory implements IServerFactory {
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
+        sessions.put(accountID(login, serverURL), session);
+
         return session;
     }
 
-    protected Map<String, Server> getServers(){
+    protected Map<String, Server> getServers() {
         return servers;
     }
 
-    protected Server getServer(String id){
+    protected Server getServer(String id) {
         return servers.get(id);
     }
 
-    protected Server putServer(String id, Server server){
+    protected Server putServer(String id, Server server) {
         return servers.put(id, server);
     }
 
-    protected Server removeServer(String id){
+    protected Server removeServer(String id) {
         return servers.remove(id);
     }
 
-    protected TokenService getTokenService(){
+    protected TokenService getTokenService() {
         return tokenService;
+    }
+
+    // Static helpers to ease implementation
+    public static String accountID(String username, String urlStr) {
+        return String.format("%s@%s", username, urlStr);
+    }
+
+    public static String accountID(String username, ServerURL serverURL) {
+        return accountID(username, serverURL.getId());
+    }
+
+    public static String accountID(String username, Server server) {
+        return accountID(username, server.getServerURL());
     }
 
     private void initAppData() {

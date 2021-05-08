@@ -8,6 +8,6 @@ public interface IServerFactory {
 
     ISession registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException;
 
-    ISession getSession(ServerURL serverURL, String login) throws SDKException;
+    ISession getSession(String login, ServerURL serverURL) throws SDKException;
 
 }

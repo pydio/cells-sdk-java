@@ -22,7 +22,8 @@ public interface ISession {
 
     String getUserAgent();
 
-    void setCredentials(Credentials c);
+    /** This also tries to login the server with the passed credentials. */
+    void setCredentials(Credentials c) throws SDKException;
 
     void login() throws SDKException;
 

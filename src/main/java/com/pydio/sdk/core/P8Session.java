@@ -14,9 +14,6 @@ import com.pydio.sdk.core.auth.TokenService;
 import com.pydio.sdk.core.model.P8Server;
 import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.ServerGeneralRegistrySaxHandler;
-import com.pydio.sdk.core.security.P8Credentials;
-import com.pydio.sdk.core.utils.Log;
-import static com.pydio.sdk.core.utils.IoHelpers.utf8Encode;
 import com.pydio.sdk.generated.p8.Method;
 import com.pydio.sdk.generated.p8.P8Request;
 import com.pydio.sdk.generated.p8.P8RequestBuilder;
@@ -36,11 +33,12 @@ import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.pydio.sdk.core.utils.IoHelpers.utf8Encode;
 
 public class P8Session implements ILegacySession, SdkNames {
 
@@ -142,22 +140,17 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     @Override
-    public void setCredentials(Credentials c) {
+    public void setCredentials(Credentials c) throws SDKException {
         // TODO re-enable when ready.
         //if (c instanceof P8Credentials) {
-            if (c instanceof Credentials) {
+        if (c instanceof Credentials) {
 
             this.credentials = c;
             // P8 token never expire so it is much easier and good enough for legacy
             // to retrieve auth info and login at this point
             // and then always rely on the objects that are stored in memory.
-            try {
-                useCaptcha();
-                login();
-            } catch (SDKException e) {
-                Log.e("Login Error", "Could not log as " + getUser() + "@" + getServer().getServerURL().getId());
-                e.printStackTrace();
-            }
+            useCaptcha();
+            login();
         } else
             throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
     }
@@ -174,7 +167,7 @@ public class P8Session implements ILegacySession, SdkNames {
         return withUserAgent(server.newURL(path).openConnection());
     }
 
-    public String appendAuth(String path) throws  SDKException {
+    public String appendAuth(String path) throws SDKException {
         StringBuilder builder = new StringBuilder(path);
         builder.append("&");
         builder.append(P8Names.REQ_PROP_TOKEN);
@@ -324,6 +317,10 @@ public class P8Session implements ILegacySession, SdkNames {
         if (existingToken != null && !"".equals(existingToken))
             return;
 
+        if (credentials == null) {
+            throw new SDKException(ErrorCodes.authentication_required);
+        }
+
         P8RequestBuilder builder = P8RequestBuilder.login(credentials);
         P8Request req = builder.getRequest();
 
@@ -347,13 +344,14 @@ public class P8Session implements ILegacySession, SdkNames {
                         if (result.equals("-4")) {
                             throw new SDKException(ErrorCodes.authentication_with_captcha_required);
                         }
-                        throw new SDKException(ErrorCodes.authentication_required);
+                        throw new SDKException(ErrorCodes.invalid_credentials,
+                                new IOException("Could not log as " + credentials.getLogin() + "@" + getServer().url()));
                     }
                 } else {
-                    throw SDKException.unexpectedContent(new IOException(doc.toString()));
+                    throw SDKException.unexpectedContent(new IOException("Cannot parse login response: " + doc.toString()));
                 }
             } else {
-                throw new SDKException(ErrorCodes.authentication_required);
+                throw new SDKException(ErrorCodes.invalid_credentials);
             }
         }
     }
@@ -657,7 +655,7 @@ public class P8Session implements ILegacySession, SdkNames {
 
     /* String manipulation Helpers */
 
-    private String getTokenId(){
+    private String getTokenId() {
         return credentials.getLogin() + "@" + server.getServerURL().getId();
     }
 

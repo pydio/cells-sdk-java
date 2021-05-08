@@ -101,10 +101,10 @@ public class CellsSession implements ICellsSession, SdkNames {
         return null;
     }
 
-
     @Override
-    public void setCredentials(Credentials c) {
-        this.credentials = c;
+    public void setCredentials(Credentials credentials) throws SDKException {
+        this.credentials = credentials;
+        login();
     }
 
     @Override
