@@ -5,6 +5,7 @@ import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.api.IServerFactory;
 import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.core.auth.TokenService;
@@ -13,6 +14,7 @@ import com.pydio.sdk.core.model.P8Server;
 import com.pydio.sdk.core.security.PasswordCredentials;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +29,100 @@ public class ServerFactory implements IServerFactory {
     public ServerFactory(TokenService tokenService) {
         this.tokenService = tokenService;
         initAppData();
+    }
+
+    @Override
+    public String checkServer(ServerURL serverURL) throws SDKException {
+        // We do not have any other choice than to try the various well-known endpoints
+        try {
+            ServerURL currURL = serverURL.withPath(CellsServer.BOOTCONF_PATH);
+            currURL.ping();
+            return SdkNames.TYPE_CELLS;
+        } catch (ConnectException ce){
+            throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
+        } catch (IOException e) {
+            try {
+                // We do not have other choice than to try the various well known endpoints
+                ServerURL currURL = serverURL.withPath(P8Server.BOOTCONF_PATH);
+                currURL.ping();
+                return SdkNames.TYPE_LEGACY_P8;
+            } catch (IOException e2) {
+                throw new SDKException(ErrorCodes.not_pydio_server, serverURL.getId(), e2);
+            }
+        }
+    }
+
+    @Override
+    public Server register(ServerURL serverURL) throws SDKException {
+
+        if (getServer(serverURL.getId()) != null) {
+            return getServer(serverURL.getId());
+        }
+
+        String type = checkServer(serverURL);
+
+        Server server;
+        if (SdkNames.TYPE_CELLS.equals(type)) {
+            server = new CellsServer(serverURL).init();
+        } else if (SdkNames.TYPE_LEGACY_P8.equals(type)) {
+            server = new P8Server(serverURL).init();
+        } else {
+            throw new SDKException(ErrorCodes.not_pydio_server);
+        }
+
+        putServer(serverURL.getId(), server);
+        return server;
+    }
+
+
+    @Override
+    public ISession registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
+
+        Server server = getServer(serverURL.getId());
+        if (server == null) {
+            server = register(serverURL);
+        }
+
+        ISession session = null;
+        if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
+            if (credentials instanceof PasswordCredentials) {
+                PasswordCredentials pc = ((PasswordCredentials) credentials);
+                session = new CellsSession(server, pc.getLogin());
+                tokenService.legacyLogin((CellsSession) session, credentials);
+                ((CellsSession) session).restore(tokenService);
+            } else
+                throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());
+
+        } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
+            session = new P8Session(server);
+            ((P8Session) session).restore(tokenService);
+            ((P8Session) session).setCredentials(credentials);
+        } else
+            throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
+
+        return session;
+    }
+
+
+    @Override
+    public ISession getSession(ServerURL serverURL, String login) throws SDKException {
+
+        Server server = getServer(serverURL.getId());
+        if (server == null) {
+            server = register(serverURL);
+        }
+
+        ISession session = null;
+        if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
+            session = new CellsSession(server, login);
+            ((CellsSession) session).restore(tokenService);
+        } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
+            session = new P8Session(server);
+            // ((CellsSession)session).restore(tokenService);
+        } else
+            throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
+
+        return session;
     }
 
     protected Map<String, Server> getServers(){
@@ -47,98 +143,6 @@ public class ServerFactory implements IServerFactory {
 
     protected TokenService getTokenService(){
         return tokenService;
-    }
-
-
-    @Override
-    public Server register(ServerURL serverURL) throws SDKException {
-
-        if (getServer(serverURL.getId()) != null) {
-            return getServer(serverURL.getId());
-        }
-
-        String type = checkServer(serverURL);
-
-        Server server;
-        if (TYPE_CELLS.equals(type)) {
-            server = new CellsServer(serverURL);
-        } else if (TYPE_LEGACY_P8.equals(type)) {
-            server = new P8Server(serverURL);
-        } else {
-            throw new SDKException(ErrorCodes.not_pydio_server);
-        }
-
-        putServer(serverURL.getId(), server);
-        return server;
-    }
-
-    @Override
-    public String checkServer(ServerURL serverURL) throws SDKException {
-        // We do not have any other choice than to try the various well-known endpoints
-        try {
-            ServerURL currURL = serverURL.withPath(CellsServer.BOOTCONF_PATH);
-            currURL.ping();
-            return TYPE_CELLS;
-        } catch (IOException e) {
-            try {
-                // We do not have other choice than to try the various well known endpoints
-                ServerURL currURL = serverURL.withPath(P8Server.BOOTCONF_PATH);
-                currURL.ping();
-                return TYPE_LEGACY_P8;
-            } catch (IOException e2) {
-                throw new SDKException(ErrorCodes.not_pydio_server, serverURL.getId(), e2);
-            }
-        }
-    }
-
-    @Override
-    public ISession registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
-
-        Server server = getServer(serverURL.getId());
-        if (server == null) {
-            server = register(serverURL);
-        }
-
-        ISession session = null;
-        if (TYPE_CELLS.equals(server.getRemoteType())) {
-            if (credentials instanceof PasswordCredentials) {
-                PasswordCredentials pc = ((PasswordCredentials) credentials);
-                session = new CellsSession(server, pc.getLogin());
-                tokenService.legacyLogin((CellsSession) session, credentials);
-                ((CellsSession) session).restore(tokenService);
-            } else
-                throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());
-
-        } else if (TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Session(server);
-            ((P8Session) session).restore(tokenService);
-            ((P8Session) session).setCredentials(credentials);
-        } else
-            throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
-
-        return session;
-    }
-
-
-    @Override
-    public ISession getSession(ServerURL serverURL, String login) throws SDKException {
-
-        Server server = getServer(serverURL.getId());
-        if (server == null) {
-            server = register(serverURL);
-        }
-
-        ISession session = null;
-        if (TYPE_CELLS.equals(server.getRemoteType())) {
-            session = new CellsSession(server, login);
-            ((CellsSession) session).restore(tokenService);
-        } else if (TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Session(server);
-            // ((CellsSession)session).restore(tokenService);
-        } else
-            throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
-
-        return session;
     }
 
     private void initAppData() {

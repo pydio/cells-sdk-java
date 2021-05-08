@@ -122,6 +122,9 @@ public class ServerURLImpl implements ServerURL {
     @Override
     public void ping() throws IOException {
         HttpURLConnection connection = openConnection();
+        // 10 secs timeout instead of the default unlimited
+        connection.setConnectTimeout(10000);
+
         try {
             connection.setRequestMethod("GET");
             if (connection.getResponseCode() != 200) {

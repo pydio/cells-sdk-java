@@ -1,42 +1,27 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.api.IServerFactory;
-import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.core.CellsSession;
-import com.pydio.sdk.core.P8Session;
 import com.pydio.sdk.core.auth.OauthConfig;
-import com.pydio.sdk.core.security.CertificateTrust;
-import com.pydio.sdk.core.security.CertificateTrustManager;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.io;
 import com.pydio.sdk.generated.p8.consts.ActionNames;
-import com.pydio.sdk.generated.p8.consts.P8Names;
 
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.Properties;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
 
 public class P8Server implements Server {
 
     public final static String API_PREFIX = "/index.php?";
     public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + ActionNames.GET_BOOT_CONF;
-
-    private String serverType = IServerFactory.TYPE_LEGACY_P8;
+    private String serverType = SdkNames.TYPE_LEGACY_P8;
     private String version = null;
 
     private final ServerURL serverURL;
@@ -45,19 +30,6 @@ public class P8Server implements Server {
     private String title;
     private String welcomeMessage;
     private String iconPath;
-
-
-    // Legacy objects TODO remove
-    private boolean sslUnverified = false;
-    private SSLContext sslContext;
-    private Properties properties = null;
-    private JSONObject bootConf;
-    private JSONObject oidc;
-    private byte[][] certificateChain;
-    private CertificateTrust.Helper trustHelper;
-
-
-    // private JSONObject bootConf;
 
     public P8Server(ServerURL serverURL) {
         this.serverURL = serverURL;
@@ -68,14 +40,9 @@ public class P8Server implements Server {
     }
 
     @Override
-    public Server init(ISession session) throws SDKException {
-        refreshBootConf((P8Session) session);
-        return null;
-    }
-
-    // Local shortcut
-    private String getId() {
-        return serverURL.getId();
+    public Server init() throws SDKException {
+        refreshBootConf();
+        return this;
     }
 
     @Override
@@ -94,18 +61,8 @@ public class P8Server implements Server {
         // }
     }
 
-
     @Override
     public String getRemoteType() {
-        return serverType;
-    }
-
-    public P8Server init(String url) {
-
-        return this;
-    }
-
-    public String getServerType() {
         return serverType;
     }
 
@@ -119,40 +76,8 @@ public class P8Server implements Server {
         return false;
     }
 
-    /* Node methods */
-
-    private void refreshBootConf(ISession session) {
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        InputStream in = null;
-        HttpURLConnection con;
-
-        try {
-            con = session.openAnonConnection(BOOTCONF_PATH);
-            in = con.getInputStream();
-            io.pipeRead(in, out);
-            JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-
-            version = bootConf.getString("ajxpVersion");
-            JSONObject customWordings = bootConf.getJSONObject("customWording");
-            title = customWordings.getString("title");
-            iconPath = customWordings.getString("icon");
-            if (customWordings.has("welcomeMessage")) {
-                welcomeMessage = customWordings.getString("welcomeMessage");
-            }
-        } catch (Exception e) {
-            // TODO handle error
-            Log.w("Unimplemented", "Error while retrieving bootconf for " + getId());
-            e.printStackTrace();
-        }
-    }
-
 
     // Getters
-
-//    private TrustManager trustManager() {
-//        return new CertificateTrustManager(getTrustHelper());
-//    }
 
     public String version() {
         if (version == null) {
@@ -167,48 +92,36 @@ public class P8Server implements Server {
     }
 
     public boolean hasLicenseFeatures() {
-        return bootConf != null && bootConf.has("license_features");
+        return false;
+        // TODO reimplement this
+        // return bootConf != null && bootConf.has("license_features");
     }
 
-//    private CertificateTrust.Helper getTrustHelper() {
-//        if (trustHelper == null) {
-//            return trustHelper = new CertificateTrust.Helper() {
-//                @Override
-//                public boolean isServerTrusted(X509Certificate[] chain) {
-//                    for (X509Certificate c : chain) {
-//                        for (byte[] trusted : P8Server.this.certificateChain) {
-//                            try {
-//                                c.checkValidity();
-//                                MessageDigest hash = MessageDigest.getInstance("MD5");
-//                                byte[] c1 = hash.digest(trusted);
-//                                byte[] c2 = hash.digest(c.getEncoded());
-//                                if (Arrays.equals(c1, c2)) {
-//                                    return true;
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                    return false;
-//                }
-//
-//                @Override
-//                public X509Certificate[] getAcceptedIssuers() {
-//                    return null;
-//                }
-//            };
-//        }
-//        return trustHelper;
-//    }
+    @Override
+    public String getIconURL() {
+        System.out.println("#### Retrieveing ICON URL");
+        return iconPath;
+    }
 
     public String getIconPath() {
         return iconPath;
     }
 
-    public String welcomeMessage() {
+    @Override
+    public String getLabel(){
+        return title;
+    }
+
+    @Override
+    public String getWelcomeMessage() {
         return this.welcomeMessage;
     }
+
+    @Override
+    public String getVersionName() {
+        return null;
+    }
+
 
 //    public SSLContext getSslContext() {
 //        if (this.sslContext == null) {
@@ -235,6 +148,49 @@ public class P8Server implements Server {
 //        return this.sslContext;
 //    }
 
+
+
+    // Local shortcut
+    private String getId() {
+        return serverURL.getId();
+    }
+
+
+    private HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
+        return newURL(path).openConnection();
+    }
+
+    private void refreshBootConf() {
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        InputStream in = null;
+        HttpURLConnection con;
+
+        try {
+            con = openAnonConnection(BOOTCONF_PATH);
+            in = con.getInputStream();
+            io.pipeRead(in, out);
+            JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
+
+            version = bootConf.getString("ajxpVersion");
+            JSONObject customWordings = bootConf.getJSONObject("customWording");
+            title = customWordings.getString("title");
+
+            // Paths always start with a leading slash in our world.
+            String tmpPath = customWordings.getString("icon");
+            iconPath = tmpPath.startsWith("/") ? tmpPath : "/"+tmpPath;
+
+            if (customWordings.has("welcomeMessage")) {
+                welcomeMessage = customWordings.getString("welcomeMessage");
+            }
+        } catch (Exception e) {
+            // TODO handle error
+            Log.w("Unimplemented", "Error while retrieving bootconf for " + getId());
+            e.printStackTrace();
+        }
+    }
+
+
     public boolean equals(Object obj) {
 
         if (this == obj) return true;
@@ -246,44 +202,6 @@ public class P8Server implements Server {
     }
 
 
-//    public byte[][] getCertificateChain() {
-//        return this.certificateChain;
-//    }
-//
-//    public boolean supportsOauth() {
-//        return this.oidc != null;
-//    }
-
-    public JSONObject getOIDCInfo() {
-        return this.oidc;
-    }
-
-
-//    public HostnameVerifier getHostnameVerifier() {
-//        return (s, sslSession) -> true;
-//    }
-
-
-    @Override
-    public String getIconURL() {
-        return null;
-    }
-
-    @Override
-    public String getWelcomeMessage() {
-        return null;
-    }
-
-    @Override
-    public String getVersionName() {
-        return null;
-    }
-
-    // Setters
-
-    public void setUnverifiedSSL(boolean unverified) {
-        sslUnverified = unverified;
-    }
 
     public OauthConfig getOAuthConfig(){
         throw new RuntimeException("Pydio 8 server does not support OAuth credential flows.");

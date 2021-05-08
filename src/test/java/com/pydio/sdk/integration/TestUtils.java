@@ -5,6 +5,7 @@ import com.pydio.sdk.api.Credentials;
 import com.pydio.sdk.api.ErrorCodes;
 import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
 import com.pydio.sdk.api.nodes.ChangeNode;
@@ -40,7 +41,7 @@ public class TestUtils {
         }
         Server server = factory.register(sURL);
         Credentials credentials;
-        if (ServerFactory.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
+        if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
             credentials = new P8Credentials(conf.login, conf.pwd);
         } else {
             credentials = new PasswordCredentials(conf.login, conf.pwd);

@@ -8,7 +8,7 @@ public interface Server {
 
     ServerURL getServerURL();
 
-    Server init(ISession session) throws SDKException;
+    Server init() throws SDKException;
 
     /**
      * returns the canonical URL of the server as String for various persistence processes.
@@ -36,6 +36,11 @@ public interface Server {
 
     default boolean isSSLUnverified() {
         return getServerURL().skipVerify();
+    }
+
+    default String getLabel(){
+        // TODO implement this from boot config
+        return url();
     }
 
     String getIconURL();

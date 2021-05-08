@@ -1,14 +1,10 @@
 package com.pydio.sdk.core.model;
 
-import com.pydio.sdk.api.IServerFactory;
-import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.SDKException;
+import com.pydio.sdk.api.SdkNames;
 import com.pydio.sdk.api.Server;
 import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.core.CellsSession;
 import com.pydio.sdk.core.auth.OauthConfig;
-import com.pydio.sdk.core.security.CertificateTrust;
-import com.pydio.sdk.core.security.CertificateTrustManager;
 import com.pydio.sdk.core.utils.Log;
 import com.pydio.sdk.core.utils.io;
 
@@ -20,14 +16,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.Properties;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
 
 public class CellsServer implements Server {
 
@@ -35,7 +23,7 @@ public class CellsServer implements Server {
     public final static String OIDC_WELLKNOWN_PATH = "/oidc/.well-known/openid-configuration";
     public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
 
-    private String serverType = IServerFactory.TYPE_CELLS;
+    private String serverType = SdkNames.TYPE_CELLS;
     private String version = null;
     private String versionName = null;
 
@@ -63,7 +51,7 @@ public class CellsServer implements Server {
     }
 
     @Override
-    public Server init(ISession session) throws SDKException {
+    public Server init() throws SDKException {
         refreshBootConf();
         downloadOIDCConfiguration();
         return this;

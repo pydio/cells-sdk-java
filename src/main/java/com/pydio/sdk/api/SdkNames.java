@@ -3,6 +3,9 @@ package com.pydio.sdk.api;
 /** Centralize all string constants for the com.pydio.sdk API */
 public interface SdkNames {
 
+    String TYPE_CELLS = "cells";
+    String TYPE_LEGACY_P8 = "pydio";
+
     String XML_MESSAGE = "message";
     String NODE_PROPERTY_UUID = "Uuid";
     String NODE_PROPERTY_ENCODED = "encoded";
@@ -141,4 +144,5 @@ public interface SdkNames {
     int CHANGE_INDEX_NODE_MTIME = 7;
     int CHANGE_INDEX_NODE_PATH = 8;
     int CHANGE_INDEX_NODE_WORKSPACE = 9;
+
 }

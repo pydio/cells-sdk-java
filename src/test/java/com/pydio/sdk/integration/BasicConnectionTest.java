@@ -70,8 +70,8 @@ public class BasicConnectionTest {
             session.getClient().ls(conf.defaultWS, "/",
                     null, (node) -> System.out.println(node.getLabel()));
         } catch (Exception e) {
-            Assert.assertNull("Listing of default workspace root failed for " + id + ": " + e.getMessage(), e);
             e.printStackTrace();
+            Assert.assertNull("Listing of default workspace root failed for " + id + ", cause: " + e.getMessage(), e);
         }
     }
 

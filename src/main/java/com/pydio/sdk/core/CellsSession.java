@@ -60,7 +60,7 @@ public class CellsSession implements ICellsSession, SdkNames {
 
     public void restore(TokenService tokens) throws SDKException {
         this.tokens = tokens;
-        server.init(this);
+        server.init();
         // TODO more init
     }
 
