@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class WorkspaceNode implements Node, SdkNames {
+
     private Properties properties;
     // private Properties preferences;
     private List<Plugin> plugins;

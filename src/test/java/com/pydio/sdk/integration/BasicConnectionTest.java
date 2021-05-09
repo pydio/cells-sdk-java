@@ -2,7 +2,9 @@ package com.pydio.sdk.integration;
 
 import com.pydio.sdk.api.ISession;
 import com.pydio.sdk.api.Message;
+import com.pydio.sdk.api.Node;
 import com.pydio.sdk.api.ServerURL;
+import com.pydio.sdk.api.callbacks.NodeHandler;
 import com.pydio.sdk.core.ServerFactory;
 import com.pydio.sdk.core.ServerURLImpl;
 import com.pydio.sdk.core.auth.TokenService;
@@ -54,7 +56,7 @@ public class BasicConnectionTest {
 
     @Test
     public void testSimpleList() {
-        config.getDefinedServers().forEach(this::listDefaultWSRoot);
+        config.getDefinedServers().forEach(this::testWorkspaces);
         config.getDefinedServers().forEach(this::basicCRUD);
 
         // For the time being only P8 upload is implemented in plain Java
@@ -64,9 +66,17 @@ public class BasicConnectionTest {
         }
     }
 
-    private void listDefaultWSRoot(String id, TestConfiguration.ServerConfig conf) {
+    private void testWorkspaces(String id, TestConfiguration.ServerConfig conf) {
         try {
+
             ISession session = TestUtils.getSession(factory, conf);
+
+            // All workspaces
+            session.getClient().workspaceList(new handler());
+//            session.getClient().workspaceList
+//                    ((node) -> System.out.println(node.getLabel()));
+
+            // Default workspace
             session.getClient().ls(conf.defaultWS, "/",
                     null, (node) -> System.out.println(node.getLabel()));
         } catch (Exception e) {
@@ -149,6 +159,15 @@ public class BasicConnectionTest {
         // the time being upload fails silently.
     }
 
+
+    private class handler implements NodeHandler {
+
+        @Override
+        public void onNode(Node node) {
+            System.out.println(node.getLabel());
+            System.out.println(node.getPath());
+        }
+    }
 
     @Test
     public void testSkipVerify() {

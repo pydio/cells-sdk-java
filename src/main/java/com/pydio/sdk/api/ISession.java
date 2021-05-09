@@ -35,22 +35,20 @@ public interface ISession {
 
     JSONObject userInfo() throws SDKException;
 
-    void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException;
-
-    void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException;
+    // InputStream getWorkspaceRegistry(String ws) throws SDKException;
+//
+    // void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException;
+//
+    // void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException;
 
     InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException;
-
-    InputStream getWorkspaceRegistry(String ws) throws SDKException;
 
     InputStream getServerRegistryAsAuthenticatedUser() throws SDKException;
 
     boolean isOffline();
 
-
     HttpURLConnection openAnonConnection(String path) throws SDKException, IOException;
 
     HttpURLConnection openConnection(String path) throws SDKException, IOException;
 
-    Map<String, WorkspaceNode> getCachedWorkspaces();
 }

@@ -117,12 +117,6 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     @Override
-    public Map<String, WorkspaceNode> getCachedWorkspaces() {
-        // TODO implement
-        return null;
-    }
-
-    @Override
     public boolean useCaptcha() {
         if (useCaptcha != null) {
             return useCaptcha.booleanValue();
@@ -223,39 +217,39 @@ public class P8Session implements ILegacySession, SdkNames {
         }
     }
 
-    @Override
-    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-        try (P8Response rsp = execute(builder.getRequest())) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
-            if (code != ErrorCodes.ok) {
-                throw new SDKException(code);
-            }
-        } catch (IOException ioe) {
-            throw new SDKException(ioe);
-        }
+   //  @Override
+   //  public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
+   //      P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
+   //      try (P8Response rsp = execute(builder.getRequest())) {
+   //          if (rsp.code() != ErrorCodes.ok) {
+   //              throw new SDKException(rsp.code());
+   //          }
+   //          final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
+   //          if (code != ErrorCodes.ok) {
+   //              throw new SDKException(code);
+   //          }
+   //      } catch (IOException ioe) {
+   //          throw new SDKException(ioe);
+   //      }
+//
+   //  }
 
-    }
-
-    @Override
-    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
-        try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-            if (code != ErrorCodes.ok) {
-                rsp.close();
-                throw new SDKException(code);
-            }
-        } catch (IOException ioe) {
-            throw new SDKException(ioe);
-        }
-    }
+  //   @Override
+  //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+  //       P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
+  //       try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+  //           if (rsp.code() != ErrorCodes.ok) {
+  //               throw new SDKException(rsp.code());
+  //           }
+  //           final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+  //           if (code != ErrorCodes.ok) {
+  //               rsp.close();
+  //               throw new SDKException(code);
+  //           }
+  //       } catch (IOException ioe) {
+  //           throw new SDKException(ioe);
+  //       }
+  //   }
 
     @Override
     public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
@@ -268,17 +262,17 @@ public class P8Session implements ILegacySession, SdkNames {
         }
     }
 
-    @Override
-    public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-        String secureToken = getSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-        try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            return rsp.getInputStream();
-        }
-    }
+//     @Override
+//     public InputStream getWorkspaceRegistry(String ws) throws SDKException {
+//         String secureToken = getSecureToken();
+//         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
+//         try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+//             if (rsp.code() != ErrorCodes.ok) {
+//                 throw new SDKException(rsp.code());
+//             }
+//             return rsp.getInputStream();
+//         }
+//     }
 
     @Override
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {

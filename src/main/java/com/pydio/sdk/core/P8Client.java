@@ -20,6 +20,7 @@ import com.pydio.sdk.api.nodes.FileNode;
 import com.pydio.sdk.api.nodes.WorkspaceNode;
 import com.pydio.sdk.core.common.http.ContentBody;
 import com.pydio.sdk.core.model.NodeDiff;
+import com.pydio.sdk.core.model.parser.RegistrySaxHandler;
 import com.pydio.sdk.core.model.parser.TreeNodeSaxHandler;
 import com.pydio.sdk.core.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.sdk.core.utils.Log;
@@ -99,6 +100,22 @@ public class P8Client implements Client, SdkNames {
         }
     }
 
+     public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setToken(session);
+         try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+             if (rsp.code() != ErrorCodes.ok) {
+                 throw new SDKException(rsp.code());
+             }
+             final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+             if (code != ErrorCodes.ok) {
+                 rsp.close();
+                 throw new SDKException(code);
+             }
+         } catch (IOException ioe) {
+             throw new SDKException(ioe);
+         }
+     }
+
     @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.nodeInfo(ws, path).setToken(session);
@@ -120,14 +137,15 @@ public class P8Client implements Client, SdkNames {
     }
 
 
+    // TODO used for debug purposes. remove
     private class RIH extends RegistryItemHandler {
 
         public void onPref(String name, String value) {
-            System.out.println("OnPref: "+ name);
+            System.out.println("OnPref: " + name);
         }
 
         public void onAction(String action, String read, String write) {
-            System.out.println("OnAction: "+ action);
+            System.out.println("OnAction: " + action);
         }
 
         public void onWorkspace(Properties p) {
@@ -136,10 +154,9 @@ public class P8Client implements Client, SdkNames {
         }
 
         public void onPlugin(Plugin p) {
-            System.out.println("OnPlugin: "+ p.name);
+            System.out.println("OnPlugin: " + p.name);
         }
     }
-
 
 
     @Override
@@ -186,8 +203,6 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(ioe);
             }
         }
-
-
     }
 
     @Override
@@ -217,12 +232,13 @@ public class P8Client implements Client, SdkNames {
 
         List<WorkspaceNode> workspaceNodes = new ArrayList<>();
 
-        if (session.isOffline()) {
-            workspaceNodes.addAll(session.getCachedWorkspaces().values());
-        } else {
-            workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
 
-        }
+        // FIXME rather handle this in the AccountNode Layer.
+//        if (session.isOffline()) {
+//            workspaceNodes.addAll(session.getCachedWorkspaces().values());
+//        } else {
+            workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
+ //       }
 
         // List<WorkspaceNode> workspaceNodes = new ArrayList<>(serverNode.getWorkspaces().values());
         // if (workspaceNodes.isEmpty()) {
@@ -393,7 +409,7 @@ public class P8Client implements Client, SdkNames {
 //            try {
 //                builder = P8RequestBuilder.upload(ws, folder, name, autoRename, null);
 //            } catch (IOException e) {
-//                e.printStackTrace();
+//                e.printStackTrace();TODO
 //                throw SDKException.encoding(e);
 //            }
 //            return session.getURL(builder.getRequest());
@@ -563,8 +579,8 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
             return rsp.getInputStream();
-   //     } catch (IOException ioe) {
-   //         throw new SDKException(ioe);
+            //     } catch (IOException ioe) {
+            //         throw new SDKException(ioe);
         }
     }
 
