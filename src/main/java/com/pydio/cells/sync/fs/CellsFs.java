@@ -3,7 +3,7 @@ package com.pydio.cells.sync.fs;
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.ISession;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.api.nodes.ChangeNode;
+import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.client.utils.CellsPath;
 import com.pydio.cells.sync.Error;

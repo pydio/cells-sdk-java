@@ -1,8 +1,8 @@
 package com.pydio.cells.api.callbacks;
 
 import com.pydio.cells.api.Change;
-import com.pydio.cells.api.nodes.ServerNode;
-import com.pydio.cells.api.Session;
+import com.pydio.cells.api.ui.ServerNode;
+import com.pydio.cells.api.ui.SessionNode;
 
 import java.security.cert.X509Certificate;
 
@@ -19,10 +19,10 @@ public interface PersistentDataManager {
     void unsetPreference(String key);
     String getPreference();
 
-    Session[] sessions();
-    Session getSession(long id);
+    SessionNode[] sessions();
+    SessionNode getSession(long id);
     void deleteSession(long id);
-    void saveSession(Session s);
+    void saveSession(SessionNode s);
     void setSessionFolder(long session, String path);
 
     void saveChange(Change change);

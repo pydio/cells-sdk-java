@@ -1,4 +1,4 @@
-package com.pydio.cells.api.nodes;
+package com.pydio.cells.api.ui;
 
 public class ChangeNode {
 

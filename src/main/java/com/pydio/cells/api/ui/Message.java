@@ -1,5 +1,6 @@
-package com.pydio.cells.api;
+package com.pydio.cells.api.ui;
 
+import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.client.model.NodeFactory;
 
 import org.w3c.dom.Document;

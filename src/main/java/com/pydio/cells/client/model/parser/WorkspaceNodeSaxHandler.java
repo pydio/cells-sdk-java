@@ -1,7 +1,7 @@
 package com.pydio.cells.client.model.parser;
 
 import com.pydio.cells.api.callbacks.NodeHandler;
-import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.model.NodeFactory;
 
 import org.xml.sax.Attributes;

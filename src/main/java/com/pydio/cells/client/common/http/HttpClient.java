@@ -1,6 +1,6 @@
 package com.pydio.cells.client.common.http;
 
-import com.pydio.cells.client.ApplicationData;
+import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.utils.Params;
 
 import java.io.ByteArrayOutputStream;
@@ -87,7 +87,7 @@ public class HttpClient {
         HttpURLConnection con = getConnection(requestData);
         con.setDoOutput(true);
 
-        con.setRequestProperty("User-Agent", "Pydio-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode);
+        con.setRequestProperty("User-Agent", "Pydio-Native-" + ClientData.name + " " + ClientData.version + "." + ClientData.versionCode);
         con.setRequestProperty("Content-Type", "application/octet-stream");
 
         OutputStream out = con.getOutputStream();

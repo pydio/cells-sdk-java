@@ -3,7 +3,7 @@ package com.pydio.sdk.integration;
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.client.CellsClient;
-import com.pydio.cells.api.nodes.ServerNode;
+import com.pydio.cells.api.ui.ServerNode;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import com.pydio.cells.client.model.TreeNodeInfo;

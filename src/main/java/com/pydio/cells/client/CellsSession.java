@@ -31,7 +31,7 @@ import javax.net.ssl.SSLContext;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import static com.pydio.cells.client.model.CellsServer.API_PREFIX;
+import static com.pydio.cells.client.CellsServer.API_PREFIX;
 
 public class CellsSession implements ICellsSession, SdkNames {
 
@@ -71,13 +71,13 @@ public class CellsSession implements ICellsSession, SdkNames {
             return userAgent;
         }
 
-        userAgent = String.format(Locale.US, "%s-%s/%d", ApplicationData.name, ApplicationData.version, ApplicationData.versionCode);
-        if (!ApplicationData.platform.equals("")) {
-            userAgent = ApplicationData.platform + "/" + userAgent;
+        userAgent = String.format(Locale.US, "%s-%s/%d", ClientData.name, ClientData.version, ClientData.versionCode);
+        if (!ClientData.platform.equals("")) {
+            userAgent = ClientData.platform + "/" + userAgent;
         }
 
-        if (!ApplicationData.packageID.equals("")) {
-            userAgent = userAgent + "/" + ApplicationData.packageID;
+        if (!ClientData.packageID.equals("")) {
+            userAgent = userAgent + "/" + ClientData.packageID;
         }
         return userAgent;
     }

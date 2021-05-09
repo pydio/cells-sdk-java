@@ -1,4 +1,4 @@
-package com.pydio.cells.api;
+package com.pydio.cells.api.ui;
 
 import java.io.Serializable;
 import java.util.Properties;

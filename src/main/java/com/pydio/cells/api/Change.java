@@ -1,6 +1,6 @@
 package com.pydio.cells.api;
 
-import com.pydio.cells.api.nodes.ChangeNode;
+import com.pydio.cells.api.ui.ChangeNode;
 
 import java.io.Serializable;
 
@@ -18,7 +18,7 @@ public class Change implements Serializable {
     private String source;
     private String target;
     private String nodeId;
-    private com.pydio.cells.api.nodes.ChangeNode node;
+    private ChangeNode node;
 
     public String getSourceSide() {
         return sourceSide;
@@ -76,7 +76,7 @@ public class Change implements Serializable {
         this.nodeId = nodeId;
     }
 
-    public com.pydio.cells.api.nodes.ChangeNode getNode() {
+    public ChangeNode getNode() {
         return node;
     }
 

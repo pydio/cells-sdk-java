@@ -1,7 +1,7 @@
 package com.pydio.cells.api.callbacks;
 
 import com.pydio.cells.api.Error;
-import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ui.Node;
 
 import java.util.List;
 

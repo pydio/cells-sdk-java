@@ -1,8 +1,8 @@
 package com.pydio.cells.sync.fs;
 
-import com.pydio.cells.client.P8Client;
+import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.api.nodes.ChangeNode;
+import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.sync.Error;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;

@@ -2,7 +2,7 @@ package com.pydio.cells.client.utils;
 
 import com.google.gson.Gson;
 import com.pydio.cells.api.SdkNames;
-import com.pydio.cells.api.nodes.FileNode;
+import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.client.model.FileNodeImpl;
 import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;

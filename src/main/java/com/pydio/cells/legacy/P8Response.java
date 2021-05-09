@@ -318,7 +318,7 @@ public class P8Response implements Closeable {
             String str = new String(ch);
             if (tag_msg) {
                 if (str.toLowerCase().contains("you are not allowed to access")) {
-                    P8Response.this.code = ErrorCodes.authentication_required; //P8Client.this.auth_step = "RENEW-TOKEN";
+                    P8Response.this.code = ErrorCodes.authentication_required;
                     throw new SAXException("token");
                 }
             }

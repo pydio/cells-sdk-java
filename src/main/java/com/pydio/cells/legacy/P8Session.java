@@ -1,4 +1,4 @@
-package com.pydio.cells.client;
+package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
@@ -8,13 +8,8 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.model.P8Server;
-import com.pydio.cells.legacy.Method;
-import com.pydio.cells.legacy.P8Request;
-import com.pydio.cells.legacy.P8RequestBuilder;
-import com.pydio.cells.legacy.P8Response;
-import com.pydio.cells.legacy.RetryCallback;
 import com.pydio.cells.legacy.consts.ActionNames;
 import com.pydio.cells.legacy.consts.P8Names;
 
@@ -94,7 +89,7 @@ public class P8Session implements ILegacySession, SdkNames {
         // if (this.config.userAgent != null) {
         //     con.setRequestProperty("User-Agent", this.config.userAgent);
         // } else {
-        return "Pydio-Native-" + ApplicationData.name + " " + ApplicationData.version + "." + ApplicationData.versionCode;
+        return "Pydio-Native-" + ClientData.name + " " + ClientData.version + "." + ClientData.versionCode;
     }
 
     @Override

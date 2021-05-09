@@ -1,7 +1,6 @@
-package com.pydio.cells.api.nodes;
+package com.pydio.cells.api.ui;
 
 import com.pydio.cells.api.Error;
-import com.pydio.cells.api.Node;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.ServerResolver;
 

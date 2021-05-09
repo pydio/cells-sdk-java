@@ -1,7 +1,7 @@
 package com.pydio.cells.client.model;
 
-import com.pydio.cells.api.nodes.FileNode;
-import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ui.FileNode;
+import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.SdkNames;
 
 import java.util.Properties;
@@ -60,7 +60,7 @@ public class FileNodeImpl implements FileNode, SdkNames {
 
     @Override
     public int getType() {
-        return com.pydio.cells.api.Node.TYPE_REMOTE_NODE;
+        return Node.TYPE_REMOTE_NODE;
     }
 
     @Override

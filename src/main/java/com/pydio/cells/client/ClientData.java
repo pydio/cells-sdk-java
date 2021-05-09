@@ -2,7 +2,7 @@ package com.pydio.cells.client;
 
 import com.pydio.cells.api.callbacks.PersistentDataManager;
 
-public class ApplicationData {
+public class ClientData {
 
     public static String name = "Cells SDK Java";
     public static String platform = "";

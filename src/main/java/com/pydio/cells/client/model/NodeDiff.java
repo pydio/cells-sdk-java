@@ -1,6 +1,6 @@
 package com.pydio.cells.client.model;
 
-import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.SdkNames;
 
 import org.w3c.dom.Document;
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class NodeDiff {
 
-    public ArrayList<com.pydio.cells.api.Node> deleted = null;
-    public ArrayList<com.pydio.cells.api.Node> added = null;
-    public ArrayList<com.pydio.cells.api.Node> updated = null;
+    public ArrayList<Node> deleted = null;
+    public ArrayList<Node> added = null;
+    public ArrayList<Node> updated = null;
 
     public static NodeDiff create(Document doc){
         NodeDiff nodeDiff = new NodeDiff();
@@ -22,7 +22,7 @@ public class NodeDiff {
                 org.w3c.dom.Node child = diff.getChildNodes().item(i);
                 String tag = child.getNodeName();
 
-                ArrayList<com.pydio.cells.api.Node> list = null;
+                ArrayList<Node> list = null;
 
                 if (SdkNames.NODE_DIFF_REMOVE.equals(tag)) {
                     list = nodeDiff.deleted;

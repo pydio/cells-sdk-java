@@ -1,10 +1,15 @@
-package com.pydio.cells.api;
+package com.pydio.cells.api.ui;
 
+import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.client.model.ContentValues;
 
 import java.util.Properties;
 
-public class Session implements SdkNames {
+/**
+ * Legacy objects renamed from Session for clarity
+ * TODO: double-check where it is used and adapt / clean
+ */
+public class SessionNode implements SdkNames {
 
     public Properties properties = new Properties();
 
@@ -18,10 +23,10 @@ public class Session implements SdkNames {
     public byte[] logo;
     public String legacyId;
 
-    public Session() {
+    public SessionNode() {
     }
 
-    public Session(ContentValues values) {
+    public SessionNode(ContentValues values) {
         serverAddress = values.getAsString(ADDRESS);
         id = values.getAsLong(SESSION_ID);
         user = values.getAsString(LOGIN);

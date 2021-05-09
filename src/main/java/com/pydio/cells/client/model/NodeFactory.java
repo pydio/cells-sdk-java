@@ -1,7 +1,7 @@
 package com.pydio.cells.client.model;
 
-import com.pydio.cells.api.Node;
-import com.pydio.cells.api.nodes.WorkspaceNode;
+import com.pydio.cells.api.ui.Node;
+import com.pydio.cells.api.ui.WorkspaceNode;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
@@ -86,7 +86,7 @@ public class NodeFactory {
         }
     }
 
-    public static com.pydio.cells.api.Node deserialize(byte[] buffer) {
+    public static Node deserialize(byte[] buffer) {
         // FIXME close stream cleanly
         try {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer));

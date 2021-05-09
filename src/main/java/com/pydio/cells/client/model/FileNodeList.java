@@ -1,6 +1,6 @@
 package com.pydio.cells.client.model;
 
-import com.pydio.cells.api.nodes.FileNode;
+import com.pydio.cells.api.ui.FileNode;
 
 import java.util.List;
 

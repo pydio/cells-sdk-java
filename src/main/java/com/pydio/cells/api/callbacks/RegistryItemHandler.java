@@ -1,6 +1,6 @@
 package com.pydio.cells.api.callbacks;
 
-import com.pydio.cells.api.Plugin;
+import com.pydio.cells.api.ui.Plugin;
 
 import java.util.Properties;
 

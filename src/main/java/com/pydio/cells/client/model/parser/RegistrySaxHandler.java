@@ -1,6 +1,6 @@
 package com.pydio.cells.client.model.parser;
 
-import com.pydio.cells.api.Plugin;
+import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
 
 import org.xml.sax.Attributes;

@@ -1,6 +1,4 @@
-package com.pydio.cells.api.nodes;
-
-import com.pydio.cells.api.Node;
+package com.pydio.cells.api.ui;
 
 /**
  * Extends Node interface adding File specific methods

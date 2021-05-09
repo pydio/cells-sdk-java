@@ -1,6 +1,6 @@
 package com.pydio.cells.client.model;
 
-import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ui.Node;
 
 import java.util.Properties;
 

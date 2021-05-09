@@ -1,12 +1,12 @@
 package com.pydio.cells.client.model;
 
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.api.nodes.ServerNode;
-import com.pydio.cells.api.nodes.WorkspaceNode;
+import com.pydio.cells.api.ui.ServerNode;
+import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.api.callbacks.ServerResolver;
 import com.pydio.cells.api.Error;
 import com.pydio.cells.client.ServerURLImpl;

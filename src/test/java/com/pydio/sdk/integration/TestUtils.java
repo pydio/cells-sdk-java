@@ -8,7 +8,7 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.api.nodes.ChangeNode;
+import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.ServerURLImpl;
 import com.pydio.cells.client.model.TreeNodeInfo;

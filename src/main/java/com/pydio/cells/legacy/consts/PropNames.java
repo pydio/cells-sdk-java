@@ -1,4 +1,4 @@
-package com.pydio.cells.api;
+package com.pydio.cells.legacy.consts;
 
 public interface PropNames {
 

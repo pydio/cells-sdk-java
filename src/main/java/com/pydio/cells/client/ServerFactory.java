@@ -9,9 +9,9 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.model.CellsServer;
-import com.pydio.cells.client.model.P8Server;
 import com.pydio.cells.client.security.PasswordCredentials;
+import com.pydio.cells.legacy.P8Server;
+import com.pydio.cells.legacy.P8Session;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -179,10 +179,10 @@ public class ServerFactory implements IServerFactory {
 
     private void initAppData() {
 
-        ApplicationData.packageID = this.getClass().getPackage().getName();
-        ApplicationData.name = "CellsJavaClient";
-        ApplicationData.version = "0.2.0-dev";
-        ApplicationData.platform = "Java";
+        ClientData.packageID = this.getClass().getPackage().getName();
+        ClientData.name = "CellsJavaClient";
+        ClientData.version = "0.2.0-dev";
+        ClientData.platform = "Java";
 
     }
 

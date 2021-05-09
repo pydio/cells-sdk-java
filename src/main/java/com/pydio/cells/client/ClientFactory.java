@@ -3,6 +3,7 @@ package com.pydio.cells.client;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ISession;
 
+@Deprecated
 public class ClientFactory {
 
     private static CellsClientFactory cellsDefaultFactory = new CellsClientFactory();

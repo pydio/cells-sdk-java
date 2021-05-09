@@ -5,12 +5,12 @@ import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.client.P8Session;
+import com.pydio.cells.legacy.P8Session;
 import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.ServerURLImpl;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
-import com.pydio.cells.client.model.P8Server;
+import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.client.security.P8Credentials;
 
 import org.junit.After;

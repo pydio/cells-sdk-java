@@ -1,8 +1,8 @@
 package com.pydio.sdk.integration;
 
 import com.pydio.cells.api.ISession;
-import com.pydio.cells.api.Message;
-import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ui.Message;
+import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.client.ServerFactory;

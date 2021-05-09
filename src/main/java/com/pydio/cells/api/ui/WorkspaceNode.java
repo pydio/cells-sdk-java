@@ -1,7 +1,5 @@
-package com.pydio.cells.api.nodes;
+package com.pydio.cells.api.ui;
 
-import com.pydio.cells.api.Node;
-import com.pydio.cells.api.Plugin;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.client.model.Action;
 
@@ -154,7 +152,7 @@ public class WorkspaceNode implements Node, SdkNames {
 
     @Override
     public int getType() {
-        return com.pydio.cells.api.Node.TYPE_WORKSPACE;
+        return Node.TYPE_WORKSPACE;
     }
 
     @Override

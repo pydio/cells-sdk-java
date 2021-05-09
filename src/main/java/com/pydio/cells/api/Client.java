@@ -3,7 +3,9 @@ package com.pydio.cells.api;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.TransferProgressListener;
-import com.pydio.cells.api.nodes.FileNode;
+import com.pydio.cells.api.ui.FileNode;
+import com.pydio.cells.api.ui.Message;
+import com.pydio.cells.api.ui.PageOptions;
 
 import org.json.JSONObject;
 
