@@ -1,16 +1,16 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.api.Change;
-import com.pydio.sdk.api.SDKException;
-import com.pydio.sdk.core.CellsClient;
-import com.pydio.sdk.api.nodes.ServerNode;
-import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
-import com.pydio.sdk.core.model.TreeNodeInfo;
-import com.pydio.sdk.core.utils.CellsPath;
-import com.pydio.sdk.sync.changes.GetChangeRequest;
-import com.pydio.sdk.sync.changes.GetChangesResponse;
-import com.pydio.sdk.sync.fs.CellsFs;
+import com.pydio.cells.api.Change;
+import com.pydio.cells.api.SDKException;
+import com.pydio.cells.client.CellsClient;
+import com.pydio.cells.api.nodes.ServerNode;
+import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
+import com.pydio.cells.client.model.TreeNodeInfo;
+import com.pydio.cells.client.utils.CellsPath;
+import com.pydio.cells.sync.changes.GetChangeRequest;
+import com.pydio.cells.sync.changes.GetChangesResponse;
+import com.pydio.cells.sync.fs.CellsFs;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -18,11 +18,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.TreeMap;
 
 /**

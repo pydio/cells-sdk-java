@@ -1,27 +1,11 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.api.ISession;
-import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.core.ServerURLImpl;
-import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
+import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
-import org.junit.Assert;
-
-import com.pydio.sdk.core.CellsClient;
-import com.pydio.sdk.api.SDKException;
-import com.pydio.sdk.api.Change;
-import com.pydio.sdk.api.Message;
-import com.pydio.sdk.sync.tree.MemoryStateManager;
-import com.pydio.sdk.sync.tree.StateManager;
-
-import java.io.ByteArrayInputStream;
-import java.nio.file.Paths;
-import java.util.TreeMap;
+import com.pydio.cells.sync.tree.StateManager;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt

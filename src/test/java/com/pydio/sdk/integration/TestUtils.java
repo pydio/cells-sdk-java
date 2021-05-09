@@ -1,20 +1,20 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.api.Change;
-import com.pydio.sdk.api.Credentials;
-import com.pydio.sdk.api.ErrorCodes;
-import com.pydio.sdk.api.ISession;
-import com.pydio.sdk.api.SDKException;
-import com.pydio.sdk.api.SdkNames;
-import com.pydio.sdk.api.Server;
-import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.api.nodes.ChangeNode;
-import com.pydio.sdk.core.ServerFactory;
-import com.pydio.sdk.core.ServerURLImpl;
-import com.pydio.sdk.core.model.TreeNodeInfo;
-import com.pydio.sdk.core.security.P8Credentials;
-import com.pydio.sdk.core.security.PasswordCredentials;
-import com.pydio.sdk.sync.tree.StateManager;
+import com.pydio.cells.api.Change;
+import com.pydio.cells.api.Credentials;
+import com.pydio.cells.api.ErrorCodes;
+import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.SDKException;
+import com.pydio.cells.api.SdkNames;
+import com.pydio.cells.api.Server;
+import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.nodes.ChangeNode;
+import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.client.ServerURLImpl;
+import com.pydio.cells.client.model.TreeNodeInfo;
+import com.pydio.cells.client.security.P8Credentials;
+import com.pydio.cells.client.security.PasswordCredentials;
+import com.pydio.cells.sync.tree.StateManager;
 
 import java.net.MalformedURLException;
 import java.util.Iterator;

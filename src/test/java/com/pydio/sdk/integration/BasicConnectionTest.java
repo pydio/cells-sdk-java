@@ -1,14 +1,14 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.api.ISession;
-import com.pydio.sdk.api.Message;
-import com.pydio.sdk.api.Node;
-import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.api.callbacks.NodeHandler;
-import com.pydio.sdk.core.ServerFactory;
-import com.pydio.sdk.core.ServerURLImpl;
-import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
+import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Message;
+import com.pydio.cells.api.Node;
+import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.callbacks.NodeHandler;
+import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.client.ServerURLImpl;
+import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 
 import org.junit.After;
 import org.junit.Assert;

@@ -1,17 +1,17 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.api.Credentials;
-import com.pydio.sdk.api.ErrorCodes;
-import com.pydio.sdk.api.SDKException;
-import com.pydio.sdk.api.SdkNames;
-import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.core.P8Session;
-import com.pydio.sdk.core.ServerFactory;
-import com.pydio.sdk.core.ServerURLImpl;
-import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.auth.jwt.TokenMemoryStore;
-import com.pydio.sdk.core.model.P8Server;
-import com.pydio.sdk.core.security.P8Credentials;
+import com.pydio.cells.api.Credentials;
+import com.pydio.cells.api.ErrorCodes;
+import com.pydio.cells.api.SDKException;
+import com.pydio.cells.api.SdkNames;
+import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.client.P8Session;
+import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.client.ServerURLImpl;
+import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
+import com.pydio.cells.client.model.P8Server;
+import com.pydio.cells.client.security.P8Credentials;
 
 import org.junit.After;
 import org.junit.Assert;

@@ -1,14 +1,5 @@
 package com.pydio.sdk.integration;
 
-import com.pydio.sdk.api.ISession;
-import com.pydio.sdk.api.SDKException;
-import com.pydio.sdk.api.Server;
-import com.pydio.sdk.api.ServerURL;
-import com.pydio.sdk.core.CellsSession;
-import com.pydio.sdk.core.auth.TokenService;
-import com.pydio.sdk.core.model.CellsServer;
-import com.pydio.sdk.core.security.PasswordCredentials;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -21,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 
 /**
  * Utilitary class to centralise test configuration retrieval.

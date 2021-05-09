@@ -2,7 +2,7 @@
 
 ## Getting started
 
-The Pydio Cells Java SDK provides a Java implementation to communicate with a Pydio Cells server (and also with the legacy Pydio 8+ versions). Most of the functions are wrapped into the `com.pydio.sdk.api.Client` class that contains methods to easily manage your files on a Cells server.
+The Pydio Cells Java SDK provides a Java implementation to communicate with a Pydio Cells server (and also with the legacy Pydio 8+ versions). Most of the functions are wrapped into the `com.pydio.cells.api.Client` class that contains methods to easily manage your files on a Cells server.
 
 ## Build
 
