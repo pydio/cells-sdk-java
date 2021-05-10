@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Wraps an URL to add convenience methods to ease implementation in a Pydio Context.
@@ -42,6 +43,8 @@ public interface ServerURL {
     byte[][] getCertificateChain();
 
     SSLContext getSSLContext();
+
+    SSLSocketFactory getSslSocketFactory();
 
     boolean skipVerify();
 }

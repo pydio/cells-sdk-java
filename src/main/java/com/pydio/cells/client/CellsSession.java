@@ -173,10 +173,10 @@ public class CellsSession implements ICellsSession, SdkNames {
         apiClient.setUserAgent(getUserAgent());
 
         if (getServer().isSSLUnverified()) {
-            SSLContext context = getServer().getServerURL().getSSLContext();
+            ServerURL serverURL = getServer().getServerURL();
             OkHttpClient c = apiClient.getHttpClient();
-            c.setSslSocketFactory(context.getSocketFactory());
-            final String serverUrl = getServer().getServerURL().getURL().toString();
+            c.setSslSocketFactory(serverURL.getSslSocketFactory());
+            final String serverUrl = serverURL.getId();
             c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
         }
         return apiClient;
