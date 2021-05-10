@@ -99,7 +99,10 @@ public class ServerFactory implements IServerFactory {
             if (credentials instanceof PasswordCredentials) {
                 PasswordCredentials pc = ((PasswordCredentials) credentials);
                 session = new CellsSession(server, pc.getLogin());
+
                 tokenService.legacyLogin((CellsSession) session, credentials);
+                //tokenService.loginPasswordGetToken((CellsSession) session, credentials);
+
                 ((CellsSession) session).restore(tokenService);
             } else
                 throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());

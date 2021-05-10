@@ -7,6 +7,7 @@ import com.pydio.cells.api.ICellsSession;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
+import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
 import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
@@ -27,7 +28,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.util.Locale;
 
-import javax.net.ssl.SSLContext;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -36,9 +36,13 @@ import static com.pydio.cells.client.CellsServer.API_PREFIX;
 public class CellsSession implements ICellsSession, SdkNames {
 
     private final Server server;
-    private final String login;
+
+    // TODO final or not ?
+    // private final String login;
+    private String login;
 
     private TokenService tokens;
+    // FIXME we should avoid to store the credentials in this object
     private Credentials credentials;
     private Boolean skipOAuth = false;
     private String userAgent;
@@ -89,13 +93,15 @@ public class CellsSession implements ICellsSession, SdkNames {
 
     @Override
     public void setCredentials(Credentials credentials) throws SDKException {
+        // FIXME
         this.credentials = credentials;
+        login = credentials.getLogin();
         login();
     }
 
     @Override
     public String getUser() {
-        return this.credentials.getLogin();
+        return login;
     }
 
     @Override
@@ -138,7 +144,7 @@ public class CellsSession implements ICellsSession, SdkNames {
         Token t = tokens.get(this, login, server.getServerURL().getId());
         String tokenStr = t.idToken;
         // FIXME
-        if (tokenStr == null){
+        if (tokenStr == null) {
             tokenStr = t.value;
         }
         return tokenStr;
@@ -219,26 +225,26 @@ public class CellsSession implements ICellsSession, SdkNames {
         }
     }
 
- //   @Override
- //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+    //   @Override
+    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
 //
- //       HttpURLConnection con;
- //       InputStream in;
- //       SAXParserFactory factory = SAXParserFactory.newInstance();
- //       try {
- //           con = openAnonApiConnection("/frontend/state/?ws=" + ws);
- //           con.setRequestMethod("GET");
- //           in = con.getInputStream();
- //           SAXParser parser = factory.newSAXParser();
- //           parser.parse(in, new RegistrySaxHandler(itemHandler));
- //       } catch (Exception e) {
- //           e.printStackTrace();
- //           throw SDKException.unexpectedContent(e);
- //       } finally {
- //           // FIXME handle stream closing
- //           // io.close(in);
- //       }
- //   }
+    //       HttpURLConnection con;
+    //       InputStream in;
+    //       SAXParserFactory factory = SAXParserFactory.newInstance();
+    //       try {
+    //           con = openAnonApiConnection("/frontend/state/?ws=" + ws);
+    //           con.setRequestMethod("GET");
+    //           in = con.getInputStream();
+    //           SAXParser parser = factory.newSAXParser();
+    //           parser.parse(in, new RegistrySaxHandler(itemHandler));
+    //       } catch (Exception e) {
+    //           e.printStackTrace();
+    //           throw SDKException.unexpectedContent(e);
+    //       } finally {
+    //           // FIXME handle stream closing
+    //           // io.close(in);
+    //       }
+    //   }
 
 
     @Override
@@ -255,18 +261,18 @@ public class CellsSession implements ICellsSession, SdkNames {
         }
     }
 
-  //   @Override
-  //   public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-  //       HttpURLConnection con;
-  //       InputStream in;
-  //       try {
-  //           con = openApiConnection("/frontend/state/?ws=" + ws);
-  //           con.setRequestMethod("GET");
-  //           return con.getInputStream();
-  //       } catch (IOException e) {
-  //           throw SDKException.conFailed(e);
-  //       }
-  //   }
+    //   @Override
+    //   public InputStream getWorkspaceRegistry(String ws) throws SDKException {
+    //       HttpURLConnection con;
+    //       InputStream in;
+    //       try {
+    //           con = openApiConnection("/frontend/state/?ws=" + ws);
+    //           con.setRequestMethod("GET");
+    //           return con.getInputStream();
+    //       } catch (IOException e) {
+    //           throw SDKException.conFailed(e);
+    //       }
+    //   }
 
     @Override
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
@@ -279,7 +285,6 @@ public class CellsSession implements ICellsSession, SdkNames {
             throw SDKException.conFailed(e);
         }
     }
-
 
 
     private static SDKException fromApiException(ApiException e) {

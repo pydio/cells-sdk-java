@@ -75,7 +75,8 @@ public class ServerURLImpl implements ServerURL {
     public static ServerURL withSkipverify(ServerURL serverURL) {
         try {
             return new ServerURLImpl(new URL(serverURL.getId()), true);
-        } catch (MalformedURLException ignore){} // OK at this point
+        } catch (MalformedURLException ignore) {
+        } // OK at this point
         return null;
     }
 
@@ -146,24 +147,43 @@ public class ServerURLImpl implements ServerURL {
             try {
                 sslContext = SSLContext.getInstance("TLS");
                 sslContext.init(null, new TrustManager[]{trustManager()}, null);
+                sslContext.getSocketFactory();
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
         }
 
-        try {
-            sslContext.getSocketFactory();
-        } catch (Exception e) {
-            try {
-                sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception ex) {
-                e.printStackTrace();
-                return null;
-            }
-        }
+//        try {
+//            sslContext.getSocketFactory();
+//        } catch (Exception e) {
+//            try {
+//                sslContext = SSLContext.getInstance("TLS");
+//                sslContext.init(null, new TrustManager[]{trustManager()}, null);
+//            } catch (Exception ex) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+
         return sslContext;
+    }
+
+
+    // TODO tweak until we rework the self signed.
+    public SSLSocketFactory getSslSocketFactory() {
+        try {
+            if (null == sslSocketFactory) {
+                SSLContext sc = SSLContext.getInstance("SSL");
+                sc.init(null, SKIP_VERIFY_TRUST_MANAGER, new java.security.SecureRandom());
+                sslSocketFactory = sc.getSocketFactory();
+            }
+            return sslSocketFactory;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Unexpected error while initializing SSL context", e);
+        } catch (KeyManagementException e) {
+            throw new RuntimeException("Unexpected error while initializing SSL context", e);
+        }
     }
 
 
