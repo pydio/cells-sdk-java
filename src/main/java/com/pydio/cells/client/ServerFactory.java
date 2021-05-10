@@ -34,6 +34,16 @@ public class ServerFactory implements IServerFactory {
 
     @Override
     public String checkServer(ServerURL serverURL) throws SDKException {
+
+        // Insure SSL is valid
+        try {
+            serverURL.ping();
+        } catch (ConnectException ce) {
+            throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
+        } catch (IOException ioe){
+            throw new SDKException(ErrorCodes.ssl_error, "Unvalid certificate found at "+serverURL.getId()+ ", Skip verify: "+serverURL.skipVerify(), ioe);
+        }
+
         // We do not have any other choice than to try the various well-known endpoints
         try {
             ServerURL currURL = serverURL.withPath(CellsServer.BOOTCONF_PATH);
@@ -101,10 +111,20 @@ public class ServerFactory implements IServerFactory {
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
-        sessions.put(accountID(credentials.getLogin(), serverURL), session);
 
+        //  Rather do this in the client layer
+        // return storeAccountInfo(accountID(credentials.getLogin(), serverURL), session);
         return session;
     }
+
+//     /**
+//      * Stores the session in a local HashMap, should be extended with client specific implementation,
+//      * to typically use a persistent storage
+//      */
+//     public ISession storeAccountInfo(String id, ISession session) throws SDKException {
+//         sessions.put(id, session);
+//         return session;
+//     }
 
     public void unregisterAccount(String accountID) throws SDKException {
         // TODO rather introduce another layer to ease use of a persistent store.
@@ -115,7 +135,6 @@ public class ServerFactory implements IServerFactory {
     public void unregisterAccount(String login, ServerURL serverURL) throws SDKException {
         unregisterAccount(accountID(login, serverURL));
     }
-
 
     @Override
     public ISession getSession(String login, ServerURL serverURL) throws SDKException {
@@ -148,7 +167,7 @@ public class ServerFactory implements IServerFactory {
         return servers;
     }
 
-    protected Server getServer(String id) {
+    public Server getServer(String id) {
         return servers.get(id);
     }
 

@@ -35,7 +35,7 @@ public class TestUtils {
     public static ISession getSession(ServerFactory factory, TestConfiguration.ServerConfig conf) throws SDKException {
         ServerURL sURL = null;
         try {
-            sURL = ServerURLImpl.fromAddress(conf.serverURL);
+            sURL = ServerURLImpl.fromAddress(conf.serverURL, conf.skipVerify);
         } catch (MalformedURLException mue) {
             throw new SDKException(ErrorCodes.configuration_error, conf.serverURL + " is not a correct URL", mue);
         }
