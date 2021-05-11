@@ -1,4 +1,4 @@
-package com.pydio.sdk.integration;
+package com.pydio.cells.integration;
 
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.auth.jwt.TokenMemoryStore;

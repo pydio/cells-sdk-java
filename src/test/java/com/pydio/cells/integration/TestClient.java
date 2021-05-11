@@ -1,4 +1,4 @@
-package com.pydio.sdk.integration;
+package com.pydio.cells.integration;
 
 public class TestClient {
 }

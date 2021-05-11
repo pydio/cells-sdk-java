@@ -4,10 +4,6 @@ import com.pydio.cells.api.Change;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ISession;
-import com.pydio.cells.api.ui.Message;
-import com.pydio.cells.api.ui.Node;
-import com.pydio.cells.api.ui.PageOptions;
-import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Stats;
@@ -17,6 +13,10 @@ import com.pydio.cells.api.callbacks.RegistryItemHandler;
 import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.api.ui.FileNode;
+import com.pydio.cells.api.ui.Message;
+import com.pydio.cells.api.ui.Node;
+import com.pydio.cells.api.ui.PageOptions;
+import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.client.model.NodeDiff;
@@ -97,21 +97,21 @@ public class P8Client implements Client, SdkNames {
         }
     }
 
-     public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setToken(session);
-         try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-             if (rsp.code() != ErrorCodes.ok) {
-                 throw new SDKException(rsp.code());
-             }
-             final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-             if (code != ErrorCodes.ok) {
-                 rsp.close();
-                 throw new SDKException(code);
-             }
-         } catch (IOException ioe) {
-             throw new SDKException(ioe);
-         }
-     }
+    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setToken(session);
+        try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+            if (code != ErrorCodes.ok) {
+                rsp.close();
+                throw new SDKException(code);
+            }
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
+        }
+    }
 
     @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
@@ -234,8 +234,8 @@ public class P8Client implements Client, SdkNames {
 //        if (session.isOffline()) {
 //            workspaceNodes.addAll(session.getCachedWorkspaces().values());
 //        } else {
-            workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
- //       }
+        workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
+        //       }
 
         // List<WorkspaceNode> workspaceNodes = new ArrayList<>(serverNode.getWorkspaces().values());
         // if (workspaceNodes.isEmpty()) {
@@ -630,7 +630,20 @@ public class P8Client implements Client, SdkNames {
             } */
 
             try {
+
+//                String contentStr = rsp.asString();
+//                if (contentStr.startsWith("<?xml")){
+//                    Document xml = rsp.fromStringToXMLDocument(contentStr);
+//                    if (rsp.code() != ErrorCodes.ok) {
+//                        throw new SDKException(rsp.code());
+//                    }
+//                    Message m = Message.create(xml);
+//                    throw new SDKException(rsp.code(), new IOException("Unexpected content returned for P8 stats at "+session.getId()));
+//                }
+//                JSONObject json = new JSONObject(contentStr);
+
                 JSONObject json = new JSONObject(rsp.asString());
+
                 if (!json.has("hash") && !json.has("mtime") && !json.has("size")) {
                     return null;
                 }

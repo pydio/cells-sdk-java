@@ -1,4 +1,4 @@
-package com.pydio.sdk.integration;
+package com.pydio.cells.integration;
 
 import java.io.File;
 import java.io.FilenameFilter;

@@ -1,4 +1,4 @@
-package com.pydio.sdk.examples;
+package com.pydio.cells.examples;
 
 import org.junit.After;
 import org.junit.Before;

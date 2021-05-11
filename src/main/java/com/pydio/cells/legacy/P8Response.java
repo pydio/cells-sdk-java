@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringBufferInputStream;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
@@ -154,7 +155,9 @@ public class P8Response implements Closeable {
             e.printStackTrace();
         } catch (SAXException e) {
             String m = e.getMessage();
-            if ("auth".equalsIgnoreCase(m)) {
+            if (m.startsWith("not-found")) {
+                this.code = ErrorCodes.not_found;
+            } else if ("auth".equalsIgnoreCase(m)) {
                 this.code = ErrorCodes.authentication_required;
             } else if ("token".equalsIgnoreCase(m)) {
                 this.code = ErrorCodes.authentication_with_captcha_required;
@@ -186,6 +189,19 @@ public class P8Response implements Closeable {
             return null;
         }
     }
+
+    // Temporary hack to solve XML error responses with P8
+    public Document fromStringToXMLDocument(String str) {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = dbf.newDocumentBuilder();
+            return builder.parse(new InputSource(new StringReader(str)));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public JSONObject toJSON() throws ParseException, IOException {
         return new JSONObject(asString());
@@ -260,6 +276,8 @@ public class P8Response implements Closeable {
     }
 
     /* This is used to parse the beginning of the returned InputStream and check for API errors */
+    // TODO insure all errors are correctly found and handled
+    // Typically, we had to manually repare error messages for not found workspace.
     private class ErrorMessageHandler extends DefaultHandler {
 
         boolean tag_auth = false;
@@ -282,6 +300,10 @@ public class P8Response implements Closeable {
                     // throw new SAXException("Found error message ["+ attributes.getValue("message")+ "], breaking.");.");
                 }
                 return;
+            }
+
+            if ("message".equals(qName) && (attributes.getLength() >0 && "ERROR".equals(attributes.getValue(0)))){
+                throw new SAXException("not-found");
             }
 
             if (tag_msg) {

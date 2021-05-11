@@ -1,8 +1,9 @@
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+// apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = 1.8
+java.targetCompatibility = JavaVersion.VERSION_1_8
 
 def vendorName = "Abstrium SAS"
 def sdkJavaRepoURL = 'https://github.com/pydio/cells-sdk-java.git'
@@ -96,9 +97,9 @@ dependencies {
     implementation 'org.threeten:threetenbp:1.4.5'
 
     // updating this cause JWT decoding failure
-    // implementation 'commons-codec:commons-codec:1.10'
-    implementation 'commons-codec:commons-codec:20041127.091804'
+    implementation 'commons-codec:commons-codec:1.10'
+    // implementation 'commons-codec:commons-codec:20041127.091804'
    
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 }

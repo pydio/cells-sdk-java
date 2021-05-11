@@ -1,4 +1,4 @@
-package com.pydio.sdk.integration;
+package com.pydio.cells.integration;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
