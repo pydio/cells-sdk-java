@@ -35,15 +35,15 @@ import static com.pydio.cells.client.utils.StateID.utf8Encode;
 public class P8Session implements ILegacySession, SdkNames {
 
     private TokenService tokens;
-    // private final Map<String, CookieManager> cookieManagers = new ConcurrentHashMap<>();
 
     private final Server server;
     private final String username;
+    private Credentials credentials;
 
     private CookieManager cookieManager;
-
-    private Credentials credentials;
     private int loginFailure;
+
+    private String tmpToken1, tmpToken2;
 
     private Boolean useCaptcha;
 
@@ -87,15 +87,15 @@ public class P8Session implements ILegacySession, SdkNames {
         // TODO more init
     }
 
-
-    public String getId() {
-        return new StateID(getUser(), getServer().getServerURL().getId()).getId();
-    }
-
+    @Deprecated
     public void setCookieManager(CookieManager man) {
         cookieManager = man;
     }
 
+    @Override
+    public String getId() {
+        return new StateID(getUser(), getServer().getServerURL().getId()).getId();
+    }
 
     @Override
     public Server getServer() {
@@ -128,6 +128,8 @@ public class P8Session implements ILegacySession, SdkNames {
         if (null == secureToken || "".equals(secureToken)) {
             login();
             secureToken = getSecureToken();
+            tmpToken2 = secureToken;
+            System.out.println("Comparing first and second token equals ? "+tmpToken2.equals(tmpToken1));
         }
         return secureToken;
     }
@@ -154,12 +156,10 @@ public class P8Session implements ILegacySession, SdkNames {
         return false;
     }
 
-
     @Override
     public HttpURLConnection openAnonConnection(String path) throws IOException {
         return server.newURL(path).openConnection();
     }
-
 
     @Override
     public HttpURLConnection openConnection(String path) throws IOException, SDKException {
@@ -314,12 +314,9 @@ public class P8Session implements ILegacySession, SdkNames {
         // FIXME not very clean.
         // In P8 token never expires, so we only need to login once.
         Token existingToken = tokens.get(this, getId());
-
         if (existingToken != null) {
             return;
         }
-//        if (existingToken != null && !"".equals(existingToken))
-//            return;
 
         if (credentials == null) {
             throw new SDKException(ErrorCodes.authentication_required);
@@ -342,6 +339,7 @@ public class P8Session implements ILegacySession, SdkNames {
                     if (result.equals("1")) {
                         String secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(P8Names.secureToken).getNodeValue();
                         saveSecureToken(secureToken);
+                        tmpToken1 = secureToken;
                         loginFailure = 0;
                     } else {
                         loginFailure++;
@@ -652,13 +650,12 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     private String getSecureToken() throws SDKException {
-        String id = getId();
-        Token t = tokens.get(this, id);
+        Token t = tokens.get(this, getId());
 
         if (t == null) {
-            System.out.println("No token found for " + id + ", about to background login.");
+           System.out.println("No token found for " + getId() + ", about to background login.");
             login();
-            t = tokens.get(this, id);
+            t = tokens.get(this, getId());
         }
 
         return t.value;

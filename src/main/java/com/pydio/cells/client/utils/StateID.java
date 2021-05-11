@@ -25,36 +25,7 @@ public class StateID {
         this.path = null;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getServerUrl() {
-        return serverUrl;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getWorkspace() {
-        if (path == null || "".equals(path) || "/".equals(path)){
-            return null;
-        }
-        return path.substring(1).split("/")[0];
-    }
-
-    public String getId(){
-        StringBuilder builder = new StringBuilder();
-        builder.append(utf8Encode(username)).append("@");
-        StringBuilder urlBuilder = new StringBuilder(serverUrl);
-        if (path != null && path.length() > 0 && !"/".equals(path)){
-            urlBuilder.append(path);
-        }
-        builder.append(utf8Encode(urlBuilder.toString()));
-        return builder.toString();
-    }
-
+    /** Simply create a StateID object from its *encoded* string representation */
     public static StateID fromId(String stateId) {
 
         if (stateId == null || stateId.length() == 0) {
@@ -81,6 +52,50 @@ public class StateID {
         }
     }
 
+    /** Retrieve the *encoded* representation of this StateID for serialization */
+    public String getId(){
+        StringBuilder builder = new StringBuilder();
+        builder.append(utf8Encode(username)).append("@");
+        StringBuilder urlBuilder = new StringBuilder(serverUrl);
+        if (path != null && path.length() > 0 && !"/".equals(path)){
+            urlBuilder.append(path);
+        }
+        builder.append(utf8Encode(urlBuilder.toString()));
+        return builder.toString();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getWorkspace() {
+        if (path == null || "".equals(path) || "/".equals(path)){
+            return null;
+        }
+        return path.substring(1).split("/")[0];
+    }
+
+    /** return the trailing part of the path without the workspace */
+    public String getFile() {
+        if (path == null || "".equals(path) || "/".equals(path)){
+            return null;
+        }
+        // TODO: double check and test
+        String prefix = "/" + getWorkspace();
+        if (path.length() > prefix.length()) {
+            return path.substring(prefix.length());
+        }
+        return null;
+    }
+
     // Simple shortcut to encode URLs
     public static String utf8Encode(String value) {
         // TODO this method throws an exception in android context but not in the sdk-java, why ?
@@ -105,7 +120,7 @@ public class StateID {
 
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append(username).append(" @ ");
+        builder.append(username).append("@");
         builder.append(serverUrl);
         if (path != null && path.length() > 0 && !"/".equals(path)){
             builder.append(path);
