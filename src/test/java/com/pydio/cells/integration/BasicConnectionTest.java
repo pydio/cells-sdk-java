@@ -10,6 +10,7 @@ import com.pydio.cells.client.ServerURLImpl;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.client.utils.StateID;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,10 +62,10 @@ public class BasicConnectionTest {
         config.getDefinedServers().forEach(this::basicCRUD);
 
         // For the time being only P8 upload is implemented in plain Java
-        TestConfiguration.ServerConfig p8Conf = config.getServer("p8");
-        if (p8Conf != null) {
-            basicCRUD("p8", p8Conf);
-        }
+//        TestConfiguration.ServerConfig p8Conf = config.getServer("p8");
+//        if (p8Conf != null) {
+//            basicCRUD("p8", p8Conf);
+//        }
     }
 
     private void testWorkspaces(String id, TestConfiguration.ServerConfig conf) {
@@ -72,12 +73,10 @@ public class BasicConnectionTest {
 
             ISession session = TestUtils.getSession(factory, conf);
 
-            // All workspaces
-            session.getClient().workspaceList(new handler());
-//            session.getClient().workspaceList
-//                    ((node) -> System.out.println(node.getLabel()));
+            System.out.println("... Listing workspaces for " + printableId(session.getId()));
+            session.getClient().workspaceList(new DummyHandler());
 
-            // Default workspace
+            System.out.println("... Listing object for workspace " + conf.defaultWS);
             session.getClient().ls(conf.defaultWS, "/",
                     null, (node) -> System.out.println(node.getLabel()));
         } catch (Exception e) {
@@ -98,7 +97,7 @@ public class BasicConnectionTest {
                 return;
             }
 
-            System.out.println("... Testing CRUD for " + session.getId());
+            System.out.println("... Testing CRUD for " + printableId(session.getId()));
 
             String baseDir = "/";
             final String name = "hello-" + testRunID + ".txt";
@@ -170,16 +169,6 @@ public class BasicConnectionTest {
         // the time being upload fails silently.
     }
 
-
-    private class handler implements NodeHandler {
-
-        @Override
-        public void onNode(Node node) {
-            System.out.println(node.getLabel());
-            System.out.println(node.getPath());
-        }
-    }
-
     @Test
     public void testSkipVerify() {
         try {
@@ -213,5 +202,21 @@ public class BasicConnectionTest {
         }
     }
 
+
+    private class DummyHandler implements NodeHandler {
+
+        private int i = 0;
+
+        @Override
+        public void onNode(Node node) {
+            System.out.println("#" + (++i) + " " + node.getLabel());
+            // System.out.println(node.getPath());
+        }
+    }
+
+
+    private String printableId(String techId) {
+        return StateID.fromId(techId).toString();
+    }
 
 }

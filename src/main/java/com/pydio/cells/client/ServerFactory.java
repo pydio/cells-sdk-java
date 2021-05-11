@@ -10,6 +10,7 @@ import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.security.PasswordCredentials;
+import com.pydio.cells.client.utils.StateID;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Session;
 
@@ -188,7 +189,7 @@ public class ServerFactory implements IServerFactory {
 
     // Static helpers to ease implementation
     public static String accountID(String username, String urlStr) {
-        return String.format("%s@%s", username, urlStr);
+        return new StateID(username, urlStr).getId();
     }
 
     public static String accountID(String username, ServerURL serverURL) {

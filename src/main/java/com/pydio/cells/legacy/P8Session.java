@@ -10,6 +10,7 @@ import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.utils.StateID;
 import com.pydio.cells.legacy.consts.ActionNames;
 import com.pydio.cells.legacy.consts.P8Names;
 
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.pydio.cells.client.utils.IoHelpers.utf8Encode;
+import static com.pydio.cells.client.utils.StateID.utf8Encode;
 
 public class P8Session implements ILegacySession, SdkNames {
 
@@ -53,6 +54,10 @@ public class P8Session implements ILegacySession, SdkNames {
 
     public P8Session(Server server) {
         this(server, new CookieManager());
+    }
+
+    public String getId() {
+        return new StateID(getUser(), getServer().getServerURL().getId()).getId();
     }
 
     public void setCookieManager(CookieManager man) {

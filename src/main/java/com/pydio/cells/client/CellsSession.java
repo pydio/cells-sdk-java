@@ -13,6 +13,7 @@ import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.client.utils.StateID;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
@@ -57,6 +58,10 @@ public class CellsSession implements ICellsSession, SdkNames {
         this.tokens = tokens;
         server.init();
         // TODO more init
+    }
+
+    public String getId() {
+        return new StateID(getUser(), getServer().getServerURL().getId()).getId();
     }
 
     @Override

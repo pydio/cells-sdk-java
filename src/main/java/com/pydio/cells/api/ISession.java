@@ -1,5 +1,7 @@
 package com.pydio.cells.api;
 
+import com.pydio.cells.client.utils.StateID;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -8,9 +10,7 @@ import java.net.HttpURLConnection;
 
 public interface ISession {
 
-    default String getId() {
-        return getUser() + "@" + getServer().getServerURL().getId();
-    }
+    String getId();
 
     Server getServer();
 
