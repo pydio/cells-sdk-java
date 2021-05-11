@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
-import com.pydio.cells.api.Stats;
+import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.TransferProgressListener;
@@ -53,6 +53,7 @@ import com.pydio.cells.openapi.model.TreeQuery;
 import com.pydio.cells.openapi.model.TreeSearchRequest;
 import com.pydio.cells.openapi.model.TreeWorkspaceRelativePath;
 import com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp;
+import com.pydio.cells.transport.CellsTransport;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -78,13 +79,13 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class CellsClient implements Client, SdkNames {
 
-    private final CellsSession session;
+    private final CellsTransport session;
 
     private Credentials credentials;
     private Boolean skipOAuth = false;
 
-    public CellsClient(ISession session) {
-        this.session = (CellsSession) session;
+    public CellsClient(Transport session) {
+        this.session = (CellsTransport) session;
     }
 
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
@@ -808,7 +809,7 @@ public class CellsClient implements Client, SdkNames {
     public interface Factory {
     }
 
-    public CellsClient get(ISession session) {
+    public CellsClient get(Transport session) {
         return new CellsClient(session);
     }
 

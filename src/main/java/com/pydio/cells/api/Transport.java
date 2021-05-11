@@ -8,15 +8,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
-public interface ISession {
+public interface Transport {
 
     String getId();
 
+    String getUser();
+
     Server getServer();
 
-    Client getClient();
-
     String getUserAgent();
+
+    @Deprecated
+    Client getClient();
 
     /** This also tries to login the server with the passed credentials. */
     void setCredentials(Credentials c) throws SDKException;
@@ -25,11 +28,15 @@ public interface ISession {
 
     void logout() throws SDKException;
 
-    String getUser();
+    boolean isOffline();
 
-    InputStream getUserData(String binary) throws SDKException;
+    HttpURLConnection openConnection(String path) throws SDKException, IOException;
+
+    HttpURLConnection openAnonConnection(String path) throws SDKException, IOException;
 
     JSONObject userInfo() throws SDKException;
+
+    InputStream getUserData(String binary) throws SDKException;
 
     // InputStream getWorkspaceRegistry(String ws) throws SDKException;
 //
@@ -40,11 +47,5 @@ public interface ISession {
     InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException;
 
     InputStream getServerRegistryAsAuthenticatedUser() throws SDKException;
-
-    boolean isOffline();
-
-    HttpURLConnection openAnonConnection(String path) throws SDKException, IOException;
-
-    HttpURLConnection openConnection(String path) throws SDKException, IOException;
 
 }

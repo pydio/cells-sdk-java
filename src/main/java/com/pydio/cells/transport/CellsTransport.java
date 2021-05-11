@@ -1,14 +1,16 @@
-package com.pydio.cells.client;
+package com.pydio.cells.transport;
 
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.ICellsSession;
+import com.pydio.cells.api.ICellsTransport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
+import com.pydio.cells.client.CellsClient;
+import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
@@ -32,9 +34,9 @@ import java.util.Locale;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import static com.pydio.cells.client.CellsServer.API_PREFIX;
+import static com.pydio.cells.transport.CellsServer.API_PREFIX;
 
-public class CellsSession implements ICellsSession, SdkNames {
+public class CellsTransport implements ICellsTransport, SdkNames {
 
     private final Server server;
 
@@ -49,7 +51,7 @@ public class CellsSession implements ICellsSession, SdkNames {
     private String userAgent;
 
 
-    public CellsSession(Server server, String login) {
+    public CellsTransport(Server server, String login) {
         this.server = server;
         this.login = login;
     }

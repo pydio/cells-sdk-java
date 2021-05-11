@@ -1,4 +1,4 @@
-package com.pydio.cells.api;
+package com.pydio.cells.api.ui;
 
 /**
  * Represents the simplified result of a stat request to the server at a given path,

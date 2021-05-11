@@ -1,4 +1,4 @@
-package com.pydio.cells.client.security;
+package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
 

@@ -3,7 +3,7 @@ package com.pydio.cells.legacy;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.ILegacySession;
+import com.pydio.cells.api.ILegacyTransport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
@@ -32,7 +32,7 @@ import java.util.Map;
 
 import static com.pydio.cells.client.utils.StateID.utf8Encode;
 
-public class P8Session implements ILegacySession, SdkNames {
+public class P8Transport implements ILegacyTransport, SdkNames {
 
     private TokenService tokens;
 
@@ -47,18 +47,18 @@ public class P8Session implements ILegacySession, SdkNames {
 
     private Boolean useCaptcha;
 
-    public P8Session(Server server, String username, CookieManager manager) {
+    public P8Transport(Server server, String username, CookieManager manager) {
         this.server = server;
         this.username = username;
         cookieManager = manager;
         loginFailure = 0;
     }
 
-    public P8Session(Server server, String username) {
+    public P8Transport(Server server, String username) {
         this(server, username, new CookieManager());
     }
 
-    public P8Session(Server server, Credentials c) throws SDKException {
+    public P8Transport(Server server, Credentials c) throws SDKException {
         this(server, c.getLogin(), new CookieManager());
         if (c instanceof Credentials) {
             this.credentials = c;
@@ -408,10 +408,17 @@ public class P8Session implements ILegacySession, SdkNames {
 
     /* HTTP Methods */
 
+    private void withToken(P8Request request, StringBuilder builder){
+        if (request.getSecureToken() != null){
+            andAppendParam(builder, "secure_token", request.getSecureToken());
+        }
+    }
+
     private P8Response doGet(P8Request request) throws IOException {
 
         StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
         appendParam(builder, P8Names.getAction, request.getAction());
+        withToken(request, builder);
 
         ServerURL currURL = null;
         try {
@@ -438,6 +445,7 @@ public class P8Session implements ILegacySession, SdkNames {
         // Prepare query
         StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
         appendParam(builder, P8Names.getAction, request.getAction());
+        withToken(request, builder);
 
         ServerURL currURL = null;
         try {

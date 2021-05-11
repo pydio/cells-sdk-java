@@ -3,16 +3,16 @@ package com.pydio.cells.integration;
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.client.ServerFactory;
-import com.pydio.cells.client.ServerURLImpl;
+import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.client.model.TreeNodeInfo;
-import com.pydio.cells.client.security.P8Credentials;
+import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.client.security.PasswordCredentials;
 import com.pydio.cells.sync.tree.StateManager;
 
@@ -32,7 +32,7 @@ public class TestUtils {
     private final static String SEED_CHARS = "abcdef1234567890";
     private static String OS = System.getProperty("os.name").toLowerCase();
 
-    public static ISession getSession(ServerFactory factory, TestConfiguration.ServerConfig conf) throws SDKException {
+    public static Transport getSession(ServerFactory factory, TestConfiguration.ServerConfig conf) throws SDKException {
         ServerURL sURL = null;
         try {
             sURL = ServerURLImpl.fromAddress(conf.serverURL, conf.skipVerify);

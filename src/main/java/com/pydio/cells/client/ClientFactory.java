@@ -1,7 +1,7 @@
 package com.pydio.cells.client;
 
 import com.pydio.cells.api.Client;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 
 @Deprecated
 public class ClientFactory {
@@ -17,7 +17,7 @@ public class ClientFactory {
         p8DefaultFactory = f;
     }
 
-    public static Client get(ISession session) {
+    public static Client get(Transport session) {
         if (session.getServer().isLegacy()){
             return p8DefaultFactory.get(session);
         }

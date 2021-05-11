@@ -50,7 +50,7 @@ public class GetChangesTest {
 
         try {
             ServerURL sURL = ServerURLImpl.fromAddress(conf.serverURL);
-            ISession session = config.openSession(tokens, sURL, conf.login, conf.pwd);
+            Transport session = config.openSession(tokens, sURL, conf.login, conf.pwd);
 
             String ws = conf.defaultWS;
             final String basePath = TestUtils.getUniquePath();

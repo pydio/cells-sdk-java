@@ -6,8 +6,8 @@ public interface IServerFactory {
 
     String checkServer(ServerURL serverURL) throws SDKException;
 
-    ISession registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException;
+    Transport registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException;
 
-    ISession getSession(String login, ServerURL serverURL) throws SDKException;
+    Transport getSession(String login, ServerURL serverURL) throws SDKException;
 
 }

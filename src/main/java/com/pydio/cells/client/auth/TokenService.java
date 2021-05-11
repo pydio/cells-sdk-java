@@ -2,9 +2,9 @@ package com.pydio.cells.client.auth;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.client.CellsSession;
+import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
@@ -25,7 +25,7 @@ public class TokenService {
         this.store = store;
     }
 
-    public Token get(ISession transport, String key) throws SDKException {
+    public Token get(Transport transport, String key) throws SDKException {
 
         Token t = store.get(key);
         if (t == null) {
@@ -49,8 +49,8 @@ public class TokenService {
     }
 
 
-    // TODO rather move this in the ISession class
-    private Token refresh(ISession transport, Token t) throws SDKException {
+    // TODO rather move this in the Transport class
+    private Token refresh(Transport transport, Token t) throws SDKException {
         Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
 
         throw new RuntimeException("Implement this");
@@ -105,7 +105,7 @@ public class TokenService {
 //        return t;
     }
 
-//    public Token loginPasswordGetToken(CellsSession session, Credentials credentials) throws SDKException {
+//    public Token loginPasswordGetToken(CellsTransport session, Credentials credentials) throws SDKException {
 //        String password = credentials.getPassword();
 //        if (password == null) {
 //            throw new SDKException(ErrorCodes.no_token_available, new IOException("no password provided"));
@@ -152,7 +152,7 @@ public class TokenService {
 //    }
 
 
-    public Token legacyLogin(CellsSession session, Credentials credentials) throws SDKException {
+    public Token legacyLogin(CellsTransport session, Credentials credentials) throws SDKException {
 
         Map<String, String> authInfo = new HashMap<>();
         authInfo.put("login", credentials.getLogin());

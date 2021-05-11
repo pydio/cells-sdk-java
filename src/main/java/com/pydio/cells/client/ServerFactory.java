@@ -3,7 +3,7 @@ package com.pydio.cells.client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.IServerFactory;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
@@ -12,7 +12,9 @@ import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.security.PasswordCredentials;
 import com.pydio.cells.client.utils.StateID;
 import com.pydio.cells.legacy.P8Server;
-import com.pydio.cells.legacy.P8Session;
+import com.pydio.cells.legacy.P8Transport;
+import com.pydio.cells.transport.CellsServer;
+import com.pydio.cells.transport.CellsTransport;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -26,7 +28,7 @@ public class ServerFactory implements IServerFactory {
 
     private final TokenService tokenService;
     private Map<String, Server> servers = new HashMap<>();
-    private Map<String, ISession> sessions = new HashMap<>();
+    private Map<String, Transport> sessions = new HashMap<>();
 
     public ServerFactory(TokenService tokenService) {
         this.tokenService = tokenService;
@@ -88,30 +90,30 @@ public class ServerFactory implements IServerFactory {
 
 
     @Override
-    public ISession registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
+    public Transport registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
 
         Server server = getServer(serverURL.getId());
         if (server == null) {
             server = register(serverURL);
         }
 
-        ISession session = null;
+        Transport session = null;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
             if (credentials instanceof PasswordCredentials) {
                 PasswordCredentials pc = ((PasswordCredentials) credentials);
-                session = new CellsSession(server, pc.getLogin());
+                session = new CellsTransport(server, pc.getLogin());
 
-                tokenService.legacyLogin((CellsSession) session, credentials);
-                //tokenService.loginPasswordGetToken((CellsSession) session, credentials);
+                tokenService.legacyLogin((CellsTransport) session, credentials);
+                //tokenService.loginPasswordGetToken((CellsTransport) session, credentials);
 
-                ((CellsSession) session).restore(tokenService);
+                ((CellsTransport) session).restore(tokenService);
             } else
                 throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());
 
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Session(server, credentials);
-            ((P8Session) session).restore(tokenService);
-            // ((P8Session) session).setCredentials(credentials);
+            session = new P8Transport(server, credentials);
+            ((P8Transport) session).restore(tokenService);
+            // ((P8Transport) session).setCredentials(credentials);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
@@ -125,7 +127,7 @@ public class ServerFactory implements IServerFactory {
 //      * Stores the session in a local HashMap, should be extended with client specific implementation,
 //      * to typically use a persistent storage
 //      */
-//     public ISession storeAccountInfo(String id, ISession session) throws SDKException {
+//     public Transport storeAccountInfo(String id, Transport session) throws SDKException {
 //         sessions.put(id, session);
 //         return session;
 //     }
@@ -141,7 +143,7 @@ public class ServerFactory implements IServerFactory {
     }
 
     @Override
-    public ISession getSession(String login, ServerURL serverURL) throws SDKException {
+    public Transport getSession(String login, ServerURL serverURL) throws SDKException {
 
         if (sessions.containsKey(accountID(login, serverURL))) {
             return sessions.get(accountID(login, serverURL));
@@ -152,13 +154,13 @@ public class ServerFactory implements IServerFactory {
             server = register(serverURL);
         }
 
-        ISession session = null;
+        Transport session = null;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
-            session = new CellsSession(server, login);
-            ((CellsSession) session).restore(tokenService);
+            session = new CellsTransport(server, login);
+            ((CellsTransport) session).restore(tokenService);
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Session(server, login);
-            // ((CellsSession)session).restore(tokenService);
+            session = new P8Transport(server, login);
+            // ((CellsTransport)session).restore(tokenService);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 

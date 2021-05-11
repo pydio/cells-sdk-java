@@ -1,6 +1,7 @@
 package com.pydio.cells.client;
 
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.transport.ServerURLImpl;
 
 import org.junit.After;
 import org.junit.Assert;

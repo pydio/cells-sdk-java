@@ -1,8 +1,8 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
-import com.pydio.cells.api.ILegacySession;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.ILegacyTransport;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.legacy.consts.ActionNames;
@@ -387,8 +387,8 @@ public class P8RequestBuilder {
         return this;
     }
 
-    public P8RequestBuilder setToken(ISession session) throws SDKException {
-        String token = ((ILegacySession) session).getToken();
+    public P8RequestBuilder setToken(Transport session) throws SDKException {
+        String token = ((ILegacyTransport) session).getToken();
         if (token != null) {
             return setSecureToken(token);
         }

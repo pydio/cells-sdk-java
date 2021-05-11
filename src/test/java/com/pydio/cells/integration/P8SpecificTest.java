@@ -6,12 +6,12 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ServerFactory;
-import com.pydio.cells.client.ServerURLImpl;
+import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.security.P8Credentials;
+import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.legacy.P8Server;
-import com.pydio.cells.legacy.P8Session;
+import com.pydio.cells.legacy.P8Transport;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -110,7 +110,7 @@ public class P8SpecificTest {
 
             Assert.assertTrue(needCaptcha);
 
-            P8Session anonSession = new P8Session(new P8Server(p8URL), "anon");
+            P8Transport anonSession = new P8Transport(new P8Server(p8URL), "anon");
             InputStream in = anonSession.getCaptcha();
 
 

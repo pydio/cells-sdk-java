@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 
-public interface ILegacySession extends ISession {
+public interface ILegacyTransport extends Transport {
 
     InputStream getCaptcha() throws SDKException;
 

@@ -1,15 +1,14 @@
 package com.pydio.cells.integration;
 
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.ServerFactory;
-import com.pydio.cells.client.ServerURLImpl;
+import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.client.utils.StateID;
 
@@ -72,7 +71,7 @@ public class BasicConnectionTest {
     private void testWorkspaces(String id, TestConfiguration.ServerConfig conf) {
         try {
 
-            ISession session = TestUtils.getSession(factory, conf);
+            Transport session = TestUtils.getSession(factory, conf);
 
             System.out.println("... Listing workspaces for " + printableId(session.getId()));
             session.getClient().workspaceList(new DummyHandler());
@@ -87,7 +86,7 @@ public class BasicConnectionTest {
     }
 
     public void basicCRUD(String id, TestConfiguration.ServerConfig conf) {
-        ISession session = null;
+        Transport session = null;
         try {
             session = TestUtils.getSession(factory, conf);
 

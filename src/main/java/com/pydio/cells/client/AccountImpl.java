@@ -1,9 +1,9 @@
 package com.pydio.cells.client;
 
-import com.pydio.cells.api.Account;
+import com.pydio.cells.api.IAccount;
 import com.pydio.cells.api.ServerURL;
 
-public class AccountImpl implements Account {
+public class AccountImpl implements IAccount {
 
     private String login;
     private ServerURL serverURL;
@@ -15,6 +15,11 @@ public class AccountImpl implements Account {
 
     @Override
     public String getLogin() {
+        return null;
+    }
+
+    @Override
+    public String getId() {
         return null;
     }
 }

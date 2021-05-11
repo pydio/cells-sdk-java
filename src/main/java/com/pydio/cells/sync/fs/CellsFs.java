@@ -1,7 +1,7 @@
 package com.pydio.cells.sync.fs;
 
 import com.pydio.cells.api.Change;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.client.model.TreeNodeInfo;
@@ -24,7 +24,7 @@ import java.util.TreeMap;
 public class CellsFs implements Fs, ContentLoader {
 
     // private CellsClient cells;
-    private ISession session;
+    private Transport session;
     private String workspace;
     private String id;
     private StateManager stateManager;
@@ -33,7 +33,7 @@ public class CellsFs implements Fs, ContentLoader {
     private final static int ADD = 2;
     private final static int DELETE = 3;
 
-    public CellsFs(String id, ISession session, String workspace, StateManager manager) {
+    public CellsFs(String id, Transport session, String workspace, StateManager manager) {
         this.id = id;
         this.session = session;
         this.workspace = workspace;

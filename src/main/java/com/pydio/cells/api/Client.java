@@ -6,6 +6,7 @@ import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
+import com.pydio.cells.api.ui.Stats;
 
 import org.json.JSONObject;
 

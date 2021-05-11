@@ -3,10 +3,10 @@ package com.pydio.cells.legacy;
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.ISession;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
-import com.pydio.cells.api.Stats;
+import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
@@ -44,10 +44,10 @@ import java.util.Properties;
 
 public class P8Client implements Client, SdkNames {
 
-    private final P8Session session;
+    private final P8Transport session;
 
-    public P8Client(ISession session) {
-        this.session = (P8Session) session;
+    public P8Client(Transport session) {
+        this.session = (P8Transport) session;
     }
 
     private P8Request refreshSecureToken(P8Request req) {
@@ -619,8 +619,9 @@ public class P8Client implements Client, SdkNames {
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
         // loadSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.stats(ws, file, withHash).setToken(session);
-        try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+
+        P8Request request = P8RequestBuilder.stats(ws, file, withHash).setToken(session).getRequest();
+        try (P8Response rsp = session.execute(request, this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }

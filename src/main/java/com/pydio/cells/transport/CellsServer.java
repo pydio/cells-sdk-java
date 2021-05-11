@@ -1,4 +1,4 @@
-package com.pydio.cells.client;
+package com.pydio.cells.transport;
 
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
