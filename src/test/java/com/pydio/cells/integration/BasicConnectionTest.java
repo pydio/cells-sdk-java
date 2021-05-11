@@ -7,6 +7,7 @@ import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.ServerURLImpl;
+import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import com.pydio.cells.client.utils.Log;
@@ -44,7 +45,7 @@ public class BasicConnectionTest {
     public void setup() {
 
         testRunID = TestUtils.randomString(4);
-        TokenService tokens = new TokenService(new TokenMemoryStore());
+        TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new ServerFactory(tokens);
 
         config = new TestConfiguration();

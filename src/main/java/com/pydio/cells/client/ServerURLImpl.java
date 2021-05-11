@@ -58,6 +58,7 @@ public class ServerURLImpl implements ServerURL {
 
     public static ServerURL fromAddress(String urlString, boolean skipVerify) throws MalformedURLException {
         // URL url = URI.create(urlString).toURL();
+        urlString = urlString.trim().toLowerCase();
         URL url = new URL(urlString);
         switch (url.getPath()) {
             case "/":

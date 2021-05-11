@@ -4,6 +4,7 @@ import com.pydio.cells.api.Change;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.client.CellsClient;
 import com.pydio.cells.api.ui.ServerNode;
+import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import com.pydio.cells.client.model.TreeNodeInfo;
@@ -43,7 +44,7 @@ public class CellsFsTest {
 
     @Before
     public void setup() {
-        tokens = new TokenService(new TokenMemoryStore());
+        tokens = new TokenService(new SimpleTokenStore());
         config = new TestConfiguration();
 
 

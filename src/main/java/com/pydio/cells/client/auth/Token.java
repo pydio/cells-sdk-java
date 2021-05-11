@@ -11,26 +11,30 @@ public class Token {
 
     public String subject;
     public String value;
-    public long expiry;
+    public long expirationTime;
     public String refreshToken;
     public String idToken;
     public String scope;
     public String tokenType;
 
     private long currentTimeInSeconds() {
-        return System.currentTimeMillis() / 1000 ;
+        return System.currentTimeMillis() / 1000;
     }
 
     public boolean isExpired() {
+        if (expirationTime == -1){
+            return false;
+        }
+        
         if (value == null) {
             return true;
         }
         if ("".equals(value)) {
             return true;
         }
-        long elapsedTimeSinceExpiry = this.currentTimeInSeconds() - this.expiry;
+        long elapsedTimeSinceExpiry = this.currentTimeInSeconds() - this.expirationTime;
         boolean expired = elapsedTimeSinceExpiry > 0;
-        if(expired) {
+        if (expired) {
             Log.i("JWT", String.format("Expired since %s seconds", elapsedTimeSinceExpiry));
         }
         return expired;
@@ -50,7 +54,7 @@ public class Token {
         JSONObject jo = new JSONObject(jwt);
 
         t.value = jo.getString("access_token");
-        t.expiry = jo.getInt("expires_in");
+        t.expirationTime = jo.getInt("expires_in");
         t.idToken = jo.getString("id_token");
         t.refreshToken = jo.getString("refresh_token");
         t.scope = jo.getString("scope");
@@ -58,10 +62,4 @@ public class Token {
         return t;
     }
 
-    public interface Store {
-        void save(Token t);
-        void save(String subject, Token t);
-        Token get(String subject);
-        void delete(String subject);
-    }
 }

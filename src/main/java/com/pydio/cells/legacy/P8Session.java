@@ -9,6 +9,7 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ClientData;
+import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.StateID;
 import com.pydio.cells.legacy.consts.ActionNames;
@@ -28,33 +29,64 @@ import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static com.pydio.cells.client.utils.StateID.utf8Encode;
 
 public class P8Session implements ILegacySession, SdkNames {
 
-    private final Map<String, String> secureTokens = new ConcurrentHashMap<>();
-    // private TokenService tokens;
+    private TokenService tokens;
     // private final Map<String, CookieManager> cookieManagers = new ConcurrentHashMap<>();
 
-    private CookieManager cookieManager;
     private final Server server;
+    private final String username;
+
+    private CookieManager cookieManager;
 
     private Credentials credentials;
     private int loginFailure;
 
     private Boolean useCaptcha;
 
-    public P8Session(Server server, CookieManager manager) {
+    public P8Session(Server server, String username, CookieManager manager) {
         this.server = server;
+        this.username = username;
         cookieManager = manager;
         loginFailure = 0;
     }
 
-    public P8Session(Server server) {
-        this(server, new CookieManager());
+    public P8Session(Server server, String username) {
+        this(server, username, new CookieManager());
     }
+
+    public P8Session(Server server, Credentials c) throws SDKException {
+        this(server, c.getLogin(), new CookieManager());
+        if (c instanceof Credentials) {
+            this.credentials = c;
+        } else
+            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
+    }
+
+    @Deprecated
+    public void setCredentials(Credentials c) {
+        if (c instanceof Credentials) {
+            this.credentials = c;
+        } else
+            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
+    }
+
+    public void restore(TokenService tokens) throws SDKException {
+        this.tokens = tokens;
+        server.init();
+
+        // P8 token never expire so it is much easier and good enough for legacy
+        // to retrieve auth info and login at this point
+        // and then always rely on the objects that are stored in memory.
+        useCaptcha();
+        login();
+
+        // TODO more init
+    }
+
 
     public String getId() {
         return new StateID(getUser(), getServer().getServerURL().getId()).getId();
@@ -64,13 +96,6 @@ public class P8Session implements ILegacySession, SdkNames {
         cookieManager = man;
     }
 
-    public void restore(TokenService tokens) throws SDKException {
-        // TODO rather use this than the local concurrent hashmap.
-        // this.tokens = tokens;
-        server.init();
-
-        // TODO more init
-    }
 
     @Override
     public Server getServer() {
@@ -109,7 +134,7 @@ public class P8Session implements ILegacySession, SdkNames {
 
     @Override
     public String getUser() {
-        return credentials.getLogin();
+        return username;
     }
 
     @Override
@@ -129,21 +154,6 @@ public class P8Session implements ILegacySession, SdkNames {
         return false;
     }
 
-    @Override
-    public void setCredentials(Credentials c) throws SDKException {
-        // TODO re-enable when ready.
-        //if (c instanceof P8Credentials) {
-        if (c instanceof Credentials) {
-
-            this.credentials = c;
-            // P8 token never expire so it is much easier and good enough for legacy
-            // to retrieve auth info and login at this point
-            // and then always rely on the objects that are stored in memory.
-            useCaptcha();
-            login();
-        } else
-            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
-    }
 
     @Override
     public HttpURLConnection openAnonConnection(String path) throws IOException {
@@ -213,39 +223,39 @@ public class P8Session implements ILegacySession, SdkNames {
         }
     }
 
-   //  @Override
-   //  public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-   //      P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-   //      try (P8Response rsp = execute(builder.getRequest())) {
-   //          if (rsp.code() != ErrorCodes.ok) {
-   //              throw new SDKException(rsp.code());
-   //          }
-   //          final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
-   //          if (code != ErrorCodes.ok) {
-   //              throw new SDKException(code);
-   //          }
-   //      } catch (IOException ioe) {
-   //          throw new SDKException(ioe);
-   //      }
+    //  @Override
+    //  public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
+    //      P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
+    //      try (P8Response rsp = execute(builder.getRequest())) {
+    //          if (rsp.code() != ErrorCodes.ok) {
+    //              throw new SDKException(rsp.code());
+    //          }
+    //          final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
+    //          if (code != ErrorCodes.ok) {
+    //              throw new SDKException(code);
+    //          }
+    //      } catch (IOException ioe) {
+    //          throw new SDKException(ioe);
+    //      }
 //
-   //  }
+    //  }
 
-  //   @Override
-  //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-  //       P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
-  //       try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-  //           if (rsp.code() != ErrorCodes.ok) {
-  //               throw new SDKException(rsp.code());
-  //           }
-  //           final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-  //           if (code != ErrorCodes.ok) {
-  //               rsp.close();
-  //               throw new SDKException(code);
-  //           }
-  //       } catch (IOException ioe) {
-  //           throw new SDKException(ioe);
-  //       }
-  //   }
+    //   @Override
+    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+    //       P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
+    //       try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+    //           if (rsp.code() != ErrorCodes.ok) {
+    //               throw new SDKException(rsp.code());
+    //           }
+    //           final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+    //           if (code != ErrorCodes.ok) {
+    //               rsp.close();
+    //               throw new SDKException(code);
+    //           }
+    //       } catch (IOException ioe) {
+    //           throw new SDKException(ioe);
+    //       }
+    //   }
 
     @Override
     public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
@@ -303,9 +313,13 @@ public class P8Session implements ILegacySession, SdkNames {
 
         // FIXME not very clean.
         // In P8 token never expires, so we only need to login once.
-        String existingToken = secureTokens.get(getTokenId());
-        if (existingToken != null && !"".equals(existingToken))
+        Token existingToken = tokens.get(this, getId());
+
+        if (existingToken != null) {
             return;
+        }
+//        if (existingToken != null && !"".equals(existingToken))
+//            return;
 
         if (credentials == null) {
             throw new SDKException(ErrorCodes.authentication_required);
@@ -630,24 +644,39 @@ public class P8Session implements ILegacySession, SdkNames {
     }
 
     private void saveSecureToken(String secureToken) {
-        secureTokens.put(getTokenId(), secureToken);
+        Token t = new Token();
+        t.subject = getId();
+        t.value = secureToken;
+        t.expirationTime = -1;
+        tokens.register(getId(), t);
     }
 
     private String getSecureToken() throws SDKException {
-        String id = getTokenId();
-        String secureToken = secureTokens.get(id);
-        if (null == secureToken || "".equals(secureToken)) {
+        String id = getId();
+        Token t = tokens.get(this, id);
+
+        if (t == null) {
             System.out.println("No token found for " + id + ", about to background login.");
             login();
+            t = tokens.get(this, id);
         }
-        return secureTokens.get(id);
+
+        return t.value;
     }
 
     /* String manipulation Helpers */
 
-    private String getTokenId() {
-        return credentials.getLogin() + "@" + server.getServerURL().getId();
-    }
+//    private String getTokenId() {
+//        String tokenID = secureTokens.get(getId());
+//        if (tokenID != null && !"".equals(tokenID)){
+//            return tokenID;
+//        }
+//
+//        if (credentials != null){
+//
+//        }
+//        return credentials.getLogin() + "@" + server.getServerURL().getId();
+//    }
 
     private StringBuilder appendParam(StringBuilder builder, String key, String value) {
         builder.append(key).append("=").append(value);

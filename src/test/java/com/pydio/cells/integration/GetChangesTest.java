@@ -1,5 +1,6 @@
 package com.pydio.cells.integration;
 
+import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import org.junit.After;
@@ -26,7 +27,7 @@ public class GetChangesTest {
 
     @Before
     public void setup() {
-        tokens = new TokenService(new TokenMemoryStore());
+        tokens = new TokenService(new SimpleTokenStore());
         config = new TestConfiguration();
 
         cec = new CecWrapper();

@@ -37,6 +37,13 @@ public class StateID {
         return path;
     }
 
+    public String getWorkspace() {
+        if (path == null || "".equals(path) || "/".equals(path)){
+            return null;
+        }
+        return path.substring(1).split("/")[0];
+    }
+
     public String getId(){
         StringBuilder builder = new StringBuilder();
         builder.append(utf8Encode(username)).append("@");

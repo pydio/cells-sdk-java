@@ -109,9 +109,9 @@ public class ServerFactory implements IServerFactory {
                 throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());
 
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Session(server);
+            session = new P8Session(server, credentials);
             ((P8Session) session).restore(tokenService);
-            ((P8Session) session).setCredentials(credentials);
+            // ((P8Session) session).setCredentials(credentials);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
@@ -157,7 +157,7 @@ public class ServerFactory implements IServerFactory {
             session = new CellsSession(server, login);
             ((CellsSession) session).restore(tokenService);
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Session(server);
+            session = new P8Session(server, login);
             // ((CellsSession)session).restore(tokenService);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());

@@ -146,7 +146,7 @@ public class CellsSession implements ICellsSession, SdkNames {
     }
 
     public String getToken() throws SDKException {
-        Token t = tokens.get(this, login, server.getServerURL().getId());
+        Token t = tokens.get(this, getId());
         String tokenStr = t.idToken;
         // FIXME
         if (tokenStr == null) {
