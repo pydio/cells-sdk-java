@@ -1,8 +1,8 @@
 package com.pydio.cells.client.model;
 
+import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Node;
-import com.pydio.cells.api.SdkNames;
 
 import java.util.Properties;
 
@@ -80,12 +80,12 @@ public class FileNodeImpl implements FileNode, SdkNames {
         String path = properties.getProperty(NODE_PROPERTY_PATH);
         String name = properties.getProperty(NODE_PROPERTY_FILENAME);
 
-        if ((path == null || "".equals(path)) && name != null && !"".equals(name)){
+        if ((path == null || "".equals(path)) && name != null && !"".equals(name)) {
             setProperty(NODE_PROPERTY_PATH, name);
             return name;
             // TODO should we also extract the real name from the path ?
         }
-         return path;
+        return path;
     }
 
     @Override

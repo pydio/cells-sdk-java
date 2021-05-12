@@ -7,9 +7,9 @@ public class ResolutionServer extends ServerNodeImpl {
 
     public static final String EXPIRATION_DATE = "expiration";
 
-    private String name;
+    private final String name;
     private String resolvedUrl;
-    private String clientID;
+    private final String clientID;
 
     public Properties mVanity;
     public Properties mSupport;

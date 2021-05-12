@@ -41,8 +41,6 @@ public interface ErrorCodes {
     int encoding_failed = 104;
 
 
-
-
     /**
      * Returns a message given its code
      * TODO: externalise strings and add i18n
@@ -50,7 +48,7 @@ public interface ErrorCodes {
      * @param code the message code number
      * @return the corresponding human readable message (not yet i18ned)
      */
-    public static String toMessage(int code) {
+    static String toMessage(int code) {
 
         switch (code) {
             case ok:
@@ -127,7 +125,7 @@ public interface ErrorCodes {
         return "Unknown exception (code: " + code + ")";
     }
 
-    public static int fromHttpStatus(int status) {
+    static int fromHttpStatus(int status) {
         switch (status) {
             case 200:
                 return ok;

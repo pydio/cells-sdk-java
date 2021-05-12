@@ -6,9 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class Log {
-    public static void setLogger(Logger l){
+    public static void setLogger(Logger l) {
         logger = l;
     }
+
     private static Logger logger;
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -31,55 +32,59 @@ public class Log {
     public static final String ANSI_BCKGD_WHITE = "\u001B[47m";
 
 
-    public static void e(String tag, String msg){
-        if(logger != null){
+    public static void e(String tag, String msg) {
+        if (logger != null) {
             logger.e(tag, msg);
             return;
         }
 
-        if(UNIXLike()){
+        if (UNIXLike()) {
             msg = ANSI_GREEN + tag + "\t" + msg + ANSI_RESET;
             System.out.println(ANSI_BCKGD_RED + msg + ANSI_RESET);
         } else {
             System.out.println(tag + "\t" + msg);
         }
     }
-    public static void i(String tag, String msg){
-        if(logger != null){
+
+    public static void i(String tag, String msg) {
+        if (logger != null) {
             logger.i(tag, msg);
             return;
         }
-        if(UNIXLike()){
+        if (UNIXLike()) {
             msg = ANSI_BLACK + tag + "\t" + msg + ANSI_RESET;
             System.out.println(ANSI_BCKGD_WHITE + msg + ANSI_RESET);
         } else {
             System.out.println(tag + "\t" + msg);
         }
     }
-    public static void d(String tag, String msg){
-        if(logger != null){
+
+    public static void d(String tag, String msg) {
+        if (logger != null) {
             logger.d(tag, msg);
             return;
         }
-        if(UNIXLike()){
+        if (UNIXLike()) {
             System.out.println(ANSI_YELLOW + msg + ANSI_RESET);
         } else {
             System.out.println(tag + "\t" + msg);
         }
     }
-    public static void v(String tag, String msg){
-        if(logger != null){
+
+    public static void v(String tag, String msg) {
+        if (logger != null) {
             logger.v(tag, msg);
             return;
         }
         System.out.println(tag + "\t" + msg);
     }
-    public static void w(String tag, String msg){
-        if(logger != null){
+
+    public static void w(String tag, String msg) {
+        if (logger != null) {
             logger.w(tag, msg);
             return;
         }
-        if(UNIXLike()){
+        if (UNIXLike()) {
             msg = ANSI_BLACK + tag + "\t" + msg + ANSI_RESET;
             System.out.println(ANSI_BCKGD_YELLOW + msg + ANSI_RESET);
         } else {
@@ -87,21 +92,21 @@ public class Log {
         }
     }
 
-    public static String paramString(Map<String, String> params){
+    public static String paramString(Map<String, String> params) {
         Set<String> keys = params.keySet();
         String s = " ";
         Iterator<String> it = keys.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             String k = it.next();
-            s += " " + k + "=" +params.get(k);
+            s += " " + k + "=" + params.get(k);
         }
-        if(s.length() > 0){
+        if (s.length() > 0) {
             s = s.substring(1);
         }
         return s;
     }
 
-    private static boolean UNIXLike(){
+    private static boolean UNIXLike() {
         return File.separator.equals("/");
     }
 

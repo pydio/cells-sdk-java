@@ -1,13 +1,13 @@
 package com.pydio.cells.legacy.auth;
 
-import com.pydio.cells.api.callbacks.PasswordLoader;
 import com.pydio.cells.api.Credentials;
+import com.pydio.cells.api.callbacks.PasswordLoader;
 
 public class DefaultP8Credentials implements Credentials {
 
-    private PasswordLoader loader;
-    private String url;
-    private String user;
+    private final PasswordLoader loader;
+    private final String url;
+    private final String user;
     private String captcha;
 
     public DefaultP8Credentials(String url, String user, PasswordLoader loader) {

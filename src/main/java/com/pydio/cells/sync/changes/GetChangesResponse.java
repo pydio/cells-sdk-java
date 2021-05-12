@@ -1,13 +1,13 @@
 package com.pydio.cells.sync.changes;
 
 import com.pydio.cells.api.Change;
+import com.pydio.cells.sync.Error;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.pydio.cells.sync.Error;
 
 public class GetChangesResponse {
-    
+
     private List<Change> changes;
     private long lastSeq;
     private boolean success;

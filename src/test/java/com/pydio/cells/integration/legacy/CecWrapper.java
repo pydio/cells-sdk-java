@@ -1,4 +1,6 @@
-package com.pydio.cells.integration;
+package com.pydio.cells.integration.legacy;
+
+import com.pydio.cells.integration.TestUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

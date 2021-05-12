@@ -1,16 +1,16 @@
 package com.pydio.cells.integration;
 
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.ServerFactory;
-import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.client.utils.StateID;
+import com.pydio.cells.transport.ServerURLImpl;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -68,10 +68,10 @@ public class BasicConnectionTest {
 //        }
     }
 
-    private void testWorkspaces(String id, TestConfiguration.ServerConfig conf) {
+    private void testWorkspaces(String id, RemoteServerConfig conf) {
         try {
 
-            Transport session = TestUtils.getSession(factory, conf);
+            Transport session = TestUtils.getTransport(factory, conf);
 
             System.out.println("... Listing workspaces for " + printableId(session.getId()));
             session.getClient().workspaceList(new DummyHandler());
@@ -85,10 +85,10 @@ public class BasicConnectionTest {
         }
     }
 
-    public void basicCRUD(String id, TestConfiguration.ServerConfig conf) {
+    public void basicCRUD(String id, RemoteServerConfig conf) {
         Transport session = null;
         try {
-            session = TestUtils.getSession(factory, conf);
+            session = TestUtils.getTransport(factory, conf);
 
             if (!session.getServer().isLegacy()) {
                 // TODO remove this once upload has been done.
@@ -172,10 +172,10 @@ public class BasicConnectionTest {
     @Test
     public void testSkipVerify() {
         try {
-            Map<String, TestConfiguration.ServerConfig> servers = config.getDefinedServers();
+            Map<String, RemoteServerConfig> servers = config.getDefinedServers();
             for (String key : servers.keySet()) {
 
-                TestConfiguration.ServerConfig currConf = servers.get(key);
+                RemoteServerConfig currConf = servers.get(key);
                 if (!currConf.skipVerify) {
                     continue;
                 }

@@ -1,8 +1,8 @@
 package com.pydio.cells.client.common.http;
 
-import com.pydio.cells.api.callbacks.StringHandler;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.callbacks.ProgressListener;
+import com.pydio.cells.api.callbacks.StringHandler;
 import com.pydio.cells.client.utils.io;
 
 import org.json.JSONObject;
@@ -35,7 +35,7 @@ public class HttpResponse {
         this.con = con;
     }
 
-    public HttpURLConnection getConnection(){
+    public HttpURLConnection getConnection() {
         return con;
     }
 
@@ -91,11 +91,11 @@ public class HttpResponse {
         sc.useDelimiter(delimiter);
 
         int lineCount = 0;
-        while(true) {
+        while (true) {
             String line;
             try {
                 line = sc.nextLine();
-            } catch (NoSuchElementException e){
+            } catch (NoSuchElementException e) {
                 return lineCount;
             }
 

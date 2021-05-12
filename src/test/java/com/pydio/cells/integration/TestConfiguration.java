@@ -18,15 +18,7 @@ import java.util.Properties;
  */
 public class TestConfiguration {
 
-    protected class ServerConfig {
-        public String serverURL;
-        public String login;
-        public String pwd;
-        public String defaultWS;
-        public boolean skipVerify;
-    }
-
-    private Map<String, ServerConfig> servers = new HashMap<>();
+    private Map<String, RemoteServerConfig> servers = new HashMap<>();
     private final String defaultServerConfigId = "default-target-server";
 
     // You must adapt these files to your setup in "src/test/resources" to run the tests
@@ -72,15 +64,15 @@ public class TestConfiguration {
     }
 
 
-    public ServerConfig getServer(String id) {
+    public RemoteServerConfig getServer(String id) {
         return servers.get(id);
     }
 
-    public ServerConfig getDefaultServer() {
+    public RemoteServerConfig getDefaultServer() {
         return servers.get(defaultServerConfigId);
     }
 
-    public Map<String, ServerConfig> getDefinedServers() {
+    public Map<String, RemoteServerConfig> getDefinedServers() {
         return servers;
     }
 
@@ -100,7 +92,7 @@ public class TestConfiguration {
                 return;
             }
 
-            ServerConfig currConf = new ServerConfig();
+            RemoteServerConfig currConf = new RemoteServerConfig();
             currConf.serverURL = p.getProperty("serverURL");
             currConf.login = p.getProperty("login");
             currConf.pwd = p.getProperty("pwd");

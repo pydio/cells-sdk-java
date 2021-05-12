@@ -29,8 +29,10 @@ import java.util.Set;
 public final class ContentValues {
     public static final String TAG = "ContentValues";
 
-    /** Holds the actual values */
-    private HashMap<String, Object> mValues;
+    /**
+     * Holds the actual values
+     */
+    private final HashMap<String, Object> mValues;
 
     /**
      * Creates an empty set of values using the default initial size
@@ -252,7 +254,7 @@ public final class ContentValues {
      *
      * @param key the value to getRequest
      * @return the Long value, or null if the value is missing or cannot be
-     *         converted
+     * converted
      */
     public Long getAsLong(String key) {
         Object value = mValues.get(key);
@@ -278,7 +280,7 @@ public final class ContentValues {
      *
      * @param key the value to getRequest
      * @return the Integer value, or null if the value is missing or cannot be
-     *         converted
+     * converted
      */
     public Integer getAsInteger(String key) {
         Object value = mValues.get(key);
@@ -304,7 +306,7 @@ public final class ContentValues {
      *
      * @param key the value to getRequest
      * @return the Short value, or null if the value is missing or cannot be
-     *         converted
+     * converted
      */
     public Short getAsShort(String key) {
         Object value = mValues.get(key);
@@ -330,7 +332,7 @@ public final class ContentValues {
      *
      * @param key the value to getRequest
      * @return the Byte value, or null if the value is missing or cannot be
-     *         converted
+     * converted
      */
     public Byte getAsByte(String key) {
         Object value = mValues.get(key);
@@ -356,7 +358,7 @@ public final class ContentValues {
      *
      * @param key the value to getRequest
      * @return the Double value, or null if the value is missing or cannot be
-     *         converted
+     * converted
      */
     public Double getAsDouble(String key) {
         Object value = mValues.get(key);
@@ -382,7 +384,7 @@ public final class ContentValues {
      *
      * @param key the value to getRequest
      * @return the Float value, or null if the value is missing or cannot be
-     *         converted
+     * converted
      */
     public Float getAsFloat(String key) {
         Object value = mValues.get(key);
@@ -408,7 +410,7 @@ public final class ContentValues {
      *
      * @param key the value to getRequest
      * @return the Boolean value, or null if the value is missing or cannot be
-     *         converted
+     * converted
      */
     public Boolean getAsBoolean(String key) {
         Object value = mValues.get(key);
@@ -463,12 +465,12 @@ public final class ContentValues {
     /*
      * public static final Parcelable.Creator<ContentValues> CREATOR = new
      * Parcelable.Creator<ContentValues>() {
-     * 
+     *
      * @SuppressWarnings({"deprecation", "unchecked"}) public ContentValues
      * createFromParcel(Parcel in) { // TODO - what ClassLoader should be passed to
      * readHashMap? HashMap<String, Object> values = in.readHashMap(null); return
      * new ContentValues(values); }
-     * 
+     *
      * public ContentValues[] newArray(int size) { return new ContentValues[size]; }
      * };
      */
@@ -502,7 +504,7 @@ public final class ContentValues {
     /**
      * Returns a string containing a concise, human-readable description of this
      * object.
-     * 
+     *
      * @return a printable representation of this object.
      */
     @Override

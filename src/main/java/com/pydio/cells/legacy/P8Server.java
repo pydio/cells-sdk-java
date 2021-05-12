@@ -21,11 +21,11 @@ public class P8Server implements Server {
 
     public final static String API_PREFIX = "/index.php?";
     public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + ActionNames.GET_BOOT_CONF;
-    private String serverType = SdkNames.TYPE_LEGACY_P8;
+    private final String serverType = SdkNames.TYPE_LEGACY_P8;
     private String version = null;
 
     private final ServerURL serverURL;
-    private String apiPath = null;
+    private final String apiPath = null;
 
     private String title;
     private String welcomeMessage;
@@ -108,7 +108,7 @@ public class P8Server implements Server {
     }
 
     @Override
-    public String getLabel(){
+    public String getLabel() {
         return title;
     }
 
@@ -149,7 +149,6 @@ public class P8Server implements Server {
 //    }
 
 
-
     // Local shortcut
     private String getId() {
         return serverURL.getId();
@@ -178,7 +177,7 @@ public class P8Server implements Server {
 
             // Paths always start with a leading slash in our world.
             String tmpPath = customWordings.getString("icon");
-            iconPath = tmpPath.startsWith("/") ? tmpPath : "/"+tmpPath;
+            iconPath = tmpPath.startsWith("/") ? tmpPath : "/" + tmpPath;
 
             if (customWordings.has("welcomeMessage")) {
                 welcomeMessage = customWordings.getString("welcomeMessage");
@@ -202,8 +201,7 @@ public class P8Server implements Server {
     }
 
 
-
-    public OauthConfig getOAuthConfig(){
+    public OauthConfig getOAuthConfig() {
         throw new RuntimeException("Pydio 8 server does not support OAuth credential flows.");
     }
 

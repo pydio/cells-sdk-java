@@ -4,16 +4,16 @@ import com.google.gson.Gson;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.Transport;
-import com.pydio.cells.api.ui.Message;
-import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
-import com.pydio.cells.api.ui.Stats;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.api.ui.FileNode;
+import com.pydio.cells.api.ui.Message;
+import com.pydio.cells.api.ui.PageOptions;
+import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
@@ -82,7 +82,7 @@ public class CellsClient implements Client, SdkNames {
     private final CellsTransport session;
 
     private Credentials credentials;
-    private Boolean skipOAuth = false;
+    private final Boolean skipOAuth = false;
 
     public CellsClient(Transport session) {
         this.session = (CellsTransport) session;

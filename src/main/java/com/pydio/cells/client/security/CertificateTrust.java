@@ -7,11 +7,12 @@ public class CertificateTrust {
 
     public interface Helper extends Serializable {
         boolean isServerTrusted(X509Certificate[] chain);
+
         X509Certificate[] getAcceptedIssuers();
     }
 
 
-    public static Helper revokeAllHelper(){
+    public static Helper revokeAllHelper() {
         return new Helper() {
             @Override
             public boolean isServerTrusted(X509Certificate[] chain) {
@@ -25,7 +26,7 @@ public class CertificateTrust {
         };
     }
 
-    public static Helper acceptAllHelper(){
+    public static Helper acceptAllHelper() {
         return new Helper() {
             @Override
             public boolean isServerTrusted(X509Certificate[] chain) {

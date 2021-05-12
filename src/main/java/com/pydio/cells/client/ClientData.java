@@ -12,10 +12,11 @@ public class ClientData {
 
     private static PersistentDataManager dataManager;
 
-    public static PersistentDataManager manager(){
+    public static PersistentDataManager manager() {
         return dataManager;
     }
-    public static void setManager(PersistentDataManager m){
+
+    public static void setManager(PersistentDataManager m) {
         dataManager = m;
     }
 }

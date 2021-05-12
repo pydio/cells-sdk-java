@@ -16,7 +16,7 @@ import java.util.TreeMap;
 
 public class FileChangeStore implements ChangeStore {
 
-    private String filePath;
+    private final String filePath;
     private SortedMap<String, Change> changes;
 
     private final Type classType = new TypeToken<SortedMap<String, Change>>() {

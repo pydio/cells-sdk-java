@@ -2,8 +2,8 @@ package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ILegacyTransport;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.legacy.consts.ActionNames;
 import com.pydio.cells.legacy.consts.Const;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class P8RequestBuilder {
 
-    private P8Request request;
+    private final P8Request request;
 
     public P8RequestBuilder() {
         request = new P8Request();

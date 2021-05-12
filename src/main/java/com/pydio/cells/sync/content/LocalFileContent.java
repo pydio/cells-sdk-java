@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class LocalFileContent implements Content {
 
-    private File file;
+    private final File file;
     private Error error;
 
     public LocalFileContent(String path) {

@@ -1,9 +1,9 @@
 package com.pydio.cells.client.model.parser;
 
-import com.pydio.cells.api.ui.FileNode;
-import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.NodeHandler;
+import com.pydio.cells.api.ui.FileNode;
+import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.model.NodeFactory;
 
 import org.xml.sax.Attributes;
@@ -72,7 +72,7 @@ public class TreeNodeSaxHandler extends DefaultHandler {
         }
     }
 
-    public void characters(char ch[], int start, int length) {
+    public void characters(char[] ch, int start, int length) {
         if (mInsideTree && p != null) {
             p.setProperty(mInnerElement, new String(ch, start, length));
         }

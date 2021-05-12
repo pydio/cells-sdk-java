@@ -9,14 +9,14 @@ import java.util.Arrays;
 
 public class ServerGeneralRegistrySaxHandler extends DefaultHandler {
 
-    private RegistryItemHandler handler;
+    private final RegistryItemHandler handler;
     private boolean insideAdminPlugin = false;
     private boolean insideConfigs = false;
     private boolean insideCoreUploader = false;
-    private boolean insideShareAction = false;
+    private final boolean insideShareAction = false;
     private String properties;
 
-    private String[] allowedProperties = new String[]{
+    private final String[] allowedProperties = new String[]{
             //"ALLOWED_EXTENSIONS",
             //"ALLOWED_EXTENSIONS_READABLE",
             //"UPLOAD_MAX_NUMBER",

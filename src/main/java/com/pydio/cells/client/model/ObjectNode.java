@@ -29,7 +29,7 @@ public class ObjectNode implements Node {
 
     @Override
     public void deleteProperty(String key) {
-        if(properties != null && properties.contains(key)){
+        if (properties != null && properties.contains(key)) {
             properties.remove(key);
         }
     }

@@ -1,5 +1,7 @@
 package com.pydio.cells.client.auth.jwt;
-public class TokenMemoryStore{}
+
+public class TokenMemoryStore {
+}
 
 //package com.pydio.cells.client.auth.jwt;
 //

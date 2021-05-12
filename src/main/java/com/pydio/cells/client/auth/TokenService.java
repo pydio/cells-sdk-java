@@ -2,14 +2,14 @@ package com.pydio.cells.client.auth;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.transport.CellsTransport;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
 import com.pydio.cells.openapi.model.RestFrontSessionRequest;
 import com.pydio.cells.openapi.model.RestFrontSessionResponse;
+import com.pydio.cells.transport.CellsTransport;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -29,7 +29,7 @@ public class TokenService {
 
         Token t = store.get(key);
         if (t == null) {
-            return  null;
+            return null;
             // Acceptable at this point.
             // throw new SDKException(ErrorCodes.no_token_available, "Please login first", null);
         }
@@ -44,7 +44,7 @@ public class TokenService {
         return t;
     }
 
-    public void register(String key, Token token)  {
+    public void register(String key, Token token) {
         store.save(key, token);
     }
 

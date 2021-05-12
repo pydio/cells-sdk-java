@@ -1,4 +1,3 @@
-
 package com.pydio.cells.client.security;
 
 import java.security.cert.CertificateException;
@@ -8,7 +7,7 @@ import javax.net.ssl.X509TrustManager;
 
 public class CertificateTrustManager implements X509TrustManager {
 
-    private CertificateTrust.Helper helper;
+    private final CertificateTrust.Helper helper;
 
     public CertificateTrustManager(CertificateTrust.Helper helper) {
         this.helper = helper;

@@ -1,7 +1,5 @@
 package com.pydio.cells.api;
 
-import com.pydio.cells.client.utils.StateID;
-
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -21,7 +19,9 @@ public interface Transport {
     @Deprecated
     Client getClient();
 
-    /** This also tries to login the server with the passed credentials. */
+    /**
+     * This also tries to login the server with the passed credentials.
+     */
     void setCredentials(Credentials c) throws SDKException;
 
     void login() throws SDKException;

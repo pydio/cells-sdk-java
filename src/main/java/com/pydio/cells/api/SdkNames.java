@@ -1,6 +1,8 @@
 package com.pydio.cells.api;
 
-/** Centralize all string constants for the com.pydio.sdk API */
+/**
+ * Centralize all string constants for the com.pydio.sdk API
+ */
 public interface SdkNames {
 
     String TYPE_CELLS = "cells";

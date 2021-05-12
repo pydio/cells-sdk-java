@@ -18,9 +18,9 @@ public class ClientFactory {
     }
 
     public static Client get(Transport session) {
-        if (session.getServer().isLegacy()){
+        if (session.getServer().isLegacy()) {
             return p8DefaultFactory.get(session);
         }
-            return cellsDefaultFactory.get(session);
+        return cellsDefaultFactory.get(session);
     }
 }

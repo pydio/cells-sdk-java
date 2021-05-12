@@ -1,4 +1,4 @@
-package com.pydio.cells.integration;
+package com.pydio.cells.integration.sync;
 
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.SDKException;
@@ -6,9 +6,10 @@ import com.pydio.cells.client.CellsClient;
 import com.pydio.cells.api.ui.ServerNode;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.client.utils.CellsPath;
+import com.pydio.cells.integration.legacy.CecWrapper;
+import com.pydio.cells.integration.TestConfiguration;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;
 import com.pydio.cells.sync.fs.CellsFs;

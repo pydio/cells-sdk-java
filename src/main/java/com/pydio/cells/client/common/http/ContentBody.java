@@ -13,7 +13,7 @@ import java.net.URLConnection;
 
 public class ContentBody {
 
-    private long mLength;
+    private final long mLength;
     private long mCursor;
     private String mFilename;
     private File mFile;

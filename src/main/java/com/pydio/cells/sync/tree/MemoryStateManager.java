@@ -1,11 +1,11 @@
 package com.pydio.cells.sync.tree;
 
+import com.pydio.cells.client.model.TreeNodeInfo;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.Map;
-
-import com.pydio.cells.client.model.TreeNodeInfo;
+import java.util.TreeMap;
 
 /**
  * Wraps a TreeMap to simply store the full tree in memory. Children are
@@ -13,7 +13,7 @@ import com.pydio.cells.client.model.TreeNodeInfo;
  */
 public class MemoryStateManager implements StateManager {
 
-    private TreeMap<String, TreeNodeInfo> nodes;
+    private final TreeMap<String, TreeNodeInfo> nodes;
 
     public MemoryStateManager() {
         nodes = new TreeMap<String, TreeNodeInfo>();
@@ -48,21 +48,21 @@ public class MemoryStateManager implements StateManager {
         ArrayList<TreeNodeInfo> children = new ArrayList<>();
 
         // Boolean first = true;
-        for (Map.Entry<String, TreeNodeInfo> currEntry : nodes.tailMap(path).entrySet()){
+        for (Map.Entry<String, TreeNodeInfo> currEntry : nodes.tailMap(path).entrySet()) {
             // if (first){
             //     first = false;
             //     continue;
             // }
-            if (!currEntry.getKey().startsWith(path)){
+            if (!currEntry.getKey().startsWith(path)) {
                 break;
-            } else if (currEntry.getKey().indexOf("/", path.length()+1) > 1){
+            } else if (currEntry.getKey().indexOf("/", path.length() + 1) > 1) {
                 // We do not want children of our children. 
                 // TODO enhance, this is not very reliable
                 continue;
             } else {
                 children.add(currEntry.getValue());
             }
-        } 
+        }
         return children;
     }
 

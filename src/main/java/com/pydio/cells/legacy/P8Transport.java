@@ -26,6 +26,7 @@ import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -129,7 +130,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             login();
             secureToken = getSecureToken();
             tmpToken2 = secureToken;
-            System.out.println("Comparing first and second token equals ? "+tmpToken2.equals(tmpToken1));
+            System.out.println("Comparing first and second token equals ? " + tmpToken2.equals(tmpToken1));
         }
         return secureToken;
     }
@@ -408,8 +409,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     /* HTTP Methods */
 
-    private void withToken(P8Request request, StringBuilder builder){
-        if (request.getSecureToken() != null){
+    private void withToken(P8Request request, StringBuilder builder) {
+        if (request.getSecureToken() != null) {
             andAppendParam(builder, "secure_token", request.getSecureToken());
         }
     }
@@ -475,7 +476,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 postData.append(utf8Encode(String.valueOf(entry.getValue())));
                 //postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postDataBytes.length));
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "application/x-www-form-urlencoded; charset=utf-8");
@@ -570,7 +571,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 partHeaderBuffer.write(LF);
                 partHeaderBuffer.write(("Content-Type: text/plain; charset=utf-8").getBytes());
                 partHeaderBuffer.write(DLF);
-                partHeaderBuffer.write(value.getBytes("UTF-8"));
+                partHeaderBuffer.write(value.getBytes(StandardCharsets.UTF_8));
                 partHeaderBuffer.write(LF);
                 partHeaderBuffer.write(("--" + boundary).getBytes());
                 partHeaderBuffer.write(LF);
@@ -661,7 +662,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         Token t = tokens.get(this, getId());
 
         if (t == null) {
-           System.out.println("No token found for " + getId() + ", about to background login.");
+            System.out.println("No token found for " + getId() + ", about to background login.");
             login();
             t = tokens.get(this, getId());
         }

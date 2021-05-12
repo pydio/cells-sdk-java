@@ -47,7 +47,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     private TokenService tokens;
     // FIXME we should avoid to store the credentials in this object
     private Credentials credentials;
-    private Boolean skipOAuth = false;
+    private final Boolean skipOAuth = false;
     private String userAgent;
 
 
@@ -71,6 +71,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return server;
     }
 
+    @Deprecated
     @Override
     public Client getClient() {
         return new CellsClient(this);
@@ -133,11 +134,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return server.newURL(path).openConnection();
     }
 
-    public HttpURLConnection openApiConnection(String path) throws SDKException, MalformedURLException, IOException {
+    public HttpURLConnection openApiConnection(String path) throws SDKException, IOException {
         return withAuth(server.newURL(API_PREFIX + path).openConnection());
     }
 
-    public HttpURLConnection openAnonApiConnection(String path) throws SDKException, MalformedURLException, IOException {
+    public HttpURLConnection openAnonApiConnection(String path) throws SDKException, IOException {
         return server.newURL(API_PREFIX + path).openConnection();
     }
 

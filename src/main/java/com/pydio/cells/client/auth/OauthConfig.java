@@ -39,6 +39,6 @@ public class OauthConfig {
     }
 
     public static OauthConfig fromJSON(JSONObject o) {
-        return  fromJSON(o, "openid email offline profile pydio");
+        return fromJSON(o, "openid email offline profile pydio");
     }
 }

@@ -22,9 +22,9 @@ import java.util.List;
 
 public class LocalFs implements Fs, ContentLoader {
 
-    private String root;
-    private String id;
-    private List<String> watched;
+    private final String root;
+    private final String id;
+    private final List<String> watched;
 
     public LocalFs(String id, String root, List<String> watched) {
         this.id = id;
@@ -44,7 +44,7 @@ public class LocalFs implements Fs, ContentLoader {
 
     @Override
     public void addWatch(String path) {
-        if(this.watched.contains(path)){
+        if (this.watched.contains(path)) {
             return;
         }
         this.watched.add(path);
@@ -119,7 +119,7 @@ public class LocalFs implements Fs, ContentLoader {
     private Error mkdir(Change c) {
         String fullPath = root + c.getNode().getPath();
         File file = new File(fullPath);
-        if(!file.exists() && !file.mkdirs()) {
+        if (!file.exists() && !file.mkdirs()) {
             return Error.opFailed(c.getType(), id(), fullPath);
         }
         return null;
@@ -129,14 +129,14 @@ public class LocalFs implements Fs, ContentLoader {
         String fullPath = root + c.getNode().getPath();
         File file = new File(fullPath);
 
-        boolean parentExists  = file.getParentFile().exists();
+        boolean parentExists = file.getParentFile().exists();
         boolean parentCreated = file.getParentFile().mkdirs();
-        if(!parentExists && !parentCreated) {
+        if (!parentExists && !parentCreated) {
             return Error.opFailed(c.getType(), id(), fullPath);
         }
 
         try {
-            if(!file.createNewFile()) {
+            if (!file.createNewFile()) {
                 return Error.opFailed(c.getType(), id(), fullPath);
             }
         } catch (IOException e) {
@@ -151,7 +151,7 @@ public class LocalFs implements Fs, ContentLoader {
         String fullPath = root + c.getNode().getPath();
         File file = new File(fullPath);
 
-        if(file.canExecute() && !file.delete()) {
+        if (file.canExecute() && !file.delete()) {
             return Error.opFailed(c.getType(), id(), fullPath);
         }
         return null;
@@ -162,12 +162,12 @@ public class LocalFs implements Fs, ContentLoader {
         String dstFullPath = root + c.getTarget();
 
         File srcFile = new File(srcFullPath);
-        if(!srcFile.exists()) {
+        if (!srcFile.exists()) {
             return Error.notFound(id(), srcFullPath);
         }
 
         File dstFile = new File(dstFullPath);
-        if(!srcFile.renameTo(dstFile)) {
+        if (!srcFile.renameTo(dstFile)) {
             return Error.opFailed(c.getType(), id(), srcFullPath + "->" + dstFullPath);
         }
         return null;
@@ -178,12 +178,12 @@ public class LocalFs implements Fs, ContentLoader {
         String fullPath = root + nodePath;
 
         File parentFile = new File(fullPath).getParentFile();
-        boolean parentExists  = parentFile.exists();
+        boolean parentExists = parentFile.exists();
         boolean parentCreated = parentFile.mkdirs();
 
         boolean isParentDir = parentFile.isDirectory();
 
-        if(!parentExists && !parentCreated) {
+        if (!parentExists && !parentCreated) {
             return Error.opFailed("create", id(), parentFile.getPath());
         }
 
@@ -198,11 +198,11 @@ public class LocalFs implements Fs, ContentLoader {
 
         Content content = loader.getContent(nodePath);
 
-        if(!content.exists()) {
-            return  null;
+        if (!content.exists()) {
+            return null;
         }
 
-        if ( content.getMd5().equals(md5) && content.getSize() == size) {
+        if (content.getMd5().equals(md5) && content.getSize() == size) {
             return null;
         }
 
@@ -226,7 +226,7 @@ public class LocalFs implements Fs, ContentLoader {
         return null;
     }
 
-    private String md5(String path){
+    private String md5(String path) {
 
         MessageDigest md = null;
         try {
@@ -249,12 +249,12 @@ public class LocalFs implements Fs, ContentLoader {
             }
             //convert the byte to hex format method 2
             StringBuffer hexString = new StringBuffer();
-            for (int i=0;i<mdbytes.length;i++) {
-                String hex=Integer.toHexString(0xff & mdbytes[i]);
-                if(hex.length()==1) hexString.append('0');
+            for (int i = 0; i < mdbytes.length; i++) {
+                String hex = Integer.toHexString(0xff & mdbytes[i]);
+                if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
-            return  hexString.toString();
+            return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             //Log.e("Runtime", e.getMessage());
         } catch (IOException e) {

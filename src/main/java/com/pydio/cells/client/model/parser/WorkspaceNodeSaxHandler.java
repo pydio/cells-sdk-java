@@ -21,20 +21,20 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
         /*tabs += "\t";
         //Log.info(tabs + qName);*/
 
-        if("repo".equals(qName)){
+        if ("repo".equals(qName)) {
             inside_repo = true;
             p = new Properties();
-            for(int i = 0; i < attributes.getLength(); i++){
+            for (int i = 0; i < attributes.getLength(); i++) {
                 p.setProperty(attributes.getLocalName(i), attributes.getValue(i));
             }
             return;
         }
 
-        if(!inside_repo) return;
+        if (!inside_repo) return;
 
         inside_label = "label".equals(qName);
         inside_description = "description".equals(qName);
-        if(inside_label || inside_description){
+        if (inside_label || inside_description) {
             inner_element = qName;
         }
     }
@@ -43,8 +43,8 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
         /*//Log.info(tabs + qName);
         tabs = tabs.substring(0, tabs.length() - 1);*/
 
-        if(inside_repo && (inside_label || inside_description)){
-            if(inside_label){
+        if (inside_repo && (inside_label || inside_description)) {
+            if (inside_label) {
                 inside_label = false;
             } else {
                 inside_description = false;
@@ -52,7 +52,7 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
             return;
         }
 
-        if(inside_repo && "repo".equals(qName)){
+        if (inside_repo && "repo".equals(qName)) {
             handler.onNode(NodeFactory.createNode(Node.TYPE_WORKSPACE, p));
             p = null;
             inside_repo = false;
@@ -60,7 +60,7 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
     }
 
     public void characters(char[] ch, int start, int length) {
-        if(inside_repo && (inside_label || inside_description)){
+        if (inside_repo && (inside_label || inside_description)) {
             String content = new String(ch, start, length);
             if (!p.containsKey(inner_element)) {
                 p.setProperty(inner_element, content);
@@ -68,7 +68,7 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
         }
     }
 
-    public WorkspaceNodeSaxHandler(NodeHandler nodeHandler, int offset, int max){
+    public WorkspaceNodeSaxHandler(NodeHandler nodeHandler, int offset, int max) {
         this.handler = nodeHandler;
     }
 }

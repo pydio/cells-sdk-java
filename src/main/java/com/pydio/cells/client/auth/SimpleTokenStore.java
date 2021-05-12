@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SimpleTokenStore implements TokenStore {
-    
+
     private final Map<String, Token> secureTokens = new ConcurrentHashMap<>();
 
     @Override

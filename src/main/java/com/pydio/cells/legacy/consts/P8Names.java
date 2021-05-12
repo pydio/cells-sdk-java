@@ -2,20 +2,28 @@ package com.pydio.cells.legacy.consts;
 
 public interface P8Names {
 
-    /** Known Headers */
-    String HEADER_SET_COOKIE =  "Set-Cookie";
+    /**
+     * Known Headers
+     */
+    String HEADER_SET_COOKIE = "Set-Cookie";
 
-    /** Known Request Properties */
-    String REQ_PROP_COOKIE  = "cookie";
-    String REQ_PROP_USER_AGENT  = "user-agent";
-    String REQ_PROP_CONTENT_TYPE  = "content-type";
-    String REQ_PROP_CONTENT_LENGTH  = "content-length";
-    String REQ_PROP_TOKEN  = "secure_token";
+    /**
+     * Known Request Properties
+     */
+    String REQ_PROP_COOKIE = "cookie";
+    String REQ_PROP_USER_AGENT = "user-agent";
+    String REQ_PROP_CONTENT_TYPE = "content-type";
+    String REQ_PROP_CONTENT_LENGTH = "content-length";
+    String REQ_PROP_TOKEN = "secure_token";
 
-    /** Supported content types */
+    /**
+     * Supported content types
+     */
     String CONTENT_TYPE_OCTET_STREAM = "application/octet-stream";
 
-    /** Supported Parameters */
+    /**
+     * Supported Parameters
+     */
 
     String XML_MESSAGE = "message";
     String COOKIE_KEY = "ajxp_sessid";

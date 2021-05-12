@@ -17,11 +17,12 @@ public class Crypto {
     private static final int DERIVED_KEY_SIZE = 128;
     private static final int DERIVATION_ITERATION = 20000;
 
-    public static byte[] hash(final String algo,  byte[] bytes) throws NoSuchAlgorithmException {
+    public static byte[] hash(final String algo, byte[] bytes) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance(algo);
         md.update(bytes);
         return md.digest();
     }
+
     public static String hexHash(final String algo, byte[] bytes) throws NoSuchAlgorithmException {
         return Hex.toString(hash(algo, bytes));
     }

@@ -20,7 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class HttpClient {
 
     public static HttpResponse request(HttpRequest request) throws IOException {
-        switch (request.getMethod()){
+        switch (request.getMethod()) {
             case Method.PUT:
                 return put(request);
 

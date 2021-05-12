@@ -1,16 +1,18 @@
 package com.pydio.cells.client;
 
+import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.IServerFactory;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.security.PasswordCredentials;
 import com.pydio.cells.client.utils.StateID;
+import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
 import com.pydio.cells.transport.CellsServer;
@@ -27,8 +29,8 @@ import java.util.Map;
 public class ServerFactory implements IServerFactory {
 
     private final TokenService tokenService;
-    private Map<String, Server> servers = new HashMap<>();
-    private Map<String, Transport> sessions = new HashMap<>();
+    private final Map<String, Server> servers = new HashMap<>();
+    private final Map<String, Transport> sessions = new HashMap<>();
 
     public ServerFactory(TokenService tokenService) {
         this.tokenService = tokenService;
@@ -43,8 +45,8 @@ public class ServerFactory implements IServerFactory {
             serverURL.ping();
         } catch (ConnectException ce) {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
-        } catch (IOException ioe){
-            throw new SDKException(ErrorCodes.ssl_error, "Unvalid certificate found at "+serverURL.getId()+ ", Skip verify: "+serverURL.skipVerify(), ioe);
+        } catch (IOException ioe) {
+            throw new SDKException(ErrorCodes.ssl_error, "Unvalid certificate found at " + serverURL.getId() + ", Skip verify: " + serverURL.skipVerify(), ioe);
         }
 
         // We do not have any other choice than to try the various well-known endpoints
@@ -88,7 +90,6 @@ public class ServerFactory implements IServerFactory {
         return server;
     }
 
-
     @Override
     public Transport registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
 
@@ -97,30 +98,28 @@ public class ServerFactory implements IServerFactory {
             server = register(serverURL);
         }
 
-        Transport session = null;
+        Transport transport = null;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
             if (credentials instanceof PasswordCredentials) {
                 PasswordCredentials pc = ((PasswordCredentials) credentials);
-                session = new CellsTransport(server, pc.getLogin());
-
-                tokenService.legacyLogin((CellsTransport) session, credentials);
+                transport = new CellsTransport(server, pc.getLogin());
+                tokenService.legacyLogin((CellsTransport) transport, credentials);
                 //tokenService.loginPasswordGetToken((CellsTransport) session, credentials);
-
-                ((CellsTransport) session).restore(tokenService);
+                ((CellsTransport) transport).restore(tokenService);
             } else
                 throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());
 
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Transport(server, credentials);
-            ((P8Transport) session).restore(tokenService);
-            // ((P8Transport) session).setCredentials(credentials);
+            transport = new P8Transport(server, credentials);
+            ((P8Transport) transport).restore(tokenService);
+            // ((P8Transport) transport).setCredentials(credentials);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
-
         //  Rather do this in the client layer
         // return storeAccountInfo(accountID(credentials.getLogin(), serverURL), session);
-        return session;
+        return transport;
+
     }
 
 //     /**
@@ -167,6 +166,14 @@ public class ServerFactory implements IServerFactory {
         sessions.put(accountID(login, serverURL), session);
 
         return session;
+    }
+
+    public Client getClient(Transport transport){
+        if (transport.getServer().isLegacy()){
+            return new P8Client(transport);
+        } else {
+            return new CellsClient(transport);
+        }
     }
 
     protected Map<String, Server> getServers() {

@@ -1,4 +1,4 @@
-package com.pydio.cells.integration;
+package com.pydio.cells.integration.legacy;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
@@ -6,6 +6,9 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.integration.RemoteServerConfig;
+import com.pydio.cells.integration.TestConfiguration;
+import com.pydio.cells.integration.TestUtils;
 import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
@@ -53,11 +56,11 @@ public class P8SpecificTest {
 
     @Test
     public void testCaptcha() {
-        Map<String, TestConfiguration.ServerConfig> servers = config.getDefinedServers();
+        Map<String, RemoteServerConfig> servers = config.getDefinedServers();
 
-        TestConfiguration.ServerConfig p8Conf = null;
+        RemoteServerConfig p8Conf = null;
         ServerURL p8URL = null;
-        for (TestConfiguration.ServerConfig conf : servers.values()) {
+        for (RemoteServerConfig conf : servers.values()) {
             try {
                 ServerURL serverURL = ServerURLImpl.fromAddress(conf.serverURL);
                 String type = factory.checkServer(serverURL);

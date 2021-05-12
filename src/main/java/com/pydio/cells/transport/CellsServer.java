@@ -23,12 +23,12 @@ public class CellsServer implements Server {
     public final static String OIDC_WELLKNOWN_PATH = "/oidc/.well-known/openid-configuration";
     public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
 
-    private String serverType = SdkNames.TYPE_CELLS;
+    private final String serverType = SdkNames.TYPE_CELLS;
     private String version = null;
-    private String versionName = null;
+    private final String versionName = null;
 
     private final ServerURL serverURL;
-    private String apiPath = null;
+    private final String apiPath = null;
 
     private String title;
     private String welcomeMessage;
@@ -130,9 +130,6 @@ public class CellsServer implements Server {
             throw SDKException.unexpectedContent(e);
         }
     }
-
-
-
 
 
     public String version() {

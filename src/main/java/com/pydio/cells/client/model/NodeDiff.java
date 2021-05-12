@@ -1,7 +1,7 @@
 package com.pydio.cells.client.model;
 
-import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.SdkNames;
+import com.pydio.cells.api.ui.Node;
 
 import org.w3c.dom.Document;
 
@@ -13,11 +13,11 @@ public class NodeDiff {
     public ArrayList<Node> added = null;
     public ArrayList<Node> updated = null;
 
-    public static NodeDiff create(Document doc){
+    public static NodeDiff create(Document doc) {
         NodeDiff nodeDiff = new NodeDiff();
         org.w3c.dom.Node diff = doc.getElementsByTagName(SdkNames.XML_NODES_DIFF).item(0);
 
-        if(diff != null) {
+        if (diff != null) {
             for (int i = 0; i < diff.getChildNodes().getLength(); i++) {
                 org.w3c.dom.Node child = diff.getChildNodes().item(i);
                 String tag = child.getNodeName();
@@ -32,14 +32,14 @@ public class NodeDiff {
                     list = nodeDiff.updated;
                 }
 
-                if(list == null){
+                if (list == null) {
                     list = new ArrayList<>();
                 }
 
                 for (int j = 0; j < child.getChildNodes().getLength(); j++) {
                     org.w3c.dom.Node c = child.getChildNodes().item(j);
                     Node pydNode = NodeFactory.createNode(c);
-                    if( pydNode != null){
+                    if (pydNode != null) {
                         list.add(pydNode);
                     }
                 }

@@ -22,10 +22,10 @@ public class Token {
     }
 
     public boolean isExpired() {
-        if (expirationTime == -1){
+        if (expirationTime == -1) {
             return false;
         }
-        
+
         if (value == null) {
             return true;
         }

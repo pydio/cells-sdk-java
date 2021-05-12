@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class BookmarkNode implements Node {
 
-    private String label;
+    private final String label;
     private Properties properties;
 
     public BookmarkNode(String label) {

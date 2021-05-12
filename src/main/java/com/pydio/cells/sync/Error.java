@@ -17,7 +17,8 @@ public class Error {
     private String path;
     private String details;
 
-    public Error(){}
+    public Error() {
+    }
 
     public int getCode() {
         return code;
@@ -68,32 +69,31 @@ public class Error {
     }
 
 
-
-    public static Error notMounted(String fs){
+    public static Error notMounted(String fs) {
         Error error = new Error();
         error.code = NOT_MOUNTED;
         return error;
     }
 
-    public static Error notFound(String fs){
+    public static Error notFound(String fs) {
         Error error = new Error();
         error.code = NOT_FOUND;
         return error;
     }
 
-    public static Error cannotRead(String fs){
+    public static Error cannotRead(String fs) {
         Error error = new Error();
         error.code = CANNOT_READ;
         return error;
     }
 
-    public static Error cannotWrite(String fs, String path){
+    public static Error cannotWrite(String fs, String path) {
         Error error = new Error();
         error.code = CANNOT_WRITE;
         return error;
     }
 
-    public static Error failedToGetContent(String fs, String path){
+    public static Error failedToGetContent(String fs, String path) {
         Error error = new Error();
         error.code = GET_CONTENT;
         error.fs = fs;
@@ -101,19 +101,19 @@ public class Error {
         return error;
     }
 
-    public static Error unknownOperation(String op){
+    public static Error unknownOperation(String op) {
         Error error = new Error();
         error.code = UNKNOWN_OPERATION;
         return error;
     }
 
-    public static Error notFound(String fs, String path){
+    public static Error notFound(String fs, String path) {
         Error error = new Error();
         error.code = NOT_FOUND;
         return error;
     }
 
-    public static Error opFailed(String op, String fs, String path){
+    public static Error opFailed(String op, String fs, String path) {
         Error error = new Error();
         error.setCode(OP_FAILED);
         error.fs = fs;

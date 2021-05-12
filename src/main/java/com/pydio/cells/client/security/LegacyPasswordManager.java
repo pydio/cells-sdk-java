@@ -18,7 +18,7 @@ public class LegacyPasswordManager {
     };
 
     public static String encrypt(String property) throws GeneralSecurityException {
-        if(property.startsWith("$AJXP_ENC$")){
+        if (property.startsWith("$AJXP_ENC$")) {
             return property;
         }
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
@@ -29,7 +29,7 @@ public class LegacyPasswordManager {
     }
 
     public static String decrypt(String property) throws GeneralSecurityException {
-        if(!property.startsWith("$AJXP_ENC$")){
+        if (!property.startsWith("$AJXP_ENC$")) {
             return property;
         }
         property = property.replace("$AJXP_ENC$", "");
@@ -49,17 +49,17 @@ public class LegacyPasswordManager {
     }
 
     public static byte[] toByte(String hexString) {
-        int len = hexString.length()/2;
+        int len = hexString.length() / 2;
         byte[] result = new byte[len];
         for (int i = 0; i < len; i++)
-            result[i] = Integer.valueOf(hexString.substring(2*i, 2*i+2), 16).byteValue();
+            result[i] = Integer.valueOf(hexString.substring(2 * i, 2 * i + 2), 16).byteValue();
         return result;
     }
 
     public static String toHex(byte[] buf) {
         if (buf == null)
             return "";
-        StringBuffer result = new StringBuffer(2*buf.length);
+        StringBuffer result = new StringBuffer(2 * buf.length);
         for (int i = 0; i < buf.length; i++) {
             appendHex(result, buf[i]);
         }
@@ -69,6 +69,6 @@ public class LegacyPasswordManager {
     private final static String HEX = "0123456789ABCDEF";
 
     private static void appendHex(StringBuffer sb, byte b) {
-        sb.append(HEX.charAt((b>>4)&0x0f)).append(HEX.charAt(b&0x0f));
+        sb.append(HEX.charAt((b >> 4) & 0x0f)).append(HEX.charAt(b & 0x0f));
     }
 }

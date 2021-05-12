@@ -32,7 +32,8 @@ public class TestUtils {
     private final static String SEED_CHARS = "abcdef1234567890";
     private static String OS = System.getProperty("os.name").toLowerCase();
 
-    public static Transport getSession(ServerFactory factory, TestConfiguration.ServerConfig conf) throws SDKException {
+    /** Create a new transport that is already logged in and ready to use. */
+    public static Transport getTransport(ServerFactory factory, RemoteServerConfig conf) throws SDKException {
         ServerURL sURL = null;
         try {
             sURL = ServerURLImpl.fromAddress(conf.serverURL, conf.skipVerify);

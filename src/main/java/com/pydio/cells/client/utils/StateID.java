@@ -25,7 +25,9 @@ public class StateID {
         this.path = null;
     }
 
-    /** Simply create a StateID object from its *encoded* string representation */
+    /**
+     * Simply create a StateID object from its *encoded* string representation
+     */
     public static StateID fromId(String stateId) {
 
         if (stateId == null || stateId.length() == 0) {
@@ -52,12 +54,14 @@ public class StateID {
         }
     }
 
-    /** Retrieve the *encoded* representation of this StateID for serialization */
-    public String getId(){
+    /**
+     * Retrieve the *encoded* representation of this StateID for serialization
+     */
+    public String getId() {
         StringBuilder builder = new StringBuilder();
         builder.append(utf8Encode(username)).append("@");
         StringBuilder urlBuilder = new StringBuilder(serverUrl);
-        if (path != null && path.length() > 0 && !"/".equals(path)){
+        if (path != null && path.length() > 0 && !"/".equals(path)) {
             urlBuilder.append(path);
         }
         builder.append(utf8Encode(urlBuilder.toString()));
@@ -77,15 +81,17 @@ public class StateID {
     }
 
     public String getWorkspace() {
-        if (path == null || "".equals(path) || "/".equals(path)){
+        if (path == null || "".equals(path) || "/".equals(path)) {
             return null;
         }
         return path.substring(1).split("/")[0];
     }
 
-    /** return the trailing part of the path without the workspace */
+    /**
+     * return the trailing part of the path without the workspace
+     */
     public String getFile() {
-        if (path == null || "".equals(path) || "/".equals(path)){
+        if (path == null || "".equals(path) || "/".equals(path)) {
             return null;
         }
         // TODO: double check and test
@@ -118,11 +124,11 @@ public class StateID {
         //return super.utf8Encode(value);
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(username).append("@");
         builder.append(serverUrl);
-        if (path != null && path.length() > 0 && !"/".equals(path)){
+        if (path != null && path.length() > 0 && !"/".equals(path)) {
             builder.append(path);
         }
         return builder.toString();

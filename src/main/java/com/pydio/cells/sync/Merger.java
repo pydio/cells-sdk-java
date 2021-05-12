@@ -16,10 +16,10 @@ import java.util.Map;
 
 public class Merger {
 
-    private ChangeStore changeStore;
-    private MergeState state;
-    private List<Fs> fsList;
-    private Map<String, Fs> mappedFsList;
+    private final ChangeStore changeStore;
+    private final MergeState state;
+    private final List<Fs> fsList;
+    private final Map<String, Fs> mappedFsList;
 
     public Merger(MergeState state, ChangeStore store, Fs... fsList) {
         this.state = state;
@@ -51,7 +51,7 @@ public class Merger {
                 Fs sourceFs = mappedFsList.get(w.getSourceFs());
                 if (sourceFs.receivesEvents()) {
                     Fs targetFs = mappedFsList.get(w.getTargetFs());
-                    if (targetFs.sendsEvents()){
+                    if (targetFs.sendsEvents()) {
 
                         GetChangeRequest getChangeRequest = new GetChangeRequest();
                         getChangeRequest.setPath(w.getPath());
@@ -61,7 +61,7 @@ public class Merger {
                         GetChangesResponse getChangesResponse = targetFs.getChanges(getChangeRequest);
                         if (getChangesResponse.isSuccess()) {
                             List<Change> changes = getChangesResponse.getChanges();
-                            if (changes != null){
+                            if (changes != null) {
                                 this.changeStore.putChanges(changes);
                             }
                             w.setSeq(getChangesResponse.getLastSeq());
@@ -80,9 +80,9 @@ public class Merger {
 
     private Error processChanges(MergeActivityListener mergeActivityListener) {
         int count = this.changeStore.count();
-        while(count > 0) {
+        while (count > 0) {
             List<Change> changes = this.changeStore.getChanges(10);
-            for (Change c: changes){
+            for (Change c : changes) {
                 String source = c.getSourceSide();
                 String target = c.getTargetSide();
 
@@ -94,7 +94,7 @@ public class Merger {
                 request.setContentLoader(sourceFs.getContentLoader());
 
                 ProcessChangeResponse response = targetFs.processChange(request);
-                if (response.isSuccess()){
+                if (response.isSuccess()) {
                     changeStore.deleteChange(c);
                     if (mergeActivityListener != null) {
                         mergeActivityListener.onActionCompleted(c);

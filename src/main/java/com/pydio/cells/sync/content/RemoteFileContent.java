@@ -1,8 +1,8 @@
 package com.pydio.cells.sync.content;
 
 import com.pydio.cells.api.Client;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.sync.Error;
 
@@ -19,7 +19,7 @@ public class RemoteFileContent implements Content {
     private Stats stats;
     private Error error;
 
-    public RemoteFileContent(Transport session, String ws, String path){
+    public RemoteFileContent(Transport session, String ws, String path) {
 
         this.session = session;
         client = session.getClient();
@@ -67,7 +67,7 @@ public class RemoteFileContent implements Content {
 
         // TODO this must be adapted or removed after refactoring is done.
         // Anyhow the cells java client cannot download yet.
-        return  null;
+        return null;
 //        ServerURL targetURL = session.getServer().getServerURL();
 //
 //        if(serverURL.skipVerify()) {

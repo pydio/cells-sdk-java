@@ -1,7 +1,7 @@
 package com.pydio.cells.client.model.parser;
 
-import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
+import com.pydio.cells.api.ui.Plugin;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class RegistrySaxHandler extends DefaultHandler {
 
-    private RegistryItemHandler handler;
+    private final RegistryItemHandler handler;
 
     private boolean inside_actions = false, inside_action = false;
     private boolean inside_plugins = false;

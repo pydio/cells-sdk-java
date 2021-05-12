@@ -2,9 +2,9 @@ package com.pydio.cells.sync.fs;
 
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;
-import com.pydio.cells.sync.content.ContentLoader;
 import com.pydio.cells.sync.changes.ProcessChangeRequest;
 import com.pydio.cells.sync.changes.ProcessChangeResponse;
+import com.pydio.cells.sync.content.ContentLoader;
 
 import java.util.List;
 

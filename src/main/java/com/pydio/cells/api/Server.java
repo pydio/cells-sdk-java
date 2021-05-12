@@ -38,7 +38,7 @@ public interface Server {
         return getServerURL().skipVerify();
     }
 
-    default String getLabel(){
+    default String getLabel() {
         // TODO implement this from boot config
         return url();
     }

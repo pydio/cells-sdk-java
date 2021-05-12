@@ -1,19 +1,19 @@
 package com.pydio.cells.client.model;
 
+import com.pydio.cells.api.Error;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.callbacks.ServerResolver;
+import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.ui.ServerNode;
 import com.pydio.cells.api.ui.WorkspaceNode;
-import com.pydio.cells.api.callbacks.ServerResolver;
-import com.pydio.cells.api.Error;
-import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.client.security.CertificateTrust;
 import com.pydio.cells.client.security.CertificateTrustManager;
 import com.pydio.cells.client.utils.ServerResolution;
 import com.pydio.cells.client.utils.io;
+import com.pydio.cells.transport.ServerURLImpl;
 
 import org.json.JSONObject;
 
@@ -118,10 +118,9 @@ public class ServerNodeImpl implements ServerNode {
         return null;
     }
 
-    public Map<String, WorkspaceNode> getWorkspaces(){
+    public Map<String, WorkspaceNode> getWorkspaces() {
         return workspaces;
     }
-
 
 
     public ServerNodeImpl init(String url) {
@@ -651,8 +650,6 @@ public class ServerNodeImpl implements ServerNode {
     public JSONObject getOIDCInfo() {
         return this.oidc;
     }
-
-
 
 
     public HostnameVerifier getHostnameVerifier() {

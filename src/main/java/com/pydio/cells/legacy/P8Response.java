@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.io.StringBufferInputStream;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
@@ -45,7 +44,7 @@ import javax.xml.parsers.SAXParserFactory;
  * Upon creation we locally retrieve at max 512 bytes that we try to parse with Sax to insure
  * we do not have an error response: the Pydio 8 API returns an HTTP status 200 with an XML
  * error message in case something goes wrong.
- *
+ * <p>
  * WARNING: this means that the connection is effectively opened upon P8Response instantiation.
  */
 public class P8Response implements Closeable {
@@ -302,7 +301,7 @@ public class P8Response implements Closeable {
                 return;
             }
 
-            if ("message".equals(qName) && (attributes.getLength() >0 && "ERROR".equals(attributes.getValue(0)))){
+            if ("message".equals(qName) && (attributes.getLength() > 0 && "ERROR".equals(attributes.getValue(0)))) {
                 throw new SAXException("not-found");
             }
 
