@@ -136,7 +136,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     public void invalidateToken() {
-        this.tokens.delete(this.getId());
+        tokens.delete(getId());
     }
 
     @Override
