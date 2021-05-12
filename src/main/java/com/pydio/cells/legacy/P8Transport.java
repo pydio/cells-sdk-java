@@ -35,15 +35,16 @@ import static com.pydio.cells.client.utils.StateID.utf8Encode;
 
 public class P8Transport implements ILegacyTransport, SdkNames {
 
-    private TokenService tokens;
-
     private final Server server;
     private final String username;
-    private Credentials credentials;
 
+    private TokenService tokens;
+    private Credentials credentials;
     private CookieManager cookieManager;
+
     private int loginFailure;
 
+    // TODO remove this once we have cornered the issue that makes CRUD integration test to fail.
     private String tmpToken1, tmpToken2;
 
     private Boolean useCaptcha;
@@ -84,7 +85,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         // and then always rely on the objects that are stored in memory.
         useCaptcha();
         login();
-
         // TODO more init
     }
 

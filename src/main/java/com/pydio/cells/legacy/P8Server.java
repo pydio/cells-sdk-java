@@ -76,7 +76,6 @@ public class P8Server implements Server {
         return false;
     }
 
-
     // Getters
 
     public String version() {
@@ -189,17 +188,12 @@ public class P8Server implements Server {
         }
     }
 
-
     public boolean equals(Object obj) {
-
         if (this == obj) return true;
-
         if (obj == null || !(obj instanceof P8Server))
             return false;
-
         return url().equals(((P8Server) obj).url());
     }
-
 
     public OauthConfig getOAuthConfig() {
         throw new RuntimeException("Pydio 8 server does not support OAuth credential flows.");

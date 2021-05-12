@@ -158,7 +158,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return tokenStr;
     }
 
-
     @Override
     public void login() throws SDKException {
         getToken();
@@ -293,7 +292,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             throw SDKException.conFailed(e);
         }
     }
-
 
     private static SDKException fromApiException(ApiException e) {
         int code = ErrorCodes.fromHttpStatus(e.getCode());

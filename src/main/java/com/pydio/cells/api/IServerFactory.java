@@ -8,6 +8,6 @@ public interface IServerFactory {
 
     Transport registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException;
 
-    Transport getSession(String login, ServerURL serverURL) throws SDKException;
+    Transport getTransport(String login, ServerURL serverURL) throws SDKException;
 
 }

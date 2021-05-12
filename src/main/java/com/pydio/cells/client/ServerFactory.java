@@ -24,13 +24,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Optimistic implementation of a IServerFactory does not persist (cache) anything locally
+ * Optimistic implementation of a IServerFactory that does not persist (cache) anything locally
  */
 public class ServerFactory implements IServerFactory {
 
     private final TokenService tokenService;
     private final Map<String, Server> servers = new HashMap<>();
-    private final Map<String, Transport> sessions = new HashMap<>();
+    private final Map<String, Transport> transports = new HashMap<>();
 
     public ServerFactory(TokenService tokenService) {
         this.tokenService = tokenService;
@@ -58,7 +58,6 @@ public class ServerFactory implements IServerFactory {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
         } catch (IOException e) {
             try {
-                // We do not have other choice than to try the various well known endpoints
                 ServerURL currURL = serverURL.withPath(P8Server.BOOTCONF_PATH);
                 currURL.ping();
                 return SdkNames.TYPE_LEGACY_P8;
@@ -133,7 +132,7 @@ public class ServerFactory implements IServerFactory {
 
     public void unregisterAccount(String accountID) throws SDKException {
         // TODO rather introduce another layer to ease use of a persistent store.
-        sessions.remove(accountID);
+        transports.remove(accountID);
     }
 
 
@@ -142,10 +141,10 @@ public class ServerFactory implements IServerFactory {
     }
 
     @Override
-    public Transport getSession(String login, ServerURL serverURL) throws SDKException {
+    public Transport getTransport(String login, ServerURL serverURL) throws SDKException {
 
-        if (sessions.containsKey(accountID(login, serverURL))) {
-            return sessions.get(accountID(login, serverURL));
+        if (transports.containsKey(accountID(login, serverURL))) {
+            return transports.get(accountID(login, serverURL));
         }
 
         Server server = getServer(serverURL.getId());
@@ -153,19 +152,19 @@ public class ServerFactory implements IServerFactory {
             server = register(serverURL);
         }
 
-        Transport session = null;
+        Transport transport = null;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
-            session = new CellsTransport(server, login);
-            ((CellsTransport) session).restore(tokenService);
+            transport = new CellsTransport(server, login);
+            ((CellsTransport) transport).restore(tokenService);
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            session = new P8Transport(server, login);
+            transport = new P8Transport(server, login);
             // ((CellsTransport)session).restore(tokenService);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
-        sessions.put(accountID(login, serverURL), session);
+        transports.put(accountID(login, serverURL), transport);
 
-        return session;
+        return transport;
     }
 
     public Client getClient(Transport transport){

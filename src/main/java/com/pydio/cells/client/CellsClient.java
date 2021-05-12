@@ -79,13 +79,13 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class CellsClient implements Client, SdkNames {
 
-    private final CellsTransport session;
+    private final CellsTransport transport;
 
     private Credentials credentials;
     private final Boolean skipOAuth = false;
 
-    public CellsClient(Transport session) {
-        this.session = (CellsTransport) session;
+    public CellsClient(Transport transport) {
+        this.transport = (CellsTransport) transport;
     }
 
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
@@ -102,13 +102,15 @@ public class CellsClient implements Client, SdkNames {
         InputStream in = null;
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
-            con = session.openApiConnection("/frontend/state");
+            con = transport.openApiConnection("/frontend/state");
             con.setRequestMethod("GET");
             in = con.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
             throw SDKException.conFailed(e);
         }
+        // TODO probably herited from P8 legacy time... and useless in a Cells context.
+        // Double check and remove
         String[] excluded = {WORKSPACE_ACCESS_TYPE_CONF, WORKSPACE_ACCESS_TYPE_SHARED,
                 WORKSPACE_ACCESS_TYPE_MYSQL, WORKSPACE_ACCESS_TYPE_IMAP, WORKSPACE_ACCESS_TYPE_JSAPI,
                 WORKSPACE_ACCESS_TYPE_USER, WORKSPACE_ACCESS_TYPE_HOME,
@@ -533,7 +535,7 @@ public class CellsClient implements Client, SdkNames {
         policy.setAction(ServiceResourcePolicyAction.OWNER);
         policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
         policy.setResource(nodeId);
-        policy.setSubject("user:" + session.getUser());
+        policy.setSubject("user:" + transport.getUser());
         item.addPoliciesItem(policy);
         metas.add(item);
 
@@ -541,7 +543,7 @@ public class CellsClient implements Client, SdkNames {
         policy.setAction(ServiceResourcePolicyAction.READ);
         policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
         policy.setResource(nodeId);
-        policy.setSubject("user:" + session.getUser());
+        policy.setSubject("user:" + transport.getUser());
         item.addPoliciesItem(policy);
         metas.add(item);
 
@@ -549,7 +551,7 @@ public class CellsClient implements Client, SdkNames {
         policy.setAction(ServiceResourcePolicyAction.WRITE);
         policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
         policy.setResource(nodeId);
-        policy.setSubject("user:" + session.getUser());
+        policy.setSubject("user:" + transport.getUser());
         item.addPoliciesItem(policy);
         metas.add(item);
         request.setMetaDatas(metas);
@@ -806,9 +808,6 @@ public class CellsClient implements Client, SdkNames {
         return delete(ws, new String[]{"/recycle_bin"});
     }
 
-    public interface Factory {
-    }
-
     public CellsClient get(Transport session) {
         return new CellsClient(session);
     }
@@ -831,6 +830,7 @@ public class CellsClient implements Client, SdkNames {
 
 
     // Simple shortcut to encode URLs
+    // TODO rather user StateID methods
     protected String utf8Encode(String value) {
         return URLEncoder.encode(value, UTF_8);
     }
@@ -840,9 +840,8 @@ public class CellsClient implements Client, SdkNames {
         return new SDKException(code, e);
     }
 
-
     private ApiClient authenticatedClient() throws SDKException {
-        return session.authenticatedClient();
+        return transport.authenticatedClient();
     }
 
     /**
