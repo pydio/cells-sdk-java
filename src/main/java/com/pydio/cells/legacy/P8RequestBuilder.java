@@ -387,8 +387,8 @@ public class P8RequestBuilder {
         return this;
     }
 
-    public P8RequestBuilder setToken(Transport session) throws SDKException {
-        String token = ((ILegacyTransport) session).getToken();
+    public P8RequestBuilder setToken(Transport transport) throws SDKException {
+        String token = ((ILegacyTransport) transport).getToken();
         if (token != null) {
             return setSecureToken(token);
         }

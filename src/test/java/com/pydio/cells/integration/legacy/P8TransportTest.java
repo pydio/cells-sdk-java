@@ -29,13 +29,13 @@ import java.io.ByteArrayInputStream;
  */
 public class P8TransportTest {
 
-    private ServerFactory factory;
-    private TestConfiguration config;
-    private String testRunID;
+    private static ServerFactory factory;
+    private static TestConfiguration config;
+    private static String testRunID;
 
     // @BeforeClass is executed once for the whole class we do not need to scratch it for each test
     @BeforeClass
-    public void setup() {
+    public static void setup() {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new ServerFactory(tokens);
@@ -43,7 +43,7 @@ public class P8TransportTest {
     }
 
     @AfterClass
-    public void teardown() {
+    public static void teardown() {
         // do nothing
     }
 

@@ -11,7 +11,7 @@ import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.utils.StateID;
+import com.pydio.cells.transport.StateID;
 import com.pydio.cells.legacy.consts.ActionNames;
 import com.pydio.cells.legacy.consts.P8Names;
 
@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static com.pydio.cells.client.utils.StateID.utf8Encode;
+import static com.pydio.cells.transport.StateID.utf8Encode;
 
 public class P8Transport implements ILegacyTransport, SdkNames {
 

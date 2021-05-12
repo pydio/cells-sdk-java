@@ -11,7 +11,7 @@ import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.security.PasswordCredentials;
-import com.pydio.cells.client.utils.StateID;
+import com.pydio.cells.transport.StateID;
 import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;

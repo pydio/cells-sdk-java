@@ -9,7 +9,7 @@ import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.StateID;
+import com.pydio.cells.transport.StateID;
 import com.pydio.cells.transport.ServerURLImpl;
 
 import org.junit.After;
@@ -58,7 +58,8 @@ public class BasicConnectionTest {
 
     @Test
     public void testSimpleList() {
-        config.getDefinedServers().forEach(this::testWorkspaces);
+        Map<String, RemoteServerConfig> servers =  config.getDefinedServers();
+        servers.forEach(this::testWorkspaces);
         config.getDefinedServers().forEach(this::basicCRUD);
 
         // For the time being only P8 upload is implemented in plain Java

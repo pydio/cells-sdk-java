@@ -15,7 +15,6 @@ import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.StateID;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
@@ -28,7 +27,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.util.Locale;
 
 import javax.xml.parsers.SAXParser;
