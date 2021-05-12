@@ -1,5 +1,6 @@
 package com.pydio.cells.integration;
 
+import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.NodeHandler;
@@ -9,8 +10,8 @@ import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.transport.StateID;
 import com.pydio.cells.transport.ServerURLImpl;
+import com.pydio.cells.transport.StateID;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -19,6 +20,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +44,10 @@ public class BasicConnectionTest {
 
     @Before
     public void setup() {
-
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new ServerFactory(tokens);
-
         config = new TestConfiguration();
-
     }
 
     @After
@@ -57,64 +56,77 @@ public class BasicConnectionTest {
     }
 
     @Test
-    public void testSimpleList() {
-        Map<String, RemoteServerConfig> servers =  config.getDefinedServers();
-        servers.forEach(this::testWorkspaces);
-        config.getDefinedServers().forEach(this::basicCRUD);
-
-        // For the time being only P8 upload is implemented in plain Java
-//        TestConfiguration.ServerConfig p8Conf = config.getServer("p8");
-//        if (p8Conf != null) {
-//            basicCRUD("p8", p8Conf);
-//        }
-    }
-
-    private void testWorkspaces(String id, RemoteServerConfig conf) {
-        try {
-
-            Transport session = TestUtils.getTransport(factory, conf);
-
-            System.out.println("... Listing workspaces for " + printableId(session.getId()));
-            session.getClient().workspaceList(new DummyHandler());
-
-            System.out.println("... Listing object for workspace " + conf.defaultWS);
-            session.getClient().ls(conf.defaultWS, "/",
-                    null, (node) -> System.out.println(node.getLabel()));
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.assertNull("Listing of default workspace root failed for " + id + ", cause: " + e.getMessage(), e);
+    public void testSimpleList() throws SDKException, IOException {
+        Map<String, RemoteServerConfig> servers = config.getDefinedServers();
+        for (RemoteServerConfig conf : servers.values()) {
+            testWorkspaces(conf);
+            basicCRUD(conf);
         }
     }
 
-    public void basicCRUD(String id, RemoteServerConfig conf) {
-        Transport session = null;
-        try {
-            session = TestUtils.getTransport(factory, conf);
+    private void testWorkspaces(RemoteServerConfig conf) throws SDKException {
 
-            if (!session.getServer().isLegacy()) {
-                // TODO remove this once upload has been done.
-                Log.w("SKIP", "Could not CRUD for *cells* server at " + conf.serverURL
-                        + ": upload with S3 is not yet implemented in plain Java");
-                return;
-            }
+        Transport session = TestUtils.getTransport(factory, conf);
 
-            System.out.println("... Testing CRUD for " + printableId(session.getId()));
+        System.out.println("... Listing workspaces for " + printableId(session.getId()));
+        session.getClient().workspaceList(new DummyHandler());
 
-            String baseDir = "/";
-            final String name = "hello-" + testRunID + ".txt";
-            String message = "Hello Pydio! - this is a message from test run #" + testRunID;
+        System.out.println("... Listing object for workspace " + conf.defaultWS);
+        session.getClient().ls(conf.defaultWS, "/",
+                null, (node) -> System.out.println(node.getLabel()));
+    }
 
-            // Upload
-            byte[] content = message.getBytes();
-            ByteArrayInputStream source = new ByteArrayInputStream(content);
-            Message msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
+    public void basicCRUD(RemoteServerConfig conf) throws SDKException, IOException {
+        Transport session = TestUtils.getTransport(factory, conf);
+
+        if (!session.getServer().isLegacy()) {
+            // TODO remove this once upload has been done.
+            Log.w("SKIP", "Could not CRUD for *cells* server at " + conf.serverURL
+                    + ": upload with S3 is not yet implemented in plain Java");
+            return;
+        }
+
+        System.out.println("... Testing CRUD for " + printableId(session.getId()));
+
+        String baseDir = "/";
+        final String name = "hello-" + testRunID + ".txt";
+        String message = "Hello Pydio! - this is a message from test run #" + testRunID;
+
+        // Upload
+        byte[] content = message.getBytes();
+        ByteArrayInputStream source = new ByteArrayInputStream(content);
+        Message msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
+            System.out.printf("\r%d bytes written\n", progress);
+            return false;
+        });
+        Assert.assertNotNull(msg);
+        Assert.assertEquals("SUCCESS", msg.type());
+
+        // Read
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            session.getClient().download(conf.defaultWS, baseDir + name, out, null);
+            out.flush();
+            byte[] byteArray = out.toByteArray();
+            String retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
+            System.out.println("Retrieved: " + retrievedMsg);
+            Assert.assertEquals(message, retrievedMsg);
+        }
+
+        // Update fails in P8
+        if (!session.getServer().isLegacy()) {
+            System.out.println("Legacy, for sure ?");
+
+            message += " -- Add with some additional content";
+            content = message.getBytes();
+            source = new ByteArrayInputStream(content);
+            msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
                 System.out.printf("\r%d bytes written\n", progress);
                 return false;
             });
             Assert.assertNotNull(msg);
             Assert.assertEquals("SUCCESS", msg.type());
 
-            // Read
+            // Read updated
             try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
                 session.getClient().download(conf.defaultWS, baseDir + name, out, null);
                 out.flush();
@@ -123,84 +135,55 @@ public class BasicConnectionTest {
                 System.out.println("Retrieved: " + retrievedMsg);
                 Assert.assertEquals(message, retrievedMsg);
             }
-
-            // Update fails in P8
-            if (!session.getServer().isLegacy()) {
-                System.out.println("Legacy, for sure ?");
-
-                message += " -- Add with some additional content";
-                content = message.getBytes();
-                source = new ByteArrayInputStream(content);
-                msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
-                    System.out.printf("\r%d bytes written\n", progress);
-                    return false;
-                });
-                Assert.assertNotNull(msg);
-                Assert.assertEquals("SUCCESS", msg.type());
-
-                // Read updated
-                try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-                    session.getClient().download(conf.defaultWS, baseDir + name, out, null);
-                    out.flush();
-                    byte[] byteArray = out.toByteArray();
-                    String retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
-                    System.out.println("Retrieved: " + retrievedMsg);
-                    Assert.assertEquals(message, retrievedMsg);
-                }
-            }
-            // Delete
-            msg = session.getClient().delete(conf.defaultWS, new String[]{"/" + name});
-            Assert.assertNotNull(msg);
-            Assert.assertEquals("EMPTY", msg.type());
-
-            // Check if uploaded files is still there
-            final List<String> founds = new ArrayList<>();
-            session.getClient().ls(conf.defaultWS, baseDir,
-                    null, (node) -> {
-                        if (name.equals(node.getLabel())) founds.add(name);
-                    });
-            Assert.assertEquals(0, founds.size());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.assertNull("CRUD failed for " + (session == null ? id : session.getId()) + ": " + e.getMessage(), e);
         }
 
-        // TODO finish implementing the CRUD and corresponding checks. Typically, for
-        // the time being upload fails silently.
+        // Delete
+        msg = session.getClient().delete(conf.defaultWS, new String[]{"/" + name});
+        Assert.assertNotNull(msg);
+        Assert.assertEquals("EMPTY", msg.type());
+
+        // Check if uploaded files is still there
+        final List<String> founds = new ArrayList<>();
+        session.getClient().ls(conf.defaultWS, baseDir,
+                null, (node) -> {
+                    if (name.equals(node.getLabel())) founds.add(name);
+                });
+        Assert.assertEquals(0, founds.size());
+
+        // TODO finish implementing the CRUD and corresponding checks.
     }
 
     @Test
     public void testSkipVerify() {
-        try {
-            Map<String, RemoteServerConfig> servers = config.getDefinedServers();
-            for (String key : servers.keySet()) {
+//        try {
+        Map<String, RemoteServerConfig> servers = config.getDefinedServers();
+        for (String key : servers.keySet()) {
 
-                RemoteServerConfig currConf = servers.get(key);
-                if (!currConf.skipVerify) {
-                    continue;
-                }
+            RemoteServerConfig currConf = servers.get(key);
+            if (!currConf.skipVerify) {
+                continue;
+            }
 
-                // Test Self signed URL
-                ServerURL currURL;
+            // Test Self signed URL
+            ServerURL currURL;
+            try {
+                currURL = ServerURLImpl.fromAddress(currConf.serverURL);
+                // => Self-signed: ping fails
+                currURL.ping();
+            } catch (Exception e) {
+                Assert.assertTrue(e instanceof SSLHandshakeException);
                 try {
-                    currURL = ServerURLImpl.fromAddress(currConf.serverURL);
-                    // => Self-signed: ping fails
+                    currURL = ServerURLImpl.fromAddress(currConf.serverURL, true);
                     currURL.ping();
-                } catch (Exception e) {
-                    Assert.assertTrue(e instanceof SSLHandshakeException);
-                    try {
-                        currURL = ServerURLImpl.fromAddress(currConf.serverURL, true);
-                        currURL.ping();
-                    } catch (Exception e2) {
-                        Assert.assertNull(e);
-                    }
+                } catch (Exception e2) {
+                    Assert.assertNull(e);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.assertNull(e);
         }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Assert.assertNull(e);
+//        }
     }
 
 
