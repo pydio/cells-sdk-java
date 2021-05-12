@@ -44,6 +44,10 @@ public class TokenService {
         return t;
     }
 
+    public void delete(String key) {
+        store.delete(key);
+    }
+
     public void register(String key, Token token) {
         store.save(key, token);
     }

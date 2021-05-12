@@ -135,6 +135,10 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return secureToken;
     }
 
+    public void invalidateToken() {
+        this.tokens.delete(this.getId());
+    }
+
     @Override
     public String getUser() {
         return username;
@@ -477,6 +481,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 //postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));
             }
             byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
+            System.out.println(postData.toString());
 
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postDataBytes.length));
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "application/x-www-form-urlencoded; charset=utf-8");

@@ -52,6 +52,8 @@ public class P8Client implements Client, SdkNames {
 
     private P8Request refreshSecureToken(P8Request req) {
         try {
+            this.transport.invalidateToken();
+
             if (!transport.useCaptcha()) {
                 return P8RequestBuilder.update(req).setToken(transport).getRequest();
             }
