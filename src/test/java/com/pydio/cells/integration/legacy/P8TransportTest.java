@@ -7,22 +7,25 @@ import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.integration.RemoteServerConfig;
 import com.pydio.cells.integration.TestConfiguration;
 import com.pydio.cells.integration.TestUtils;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 
 /**
- * Performs basic tests against a running Cells instance. You must first adapt
+ * Performs basic tests against a running Pydio 8 instance. You must first adapt
  * the "src/test/resources/servers/p8.properties" file to match your setup.
  * You can then launch the test with:
- * <code>./gradlew :test -Dtest.profile=integration</code>
+ * <code>./gradlew test --tests com.pydio.cells.integration.legacy.P8TransportTest -Dtest.profile=integration</code>
  */
 public class P8TransportTest {
 
@@ -30,7 +33,8 @@ public class P8TransportTest {
     private TestConfiguration config;
     private String testRunID;
 
-    @Before
+    // @BeforeClass is executed once for the whole class we do not need to scratch it for each test
+    @BeforeClass
     public void setup() {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
@@ -38,7 +42,7 @@ public class P8TransportTest {
         config = new TestConfiguration();
     }
 
-    @After
+    @AfterClass
     public void teardown() {
         // do nothing
     }
@@ -48,6 +52,7 @@ public class P8TransportTest {
         // TODO move this in the setup
         RemoteServerConfig p8Conf = config.getServer("p8");
         if (p8Conf == null) {
+            Log.w("Unsupported conf", "No Pydio 8 compatible configuration found, skipping");
             return;
         }
 
@@ -61,7 +66,6 @@ public class P8TransportTest {
             System.out.println("Size: "+ stats.getSize());
             System.out.println("Time: "+ stats.getmTime());
             System.out.println("Hash: "+ stats.getHash());
-
 
             // Upload
             String baseDir = "/";
