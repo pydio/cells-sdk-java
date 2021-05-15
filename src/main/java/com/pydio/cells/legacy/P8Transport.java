@@ -659,7 +659,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         Token t = new Token();
         t.subject = getId();
         t.value = secureToken;
-        t.expirationTime = -1;
+        t.setExpiry(-1);
         tokens.register(getId(), t);
     }
 

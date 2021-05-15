@@ -11,12 +11,12 @@ import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.security.PasswordCredentials;
-import com.pydio.cells.transport.StateID;
 import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
 import com.pydio.cells.transport.CellsServer;
 import com.pydio.cells.transport.CellsTransport;
+import com.pydio.cells.transport.StateID;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -158,7 +158,7 @@ public class ServerFactory implements IServerFactory {
             ((CellsTransport) transport).restore(tokenService);
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
             transport = new P8Transport(server, login);
-            // ((CellsTransport)session).restore(tokenService);
+            ((P8Transport) transport).restore(tokenService);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
@@ -167,8 +167,8 @@ public class ServerFactory implements IServerFactory {
         return transport;
     }
 
-    public Client getClient(Transport transport){
-        if (transport.getServer().isLegacy()){
+    public Client getClient(Transport transport) {
+        if (transport.getServer().isLegacy()) {
             return new P8Client(transport);
         } else {
             return new CellsClient(transport);

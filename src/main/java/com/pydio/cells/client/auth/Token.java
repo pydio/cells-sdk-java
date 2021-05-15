@@ -11,15 +11,12 @@ public class Token {
 
     public String subject;
     public String value;
-    public long expirationTime;
+    public long expiresIn;
+    private long expirationTime;
     public String refreshToken;
     public String idToken;
     public String scope;
     public String tokenType;
-
-    private long currentTimeInSeconds() {
-        return System.currentTimeMillis() / 1000;
-    }
 
     public boolean isExpired() {
         if (expirationTime == -1) {
@@ -52,14 +49,27 @@ public class Token {
     public static Token decodeOauthJWT(String jwt) throws ParseException {
         Token t = new Token();
         JSONObject jo = new JSONObject(jwt);
-
         t.value = jo.getString("access_token");
-        t.expirationTime = jo.getInt("expires_in");
         t.idToken = jo.getString("id_token");
         t.refreshToken = jo.getString("refresh_token");
         t.scope = jo.getString("scope");
         t.tokenType = jo.getString("token_type");
+        t.setExpiry(jo.getInt("expires_in"));
         return t;
+    }
+
+    public void setExpiry(long expiresIn) {
+        if (expiresIn == -1){
+            expirationTime = -1;
+            this.expiresIn = -1;
+        } else {
+            expirationTime = currentTimeInSeconds() + expiresIn;
+            this.expiresIn = expiresIn;
+        }
+    }
+
+    private long currentTimeInSeconds() {
+        return System.currentTimeMillis() / 1000;
     }
 
 }

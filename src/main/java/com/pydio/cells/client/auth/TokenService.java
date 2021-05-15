@@ -156,7 +156,7 @@ public class TokenService {
 //    }
 
 
-    public Token legacyLogin(CellsTransport session, Credentials credentials) throws SDKException {
+    public Token legacyLogin(CellsTransport transport, Credentials credentials) throws SDKException {
 
         Map<String, String> authInfo = new HashMap<>();
         authInfo.put("login", credentials.getLogin());
@@ -175,7 +175,7 @@ public class TokenService {
         request.setClientTime((int) System.currentTimeMillis());
         request.authInfo(authInfo);
 
-        FrontendServiceApi api = new FrontendServiceApi(session.getApiClient());
+        FrontendServiceApi api = new FrontendServiceApi(transport.getApiClient());
 
 
         RestFrontSessionResponse response;
@@ -184,15 +184,10 @@ public class TokenService {
 
             Token t = new Token();
             // String subject = String.format("%s@%s", credentials.getLogin(), session.getServer().getServerURL().getId());
-            String subject = session.getId();
-            t.subject = subject;
+            t.subject = transport.getId();
             t.value = response.getJWT();
-            long expireIn = (long) response.getExpireTime();
-            t.expirationTime = System.currentTimeMillis() / 1000 + expireIn;
-
-            // FIXME why shouldn't we provide an ID here ?
-            store.save(subject, t);
-
+            t.setExpiry((long) response.getExpireTime());
+            store.save(transport.getId(), t);
             return t;
         } catch (ApiException e) {
             throw new SDKException(ErrorCodes.no_token_available, new IOException("login or password incorrect"));
