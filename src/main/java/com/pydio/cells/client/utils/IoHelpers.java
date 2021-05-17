@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 
 /* Work in progress: new version of the utilitary static methods
 to solve resource exhaustion issues*/
@@ -19,6 +20,33 @@ public class IoHelpers {
     public static void consume(InputStream in) throws IOException {
         byte[] buffer = new byte[bufferSize];
         for (int read = 0; read != -1; read = in.read(buffer)) ;
+    }
+
+    public static void closeQuietly(InputStream in) {
+        try {
+            if (in != null) {
+                in.close();
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    public static void closeQuietly(OutputStream out) {
+        try {
+            if (out != null) {
+                out.close();
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    public static void closeQuietly(HttpURLConnection con) {
+        try {
+            if (con != null) {
+                con.disconnect();
+            }
+        } catch (Exception ignored) {
+        }
     }
 
     public static boolean quietlyClose(InputStream in) {
@@ -42,13 +70,13 @@ public class IoHelpers {
     public static long pipeRead(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[bufferSize];
         long total_read = 0;
-        int read;
-        for (; ; ) {
+        int read = 0;
+        while (read != -1) {
             read = in.read(buffer);
-            if (read == -1)
-                break;
             total_read += read;
-            out.write(buffer, 0, read);
+            if (read != -1) {
+                out.write(buffer, 0, read);
+            }
         }
         return total_read;
     }

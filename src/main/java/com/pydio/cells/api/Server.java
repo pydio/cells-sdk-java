@@ -1,6 +1,6 @@
 package com.pydio.cells.api;
 
-import com.pydio.cells.client.auth.OauthConfig;
+import com.pydio.cells.client.auth.OAuthConfig;
 
 import java.net.MalformedURLException;
 
@@ -28,7 +28,7 @@ public interface Server {
     @Deprecated
     boolean supportsOauth();
 
-    OauthConfig getOAuthConfig();
+    OAuthConfig getOAuthConfig();
 
     default ServerURL newURL(String path) throws MalformedURLException {
         return getServerURL().withPath(path);

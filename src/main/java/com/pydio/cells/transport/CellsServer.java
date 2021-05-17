@@ -4,7 +4,8 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.client.auth.OauthConfig;
+import com.pydio.cells.client.auth.OAuthConfig;
+import com.pydio.cells.client.utils.IoHelpers;
 import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.client.utils.io;
 
@@ -20,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 public class CellsServer implements Server {
 
     public final static String API_PREFIX = "/a";
-    public final static String OIDC_WELLKNOWN_PATH = "/oidc/.well-known/openid-configuration";
     public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
 
     private final String serverType = SdkNames.TYPE_CELLS;
@@ -36,7 +36,7 @@ public class CellsServer implements Server {
 
     // Legacy objects TODO remove
     private JSONObject bootConf;
-    private OauthConfig oidc;
+    private OAuthConfig oidc;
 
     public CellsServer(ServerURL serverURL) {
         this.serverURL = serverURL;
@@ -113,24 +113,34 @@ public class CellsServer implements Server {
     }
 
     private void downloadOIDCConfiguration() throws SDKException {
-        HttpURLConnection con;
-        InputStream in;
+        HttpURLConnection con = null;
+        InputStream in = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ServerURL oidcURL = null;
         try {
-            con = newURL(OIDC_WELLKNOWN_PATH).openConnection();
+            oidcURL = newURL(OAuthConfig.OIDC_WELLKNOWN_PATH);
+            con = oidcURL.openConnection();
             con.setRequestMethod("GET");
             in = con.getInputStream();
-            io.pipeRead(in, out);
-            JSONObject oidcJson = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-            oidc = OauthConfig.fromJSON(oidcJson, "");
-        } catch (Exception e) {
-            // TODO manage errors
+            long totalRead = IoHelpers.pipeRead(in, out);
+            String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
+//            Log.d("Read OIDC", "Read " + totalRead + " bytes");
+//            System.out.println("-------------------------");
+//            System.out.println(oidcStr);
+//            System.out.println("-------------------------");
 
-            Log.w("Connection", "connection error while OIDC conf");
+            JSONObject oidcJson = new JSONObject(oidcStr);
+            oidc = OAuthConfig.fromJSON(oidcJson);
+        } catch (Exception e) {
+            Log.w("Initialisation", "Unexpected error while retrieving OIDC configuration at "
+                    + oidcURL.getURL().toString() + ", cause: " + e.getMessage());
             throw SDKException.unexpectedContent(e);
+        } finally {
+            IoHelpers.closeQuietly(con);
+            IoHelpers.closeQuietly(in);
+            IoHelpers.closeQuietly(out);
         }
     }
-
 
     public String version() {
         if (version == null) {
@@ -163,16 +173,16 @@ public class CellsServer implements Server {
     }
 
     public String welcomeMessage() {
-        return this.welcomeMessage;
+        return welcomeMessage;
     }
 
     public boolean supportsOauth() {
-        return this.oidc != null;
+        return oidc != null;
     }
 
     @Override
-    public OauthConfig getOAuthConfig() {
-        return this.oidc;
+    public OAuthConfig getOAuthConfig() {
+        return oidc;
     }
 
 //    public void setUnverifiedSSL(boolean unverified) {

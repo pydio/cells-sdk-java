@@ -46,20 +46,20 @@ public class Token {
         return new Gson().fromJson(json, Token.class);
     }
 
-    public static Token decodeOauthJWT(String jwt) throws ParseException {
+    public static Token decodeOAuthJWT(String jwt) throws ParseException {
         Token t = new Token();
         JSONObject jo = new JSONObject(jwt);
         t.value = jo.getString("access_token");
+        t.setExpiry(jo.getInt("expires_in"));
+        t.scope = jo.getString("scope");
         t.idToken = jo.getString("id_token");
         t.refreshToken = jo.getString("refresh_token");
-        t.scope = jo.getString("scope");
         t.tokenType = jo.getString("token_type");
-        t.setExpiry(jo.getInt("expires_in"));
         return t;
     }
 
     public void setExpiry(long expiresIn) {
-        if (expiresIn == -1){
+        if (expiresIn == -1) {
             expirationTime = -1;
             this.expiresIn = -1;
         } else {

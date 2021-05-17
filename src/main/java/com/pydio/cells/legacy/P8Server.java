@@ -4,7 +4,7 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.client.auth.OauthConfig;
+import com.pydio.cells.client.auth.OAuthConfig;
 import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.client.utils.io;
 import com.pydio.cells.legacy.consts.ActionNames;
@@ -195,7 +195,7 @@ public class P8Server implements Server {
         return url().equals(((P8Server) obj).url());
     }
 
-    public OauthConfig getOAuthConfig() {
+    public OAuthConfig getOAuthConfig() {
         throw new RuntimeException("Pydio 8 server does not support OAuth credential flows.");
     }
 
