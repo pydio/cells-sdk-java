@@ -10,7 +10,7 @@ import java.util.List;
  * a remote Pydio Server
  *
  * One way to view it as an XML document is to access your Pydio server via the web browser and
- * using the developer and type & execute the following javascript function: pydio.getXmlRegistry();
+ * using the developer, type and execute the following javascript function: <code>pydio.getXmlRegistry();</code>
  */
 public interface Registry {
 

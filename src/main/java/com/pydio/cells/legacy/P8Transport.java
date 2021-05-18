@@ -573,7 +573,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     /**
      * Simply generate the full path (**file** + query) from the passed P8Request
      *
-     * @return a string that look like:  "/index.php?get_action=action&param1=john&param2=doo"
+     * @return a string that look like:  {@code /index.php?get_action=action&param1=john&param2=doo}
      */
     protected String pathFromRequest(P8Request request) {
 

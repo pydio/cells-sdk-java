@@ -13,7 +13,7 @@ public interface Server {
     /**
      * returns the canonical URL of the server as String for various persistence processes.
      * This should not be used to create another URL object to try to connect to the server
-     * => it will by-pass management of self-signed URLs.
+     * or management of self-signed URLs will be skipped.
      */
     default String url() {
         return getServerURL().getId();
