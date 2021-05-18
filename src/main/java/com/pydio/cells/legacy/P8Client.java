@@ -66,8 +66,17 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Registry getRegistry() {
-        return null;
+    public Registry getRegistry() throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setToken(transport);
+        try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            Document doc = rsp.toXMLDocument();
+            return new DocumentRegistry(doc);
+        } catch (Exception ioe) {
+            throw new SDKException(ioe);
+        }
     }
 
     @Override
@@ -92,15 +101,7 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
 
-            Document doc = rsp.toXMLDocument();
-            Registry registry = new DocumentRegistry(doc);
-
-            for(WorkspaceNode n: registry.GetWorkspaces()) {
-                if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
-                    handler.onNode(n);
-                }
-            }
-            /*final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
+            final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
                 if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
                     handler.onNode(n);
                 }
@@ -108,8 +109,8 @@ public class P8Client implements Client, SdkNames {
 
             if (code != ErrorCodes.ok) {
                 throw new SDKException(code);
-            }*/
-        } catch (Exception ioe) {
+            }
+        } catch (IOException ioe) {
             throw new SDKException(ioe);
         }
     }

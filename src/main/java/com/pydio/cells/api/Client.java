@@ -17,7 +17,7 @@ import java.io.OutputStream;
 
 public interface Client {
 
-    Registry getRegistry();
+    Registry getRegistry() throws SDKException;
 
     void workspaceList(NodeHandler handler) throws SDKException;
 
