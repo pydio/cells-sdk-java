@@ -15,6 +15,7 @@ import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
+import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.cells.client.utils.FileNodeUtils;
@@ -93,6 +94,11 @@ public class CellsClient implements Client, SdkNames {
         long size = Long.parseLong(node.getSize());
         long lastEdit = Long.parseLong(node.getMtime());
         return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
+    }
+
+    @Override
+    public Registry getRegistry() {
+        return null;
     }
 
     @Override

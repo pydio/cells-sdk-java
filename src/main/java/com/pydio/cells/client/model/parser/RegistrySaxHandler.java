@@ -109,15 +109,15 @@ public class RegistrySaxHandler extends DefaultHandler {
             return;
         }
 
-        if ("ajxp_plugin".equals(qName) || "plugin".equals(qName)) {
+       /* if ("ajxp_plugin".equals(qName) || "plugin".equals(qName)) {
             insideAjxpPlugin = true;
-            currentPlugin = new Plugin();
+            currentPlugin = new Plugin(id, name, label, description, configs);
             currentPlugin.id = attributes.getValue("id");
             currentPlugin.name = attributes.getValue("name");
             currentPlugin.label = attributes.getValue("label");
             currentPlugin.description = attributes.getValue("description");
             currentPlugin.configs = new Properties();
-        }
+        } */
 
         if (inside_repositories && "repo".equals(qName)) {
             inside_repo = true;
@@ -133,14 +133,14 @@ public class RegistrySaxHandler extends DefaultHandler {
             return;
         }
 
-        if (insidePluginConfigs && pluginProperty != null) {
+        /*if (insidePluginConfigs && pluginProperty != null) {
             if (currentPlugin != null) {
                 if (currentPlugin.configs == null) {
                     currentPlugin.configs = new Properties();
                 }
                 currentPlugin.configs.put(pluginProperty, content);
             }
-        }
+        }*/
     }
 
     @Override

@@ -19,7 +19,9 @@ import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.common.http.ContentBody;
+import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.NodeDiff;
+import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.TreeNodeSaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
@@ -64,6 +66,11 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
+    public Registry getRegistry() {
+        return null;
+    }
+
+    @Override
     public void workspaceList(NodeHandler handler) throws SDKException {
         String[] excluded = {
                 WORKSPACE_ACCESS_TYPE_CONF,
@@ -85,7 +92,15 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
 
-            final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
+            Document doc = rsp.toXMLDocument();
+            Registry registry = new DocumentRegistry(doc);
+
+            for(WorkspaceNode n: registry.GetWorkspaces()) {
+                if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
+                    handler.onNode(n);
+                }
+            }
+            /*final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
                 if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
                     handler.onNode(n);
                 }
@@ -93,8 +108,8 @@ public class P8Client implements Client, SdkNames {
 
             if (code != ErrorCodes.ok) {
                 throw new SDKException(code);
-            }
-        } catch (IOException ioe) {
+            }*/
+        } catch (Exception ioe) {
             throw new SDKException(ioe);
         }
     }
@@ -153,7 +168,7 @@ public class P8Client implements Client, SdkNames {
         }
 
         public void onPlugin(Plugin p) {
-            System.out.println("OnPlugin: " + p.name);
+            System.out.println("OnPlugin: " + p.getName());
         }
     }
 

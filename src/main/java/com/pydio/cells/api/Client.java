@@ -7,6 +7,7 @@ import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
+import com.pydio.cells.client.model.Registry;
 
 import org.json.JSONObject;
 
@@ -15,6 +16,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface Client {
+
+    Registry getRegistry();
 
     void workspaceList(NodeHandler handler) throws SDKException;
 

@@ -111,7 +111,7 @@ public class WorkspaceNode implements Node, SdkNames {
         }
 
         for (Plugin p : this.plugins) {
-            if (id.equals(p.id)) {
+            if (id.equals(p.getId())) {
                 return p;
             }
         }
