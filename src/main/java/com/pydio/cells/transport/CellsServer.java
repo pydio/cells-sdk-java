@@ -36,7 +36,7 @@ public class CellsServer implements Server {
 
     // Legacy objects TODO remove
     private JSONObject bootConf;
-    private OAuthConfig oidc;
+    private OAuthConfig authConfig;
 
     public CellsServer(ServerURL serverURL) {
         this.serverURL = serverURL;
@@ -124,13 +124,9 @@ public class CellsServer implements Server {
             in = con.getInputStream();
             long totalRead = IoHelpers.pipeRead(in, out);
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-//            Log.d("Read OIDC", "Read " + totalRead + " bytes");
-//            System.out.println("-------------------------");
-//            System.out.println(oidcStr);
-//            System.out.println("-------------------------");
 
             JSONObject oidcJson = new JSONObject(oidcStr);
-            oidc = OAuthConfig.fromJSON(oidcJson);
+            authConfig = OAuthConfig.fromJSON(oidcJson);
         } catch (Exception e) {
             Log.w("Initialisation", "Unexpected error while retrieving OIDC configuration at "
                     + oidcURL.getURL().toString() + ", cause: " + e.getMessage());
@@ -177,12 +173,12 @@ public class CellsServer implements Server {
     }
 
     public boolean supportsOauth() {
-        return oidc != null;
+        return authConfig != null;
     }
 
     @Override
     public OAuthConfig getOAuthConfig() {
-        return oidc;
+        return authConfig;
     }
 
 //    public void setUnverifiedSSL(boolean unverified) {

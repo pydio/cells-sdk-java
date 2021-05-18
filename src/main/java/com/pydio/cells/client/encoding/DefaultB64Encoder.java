@@ -1,4 +1,5 @@
-/*package com.pydio.sdk.core.encoding;
+/*package com.pydio.cells.client.encoding;
+
 import org.apache.commons.codec.binary.Base64;
 
 public class DefaultB64Encoder extends B64 {

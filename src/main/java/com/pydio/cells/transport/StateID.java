@@ -1,5 +1,7 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.client.encoding.JavaCustomEncoder;
+
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -102,27 +104,26 @@ public class StateID {
         return null;
     }
 
-    // Simple shortcut to encode URLs
-    public static String utf8Encode(String value) {
-        // TODO this method throws an exception in android context but not in the sdk-java, why ?
+    // Not perfect: Might have side effects when swtching from plain Java to Android
+    // TODO might need to be improved
+
+    private static String utf8Encode(String value) {
         try {
             return URLEncoder.encode(value, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Unexpected encoding issue", e);
         }
-        //return super.utf8Encode(value);
     }
 
-    // Simple shortcut to decode URLs
-    public static String utf8Decode(String value) {
-        // TODO this method throws an exception in android context but not in the sdk-java, why ?
+    private static String utf8Decode(String value) {
         try {
             return URLDecoder.decode(value, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Unexpected decoding issue", e);
         }
-        //return super.utf8Encode(value);
     }
+
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();

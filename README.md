@@ -94,6 +94,6 @@ Find more examples in [our sample package](./tree/master/src/main/java/com/pydio
 
 ## Legacy note
 
-This reposirtory has been forked from [this legacy repo in Pydio's code base](https://github.com/pydio/pydio-sdk-java-v2).
+This repository has been forked from [this legacy repo in Pydio's code base](https://github.com/pydio/pydio-sdk-java-v2).
 
 

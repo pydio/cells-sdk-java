@@ -830,10 +830,9 @@ public class CellsClient implements Client, SdkNames {
 
 
     // Simple shortcut to encode URLs
-    // TODO rather user StateID methods
-    protected String utf8Encode(String value) {
-        return URLEncoder.encode(value, UTF_8);
-    }
+//    protected String utf8Encode(String value) {
+//        return URLEncoder.encode(value, UTF_8);
+//    }
 
     private static SDKException fromApiException(ApiException e) {
         int code = ErrorCodes.fromHttpStatus(e.getCode());

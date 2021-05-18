@@ -81,7 +81,6 @@ public class ServerURLImpl implements ServerURL {
         return null;
     }
 
-
     public static ServerURL fromAddress(String urlString) throws MalformedURLException {
         return fromAddress(urlString, false);
     }

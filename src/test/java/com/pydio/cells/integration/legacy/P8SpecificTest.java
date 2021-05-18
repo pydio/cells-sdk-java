@@ -6,6 +6,7 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.integration.RemoteServerConfig;
 import com.pydio.cells.integration.TestConfiguration;
 import com.pydio.cells.integration.TestUtils;
@@ -85,7 +86,6 @@ public class P8SpecificTest {
             return;
         }
 
-
         try {
             // First log with correct password to reduce useless noise
             String accountId = ServerFactory.accountID(p8Conf.login, p8URL);
@@ -113,7 +113,7 @@ public class P8SpecificTest {
 
             Assert.assertTrue(needCaptcha);
 
-            P8Transport anonSession = new P8Transport(new P8Server(p8URL), "anon");
+            P8Transport anonSession = new P8Transport(new P8Server(p8URL), "anon", new JavaCustomEncoder());
             InputStream in = anonSession.getCaptcha();
 
 

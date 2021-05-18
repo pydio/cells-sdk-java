@@ -11,9 +11,10 @@ import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.transport.StateID;
+import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.legacy.consts.ActionNames;
 import com.pydio.cells.legacy.consts.P8Names;
+import com.pydio.cells.transport.StateID;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -31,8 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static com.pydio.cells.transport.StateID.utf8Encode;
-
 public class P8Transport implements ILegacyTransport, SdkNames {
 
     private final Server server;
@@ -42,6 +41,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     private Credentials credentials;
     private CookieManager cookieManager;
 
+    protected final CustomEncoder encoder;
+
     private int loginFailure;
 
     // TODO remove this once we have cornered the issue that makes CRUD integration test to fail.
@@ -49,19 +50,23 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     private Boolean useCaptcha;
 
-    public P8Transport(Server server, String username, CookieManager manager) {
+
+    public P8Transport(Server server, String username, CookieManager manager, CustomEncoder encoder) {
         this.server = server;
         this.username = username;
         cookieManager = manager;
+        this.encoder = encoder;
+
         loginFailure = 0;
     }
 
-    public P8Transport(Server server, String username) {
-        this(server, username, new CookieManager());
+
+    public P8Transport(Server server, String username, CustomEncoder encoder) {
+        this(server, username, new CookieManager(), encoder);
     }
 
-    public P8Transport(Server server, Credentials c) throws SDKException {
-        this(server, c.getLogin(), new CookieManager());
+    public P8Transport(Server server, Credentials c, CustomEncoder encoder) throws SDKException {
+        this(server, c.getLogin(), new CookieManager(), encoder);
         if (c instanceof Credentials) {
             this.credentials = c;
         } else
@@ -707,6 +712,10 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     private StringBuilder andAppendEncodedParam(StringBuilder builder, String key, String value) {
         builder.append("&").append(key).append("=").append(utf8Encode(value));
         return builder;
+    }
+
+    private String utf8Encode(String value) {
+        return encoder.utf8Encode(value);
     }
 
 }

@@ -10,6 +10,8 @@ import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.encoding.CustomEncoder;
+import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.client.security.PasswordCredentials;
 import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.legacy.P8Server;
@@ -101,7 +103,7 @@ public class ServerFactory implements IServerFactory {
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
             if (credentials instanceof PasswordCredentials) {
                 PasswordCredentials pc = ((PasswordCredentials) credentials);
-                transport = new CellsTransport(server, pc.getLogin());
+                transport = new CellsTransport(pc.getLogin(), server, getEncoder());
                 tokenService.legacyLogin((CellsTransport) transport, credentials);
                 //tokenService.loginPasswordGetToken((CellsTransport) session, credentials);
                 ((CellsTransport) transport).restore(tokenService);
@@ -109,7 +111,7 @@ public class ServerFactory implements IServerFactory {
                 throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());
 
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            transport = new P8Transport(server, credentials);
+            transport = new P8Transport(server, credentials, getEncoder());
             ((P8Transport) transport).restore(tokenService);
             // ((P8Transport) transport).setCredentials(credentials);
         } else
@@ -154,10 +156,10 @@ public class ServerFactory implements IServerFactory {
 
         Transport transport = null;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
-            transport = new CellsTransport(server, login);
+            transport = new CellsTransport(login, server, getEncoder());
             ((CellsTransport) transport).restore(tokenService);
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            transport = new P8Transport(server, login);
+            transport = new P8Transport(server, login, getEncoder());
             ((P8Transport) transport).restore(tokenService);
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
@@ -215,6 +217,10 @@ public class ServerFactory implements IServerFactory {
         ClientData.version = "0.2.0-dev";
         ClientData.platform = "Java";
 
+    }
+
+    public CustomEncoder getEncoder(){
+        return new JavaCustomEncoder();
     }
 
 }
