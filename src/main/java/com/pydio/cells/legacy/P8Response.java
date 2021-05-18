@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -87,11 +88,11 @@ public class P8Response implements Closeable {
     }
 
     public List<String> getHeaders(String key) {
-        try {
-            return this.con.getHeaderFields().get(key);
-        } catch (Exception e) {
-            return null;
-        }
+        return con.getHeaderFields().get(key);
+    }
+
+    public Map<String, List<String>> getAllHeaders() {
+        return con.getHeaderFields();
     }
 
     public InputStream getInputStream() {

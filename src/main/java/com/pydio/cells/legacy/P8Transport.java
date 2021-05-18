@@ -27,6 +27,7 @@ import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
@@ -59,7 +60,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
         loginFailure = 0;
     }
-
 
     public P8Transport(Server server, String username, CustomEncoder encoder) {
         this(server, username, new CookieManager(), encoder);
@@ -321,8 +321,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     @Override
     public void login() throws SDKException {
 
-        // FIXME not very clean.
-        // In P8 token never expires, so we only need to login once.
         Token existingToken = tokens.get(this, getId());
         if (existingToken != null) {
             return;
@@ -331,6 +329,10 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         if (credentials == null) {
             throw new SDKException(ErrorCodes.authentication_required);
         }
+
+        // In P8, the token is bound to a given session cookie, so we clear cookie store
+        // before trying to get a new token
+        cookieManager.getCookieStore().removeAll();
 
         P8RequestBuilder builder = P8RequestBuilder.login(credentials);
         P8Request req = builder.getRequest();
@@ -351,6 +353,39 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                         saveSecureToken(secureToken);
                         tmpToken1 = secureToken;
                         loginFailure = 0;
+
+                        // Cookies and token are bound: we only update session cookie upon login
+                        List<String> cookieHeaders = rsp.getHeaders(P8Names.HEADER_SET_COOKIE);
+
+//                        Map<String, List<String>> allHeaders = rsp.getAllHeaders();
+//                        for (String currHeader : allHeaders.keySet()) {
+//                            System.out.println("--- " + currHeader);
+//                            int ii = 0;
+//                            for (String val : allHeaders.get(currHeader)) {
+//                                System.out.println("#" + (++ii) + ": " + val);
+//                            }
+//                        }
+
+                        if (cookieHeaders != null) {
+                            // System.out.println("Found " + cookieHeaders.size() + " set-cookie headers");
+                            boolean alreadyStored = false;
+                            for (String headers : cookieHeaders) {
+                                List<HttpCookie> cookies = HttpCookie.parse(headers);
+                                for (HttpCookie cookie : cookies) {
+                                    if (P8Names.AJXP_SESSION_COOKIE_NAME.equals(cookie.getName())) {
+                                        // Dirty hack until we find why Pydio8 replies with 2 session cookies upon login.
+                                        if (!alreadyStored) {
+                                            cookieManager.getCookieStore().add(URI.create(getId()), cookie);
+                                            alreadyStored = true;
+                                            // System.out.println("Storing: " + cookie.getValue());
+                                       }
+                                    } else {
+                                        cookieManager.getCookieStore().add(URI.create(getId()), cookie);
+                                    }
+                                }
+                            }
+                        }
+
                     } else {
                         loginFailure++;
                         if (result.equals("-4")) {
@@ -445,7 +480,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
         con.setRequestMethod("GET");
         P8Response response = new P8Response(con);
-        storeReturnedSetCookies(con.getHeaderFields());
+        // storeReturnedSetCookies(con.getHeaderFields());
 
         return response;
     }
@@ -486,17 +521,16 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 //postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));
             }
             byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
-            System.out.println(postData.toString());
 
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postDataBytes.length));
-            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "application/x-www-form-urlencoded; charset=utf-8");
+            con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, P8Names.CONTENT_TYPE_URL_ENCODED);
 
             OutputStream out = con.getOutputStream();
             out.write(postDataBytes);
         }
 
         P8Response response = new P8Response(con);
-        storeReturnedSetCookies(con.getHeaderFields());
+        // storeReturnedSetCookies(con.getHeaderFields());
         return response;
     }
 
@@ -529,7 +563,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
         // Handle the response
         OutputStream out = con.getOutputStream();
-        storeReturnedSetCookies(con.getHeaderFields());
+        // storeReturnedSetCookies(con.getHeaderFields());
         request.getBody().writeTo(out);
         P8Response response = new P8Response(con);
 
@@ -615,7 +649,9 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             for (HttpCookie cookie : cookies) {
                 builder.append(";").append(cookie.toString());
             }
-            con.setRequestProperty(P8Names.REQ_PROP_COOKIE, builder.substring(1));
+            String cookieStr = builder.substring(1);
+            // System.out.println("Setting cookies: [" + cookieStr + "]");
+            con.setRequestProperty(P8Names.REQ_PROP_COOKIE, cookieStr);
         }
         return con;
     }
@@ -630,17 +666,17 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return con;
     }
 
-    private void storeReturnedSetCookies(Map<String, List<String>> headerFields) {
-        List<String> cookiesHeader = headerFields.get(P8Names.HEADER_SET_COOKIE);
-        if (cookiesHeader != null) {
-            for (String cookie : cookiesHeader) {
-                List<HttpCookie> cs = HttpCookie.parse(cookie);
-                for (HttpCookie hc : cs) {
-                    cookieManager.getCookieStore().add(null, hc);
-                }
-            }
-        }
-    }
+//    private void storeReturnedSetCookies(Map<String, List<String>> headerFields) {
+//        List<String> cookiesHeader = headerFields.get(P8Names.HEADER_SET_COOKIE);
+//        if (cookiesHeader != null) {
+//            for (String cookie : cookiesHeader) {
+//                List<HttpCookie> cs = HttpCookie.parse(cookie);
+//                for (HttpCookie hc : cs) {
+//                    cookieManager.getCookieStore().add(null, hc);
+//                }
+//            }
+//        }
+//    }
 
     /**
      * Token Management

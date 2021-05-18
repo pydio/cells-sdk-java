@@ -6,6 +6,7 @@ public interface P8Names {
      * Known Headers
      */
     String HEADER_SET_COOKIE = "Set-Cookie";
+    String AJXP_SESSION_COOKIE_NAME = "AjaXplorer";
 
     /**
      * Known Request Properties
@@ -20,6 +21,7 @@ public interface P8Names {
      * Supported content types
      */
     String CONTENT_TYPE_OCTET_STREAM = "application/octet-stream";
+    String CONTENT_TYPE_URL_ENCODED = "application/x-www-form-urlencoded; charset=utf-8";
 
     /**
      * Supported Parameters

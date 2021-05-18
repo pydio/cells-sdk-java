@@ -51,7 +51,7 @@ public class P8RequestBuilder {
         if (credentials.getCaptcha() != null) {
             builder.setParam(P8Names.captchaCode, credentials.getCaptcha());
         }
-        return builder.ignoreCookies(false);
+        return builder.ignoreCookies(true);
     }
 
     public static P8RequestBuilder logout() {
