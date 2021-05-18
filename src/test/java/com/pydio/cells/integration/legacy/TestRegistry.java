@@ -52,7 +52,7 @@ public class TestRegistry {
 
     @Test
     public void testDefaultRegistry() {
-        // TODO move this in the setup: since I've copied the remote config loading from transport test
+        // TODO move this in the setup
 
         RemoteServerConfig p8Conf = config.getServer("p8");
         if (p8Conf == null) {
@@ -81,7 +81,7 @@ public class TestRegistry {
 
     @Test
     public void testAuthenticatedUserRegistry() {
-        // TODO move this in the setup: since I've copied the remote config loading from transport test
+        // TODO move this in the setup
 
         RemoteServerConfig p8Conf = config.getServer("p8");
         if (p8Conf == null) {
