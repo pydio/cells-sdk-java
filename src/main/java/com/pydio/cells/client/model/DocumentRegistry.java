@@ -126,11 +126,11 @@ public class DocumentRegistry implements Registry {
 
             switch (name) {
                 case SdkNames.NODE_PROPERTY_LABEL:
-                    workspaceNode.setProperty(SdkNames.NODE_PROPERTY_LABEL, repoChildNode.getNodeValue());
+                    workspaceNode.setProperty(SdkNames.NODE_PROPERTY_LABEL, repoChildNode.getFirstChild().getNodeValue());
 
                     break;
                 case SdkNames.NODE_PROPERTY_DESCRIPTION:
-                    workspaceNode.setProperty(SdkNames.NODE_PROPERTY_DESCRIPTION, repoChildNode.getNodeValue());
+                    workspaceNode.setProperty(SdkNames.NODE_PROPERTY_DESCRIPTION, repoChildNode.getFirstChild().getNodeValue());
                     break;
             }
         }

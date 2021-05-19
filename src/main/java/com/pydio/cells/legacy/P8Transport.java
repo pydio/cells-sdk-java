@@ -267,7 +267,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
+        P8RequestBuilder builder = P8RequestBuilder.defaultRegistry();
         try (P8Response rsp = execute(builder.getRequest())) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());

@@ -60,9 +60,15 @@ public class P8RequestBuilder {
         return builder;
     }
 
-    public static P8RequestBuilder serverRegistry() {
+    public static P8RequestBuilder defaultRegistry() {
         P8RequestBuilder builder = new P8RequestBuilder();
         builder = builder.setAction(ActionNames.getXmlRegistry).ignoreCookies(true);
+        return builder;
+    }
+
+    public static P8RequestBuilder userRegistry() {
+        P8RequestBuilder builder = new P8RequestBuilder();
+        builder = builder.setAction(ActionNames.getXmlRegistry).ignoreCookies(false);
         return builder;
     }
 

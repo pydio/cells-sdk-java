@@ -36,7 +36,7 @@ import org.junit.Test;
  * There is a lot more things that can be tested about the registry but what is described above is
  * ok as a baseline test
  */
-public class TestRegistry {
+public class RegistryTest {
 
     private static ServerFactory factory;
     private static TestConfiguration config;
@@ -64,7 +64,7 @@ public class TestRegistry {
             Transport p8Transport = TestUtils.getTransport(factory, p8Conf);
             Client p8Client = factory.getClient(p8Transport);
 
-            Registry registry = p8Client.getRegistry();
+            Registry registry = p8Client.getDefaultRegistry();
 
             // we must have actions and plugins
             Assert.assertNotEquals(0, registry.GetActions().size());
@@ -93,10 +93,7 @@ public class TestRegistry {
             Transport p8Transport = TestUtils.getTransport(factory, p8Conf);
             Client p8Client = factory.getClient(p8Transport);
 
-            // trick to force authentication
-            p8Client.stats(p8Conf.defaultWS, "/", false);
-
-            Registry registry = p8Client.getRegistry();
+            Registry registry = p8Client.getUserRegistry();
 
             // we must have actions and plugins
             Assert.assertNotEquals(0, registry.GetActions().size());

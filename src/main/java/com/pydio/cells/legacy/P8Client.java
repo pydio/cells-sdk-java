@@ -66,8 +66,22 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Registry getRegistry() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.serverRegistry().setToken(transport);
+    public Registry getDefaultRegistry() throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.defaultRegistry();
+        try (P8Response rsp = transport.execute(builder.getRequest())) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            Document doc = rsp.toXMLDocument();
+            return new DocumentRegistry(doc);
+        } catch (Exception ioe) {
+            throw new SDKException(ioe);
+        }
+    }
+
+    @Override
+    public Registry getUserRegistry() throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.userRegistry().setToken(transport);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
