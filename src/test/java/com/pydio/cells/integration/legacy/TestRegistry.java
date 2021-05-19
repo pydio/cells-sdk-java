@@ -67,11 +67,11 @@ public class TestRegistry {
             Registry registry = p8Client.getRegistry();
 
             // we must have actions and plugins
-            Assert.assertNotNull(registry.GetActions());
-            Assert.assertNotNull(registry.GetPlugins());
+            Assert.assertNotEquals(0, registry.GetActions().size());
+            Assert.assertNotEquals(0, registry.GetPlugins().size());
 
             // me must not have workspaces
-            Assert.assertNull(registry.GetWorkspaces());
+            Assert.assertEquals(0, registry.GetWorkspaces().size());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,16 +94,16 @@ public class TestRegistry {
             Client p8Client = factory.getClient(p8Transport);
 
             // trick to force authentication
-            p8Client.stats("common-files", "/", false);
+            p8Client.stats(p8Conf.defaultWS, "/", false);
 
             Registry registry = p8Client.getRegistry();
 
             // we must have actions and plugins
-            Assert.assertNotNull(registry.GetActions());
-            Assert.assertNotNull(registry.GetPlugins());
+            Assert.assertNotEquals(0, registry.GetActions().size());
+            Assert.assertNotEquals(0, registry.GetPlugins().size());
 
-            // me must also have workspaces
-            Assert.assertNotNull(registry.GetWorkspaces());
+            // me must not have workspaces
+            Assert.assertNotEquals(0, registry.GetWorkspaces().size());
 
         } catch (Exception e) {
             e.printStackTrace();

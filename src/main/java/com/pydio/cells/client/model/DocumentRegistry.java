@@ -28,9 +28,9 @@ public class DocumentRegistry implements Registry {
 
     // todo: add constant in SDKNames instead of hardcoded tag names
 
-    final protected String repositoriesXPath = "/user/repositories";
-    final protected String actionsXPath = "/actions";
-    final protected String pluginsXPath = "/plugins";
+    final protected String repositoriesXPath = "/ajxp_registry/user/repositories";
+    final protected String actionsXPath = "/ajxp_registry/actions";
+    final protected String pluginsXPath = "/ajxp_registry/plugins";
 
     private final Document xmlDocument;
 
@@ -61,20 +61,18 @@ public class DocumentRegistry implements Registry {
         XPath xPath = XPathFactory.newInstance().newXPath();
         try {
             List<WorkspaceNode> workspaceNodes = new ArrayList<>();
-
-
-            Node repositoriesNode = (Node) xPath.compile(repositoriesXPath).evaluate(xmlDocument, XPathConstants.NODESET);
-            NodeList repositoriesChildNodes = repositoriesNode.getChildNodes();
-            for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
-
-                Node node = repositoriesChildNodes.item(i);
-                String tag = node.getLocalName();
-                if ("repository".equals(tag)) {
-                    WorkspaceNode workspaceNode = parseWorkspace(node);
-                    workspaceNodes.add(workspaceNode);
+            NodeList repositoriesNode = (NodeList) xPath.compile(repositoriesXPath).evaluate(xmlDocument, XPathConstants.NODESET);
+            if (repositoriesNode.getLength() > 0) {
+                NodeList repositoriesChildNodes = repositoriesNode.item(0).getChildNodes();
+                for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
+                    Node node = repositoriesChildNodes.item(i);
+                    String tag = node.getNodeName();
+                    if ("repo".equals(tag)) {
+                        WorkspaceNode workspaceNode = parseWorkspace(node);
+                        workspaceNodes.add(workspaceNode);
+                    }
                 }
             }
-
             return workspaceNodes;
         } catch (XPathExpressionException e) {
             e.printStackTrace();
@@ -124,7 +122,7 @@ public class DocumentRegistry implements Registry {
         NodeList repoChildNodes = node.getChildNodes();
         for (int j = 0; j < repoChildNodes.getLength(); j++) {
             Node repoChildNode = repoChildNodes.item(j);
-            final String name = repoChildNode.getLocalName();
+            final String name = repoChildNode.getNodeName();
 
             switch (name) {
                 case SdkNames.NODE_PROPERTY_LABEL:
@@ -153,17 +151,16 @@ public class DocumentRegistry implements Registry {
         try {
             List<Action> actions = new ArrayList<>();
 
-            Node repositoriesNode = (Node) xPath.compile(actionsXPath).evaluate(xmlDocument, XPathConstants.NODESET);
+            Node repositoriesNode = (Node) xPath.compile(actionsXPath).evaluate(xmlDocument, XPathConstants.NODE);
             NodeList repositoriesChildNodes = repositoriesNode.getChildNodes();
             for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
                 Node node = repositoriesChildNodes.item(i);
-                final String tag = node.getLocalName();
+                final String tag = node.getNodeName();
                 if ("action".equals(tag)) {
                     Action action = parseAction(node);
                     actions.add(action);
                 }
             }
-
             return actions;
         } catch (XPathExpressionException e) {
             e.printStackTrace();
@@ -201,7 +198,7 @@ public class DocumentRegistry implements Registry {
         for (int i = 0; i < actionChildNodes.getLength(); i++) {
 
             Node actionChildNode = node.getFirstChild();
-            final String tag = actionChildNode.getLocalName();
+            final String tag = actionChildNode.getNodeName();
 
             if ("rightsContext".equals(tag)) {
                 NamedNodeMap rightsContextAttrs = node.getAttributes();
@@ -249,13 +246,12 @@ public class DocumentRegistry implements Registry {
         try {
             List<Plugin> plugins = new ArrayList<>();
 
-            Node pluginsNode = (Node) xPath.compile(pluginsXPath).evaluate(xmlDocument, XPathConstants.NODESET);
+            Node pluginsNode = (Node) xPath.compile(pluginsXPath).evaluate(xmlDocument, XPathConstants.NODE);
             NodeList repositoriesChildNodes = pluginsNode.getChildNodes();
-
             for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
                 Node node = repositoriesChildNodes.item(i);
-                final String tag = node.getLocalName();
-                if ("plugin".equals(tag)) {
+                final String tag = node.getNodeName();
+                if ("ajxp_plugin".equals(tag)) {
                     Plugin plugin = parsePlugin(node);
                     plugins.add(plugin);
                 }
@@ -271,18 +267,19 @@ public class DocumentRegistry implements Registry {
         Properties properties = null;
 
         NamedNodeMap attrs = node.getAttributes();
-        String id = attrs.getNamedItem("id").getNodeValue();
-        String name = attrs.getNamedItem("name").getNodeValue();
-        String label = attrs.getNamedItem("label").getNodeValue();
-        String description = attrs.getNamedItem("description").getNodeValue();
+        String id = attrs.getNamedItem("id") != null ? attrs.getNamedItem("id").getNodeValue() : "";
+        String name = attrs.getNamedItem("name") != null ? attrs.getNamedItem("name").getNodeValue() : "";
+        String label = attrs.getNamedItem("label") != null ? attrs.getNamedItem("label").getNodeValue() : "";
+        String description = attrs.getNamedItem("description") != null ? attrs.getNamedItem("description").getNodeValue() : "";
 
 
         NodeList pluginChildNodes = node.getChildNodes();
 
         for (int i = 0; i < pluginChildNodes.getLength(); i++) {
             Node pluginChildNode = pluginChildNodes.item(i);
-            String tag = pluginChildNode.getLocalName();
+            String tag = pluginChildNode.getNodeName();
             if ("plugin_configs".equals(tag)) {
+
                 properties = parsePluginProperties(pluginChildNode);
                 break;
             }
@@ -296,10 +293,10 @@ public class DocumentRegistry implements Registry {
         NodeList propertyNodes = node.getChildNodes();
         for (int i = 0; i < propertyNodes.getLength(); i++) {
             Node propertyNode = propertyNodes.item(i);
-            String tag = node.getLocalName();
+            String tag = propertyNode.getNodeName();
             if ("property".equals(tag)) {
                 String propName = propertyNode.getAttributes().getNamedItem("name").getNodeValue();
-                String value = propertyNode.getNodeValue();
+                String value = propertyNode.getFirstChild().getNodeValue();
                 properties.setProperty(propName, value);
             }
         }

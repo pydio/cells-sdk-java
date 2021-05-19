@@ -67,7 +67,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Registry getRegistry() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.serverRegistry().setToken(transport);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
