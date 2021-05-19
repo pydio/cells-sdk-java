@@ -42,7 +42,7 @@ public class P8RequestBuilder {
         return builder.ignoreCookies(false);
     }
 
-    public static P8RequestBuilder login(Credentials credentials) {
+    public static P8RequestBuilder login(P8Credentials credentials) {
         P8RequestBuilder builder = new P8RequestBuilder();
         builder = builder.setAction(ActionNames.login).
                 setParam(P8Names.loginSeed, credentials.getSeed()).

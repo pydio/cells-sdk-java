@@ -1,16 +1,8 @@
 package com.pydio.cells.api;
 
-// TODO refactor in Legacy Credentials and LegacyPydioCredentials
+/** Generic interface to manage credentials. We only always have a username */
 public interface Credentials {
 
     String getLogin();
 
-    @Deprecated
-    String getPassword();
-
-    @Deprecated
-    String getCaptcha();
-
-    @Deprecated
-    String getSeed();
 }

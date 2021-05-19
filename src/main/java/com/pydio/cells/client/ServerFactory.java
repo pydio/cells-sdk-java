@@ -12,7 +12,7 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.client.encoding.JavaCustomEncoder;
-import com.pydio.cells.client.security.PasswordCredentials;
+import com.pydio.cells.client.security.LegacyPasswordCredentials;
 import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
@@ -101,10 +101,10 @@ public class ServerFactory implements IServerFactory {
 
         Transport transport = null;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
-            if (credentials instanceof PasswordCredentials) {
-                PasswordCredentials pc = ((PasswordCredentials) credentials);
+            if (credentials instanceof LegacyPasswordCredentials) {
+                LegacyPasswordCredentials pc = ((LegacyPasswordCredentials) credentials);
                 transport = new CellsTransport(pc.getLogin(), server, getEncoder());
-                tokenService.legacyLogin((CellsTransport) transport, credentials);
+                tokenService.legacyLogin((CellsTransport) transport, pc);
                 //tokenService.loginPasswordGetToken((CellsTransport) session, credentials);
                 ((CellsTransport) transport).restore(tokenService);
             } else

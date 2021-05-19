@@ -39,7 +39,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     private final String username;
 
     private TokenService tokens;
-    private Credentials credentials;
+    private P8Credentials credentials;
     private CookieManager cookieManager;
 
     protected final CustomEncoder encoder;
@@ -67,16 +67,16 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     public P8Transport(Server server, Credentials c, CustomEncoder encoder) throws SDKException {
         this(server, c.getLogin(), new CookieManager(), encoder);
-        if (c instanceof Credentials) {
-            this.credentials = c;
+        if (c instanceof P8Credentials) {
+            this.credentials = (P8Credentials) c;
         } else
             throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
     }
 
     @Deprecated
     public void setCredentials(Credentials c) {
-        if (c instanceof Credentials) {
-            this.credentials = c;
+        if (c instanceof P8Credentials) {
+            this.credentials = (P8Credentials) c;
         } else
             throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
     }
@@ -378,7 +378,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                                             cookieManager.getCookieStore().add(URI.create(getId()), cookie);
                                             alreadyStored = true;
                                             // System.out.println("Storing: " + cookie.getValue());
-                                       }
+                                        }
                                     } else {
                                         cookieManager.getCookieStore().add(URI.create(getId()), cookie);
                                     }

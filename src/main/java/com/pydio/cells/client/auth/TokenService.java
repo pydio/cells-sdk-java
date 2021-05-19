@@ -2,6 +2,7 @@ package com.pydio.cells.client.auth;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
+import com.pydio.cells.api.PasswordCredentials;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.openapi.ApiException;
@@ -99,7 +100,7 @@ public class TokenService {
 //    }
 
 
-    public Token legacyLogin(CellsTransport transport, Credentials credentials) throws SDKException {
+    public Token legacyLogin(CellsTransport transport, PasswordCredentials credentials) throws SDKException {
 
         Map<String, String> authInfo = new HashMap<>();
         authInfo.put("login", credentials.getLogin());

@@ -11,7 +11,7 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.model.TreeNodeInfo;
-import com.pydio.cells.client.security.PasswordCredentials;
+import com.pydio.cells.client.security.LegacyPasswordCredentials;
 import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.sync.tree.StateManager;
 import com.pydio.cells.transport.ServerURLImpl;
@@ -47,7 +47,7 @@ public class TestUtils {
         if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
             credentials = new P8Credentials(conf.login, conf.pwd);
         } else {
-            credentials = new PasswordCredentials(conf.login, conf.pwd);
+            credentials = new LegacyPasswordCredentials(conf.login, conf.pwd);
         }
         return factory.registerAccount(sURL, credentials);
     }

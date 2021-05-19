@@ -57,7 +57,7 @@ public class CellsFsTest {
 //        }
 //
 //        cellsClient = new CellsClient(node);
-//        cellsClient.setCredentials(new PasswordCredentials(login, pwd));
+//        cellsClient.setCredentials(new LegacyPasswordCredentials(login, pwd));
 //        cellsClient.setSkipOAuthFlag(true);
 //
 //        cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());

@@ -12,7 +12,7 @@ public class Workspaces {
 //            return;
 //        }
 //        Client client = ClientFactory.get(node);
-//        client.setCredentials(new PasswordCredentials("admin", "admin"));
+//        client.setCredentials(new LegacyPasswordCredentials("admin", "admin"));
 //        client.setSkipOAuthFlag(true);
 //        try {
 //            client.workspaceList((n) -> System.out.println(n.getLabel()));

@@ -18,7 +18,7 @@ public class Upload {
 //        }
 //
 //        Client client = ClientFactory.get(node);
-//        client.setCredentials(new PasswordCredentials(login, pwd));
+//        client.setCredentials(new LegacyPasswordCredentials(login, pwd));
 //        client.setSkipOAuthFlag(true);
 //
 //
