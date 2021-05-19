@@ -34,7 +34,7 @@ import javax.net.ssl.SSLHandshakeException;
  * <p>
  * You can then launch the test with:
  *
- * <code>./gradlew build -Dtest.profile=integration</code>
+ * {@code ./gradlew build -Dtest.profile=integration}
  */
 public class BasicConnectionTest {
 
@@ -187,7 +187,7 @@ public class BasicConnectionTest {
     }
 
 
-    private class DummyHandler implements NodeHandler {
+    private static class DummyHandler implements NodeHandler {
 
         private int i = 0;
 

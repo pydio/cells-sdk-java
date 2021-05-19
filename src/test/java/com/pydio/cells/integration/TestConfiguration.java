@@ -1,5 +1,7 @@
 package com.pydio.cells.integration;
 
+import com.pydio.cells.client.utils.Log;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -9,7 +11,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -18,17 +19,13 @@ import java.util.Properties;
  */
 public class TestConfiguration {
 
-    private Map<String, RemoteServerConfig> servers = new HashMap<>();
+    private final Map<String, RemoteServerConfig> servers = new HashMap<>();
     private final String defaultServerConfigId = "default-target-server";
 
     // You must adapt these files to your setup in "src/test/resources" to run the tests
     private final String defaultServerConfigPath = "/" + defaultServerConfigId + ".properties";
-
     private final String variantFolderPath = "/servers";
-
-    final private Path resourceDirPath;
-
-    private String serverURLStr, login, pwd, workspace;
+    private final Path resourceDirPath;
 
     public TestConfiguration() {
         URL url = TestConfiguration.class.getResource(defaultServerConfigPath);
@@ -44,22 +41,16 @@ public class TestConfiguration {
         // Also loads all servers that are not explicitly skipped in servers subfolder
         try {
             URL url = TestConfiguration.class.getResource(variantFolderPath);
-            List<String> paths;
             File f = new File(url.toURI());
-            FilenameFilter filter = new FilenameFilter() {
-                @Override
-                public boolean accept(File f, String name) {
-                    return name.endsWith(".properties");
-                }
-            };
+            FilenameFilter filter = (f1, name) -> name.endsWith(".properties");
 
             for (String currName : f.list(filter)) {
                 loadOne(currName.substring(0, currName.lastIndexOf('.')), variantFolderPath + "/" + currName);
             }
 
         } catch (Exception e) {
-            System.out.println("could not load additional server confs at " + variantFolderPath);
-            System.out.println(e);
+            Log.e("Initialisation", "Could not load additional server configuration at " + variantFolderPath);
+            e.printStackTrace();
         }
     }
 
@@ -79,7 +70,6 @@ public class TestConfiguration {
     public Path getWorkingDir() {
         return resourceDirPath;
     }
-
 
     /* Local helpers */
 
@@ -101,10 +91,8 @@ public class TestConfiguration {
 
             servers.put(id, currConf);
         } catch (IOException e) {
-            System.out.println("could not retrieve configuration file, cause: ");
-            System.out.println(e);
-            return;
+            Log.e("Initialisation", "Could not retrieve configuration file, cause: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-
 }

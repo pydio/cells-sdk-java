@@ -12,10 +12,8 @@ import com.pydio.cells.integration.RemoteServerConfig;
 import com.pydio.cells.integration.TestConfiguration;
 import com.pydio.cells.integration.TestUtils;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -63,9 +61,9 @@ public class P8TransportTest {
             // Post with a stat
             Stats stats = p8Client.stats(p8Conf.defaultWS, "/", false);
             System.out.println("... Stats request succeeded");
-            System.out.println("Size: "+ stats.getSize());
-            System.out.println("Time: "+ stats.getmTime());
-            System.out.println("Hash: "+ stats.getHash());
+            System.out.println("Size: " + stats.getSize());
+            System.out.println("Time: " + stats.getmTime());
+            System.out.println("Hash: " + stats.getHash());
 
             // Upload
             String baseDir = "/";

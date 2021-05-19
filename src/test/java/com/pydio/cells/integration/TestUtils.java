@@ -3,21 +3,20 @@ package com.pydio.cells.integration;
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.client.ServerFactory;
-import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.client.model.TreeNodeInfo;
-import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.client.security.PasswordCredentials;
+import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.sync.tree.StateManager;
+import com.pydio.cells.transport.ServerURLImpl;
 
 import java.net.MalformedURLException;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -29,12 +28,15 @@ public class TestUtils {
     public final static String parentPath = "sdk-tests";
     public final static String OS_MAC = "darwin";
     public final static String OS_LINUX = "linux";
-    private final static String SEED_CHARS = "abcdef1234567890";
-    private static String OS = System.getProperty("os.name").toLowerCase();
 
-    /** Create a new transport that is already logged in and ready to use. */
+    private final static String SEED_CHARS = "abcdef1234567890";
+    private final static String OS = System.getProperty("os.name").toLowerCase();
+
+    /**
+     * Create a new transport that is already logged in and ready to use.
+     */
     public static Transport getTransport(ServerFactory factory, RemoteServerConfig conf) throws SDKException {
-        ServerURL sURL = null;
+        ServerURL sURL;
         try {
             sURL = ServerURLImpl.fromAddress(conf.serverURL, conf.skipVerify);
         } catch (MalformedURLException mue) {
@@ -67,10 +69,8 @@ public class TestUtils {
         int targetStringLength = 6;
         Random random = new Random();
 
-        String generatedString = random.ints(inf, sup + 1).limit(targetStringLength)
+        return random.ints(inf, sup + 1).limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-
-        return generatedString;
     }
 
     public static String getUniquePath() {
@@ -79,9 +79,7 @@ public class TestUtils {
 
     public static void dummyProcessChanges(StateManager manager, TreeMap<String, Change> changes) {
 
-        Iterator<String> it = changes.keySet().iterator();
-        while (it.hasNext()) {
-            String currPath = it.next();
+        for (String currPath : changes.keySet()) {
             Change currChange = changes.get(currPath);
             ChangeNode node = currChange.getNode();
 
@@ -113,15 +111,15 @@ public class TestUtils {
     }
 
     public static boolean isWindows() {
-        return (OS.indexOf("win") >= 0);
+        return (OS.contains("win"));
     }
 
     public static boolean isMac() {
-        return (OS.indexOf("mac") >= 0);
+        return (OS.contains("mac"));
     }
 
     public static boolean isLinux() {
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+        return (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"));
     }
 
     public static String getOS() {
