@@ -52,6 +52,10 @@ public class TokenService {
         store.save(key, token);
     }
 
+    public Map<String, Token> getAllTokens() {
+        return store.getAll();
+    }
+
 
 //    public Token loginPasswordGetToken(CellsTransport session, Credentials credentials) throws SDKException {
 //        String password = credentials.getPassword();

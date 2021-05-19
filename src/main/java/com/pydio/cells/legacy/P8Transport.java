@@ -12,6 +12,7 @@ import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.encoding.CustomEncoder;
+import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.legacy.consts.ActionNames;
 import com.pydio.cells.legacy.consts.P8Names;
 import com.pydio.cells.transport.StateID;
@@ -85,9 +86,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         this.tokens = tokens;
         server.init();
 
-        // P8 token never expire so it is much easier and good enough for legacy
-        // to retrieve auth info and login at this point
-        // and then always rely on the objects that are stored in memory.
         useCaptcha();
         login();
         // TODO more init
@@ -320,6 +318,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public void login() throws SDKException {
+        Log.i("Login", "Login process for "+getId());
+        // Log.i("Login", "CookieManager: "+cookieManager.toString());
 
         Token existingToken = tokens.get(this, getId());
         if (existingToken != null) {
@@ -520,7 +520,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 postData.append(utf8Encode(String.valueOf(entry.getValue())));
                 //postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));
             }
-            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
+            byte[] postDataBytes = encoder.getUTF8Bytes(postData.toString());
 
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_LENGTH, String.valueOf(postDataBytes.length));
             con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, P8Names.CONTENT_TYPE_URL_ENCODED);
@@ -705,12 +705,21 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     private String getSecureToken() throws SDKException {
+        // System.out.println(".... In get secure token for " +getId());
+
+        // Map<String, Token> definedTokens = tokens.getAllTokens();
+        // for (String key : definedTokens.keySet()){
+        //     System.out.println("- " + key + ": "+definedTokens.get(key).toString());
+        // }
+
         Token t = tokens.get(this, getId());
 
         if (t == null) {
             System.out.println("No token found for " + getId() + ", about to background login.");
             login();
             t = tokens.get(this, getId());
+        // } else {
+        //     System.out.println("Token found for " + getId() + ", returning "+ t.value);
         }
 
         return t.value;

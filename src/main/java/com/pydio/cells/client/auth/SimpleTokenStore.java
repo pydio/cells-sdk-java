@@ -21,4 +21,11 @@ public class SimpleTokenStore implements TokenStore {
     public void delete(String key) {
         secureTokens.remove(key);
     }
+
+    @Override
+    public Map<String, Token> getAll() {
+        return secureTokens;
+    }
+
+
 }

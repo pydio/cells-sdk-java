@@ -1,5 +1,7 @@
 package com.pydio.cells.client.auth;
 
+import java.util.Map;
+
 public interface TokenStore {
 
     void save(String key, Token t);
@@ -7,5 +9,7 @@ public interface TokenStore {
     Token get(String key);
 
     void delete(String key);
+
+    Map<String, Token> getAll();
 
 }
