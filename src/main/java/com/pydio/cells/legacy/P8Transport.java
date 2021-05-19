@@ -84,6 +84,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     public void restore(TokenService tokens) throws SDKException {
         this.tokens = tokens;
+        // TODO check if it is already initialized
         server.init();
 
         useCaptcha();
