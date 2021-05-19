@@ -67,7 +67,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,8 +74,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.SAXParserFactory;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class CellsClient implements Client, SdkNames {
 
@@ -97,7 +94,12 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Registry getRegistry() {
+    public Registry getDefaultRegistry() {
+        return null;
+    }
+
+    @Override
+    public Registry getUserRegistry() {
         return null;
     }
 
