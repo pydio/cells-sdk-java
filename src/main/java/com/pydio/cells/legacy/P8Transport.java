@@ -19,6 +19,7 @@ import com.pydio.cells.transport.StateID;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -318,26 +319,26 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     @Override
+    /** In P8 the auth token is bound to a session cookie: we must retrieve and store both
+     *      with the provided credentials.
+     */
     public void login() throws SDKException {
-        Log.i("Login", "Login process for "+getId());
-        // Log.i("Login", "CookieManager: "+cookieManager.toString());
 
         Token existingToken = tokens.get(this, getId());
         if (existingToken != null) {
             return;
         }
 
+        Log.i("Login", "Login process for " + getId());
         if (credentials == null) {
             throw new SDKException(ErrorCodes.authentication_required);
         }
 
-        // In P8, the token is bound to a given session cookie, so we clear cookie store
-        // before trying to get a new token
+        // Clear the cookie store before trying to login
         cookieManager.getCookieStore().removeAll();
 
         P8RequestBuilder builder = P8RequestBuilder.login(credentials);
         P8Request req = builder.getRequest();
-
         try (P8Response rsp = execute(req)) {
             final int code = rsp.code();
             if (code != ErrorCodes.ok) {
@@ -345,18 +346,34 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 throw new SDKException(code);
             }
 
+            // Known issue: Pydio8 replies with 2 session cookies upon login.
+            // So before storing the cookie, we must insure it is the correct one.
             Document doc = rsp.toXMLDocument();
-            if (doc != null) {
-                if (doc.getElementsByTagName("logging_result").getLength() > 0) {
-                    String result = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem("value").getNodeValue();
-                    if (result.equals("1")) {
-                        String secureToken = doc.getElementsByTagName("logging_result").item(0).getAttributes().getNamedItem(P8Names.secureToken).getNodeValue();
-                        saveSecureToken(secureToken);
-                        tmpToken1 = secureToken;
-                        loginFailure = 0;
+            List<String> cookieHeaders = rsp.getHeaders(P8Names.HEADER_SET_COOKIE);
+            handleCookie(doc, cookieHeaders);
+        }
+    }
 
-                        // Cookies and token are bound: we only update session cookie upon login
-                        List<String> cookieHeaders = rsp.getHeaders(P8Names.HEADER_SET_COOKIE);
+    private void handleCookie(Document doc, List<String> cookieHeaders) throws SDKException {
+
+        // First handle well known error cases
+        if (doc == null) {
+            throw new SDKException(ErrorCodes.invalid_credentials, new IOException("Request sent an OK response, but could not parse XML body"));
+        }
+        if (doc.getElementsByTagName(P8Names.TAG_LOGIN_RESULT).getLength() == 0) {
+            throw SDKException.unexpectedContent(new IOException("Cannot parse login response: " + doc.toString()));
+        }
+
+        if (cookieHeaders == null) {
+            throw SDKException.unexpectedContent(new IOException("No cookies returned by the login process, aborting"));
+        }
+
+        NamedNodeMap attributes = doc.getElementsByTagName(P8Names.TAG_LOGIN_RESULT).item(0).getAttributes();
+        String result = attributes.getNamedItem("value").getNodeValue();
+        if (result.equals("1")) {
+            String secureToken = attributes.getNamedItem(P8Names.secureToken).getNodeValue();
+            loginFailure = 0;
+            saveSecureToken(secureToken);
 
 //                        Map<String, List<String>> allHeaders = rsp.getAllHeaders();
 //                        for (String currHeader : allHeaders.keySet()) {
@@ -366,41 +383,37 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 //                                System.out.println("#" + (++ii) + ": " + val);
 //                            }
 //                        }
+            // System.out.println("Found " + cookieHeaders.size() + " set-cookie headers");
 
-                        if (cookieHeaders != null) {
-                            // System.out.println("Found " + cookieHeaders.size() + " set-cookie headers");
-                            boolean alreadyStored = false;
-                            for (String headers : cookieHeaders) {
-                                List<HttpCookie> cookies = HttpCookie.parse(headers);
-                                for (HttpCookie cookie : cookies) {
-                                    if (P8Names.AJXP_SESSION_COOKIE_NAME.equals(cookie.getName())) {
-                                        // Dirty hack until we find why Pydio8 replies with 2 session cookies upon login.
-                                        if (!alreadyStored) {
-                                            cookieManager.getCookieStore().add(URI.create(getId()), cookie);
-                                            alreadyStored = true;
-                                            // System.out.println("Storing: " + cookie.getValue());
-                                        }
-                                    } else {
-                                        cookieManager.getCookieStore().add(URI.create(getId()), cookie);
-                                    }
+            boolean alreadyStoredValidCookie = false;
+            for (String headers : cookieHeaders) {
+                List<HttpCookie> cookies = HttpCookie.parse(headers);
+                for (HttpCookie cookie : cookies) {
+                    if (P8Names.AJXP_SESSION_COOKIE_NAME.equals(cookie.getName())) {
+                        if (!alreadyStoredValidCookie) {
+                            cookieManager.getCookieStore().add(URI.create(getId()), cookie);
+
+                            // Perform a call with retrieved token and current session cookie
+                            // to insure we have a correct session ID
+                            P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
+                            try (P8Response rsp = execute(builder.getRequest())) {
+                                if (rsp.code() == ErrorCodes.ok) {
+                                    alreadyStoredValidCookie = true;
                                 }
                             }
                         }
-
-                    } else {
-                        loginFailure++;
-                        if (result.equals("-4")) {
-                            throw new SDKException(ErrorCodes.authentication_with_captcha_required);
-                        }
-                        throw new SDKException(ErrorCodes.invalid_credentials,
-                                new IOException("Could not log as " + credentials.getLogin() + "@" + getServer().url()));
+                    } else { // also store all other cookies.
+                        cookieManager.getCookieStore().add(URI.create(getId()), cookie);
                     }
-                } else {
-                    throw SDKException.unexpectedContent(new IOException("Cannot parse login response: " + doc.toString()));
                 }
-            } else {
-                throw new SDKException(ErrorCodes.invalid_credentials);
             }
+        } else {
+            loginFailure++;
+            if (result.equals("-4")) {
+                throw new SDKException(ErrorCodes.authentication_with_captcha_required);
+            }
+            throw new SDKException(ErrorCodes.invalid_credentials,
+                    new IOException("Could not log as " + credentials.getLogin() + "@" + getServer().url()));
         }
     }
 
@@ -719,8 +732,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             System.out.println("No token found for " + getId() + ", about to background login.");
             login();
             t = tokens.get(this, getId());
-        // } else {
-        //     System.out.println("Token found for " + getId() + ", returning "+ t.value);
+            // } else {
+            //     System.out.println("Token found for " + getId() + ", returning "+ t.value);
         }
 
         return t.value;
