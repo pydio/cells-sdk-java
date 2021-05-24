@@ -14,15 +14,10 @@ import com.pydio.cells.client.ClientData;
 import com.pydio.cells.client.auth.OAuthConfig;
 import com.pydio.cells.client.auth.Token;
 import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.common.http.HttpClient;
-import com.pydio.cells.client.common.http.HttpRequest;
-import com.pydio.cells.client.common.http.HttpResponse;
 import com.pydio.cells.client.encoding.CustomEncoder;
-import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.client.utils.IoHelpers;
 import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.Params;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
@@ -30,7 +25,6 @@ import com.pydio.cells.openapi.model.RestFrontSessionRequest;
 import com.pydio.cells.openapi.model.TreeNode;
 import com.squareup.okhttp.OkHttpClient;
 
-import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -39,7 +33,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -47,7 +40,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
