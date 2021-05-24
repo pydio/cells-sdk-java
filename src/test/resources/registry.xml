@@ -1,0 +1,1031 @@
+<ajxp_registry>
+    <actions>
+        <action name="versions_history">
+            <gui hasAccessKey="false" iconClass="mdi mdi-backup-restore" text="meta.versions.1" title="meta.versions.2" weight="20">
+                <context actionBar="true" actionBarGroup="0_get" behaviour="hidden" contextMenu="true" dir="false" infoPanel="false" recycle="false" selection="true"/>
+                <selectionContext behaviour="hidden" dir="false" evalMetadata="metadata.get('datasource_versioning')" file="true" recycle="true" unique="true"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioVersioning.Callbacks.loadHistoryBrowser"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="true"/>
+        </action>
+        <action name="share">
+            <gui hasAccessKey="false" iconClass="mdi mdi-share-variant" text="292" title="292">
+                <context actionBar="true" actionBarGroup="0_get,info_panel_share" contextMenu="true" dir="true" recycle="hidden" selection="true"/>
+                <selectionContext dir="true" evalMetadata="!metadata.get('pydio_is_shared')" file="true" recycle="false" unique="true"/>
+            </gui>
+            <processing>
+                <clientCallback module="ShareActions.Callbacks.share"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="false"/>
+        </action>
+        <action name="share-edit-shared">
+            <gui iconClass="mdi mdi-share-variant" text="share_center.125" title="share_center.126">
+                <context actionBar="true" actionBarGroup="0_get" behaviour="hidden" contextMenu="true" dir="true" recycle="hidden" selection="true"/>
+                <selectionContext behaviour="hidden" dir="true" enableRoot="true" evalMetadata="metadata.get('pydio_is_shared')" file="true" recycle="false" unique="true"/>
+            </gui>
+            <processing>
+                <clientCallback module="ShareActions.Callbacks.editShare"/>
+            </processing>
+        </action>
+        <action name="open_user_shares">
+            <gui accessKey="folder_access_key" iconClass="mdi mdi-share-variant" text="share_center.98" title="share_center.98">
+                <context actionBar="true" actionBarGroup="user" contextMenu="false" infoPanel="false" recycle="false" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="ShareActions.Callbacks.openUserShareView"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="up_dir">
+            <gui accessKey="parent_access_key" hasAccessKey="true" iconClass="mdi mdi-folder-upload" text="148" title="24">
+                <context actionBar="true" actionBarGroup="00_navigation" contextMenu="true" dir="false" infoPanel="false" recycle="false" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioCoreActions.Navigation.up"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="false"/>
+        </action>
+        <action name="refresh">
+            <gui accessKey="refresh_access_key" hasAccessKey="true" iconClass="mdi mdi-refresh" text="149" title="149">
+                <context actionBar="true" actionBarGroup="00_navigation,display_toolbar" contextMenu="true" dir="true" infoPanel="false" recycle="false" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioCoreActions.Navigation.refresh"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="false"/>
+        </action>
+        <action name="bookmark_on">
+            <gui accessKey="bookmarks_access_key" hasAccessKey="true" iconClass="mdi mdi-star-outline" text="152-on" title="153-on">
+                <context actionBar="true" actionBarGroup="other" contextMenu="true" dir="false" infoPanel="false" recycle="hidden" selection="true"/>
+                <selectionContext dir="true" enableRoot="true" evalMetadata="!metadata.get('bookmark')" file="true" recycle="false" unique="true"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioCoreActions.Callbacks.toggleBookmark"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="false"/>
+        </action>
+        <action name="bookmark_off">
+            <gui accessKey="bookmarks_access_key" hasAccessKey="true" iconClass="mdi mdi-star" text="152-off" title="153-off">
+                <context actionBar="true" actionBarGroup="other" contextMenu="true" dir="false" infoPanel="false" recycle="hidden" selection="true"/>
+                <selectionContext dir="true" enableRoot="true" evalMetadata="metadata.get('bookmark')" file="true" recycle="false" unique="true"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioCoreActions.Callbacks.toggleBookmark"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="false"/>
+        </action>
+        <action name="open_user_dashboard">
+            <gui accessKey="folder_access_key" iconClass="mdi mdi-account-settings-variant" text="user_dash.title" title="user_dash.desc" weight="-10">
+                <context actionBar="true" actionBarGroup="user" contextMenu="false" infoPanel="false" recycle="false" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="UserAccount.Callbacks.openDashboard"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="open_address_book">
+            <gui accessKey="folder_access_key" iconClass="mdi mdi-account-card-details" text="user_dash.1" title="user_dash.1">
+                <context actionBar="true" actionBarGroup="user" contextMenu="false" infoPanel="false" recycle="false" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="UserAccount.Callbacks.openAddressBook"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="false" paramDisable="action.user/DASH_DISABLE_ADDRESS_BOOK" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="toggle_watch">
+            <gui iconClass="mdi mdi-rss" text="meta.watch.1" title="meta.watch.2" weight="10">
+                <context actionBar="true" actionBarGroup="0_get" contextMenu="true" dir="true" recycle="hidden" selection="true"/>
+                <selectionContext dir="true" enableRoot="true" evalMetadata="!metadata.get('meta_watched')" file="true" recycle="false" unique="true"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioActivityStreams.Callbacks.toggleWatch"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+            <subMenu>
+                <dynamicBuilder module="PydioActivityStreams.Listener.dynamicBuilder"/>
+            </subMenu>
+        </action>
+        <action name="toggle_watch_off">
+            <gui iconClass="mdi mdi-rss" text="meta.watch.1-off" title="meta.watch.2" weight="10">
+                <context actionBar="true" actionBarGroup="0_get" contextMenu="true" dir="true" recycle="hidden" selection="true"/>
+                <selectionContext dir="true" enableRoot="true" evalMetadata="metadata.get('meta_watched')" file="true" recycle="false" unique="true"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioActivityStreams.Callbacks.toggleWatch"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+            <subMenu>
+                <dynamicBuilder module="PydioActivityStreams.Listener.dynamicBuilder"/>
+            </subMenu>
+        </action>
+        <action name="edit_user_meta_mass">
+            <gui hasAccessKey="false" iconClass="mdi mdi-tag-multiple" text="meta.user.1" title="meta.user.1">
+                <context actionBar="true" actionBarGroup="put,info_panel" contextMenu="true" inZip="false" infoPanel="false" recycle="hidden" selection="true"/>
+                <selectionContext dir="true" file="file" multipleOnly="true" recycle="false" unique="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="ReactMeta.Callbacks.editMeta"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="true"/>
+        </action>
+        <action name="edit_user_meta">
+            <gui hasAccessKey="false" iconClass="mdi mdi-tag" text="meta.user.1" title="meta.user.1" weight="10">
+                <context actionBar="true" actionBarGroup="0_get" contextMenu="true" inZip="false" infoPanel="false" recycle="hidden" selection="true"/>
+                <selectionContext dir="true" file="file" recycle="false" unique="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="ReactMeta.Callbacks.editMeta"/>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="true"/>
+        </action>
+        <action name="slideshow_sel">
+            <gui hasAccessKey="false" text="234" title="234">
+                <context actionBar="false" actionBarGroup="get" infoPanel="true" recycle="hidden" selection="true"/>
+                <selectionContext allowedMimes="png,bmp,jpg,jpeg,gif" behaviour="hidden" dir="true" file="true" multipleOnly="true" recycle="true" unique="false"/>
+            </gui>
+            <processing>
+                <clientCallback><![CDATA[
+						var selectedMime = getAjxpMimeType(pydio.getUserSelection().getUniqueNode());
+						var editors = pydio.Registry.findEditorsForMime(selectedMime);
+						var editorData;
+						if(editors.length){
+							editorData = editors[0];
+						}
+						if(editorData){
+							pydio.Registry.loadEditorResources(editorData.resourcesManager);
+							modal.openEditorDialog(editorData);
+						}else{
+							alert('no data found!');
+						}
+						]]></clientCallback>
+            </processing>
+            <rightsContext noUser="true" read="true" userLogged="only" write="false"/>
+        </action>
+        <action name="pass_change">
+            <gui hasAccessKey="false" iconClass="icon-key" text="194" title="194">
+                <context actionBarGroup="utils" recycle="true" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioCoreActions.Callbacks.changePass"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="user_team_create">
+            <gui iconClass="icon-plus" text="571.create_team_action" title="571.create_team_legend"/>
+        </action>
+        <action name="custom_data_edit">
+            <gui hasAccessKey="false" iconClass="icon-reorder" text="442" title="443">
+                <context actionBar="false" actionBarGroup="utils" contextMenu="false" infoPanel="false" recycle="true" selection="false"/>
+            </gui>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="user_update_user">
+            <gui hasAccessKey="false" iconClass="icon-user" text="519" title="520">
+                <context actionBar="true" actionBarGroup="address_book" contextMenu="false" infoPanel="false" recycle="true" selection="true"/>
+                <selectionContext allowedMimes="shared_user" dir="false" file="true" recycle="false" unique="true"/>
+            </gui>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="user_create_user">
+            <gui hasAccessKey="false" iconClass="icon-user" text="484" title="485">
+                <context actionBar="true" actionBarGroup="address_book" contextMenu="false" infoPanel="false" recycle="true" selection="false"/>
+            </gui>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="switch_language">
+            <gui hasAccessKey="false" iconClass="icon-flag" text="190" title="190">
+                <context actionBar="false" actionBarGroup="utils" contextMenu="false" infoPanel="false" recycle="true" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="PydioCoreActions.Callbacks.switchLanguage"/>
+            </processing>
+        </action>
+        <action name="webdav_preferences">
+            <gui hasAccessKey="false" iconClass="icon-cog" text="403" title="403">
+                <context actionBar="false" actionBarGroup="utils" contextMenu="false" infoPanel="false" recycle="true" selection="false"/>
+            </gui>
+            <rightsContext noUser="false" read="true" userLogged="only" write="false"/>
+        </action>
+        <action name="switch_to_settings">
+            <gui accessKey="settings_access_key" hasAccessKey="true" iconClass="mdi mdi-tune-vertical" text="settings.topbar.title" title="settings.topbar.title">
+                <context actionBar="true" actionBarGroup="zlogin" dir="false" recycle="true" selection="false"/>
+            </gui>
+            <processing>
+                <activeCondition><![CDATA[
+                        return (pydio && pydio.user && (pydio.user.getRepositoriesList().has('settings') && pydio.user.activeRepository !== 'settings'));
+                     ]]></activeCondition>
+                <clientCallback module="PydioCoreActions.Navigation.switchToSettings"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="switch_to_homepage">
+            <gui hasAccessKey="false" iconClass="mdi mdi-home" text="305" title="305">
+                <context actionBar="true" actionBarGroup="aUser" dir="false" recycle="true" selection="false"/>
+            </gui>
+            <processing>
+                <activeCondition><![CDATA[
+                        return (pydio && pydio.user && (pydio.user.getRepositoriesList().has('homepage') && pydio.user.activeRepository !== 'homepage'));
+                     ]]></activeCondition>
+                <clientCallback module="PydioCoreActions.Navigation.switchToHomepage"/>
+            </processing>
+            <rightsContext adminOnly="false" noUser="true" read="false" userLogged="only" write="false"/>
+        </action>
+        <action expireDefault="true" name="logout">
+            <gui hasAccessKey="false" iconClass="mdi mdi-logout" text="164" title="169" weight="400">
+                <context actionBar="true" actionBarGroup="zlogin,minisite" contextMenu="false" recycle="false" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="AuthfrontCoreActions.Callbacks.sessionLogout"/>
+            </processing>
+            <rightsContext guestLogged="hidden" noUser="false" read="false" userLogged="only" write="false"/>
+        </action>
+        <action name="get_drop_bg" skipSecureToken="true">
+            <processing>
+                <serverCallback methodName="getDropBg"/>
+            </processing>
+        </action>
+        <action name="tplfolder">
+            <gui hasAccessKey="false" iconClass="mdi mdi-folder-plus" text="tpl_actions.frombookmarks" title="tpl_actions.frombookmarks">
+                <context actionBar="true" actionBarGroup="create" contextMenu="true" dir="true" inZip="false" infoPanel="false" recycle="hidden" selection="false"/>
+            </gui>
+            <rightsContext noUser="true" read="false" userLogged="only" write="true"/>
+            <subMenu>
+                <dynamicBuilder module="TemplateActions.Callbacks.fromBookmarksDynamicBuilder"/>
+            </subMenu>
+        </action>
+        <action name="reset-password-ask">
+            <gui iconClass="icon-terminal" text="gui.user.1" title="gui.user.2">
+                <context dir="true" recycle="true" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="AuthfrontCoreActions.ResetPasswordRequire.open"/>
+            </processing>
+        </action>
+        <action name="reset-password">
+            <gui iconClass="icon-terminal" text="gui.user.1" title="gui.user.2">
+                <context dir="true" recycle="true" selection="false"/>
+            </gui>
+            <processing>
+                <clientCallback module="AuthfrontCoreActions.ResetPasswordDialog.open"/>
+            </processing>
+        </action>
+    </actions>
+    <client_configs>
+        <component_config component="InfoPanel">
+            <infoPanel mime="jpg,jpeg,tiff,riff" reactComponent="PydioExif.Panel" theme="material" weight="-10"/>
+        </component_config>
+        <component_config component="InfoPanel">
+            <infoPanel mime="meta:pydio_is_shared" reactComponent="ShareDialog.InfoPanel" weight="-600"/>
+        </component_config>
+        <component_config component="FilesList">
+            <property name="thumbSize" value="128"/>
+        </component_config>
+        <component_config component="InfoPanel">
+            <infoPanel mime="ajxp_root_node,generic_dir,generic_file" reactComponent="PydioActivityStreams.InfoPanel"/>
+        </component_config>
+        <component_config component="InfoPanel">
+            <infoPanel mime="generic_file,generic_dir" reactComponent="ReactMeta.InfoPanel" theme="material" weight="3"/>
+        </component_config>
+        <component_config component="FilesList">
+            <columns>
+                <additional_column attributeName="readable_dimension" defaultVisibilty="hidden" messageId="135" sortType="String"/>
+            </columns>
+        </component_config>
+        <component_config component="InfoPanel">
+            <infoPanel mime="generic_file,generic_dir" reactComponent="MetaComments.InfoPanel" weight="10"/>
+        </component_config>
+        <component_config component="FilesList">
+            <columns>
+                <additional_column attributeName="usermeta-tags" defaultVisibilty="true" messageString="Tags" sortType="String" reactModifier="ReactMeta.Renderer.renderTagsCloud"/>
+            </columns>
+        </component_config>
+        <template component="FolderMinisite" element="pydio_shared_folder" label="share_center.153" name="minisite_std_list" namespace="ShareTemplates" position="top" props="{&quot;aboutString&quot;:&quot;false&quot;,&quot;containerId&quot;:&quot;pydio_shared_folder&quot;,&quot;imageBackgroundFromConfigs&quot;:&quot;gui.ajax/CUSTOM_SHAREPAGE_BACKGROUND_&quot;}"/>
+        <template component="FilmStripMinisite" element="pydio_film_strip" label="share_center.154" name="minisite_film_strip" namespace="ShareTemplates" position="top" props="{&quot;aboutString&quot;:&quot;false&quot;,&quot;containerId&quot;:&quot;pydio_film_strip&quot;,&quot;imageBackgroundFromConfigs&quot;:&quot;gui.ajax/CUSTOM_SHAREPAGE_BACKGROUND_&quot;}"/>
+        <template component="FileMinisite" element="pydio_unique_strip" label="Unique File Preview" name="unique_preview_file" namespace="ShareTemplates" position="top" props="{&quot;aboutString&quot;:&quot;false&quot;,&quot;containerId&quot;:&quot;pydio_unique_strip&quot;,&quot;imageBackgroundFromConfigs&quot;:&quot;gui.ajax/CUSTOM_SHAREPAGE_BACKGROUND_&quot;}"/>
+        <template component="DLTemplate" element="pydio_unique_dl" label="Big download button" name="unique_preview_download" namespace="ShareTemplates" position="top" props="{&quot;aboutString&quot;:&quot;false&quot;,&quot;containerId&quot;:&quot;pydio_unique_dl&quot;,&quot;imageBackgroundFromConfigs&quot;:&quot;gui.ajax/CUSTOM_SHAREPAGE_BACKGROUND_&quot;}"/>
+        <template component="DropZoneMinisite" element="pydio_dropbox_template" label="share_center.163" name="minisite_dropbox" namespace="ShareTemplates" position="top" props="{&quot;aboutString&quot;:&quot;false&quot;,&quot;containerId&quot;:&quot;pydio_dropbox_template&quot;,&quot;imageBackgroundFromConfigs&quot;:&quot;gui.ajax/CUSTOM_SHAREPAGE_BACKGROUND_&quot;,&quot;minisiteMode&quot;:&quot;embed&quot;}"/>
+        <template component="TemplateBuilder" element="ajxp_desktop" name="main_material" namespace="PydioReactUI" position="top" props="{&quot;imageBackgroundFromConfigs&quot;:&quot;gui.ajax/WELCOME_PAGE_BACKGROUND_&quot;, &quot;containerId&quot;:&quot;orbit_content&quot;}" theme="material"/>
+        <template component="Modal" element="body" name="material_modal" namespace="PydioReactUI" position="bottom" props="{&quot;containerId&quot;:&quot;pydio_modal&quot;}" theme="material"/>
+        <template component="MessageBar" element="body" name="material_snack" namespace="PydioReactUI" position="bottom" props="{&quot;containerId&quot;:&quot;pydio_message_bar&quot;}"/>
+        <template component="Router" element="ajxp_desktop" name="material_router" namespace="PydioReactUI" position="bottom" props="{&quot;containerId&quot;:&quot;pydio_router&quot;}"/>
+        <template component="NetworkLoader" element="body" name="network_loader" namespace="PydioReactUI" position="bottom" props="{}"/>
+        <template component="HiddenDownloadForm" element="body" name="hidden_download" namespace="PydioReactUI" position="bottom" props="{}"/>
+        <template component="Mounter" element="body" name="password_policy" namespace="PasswordPolicy" position="bottom" theme="material"/>
+        <template_part ajxpId="orbit_content" component="HomeDashboard" dependencies="PydioComponents" namespace="WelcomeComponents" props="{&quot;rootId&quot;:&quot;home_account_pane&quot;,&quot;style&quot;: {}}" theme="material"/>
+        <template_part ajxpId="search_container" ajxpClass="SearchEngine" ajxpOptions="{&quot;detailThumbSize&quot;:24,&quot;fitMarginBottom&quot;:0,&quot;metaColumns&quot;:{&quot;usermeta-tags&quot;:&quot;Tags&quot;},&quot;openSearchInput&quot;:&quot;true&quot;,&quot;openSearchStickLeftTo&quot;:&quot;cpane_container&quot;,&quot;reactColumnsRenderers&quot;:{&quot;usermeta-tags&quot;:&quot;ReactMeta.Renderer.formPanelTags&quot;},&quot;searchChooserAsResultsHeader&quot;:true,&quot;toggleResultsFitTo&quot;:&quot;cpane_tabs&quot;,&quot;toggleResultsOffsetRight&quot;:0,&quot;toggleResultsOffsetTop&quot;:0,&quot;toggleResultsVisibility&quot;:&quot;search_results_cont&quot;}" theme="material"/>
+    </client_configs>
+    <extensions>
+        <extension font="folder" messageId="8" mime="ajxp_folder"/>
+        <extension font="file" messageId="23" mime="ajxp_empty"/>
+        <extension font="file-music" messageId="9" mime="mid"/>
+        <extension font="file-document" messageId="10" mime="txt"/>
+        <extension font="file-document" messageId="10" mime="sql"/>
+        <extension font="language-javascript" messageId="11" mime="js"/>
+        <extension font="file-image" messageId="12" mime="gif"/>
+        <extension font="file-image" messageId="13" mime="jpg"/>
+        <extension font="file-image" messageId="13" mime="jpeg"/>
+        <extension font="file-image" messageId="56" mime="bmp"/>
+        <extension font="file-image" messageId="57" mime="png"/>
+        <extension font="file-image" messageId="TIFF" mime="tiff"/>
+        <extension font="file-image" messageId="TIFF" mime="tif"/>
+        <extension font="file-image" messageId="SVG" mime="svg"/>
+        <extension font="file-image" messageId="Photoshop" mime="psd"/>
+        <extension font="language-html5" messageId="14" mime="html"/>
+        <extension font="language-html5" messageId="14" mime="htm"/>
+        <extension font="archive" messageId="60" mime="rar"/>
+        <extension font="archive" messageId="61" mime="tar"/>
+        <extension font="archive" messageId="61" mime="tgz"/>
+        <extension font="archive" messageId="61" mime="gz"/>
+        <extension font="archive" messageId="61" mime="z"/>
+        <extension font="archive" messageId="19" mime="zip"/>
+        <extension font="file-video" messageId="16" mime="ra"/>
+        <extension font="file-video" messageId="17" mime="ram"/>
+        <extension font="file-video" messageId="17" mime="rm"/>
+        <extension font="file-video" messageId="80" mime="mov"/>
+        <extension font="file-video" messageId="81" mime="avi"/>
+        <extension font="file-video" messageId="82" mime="mpg"/>
+        <extension font="file-video" messageId="83" mime="mpeg"/>
+        <extension font="file-video" messageId="83" mime="mp4"/>
+        <extension font="file-video" messageId="83" mime="m4v"/>
+        <extension font="file-video" messageId="Video" mime="ogv"/>
+        <extension font="file-video" messageId="Video" mime="webm"/>
+        <extension font="file-video" messageId="81" mime="wmv"/>
+        <extension font="file-music" messageId="59" mime="mp3"/>
+        <extension font="file-music" messageId="59" mime="m4a"/>
+        <extension font="file-music" messageId="59" mime="aac"/>
+        <extension font="file-music" messageId="20" mime="wav"/>
+        <extension font="language-php" messageId="21" mime="php"/>
+        <extension font="language-php" messageId="22" mime="phar"/>
+        <extension font="language-php" messageId="22" mime="phtml"/>
+        <extension font="language-css3" messageId="58" mime="css"/>
+        <extension font="application" messageId="50" mime="exe"/>
+        <extension font="file-pdf" messageId="79" mime="pdf"/>
+        <extension font="movie" messageId="91" mime="swf"/>
+        <extension font="movie" messageId="91" mime="flv"/>
+        <extension font="timer" messageId="Timestamp" mime="ers"/>
+        <extension font="cube-outline" messageId="DWG" mime="dwg"/>
+        <extension font="file-excel" messageId="64" mime="xls"/>
+        <extension font="file-excel" messageId="64" mime="xlsx"/>
+        <extension font="file-excel" messageId="64" mime="xlt"/>
+        <extension font="file-excel" messageId="64" mime="xltx"/>
+        <extension font="file-excel" messageId="64" mime="ods"/>
+        <extension font="file-excel" messageId="64" mime="sxc"/>
+        <extension font="file-excel" messageId="64" mime="csv"/>
+        <extension font="file-excel" messageId="64" mime="tsv"/>
+        <extension font="file-word" messageId="65" mime="doc"/>
+        <extension font="file-word" messageId="65" mime="docx"/>
+        <extension font="file-word" messageId="65" mime="dot"/>
+        <extension font="file-word" messageId="65" mime="dotx"/>
+        <extension font="file-word" messageId="65" mime="odt"/>
+        <extension font="file-word" messageId="65" mime="swx"/>
+        <extension font="file-word" messageId="65" mime="rtf"/>
+        <extension font="file-powerpoint" messageId="446" mime="ppt"/>
+        <extension font="file-powerpoint" messageId="446" mime="pptx"/>
+        <extension font="file-powerpoint" messageId="446" mime="pps"/>
+        <extension font="file-powerpoint" messageId="446" mime="odp"/>
+        <extension font="file-powerpoint" messageId="446" mime="sxi"/>
+        <extension font="file-powerpoint" messageId="446" mime="key"/>
+    </extensions>
+    <plugins>
+        <plugin description="Sets how the application core data (users,roles,etc) is stored." enabled="always" id="core.conf" label="Configurations Management">
+            <client_settings>
+                <resources>
+                    <i18n namespace="core_conf" remote="plug/core.conf/i18n"/>
+                </resources>
+            </client_settings>
+            <server_settings>
+                <param description="Full name displayed to others" editable="true" expose="true" label="Name" type="string" scope="user" name="displayName"/>
+                <param defaultImage="plug/core.conf/default_avatar.png" description="Image displayed next to the user name" editable="true" expose="true" label="Avatar" loadAction="/frontend/binaries/USER/{BINARY}" type="image" uploadAction="/frontend/binaries/USER/{BINARY}" scope="user" name="avatar"/>
+                <param description="Address used for notifications" editable="true" expose="true" label="Email" type="string" scope="user" name="email"/>
+                <param choices="PYDIO_AVAILABLE_LANGUAGES" description="User Language" editable="true" expose="true" label="Language" type="select" scope="role,user" name="lang"/>
+                <param choices="json_file:plug/core.conf/countries.json" description="Country" editable="true" expose="true" label="Country" type="autocomplete" scope="role,user" name="country"/>
+                <param choices="default|Default,material|Material,light|Material Light" default="default" description="Theme used for display" editable="true" expose="true" label="Theme" mandatory="true" type="select" scope="user" name="theme"/>
+                <param choices="PYDIO_AVAILABLE_REPOSITORIES" default="homepage" description="Default workspace shown after log in. 'Home' is the welcome page with activity and search engine." editable="true" expose="true" label="Default Workspace" type="select" scope="role,user,group" name="DEFAULT_START_REPOSITORY"/>
+                <param description="If set, this action will be triggered automatically at users login. Can be logout (to lock out the users), pass_change (to force password change), or anything else" label="Users Lock Action" type="string" scope="role,group" name="USER_LOCK_ACTION"/>
+                <param description="Maximum number of shared users per user" editable="false" expose="false" label="Shared users limit" type="integer" scope="user" name="USER_SHARED_USERS_LIMIT"/>
+            </server_settings>
+        </plugin>
+        <plugin description="Share Center actions and hooks" id="action.share" label="Sharing Features" name="share">
+            <client_settings>
+                <resources>
+                    <css autoload="true" file="plug/action.share/res/react-share-form.css"/>
+                    <i18n namespace="share_center" remote="plug/action.share/res/i18n"/>
+                    <js className="ShareActions" file="plug/action.share/res/build/model/ShareActions.js"/>
+                    <js className="ShareTemplates" depends="React,PydioComponents,PydioWorkspaces" file="plug/action.share/res/build/ShareTemplates.js"/>
+                    <js className="ShareDialog" depends="React,PydioForm,PydioComponents" file="plug/action.share/res/build/ShareDialog.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="HASH_MIN_LENGTH"><![CDATA[12]]></property>
+                <property name="FILE_MAX_DOWNLOAD"><![CDATA[0]]></property>
+                <property name="SHARE_FORCE_PASSWORD"><![CDATA[false]]></property>
+                <property name="CREATE_QRCODE"><![CDATA[false]]></property>
+                <property name="ENABLE_FILE_INTERNAL_SHARING"><![CDATA[true]]></property>
+                <property name="ENABLE_FOLDER_PUBLIC_LINK"><![CDATA[true]]></property>
+                <property name="SHARED_USERS_TMP_PREFIX"><![CDATA[""]]></property>
+                <property name="HASH_USER_EDITABLE"><![CDATA[true]]></property>
+                <property name="FILE_MAX_EXPIRATION"><![CDATA[0]]></property>
+                <property name="ENABLE_FILE_PUBLIC_LINK"><![CDATA[true]]></property>
+                <property name="ENABLE_FOLDER_INTERNAL_SHARING"><![CDATA[true]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="true" description="Allow users to generate public links on files" expose="true" group="Authorizations" label="Files: enable public links" name="ENABLE_FILE_PUBLIC_LINK" type="boolean"/>
+                <global_param default="true" description="Enable internal file sharing (sharing with users existing or temporary users)" expose="true" group="Authorizations" label="Files: enable internal sharing" mandatory="true" name="ENABLE_FILE_INTERNAL_SHARING" type="boolean"/>
+                <global_param default="true" description="Allow users to generate public links on folders" expose="true" group="Authorizations" label="Folders: enable public links" name="ENABLE_FOLDER_PUBLIC_LINK" type="boolean"/>
+                <global_param default="true" description="Enable internal folder sharing (sharing with users existing or temporary users)" expose="true" group="Authorizations" label="Folders: enable internal sharing" mandatory="true" name="ENABLE_FOLDER_INTERNAL_SHARING" type="boolean"/>
+                <global_param description="Mandatory prefix for users created temporary users login" expose="true" group="Authorizations" label="Tmp users prefix" name="SHARED_USERS_TMP_PREFIX" type="string"/>
+                <global_param default="12" description="Minimum length of the generated hash" group="Link Generation" label="Hash minimum length" name="HASH_MIN_LENGTH" type="integer"/>
+                <global_param default="true" description="Allow users to manually choose a hash for the generated links" expose="true" group="Link Generation" label="Hash user-editable" name="HASH_USER_EDITABLE" type="boolean"/>
+                <global_param default="0" description="Maximum share expiration limit for file, 0 = unlimited" expose="true" group="Link Generation" label="Maximum file expiration limit" name="FILE_MAX_EXPIRATION" type="integer"/>
+                <global_param default="0" description="Maximum download limit for file, 0 = unlimited" expose="true" group="Link Generation" label="Maximum file download limit" name="FILE_MAX_DOWNLOAD" type="integer"/>
+                <global_param default="false" description="Do not allow users to create public links, only private links (password-protected)" expose="true" group="Link Generation" label="Set password mandatory" name="SHARE_FORCE_PASSWORD" type="boolean"/>
+                <global_param default="false" description="Create and display QRCode for shared link" expose="true" group="Link Generation" label="Create QRCode" name="CREATE_QRCODE" type="boolean"/>
+            </server_settings>
+        </plugin>
+        <plugin description="Browser-based rich interface. Contains configurations for theming, custom welcome message, etc." enabled="always" id="gui.ajax" label="Client Plugin">
+            <client_settings>
+                <resources>
+                    <css autoload="true" file="plug/gui.ajax/res/build/pydio.material.min.css"/>
+                    <i18n namespace="ajax_gui" remote="plug/gui.ajax/res/i18n"/>
+                    <js className="React" file="plug/gui.ajax/res/build/bundle.prod.min.js"/>
+                    <js className="PydioCoreActions" depends="React" expose="actions/core" fallbackCondition="pydio.Parameters.get('debugMode')" fallbackFile="plug/gui.ajax/res/build/PydioCoreActions.js" file="plug/gui.ajax/res/build/PydioCoreActions.min.js"/>
+                    <js className="PydioForm" expose="form" fallbackCondition="pydio.Parameters.get('debugMode')" fallbackFile="plug/gui.ajax/res/build/PydioForm.js" file="plug/gui.ajax/res/build/PydioForm.min.js"/>
+                    <js className="PydioReactUI" depends="React,PydioHOCs" expose="boot" fallbackCondition="pydio.Parameters.get('debugMode')" fallbackFile="plug/gui.ajax/res/build/PydioReactUI.js" file="plug/gui.ajax/res/build/PydioReactUI.min.js"/>
+                    <js className="PydioComponents" depends="React,PydioForm" expose="components" fallbackCondition="pydio.Parameters.get('debugMode')" fallbackFile="plug/gui.ajax/res/build/PydioComponents.js" file="plug/gui.ajax/res/build/PydioComponents.min.js"/>
+                    <js className="PydioHOCs" depends="React" expose="hoc" fallbackCondition="pydio.Parameters.get('debugMode')" fallbackFile="plug/gui.ajax/res/build/PydioHOCs.js" file="plug/gui.ajax/res/build/PydioHOCs.min.js"/>
+                    <js className="PydioWorkspaces" depends="React,PydioComponents,PydioHOCs" expose="workspaces" fallbackCondition="pydio.Parameters.get('debugMode')" fallbackFile="plug/gui.ajax/res/build/PydioWorkspaces.js" file="plug/gui.ajax/res/build/PydioWorkspaces.min.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_3"><![CDATA["background-repeat:repeat;background-size:140%;background-position:50% 50%;"]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_4"><![CDATA[""]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_4"><![CDATA["background-repeat:repeat;background-size:140%;background-position:50% 50%;"]]></property>
+                <property name="CUSTOM_SHAREPAGE_BACKGROUND_2"><![CDATA[""]]></property>
+                <property name="CUSTOM_SHAREPAGE_BACKGROUND_ATTRIBUTES_2"><![CDATA["background-repeat:repeat;background-size:100%;background-position:50% 50%;"]]></property>
+                <property name="ENABLE_WELCOME_TOUR"><![CDATA[true]]></property>
+                <property name="CLIENT_TIMEOUT"><![CDATA[24]]></property>
+                <property name="CUSTOM_ICON_BINARY"><![CDATA[""]]></property>
+                <property name="CUSTOM_SHAREPAGE_BACKGROUND_ATTRIBUTES_3"><![CDATA["background-repeat:repeat;background-size:100%;background-position:50% 50%;"]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_5"><![CDATA["background-repeat:repeat;background-size:140%;background-position:50% 50%;"]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_6"><![CDATA["background-repeat:repeat;background-size:140%;background-position:50% 50%;"]]></property>
+                <property name="CUSTOM_ICON"><![CDATA["plug/gui.ajax/res/themes/common/images/LoginBoxLogo.png"]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_3"><![CDATA[""]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_5"><![CDATA[""]]></property>
+                <property name="CUSTOM_SHAREPAGE_BACKGROUND_3"><![CDATA[""]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_1"><![CDATA["background-repeat:repeat;background-size:140%;background-position:50% 50%;"]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_6"><![CDATA[""]]></property>
+                <property name="CUSTOM_SHAREPAGE_BACKGROUND_1"><![CDATA[""]]></property>
+                <property name="CUSTOM_DASH_LOGO"><![CDATA[""]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_1"><![CDATA[""]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_2"><![CDATA[""]]></property>
+                <property name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_2"><![CDATA["background-repeat:repeat;background-size:140%;background-position:50% 50%;"]]></property>
+                <property name="CUSTOM_SHAREPAGE_BACKGROUND_ATTRIBUTES_1"><![CDATA["background-repeat:repeat;background-size:100%;background-position:50% 50%;"]]></property>
+                <property name="GUI_THEME"><![CDATA["light"]]></property>
+                <property name="CLIENT_TIMEOUT_WARN"><![CDATA[3]]></property>
+                <property name="HTML_CUSTOM_HEADER"><![CDATA[""]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param choices="material|Material,light|Material Light" default="light" description="Theme used for display" expose="true" group="Main Options" label="Theme" mandatory="true" name="GUI_THEME" type="select"/>
+                <global_param default="true" description="Enable the small tour triggered at first visit" expose="true" group="Main Options" label="Enable Welcome Tour" name="ENABLE_WELCOME_TOUR" type="boolean"/>
+                <global_param default="24" description="For security, disconnect user if there was no activity. Set to the cookie expiration by default." group="Main Options" label="Web Interface auto-logout after inactivity" mandatory="false" name="CLIENT_TIMEOUT" type="integer"/>
+                <global_param default="3" description="Alert the user that the web session is about to expire. Number of minutes before session expiration" group="Main Options" label="Warning Before Session Expiration" mandatory="false" name="CLIENT_TIMEOUT_WARN" type="integer"/>
+                <global_param description="Custom HTML you want to be included in the pages header. Beware, make sure to put valid HTML here!" group="Main Options" label="Custom HTML Header" name="HTML_CUSTOM_HEADER" type="textarea"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/LoginBoxLogo.png" description="URI to a custom image to be used as start up logo" editable="true" expose="true" group="Login Page" label="Custom Icon" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="CUSTOM_ICON_BINARY" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param default="plug/gui.ajax/res/themes/common/images/LoginBoxLogo.png" description="URI to a custom image to be used as start up logo" expose="true" group="Login Page" label="Icon Path (Legacy)" mandatory="false" name="CUSTOM_ICON" type="string"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/PydioCellsColor.png" description="Replace the logo displayed in the welcome page" editable="true" expose="true" group="Login Page" label="User Home Logo" loadAction="/frontend/binaries/GLOBAL/{BINARY}" name="CUSTOM_DASH_LOGO" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/01.jpg" description="Image used as a background" editable="true" expose="true" group="Page Background Images" label="Custom background (1)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="WELCOME_PAGE_BACKGROUND_1" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:140%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:140%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Page Background Images" label="Background attributes (1)" mandatory="false" name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_1" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/02.jpg" description="Image used as a background" editable="true" expose="true" group="Page Background Images" label="Custom background (2)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="WELCOME_PAGE_BACKGROUND_2" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:140%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:140%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Page Background Images" label="Background attributes (2)" mandatory="false" name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_2" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/03.jpg" description="Image used as a background" editable="true" expose="true" group="Page Background Images" label="Custom background (3)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="WELCOME_PAGE_BACKGROUND_3" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:140%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:140%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Page Background Images" label="Background attributes (3)" mandatory="false" name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_3" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/04.jpg" description="Image used as a background" editable="true" expose="true" group="Page Background Images" label="Custom background (4)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="WELCOME_PAGE_BACKGROUND_4" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:140%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:140%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Page Background Images" label="Background attributes (4)" mandatory="false" name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_4" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/05.jpg" description="Image used as a background" editable="true" expose="true" group="Page Background Images" label="Custom background (5)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="WELCOME_PAGE_BACKGROUND_5" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:140%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:140%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Page Background Images" label="Background attributes (5)" mandatory="false" name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_5" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/06.jpg" description="Image used as a background" editable="true" expose="true" group="Page Background Images" label="Custom background (6)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="WELCOME_PAGE_BACKGROUND_6" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:140%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:140%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Page Background Images" label="Background attributes (6)" mandatory="false" name="WELCOME_PAGE_BACKGROUND_ATTRIBUTES_6" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/02.jpg" description="Image used as a background" editable="true" expose="true" group="Minisite" label="Custom background (1)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="CUSTOM_SHAREPAGE_BACKGROUND_1" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:100%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:100%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Minisite" label="Background attributes (1)" mandatory="false" name="CUSTOM_SHAREPAGE_BACKGROUND_ATTRIBUTES_1" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/03.jpg" description="Image used as a background" editable="true" expose="true" group="Minisite" label="Custom background (2)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="CUSTOM_SHAREPAGE_BACKGROUND_2" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:100%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:100%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Minisite" label="Background attributes (2)" mandatory="false" name="CUSTOM_SHAREPAGE_BACKGROUND_ATTRIBUTES_2" type="select"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/hires-photos/05.jpg" description="Image used as a background" editable="true" expose="true" group="Minisite" label="Custom background (3)" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="CUSTOM_SHAREPAGE_BACKGROUND_3" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param choices="background-repeat:no-repeat;background-position:50% 50%;|Center in Page (no-repeat),background-repeat:repeat;background-size:100%;background-position:50% 50%;|Fetch Window (repeat vertically),background-repeat:no-repeat;background-size:100%; background-position:center center;|Fetch Window (no repeat),background-repeat:repeat;|Tile (repeat both directions)" default="background-repeat:repeat;background-size:100%;background-position:50% 50%;" description="Attributes of the image used as a background" expose="true" group="Minisite" label="Background attributes (3)" mandatory="false" name="CUSTOM_SHAREPAGE_BACKGROUND_ATTRIBUTES_3" type="select"/>
+            </server_settings>
+            <dependencies>
+                <activePlugin pluginName="core.conf"/>
+            </dependencies>
+        </plugin>
+        <plugin description="User account panel for managing settings and opening address book" enabled="always" id="action.user" label="User Account Panel">
+            <client_settings>
+                <resources>
+                    <i18n namespace="user_dash" remote="plug/action.user/res/i18n"/>
+                    <js className="UserAccount" depends="React,PydioForm" file="plug/action.user/res/build/UserAccount.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="DASH_DISABLE_ADDRESS_BOOK"><![CDATA[false]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="false" description="Do not display address book in user account panel." expose="true" label="Disable Address Book" name="DASH_DISABLE_ADDRESS_BOOK" type="boolean"/>
+            </server_settings>
+        </plugin>
+        <plugin description="Activity Streams 2.0" enabled="always" id="core.activitystreams" label="Activity Center">
+            <client_settings>
+                <resources>
+                    <i18n namespace="notification_center" remote="plug/core.activitystreams/res/i18n"/>
+                    <i18n namespace="meta.watch" remote="plug/core.activitystreams/res/i18n/watch"/>
+                    <js className="PydioActivityStreams" depends="React,PydioComponents,PydioWorkspaces" file="plug/core.activitystreams/res/build/PydioActivityStreams.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="ACTIVITY_SHOW_ACTIVITIES"><![CDATA[true]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="true" description="Display file and folders activities in the right-hand info panel" expose="true" group="Activities" label="Show file/folders activities" mandatory="false" name="ACTIVITY_SHOW_ACTIVITIES" type="boolean"/>
+            </server_settings>
+            <dependencies>
+                <activePlugin pluginName="core.conf"/>
+            </dependencies>
+        </plugin>
+        <plugin description="Policy for password complexity" enabled="true" id="action.password_policy" label="Password Policy">
+            <client_settings>
+                <resources>
+                    <i18n namespace="password_policy" remote="plug/action.password_policy/res/i18n"/>
+                    <js className="PasswordPolicy" file="plug/action.password_policy/res/build/PasswordPolicy.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="PWPOLICY_MIN_LOWERCASE"><![CDATA["1"]]></property>
+                <property name="PWPOLICY_MIN_DIGITS"><![CDATA["1"]]></property>
+                <property name="PWPOLICY_MIN_SPECIALCHARS"><![CDATA["1"]]></property>
+                <property name="PWPOLICY_MIN_SPECIALCHARS_LIST"><![CDATA["!@#$%^\u0026*()-_"]]></property>
+                <property name="PWPOLICY_MIN_LENGTH"><![CDATA["8"]]></property>
+                <property name="PWPOLICY_MAX_LENGTH"><![CDATA["64"]]></property>
+                <property name="PWPOLICY_MIN_UPPERCASE"><![CDATA["1"]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="8" description="Minimal length" expose="true" label="Minimal length" name="PWPOLICY_MIN_LENGTH" type="string"/>
+                <global_param default="64" description="Maximal length" expose="true" label="Maximal length" name="PWPOLICY_MAX_LENGTH" type="string"/>
+                <global_param default="1" description="Minimum number of upper case characters the password must contain]" expose="true" label="Minimum number of upper case characters" name="PWPOLICY_MIN_UPPERCASE" type="string"/>
+                <global_param default="1" description="Minimum number of lower case characters the password must contain]" expose="true" label="Minimum number of lower case characters" name="PWPOLICY_MIN_LOWERCASE" type="string"/>
+                <global_param default="1" description="Minimum number of numeric characters the password must contain]" expose="true" label="Minimum number of numeric characters" name="PWPOLICY_MIN_DIGITS" type="string"/>
+                <global_param default="1" description="Minimum number of special characters the password must contain]" expose="true" label="Minimum number of special characters" name="PWPOLICY_MIN_SPECIALCHARS" type="string"/>
+                <global_param default="!@#$%^&amp;*()-_" description="List special characters the password must contain]" editable="false" expose="true" label="List of special characters" name="PWPOLICY_MIN_SPECIALCHARS_LIST" type="string"/>
+            </server_settings>
+        </plugin>
+        <plugin description="Main container for core Pydio settings (application title, sharing, webdav server config, etc...)" enabled="always" id="core.pydio" label="Pydio Main Options">
+            <client_settings>
+                <resources>
+                    <i18n remote="plug/core.pydio/i18n"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="APPLICATION_TITLE"><![CDATA["Vers l'infini et au-delà !"]]></property>
+                <property name="DEFAULT_LANGUAGE"><![CDATA["en-us"]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="Pydio" description="This title will appear as the window title, in the splash screen." expose="true" group="Main Options" label="Application Title" mandatory="true" name="APPLICATION_TITLE" type="string"/>
+                <global_param choices="PYDIO_AVAILABLE_LANGUAGES" default="en" description="Default language when a user does not have set his/her own." group="Main Options" label="Default Language" mandatory="true" name="DEFAULT_LANGUAGE" type="select"/>
+            </server_settings>
+        </plugin>
+        <plugin description="Authentication-related actions" enabled="always" id="auth.pydio" label="Authentication actions" name="pydio">
+            <client_settings>
+                <resources>
+                    <i18n namespace="sql_auth" remote="plug/auth.pydio/i18n"/>
+                </resources>
+            </client_settings>
+        </plugin>
+        <plugin description="Display a standard user/password login screen" enabled="always" id="authfront.session_login" label="Standard login screen">
+            <client_settings>
+                <resources>
+                    <i18n namespace="authfront.session_login" remote="plug/authfront.session_login/i18n"/>
+                </resources>
+            </client_settings>
+        </plugin>
+        <plugin description="Tools for migrating data from other platforms to Pydio Cells" id="action.migration" label="Migration">
+            <client_settings>
+                <resources>
+                    <i18n namespace="migration" remote="plug/action.migration/res/i18n"/>
+                    <js className="MigrationComponents" depends="AdminWorkspaces" file="plug/action.migration/res/build/MigrationComponents.js"/>
+                </resources>
+            </client_settings>
+        </plugin>
+        <plugin description="Options shared by all uploaders plugins" enabled="always" id="core.uploader" label="Uploaders Options">
+            <client_settings>
+                <resources>
+                    <i18n namespace="core_uploader" remote="plug/core.uploader/i18n"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="MULTIPART_UPLOAD_THRESHOLD"><![CDATA[104857600]]></property>
+                <property name="MULTIPART_UPLOAD_PART_SIZE"><![CDATA[52428800]]></property>
+                <property name="MULTIPART_UPLOAD_QUEUE_SIZE"><![CDATA[3]]></property>
+                <property name="MULTIPART_UPLOAD_TIMEOUT_MINUTES"><![CDATA[3]]></property>
+                <property name="UPLOAD_MAX_SIZE"><![CDATA["0"]]></property>
+                <property name="ALLOWED_EXTENSIONS"><![CDATA[""]]></property>
+                <property name="ALLOWED_EXTENSIONS_READABLE"><![CDATA[""]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="0" description="Maximum size per file allowed to upload." expose="true" group="Limitations" label="File Size" mandatory="false" name="UPLOAD_MAX_SIZE" type="string"/>
+                <global_param description="Filter the files that are allowed to be uploaded, by extensions. Use a comma-separated list." expose="true" group="Limitations" label="Extensions List" mandatory="false" name="ALLOWED_EXTENSIONS" type="string"/>
+                <global_param description="User readable label for the list of allowed extensions (images, all files, etc)." expose="true" group="Limitations" label="Ext. Label" mandatory="false" name="ALLOWED_EXTENSIONS_READABLE" type="string"/>
+                <global_param default="104857600" description="Switch to Multipart Upload for files bigger than this value (in bytes)" expose="true" group="Multipart Uploads" label="Multipart Threshold" mandatory="false" name="MULTIPART_UPLOAD_THRESHOLD" type="integer"/>
+                <global_param default="52428800" description="Chunk Size used for multipart uploads, must be bigger than 5MB (5242800B)" expose="true" group="Multipart Uploads" label="Multipart Parts Size" mandatory="false" name="MULTIPART_UPLOAD_PART_SIZE" type="integer"/>
+                <global_param default="3" description="Number of concurrent uploads (maximum 6, due to browsers limitations)" expose="true" group="Multipart Uploads" label="Queue Size" mandatory="false" name="MULTIPART_UPLOAD_QUEUE_SIZE" type="integer"/>
+                <global_param default="3" description="Request Timeout (in minutes) for each concurrent part upload" expose="true" group="Multipart Uploads" label="Timeout" mandatory="false" name="MULTIPART_UPLOAD_TIMEOUT_MINUTES" type="integer"/>
+            </server_settings>
+        </plugin>
+        <plugin description="Core component for sending emails" enabled="always" id="core.mailer" label="Mailers">
+            <client_settings>
+                <resources>
+                    <i18n namespace="core.mailer" remote="plug/core.mailer/i18n"/>
+                    <js className="PydioMailer" depends="React,PydioComponents,PydioForm" file="plug/core.mailer/js/build/PydioMailer.js"/>
+                </resources>
+            </client_settings>
+            <server_settings/>
+        </plugin>
+        <plugin description="Options applied to all auth drivers" enabled="always" id="core.auth" label="Authentication">
+            <client_settings>
+                <resources>
+                    <i18n namespace="core_auth" remote="plug/core.auth/i18n"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="FORGOT_PASSWORD_ACTION"><![CDATA["reset-password-ask"]]></property>
+                <property name="USER_CREATE_USERS"><![CDATA[true]]></property>
+                <property name="NEWUSERS_EDIT_PARAMETERS"><![CDATA["email,displayName,lang"]]></property>
+                <property name="USERS_LIST_COMPLETE_LIMIT"><![CDATA[40]]></property>
+                <property name="SECURE_LOGIN_FORM"><![CDATA[false]]></property>
+                <property name="ENABLE_FORGOT_PASSWORD"><![CDATA[false]]></property>
+                <property name="USERS_LIST_COMPLETE_MIN_CHARS"><![CDATA[0]]></property>
+                <property name="USERS_LIST_AUTO_WILDCARD"><![CDATA[false]]></property>
+                <property name="USER_CREATE_CELLS"><![CDATA[true]]></property>
+                <property name="SKIP_USER_HISTORY"><![CDATA[true]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="false" description="Raise the security of the login form by disabling autocompletion and remember me feature" expose="true" group="Security" label="Secure Login Form" mandatory="true" name="SECURE_LOGIN_FORM" type="boolean"/>
+                <global_param default="false" description="Add a Forgot Password link at the bottom of the login form" expose="true" group="Security" label="Enable Forgot Password" mandatory="true" name="ENABLE_FORGOT_PASSWORD" type="boolean"/>
+                <global_param default="reset-password-ask" description="Action to trigger when clicking on Forgot Password. Can be changed to trigger a custom action if you rely on external authentication system." expose="true" group="Security" label="Forgot Password Action" mandatory="true" name="FORGOT_PASSWORD_ACTION" type="string"/>
+                <global_param default="true" description="Whether users can create their own cells or not" expose="true" group="Delegation" label="Let user create new cells" mandatory="false" name="USER_CREATE_CELLS" type="boolean"/>
+                <global_param default="true" description="Allow the users to create a new user when sharing a folder" expose="true" group="Delegation" label="Create external users" mandatory="false" name="USER_CREATE_USERS" type="boolean"/>
+                <global_param default="email,displayName,lang" description="List of parameters to be edited when creating a new shared user." expose="true" group="Delegation" label="External users parameters" mandatory="false" name="NEWUSERS_EDIT_PARAMETERS" type="string"/>
+                <global_param default="true" description="Use this option to avoid automatic reloading of the interface state (last folder, opened tabs, etc)" expose="true" group="Delegation" label="Skip interface preferences" mandatory="false" name="SKIP_USER_HISTORY" type="boolean"/>
+                <global_param default="40" description="Maximum number of users displayed in the users autocompleter" group="Users Directory Listing" label="Users completer limit" name="USERS_LIST_COMPLETE_LIMIT" type="integer"/>
+                <global_param default="0" description="Minimum number of characters to trigger the auto completion feature" expose="true" group="Users Directory Listing" label="Users completer min chars" name="USERS_LIST_COMPLETE_MIN_CHARS" type="integer"/>
+                <global_param default="false" description="Directory search is looking for labels 'starting with' the search string. Switching this on will prepend a wildcard to look for labels 'containing' the string." expose="true" group="Users Directory Listing" label="Auto-wildcard search" name="USERS_LIST_AUTO_WILDCARD" type="boolean"/>
+            </server_settings>
+        </plugin>
+        <plugin description="Allows Pydio Cells to offer the choice between multiple oauth providers to choose from" enabled="always" id="authfront.oauth" label="Authfront OAuth">
+            <client_settings>
+                <resources>
+                    <i18n namespace="oauth" remote="plug/authfront.oauth/i18n"/>
+                    <js className="AuthfrontOAuth" depends="EnterpriseSDK" file="plug/authfront.oauth/res/build/AuthfrontOAuth.js"/>
+                </resources>
+            </client_settings>
+        </plugin>
+        <plugin description="Create folders from predefined templates" enabled="true" id="action.templates" label="Folder Templates">
+            <client_settings>
+                <resources>
+                    <i18n namespace="tpl_actions" remote="plug/action.templates/i18n"/>
+                    <js className="TemplateActions" file="plug/action.templates/res/build/TemplateActions.js"/>
+                </resources>
+            </client_settings>
+        </plugin>
+        <plugin description="Workflows management board" enabled="always" id="action.flows" label="Flows Board">
+            <client_settings icon="plug/access.settings/admin.png">
+                <resources>
+                    <i18n namespace="flows" remote="plug/action.flows/res/i18n"/>
+                    <js className="Flows" depends="React,AdminScheduler" file="plug/action.flows/res/build/Flows.js"/>
+                </resources>
+            </client_settings>
+            <plugin_info>
+                <core_relation packaged="true"/>
+                <plugin_author/>
+            </plugin_info>
+        </plugin>
+        <plugin description="Javascript Client for Enterprise REST Apis" enabled="true" id="core.enterprise" label="Enterprise SDK">
+            <client_settings>
+                <resources>
+                    <js className="EnterpriseSDK" file="plug/core.enterprise/res/build/EnterpriseSDK.js"/>
+                </resources>
+            </client_settings>
+        </plugin>
+        <plugin description="Actual way to authenticate users (via credentials, certificates, http, etc)" enabled="always" id="core.authfront" label="Authentication FrontEnd">
+            <client_settings>
+                <resources>
+                    <i18n namespace="gui.user" remote="plug/core.authfront/res/i18n"/>
+                    <js className="AuthfrontCoreActions" file="plug/core.authfront/res/build/AuthfrontCoreActions.js"/>
+                </resources>
+            </client_settings>
+        </plugin>
+        <plugin description="Enterprise Only advanced settings" enabled="always" id="action.advanced_settings" label="Advanced Settings">
+            <client_settings>
+                <resources>
+                    <i18n namespace="advanced_settings" remote="plug/action.advanced_settings/i18n"/>
+                    <js className="SettingsBoards" depends="AdminComponents,EnterpriseSDK,AdminPeople,AdminLogs" file="plug/action.advanced_settings/res/build/SettingsBoards.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="CUSTOM_MINISITE_LOGO"><![CDATA[""]]></property>
+                <property name="CUSTOM_LOGIN_TITLE"><![CDATA[""]]></property>
+                <property name="EMAIL_TEMPLATE_LOGO"><![CDATA[""]]></property>
+                <property name="DISABLE_SHARE_GROUPS"><![CDATA[false]]></property>
+                <property name="GLOBAL_DISABLE_CHATS"><![CDATA[false]]></property>
+                <property name="CUSTOM_FAVICON"><![CDATA[""]]></property>
+                <property name="CUSTOM_LOGIN_LEGEND"><![CDATA[""]]></property>
+                <property name="EMAIL_TEMPLATE_FOOTER"><![CDATA[""]]></property>
+                <property name="TENANCY_LEGEND"><![CDATA[""]]></property>
+                <property name="USERS_GROUPS_TENANCY"><![CDATA[false]]></property>
+                <property name="DISABLE_SHARE_GROUPS_LEGEND"><![CDATA[""]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="false" description="Disable chat rooms for all users" expose="true" group="UI Customization" label="Disable Chats" mandatory="false" name="GLOBAL_DISABLE_CHATS" type="boolean"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/favicon.png" description="Website Favicon (make sure to use a PNG image)" editable="true" expose="true" group="UI Customization" label="Favicon" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="CUSTOM_FAVICON" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param defaultImage="plug/gui.ajax/res/themes/common/images/PydioLogoSquare.png" description="Top-right logo displayed on minisite page" editable="true" expose="true" group="UI Customization" label="Public Links Logo" loadAction="/frontend/binaries/GLOBAL/{BINARY}" mandatory="false" name="CUSTOM_MINISITE_LOGO" type="image" uploadAction="/frontend/binaries/GLOBAL/{BINARY}"/>
+                <global_param description="Display a custom title on login screen (will replace Enter login/password)" editable="true" group="UI Customization" label="Login Custom Title" mandatory="false" name="CUSTOM_LOGIN_TITLE" type="string"/>
+                <global_param description="Additional description phrase displayed below the login title" editable="true" group="UI Customization" label="Login Custom Legend" mandatory="false" name="CUSTOM_LOGIN_LEGEND" type="textarea"/>
+                <global_param description="Use a custom logo for emails sent to users. Please provide a valid HTTPS url (typically an image hosted on your website) as it will be loaded by users mail readers." expose="false" group="UI Customization" label="Emails Template Logo" mandatory="false" name="EMAIL_TEMPLATE_LOGO" type="string"/>
+                <global_param description="Replace the footer string by your own sentence or copyright string." expose="false" group="UI Customization" label="Emails Template Footer" mandatory="false" name="EMAIL_TEMPLATE_FOOTER" type="string"/>
+                <global_param description="This setting can emulate multi-tenancy by letting users see only their own group and users of their own group. By default, everyone can see all users from all groups. When enabled, sibling groups cannot see themselves. Beware that users inside groups can still see upper level users. This is useful only for 1-level of groups." group="Users Visibility" name="TENANCY_LEGEND" type="legend"/>
+                <global_param description="Switching this setting will launch a background task to re-affect permissions to all users." editable="true" expose="true" group="Users Visibility" label="Users visible only to their group" mandatory="false" name="USERS_GROUPS_TENANCY" type="boolean"/>
+                <global_param description="Hide groups in sharing auto-complete dialog and in the visibility screens. This can be an additional security to make sure that users will not share a document with their whole group by error." group="Users Visibility" name="DISABLE_SHARE_GROUPS_LEGEND" type="legend"/>
+                <global_param description="Toggle to hide groups from sharing dialog." editable="true" expose="true" group="Users Visibility" label="Hide groups from sharing dialogs" mandatory="false" name="DISABLE_SHARE_GROUPS" type="boolean"/>
+            </server_settings>
+        </plugin>
+        <ajxpdriver description="Welcome Page displaying a list of workspaces" enabled="always" id="access.homepage" label="Welcome Page">
+            <client_settings icon="plug/access.homepage/share.png">
+                <node_provider ajxpClass="EmptyNodeProvider" ajxpOptions="{}"/>
+                <resources>
+                    <css autoload="true" file="plug/access.homepage/res/home.css"/>
+                    <i18n namespace="user_home" remote="plug/access.homepage/res/i18n"/>
+                    <js className="WelcomeComponents" depends="React,PydioComponents,PydioWorkspaces,PydioForm,PydioActivityStreams" file="plug/access.homepage/res/build/WelcomeComponents.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="URL_APP_IOSAPPSTORE"><![CDATA["https://itunes.apple.com/us/app/pydiopro/id1109419882?mt=8"]]></property>
+                <property name="URL_APP_ANDROID"><![CDATA["https://play.google.com/store/apps/details?id=com.pydio.android.pydioPro"]]></property>
+                <property name="URL_APP_SYNC_WIN"><![CDATA["https://pydio.com/en/get-pydio/downloads/pydiosync-desktop-app/"]]></property>
+                <property name="URL_APP_SYNC_MAC"><![CDATA["https://pydio.com/en/get-pydio/downloads/pydiosync-desktop-app/"]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="https://itunes.apple.com/us/app/pydiopro/id1109419882?mt=8" description="URL to iOS App (leave empty if you want to hide the block)" expose="true" label="URL to iOS App" name="URL_APP_IOSAPPSTORE" type="string"/>
+                <global_param default="https://play.google.com/store/apps/details?id=com.pydio.android.pydioPro" description="URL to Android App (leave empty if you want to hide the block)" expose="true" label="URL to Android App" name="URL_APP_ANDROID" type="string"/>
+                <global_param default="https://pydio.com/en/get-pydio/downloads/pydiosync-desktop-app/" description="URL to Windows sync application (leave empty if you want to hide the block)" expose="true" label="Windows PydioSync URL" name="URL_APP_SYNC_WIN" type="string"/>
+                <global_param default="https://pydio.com/en/get-pydio/downloads/pydiosync-desktop-app/" description="URL to Mac sync application (leave empty if you want to hide the block)" expose="true" label="Mac PydioSync URL" name="URL_APP_SYNC_MAC" type="string"/>
+            </server_settings>
+        </ajxpdriver>
+        <editor description="Geolocation feature to either display a WMS layer or simply place an exif-localized photo. Requires OpenLayers" id="editor.openlayer" label="Map viewer" className="PydioMaps" iconClass="mdi mdi-google-maps" mimes="ol_layer,jpg" openable="true" text="openlayer.1" title="openlayer.1">
+            <client_settings>
+                <resources>
+                    <css file="plug/editor.openlayer/openlayer/theme/default/style.css"/>
+                    <i18n namespace="openlayer" remote="plug/editor.openlayer/res/i18n"/>
+                    <js className="OpenLayers" file="plug/editor.openlayer/openlayer/OpenLayers.js"/>
+                    <js className="PydioMaps" depends="OpenLayers" file="plug/editor.openlayer/res/build/PydioMaps.js"/>
+                </resources>
+            </client_settings>
+            <dependencies>
+                <activePlugin pluginName="meta.exif"/>
+            </dependencies>
+            <processing/>
+        </editor>
+        <editor description="Syntax Highlighter for all supported code source files" id="editor.codemirror" label="Source Viewer" actions="PydioCodeMirror.Actions" canWrite="true" className="PydioCodeMirror" iconClass="mdi mdi-code-tags" mimes="xml,html,htm,js,json,css,php,phtml,sparql,txt,py,c#,java,jsp,sql,cgi,pl,inc,xsl,md" openable="true" text="code_mirror.1" title="code_mirror.2">
+            <client_settings>
+                <resources>
+                    <css file="plug/editor.codemirror/res/build/codemirror/lib/codemirror.css"/>
+                    <css file="plug/editor.codemirror/css/linenumbers.css"/>
+                    <i18n namespace="code_mirror" remote="plug/editor.codemirror/i18n"/>
+                    <js className="PydioCodeMirror" file="plug/editor.codemirror/res/build/PydioCodeMirror.js"/>
+                </resources>
+            </client_settings>
+            <dependencies>
+                <activePlugin pluginName="access.gateway|access.homepage|access.settings"/>
+            </dependencies>
+        </editor>
+        <editor description="Display the Exif metadata contained inside the JPG files. Can locate the image on a map if it contains geolocation data." id="editor.exif" label="EXIF Extractor" actions="PydioExif.Actions" className="PydioExif" formId="exif_box" iconClass="mdi mdi-camera" mimes="jpg,jpeg" openable="true" text="editor.exif.1" title="editor.exif.2">
+            <client_settings>
+                <resources>
+                    <i18n namespace="editor.exif" remote="plug/editor.exif/i18n"/>
+                    <js className="PydioExif" file="plug/meta.exif/res/build/PydioExif.js"/>
+                </resources>
+            </client_settings>
+            <dependencies>
+                <activePlugin pluginName="meta.exif"/>
+            </dependencies>
+        </editor>
+        <editor description="Image viewer, used for previewing images and browsing them in a diaporama. Generates a thumbnail version of the images." id="editor.diaporama" label="Image viewer" actions="PydioDiaporama.Actions" className="PydioDiaporama" iconClass="mdi mdi-image" mimes="png,jpg,jpeg,gif" openable="true" order="-1" previewProvider="true" text="186" title="136">
+            <client_settings>
+                <resources>
+                    <css file="plug/editor.diaporama/res/rotator.css"/>
+                    <i18n namespace="diaporama" remote="plug/editor.diaporama/res/i18n"/>
+                    <js className="PydioDiaporama" file="plug/editor.diaporama/res/build/PydioDiaporama.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="PREVIEWER_LOWRES_SIZES"><![CDATA["300,700,1000,1300"]]></property>
+                <property name="EXIF_ROTATION"><![CDATA[true]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="300,700,1000,1300" description="Threshold for low-res versions of images" expose="true" label="Low-res Sizes" name="PREVIEWER_LOWRES_SIZES" type="string"/>
+                <global_param default="true" description="Rotate image using exif rotation" label="Exif Rotation" name="EXIF_ROTATION" type="boolean"/>
+            </server_settings>
+            <dependencies>
+                <activePlugin pluginName="access.gateway|access.homepage"/>
+            </dependencies>
+        </editor>
+        <editor description="Uses HTML5 or Flash to play a sound" id="editor.soundmanager" label="Sound Player" className="PydioSoundManager" formId="smplayer_editor" iconClass="mdi mdi-volume-high" mimes="mp3,wav,ogg" openable="true" previewProvider="true" text="sm_editor.2" title="sm_editor.2">
+            <client_settings>
+                <resources>
+                    <css file="plug/editor.soundmanager/soundmanager.css"/>
+                    <css file="plug/editor.soundmanager/sm/360-player/360player.css"/>
+                    <css file="plug/editor.soundmanager/sm/360-player/360player-visualization.css"/>
+                    <i18n namespace="sm_editor" remote="plug/editor.soundmanager/i18n"/>
+                    <js className="Animator" file="plug/editor.soundmanager/sm/360-player/script/berniecode-animator.js"/>
+                    <js className="PydioSoundManager" file="plug/editor.soundmanager/res/build/PydioSoundManager.js"/>
+                </resources>
+            </client_settings>
+            <clientForm id="smplayer_editor"><![CDATA[
+             <div id="smplayer_editor" box_width="260">
+                <div class="smplayer_title" style="font-size:15px"></div>
+                <div class="smplayer_preview_element"></div>
+             </div>
+
+    ]]></clientForm>
+            <processing>
+                <activeCondition><![CDATA[
+                return (document.createElement("canvas").getContext?true:false);
+         ]]></activeCondition>
+            </processing>
+        </editor>
+        <meta description="Extracts the EXIF metadata of a JPG image. Used in conjunction with editor.exif" id="meta.exif" label="Exif Metadata">
+            <client_settings>
+                <resources>
+                    <i18n namespace="meta.exif" remote="plug/meta.exif/res/i18n"/>
+                    <js className="PydioExif" file="plug/meta.exif/res/build/PydioExif.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="exif_meta_fields"><![CDATA["GeoLocation.GPS_latitude,GeoLocation.GPS_longitude,ImageExif.Make,ImageExif.Model"]]></property>
+                <property name="exif_meta_labels"><![CDATA["Latitude,Longitude,Maker,Model"]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param default="GeoLocation.GPS_latitude,GeoLocation.GPS_longitude,ImageExif.Make,ImageExif.Model" description="Comma separated list of fields, use syntax 'EXIF_SECTION.ExifName'." expose="true" label="Info Panel Fields" mandatory="false" name="exif_meta_fields" type="string"/>
+                <global_param default="Latitude,Longitude,Maker,Model" description="Associated list of labels, be sure to define as many as fields!" expose="true" label="Info Panel Labels" mandatory="false" name="exif_meta_labels" type="string"/>
+            </server_settings>
+            <dependencies>
+                <pluginClass pluginName="access.gateway"/>
+            </dependencies>
+        </meta>
+        <meta description="Keep tracks of all files modifications" id="meta.versions" label="Files Versioning">
+            <client_settings>
+                <resources>
+                    <i18n namespace="meta.versions" remote="plug/meta.versions/i18n"/>
+                    <js className="PydioVersioning" file="plug/meta.versions/res/build/PydioVersioning.js"/>
+                </resources>
+            </client_settings>
+            <plugin_info>
+                <core_relation packaged="true" tested_version="follow_core"/>
+                <plugin_author/>
+            </plugin_info>
+        </meta>
+        <meta description="User Metadata implementation" id="meta.user" label="Files Metadata">
+            <client_settings icon="plug/access.mysql/resources/images/mysql_icon.png">
+                <resources>
+                    <i18n namespace="meta.user" remote="plug/meta.user/i18n"/>
+                    <js className="ReactMeta" file="plug/meta.user/js/build/ReactMeta.js"/>
+                </resources>
+            </client_settings>
+        </meta>
+        <meta description="Display a chat-like feed on every nodes" id="meta.comments" label="Comments Feed">
+            <client_settings>
+                <resources>
+                    <i18n namespace="meta.comments" remote="plug/meta.comments/res/i18n"/>
+                    <js className="MetaComments" file="plug/meta.comments/res/build/MetaComments.js"/>
+                </resources>
+            </client_settings>
+            <server_settings>
+                <param default="1000" description="Maximum number of characters for each comment" label="Comment limit" type="integer" name="COMMENT_SIZE_LIMIT"/>
+            </server_settings>
+            <dependencies>
+                <pluginClass pluginName="access.gateway"/>
+            </dependencies>
+        </meta>
+        <uploader description="Auto-switching HTML5 or IFrame uploader." id="uploader.html" label="Standard" className="MultiUploader" order="0" text="51" title="162">
+            <client_settings>
+                <resources>
+                    <i18n namespace="html_uploader" remote="plug/uploader.html/i18n"/>
+                    <js className="UploaderView" depends="React,PydioForm,UploaderModel" file="plug/uploader.html/js/build/UploaderView.js"/>
+                    <js className="UploaderModel" depends="React" file="plug/uploader.html/js/build/UploaderModel.js"/>
+                </resources>
+            </client_settings>
+            <plugin_configs>
+                <property name="DEFAULT_STAT_SLICES"><![CDATA[400]]></property>
+                <property name="DEFAULT_EXISTING"><![CDATA["rename"]]></property>
+                <property name="DEFAULT_AUTO_START"><![CDATA[true]]></property>
+                <property name="DEFAULT_AUTO_CLOSE"><![CDATA[true]]></property>
+            </plugin_configs>
+            <server_settings>
+                <global_param choices="overwrite|Always Override,rename|Auto Rename File,alert|Prompt user" default="rename" description="Inform the user or not if the file already exists (default behaviour, the user will be able to change this preference)" expose="true" group="Default Behaviour" label="Existing Files" mandatory="false" name="DEFAULT_EXISTING" type="select"/>
+                <global_param default="true" description="Default value for automatically starting upload or not" expose="true" group="Default Behaviour" label="Auto Start" mandatory="false" name="DEFAULT_AUTO_START" type="boolean"/>
+                <global_param default="true" description="Default value for automatically closing the dialog after upload or not" expose="true" group="Default Behaviour" label="Auto Close" mandatory="false" name="DEFAULT_AUTO_CLOSE" type="boolean"/>
+                <global_param default="400" description="Size of requests used to test if files already exists" expose="true" group="Default Behaviour" label="Stat Slices" mandatory="false" name="DEFAULT_STAT_SLICES" type="integer"/>
+            </server_settings>
+            <dependencies>
+                <activePlugin pluginName="access.gateway|access.homepage"/>
+                <pluginClass pluginName="gui.ajax"/>
+            </dependencies>
+            <processing>
+                <clientForm module="UploaderView.DropUploader"/>
+                <extensionOnInit><![CDATA[
+            var pydioUser = pydio && pydio.user;
+            var dragSupported = 'draggable' in document.createElement('span');
+            var fileUploadSupported = typeof File != "undefined" && typeof (new XMLHttpRequest()).upload != "undefined" && (window.FileReader || window.FormData);
+            if(fileUploadSupported && dragSupported && pydioUser){
+                try{
+                    ResourcesManager.loadClassesAndApply(["UploaderModel"], function(){});
+                }catch(e){}
+            }
+		]]></extensionOnInit>
+            </processing>
+        </uploader>
+    </plugins>
+    <user id="android">
+        <active_repo id="homepage"/>
+        <preferences>
+            <pref name="gui_preferences"><![CDATA[{"UserAccount.WelcomeModal.Shown":true,"WelcomeComponent.Pydio8.TourGuide.Welcome":true,"WelcomeComponent.Pydio8.TourGuide.FSTemplate":true}]]></pref>
+            <pref name="lang" pluginId="core.conf" value="en-us"/>
+        </preferences>
+        <repositories>
+            <repo access_type="gateway" acl="rw" allowCrossRepositoryCopy="true" id="11f2cc50-1889-11eb-bd69-de1c9c2bd01f" repositorySlug="common-files" repository_type="workspace">
+                <client_settings icon="plug/access.fs/icon.png" iconClass="icon-sitemap">
+                    <node_provider ajxpClass="MetaNodeProvider" ajxpOptions="{}"/>
+                    <resources>
+                        <i18n namespace="openother" remote="plug/access.gateway/i18n/editor.picker"/>
+                        <i18n namespace="access_fs" remote="plug/access.gateway/i18n/access.fs"/>
+                        <js className="FSActions" depends="PydioComponents" file="plug/access.gateway/res/build/FSActions.js"/>
+                    </resources>
+                </client_settings>
+                <description><![CDATA[Data shared by all users]]></description>
+                <label><![CDATA[Common Files]]></label>
+            </repo>
+            <repo access_type="gateway" acl="rw" allowCrossRepositoryCopy="true" id="4e895ac5-1a00-11eb-92c5-de1c9c2bd01f" owner="shared" repositorySlug="android-tester-corner" repository_type="cell" user_editable_repository="true">
+                <client_settings icon="plug/access.fs/icon.png" iconClass="icon-sitemap">
+                    <node_provider ajxpClass="MetaNodeProvider" ajxpOptions="{}"/>
+                    <resources>
+                        <i18n namespace="openother" remote="plug/access.gateway/i18n/editor.picker"/>
+                        <i18n namespace="access_fs" remote="plug/access.gateway/i18n/access.fs"/>
+                        <js className="FSActions" depends="PydioComponents" file="plug/access.gateway/res/build/FSActions.js"/>
+                    </resources>
+                </client_settings>
+                <label><![CDATA[Android Tester Corner]]></label>
+            </repo>
+            <repo access_type="gateway" acl="rw" allowCrossRepositoryCopy="true" id="29867030-2363-11eb-92c5-de1c9c2bd01f" owner="shared" repositorySlug="astalvista-astalavista-astalavista" repository_type="cell" user_editable_repository="true">
+                <client_settings icon="plug/access.fs/icon.png" iconClass="icon-sitemap">
+                    <node_provider ajxpClass="MetaNodeProvider" ajxpOptions="{}"/>
+                    <resources>
+                        <i18n namespace="openother" remote="plug/access.gateway/i18n/editor.picker"/>
+                        <i18n namespace="access_fs" remote="plug/access.gateway/i18n/access.fs"/>
+                        <js className="FSActions" depends="PydioComponents" file="plug/access.gateway/res/build/FSActions.js"/>
+                    </resources>
+                </client_settings>
+                <label><![CDATA[Astalvi xxx  [sta]]]></label>
+            </repo>
+            <repo access_type="gateway" acl="rw" allowCrossRepositoryCopy="true" id="68e228e3-b6e4-11eb-8cb3-de1c80192027" owner="shared" repositorySlug="share" repository_type="cell" user_editable_repository="true">
+                <client_settings icon="plug/access.fs/icon.png" iconClass="icon-sitemap">
+                    <node_provider ajxpClass="MetaNodeProvider" ajxpOptions="{}"/>
+                    <resources>
+                        <i18n namespace="openother" remote="plug/access.gateway/i18n/editor.picker"/>
+                        <i18n namespace="access_fs" remote="plug/access.gateway/i18n/access.fs"/>
+                        <js className="FSActions" depends="PydioComponents" file="plug/access.gateway/res/build/FSActions.js"/>
+                    </resources>
+                </client_settings>
+                <label><![CDATA[Share]]></label>
+            </repo>
+            <repo access_type="homepage" acl="rw" id="homepage" repositorySlug="welcome" repository_type="workspace">
+                <client_settings icon="plug/access.homepage/share.png">
+                    <node_provider ajxpClass="EmptyNodeProvider" ajxpOptions="{}"/>
+                    <resources>
+                        <css autoload="true" file="plug/access.homepage/res/home.css"/>
+                        <i18n namespace="user_home" remote="plug/access.homepage/res/i18n"/>
+                        <js className="WelcomeComponents" depends="React,PydioComponents,PydioWorkspaces,PydioForm,PydioActivityStreams" file="plug/access.homepage/res/build/WelcomeComponents.js"/>
+                    </resources>
+                </client_settings>
+                <label><![CDATA[homepage]]></label>
+            </repo>
+            <repo access_type="gateway" acl="rw" allowCrossRepositoryCopy="true" id="119cf005-1889-11eb-bd69-de1c9c2bd01f" repositorySlug="personal-files" repository_type="workspace-personal">
+                <client_settings icon="plug/access.fs/icon.png" iconClass="icon-sitemap">
+                    <node_provider ajxpClass="MetaNodeProvider" ajxpOptions="{}"/>
+                    <resources>
+                        <i18n namespace="openother" remote="plug/access.gateway/i18n/editor.picker"/>
+                        <i18n namespace="access_fs" remote="plug/access.gateway/i18n/access.fs"/>
+                        <js className="FSActions" depends="PydioComponents" file="plug/access.gateway/res/build/FSActions.js"/>
+                    </resources>
+                </client_settings>
+                <description><![CDATA[User personal data]]></description>
+                <label><![CDATA[Personal Files]]></label>
+            </repo>
+        </repositories>
+    </user>
+</ajxp_registry>

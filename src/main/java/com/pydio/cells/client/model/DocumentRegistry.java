@@ -251,7 +251,7 @@ public class DocumentRegistry implements Registry {
             for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
                 Node node = repositoriesChildNodes.item(i);
                 final String tag = node.getNodeName();
-                if ("ajxp_plugin".equals(tag)) {
+                if ("ajxp_plugin".equals(tag) || "plugin".equals(tag)) {
                     Plugin plugin = parsePlugin(node);
                     plugins.add(plugin);
                 }
