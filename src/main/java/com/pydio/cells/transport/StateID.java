@@ -1,7 +1,5 @@
 package com.pydio.cells.transport;
 
-import com.pydio.cells.client.encoding.JavaCustomEncoder;
-
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -28,7 +26,7 @@ public class StateID {
     }
 
     /**
-     * Simply create a StateID object from its *encoded* string representation
+     * Simply creates a StateID object from its *encoded* string representation.
      */
     public static StateID fromId(String stateId) {
 
@@ -57,7 +55,7 @@ public class StateID {
     }
 
     /**
-     * Retrieve the *encoded* representation of this StateID for serialization
+     * Retrieves the *encoded* representation of this StateID for serialization.
      */
     public String getId() {
         StringBuilder builder = new StringBuilder();
@@ -90,7 +88,7 @@ public class StateID {
     }
 
     /**
-     * return the trailing part of the path without the workspace
+     * Returns the trailing part of the path without the workspace. Always starts with a slash.
      */
     public String getFile() {
         if (path == null || "".equals(path) || "/".equals(path)) {
@@ -104,7 +102,7 @@ public class StateID {
         return null;
     }
 
-    // Not perfect: Might have side effects when swtching from plain Java to Android
+    // Not perfect: Might have side effects when switching from plain Java to Android
     // TODO might need to be improved
 
     private static String utf8Encode(String value) {
@@ -122,7 +120,6 @@ public class StateID {
             throw new RuntimeException("Unexpected decoding issue", e);
         }
     }
-
 
 
     public String toString() {

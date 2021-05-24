@@ -115,6 +115,7 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
 
+            // TODO this WorkspaceNodeSaxHandler parser is not reliable.
             final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
                 if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
                     handler.onNode(n);
