@@ -49,7 +49,7 @@ public class LocalFileContent implements Content {
 
     private String md5(String path) {
 
-        MessageDigest md = null;
+        MessageDigest md;
         try {
             md = MessageDigest.getInstance("MD5");
 
@@ -57,21 +57,21 @@ public class LocalFileContent implements Content {
 
             byte[] dataBytes = new byte[1024];
 
-            int nread = 0;
+            int nread;
             while ((nread = fis.read(dataBytes)) != -1) {
                 md.update(dataBytes, 0, nread);
             }
             byte[] mdbytes = md.digest();
 
             //convert the byte to hex format method 1
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < mdbytes.length; i++) {
-                sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
+            /* StringBuilder sb = new StringBuilder();
+            for (byte mdbyte : mdbytes) {
+                sb.append(Integer.toString((mdbyte & 0xff) + 0x100, 16).substring(1));
+            } */
             //convert the byte to hex format method 2
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < mdbytes.length; i++) {
-                String hex = Integer.toHexString(0xff & mdbytes[i]);
+            StringBuilder hexString = new StringBuilder();
+            for (byte mdbyte : mdbytes) {
+                String hex = Integer.toHexString(0xff & mdbyte);
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }

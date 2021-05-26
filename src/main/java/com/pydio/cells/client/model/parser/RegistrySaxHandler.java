@@ -8,6 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.Properties;
 
+@Deprecated
 public class RegistrySaxHandler extends DefaultHandler {
 
     private final RegistryItemHandler handler;

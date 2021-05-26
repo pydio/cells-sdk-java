@@ -38,7 +38,7 @@ public class ContentBody {
         if (maxPartSize == 0) {
             maxPartSize = mLength;
         } else {
-            maxPartSize = mMaxChunckSize = maxPartSize;
+            mMaxChunckSize = maxPartSize;
         }
 
         if (maxPartSize >= length) {
