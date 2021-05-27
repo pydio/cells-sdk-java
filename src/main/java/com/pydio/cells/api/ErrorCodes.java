@@ -34,6 +34,8 @@ public interface ErrorCodes {
     int unexpected_content = 44;
     int unexpected_response = 45;
 
+    int api_error = 50;
+
     int panic = 100;
     int internal_error = 101;
     int configuration_error = 102;
@@ -109,6 +111,9 @@ public interface ErrorCodes {
                 return "Unexpected content";
             case unexpected_response:
                 return "Unexpected response";
+
+            case api_error:
+                return "API error";
 
             case panic:
                 return "Panic";

@@ -202,7 +202,6 @@ public class P8Response implements Closeable {
         }
     }
 
-
     public JSONObject toJSON() throws ParseException, IOException {
         return new JSONObject(asString());
     }

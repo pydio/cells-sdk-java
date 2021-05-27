@@ -30,9 +30,9 @@ import java.util.Map;
  */
 public class ServerFactory implements IServerFactory {
 
-    private final TokenService tokenService;
     private final Map<String, Server> servers = new HashMap<>();
     private final Map<String, Transport> transports = new HashMap<>();
+    private final TokenService tokenService;
 
     public ServerFactory(TokenService tokenService) {
         this.tokenService = tokenService;
@@ -91,6 +91,7 @@ public class ServerFactory implements IServerFactory {
         return server;
     }
 
+    @Deprecated
     @Override
     public Transport registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
 
@@ -122,15 +123,6 @@ public class ServerFactory implements IServerFactory {
         return transport;
 
     }
-
-//     /**
-//      * Stores the session in a local HashMap, should be extended with client specific implementation,
-//      * to typically use a persistent storage
-//      */
-//     public Transport storeAccountInfo(String id, Transport session) throws SDKException {
-//         sessions.put(id, session);
-//         return session;
-//     }
 
     public void unregisterAccount(String accountID) throws SDKException {
         // TODO rather introduce another layer to ease use of a persistent store.
@@ -167,14 +159,6 @@ public class ServerFactory implements IServerFactory {
         transports.put(accountID(login, serverURL), transport);
 
         return transport;
-    }
-
-    public Client getClient(Transport transport) {
-        if (transport.getServer().isLegacy()) {
-            return new P8Client(transport);
-        } else {
-            return new CellsClient(transport);
-        }
     }
 
     protected Map<String, Server> getServers() {

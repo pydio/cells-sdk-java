@@ -22,7 +22,6 @@ import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
 import com.pydio.cells.openapi.model.RestFrontSessionRequest;
-import com.pydio.cells.openapi.model.TreeNode;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONObject;
@@ -88,6 +87,22 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return new CellsClient(this);
     }
 
+//    public void ping() throws IOException {
+//        HttpURLConnection connection = null;
+//        // 10 secs timeout instead of the default unlimited
+//        connection.setConnectTimeout(10000);
+//
+//        try {
+//            connection.setRequestMethod("GET");
+//            if (connection.getResponseCode() != 200) {
+//                throw new IOException("Unvalid response code: " + connection.getResponseCode());
+//            }
+//        } catch (ProtocolException pe) {
+//            throw new RuntimeException("Unvalid protocol GET...", pe);
+//        }
+//    }
+
+
     @Override
     public String getUserAgent() {
         if (userAgent != null) {
@@ -123,6 +138,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return login;
     }
 
+    public String getToken() throws SDKException {
+        Token t = tokens.get(this, getId());
+        return t.value;
+    }
+
     @Override
     public InputStream getUserData(String binary) {
         // FIXME  implement
@@ -136,32 +156,33 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     @Override
+    public HttpURLConnection withUserAgent(HttpURLConnection con) {
+        con.setRequestProperty("User-Agent", getUserAgent());
+        return con;
+    }
+
+    @Override
     public HttpURLConnection openConnection(String path) throws SDKException, IOException {
-        return withAuth(server.newURL(path).openConnection());
+        return withAuth(withUserAgent(server.newURL(path).openConnection()));
     }
 
     @Override
     public HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
-        return server.newURL(path).openConnection();
+        return withUserAgent(server.newURL(path).openConnection());
     }
 
     public HttpURLConnection openApiConnection(String path) throws SDKException, IOException {
-        return withAuth(server.newURL(API_PREFIX + path).openConnection());
+        return withAuth(withUserAgent(server.newURL(API_PREFIX + path).openConnection()));
     }
 
     public HttpURLConnection openAnonApiConnection(String path) throws SDKException, IOException {
-        return server.newURL(API_PREFIX + path).openConnection();
+        return withUserAgent(server.newURL(API_PREFIX + path).openConnection());
     }
 
     public ApiClient authenticatedClient() throws SDKException {
         ApiClient apiClient = getApiClient();
         apiClient.addDefaultHeader("Authorization", "Bearer " + getToken());
         return apiClient;
-    }
-
-    public String getToken() throws SDKException {
-        Token t = tokens.get(this, getId());
-        return t.value;
     }
 
     @Override
@@ -299,12 +320,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-    private static SDKException fromApiException(ApiException e) {
-        int code = ErrorCodes.fromHttpStatus(e.getCode());
-        return new SDKException(code, e);
-    }
-
-
     public String getTokenFromCode(String state, String code) throws Exception {
         InputStream in = null;
         ByteArrayOutputStream out = null;
@@ -399,19 +414,20 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         ByteArrayOutputStream out = null;
 
         try {
-
-            // Token tmpt = refresh(t);
             Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
+
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
             HttpURLConnection con = openAnonConnection(endpointURI.getPath());
 
             con.setRequestMethod("POST");
             con.setDoOutput(true);
+            withUserAgent(con);
 
             Map<String, String> authData = new HashMap<>();
             authData.put("grant_type", "refresh_token");
             authData.put("refresh_token", t.refreshToken);
+
             // TODO make this dynamic
             authData.put("client_id", "cells-mobile");
             authData.put("client_secret", "");
@@ -458,6 +474,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
+    @SuppressWarnings("unused")
     private void debugConnection(HttpURLConnection con) {
         System.out.println(con.getRequestMethod());
 
@@ -480,13 +497,18 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-
-    /**
-     * This is necessary until min version is 24: we cannot use the consumer pattern:
-     * public void listChildren(String fullPath, Consumer<TreeNode> consumer) throws SDKException {
-     * ... consumer.onNode(nodes.next());
-     */
-    public interface TreeNodeHandler {
-        void onNode(TreeNode node);
-    }
+//    private static SDKException fromApiException(ApiException e) {
+//        int code = ErrorCodes.fromHttpStatus(e.getCode());
+//        return new SDKException(code, e);
+//    }
+//
+//
+//    /**
+//     * This is necessary until min version is 24: we cannot use the consumer pattern:
+//     * public void listChildren(String fullPath, Consumer<TreeNode> consumer) throws SDKException {
+//     * ... consumer.onNode(nodes.next());
+//     */
+//    public interface TreeNodeHandler {
+//        void onNode(TreeNode node);
+//    }
 }

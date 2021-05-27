@@ -1,6 +1,5 @@
 package com.pydio.cells.client.auth;
 
-import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.PasswordCredentials;
 import com.pydio.cells.api.SDKException;

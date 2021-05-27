@@ -670,7 +670,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return con;
     }
 
-    private HttpURLConnection withUserAgent(HttpURLConnection con) {
+    @Override
+    public HttpURLConnection withUserAgent(HttpURLConnection con) {
         con.setRequestProperty(P8Names.REQ_PROP_USER_AGENT, getUserAgent());
         return con;
     }

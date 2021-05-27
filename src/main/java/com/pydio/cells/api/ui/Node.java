@@ -47,5 +47,4 @@ public interface Node extends Serializable {
 
     String getEncodedHash();
 
-
 }
