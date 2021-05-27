@@ -377,7 +377,7 @@ public class CellsClient implements Client, SdkNames {
             throws SDKException {
         OutputStream out;
         try {
-            out = new FileOutputStream(file);
+            out = new FileOutputStream(target);
         } catch (FileNotFoundException e) {
             throw SDKException.notFound(e);
         }
