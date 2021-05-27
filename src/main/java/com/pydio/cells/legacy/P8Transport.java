@@ -563,10 +563,10 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         HttpURLConnection con = currURL.openConnection();
         con.setDoOutput(true);
 
-        // TODO remove: useless, or we will get an exception here
+        /*// TODO remove: useless, or we will get an exception here
         if (con == null) {
             return P8Response.error(ErrorCodes.con_failed);
-        }
+        }*/
 
         con.setRequestMethod("PUT");
         if (!request.getIgnoreCookies()) {

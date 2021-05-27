@@ -38,12 +38,12 @@ public class P8SpecificTest {
 
     private ServerFactory factory;
     private TestConfiguration config;
-    private String testRunID;
+    // private String testRunID;
 
     @Before
     public void setup() {
 
-        testRunID = TestUtils.randomString(4);
+        //testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new ServerFactory(tokens);
 

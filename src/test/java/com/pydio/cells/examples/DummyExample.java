@@ -19,7 +19,6 @@ public class DummyExample {
 
     @Test
     public void method() {
-        org.junit.Assert.assertTrue(new ArrayList<String>().isEmpty());
         int order = "b".compareTo("c");
         int order2 = "d".compareTo("c");
         int order3 = "D".compareTo("c");

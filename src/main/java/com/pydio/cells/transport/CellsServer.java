@@ -128,8 +128,8 @@ public class CellsServer implements Server {
             JSONObject oidcJson = new JSONObject(oidcStr);
             authConfig = OAuthConfig.fromJSON(oidcJson);
         } catch (Exception e) {
-            Log.w("Initialisation", "Unexpected error while retrieving OIDC configuration at "
-                    + oidcURL.getURL().toString() + ", cause: " + e.getMessage());
+            Log.w("Initialisation", "Unexpected error while retrieving OIDC configuration"
+                    + ", cause: " + e.getMessage());
             throw SDKException.unexpectedContent(e);
         } finally {
             IoHelpers.closeQuietly(con);
