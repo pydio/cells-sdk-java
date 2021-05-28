@@ -570,7 +570,7 @@ public class CellsClient implements Client, SdkNames {
             return null;
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: "+ e.getMessage(), e);
         }
     }
 

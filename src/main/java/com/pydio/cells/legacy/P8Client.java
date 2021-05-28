@@ -604,21 +604,19 @@ public class P8Client implements Client, SdkNames {
     @Override
     public InputStream previewData(String ws, String file, int dim) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file, dim).setToken(transport);
-        try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            return rsp.getInputStream();
-            //     } catch (IOException ioe) {
-            //         throw new SDKException(ioe);
+        P8Response rsp = null; // cannot use try on closer method or the stream will be closed before it is read
+        rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
+        if (rsp.code() != ErrorCodes.ok) {
+            throw new SDKException(rsp.code());
         }
+        return rsp.getInputStream();
     }
 
+    @Deprecated
     @Override
     public String streamingAudioURL(String ws, String file) throws SDKException {
-        // FIXME
         Thread.dumpStack();
-        throw new RuntimeException("Reimplement");
+        throw new RuntimeException("Streaming is not supported with Pydio 8 servers.");
 
 //        // loadSecureToken();
 //        P8RequestBuilder builder = P8RequestBuilder.streamingAudio(ws, file).setToken(session);
@@ -633,10 +631,9 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String streamingVideoURL(String ws, String file) throws SDKException {
-        // FIXME
         Thread.dumpStack();
-        throw new RuntimeException("Reimplement");
-
+        throw new RuntimeException("Streaming is not supported with Pydio 8 servers.");
+        
 //         // loadSecureToken();
 //         P8RequestBuilder builder = P8RequestBuilder.streamingVideo(ws, file).setToken(session);
 //         try {
