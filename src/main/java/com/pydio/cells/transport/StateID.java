@@ -37,22 +37,40 @@ public class StateID {
         // TODO also support missing username ?
         String[] parts = stateId.split("@");
         String username = utf8Decode(parts[0]);
-        String encodedUrl = parts[1];
+        String host = utf8Decode(parts[1]);
 
-        String serverUrl;
-        String path;
-
-        try {
-            String urlStr = utf8Decode(encodedUrl);
-            URL url = URI.create(urlStr).toURL();
-            serverUrl = url.getProtocol() + "://" + url.getAuthority();
-            path = url.getPath();
-            return new StateID(username, serverUrl, path);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
+        String path = null;
+        if (parts.length == 3){
+            path = utf8Decode(parts[2]);
         }
-    }
+
+        return new StateID(username, host, path);
+
+        // try {
+//            String urlStr = utf8Decode(encodedUrl);
+//            System.out.println("#### URLS:");
+//            System.out.println(encodedUrl);
+//            System.out.println(urlStr);
+//
+//            URL url = null;
+//            try {
+//                url = URI.create(encodedUrl).toURL();
+//            } catch (Exception e) {
+//                try {
+//                    url = URI.create(urlStr).toURL();
+//                } catch (Exception e2) {
+//                    System.out.println("double fail");
+//                }
+//            }
+//
+//            serverUrl = url.getProtocol() + "://" + url.getAuthority();
+//            path = utf8Decode(url.getPath());
+//            return new StateID(username, serverUrl, path);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//           return null;
+
+        }
 
     /**
      * Retrieves the *encoded* representation of this StateID for serialization.
@@ -60,11 +78,10 @@ public class StateID {
     public String getId() {
         StringBuilder builder = new StringBuilder();
         builder.append(utf8Encode(username)).append("@");
-        StringBuilder urlBuilder = new StringBuilder(serverUrl);
+        builder.append(utf8Encode(serverUrl));
         if (path != null && path.length() > 0 && !"/".equals(path)) {
-            urlBuilder.append(path);
+            builder.append("@").append(utf8Encode(path));
         }
-        builder.append(utf8Encode(urlBuilder.toString()));
         return builder.toString();
     }
 
