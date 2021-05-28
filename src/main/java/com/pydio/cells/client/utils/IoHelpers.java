@@ -69,16 +69,23 @@ public class IoHelpers {
 
     public static long pipeRead(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[bufferSize];
-        long total_read = 0;
+        long total_read = -1;
         int read = 0;
-        while (read != -1) {
-            read = in.read(buffer);
-            total_read += read;
-            if (read != -1) {
-                out.write(buffer, 0, read);
+        try {
+            while (read != -1) {
+                read = in.read(buffer);
+                if (read != -1) {
+                    out.write(buffer, 0, read);
+                }
+                if (total_read == -1) {
+                    total_read = 0;
+                }
+                total_read += read;
             }
+            return total_read;
+        } catch (IOException e){
+            throw new IOException("Could not pipe read", e);
         }
-        return total_read;
     }
 
     public static long write(byte[] bytes, OutputStream out) throws IOException {
