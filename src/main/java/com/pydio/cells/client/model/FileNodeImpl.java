@@ -76,13 +76,13 @@ public class FileNodeImpl implements FileNode, SdkNames {
     @Override
     public String getPath() {
 
-        // FIXME dirty hack until we clean this in legacy P8
+        // TODO hack until we clean this in legacy P8
         String path = properties.getProperty(NODE_PROPERTY_PATH);
         String name = properties.getProperty(NODE_PROPERTY_FILENAME);
 
         if ((path == null || "".equals(path)) && name != null && !"".equals(name)) {
             setProperty(NODE_PROPERTY_PATH, name);
-            return name;
+            return "/"+ name;
             // TODO should we also extract the real name from the path ?
         }
         return path;

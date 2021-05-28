@@ -1,5 +1,6 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
@@ -7,7 +8,6 @@ import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.auth.OAuthConfig;
 import com.pydio.cells.client.utils.IoHelpers;
 import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.io;
 
 import org.json.JSONObject;
 
@@ -23,36 +23,25 @@ public class CellsServer implements Server {
     public final static String API_PREFIX = "/a";
     public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
 
-    private final String serverType = SdkNames.TYPE_CELLS;
-    private String version = null;
-    private final String versionName = null;
-
     private final ServerURL serverURL;
-    private final String apiPath = null;
 
+    private OAuthConfig authConfig;
     private String title;
     private String welcomeMessage;
     private String iconPath;
+    private String version = null;
 
     // Legacy objects TODO remove
     private JSONObject bootConf;
-    private OAuthConfig authConfig;
 
     public CellsServer(ServerURL serverURL) {
         this.serverURL = serverURL;
     }
 
-    public static CellsServer fromServerURL(ServerURL serverURL) {
-        return new CellsServer(serverURL);
-    }
-
-    public CellsServer init(String url) {
-        return this;
-    }
 
     @Override
     public Server init() throws SDKException {
-        refreshBootConf();
+        downloadBootConf();
         downloadOIDCConfiguration();
         return this;
     }
@@ -73,7 +62,7 @@ public class CellsServer implements Server {
 
     @Override
     public String getRemoteType() {
-        return serverType;
+        return SdkNames.TYPE_CELLS;
     }
 
     @Override
@@ -81,34 +70,84 @@ public class CellsServer implements Server {
         return false;
     }
 
-    /* Node methods */
+    @Override
+    public OAuthConfig getOAuthConfig() {
+        return authConfig;
+    }
 
-    public HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
+    @Override
+    public String getLabel() {
+        if (title != null && !"".equals(title)) {
+            return title;
+        }
+        return url();
+    }
+
+    @Override
+    public String getIconURL() {
+        return iconPath;
+    }
+
+    @Override
+    public String getWelcomeMessage() {
+        return welcomeMessage;
+    }
+
+    @Override
+    public String getVersionName() {
+        if (version == null) {
+            throw new RuntimeException("Trying to retrieve AJXP Version param before the server has been instantiated");
+        }
+        return version;
+    }
+
+    public boolean hasLicenseFeatures() {
+        return bootConf != null && bootConf.has("license_features");
+    }
+
+    public HttpURLConnection openAnonConnection(String path) throws IOException {
         return newURL(path).openConnection();
     }
 
-    private void refreshBootConf() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        InputStream in = null;
-        HttpURLConnection con;
 
+    @Deprecated
+    @Override
+    public boolean supportsOauth() {
+        // return authConfig != null;
+        return true;
+    }
+
+    @Deprecated
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    private void downloadBootConf() throws SDKException {
+        HttpURLConnection con = null;
+        InputStream in = null;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             con = openAnonConnection(BOOTCONF_PATH);
+            con.setRequestMethod("GET");
             in = con.getInputStream();
-            io.pipeRead(in, out);
-            JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
+            IoHelpers.pipeRead(in, out);
 
+            bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
             version = bootConf.getString("ajxpVersion");
-            JSONObject customWordings = bootConf.getJSONObject("customWording");
-            title = customWordings.getString("title");
-            iconPath = customWordings.getString("icon");
-            if (customWordings.has("welcomeMessage")) {
-                welcomeMessage = customWordings.getString("welcomeMessage");
+            if (bootConf.has("customWording")) {
+                JSONObject customWordings = bootConf.getJSONObject("customWording");
+                title = customWordings.getString("title");
+                iconPath = customWordings.getString("icon");
+                if (customWordings.has("welcomeMessage")) {
+                    welcomeMessage = customWordings.getString("welcomeMessage");
+                }
             }
         } catch (Exception e) {
-            // TODO handle error
-            Log.w("Unimplemented", "Error while retrieving bootconf for " + url());
-            e.printStackTrace();
+            throw new SDKException(ErrorCodes.unexpected_content, "Could not retrieve boot configuration at " + url(), e);
+        } finally {
+            IoHelpers.closeQuietly(con);
+            IoHelpers.closeQuietly(in);
+            IoHelpers.closeQuietly(out);
         }
     }
 
@@ -116,15 +155,14 @@ public class CellsServer implements Server {
         HttpURLConnection con = null;
         InputStream in = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ServerURL oidcURL = null;
         try {
-            oidcURL = newURL(OAuthConfig.OIDC_WELLKNOWN_PATH);
+            ServerURL oidcURL = newURL(OAuthConfig.OIDC_WELL_KNOWN_CONFIG_PATH);
             con = oidcURL.openConnection();
             con.setRequestMethod("GET");
             in = con.getInputStream();
-            long totalRead = IoHelpers.pipeRead(in, out);
+            // long totalRead = IoHelpers.pipeRead(in, out);
+            IoHelpers.pipeRead(in, out);
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-
             JSONObject oidcJson = new JSONObject(oidcStr);
             authConfig = OAuthConfig.fromJSON(oidcJson);
         } catch (Exception e) {
@@ -138,48 +176,13 @@ public class CellsServer implements Server {
         }
     }
 
-    public String version() {
-        if (version == null) {
-            throw new RuntimeException("Trying to retrieve AJXP Version param before the server has been instantiated");
-        }
-        return version;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof CellsServer))
+            return false;
+        return url().equals(((CellsServer) obj).url());
     }
 
-    public boolean hasLicenseFeatures() {
-        return bootConf != null && bootConf.has("license_features");
-    }
-
-    @Override
-    public String getIconURL() {
-        return null;
-    }
-
-    @Override
-    public String getWelcomeMessage() {
-        return null;
-    }
-
-    @Override
-    public String getVersionName() {
-        return null;
-    }
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    public String welcomeMessage() {
-        return welcomeMessage;
-    }
-
-    public boolean supportsOauth() {
-        return authConfig != null;
-    }
-
-    @Override
-    public OAuthConfig getOAuthConfig() {
-        return authConfig;
-    }
 
 //    public void setUnverifiedSSL(boolean unverified) {
 //        sslUnverified = unverified;
@@ -260,15 +263,5 @@ public class CellsServer implements Server {
 //        return trustHelper;
 //    }
 
-
-    public boolean equals(Object obj) {
-
-        if (this == obj) return true;
-
-        if (obj == null || !(obj instanceof CellsServer))
-            return false;
-
-        return url().equals(((CellsServer) obj).url());
-    }
 
 }

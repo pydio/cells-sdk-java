@@ -6,9 +6,13 @@ import java.net.MalformedURLException;
 
 public interface Server {
 
+    Server init() throws SDKException;
+
     ServerURL getServerURL();
 
-    Server init() throws SDKException;
+    default ServerURL newURL(String path) throws MalformedURLException {
+        return getServerURL().withPath(path);
+    }
 
     /**
      * returns the canonical URL of the server as String for various persistence processes.
@@ -19,31 +23,22 @@ public interface Server {
         return getServerURL().getId();
     }
 
-    String getApiURL();
-
     String getRemoteType();
 
     boolean isLegacy();
 
-    @Deprecated
-    boolean supportsOauth();
-
     OAuthConfig getOAuthConfig();
-
-    default ServerURL newURL(String path) throws MalformedURLException {
-        return getServerURL().withPath(path);
-    }
 
     default boolean isSSLUnverified() {
         return getServerURL().skipVerify();
     }
 
-    default String getLabel() {
-        // TODO implement this from boot config
-        return url();
-    }
+    String getLabel();
 
-    String getIconURL();
+//    default String getLabel() {
+//        // TODO implement this from boot config
+//        return url();
+//    }
 
     String getWelcomeMessage();
 
@@ -51,4 +46,12 @@ public interface Server {
 
     boolean hasLicenseFeatures();
 
+    @Deprecated
+    boolean supportsOauth();
+
+    @Deprecated
+    String getIconURL();
+
+    @Deprecated
+    String getApiURL();
 }

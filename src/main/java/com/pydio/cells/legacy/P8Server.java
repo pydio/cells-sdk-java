@@ -51,17 +51,6 @@ public class P8Server implements Server {
     }
 
     @Override
-    public String getApiURL() {
-        // FIXME should not be used for P8
-        return url();
-        // try {
-        //     return serverURL.withPath(API_PREFIX).getURL().toString();
-        // } catch (MalformedURLException e) {
-        //     throw new RuntimeException("Getting API URL for " + getId(), e);
-        // }
-    }
-
-    @Override
     public String getRemoteType() {
         return serverType;
     }
@@ -76,7 +65,42 @@ public class P8Server implements Server {
         return false;
     }
 
-    // Getters
+
+    public boolean hasLicenseFeatures() {
+        return false;
+        // TODO reimplement this
+        // return bootConf != null && bootConf.has("license_features");
+    }
+
+    @Override
+    public String getLabel() {
+        if (title != null && !"".equals(title)) {
+            return title;
+        }
+        return url();
+    }
+
+    @Override
+    public String getIconURL() {
+        return iconPath;
+    }
+
+    @Override
+    public String getWelcomeMessage() {
+        return this.welcomeMessage;
+    }
+
+    @Override
+    public String getApiURL() {
+        // FIXME should not be used for P8
+        return url();
+        // try {
+        //     return serverURL.withPath(API_PREFIX).getURL().toString();
+        // } catch (MalformedURLException e) {
+        //     throw new RuntimeException("Getting API URL for " + getId(), e);
+        // }
+    }
+
 
     public String version() {
         if (version == null) {
@@ -88,32 +112,6 @@ public class P8Server implements Server {
     public String versionName() {
         // FIXME clean this
         return version();
-    }
-
-    public boolean hasLicenseFeatures() {
-        return false;
-        // TODO reimplement this
-        // return bootConf != null && bootConf.has("license_features");
-    }
-
-    @Override
-    public String getIconURL() {
-        System.out.println("#### Retrieveing ICON URL");
-        return iconPath;
-    }
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    @Override
-    public String getLabel() {
-        return title;
-    }
-
-    @Override
-    public String getWelcomeMessage() {
-        return this.welcomeMessage;
     }
 
     @Override

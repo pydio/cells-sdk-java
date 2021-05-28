@@ -354,62 +354,9 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-//    private Token refresh(Token t) throws SDKException {
-//        Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
-//
-//        HttpRequest request = new HttpRequest();
-//        Params params = Params.create("grant_type", "refresh_token").set("refresh_token", t.refreshToken);
-//        request.setParams(params);
-//
-//        OAuthConfig cfg = server.getOAuthConfig();
-//
-//        // String auth = JavaCustomEncoder.base64Encode(cfg.clientID + ":" + cfg.clientSecret);
-//
-//        Base64 base64 = new Base64();
-//        String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
-//
-//        request.setHeaders(Params.create("Authorization", "Basic " + auth));
-//        request.setEndpoint(cfg.tokenEndpoint);
-//        request.setMethod("POST");
-//
-//        HttpResponse response;
-//        try {
-//            response = HttpClient.request(request);
-//        } catch (Exception e) {
-//            Log.w("Token Service", " token request failed: " + e.getLocalizedMessage());
-//            throw new SDKException(ErrorCodes.con_failed);
-//        }
-//
-//        String jwt;
-//        try {
-//            jwt = response.getString();
-//        } catch (IOException e) {
-//            Log.e("Refresh Token Service", "Could not get response string body: " + e.getLocalizedMessage());
-//            e.printStackTrace();
-//            throw new SDKException(ErrorCodes.no_token_available, new IOException("refresh token failed"));
-//        }
-//
-////        try {
-////            t = Token.decodeOAuthJWT(jwt);
-////        } catch (ParseException e) {
-////            Log.e("Refresh Token Service", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
-////            throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
-////        }
-////
-////        JWT parsedIDToken;
-////        parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
-////        if (parsedIDToken == null) {
-////            throw new SDKException(Code.no_token_available);
-////        }
-////
-////        t.subject = String.format("%s@%s", parsedIDToken.claims.name, server.url());
-////        t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
-////        this.store.save(t);
-////        return t;
-//        return null;
-//    }
-
     public Token refreshOAuthToken(Token t) throws SDKException {
+
+        // FIXME refactor this
         InputStream in = null;
         ByteArrayOutputStream out = null;
 
@@ -418,6 +365,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
+
+
             HttpURLConnection con = openAnonConnection(endpointURI.getPath());
 
             con.setRequestMethod("POST");
@@ -440,9 +389,9 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
             return Token.decodeOAuthJWT(jwtStr);
         } catch (ParseException e) {
-            Log.e("Refresh Token Service", "Could not parse refreshed token. " + e.getLocalizedMessage());
+            Log.e("Token Service", "Could not parse refreshed token. " + e.getLocalizedMessage());
             throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.w("Token Service", " token request failed: " + e.getLocalizedMessage());
             e.printStackTrace();
             throw new SDKException(ErrorCodes.con_failed, e);
@@ -511,4 +460,60 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 //    public interface TreeNodeHandler {
 //        void onNode(TreeNode node);
 //    }
+
+    //    private Token refresh(Token t) throws SDKException {
+//        Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
+//
+//        HttpRequest request = new HttpRequest();
+//        Params params = Params.create("grant_type", "refresh_token").set("refresh_token", t.refreshToken);
+//        request.setParams(params);
+//
+//        OAuthConfig cfg = server.getOAuthConfig();
+//
+//        // String auth = JavaCustomEncoder.base64Encode(cfg.clientID + ":" + cfg.clientSecret);
+//
+//        Base64 base64 = new Base64();
+//        String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
+//
+//        request.setHeaders(Params.create("Authorization", "Basic " + auth));
+//        request.setEndpoint(cfg.tokenEndpoint);
+//        request.setMethod("POST");
+//
+//        HttpResponse response;
+//        try {
+//            response = HttpClient.request(request);
+//        } catch (Exception e) {
+//            Log.w("Token Service", " token request failed: " + e.getLocalizedMessage());
+//            throw new SDKException(ErrorCodes.con_failed);
+//        }
+//
+//        String jwt;
+//        try {
+//            jwt = response.getString();
+//        } catch (IOException e) {
+//            Log.e("Refresh Token Service", "Could not get response string body: " + e.getLocalizedMessage());
+//            e.printStackTrace();
+//            throw new SDKException(ErrorCodes.no_token_available, new IOException("refresh token failed"));
+//        }
+//
+////        try {
+////            t = Token.decodeOAuthJWT(jwt);
+////        } catch (ParseException e) {
+////            Log.e("Refresh Token Service", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
+////            throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
+////        }
+////
+////        JWT parsedIDToken;
+////        parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
+////        if (parsedIDToken == null) {
+////            throw new SDKException(Code.no_token_available);
+////        }
+////
+////        t.subject = String.format("%s@%s", parsedIDToken.claims.name, server.url());
+////        t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
+////        this.store.save(t);
+////        return t;
+//        return null;
+//    }
+
 }
