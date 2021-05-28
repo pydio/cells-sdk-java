@@ -5,6 +5,7 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.client.SessionFactory;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.Log;
@@ -27,7 +28,7 @@ import java.io.ByteArrayInputStream;
  */
 public class P8TransportTest {
 
-    private static ServerFactory factory;
+    private static SessionFactory factory;
     private static TestConfiguration config;
     private static String testRunID;
 
@@ -36,7 +37,7 @@ public class P8TransportTest {
     public static void setup() {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new ServerFactory(tokens);
+        factory = new SessionFactory(tokens);
         config = new TestConfiguration();
     }
 
