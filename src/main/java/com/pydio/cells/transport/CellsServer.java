@@ -41,8 +41,15 @@ public class CellsServer implements Server {
 
     @Override
     public Server init() throws SDKException {
-        downloadBootConf();
-        downloadOIDCConfiguration();
+        return refresh(true);
+    }
+
+    @Override
+    public Server refresh(boolean force) throws SDKException {
+        if (force || version == null ){
+            downloadBootConf();
+            downloadOIDCConfiguration();
+        }
         return this;
     }
 
@@ -128,7 +135,7 @@ public class CellsServer implements Server {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             con = openAnonConnection(BOOTCONF_PATH);
-            con.setRequestMethod("GET");
+            //con.setRequestMethod("GET");
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
 
@@ -143,7 +150,7 @@ public class CellsServer implements Server {
                 }
             }
         } catch (Exception e) {
-            throw new SDKException(ErrorCodes.unexpected_content, "Could not retrieve boot configuration at " + url(), e);
+            throw new SDKException(ErrorCodes.unexpected_content, "Could not get boot configuration at " + url(), e);
         } finally {
             IoHelpers.closeQuietly(con);
             IoHelpers.closeQuietly(in);

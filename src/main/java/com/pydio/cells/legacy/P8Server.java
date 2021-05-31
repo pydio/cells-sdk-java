@@ -1,12 +1,12 @@
 package com.pydio.cells.legacy;
 
+import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.auth.OAuthConfig;
-import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.io;
+import com.pydio.cells.client.utils.IoHelpers;
 import com.pydio.cells.legacy.consts.ActionNames;
 
 import org.json.JSONObject;
@@ -41,7 +41,14 @@ public class P8Server implements Server {
 
     @Override
     public Server init() throws SDKException {
-        refreshBootConf();
+        return refresh(true);
+    }
+
+    @Override
+    public Server refresh(boolean force) throws SDKException {
+        if (force || version == null) {
+            refreshBootConf();
+        }
         return this;
     }
 
@@ -156,33 +163,36 @@ public class P8Server implements Server {
         return newURL(path).openConnection();
     }
 
-    private void refreshBootConf() {
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private void refreshBootConf() throws SDKException {
+        HttpURLConnection con = null;
         InputStream in = null;
-        HttpURLConnection con;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
             con = openAnonConnection(BOOTCONF_PATH);
             in = con.getInputStream();
-            io.pipeRead(in, out);
+            IoHelpers.pipeRead(in, out);
+
             JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-
             version = bootConf.getString("ajxpVersion");
-            JSONObject customWordings = bootConf.getJSONObject("customWording");
-            title = customWordings.getString("title");
+            if (bootConf.has("customWording")) {
+                JSONObject customWordings = bootConf.getJSONObject("customWording");
+                title = customWordings.getString("title");
+                String tmpPath = customWordings.getString("icon");
+                // Paths always start with a leading slash in our world.
+                iconPath = tmpPath.startsWith("/") ? tmpPath : "/" + tmpPath;
 
-            // Paths always start with a leading slash in our world.
-            String tmpPath = customWordings.getString("icon");
-            iconPath = tmpPath.startsWith("/") ? tmpPath : "/" + tmpPath;
-
-            if (customWordings.has("welcomeMessage")) {
-                welcomeMessage = customWordings.getString("welcomeMessage");
+                if (customWordings.has("welcomeMessage")) {
+                    welcomeMessage = customWordings.getString("welcomeMessage");
+                }
             }
+
         } catch (Exception e) {
-            // TODO handle error
-            Log.w("Unimplemented", "Error while retrieving bootconf for " + getId());
-            e.printStackTrace();
+            throw new SDKException(ErrorCodes.api_error, "Could not get boot configuration at " + getId(), e);
+        } finally {
+            IoHelpers.closeQuietly(con);
+            IoHelpers.closeQuietly(in);
+            IoHelpers.closeQuietly(out);
         }
     }
 

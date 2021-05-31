@@ -6,8 +6,13 @@ import java.net.MalformedURLException;
 
 public interface Server {
 
+    /* Force initialisation of the local Server object, to typically refresh boot configuration */
     Server init() throws SDKException;
 
+    /* Re-run initialisation if necessary or forced */
+    Server refresh(boolean force) throws SDKException;
+
+    /* Return the convenient {@code ServerURL} already configured to speak with the server */
     ServerURL getServerURL();
 
     default ServerURL newURL(String path) throws MalformedURLException {
