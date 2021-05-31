@@ -773,7 +773,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
 
-    /* Tranfers methods that use S3 */
+    /* Transfer methods that use S3 */
 
     @Override
     public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
