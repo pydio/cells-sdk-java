@@ -33,7 +33,7 @@ import javax.net.ssl.SSLHandshakeException;
  * the "src/test/resources/default-target-server.properties" file to match your setup.
  * <p>
  * You can then launch the test with:
- *
+ * <p>
  * {@code ./gradlew build -Dtest.profile=integration}
  */
 public class BasicConnectionTest {

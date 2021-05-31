@@ -72,6 +72,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         // TODO more init
     }
 
+
     public String getId() {
         return new StateID(getUser(), getServer().getServerURL().getId()).getId();
     }
@@ -79,6 +80,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     @Override
     public Server getServer() {
         return server;
+    }
+
+
+    public CustomEncoder getEncoder() {
+        return encoder;
     }
 
     @Deprecated

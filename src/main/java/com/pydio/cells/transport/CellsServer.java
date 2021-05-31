@@ -46,7 +46,7 @@ public class CellsServer implements Server {
 
     @Override
     public Server refresh(boolean force) throws SDKException {
-        if (force || version == null ){
+        if (force || version == null) {
             downloadBootConf();
             downloadOIDCConfiguration();
         }

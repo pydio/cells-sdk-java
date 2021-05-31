@@ -6,6 +6,7 @@ import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
+import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
@@ -15,12 +16,17 @@ import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
+import com.pydio.cells.client.common.http.ContentBody;
+import com.pydio.cells.client.common.http.HttpClient;
+import com.pydio.cells.client.common.http.HttpRequest;
 import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
+import com.pydio.cells.api.S3Client;
 import com.pydio.cells.client.utils.FileNodeUtils;
+import com.pydio.cells.client.utils.IoHelpers;
 import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.io;
+import com.pydio.cells.client.utils.Params;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.JobsServiceApi;
@@ -61,12 +67,14 @@ import org.json.JSONObject;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,12 +86,14 @@ import javax.xml.parsers.SAXParserFactory;
 public class CellsClient implements Client, SdkNames {
 
     private final CellsTransport transport;
+    private final S3Client s3Client;
 
     private Credentials credentials;
     private final Boolean skipOAuth = false;
 
-    public CellsClient(Transport transport) {
+    public CellsClient(Transport transport, S3Client s3Client) {
         this.transport = (CellsTransport) transport;
+        this.s3Client = s3Client;
     }
 
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
@@ -347,49 +357,6 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw new SDKException(e);
         }
-    }
-
-    @Override
-    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename,
-                          TransferProgressListener progressListener) throws SDKException {
-        return null;
-    }
-
-    @Override
-    public Message upload(File source, String ws, String path, String name, boolean autoRename,
-                          TransferProgressListener progressListener) throws SDKException {
-        return null;
-    }
-
-    @Override
-    public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
-        return null;
-    }
-
-    @Override
-    public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener)
-            throws SDKException {
-        return 0;
-    }
-
-    @Override
-    public long download(String ws, String file, File target, TransferProgressListener progressListener)
-            throws SDKException {
-        OutputStream out;
-        try {
-            out = new FileOutputStream(target);
-        } catch (FileNotFoundException e) {
-            throw SDKException.notFound(e);
-        }
-
-        long downloaded = download(ws, file, out, progressListener);
-        io.close(out);
-        return downloaded;
-    }
-
-    @Override
-    public String downloadPath(String ws, String file) throws SDKException {
-        return null;
     }
 
     @Override
@@ -660,21 +627,6 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public InputStream previewData(String ws, String file, int dim) throws SDKException {
-        return null;
-    }
-
-    @Override
-    public String streamingAudioURL(String ws, String file) throws SDKException {
-        return null;
-    }
-
-    @Override
-    public String streamingVideoURL(String ws, String file) throws SDKException {
-        return null;
-    }
-
-    @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
         request.addNodePathsItem(FileNodeUtils.toTreeNodePath(ws, file));
@@ -817,8 +769,122 @@ public class CellsClient implements Client, SdkNames {
     }
 
     public CellsClient get(Transport session) {
-        return new CellsClient(session);
+        return new CellsClient(session, s3Client);
     }
+
+
+    /* Tranfers methods that use S3 */
+
+    @Override
+    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+        String urlStr = fromURL(s3Client.getUploadPreSignedURL(ws, path, name));
+        httpPUT(urlStr, source, length, progressListener);
+        return Message.create(Message.SUCCESS, "SUCCESS");
+    }
+
+
+    @Override
+    public Message upload(File source, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+        return upload(source, ws, path, name, progressListener);
+    }
+
+    @Deprecated
+    private String fromURL(URL url) {
+        return url.toString().replace(" ", "%20");
+    }
+
+    private Message upload(File f, String ws, String path, String name, TransferProgressListener tpl) throws SDKException {
+        InputStream in;
+        try {
+            in = new FileInputStream(f);
+        } catch (FileNotFoundException e) {
+            throw SDKException.notFound(e);
+        }
+        return upload(in, f.length(), ws, path, name, true, tpl);
+    }
+
+
+    @Override
+    public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
+        return null;
+    }
+
+
+    @Override
+    public InputStream previewData(String ws, String file, int dim) throws SDKException {
+        return s3Client.getThumb(file);
+    }
+
+    @Override
+    public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener)
+            throws SDKException {
+        // TODO handle self-signed
+
+        InputStream in = null;
+        try {
+            URL preSignedURL = s3Client.getDownloadPreSignedURL(ws, file);
+            HttpURLConnection connection = (HttpURLConnection) preSignedURL.openConnection();
+            transport.withUserAgent(connection);
+            in = connection.getInputStream();
+            if (progressListener == null) {
+                return IoHelpers.pipeRead(in, target);
+            } else {
+                return IoHelpers.pipeReadWithProgress(in, target, progressListener::onProgress);
+            }
+        } catch (IOException e) {
+            throw SDKException.conReadFailed(e);
+        } finally {
+            IoHelpers.closeQuietly(in);
+        }
+
+    }
+
+    @Override
+    public long download(String ws, String file, File target, TransferProgressListener progressListener)
+            throws SDKException {
+        long totalRead = -1;
+        SDKException dlException = null;
+
+        try (OutputStream out = new FileOutputStream(target)) {
+            totalRead = this.download(ws, file, out, progressListener);
+        } catch (FileNotFoundException e) {
+            dlException = SDKException.notFound(e);
+        } catch (IOException e) {
+            dlException = SDKException.conWriteFailed(e);
+        } catch (SDKException e) {
+            dlException = new SDKException(ErrorCodes.api_error, "Could not download file " + file + " from " + ws, e);
+        } finally {
+            if (dlException != null) {
+                // Best effort to download non-complete
+                try {
+                    //noinspection ResultOfMethodCallIgnored
+                    target.delete();
+                } catch (Exception e) {
+                    Log.w("Local", "Could not delete file at " + target + " after failed download");
+                }
+                throw dlException;
+            }
+        }
+        return totalRead;
+    }
+
+    @Deprecated
+    @Override
+    public String downloadPath(String ws, String file) throws SDKException {
+        return fromURL(s3Client.getDownloadPreSignedURL(ws, file));
+    }
+
+
+    @Override
+    public String streamingAudioURL(String ws, String file) throws SDKException {
+        return null;
+    }
+
+    @Override
+    public String streamingVideoURL(String ws, String file) throws SDKException {
+        return null;
+    }
+
 
     // Local Helpers
     //  protected String getToken() throws SDKException {
@@ -850,6 +916,42 @@ public class CellsClient implements Client, SdkNames {
     private ApiClient authenticatedClient() throws SDKException {
         return transport.authenticatedClient();
     }
+
+
+    private void httpPUT(String url, InputStream source, long length, TransferProgressListener listener) throws SDKException {
+        ContentBody body = new ContentBody(source, length);
+        body.setListener(new ContentBody.ProgressListener() {
+            @Override
+            public void transferred(long progress) throws IOException {
+                if (listener.onProgress(progress)) {
+                    throw new IOException("stopped");
+                }
+            }
+
+            @Override
+            public void partTransferred(int part, int total) throws IOException {
+                if (total == 0) {
+                    return;
+                }
+
+                long progress = (long) ((float) part / (float) total);
+                if (listener.onProgress(progress)) {
+                    throw new IOException("stopped");
+                }
+            }
+        });
+        try {
+            HttpRequest request = new HttpRequest();
+            request.setMethod("PUT");
+            request.setHeaders(Params.create("User-Agent", transport.getUserAgent()));
+            request.setContentBody(body);
+            request.setEndpoint(url);
+            HttpClient.request(request);
+        } catch (IOException e) {
+            throw SDKException.conWriteFailed(e);
+        }
+    }
+
 
     /**
      * This is necessary until min version is 24: we cannot use the consumer pattern:

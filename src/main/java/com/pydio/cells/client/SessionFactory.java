@@ -31,7 +31,9 @@ public class SessionFactory extends ServerFactory {
         if (transport.getServer().isLegacy()) {
             return new P8Client(transport);
         } else {
-            return new CellsClient(transport);
+            // FIXME change when problems with S3 dependencies have been solved.
+            // return new CellsClient(transport, new PojoS3Client((CellsTransport)transport));
+            return new CellsClient(transport, null);
         }
     }
 
