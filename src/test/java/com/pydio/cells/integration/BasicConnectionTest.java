@@ -31,7 +31,8 @@ import javax.net.ssl.SSLHandshakeException;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * the "src/test/resources/default-target-server.properties" file to match your setup.
+ * the "src/test/resources/default-target-server.properties" file to match your
+ * setup.
  * <p>
  * You can then launch the test with:
  * <p>
@@ -57,7 +58,7 @@ public class BasicConnectionTest {
     }
 
     @Test
-    public void testSimpleList() throws SDKException, IOException {
+    public void testSimpleCRUD() throws SDKException, IOException {
         Map<String, RemoteServerConfig> servers = config.getDefinedServers();
         for (RemoteServerConfig conf : servers.values()) {
             testWorkspaces(conf);
@@ -73,20 +74,21 @@ public class BasicConnectionTest {
         factory.getClient(transport).workspaceList(new DummyHandler());
 
         System.out.println("... Listing object for workspace " + conf.defaultWS);
-        factory.getClient(transport).ls(conf.defaultWS, "/",
-                null, (node) -> System.out.println(node.getLabel()));
+        factory.getClient(transport).ls(conf.defaultWS, "/", null, (node) -> System.out.println(node.getLabel()));
     }
 
     public void basicCRUD(RemoteServerConfig conf) throws SDKException, IOException {
+        // System.out.println("... Testing CRUD for " + printableId(transport.getId()));
+
         Transport transport = TestUtils.getTransport(factory, conf);
         Client client = factory.getClient(transport);
 
-        if (!transport.getServer().isLegacy()) {
-            // TODO remove this once upload has been done.
-            Log.w("SKIP", "Could not CRUD for *cells* server at " + conf.serverURL
-                    + ": upload with S3 is not yet implemented in plain Java");
-            return;
-        }
+        // if (!transport.getServer().isLegacy()) {
+        // // TODO remove this once upload has been done.
+        // Log.w("SKIP", "Could not CRUD for *cells* server at " + conf.serverURL
+        // + ": upload with S3 is not yet implemented in plain Java");
+        // return;
+        // }
 
         System.out.println("... Testing CRUD for " + printableId(transport.getId()));
 
@@ -129,35 +131,66 @@ public class BasicConnectionTest {
             Assert.assertEquals("SUCCESS", msg.type());
 
             // Read updated
-            try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-                client.download(conf.defaultWS, baseDir + name, out, null);
-                out.flush();
-                byte[] byteArray = out.toByteArray();
-                String retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
-                System.out.println("Retrieved: " + retrievedMsg);
-                Assert.assertEquals(message, retrievedMsg);
+            String retrievedMsg = "";
+            loop: for (int i = 0; i < 10; i++) {
+                try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+                    client.download(conf.defaultWS, baseDir + name, out, null);
+                    out.flush();
+                    byte[] byteArray = out.toByteArray();
+                    retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
+                    System.out.println("Retrieved: " + retrievedMsg);
+
+                    if (message.equals(retrievedMsg)) {
+                        break loop;
+                    }
+                    Thread.sleep(2000);
+                    System.out.println("Wait 2s before retry...");
+
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
+
+            Assert.assertEquals(message, retrievedMsg);
+
         }
 
         // Delete
-        msg = client.delete(conf.defaultWS, new String[]{"/" + name});
-        Assert.assertNotNull(msg);
-        Assert.assertEquals("EMPTY", msg.type());
+        msg = client.delete(conf.defaultWS, new String[] { "/" + name });
+        // Assert.assertNotNull(msg);
+        // Assert.assertEquals("EMPTY", msg.type());
 
-        // Check if uploaded files is still there
-        final List<String> founds = new ArrayList<>();
-        client.ls(conf.defaultWS, baseDir,
-                null, (node) -> {
-                    if (name.equals(node.getLabel())) founds.add(name);
+        boolean deleted = false;
+        loop: for (int i = 0; i < 10; i++) {
+            try {
+
+                // Check if uploaded files is still there
+                final List<String> founds = new ArrayList<>();
+                client.ls(conf.defaultWS, baseDir, null, (node) -> {
+                    if (name.equals(node.getLabel()))
+                        founds.add(name);
                 });
-        Assert.assertEquals(0, founds.size());
+                if (founds.size() == 0) {
+                    deleted = true;
+                    break loop;
+                }
+                Thread.sleep(2000);
+                System.out.println("Wait 2s before retry...");
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        Assert.assertTrue(deleted);
 
         // TODO finish implementing the CRUD and corresponding checks.
     }
 
     @Test
     public void testSkipVerify() {
-//        try {
+        // try {
         Map<String, RemoteServerConfig> servers = config.getDefinedServers();
         for (String key : servers.keySet()) {
 
@@ -182,12 +215,11 @@ public class BasicConnectionTest {
                 }
             }
         }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            Assert.assertNull(e);
-//        }
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // Assert.assertNull(e);
+        // }
     }
-
 
     private static class DummyHandler implements NodeHandler {
 
@@ -199,7 +231,6 @@ public class BasicConnectionTest {
             // System.out.println(node.getPath());
         }
     }
-
 
     private String printableId(String techId) {
         return StateID.fromId(techId).toString();

@@ -7,8 +7,10 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.client.encoding.JavaCustomEncoder;
+import com.pydio.cells.client.s3.PojoS3Client;
 import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.transport.StateID;
+import com.pydio.cells.transport.CellsTransport;
 
 /**
  * Extend a server factory to manage client concepts.
@@ -32,8 +34,8 @@ public class SessionFactory extends ServerFactory {
             return new P8Client(transport);
         } else {
             // FIXME change when problems with S3 dependencies have been solved.
-            // return new CellsClient(transport, new PojoS3Client((CellsTransport)transport));
-            return new CellsClient(transport, null);
+            return new CellsClient(transport, new PojoS3Client((CellsTransport)transport));
+            // return new CellsClient(transport, null);
         }
     }
 
