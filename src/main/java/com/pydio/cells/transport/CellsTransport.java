@@ -87,12 +87,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return encoder;
     }
 
-    @Deprecated
-    @Override
-    public Client getClient() {
-        return new CellsClient(this);
-    }
-
 //    public void ping() throws IOException {
 //        HttpURLConnection connection = null;
 //        // 10 secs timeout instead of the default unlimited

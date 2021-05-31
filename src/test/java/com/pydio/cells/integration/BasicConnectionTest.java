@@ -1,12 +1,13 @@
 package com.pydio.cells.integration;
 
+import com.pydio.cells.api.Client;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
-import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.client.SessionFactory;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.Log;
@@ -38,7 +39,7 @@ import javax.net.ssl.SSLHandshakeException;
  */
 public class BasicConnectionTest {
 
-    private ServerFactory factory;
+    private SessionFactory factory;
     private TestConfiguration config;
     private String testRunID;
 
@@ -46,7 +47,7 @@ public class BasicConnectionTest {
     public void setup() {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new ServerFactory(tokens);
+        factory = new SessionFactory(tokens);
         config = new TestConfiguration();
     }
 
@@ -66,27 +67,28 @@ public class BasicConnectionTest {
 
     private void testWorkspaces(RemoteServerConfig conf) throws SDKException {
 
-        Transport session = TestUtils.getTransport(factory, conf);
+        Transport transport = TestUtils.getTransport(factory, conf);
 
-        System.out.println("... Listing workspaces for " + printableId(session.getId()));
-        session.getClient().workspaceList(new DummyHandler());
+        System.out.println("... Listing workspaces for " + printableId(transport.getId()));
+        factory.getClient(transport).workspaceList(new DummyHandler());
 
         System.out.println("... Listing object for workspace " + conf.defaultWS);
-        session.getClient().ls(conf.defaultWS, "/",
+        factory.getClient(transport).ls(conf.defaultWS, "/",
                 null, (node) -> System.out.println(node.getLabel()));
     }
 
     public void basicCRUD(RemoteServerConfig conf) throws SDKException, IOException {
-        Transport session = TestUtils.getTransport(factory, conf);
+        Transport transport = TestUtils.getTransport(factory, conf);
+        Client client = factory.getClient(transport);
 
-        if (!session.getServer().isLegacy()) {
+        if (!transport.getServer().isLegacy()) {
             // TODO remove this once upload has been done.
             Log.w("SKIP", "Could not CRUD for *cells* server at " + conf.serverURL
                     + ": upload with S3 is not yet implemented in plain Java");
             return;
         }
 
-        System.out.println("... Testing CRUD for " + printableId(session.getId()));
+        System.out.println("... Testing CRUD for " + printableId(transport.getId()));
 
         String baseDir = "/";
         final String name = "hello-" + testRunID + ".txt";
@@ -95,7 +97,7 @@ public class BasicConnectionTest {
         // Upload
         byte[] content = message.getBytes();
         ByteArrayInputStream source = new ByteArrayInputStream(content);
-        Message msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
+        Message msg = client.upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
             System.out.printf("\r%d bytes written\n", progress);
             return false;
         });
@@ -104,7 +106,7 @@ public class BasicConnectionTest {
 
         // Read
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            session.getClient().download(conf.defaultWS, baseDir + name, out, null);
+            client.download(conf.defaultWS, baseDir + name, out, null);
             out.flush();
             byte[] byteArray = out.toByteArray();
             String retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
@@ -113,13 +115,13 @@ public class BasicConnectionTest {
         }
 
         // Update fails in P8
-        if (!session.getServer().isLegacy()) {
+        if (!transport.getServer().isLegacy()) {
             System.out.println("Legacy, for sure ?");
 
             message += " -- Add with some additional content";
             content = message.getBytes();
             source = new ByteArrayInputStream(content);
-            msg = session.getClient().upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
+            msg = client.upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
                 System.out.printf("\r%d bytes written\n", progress);
                 return false;
             });
@@ -128,7 +130,7 @@ public class BasicConnectionTest {
 
             // Read updated
             try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-                session.getClient().download(conf.defaultWS, baseDir + name, out, null);
+                client.download(conf.defaultWS, baseDir + name, out, null);
                 out.flush();
                 byte[] byteArray = out.toByteArray();
                 String retrievedMsg = new String(byteArray, StandardCharsets.UTF_8);
@@ -138,13 +140,13 @@ public class BasicConnectionTest {
         }
 
         // Delete
-        msg = session.getClient().delete(conf.defaultWS, new String[]{"/" + name});
+        msg = client.delete(conf.defaultWS, new String[]{"/" + name});
         Assert.assertNotNull(msg);
         Assert.assertEquals("EMPTY", msg.type());
 
         // Check if uploaded files is still there
         final List<String> founds = new ArrayList<>();
-        session.getClient().ls(conf.defaultWS, baseDir,
+        client.ls(conf.defaultWS, baseDir,
                 null, (node) -> {
                     if (name.equals(node.getLabel())) founds.add(name);
                 });

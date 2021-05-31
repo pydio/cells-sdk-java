@@ -2,7 +2,6 @@ package com.pydio.cells.sync.content;
 
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.sync.Error;
 
@@ -11,7 +10,6 @@ import java.io.InputStream;
 
 public class RemoteFileContent implements Content {
 
-    private final Transport session;
     private final Client client;
     private final String ws;
     private final String path;
@@ -19,10 +17,9 @@ public class RemoteFileContent implements Content {
     private Stats stats;
     private Error error;
 
-    public RemoteFileContent(Transport session, String ws, String path) {
+    public RemoteFileContent(Client client, String ws, String path) {
 
-        this.session = session;
-        client = session.getClient();
+        this.client = client;
         this.ws = ws;
         this.path = path;
 

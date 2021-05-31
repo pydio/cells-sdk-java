@@ -6,7 +6,7 @@ import com.pydio.cells.api.Transport;
 public class CellsClientFactory {
 
     public CellsClient get(Transport session) {
-        return new CellsClient(session);
+        return new CellsClient(session, null);
     }
 
 }

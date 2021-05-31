@@ -16,9 +16,6 @@ public interface Transport {
 
     String getUserAgent();
 
-    @Deprecated
-    Client getClient();
-
     /**
      * This also tries to login the server with the passed credentials.
      */

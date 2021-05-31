@@ -1,6 +1,5 @@
 package com.pydio.cells.legacy;
 
-import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ILegacyTransport;
@@ -106,11 +105,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     @Override
     public Server getServer() {
         return server;
-    }
-
-    @Override
-    public Client getClient() {
-        return new P8Client(this);
     }
 
     @Override
