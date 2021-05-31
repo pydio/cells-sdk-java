@@ -533,35 +533,26 @@ public class CellsClient implements Client, SdkNames {
 
         IdmUpdateUserMetaRequest request = new IdmUpdateUserMetaRequest();
         request.setOperation(UpdateUserMetaRequestUserMetaOp.PUT);
+
         List<IdmUserMeta> metas = new ArrayList<>();
-        IdmUserMeta item = new IdmUserMeta();
-        item.setNodeUuid(nodeId);
-        item.setNamespace("bookmark");
-        item.setJsonValue("true");
 
-        ServiceResourcePolicy policy = new ServiceResourcePolicy();
-        policy.setAction(ServiceResourcePolicyAction.OWNER);
-        policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
-        policy.setResource(nodeId);
-        policy.setSubject("user:" + transport.getUser());
-        item.addPoliciesItem(policy);
-        metas.add(item);
+        IdmUserMeta userMeta = new IdmUserMeta();
+        userMeta.setNodeUuid(nodeId);
+        userMeta.setNamespace("bookmark");
+        userMeta.setJsonValue("true");
 
-        policy = new ServiceResourcePolicy();
-        policy.setAction(ServiceResourcePolicyAction.READ);
-        policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
-        policy.setResource(nodeId);
-        policy.setSubject("user:" + transport.getUser());
-        item.addPoliciesItem(policy);
-        metas.add(item);
+        ServiceResourcePolicy ownerPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.OWNER);
+        ServiceResourcePolicy readPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.READ);
+        ServiceResourcePolicy writePolicy = newPolicy(nodeId, ServiceResourcePolicyAction.WRITE);
+        //ServiceResourcePolicy adminPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.WRITE);
+        //adminPolicy.setSubject("profile:admin");
+        userMeta.addPoliciesItem(ownerPolicy);
+        userMeta.addPoliciesItem(readPolicy);
+        userMeta.addPoliciesItem(writePolicy);
+        //userMeta.addPoliciesItem(adminPolicy);
 
-        policy = new ServiceResourcePolicy();
-        policy.setAction(ServiceResourcePolicyAction.WRITE);
-        policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
-        policy.setResource(nodeId);
-        policy.setSubject("user:" + transport.getUser());
-        item.addPoliciesItem(policy);
-        metas.add(item);
+        metas.add(userMeta);
+
         request.setMetaDatas(metas);
 
         try {
@@ -570,8 +561,17 @@ public class CellsClient implements Client, SdkNames {
             return null;
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: "+ e.getMessage(), e);
+            throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: " + e.getMessage(), e);
         }
+    }
+
+    private ServiceResourcePolicy newPolicy(String nodeId, ServiceResourcePolicyAction action) {
+        ServiceResourcePolicy policy = new ServiceResourcePolicy();
+        policy.setSubject("user:" + transport.getUser());
+        policy.setResource(nodeId);
+        policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
+        policy.setAction(action);
+        return policy;
     }
 
     @Override
