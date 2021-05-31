@@ -68,7 +68,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     public void restore(TokenService tokens) throws SDKException {
         this.tokens = tokens;
-        server.init();
+        server.refresh(false);
         // TODO more init
     }
 

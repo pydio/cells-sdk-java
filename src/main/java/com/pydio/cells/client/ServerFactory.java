@@ -80,7 +80,7 @@ public class ServerFactory implements IServerFactory {
 
         Server server;
         if (SdkNames.TYPE_CELLS.equals(type)) {
-            server = new CellsServer(serverURL).init();
+            server = new CellsServer(serverURL).refresh(false);
         } else if (SdkNames.TYPE_LEGACY_P8.equals(type)) {
             server = new P8Server(serverURL).init();
         } else {

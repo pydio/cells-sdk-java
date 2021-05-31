@@ -35,6 +35,7 @@ public interface ErrorCodes {
     int unexpected_response = 45;
 
     int api_error = 50;
+    int unsupported = 51;
 
     int panic = 100;
     int internal_error = 101;
