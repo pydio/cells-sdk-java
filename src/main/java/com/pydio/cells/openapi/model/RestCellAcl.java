@@ -14,27 +14,31 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmACLAction;
+import com.pydio.cells.openapi.model.IdmRole;
+import com.pydio.cells.openapi.model.IdmUser;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestCellAcl
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestCellAcl {
   @SerializedName("RoleId")
   private String roleId = null;
 
   @SerializedName("Actions")
-  private List<com.pydio.cells.openapi.model.IdmACLAction> actions = null;
+  private List<IdmACLAction> actions = null;
 
   @SerializedName("IsUserRole")
   private Boolean isUserRole = null;
@@ -66,14 +70,14 @@ public class RestCellAcl {
     this.roleId = roleId;
   }
 
-  public RestCellAcl actions(List<com.pydio.cells.openapi.model.IdmACLAction> actions) {
+  public RestCellAcl actions(List<IdmACLAction> actions) {
     this.actions = actions;
     return this;
   }
 
-  public RestCellAcl addActionsItem(com.pydio.cells.openapi.model.IdmACLAction actionsItem) {
+  public RestCellAcl addActionsItem(IdmACLAction actionsItem) {
     if (this.actions == null) {
-      this.actions = new ArrayList<com.pydio.cells.openapi.model.IdmACLAction>();
+      this.actions = new ArrayList<IdmACLAction>();
     }
     this.actions.add(actionsItem);
     return this;
@@ -84,7 +88,7 @@ public class RestCellAcl {
    * @return actions
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmACLAction> getActions() {
+  public List<IdmACLAction> getActions() {
     return actions;
   }
 

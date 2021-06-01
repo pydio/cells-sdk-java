@@ -14,21 +14,25 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ProtobufAny;
+import com.pydio.cells.openapi.model.ServiceOperationType;
+import com.pydio.cells.openapi.model.ServiceResourcePolicyQuery;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * ServiceQuery
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class ServiceQuery {
   @SerializedName("SubQueries")
   private List<ProtobufAny> subQueries = null;
@@ -37,7 +41,7 @@ public class ServiceQuery {
   private ServiceOperationType operation = null;
 
   @SerializedName("ResourcePolicyQuery")
-  private com.pydio.cells.openapi.model.ServiceResourcePolicyQuery resourcePolicyQuery = null;
+  private ServiceResourcePolicyQuery resourcePolicyQuery = null;
 
   @SerializedName("Offset")
   private String offset = null;
@@ -92,7 +96,7 @@ public class ServiceQuery {
     this.operation = operation;
   }
 
-  public ServiceQuery resourcePolicyQuery(com.pydio.cells.openapi.model.ServiceResourcePolicyQuery resourcePolicyQuery) {
+  public ServiceQuery resourcePolicyQuery(ServiceResourcePolicyQuery resourcePolicyQuery) {
     this.resourcePolicyQuery = resourcePolicyQuery;
     return this;
   }
@@ -102,7 +106,7 @@ public class ServiceQuery {
    * @return resourcePolicyQuery
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.ServiceResourcePolicyQuery getResourcePolicyQuery() {
+  public ServiceResourcePolicyQuery getResourcePolicyQuery() {
     return resourcePolicyQuery;
   }
 

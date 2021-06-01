@@ -14,39 +14,48 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ActivityObject;
+import com.pydio.cells.openapi.model.IdmACL;
+import com.pydio.cells.openapi.model.IdmRole;
+import com.pydio.cells.openapi.model.IdmUser;
+import com.pydio.cells.openapi.model.IdmWorkspace;
+import com.pydio.cells.openapi.model.JobsActionOutput;
+import com.pydio.cells.openapi.model.ProtobufAny;
+import com.pydio.cells.openapi.model.TreeNode;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * JobsActionMessage
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class JobsActionMessage {
   @SerializedName("Event")
   private ProtobufAny event = null;
 
   @SerializedName("Nodes")
-  private List<com.pydio.cells.openapi.model.TreeNode> nodes = null;
+  private List<TreeNode> nodes = null;
 
   @SerializedName("Users")
   private List<IdmUser> users = null;
 
   @SerializedName("Roles")
-  private List<com.pydio.cells.openapi.model.IdmRole> roles = null;
+  private List<IdmRole> roles = null;
 
   @SerializedName("Workspaces")
-  private List<com.pydio.cells.openapi.model.IdmWorkspace> workspaces = null;
+  private List<IdmWorkspace> workspaces = null;
 
   @SerializedName("Acls")
-  private List<com.pydio.cells.openapi.model.IdmACL> acls = null;
+  private List<IdmACL> acls = null;
 
   @SerializedName("Activities")
   private List<ActivityObject> activities = null;
@@ -72,14 +81,14 @@ public class JobsActionMessage {
     this.event = event;
   }
 
-  public JobsActionMessage nodes(List<com.pydio.cells.openapi.model.TreeNode> nodes) {
+  public JobsActionMessage nodes(List<TreeNode> nodes) {
     this.nodes = nodes;
     return this;
   }
 
-  public JobsActionMessage addNodesItem(com.pydio.cells.openapi.model.TreeNode nodesItem) {
+  public JobsActionMessage addNodesItem(TreeNode nodesItem) {
     if (this.nodes == null) {
-      this.nodes = new ArrayList<com.pydio.cells.openapi.model.TreeNode>();
+      this.nodes = new ArrayList<TreeNode>();
     }
     this.nodes.add(nodesItem);
     return this;
@@ -90,7 +99,7 @@ public class JobsActionMessage {
    * @return nodes
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.TreeNode> getNodes() {
+  public List<TreeNode> getNodes() {
     return nodes;
   }
 
@@ -124,14 +133,14 @@ public class JobsActionMessage {
     this.users = users;
   }
 
-  public JobsActionMessage roles(List<com.pydio.cells.openapi.model.IdmRole> roles) {
+  public JobsActionMessage roles(List<IdmRole> roles) {
     this.roles = roles;
     return this;
   }
 
-  public JobsActionMessage addRolesItem(com.pydio.cells.openapi.model.IdmRole rolesItem) {
+  public JobsActionMessage addRolesItem(IdmRole rolesItem) {
     if (this.roles == null) {
-      this.roles = new ArrayList<com.pydio.cells.openapi.model.IdmRole>();
+      this.roles = new ArrayList<IdmRole>();
     }
     this.roles.add(rolesItem);
     return this;
@@ -142,7 +151,7 @@ public class JobsActionMessage {
    * @return roles
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmRole> getRoles() {
+  public List<IdmRole> getRoles() {
     return roles;
   }
 
@@ -150,14 +159,14 @@ public class JobsActionMessage {
     this.roles = roles;
   }
 
-  public JobsActionMessage workspaces(List<com.pydio.cells.openapi.model.IdmWorkspace> workspaces) {
+  public JobsActionMessage workspaces(List<IdmWorkspace> workspaces) {
     this.workspaces = workspaces;
     return this;
   }
 
-  public JobsActionMessage addWorkspacesItem(com.pydio.cells.openapi.model.IdmWorkspace workspacesItem) {
+  public JobsActionMessage addWorkspacesItem(IdmWorkspace workspacesItem) {
     if (this.workspaces == null) {
-      this.workspaces = new ArrayList<com.pydio.cells.openapi.model.IdmWorkspace>();
+      this.workspaces = new ArrayList<IdmWorkspace>();
     }
     this.workspaces.add(workspacesItem);
     return this;
@@ -168,7 +177,7 @@ public class JobsActionMessage {
    * @return workspaces
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmWorkspace> getWorkspaces() {
+  public List<IdmWorkspace> getWorkspaces() {
     return workspaces;
   }
 
@@ -176,14 +185,14 @@ public class JobsActionMessage {
     this.workspaces = workspaces;
   }
 
-  public JobsActionMessage acls(List<com.pydio.cells.openapi.model.IdmACL> acls) {
+  public JobsActionMessage acls(List<IdmACL> acls) {
     this.acls = acls;
     return this;
   }
 
-  public JobsActionMessage addAclsItem(com.pydio.cells.openapi.model.IdmACL aclsItem) {
+  public JobsActionMessage addAclsItem(IdmACL aclsItem) {
     if (this.acls == null) {
-      this.acls = new ArrayList<com.pydio.cells.openapi.model.IdmACL>();
+      this.acls = new ArrayList<IdmACL>();
     }
     this.acls.add(aclsItem);
     return this;
@@ -194,7 +203,7 @@ public class JobsActionMessage {
    * @return acls
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmACL> getAcls() {
+  public List<IdmACL> getAcls() {
     return acls;
   }
 

@@ -14,21 +14,25 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.TreeNode;
+import com.pydio.cells.openapi.model.TreeNodeType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * TreeListNodesRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class TreeListNodesRequest {
   @SerializedName("Node")
-  private com.pydio.cells.openapi.model.TreeNode node = null;
+  private TreeNode node = null;
 
   @SerializedName("Recursive")
   private Boolean recursive = null;
@@ -49,9 +53,9 @@ public class TreeListNodesRequest {
   private String offset = null;
 
   @SerializedName("FilterType")
-  private com.pydio.cells.openapi.model.TreeNodeType filterType = null;
+  private TreeNodeType filterType = null;
 
-  public TreeListNodesRequest node(com.pydio.cells.openapi.model.TreeNode node) {
+  public TreeListNodesRequest node(TreeNode node) {
     this.node = node;
     return this;
   }
@@ -61,7 +65,7 @@ public class TreeListNodesRequest {
    * @return node
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeNode getNode() {
+  public TreeNode getNode() {
     return node;
   }
 
@@ -177,7 +181,7 @@ public class TreeListNodesRequest {
     this.offset = offset;
   }
 
-  public TreeListNodesRequest filterType(com.pydio.cells.openapi.model.TreeNodeType filterType) {
+  public TreeListNodesRequest filterType(TreeNodeType filterType) {
     this.filterType = filterType;
     return this;
   }
@@ -187,7 +191,7 @@ public class TreeListNodesRequest {
    * @return filterType
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeNodeType getFilterType() {
+  public TreeNodeType getFilterType() {
     return filterType;
   }
 

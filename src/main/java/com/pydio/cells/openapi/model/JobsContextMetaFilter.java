@@ -14,18 +14,22 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.JobsContextMetaFilterType;
+import com.pydio.cells.openapi.model.ServiceQuery;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * JobsContextMetaFilter
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class JobsContextMetaFilter {
   @SerializedName("Type")
   private JobsContextMetaFilterType type = null;

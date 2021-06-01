@@ -127,8 +127,8 @@ public class FrontendServiceApi {
      * @return RestFrontBootConfResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontBootConfResponse frontBootConf() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontBootConfResponse> resp = frontBootConfWithHttpInfo();
+    public RestFrontBootConfResponse frontBootConf() throws ApiException {
+        ApiResponse<RestFrontBootConfResponse> resp = frontBootConfWithHttpInfo();
         return resp.getData();
     }
 
@@ -138,9 +138,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontBootConfResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontBootConfResponse> frontBootConfWithHttpInfo() throws ApiException {
+    public ApiResponse<RestFrontBootConfResponse> frontBootConfWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = frontBootConfValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontBootConfResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontBootConfResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -151,7 +151,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontBootConfAsync(final ApiCallback<com.pydio.cells.openapi.model.RestFrontBootConfResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontBootConfAsync(final ApiCallback<RestFrontBootConfResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -185,7 +185,7 @@ public class FrontendServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call frontEnrollAuthCall(com.pydio.cells.openapi.model.RestFrontEnrollAuthRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call frontEnrollAuthCall(RestFrontEnrollAuthRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -227,7 +227,7 @@ public class FrontendServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call frontEnrollAuthValidateBeforeCall(com.pydio.cells.openapi.model.RestFrontEnrollAuthRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call frontEnrollAuthValidateBeforeCall(RestFrontEnrollAuthRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -247,8 +247,8 @@ public class FrontendServiceApi {
      * @return RestFrontEnrollAuthResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontEnrollAuthResponse frontEnrollAuth(com.pydio.cells.openapi.model.RestFrontEnrollAuthRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontEnrollAuthResponse> resp = frontEnrollAuthWithHttpInfo(body);
+    public RestFrontEnrollAuthResponse frontEnrollAuth(RestFrontEnrollAuthRequest body) throws ApiException {
+        ApiResponse<RestFrontEnrollAuthResponse> resp = frontEnrollAuthWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -259,9 +259,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontEnrollAuthResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontEnrollAuthResponse> frontEnrollAuthWithHttpInfo(com.pydio.cells.openapi.model.RestFrontEnrollAuthRequest body) throws ApiException {
+    public ApiResponse<RestFrontEnrollAuthResponse> frontEnrollAuthWithHttpInfo(RestFrontEnrollAuthRequest body) throws ApiException {
         com.squareup.okhttp.Call call = frontEnrollAuthValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontEnrollAuthResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontEnrollAuthResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -273,7 +273,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontEnrollAuthAsync(RestFrontEnrollAuthRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestFrontEnrollAuthResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontEnrollAuthAsync(RestFrontEnrollAuthRequest body, final ApiCallback<RestFrontEnrollAuthResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -370,8 +370,8 @@ public class FrontendServiceApi {
      * @return RestFrontMessagesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontMessagesResponse frontMessages(String lang) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontMessagesResponse> resp = frontMessagesWithHttpInfo(lang);
+    public RestFrontMessagesResponse frontMessages(String lang) throws ApiException {
+        ApiResponse<RestFrontMessagesResponse> resp = frontMessagesWithHttpInfo(lang);
         return resp.getData();
     }
 
@@ -382,9 +382,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontMessagesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontMessagesResponse> frontMessagesWithHttpInfo(String lang) throws ApiException {
+    public ApiResponse<RestFrontMessagesResponse> frontMessagesWithHttpInfo(String lang) throws ApiException {
         com.squareup.okhttp.Call call = frontMessagesValidateBeforeCall(lang, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontMessagesResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontMessagesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -396,7 +396,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontMessagesAsync(String lang, final ApiCallback<com.pydio.cells.openapi.model.RestFrontMessagesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontMessagesAsync(String lang, final ApiCallback<RestFrontMessagesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -493,8 +493,8 @@ public class FrontendServiceApi {
      * @return RestFrontPluginsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontPluginsResponse frontPlugins(String lang) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontPluginsResponse> resp = frontPluginsWithHttpInfo(lang);
+    public RestFrontPluginsResponse frontPlugins(String lang) throws ApiException {
+        ApiResponse<RestFrontPluginsResponse> resp = frontPluginsWithHttpInfo(lang);
         return resp.getData();
     }
 
@@ -505,9 +505,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontPluginsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontPluginsResponse> frontPluginsWithHttpInfo(String lang) throws ApiException {
+    public ApiResponse<RestFrontPluginsResponse> frontPluginsWithHttpInfo(String lang) throws ApiException {
         com.squareup.okhttp.Call call = frontPluginsValidateBeforeCall(lang, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontPluginsResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontPluginsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -519,7 +519,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontPluginsAsync(String lang, final ApiCallback<com.pydio.cells.openapi.model.RestFrontPluginsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontPluginsAsync(String lang, final ApiCallback<RestFrontPluginsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -555,7 +555,7 @@ public class FrontendServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call frontPutBinaryCall(String binaryType, String uuid, com.pydio.cells.openapi.model.RestFrontBinaryRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call frontPutBinaryCall(String binaryType, String uuid, RestFrontBinaryRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -599,7 +599,7 @@ public class FrontendServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call frontPutBinaryValidateBeforeCall(String binaryType, String uuid, com.pydio.cells.openapi.model.RestFrontBinaryRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call frontPutBinaryValidateBeforeCall(String binaryType, String uuid, RestFrontBinaryRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'binaryType' is set
         if (binaryType == null) {
@@ -631,8 +631,8 @@ public class FrontendServiceApi {
      * @return RestFrontBinaryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontBinaryResponse frontPutBinary(String binaryType, String uuid, com.pydio.cells.openapi.model.RestFrontBinaryRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontBinaryResponse> resp = frontPutBinaryWithHttpInfo(binaryType, uuid, body);
+    public RestFrontBinaryResponse frontPutBinary(String binaryType, String uuid, RestFrontBinaryRequest body) throws ApiException {
+        ApiResponse<RestFrontBinaryResponse> resp = frontPutBinaryWithHttpInfo(binaryType, uuid, body);
         return resp.getData();
     }
 
@@ -645,9 +645,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontBinaryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontBinaryResponse> frontPutBinaryWithHttpInfo(String binaryType, String uuid, com.pydio.cells.openapi.model.RestFrontBinaryRequest body) throws ApiException {
+    public ApiResponse<RestFrontBinaryResponse> frontPutBinaryWithHttpInfo(String binaryType, String uuid, RestFrontBinaryRequest body) throws ApiException {
         com.squareup.okhttp.Call call = frontPutBinaryValidateBeforeCall(binaryType, uuid, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontBinaryResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontBinaryResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -661,7 +661,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontPutBinaryAsync(String binaryType, String uuid, RestFrontBinaryRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestFrontBinaryResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontPutBinaryAsync(String binaryType, String uuid, RestFrontBinaryRequest body, final ApiCallback<RestFrontBinaryResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -683,7 +683,7 @@ public class FrontendServiceApi {
         }
 
         com.squareup.okhttp.Call call = frontPutBinaryValidateBeforeCall(binaryType, uuid, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontBinaryResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontBinaryResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -766,8 +766,8 @@ public class FrontendServiceApi {
      * @return RestFrontBinaryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontBinaryResponse frontServeBinary(String binaryType, String uuid) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontBinaryResponse> resp = frontServeBinaryWithHttpInfo(binaryType, uuid);
+    public RestFrontBinaryResponse frontServeBinary(String binaryType, String uuid) throws ApiException {
+        ApiResponse<RestFrontBinaryResponse> resp = frontServeBinaryWithHttpInfo(binaryType, uuid);
         return resp.getData();
     }
 
@@ -779,9 +779,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontBinaryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontBinaryResponse> frontServeBinaryWithHttpInfo(String binaryType, String uuid) throws ApiException {
+    public ApiResponse<RestFrontBinaryResponse> frontServeBinaryWithHttpInfo(String binaryType, String uuid) throws ApiException {
         com.squareup.okhttp.Call call = frontServeBinaryValidateBeforeCall(binaryType, uuid, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontBinaryResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontBinaryResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -794,7 +794,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontServeBinaryAsync(String binaryType, String uuid, final ApiCallback<com.pydio.cells.openapi.model.RestFrontBinaryResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontServeBinaryAsync(String binaryType, String uuid, final ApiCallback<RestFrontBinaryResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -828,7 +828,7 @@ public class FrontendServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call frontSessionCall(com.pydio.cells.openapi.model.RestFrontSessionRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call frontSessionCall(RestFrontSessionRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -870,7 +870,7 @@ public class FrontendServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call frontSessionValidateBeforeCall(com.pydio.cells.openapi.model.RestFrontSessionRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call frontSessionValidateBeforeCall(RestFrontSessionRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -890,8 +890,8 @@ public class FrontendServiceApi {
      * @return RestFrontSessionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontSessionResponse frontSession(com.pydio.cells.openapi.model.RestFrontSessionRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontSessionResponse> resp = frontSessionWithHttpInfo(body);
+    public RestFrontSessionResponse frontSession(RestFrontSessionRequest body) throws ApiException {
+        ApiResponse<RestFrontSessionResponse> resp = frontSessionWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -902,9 +902,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontSessionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontSessionResponse> frontSessionWithHttpInfo(com.pydio.cells.openapi.model.RestFrontSessionRequest body) throws ApiException {
+    public ApiResponse<RestFrontSessionResponse> frontSessionWithHttpInfo(RestFrontSessionRequest body) throws ApiException {
         com.squareup.okhttp.Call call = frontSessionValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontSessionResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontSessionResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -916,7 +916,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontSessionAsync(RestFrontSessionRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestFrontSessionResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontSessionAsync(RestFrontSessionRequest body, final ApiCallback<RestFrontSessionResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1005,8 +1005,8 @@ public class FrontendServiceApi {
      * @return RestFrontStateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestFrontStateResponse frontState() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestFrontStateResponse> resp = frontStateWithHttpInfo();
+    public RestFrontStateResponse frontState() throws ApiException {
+        ApiResponse<RestFrontStateResponse> resp = frontStateWithHttpInfo();
         return resp.getData();
     }
 
@@ -1016,9 +1016,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestFrontStateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestFrontStateResponse> frontStateWithHttpInfo() throws ApiException {
+    public ApiResponse<RestFrontStateResponse> frontStateWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = frontStateValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestFrontStateResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestFrontStateResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1029,7 +1029,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call frontStateAsync(final ApiCallback<com.pydio.cells.openapi.model.RestFrontStateResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call frontStateAsync(final ApiCallback<RestFrontStateResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1118,8 +1118,8 @@ public class FrontendServiceApi {
      * @return RestSettingsMenuResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestSettingsMenuResponse settingsMenu() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestSettingsMenuResponse> resp = settingsMenuWithHttpInfo();
+    public RestSettingsMenuResponse settingsMenu() throws ApiException {
+        ApiResponse<RestSettingsMenuResponse> resp = settingsMenuWithHttpInfo();
         return resp.getData();
     }
 
@@ -1129,9 +1129,9 @@ public class FrontendServiceApi {
      * @return ApiResponse&lt;RestSettingsMenuResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestSettingsMenuResponse> settingsMenuWithHttpInfo() throws ApiException {
+    public ApiResponse<RestSettingsMenuResponse> settingsMenuWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = settingsMenuValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestSettingsMenuResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestSettingsMenuResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1142,7 +1142,7 @@ public class FrontendServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call settingsMenuAsync(final ApiCallback<com.pydio.cells.openapi.model.RestSettingsMenuResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call settingsMenuAsync(final ApiCallback<RestSettingsMenuResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

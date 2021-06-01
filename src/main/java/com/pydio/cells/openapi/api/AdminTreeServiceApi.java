@@ -65,7 +65,7 @@ public class AdminTreeServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listAdminTreeCall(com.pydio.cells.openapi.model.TreeListNodesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listAdminTreeCall(TreeListNodesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -107,7 +107,7 @@ public class AdminTreeServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listAdminTreeValidateBeforeCall(com.pydio.cells.openapi.model.TreeListNodesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listAdminTreeValidateBeforeCall(TreeListNodesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -127,8 +127,8 @@ public class AdminTreeServiceApi {
      * @return RestNodesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestNodesCollection listAdminTree(com.pydio.cells.openapi.model.TreeListNodesRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> resp = listAdminTreeWithHttpInfo(body);
+    public RestNodesCollection listAdminTree(TreeListNodesRequest body) throws ApiException {
+        ApiResponse<RestNodesCollection> resp = listAdminTreeWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -139,9 +139,9 @@ public class AdminTreeServiceApi {
      * @return ApiResponse&lt;RestNodesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> listAdminTreeWithHttpInfo(com.pydio.cells.openapi.model.TreeListNodesRequest body) throws ApiException {
+    public ApiResponse<RestNodesCollection> listAdminTreeWithHttpInfo(TreeListNodesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listAdminTreeValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestNodesCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -153,7 +153,7 @@ public class AdminTreeServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listAdminTreeAsync(TreeListNodesRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestNodesCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listAdminTreeAsync(TreeListNodesRequest body, final ApiCallback<RestNodesCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -187,7 +187,7 @@ public class AdminTreeServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call statAdminTreeCall(com.pydio.cells.openapi.model.TreeReadNodeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call statAdminTreeCall(TreeReadNodeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -229,7 +229,7 @@ public class AdminTreeServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call statAdminTreeValidateBeforeCall(com.pydio.cells.openapi.model.TreeReadNodeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call statAdminTreeValidateBeforeCall(TreeReadNodeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -249,8 +249,8 @@ public class AdminTreeServiceApi {
      * @return TreeReadNodeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.TreeReadNodeResponse statAdminTree(com.pydio.cells.openapi.model.TreeReadNodeRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.TreeReadNodeResponse> resp = statAdminTreeWithHttpInfo(body);
+    public TreeReadNodeResponse statAdminTree(TreeReadNodeRequest body) throws ApiException {
+        ApiResponse<TreeReadNodeResponse> resp = statAdminTreeWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -261,9 +261,9 @@ public class AdminTreeServiceApi {
      * @return ApiResponse&lt;TreeReadNodeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.TreeReadNodeResponse> statAdminTreeWithHttpInfo(com.pydio.cells.openapi.model.TreeReadNodeRequest body) throws ApiException {
+    public ApiResponse<TreeReadNodeResponse> statAdminTreeWithHttpInfo(TreeReadNodeRequest body) throws ApiException {
         com.squareup.okhttp.Call call = statAdminTreeValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.TreeReadNodeResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<TreeReadNodeResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -275,7 +275,7 @@ public class AdminTreeServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call statAdminTreeAsync(TreeReadNodeRequest body, final ApiCallback<com.pydio.cells.openapi.model.TreeReadNodeResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call statAdminTreeAsync(TreeReadNodeRequest body, final ApiCallback<TreeReadNodeResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

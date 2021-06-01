@@ -14,27 +14,30 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.RestSettingsEntryMeta;
+import com.pydio.cells.openapi.model.RestSettingsSection;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestSettingsMenuResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestSettingsMenuResponse {
   @SerializedName("RootMetadata")
   private RestSettingsEntryMeta rootMetadata = null;
 
   @SerializedName("Sections")
-  private List<com.pydio.cells.openapi.model.RestSettingsSection> sections = null;
+  private List<RestSettingsSection> sections = null;
 
   public RestSettingsMenuResponse rootMetadata(RestSettingsEntryMeta rootMetadata) {
     this.rootMetadata = rootMetadata;
@@ -54,14 +57,14 @@ public class RestSettingsMenuResponse {
     this.rootMetadata = rootMetadata;
   }
 
-  public RestSettingsMenuResponse sections(List<com.pydio.cells.openapi.model.RestSettingsSection> sections) {
+  public RestSettingsMenuResponse sections(List<RestSettingsSection> sections) {
     this.sections = sections;
     return this;
   }
 
-  public RestSettingsMenuResponse addSectionsItem(com.pydio.cells.openapi.model.RestSettingsSection sectionsItem) {
+  public RestSettingsMenuResponse addSectionsItem(RestSettingsSection sectionsItem) {
     if (this.sections == null) {
-      this.sections = new ArrayList<com.pydio.cells.openapi.model.RestSettingsSection>();
+      this.sections = new ArrayList<RestSettingsSection>();
     }
     this.sections.add(sectionsItem);
     return this;
@@ -72,7 +75,7 @@ public class RestSettingsMenuResponse {
    * @return sections
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.RestSettingsSection> getSections() {
+  public List<RestSettingsSection> getSections() {
     return sections;
   }
 

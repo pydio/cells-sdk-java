@@ -14,21 +14,25 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.InstallTLSCertificate;
+import com.pydio.cells.openapi.model.InstallTLSLetsEncrypt;
+import com.pydio.cells.openapi.model.InstallTLSSelfSigned;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * InstallProxyConfig
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class InstallProxyConfig {
   @SerializedName("Binds")
   private List<String> binds = null;
@@ -37,13 +41,13 @@ public class InstallProxyConfig {
   private String reverseProxyURL = null;
 
   @SerializedName("SelfSigned")
-  private com.pydio.cells.openapi.model.InstallTLSSelfSigned selfSigned = null;
+  private InstallTLSSelfSigned selfSigned = null;
 
   @SerializedName("LetsEncrypt")
-  private com.pydio.cells.openapi.model.InstallTLSLetsEncrypt letsEncrypt = null;
+  private InstallTLSLetsEncrypt letsEncrypt = null;
 
   @SerializedName("Certificate")
-  private com.pydio.cells.openapi.model.InstallTLSCertificate certificate = null;
+  private InstallTLSCertificate certificate = null;
 
   @SerializedName("SSLRedirect")
   private Boolean ssLRedirect = null;
@@ -98,7 +102,7 @@ public class InstallProxyConfig {
     this.reverseProxyURL = reverseProxyURL;
   }
 
-  public InstallProxyConfig selfSigned(com.pydio.cells.openapi.model.InstallTLSSelfSigned selfSigned) {
+  public InstallProxyConfig selfSigned(InstallTLSSelfSigned selfSigned) {
     this.selfSigned = selfSigned;
     return this;
   }
@@ -108,7 +112,7 @@ public class InstallProxyConfig {
    * @return selfSigned
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.InstallTLSSelfSigned getSelfSigned() {
+  public InstallTLSSelfSigned getSelfSigned() {
     return selfSigned;
   }
 
@@ -116,7 +120,7 @@ public class InstallProxyConfig {
     this.selfSigned = selfSigned;
   }
 
-  public InstallProxyConfig letsEncrypt(com.pydio.cells.openapi.model.InstallTLSLetsEncrypt letsEncrypt) {
+  public InstallProxyConfig letsEncrypt(InstallTLSLetsEncrypt letsEncrypt) {
     this.letsEncrypt = letsEncrypt;
     return this;
   }
@@ -126,7 +130,7 @@ public class InstallProxyConfig {
    * @return letsEncrypt
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.InstallTLSLetsEncrypt getLetsEncrypt() {
+  public InstallTLSLetsEncrypt getLetsEncrypt() {
     return letsEncrypt;
   }
 
@@ -134,7 +138,7 @@ public class InstallProxyConfig {
     this.letsEncrypt = letsEncrypt;
   }
 
-  public InstallProxyConfig certificate(com.pydio.cells.openapi.model.InstallTLSCertificate certificate) {
+  public InstallProxyConfig certificate(InstallTLSCertificate certificate) {
     this.certificate = certificate;
     return this;
   }
@@ -144,7 +148,7 @@ public class InstallProxyConfig {
    * @return certificate
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.InstallTLSCertificate getCertificate() {
+  public InstallTLSCertificate getCertificate() {
     return certificate;
   }
 

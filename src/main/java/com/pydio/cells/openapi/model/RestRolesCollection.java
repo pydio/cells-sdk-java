@@ -14,24 +14,29 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmRole;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestRolesCollection
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestRolesCollection {
   @SerializedName("Roles")
   private List<IdmRole> roles = null;
+
+  @SerializedName("Total")
+  private Integer total = null;
 
   public RestRolesCollection roles(List<IdmRole> roles) {
     this.roles = roles;
@@ -59,6 +64,24 @@ public class RestRolesCollection {
     this.roles = roles;
   }
 
+  public RestRolesCollection total(Integer total) {
+    this.total = total;
+    return this;
+  }
+
+   /**
+   * Get total
+   * @return total
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getTotal() {
+    return total;
+  }
+
+  public void setTotal(Integer total) {
+    this.total = total;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -69,12 +92,13 @@ public class RestRolesCollection {
       return false;
     }
     RestRolesCollection restRolesCollection = (RestRolesCollection) o;
-    return Objects.equals(this.roles, restRolesCollection.roles);
+    return Objects.equals(this.roles, restRolesCollection.roles) &&
+        Objects.equals(this.total, restRolesCollection.total);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(roles);
+    return Objects.hash(roles, total);
   }
 
 
@@ -84,6 +108,7 @@ public class RestRolesCollection {
     sb.append("class RestRolesCollection {\n");
     
     sb.append("    roles: ").append(toIndentedString(roles)).append("\n");
+    sb.append("    total: ").append(toIndentedString(total)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -63,7 +63,7 @@ public class PolicyServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listPoliciesCall(com.pydio.cells.openapi.model.IdmListPolicyGroupsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listPoliciesCall(IdmListPolicyGroupsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -105,7 +105,7 @@ public class PolicyServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listPoliciesValidateBeforeCall(com.pydio.cells.openapi.model.IdmListPolicyGroupsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listPoliciesValidateBeforeCall(IdmListPolicyGroupsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -125,8 +125,8 @@ public class PolicyServiceApi {
      * @return IdmListPolicyGroupsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmListPolicyGroupsResponse listPolicies(com.pydio.cells.openapi.model.IdmListPolicyGroupsRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmListPolicyGroupsResponse> resp = listPoliciesWithHttpInfo(body);
+    public IdmListPolicyGroupsResponse listPolicies(IdmListPolicyGroupsRequest body) throws ApiException {
+        ApiResponse<IdmListPolicyGroupsResponse> resp = listPoliciesWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -137,9 +137,9 @@ public class PolicyServiceApi {
      * @return ApiResponse&lt;IdmListPolicyGroupsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmListPolicyGroupsResponse> listPoliciesWithHttpInfo(com.pydio.cells.openapi.model.IdmListPolicyGroupsRequest body) throws ApiException {
+    public ApiResponse<IdmListPolicyGroupsResponse> listPoliciesWithHttpInfo(IdmListPolicyGroupsRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listPoliciesValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmListPolicyGroupsResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmListPolicyGroupsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -151,7 +151,7 @@ public class PolicyServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listPoliciesAsync(IdmListPolicyGroupsRequest body, final ApiCallback<com.pydio.cells.openapi.model.IdmListPolicyGroupsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listPoliciesAsync(IdmListPolicyGroupsRequest body, final ApiCallback<IdmListPolicyGroupsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

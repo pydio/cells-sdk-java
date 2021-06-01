@@ -14,36 +14,39 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.EncryptionExport;
+import com.pydio.cells.openapi.model.EncryptionImport;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * EncryptionKeyInfo
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class EncryptionKeyInfo {
   @SerializedName("Exports")
-  private List<com.pydio.cells.openapi.model.EncryptionExport> exports = null;
+  private List<EncryptionExport> exports = null;
 
   @SerializedName("Imports")
-  private List<com.pydio.cells.openapi.model.EncryptionImport> imports = null;
+  private List<EncryptionImport> imports = null;
 
-  public EncryptionKeyInfo exports(List<com.pydio.cells.openapi.model.EncryptionExport> exports) {
+  public EncryptionKeyInfo exports(List<EncryptionExport> exports) {
     this.exports = exports;
     return this;
   }
 
-  public EncryptionKeyInfo addExportsItem(com.pydio.cells.openapi.model.EncryptionExport exportsItem) {
+  public EncryptionKeyInfo addExportsItem(EncryptionExport exportsItem) {
     if (this.exports == null) {
-      this.exports = new ArrayList<com.pydio.cells.openapi.model.EncryptionExport>();
+      this.exports = new ArrayList<EncryptionExport>();
     }
     this.exports.add(exportsItem);
     return this;
@@ -54,7 +57,7 @@ public class EncryptionKeyInfo {
    * @return exports
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.EncryptionExport> getExports() {
+  public List<EncryptionExport> getExports() {
     return exports;
   }
 
@@ -62,14 +65,14 @@ public class EncryptionKeyInfo {
     this.exports = exports;
   }
 
-  public EncryptionKeyInfo imports(List<com.pydio.cells.openapi.model.EncryptionImport> imports) {
+  public EncryptionKeyInfo imports(List<EncryptionImport> imports) {
     this.imports = imports;
     return this;
   }
 
-  public EncryptionKeyInfo addImportsItem(com.pydio.cells.openapi.model.EncryptionImport importsItem) {
+  public EncryptionKeyInfo addImportsItem(EncryptionImport importsItem) {
     if (this.imports == null) {
-      this.imports = new ArrayList<com.pydio.cells.openapi.model.EncryptionImport>();
+      this.imports = new ArrayList<EncryptionImport>();
     }
     this.imports.add(importsItem);
     return this;
@@ -80,7 +83,7 @@ public class EncryptionKeyInfo {
    * @return imports
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.EncryptionImport> getImports() {
+  public List<EncryptionImport> getImports() {
     return imports;
   }
 

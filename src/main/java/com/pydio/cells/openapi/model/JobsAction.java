@@ -14,11 +14,21 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.JobsAction;
+import com.pydio.cells.openapi.model.JobsActionOutputFilter;
+import com.pydio.cells.openapi.model.JobsContextMetaFilter;
+import com.pydio.cells.openapi.model.JobsIdmSelector;
+import com.pydio.cells.openapi.model.JobsNodesSelector;
+import com.pydio.cells.openapi.model.JobsUsersSelector;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +37,7 @@ import java.util.Map;
 /**
  * JobsAction
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class JobsAction {
   @SerializedName("ID")
   private String ID = null;
@@ -51,13 +58,13 @@ public class JobsAction {
   private JobsNodesSelector nodesSelector = null;
 
   @SerializedName("UsersSelector")
-  private com.pydio.cells.openapi.model.JobsUsersSelector usersSelector = null;
+  private JobsUsersSelector usersSelector = null;
 
   @SerializedName("NodesFilter")
   private JobsNodesSelector nodesFilter = null;
 
   @SerializedName("UsersFilter")
-  private com.pydio.cells.openapi.model.JobsUsersSelector usersFilter = null;
+  private JobsUsersSelector usersFilter = null;
 
   @SerializedName("IdmSelector")
   private JobsIdmSelector idmSelector = null;
@@ -66,10 +73,10 @@ public class JobsAction {
   private JobsIdmSelector idmFilter = null;
 
   @SerializedName("ActionOutputFilter")
-  private com.pydio.cells.openapi.model.JobsActionOutputFilter actionOutputFilter = null;
+  private JobsActionOutputFilter actionOutputFilter = null;
 
   @SerializedName("ContextMetaFilter")
-  private com.pydio.cells.openapi.model.JobsContextMetaFilter contextMetaFilter = null;
+  private JobsContextMetaFilter contextMetaFilter = null;
 
   @SerializedName("Parameters")
   private Map<String, String> parameters = null;
@@ -188,7 +195,7 @@ public class JobsAction {
     this.nodesSelector = nodesSelector;
   }
 
-  public JobsAction usersSelector(com.pydio.cells.openapi.model.JobsUsersSelector usersSelector) {
+  public JobsAction usersSelector(JobsUsersSelector usersSelector) {
     this.usersSelector = usersSelector;
     return this;
   }
@@ -198,11 +205,11 @@ public class JobsAction {
    * @return usersSelector
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsUsersSelector getUsersSelector() {
+  public JobsUsersSelector getUsersSelector() {
     return usersSelector;
   }
 
-  public void setUsersSelector(com.pydio.cells.openapi.model.JobsUsersSelector usersSelector) {
+  public void setUsersSelector(JobsUsersSelector usersSelector) {
     this.usersSelector = usersSelector;
   }
 
@@ -224,7 +231,7 @@ public class JobsAction {
     this.nodesFilter = nodesFilter;
   }
 
-  public JobsAction usersFilter(com.pydio.cells.openapi.model.JobsUsersSelector usersFilter) {
+  public JobsAction usersFilter(JobsUsersSelector usersFilter) {
     this.usersFilter = usersFilter;
     return this;
   }
@@ -234,7 +241,7 @@ public class JobsAction {
    * @return usersFilter
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsUsersSelector getUsersFilter() {
+  public JobsUsersSelector getUsersFilter() {
     return usersFilter;
   }
 
@@ -278,7 +285,7 @@ public class JobsAction {
     this.idmFilter = idmFilter;
   }
 
-  public JobsAction actionOutputFilter(com.pydio.cells.openapi.model.JobsActionOutputFilter actionOutputFilter) {
+  public JobsAction actionOutputFilter(JobsActionOutputFilter actionOutputFilter) {
     this.actionOutputFilter = actionOutputFilter;
     return this;
   }
@@ -288,7 +295,7 @@ public class JobsAction {
    * @return actionOutputFilter
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsActionOutputFilter getActionOutputFilter() {
+  public JobsActionOutputFilter getActionOutputFilter() {
     return actionOutputFilter;
   }
 
@@ -296,7 +303,7 @@ public class JobsAction {
     this.actionOutputFilter = actionOutputFilter;
   }
 
-  public JobsAction contextMetaFilter(com.pydio.cells.openapi.model.JobsContextMetaFilter contextMetaFilter) {
+  public JobsAction contextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
     this.contextMetaFilter = contextMetaFilter;
     return this;
   }
@@ -306,7 +313,7 @@ public class JobsAction {
    * @return contextMetaFilter
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsContextMetaFilter getContextMetaFilter() {
+  public JobsContextMetaFilter getContextMetaFilter() {
     return contextMetaFilter;
   }
 

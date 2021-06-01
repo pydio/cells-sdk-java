@@ -14,33 +14,35 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmUserMeta;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestUserMetaCollection
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestUserMetaCollection {
   @SerializedName("Metadatas")
-  private List<com.pydio.cells.openapi.model.IdmUserMeta> metadatas = null;
+  private List<IdmUserMeta> metadatas = null;
 
-  public RestUserMetaCollection metadatas(List<com.pydio.cells.openapi.model.IdmUserMeta> metadatas) {
+  public RestUserMetaCollection metadatas(List<IdmUserMeta> metadatas) {
     this.metadatas = metadatas;
     return this;
   }
 
-  public RestUserMetaCollection addMetadatasItem(com.pydio.cells.openapi.model.IdmUserMeta metadatasItem) {
+  public RestUserMetaCollection addMetadatasItem(IdmUserMeta metadatasItem) {
     if (this.metadatas == null) {
-      this.metadatas = new ArrayList<com.pydio.cells.openapi.model.IdmUserMeta>();
+      this.metadatas = new ArrayList<IdmUserMeta>();
     }
     this.metadatas.add(metadatasItem);
     return this;
@@ -51,7 +53,7 @@ public class RestUserMetaCollection {
    * @return metadatas
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmUserMeta> getMetadatas() {
+  public List<IdmUserMeta> getMetadatas() {
     return metadatas;
   }
 

@@ -14,39 +14,42 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.TreeNode;
+import com.pydio.cells.openapi.model.TreeSearchFacet;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestSearchResults
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestSearchResults {
   @SerializedName("Results")
-  private List<com.pydio.cells.openapi.model.TreeNode> results = null;
+  private List<TreeNode> results = null;
 
   @SerializedName("Facets")
-  private List<com.pydio.cells.openapi.model.TreeSearchFacet> facets = null;
+  private List<TreeSearchFacet> facets = null;
 
   @SerializedName("Total")
   private Integer total = null;
 
-  public RestSearchResults results(List<com.pydio.cells.openapi.model.TreeNode> results) {
+  public RestSearchResults results(List<TreeNode> results) {
     this.results = results;
     return this;
   }
 
-  public RestSearchResults addResultsItem(com.pydio.cells.openapi.model.TreeNode resultsItem) {
+  public RestSearchResults addResultsItem(TreeNode resultsItem) {
     if (this.results == null) {
-      this.results = new ArrayList<com.pydio.cells.openapi.model.TreeNode>();
+      this.results = new ArrayList<TreeNode>();
     }
     this.results.add(resultsItem);
     return this;
@@ -57,7 +60,7 @@ public class RestSearchResults {
    * @return results
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.TreeNode> getResults() {
+  public List<TreeNode> getResults() {
     return results;
   }
 
@@ -65,14 +68,14 @@ public class RestSearchResults {
     this.results = results;
   }
 
-  public RestSearchResults facets(List<com.pydio.cells.openapi.model.TreeSearchFacet> facets) {
+  public RestSearchResults facets(List<TreeSearchFacet> facets) {
     this.facets = facets;
     return this;
   }
 
-  public RestSearchResults addFacetsItem(com.pydio.cells.openapi.model.TreeSearchFacet facetsItem) {
+  public RestSearchResults addFacetsItem(TreeSearchFacet facetsItem) {
     if (this.facets == null) {
-      this.facets = new ArrayList<com.pydio.cells.openapi.model.TreeSearchFacet>();
+      this.facets = new ArrayList<TreeSearchFacet>();
     }
     this.facets.add(facetsItem);
     return this;
@@ -83,7 +86,7 @@ public class RestSearchResults {
    * @return facets
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.TreeSearchFacet> getFacets() {
+  public List<TreeSearchFacet> getFacets() {
     return facets;
   }
 

@@ -145,8 +145,8 @@ public class UserMetaServiceApi {
      * @return RestDeleteUserMetaTagsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDeleteUserMetaTagsResponse deleteUserMetaTags(String namespace, String tags) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDeleteUserMetaTagsResponse> resp = deleteUserMetaTagsWithHttpInfo(namespace, tags);
+    public RestDeleteUserMetaTagsResponse deleteUserMetaTags(String namespace, String tags) throws ApiException {
+        ApiResponse<RestDeleteUserMetaTagsResponse> resp = deleteUserMetaTagsWithHttpInfo(namespace, tags);
         return resp.getData();
     }
 
@@ -158,9 +158,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;RestDeleteUserMetaTagsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDeleteUserMetaTagsResponse> deleteUserMetaTagsWithHttpInfo(String namespace, String tags) throws ApiException {
+    public ApiResponse<RestDeleteUserMetaTagsResponse> deleteUserMetaTagsWithHttpInfo(String namespace, String tags) throws ApiException {
         com.squareup.okhttp.Call call = deleteUserMetaTagsValidateBeforeCall(namespace, tags, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDeleteUserMetaTagsResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDeleteUserMetaTagsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -173,7 +173,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteUserMetaTagsAsync(String namespace, String tags, final ApiCallback<com.pydio.cells.openapi.model.RestDeleteUserMetaTagsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteUserMetaTagsAsync(String namespace, String tags, final ApiCallback<RestDeleteUserMetaTagsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -262,8 +262,8 @@ public class UserMetaServiceApi {
      * @return RestUserMetaNamespaceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestUserMetaNamespaceCollection listUserMetaNamespace() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestUserMetaNamespaceCollection> resp = listUserMetaNamespaceWithHttpInfo();
+    public RestUserMetaNamespaceCollection listUserMetaNamespace() throws ApiException {
+        ApiResponse<RestUserMetaNamespaceCollection> resp = listUserMetaNamespaceWithHttpInfo();
         return resp.getData();
     }
 
@@ -273,9 +273,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;RestUserMetaNamespaceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestUserMetaNamespaceCollection> listUserMetaNamespaceWithHttpInfo() throws ApiException {
+    public ApiResponse<RestUserMetaNamespaceCollection> listUserMetaNamespaceWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listUserMetaNamespaceValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestUserMetaNamespaceCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestUserMetaNamespaceCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -286,7 +286,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listUserMetaNamespaceAsync(final ApiCallback<com.pydio.cells.openapi.model.RestUserMetaNamespaceCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listUserMetaNamespaceAsync(final ApiCallback<RestUserMetaNamespaceCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -383,8 +383,8 @@ public class UserMetaServiceApi {
      * @return RestListUserMetaTagsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestListUserMetaTagsResponse listUserMetaTags(String namespace) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestListUserMetaTagsResponse> resp = listUserMetaTagsWithHttpInfo(namespace);
+    public RestListUserMetaTagsResponse listUserMetaTags(String namespace) throws ApiException {
+        ApiResponse<RestListUserMetaTagsResponse> resp = listUserMetaTagsWithHttpInfo(namespace);
         return resp.getData();
     }
 
@@ -395,9 +395,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;RestListUserMetaTagsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestListUserMetaTagsResponse> listUserMetaTagsWithHttpInfo(String namespace) throws ApiException {
+    public ApiResponse<RestListUserMetaTagsResponse> listUserMetaTagsWithHttpInfo(String namespace) throws ApiException {
         com.squareup.okhttp.Call call = listUserMetaTagsValidateBeforeCall(namespace, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestListUserMetaTagsResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestListUserMetaTagsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -409,7 +409,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listUserMetaTagsAsync(String namespace, final ApiCallback<com.pydio.cells.openapi.model.RestListUserMetaTagsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listUserMetaTagsAsync(String namespace, final ApiCallback<RestListUserMetaTagsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -444,7 +444,7 @@ public class UserMetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putUserMetaTagCall(String namespace, com.pydio.cells.openapi.model.RestPutUserMetaTagRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putUserMetaTagCall(String namespace, RestPutUserMetaTagRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -487,7 +487,7 @@ public class UserMetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putUserMetaTagValidateBeforeCall(String namespace, com.pydio.cells.openapi.model.RestPutUserMetaTagRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putUserMetaTagValidateBeforeCall(String namespace, RestPutUserMetaTagRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -513,8 +513,8 @@ public class UserMetaServiceApi {
      * @return RestPutUserMetaTagResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestPutUserMetaTagResponse putUserMetaTag(String namespace, com.pydio.cells.openapi.model.RestPutUserMetaTagRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestPutUserMetaTagResponse> resp = putUserMetaTagWithHttpInfo(namespace, body);
+    public RestPutUserMetaTagResponse putUserMetaTag(String namespace, RestPutUserMetaTagRequest body) throws ApiException {
+        ApiResponse<RestPutUserMetaTagResponse> resp = putUserMetaTagWithHttpInfo(namespace, body);
         return resp.getData();
     }
 
@@ -526,9 +526,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;RestPutUserMetaTagResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestPutUserMetaTagResponse> putUserMetaTagWithHttpInfo(String namespace, com.pydio.cells.openapi.model.RestPutUserMetaTagRequest body) throws ApiException {
+    public ApiResponse<RestPutUserMetaTagResponse> putUserMetaTagWithHttpInfo(String namespace, RestPutUserMetaTagRequest body) throws ApiException {
         com.squareup.okhttp.Call call = putUserMetaTagValidateBeforeCall(namespace, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestPutUserMetaTagResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestPutUserMetaTagResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -541,7 +541,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putUserMetaTagAsync(String namespace, RestPutUserMetaTagRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestPutUserMetaTagResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call putUserMetaTagAsync(String namespace, RestPutUserMetaTagRequest body, final ApiCallback<RestPutUserMetaTagResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -575,7 +575,7 @@ public class UserMetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call searchUserMetaCall(com.pydio.cells.openapi.model.IdmSearchUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchUserMetaCall(IdmSearchUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -617,7 +617,7 @@ public class UserMetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call searchUserMetaValidateBeforeCall(com.pydio.cells.openapi.model.IdmSearchUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchUserMetaValidateBeforeCall(IdmSearchUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -637,8 +637,8 @@ public class UserMetaServiceApi {
      * @return RestUserMetaCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestUserMetaCollection searchUserMeta(com.pydio.cells.openapi.model.IdmSearchUserMetaRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestUserMetaCollection> resp = searchUserMetaWithHttpInfo(body);
+    public RestUserMetaCollection searchUserMeta(IdmSearchUserMetaRequest body) throws ApiException {
+        ApiResponse<RestUserMetaCollection> resp = searchUserMetaWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -649,9 +649,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;RestUserMetaCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestUserMetaCollection> searchUserMetaWithHttpInfo(com.pydio.cells.openapi.model.IdmSearchUserMetaRequest body) throws ApiException {
+    public ApiResponse<RestUserMetaCollection> searchUserMetaWithHttpInfo(IdmSearchUserMetaRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchUserMetaValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestUserMetaCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestUserMetaCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -663,7 +663,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchUserMetaAsync(IdmSearchUserMetaRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestUserMetaCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchUserMetaAsync(IdmSearchUserMetaRequest body, final ApiCallback<RestUserMetaCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -697,7 +697,7 @@ public class UserMetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateUserMetaCall(com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateUserMetaCall(IdmUpdateUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -739,7 +739,7 @@ public class UserMetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateUserMetaValidateBeforeCall(com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateUserMetaValidateBeforeCall(IdmUpdateUserMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -759,8 +759,8 @@ public class UserMetaServiceApi {
      * @return IdmUpdateUserMetaResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmUpdateUserMetaResponse updateUserMeta(com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmUpdateUserMetaResponse> resp = updateUserMetaWithHttpInfo(body);
+    public IdmUpdateUserMetaResponse updateUserMeta(IdmUpdateUserMetaRequest body) throws ApiException {
+        ApiResponse<IdmUpdateUserMetaResponse> resp = updateUserMetaWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -771,9 +771,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;IdmUpdateUserMetaResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmUpdateUserMetaResponse> updateUserMetaWithHttpInfo(com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest body) throws ApiException {
+    public ApiResponse<IdmUpdateUserMetaResponse> updateUserMetaWithHttpInfo(IdmUpdateUserMetaRequest body) throws ApiException {
         com.squareup.okhttp.Call call = updateUserMetaValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmUpdateUserMetaResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmUpdateUserMetaResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -785,7 +785,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateUserMetaAsync(IdmUpdateUserMetaRequest body, final ApiCallback<com.pydio.cells.openapi.model.IdmUpdateUserMetaResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateUserMetaAsync(IdmUpdateUserMetaRequest body, final ApiCallback<IdmUpdateUserMetaResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -819,7 +819,7 @@ public class UserMetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateUserMetaNamespaceCall(com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateUserMetaNamespaceCall(IdmUpdateUserMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -861,7 +861,7 @@ public class UserMetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateUserMetaNamespaceValidateBeforeCall(com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateUserMetaNamespaceValidateBeforeCall(IdmUpdateUserMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -881,8 +881,8 @@ public class UserMetaServiceApi {
      * @return IdmUpdateUserMetaNamespaceResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceResponse updateUserMetaNamespace(com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceResponse> resp = updateUserMetaNamespaceWithHttpInfo(body);
+    public IdmUpdateUserMetaNamespaceResponse updateUserMetaNamespace(IdmUpdateUserMetaNamespaceRequest body) throws ApiException {
+        ApiResponse<IdmUpdateUserMetaNamespaceResponse> resp = updateUserMetaNamespaceWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -893,9 +893,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;IdmUpdateUserMetaNamespaceResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceResponse> updateUserMetaNamespaceWithHttpInfo(com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceRequest body) throws ApiException {
+    public ApiResponse<IdmUpdateUserMetaNamespaceResponse> updateUserMetaNamespaceWithHttpInfo(IdmUpdateUserMetaNamespaceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = updateUserMetaNamespaceValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmUpdateUserMetaNamespaceResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -907,7 +907,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateUserMetaNamespaceAsync(IdmUpdateUserMetaNamespaceRequest body, final ApiCallback<com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateUserMetaNamespaceAsync(IdmUpdateUserMetaNamespaceRequest body, final ApiCallback<IdmUpdateUserMetaNamespaceResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -941,7 +941,7 @@ public class UserMetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call userBookmarksCall(com.pydio.cells.openapi.model.RestUserBookmarksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call userBookmarksCall(RestUserBookmarksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -983,7 +983,7 @@ public class UserMetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call userBookmarksValidateBeforeCall(com.pydio.cells.openapi.model.RestUserBookmarksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call userBookmarksValidateBeforeCall(RestUserBookmarksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -1003,8 +1003,8 @@ public class UserMetaServiceApi {
      * @return RestBulkMetaResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestBulkMetaResponse userBookmarks(com.pydio.cells.openapi.model.RestUserBookmarksRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestBulkMetaResponse> resp = userBookmarksWithHttpInfo(body);
+    public RestBulkMetaResponse userBookmarks(RestUserBookmarksRequest body) throws ApiException {
+        ApiResponse<RestBulkMetaResponse> resp = userBookmarksWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -1015,9 +1015,9 @@ public class UserMetaServiceApi {
      * @return ApiResponse&lt;RestBulkMetaResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestBulkMetaResponse> userBookmarksWithHttpInfo(com.pydio.cells.openapi.model.RestUserBookmarksRequest body) throws ApiException {
+    public ApiResponse<RestBulkMetaResponse> userBookmarksWithHttpInfo(RestUserBookmarksRequest body) throws ApiException {
         com.squareup.okhttp.Call call = userBookmarksValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestBulkMetaResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestBulkMetaResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1029,7 +1029,7 @@ public class UserMetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call userBookmarksAsync(RestUserBookmarksRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestBulkMetaResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call userBookmarksAsync(RestUserBookmarksRequest body, final ApiCallback<RestBulkMetaResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

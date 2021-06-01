@@ -156,8 +156,8 @@ public class ConfigServiceApi {
      * @return RestDiscoveryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDiscoveryResponse configFormsDiscovery(String serviceName) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDiscoveryResponse> resp = configFormsDiscoveryWithHttpInfo(serviceName);
+    public RestDiscoveryResponse configFormsDiscovery(String serviceName) throws ApiException {
+        ApiResponse<RestDiscoveryResponse> resp = configFormsDiscoveryWithHttpInfo(serviceName);
         return resp.getData();
     }
 
@@ -168,9 +168,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestDiscoveryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDiscoveryResponse> configFormsDiscoveryWithHttpInfo(String serviceName) throws ApiException {
+    public ApiResponse<RestDiscoveryResponse> configFormsDiscoveryWithHttpInfo(String serviceName) throws ApiException {
         com.squareup.okhttp.Call call = configFormsDiscoveryValidateBeforeCall(serviceName, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDiscoveryResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDiscoveryResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -182,7 +182,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call configFormsDiscoveryAsync(String serviceName, final ApiCallback<com.pydio.cells.openapi.model.RestDiscoveryResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call configFormsDiscoveryAsync(String serviceName, final ApiCallback<RestDiscoveryResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -204,7 +204,7 @@ public class ConfigServiceApi {
         }
 
         com.squareup.okhttp.Call call = configFormsDiscoveryValidateBeforeCall(serviceName, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDiscoveryResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDiscoveryResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -216,7 +216,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call controlServiceCall(com.pydio.cells.openapi.model.RestControlServiceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call controlServiceCall(RestControlServiceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -258,7 +258,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call controlServiceValidateBeforeCall(com.pydio.cells.openapi.model.RestControlServiceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call controlServiceValidateBeforeCall(RestControlServiceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -278,8 +278,8 @@ public class ConfigServiceApi {
      * @return CtlService
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.CtlService controlService(com.pydio.cells.openapi.model.RestControlServiceRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.CtlService> resp = controlServiceWithHttpInfo(body);
+    public CtlService controlService(RestControlServiceRequest body) throws ApiException {
+        ApiResponse<CtlService> resp = controlServiceWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -290,9 +290,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;CtlService&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.CtlService> controlServiceWithHttpInfo(com.pydio.cells.openapi.model.RestControlServiceRequest body) throws ApiException {
+    public ApiResponse<CtlService> controlServiceWithHttpInfo(RestControlServiceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = controlServiceValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.CtlService>(){}.getType();
+        Type localVarReturnType = new TypeToken<CtlService>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -304,7 +304,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call controlServiceAsync(RestControlServiceRequest body, final ApiCallback<com.pydio.cells.openapi.model.CtlService> callback) throws ApiException {
+    public com.squareup.okhttp.Call controlServiceAsync(RestControlServiceRequest body, final ApiCallback<CtlService> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -338,7 +338,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createEncryptionKeyCall(com.pydio.cells.openapi.model.EncryptionAdminCreateKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createEncryptionKeyCall(EncryptionAdminCreateKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -380,7 +380,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createEncryptionKeyValidateBeforeCall(com.pydio.cells.openapi.model.EncryptionAdminCreateKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createEncryptionKeyValidateBeforeCall(EncryptionAdminCreateKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -400,8 +400,8 @@ public class ConfigServiceApi {
      * @return EncryptionAdminCreateKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.EncryptionAdminCreateKeyResponse createEncryptionKey(com.pydio.cells.openapi.model.EncryptionAdminCreateKeyRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminCreateKeyResponse> resp = createEncryptionKeyWithHttpInfo(body);
+    public EncryptionAdminCreateKeyResponse createEncryptionKey(EncryptionAdminCreateKeyRequest body) throws ApiException {
+        ApiResponse<EncryptionAdminCreateKeyResponse> resp = createEncryptionKeyWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -412,9 +412,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;EncryptionAdminCreateKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminCreateKeyResponse> createEncryptionKeyWithHttpInfo(com.pydio.cells.openapi.model.EncryptionAdminCreateKeyRequest body) throws ApiException {
+    public ApiResponse<EncryptionAdminCreateKeyResponse> createEncryptionKeyWithHttpInfo(EncryptionAdminCreateKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createEncryptionKeyValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.EncryptionAdminCreateKeyResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<EncryptionAdminCreateKeyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -426,7 +426,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createEncryptionKeyAsync(EncryptionAdminCreateKeyRequest body, final ApiCallback<com.pydio.cells.openapi.model.EncryptionAdminCreateKeyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call createEncryptionKeyAsync(EncryptionAdminCreateKeyRequest body, final ApiCallback<EncryptionAdminCreateKeyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -461,7 +461,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createPeerFolderCall(String peerAddress, com.pydio.cells.openapi.model.RestCreatePeerFolderRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createPeerFolderCall(String peerAddress, RestCreatePeerFolderRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -504,7 +504,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createPeerFolderValidateBeforeCall(String peerAddress, com.pydio.cells.openapi.model.RestCreatePeerFolderRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createPeerFolderValidateBeforeCall(String peerAddress, RestCreatePeerFolderRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'peerAddress' is set
         if (peerAddress == null) {
@@ -530,8 +530,8 @@ public class ConfigServiceApi {
      * @return RestCreatePeerFolderResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestCreatePeerFolderResponse createPeerFolder(String peerAddress, com.pydio.cells.openapi.model.RestCreatePeerFolderRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestCreatePeerFolderResponse> resp = createPeerFolderWithHttpInfo(peerAddress, body);
+    public RestCreatePeerFolderResponse createPeerFolder(String peerAddress, RestCreatePeerFolderRequest body) throws ApiException {
+        ApiResponse<RestCreatePeerFolderResponse> resp = createPeerFolderWithHttpInfo(peerAddress, body);
         return resp.getData();
     }
 
@@ -543,9 +543,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestCreatePeerFolderResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestCreatePeerFolderResponse> createPeerFolderWithHttpInfo(String peerAddress, com.pydio.cells.openapi.model.RestCreatePeerFolderRequest body) throws ApiException {
+    public ApiResponse<RestCreatePeerFolderResponse> createPeerFolderWithHttpInfo(String peerAddress, RestCreatePeerFolderRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createPeerFolderValidateBeforeCall(peerAddress, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestCreatePeerFolderResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestCreatePeerFolderResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -558,7 +558,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createPeerFolderAsync(String peerAddress, RestCreatePeerFolderRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestCreatePeerFolderResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call createPeerFolderAsync(String peerAddress, RestCreatePeerFolderRequest body, final ApiCallback<RestCreatePeerFolderResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -655,8 +655,8 @@ public class ConfigServiceApi {
      * @return RestDeleteDataSourceResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDeleteDataSourceResponse deleteDataSource(String name) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDeleteDataSourceResponse> resp = deleteDataSourceWithHttpInfo(name);
+    public RestDeleteDataSourceResponse deleteDataSource(String name) throws ApiException {
+        ApiResponse<RestDeleteDataSourceResponse> resp = deleteDataSourceWithHttpInfo(name);
         return resp.getData();
     }
 
@@ -667,9 +667,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestDeleteDataSourceResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDeleteDataSourceResponse> deleteDataSourceWithHttpInfo(String name) throws ApiException {
+    public ApiResponse<RestDeleteDataSourceResponse> deleteDataSourceWithHttpInfo(String name) throws ApiException {
         com.squareup.okhttp.Call call = deleteDataSourceValidateBeforeCall(name, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDeleteDataSourceResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDeleteDataSourceResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -681,7 +681,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteDataSourceAsync(String name, final ApiCallback<com.pydio.cells.openapi.model.RestDeleteDataSourceResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteDataSourceAsync(String name, final ApiCallback<RestDeleteDataSourceResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -715,7 +715,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteEncryptionKeyCall(com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteEncryptionKeyCall(EncryptionAdminDeleteKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -757,7 +757,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteEncryptionKeyValidateBeforeCall(com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteEncryptionKeyValidateBeforeCall(EncryptionAdminDeleteKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -777,8 +777,8 @@ public class ConfigServiceApi {
      * @return EncryptionAdminDeleteKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyResponse deleteEncryptionKey(com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyResponse> resp = deleteEncryptionKeyWithHttpInfo(body);
+    public EncryptionAdminDeleteKeyResponse deleteEncryptionKey(EncryptionAdminDeleteKeyRequest body) throws ApiException {
+        ApiResponse<EncryptionAdminDeleteKeyResponse> resp = deleteEncryptionKeyWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -789,9 +789,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;EncryptionAdminDeleteKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyResponse> deleteEncryptionKeyWithHttpInfo(com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyRequest body) throws ApiException {
+    public ApiResponse<EncryptionAdminDeleteKeyResponse> deleteEncryptionKeyWithHttpInfo(EncryptionAdminDeleteKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = deleteEncryptionKeyValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<EncryptionAdminDeleteKeyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -803,7 +803,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteEncryptionKeyAsync(EncryptionAdminDeleteKeyRequest body, final ApiCallback<com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteEncryptionKeyAsync(EncryptionAdminDeleteKeyRequest body, final ApiCallback<EncryptionAdminDeleteKeyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -896,8 +896,8 @@ public class ConfigServiceApi {
      * @return RestDiscoveryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDiscoveryResponse endpointsDiscovery(String endpointType) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDiscoveryResponse> resp = endpointsDiscoveryWithHttpInfo(endpointType);
+    public RestDiscoveryResponse endpointsDiscovery(String endpointType) throws ApiException {
+        ApiResponse<RestDiscoveryResponse> resp = endpointsDiscoveryWithHttpInfo(endpointType);
         return resp.getData();
     }
 
@@ -908,9 +908,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestDiscoveryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDiscoveryResponse> endpointsDiscoveryWithHttpInfo(String endpointType) throws ApiException {
+    public ApiResponse<RestDiscoveryResponse> endpointsDiscoveryWithHttpInfo(String endpointType) throws ApiException {
         com.squareup.okhttp.Call call = endpointsDiscoveryValidateBeforeCall(endpointType, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDiscoveryResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDiscoveryResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -922,7 +922,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call endpointsDiscoveryAsync(String endpointType, final ApiCallback<com.pydio.cells.openapi.model.RestDiscoveryResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call endpointsDiscoveryAsync(String endpointType, final ApiCallback<RestDiscoveryResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -956,7 +956,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call exportEncryptionKeyCall(com.pydio.cells.openapi.model.EncryptionAdminExportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call exportEncryptionKeyCall(EncryptionAdminExportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -998,7 +998,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call exportEncryptionKeyValidateBeforeCall(com.pydio.cells.openapi.model.EncryptionAdminExportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call exportEncryptionKeyValidateBeforeCall(EncryptionAdminExportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -1018,8 +1018,8 @@ public class ConfigServiceApi {
      * @return EncryptionAdminExportKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.EncryptionAdminExportKeyResponse exportEncryptionKey(com.pydio.cells.openapi.model.EncryptionAdminExportKeyRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminExportKeyResponse> resp = exportEncryptionKeyWithHttpInfo(body);
+    public EncryptionAdminExportKeyResponse exportEncryptionKey(EncryptionAdminExportKeyRequest body) throws ApiException {
+        ApiResponse<EncryptionAdminExportKeyResponse> resp = exportEncryptionKeyWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -1030,9 +1030,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;EncryptionAdminExportKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminExportKeyResponse> exportEncryptionKeyWithHttpInfo(com.pydio.cells.openapi.model.EncryptionAdminExportKeyRequest body) throws ApiException {
+    public ApiResponse<EncryptionAdminExportKeyResponse> exportEncryptionKeyWithHttpInfo(EncryptionAdminExportKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = exportEncryptionKeyValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.EncryptionAdminExportKeyResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<EncryptionAdminExportKeyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1044,7 +1044,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call exportEncryptionKeyAsync(EncryptionAdminExportKeyRequest body, final ApiCallback<com.pydio.cells.openapi.model.EncryptionAdminExportKeyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call exportEncryptionKeyAsync(EncryptionAdminExportKeyRequest body, final ApiCallback<EncryptionAdminExportKeyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1145,8 +1145,8 @@ public class ConfigServiceApi {
      * @return RestConfiguration
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestConfiguration getConfig(String fullPath, String data) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestConfiguration> resp = getConfigWithHttpInfo(fullPath, data);
+    public RestConfiguration getConfig(String fullPath, String data) throws ApiException {
+        ApiResponse<RestConfiguration> resp = getConfigWithHttpInfo(fullPath, data);
         return resp.getData();
     }
 
@@ -1158,9 +1158,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestConfiguration&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestConfiguration> getConfigWithHttpInfo(String fullPath, String data) throws ApiException {
+    public ApiResponse<RestConfiguration> getConfigWithHttpInfo(String fullPath, String data) throws ApiException {
         com.squareup.okhttp.Call call = getConfigValidateBeforeCall(fullPath, data, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestConfiguration>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestConfiguration>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1173,7 +1173,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getConfigAsync(String fullPath, String data, final ApiCallback<com.pydio.cells.openapi.model.RestConfiguration> callback) throws ApiException {
+    public com.squareup.okhttp.Call getConfigAsync(String fullPath, String data, final ApiCallback<RestConfiguration> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1195,7 +1195,7 @@ public class ConfigServiceApi {
         }
 
         com.squareup.okhttp.Call call = getConfigValidateBeforeCall(fullPath, data, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestConfiguration>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestConfiguration>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -1338,8 +1338,8 @@ public class ConfigServiceApi {
      * @return ObjectDataSource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.ObjectDataSource getDataSource(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.ObjectDataSource> resp = getDataSourceWithHttpInfo(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
+    public ObjectDataSource getDataSource(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+        ApiResponse<ObjectDataSource> resp = getDataSourceWithHttpInfo(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
         return resp.getData();
     }
 
@@ -1367,9 +1367,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;ObjectDataSource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.ObjectDataSource> getDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+    public ApiResponse<ObjectDataSource> getDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
         com.squareup.okhttp.Call call = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.ObjectDataSource>(){}.getType();
+        Type localVarReturnType = new TypeToken<ObjectDataSource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1398,7 +1398,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getDataSourceAsync(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<com.pydio.cells.openapi.model.ObjectDataSource> callback) throws ApiException {
+    public com.squareup.okhttp.Call getDataSourceAsync(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<ObjectDataSource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1420,7 +1420,7 @@ public class ConfigServiceApi {
         }
 
         com.squareup.okhttp.Call call = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.ObjectDataSource>(){}.getType();
+        Type localVarReturnType = new TypeToken<ObjectDataSource>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -1523,8 +1523,8 @@ public class ConfigServiceApi {
      * @return TreeVersioningPolicy
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.TreeVersioningPolicy getVersioningPolicy(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.TreeVersioningPolicy> resp = getVersioningPolicyWithHttpInfo(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan);
+    public TreeVersioningPolicy getVersioningPolicy(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
+        ApiResponse<TreeVersioningPolicy> resp = getVersioningPolicyWithHttpInfo(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan);
         return resp.getData();
     }
 
@@ -1542,9 +1542,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;TreeVersioningPolicy&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.TreeVersioningPolicy> getVersioningPolicyWithHttpInfo(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
+    public ApiResponse<TreeVersioningPolicy> getVersioningPolicyWithHttpInfo(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
         com.squareup.okhttp.Call call = getVersioningPolicyValidateBeforeCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.TreeVersioningPolicy>(){}.getType();
+        Type localVarReturnType = new TypeToken<TreeVersioningPolicy>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1563,7 +1563,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getVersioningPolicyAsync(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, final ApiCallback<com.pydio.cells.openapi.model.TreeVersioningPolicy> callback) throws ApiException {
+    public com.squareup.okhttp.Call getVersioningPolicyAsync(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, final ApiCallback<TreeVersioningPolicy> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1597,7 +1597,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call importEncryptionKeyCall(com.pydio.cells.openapi.model.EncryptionAdminImportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call importEncryptionKeyCall(EncryptionAdminImportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1639,7 +1639,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call importEncryptionKeyValidateBeforeCall(com.pydio.cells.openapi.model.EncryptionAdminImportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call importEncryptionKeyValidateBeforeCall(EncryptionAdminImportKeyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -1659,8 +1659,8 @@ public class ConfigServiceApi {
      * @return EncryptionAdminImportKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.EncryptionAdminImportKeyResponse importEncryptionKey(com.pydio.cells.openapi.model.EncryptionAdminImportKeyRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminImportKeyResponse> resp = importEncryptionKeyWithHttpInfo(body);
+    public EncryptionAdminImportKeyResponse importEncryptionKey(EncryptionAdminImportKeyRequest body) throws ApiException {
+        ApiResponse<EncryptionAdminImportKeyResponse> resp = importEncryptionKeyWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -1671,9 +1671,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;EncryptionAdminImportKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminImportKeyResponse> importEncryptionKeyWithHttpInfo(com.pydio.cells.openapi.model.EncryptionAdminImportKeyRequest body) throws ApiException {
+    public ApiResponse<EncryptionAdminImportKeyResponse> importEncryptionKeyWithHttpInfo(EncryptionAdminImportKeyRequest body) throws ApiException {
         com.squareup.okhttp.Call call = importEncryptionKeyValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.EncryptionAdminImportKeyResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<EncryptionAdminImportKeyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1685,7 +1685,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call importEncryptionKeyAsync(EncryptionAdminImportKeyRequest body, final ApiCallback<com.pydio.cells.openapi.model.EncryptionAdminImportKeyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call importEncryptionKeyAsync(EncryptionAdminImportKeyRequest body, final ApiCallback<EncryptionAdminImportKeyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1774,8 +1774,8 @@ public class ConfigServiceApi {
      * @return RestDataSourceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDataSourceCollection listDataSources() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDataSourceCollection> resp = listDataSourcesWithHttpInfo();
+    public RestDataSourceCollection listDataSources() throws ApiException {
+        ApiResponse<RestDataSourceCollection> resp = listDataSourcesWithHttpInfo();
         return resp.getData();
     }
 
@@ -1785,9 +1785,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestDataSourceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDataSourceCollection> listDataSourcesWithHttpInfo() throws ApiException {
+    public ApiResponse<RestDataSourceCollection> listDataSourcesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listDataSourcesValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDataSourceCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDataSourceCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1798,7 +1798,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listDataSourcesAsync(final ApiCallback<com.pydio.cells.openapi.model.RestDataSourceCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listDataSourcesAsync(final ApiCallback<RestDataSourceCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1832,7 +1832,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listEncryptionKeysCall(com.pydio.cells.openapi.model.EncryptionAdminListKeysRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listEncryptionKeysCall(EncryptionAdminListKeysRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1874,7 +1874,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listEncryptionKeysValidateBeforeCall(com.pydio.cells.openapi.model.EncryptionAdminListKeysRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listEncryptionKeysValidateBeforeCall(EncryptionAdminListKeysRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -1894,8 +1894,8 @@ public class ConfigServiceApi {
      * @return EncryptionAdminListKeysResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.EncryptionAdminListKeysResponse listEncryptionKeys(com.pydio.cells.openapi.model.EncryptionAdminListKeysRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminListKeysResponse> resp = listEncryptionKeysWithHttpInfo(body);
+    public EncryptionAdminListKeysResponse listEncryptionKeys(EncryptionAdminListKeysRequest body) throws ApiException {
+        ApiResponse<EncryptionAdminListKeysResponse> resp = listEncryptionKeysWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -1906,9 +1906,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;EncryptionAdminListKeysResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.EncryptionAdminListKeysResponse> listEncryptionKeysWithHttpInfo(com.pydio.cells.openapi.model.EncryptionAdminListKeysRequest body) throws ApiException {
+    public ApiResponse<EncryptionAdminListKeysResponse> listEncryptionKeysWithHttpInfo(EncryptionAdminListKeysRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listEncryptionKeysValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.EncryptionAdminListKeysResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<EncryptionAdminListKeysResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1920,7 +1920,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listEncryptionKeysAsync(EncryptionAdminListKeysRequest body, final ApiCallback<com.pydio.cells.openapi.model.EncryptionAdminListKeysResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listEncryptionKeysAsync(EncryptionAdminListKeysRequest body, final ApiCallback<EncryptionAdminListKeysResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1955,7 +1955,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listPeerFoldersCall(String peerAddress, com.pydio.cells.openapi.model.RestListPeerFoldersRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listPeerFoldersCall(String peerAddress, RestListPeerFoldersRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1998,7 +1998,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listPeerFoldersValidateBeforeCall(String peerAddress, com.pydio.cells.openapi.model.RestListPeerFoldersRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listPeerFoldersValidateBeforeCall(String peerAddress, RestListPeerFoldersRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'peerAddress' is set
         if (peerAddress == null) {
@@ -2024,8 +2024,8 @@ public class ConfigServiceApi {
      * @return RestNodesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestNodesCollection listPeerFolders(String peerAddress, com.pydio.cells.openapi.model.RestListPeerFoldersRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> resp = listPeerFoldersWithHttpInfo(peerAddress, body);
+    public RestNodesCollection listPeerFolders(String peerAddress, RestListPeerFoldersRequest body) throws ApiException {
+        ApiResponse<RestNodesCollection> resp = listPeerFoldersWithHttpInfo(peerAddress, body);
         return resp.getData();
     }
 
@@ -2037,9 +2037,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestNodesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> listPeerFoldersWithHttpInfo(String peerAddress, com.pydio.cells.openapi.model.RestListPeerFoldersRequest body) throws ApiException {
+    public ApiResponse<RestNodesCollection> listPeerFoldersWithHttpInfo(String peerAddress, RestListPeerFoldersRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listPeerFoldersValidateBeforeCall(peerAddress, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestNodesCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2052,7 +2052,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listPeerFoldersAsync(String peerAddress, RestListPeerFoldersRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestNodesCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listPeerFoldersAsync(String peerAddress, RestListPeerFoldersRequest body, final ApiCallback<RestNodesCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2074,7 +2074,7 @@ public class ConfigServiceApi {
         }
 
         com.squareup.okhttp.Call call = listPeerFoldersValidateBeforeCall(peerAddress, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestNodesCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -2141,8 +2141,8 @@ public class ConfigServiceApi {
      * @return RestListPeersAddressesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestListPeersAddressesResponse listPeersAddresses() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestListPeersAddressesResponse> resp = listPeersAddressesWithHttpInfo();
+    public RestListPeersAddressesResponse listPeersAddresses() throws ApiException {
+        ApiResponse<RestListPeersAddressesResponse> resp = listPeersAddressesWithHttpInfo();
         return resp.getData();
     }
 
@@ -2152,9 +2152,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestListPeersAddressesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestListPeersAddressesResponse> listPeersAddressesWithHttpInfo() throws ApiException {
+    public ApiResponse<RestListPeersAddressesResponse> listPeersAddressesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listPeersAddressesValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestListPeersAddressesResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestListPeersAddressesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2165,7 +2165,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listPeersAddressesAsync(final ApiCallback<com.pydio.cells.openapi.model.RestListPeersAddressesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listPeersAddressesAsync(final ApiCallback<RestListPeersAddressesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2199,7 +2199,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listProcessesCall(com.pydio.cells.openapi.model.RestListProcessesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listProcessesCall(RestListProcessesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -2241,7 +2241,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listProcessesValidateBeforeCall(com.pydio.cells.openapi.model.RestListProcessesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listProcessesValidateBeforeCall(RestListProcessesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -2261,8 +2261,8 @@ public class ConfigServiceApi {
      * @return RestListProcessesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestListProcessesResponse listProcesses(com.pydio.cells.openapi.model.RestListProcessesRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestListProcessesResponse> resp = listProcessesWithHttpInfo(body);
+    public RestListProcessesResponse listProcesses(RestListProcessesRequest body) throws ApiException {
+        ApiResponse<RestListProcessesResponse> resp = listProcessesWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -2273,9 +2273,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestListProcessesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestListProcessesResponse> listProcessesWithHttpInfo(com.pydio.cells.openapi.model.RestListProcessesRequest body) throws ApiException {
+    public ApiResponse<RestListProcessesResponse> listProcessesWithHttpInfo(RestListProcessesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listProcessesValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestListProcessesResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestListProcessesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2287,7 +2287,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listProcessesAsync(RestListProcessesRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestListProcessesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listProcessesAsync(RestListProcessesRequest body, final ApiCallback<RestListProcessesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2380,8 +2380,8 @@ public class ConfigServiceApi {
      * @return RestServiceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestServiceCollection listServices(String statusFilter) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestServiceCollection> resp = listServicesWithHttpInfo(statusFilter);
+    public RestServiceCollection listServices(String statusFilter) throws ApiException {
+        ApiResponse<RestServiceCollection> resp = listServicesWithHttpInfo(statusFilter);
         return resp.getData();
     }
 
@@ -2392,9 +2392,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestServiceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestServiceCollection> listServicesWithHttpInfo(String statusFilter) throws ApiException {
+    public ApiResponse<RestServiceCollection> listServicesWithHttpInfo(String statusFilter) throws ApiException {
         com.squareup.okhttp.Call call = listServicesValidateBeforeCall(statusFilter, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestServiceCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestServiceCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2406,7 +2406,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listServicesAsync(String statusFilter, final ApiCallback<com.pydio.cells.openapi.model.RestServiceCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listServicesAsync(String statusFilter, final ApiCallback<RestServiceCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2503,8 +2503,8 @@ public class ConfigServiceApi {
      * @return RestListSitesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestListSitesResponse listSites(String filter) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestListSitesResponse> resp = listSitesWithHttpInfo(filter);
+    public RestListSitesResponse listSites(String filter) throws ApiException {
+        ApiResponse<RestListSitesResponse> resp = listSitesWithHttpInfo(filter);
         return resp.getData();
     }
 
@@ -2515,9 +2515,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestListSitesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestListSitesResponse> listSitesWithHttpInfo(String filter) throws ApiException {
+    public ApiResponse<RestListSitesResponse> listSitesWithHttpInfo(String filter) throws ApiException {
         com.squareup.okhttp.Call call = listSitesValidateBeforeCall(filter, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestListSitesResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestListSitesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2529,7 +2529,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listSitesAsync(String filter, final ApiCallback<com.pydio.cells.openapi.model.RestListSitesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listSitesAsync(String filter, final ApiCallback<RestListSitesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2563,7 +2563,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listStorageBucketsCall(com.pydio.cells.openapi.model.RestListStorageBucketsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listStorageBucketsCall(RestListStorageBucketsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -2605,7 +2605,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listStorageBucketsValidateBeforeCall(com.pydio.cells.openapi.model.RestListStorageBucketsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listStorageBucketsValidateBeforeCall(RestListStorageBucketsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -2625,8 +2625,8 @@ public class ConfigServiceApi {
      * @return RestNodesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestNodesCollection listStorageBuckets(com.pydio.cells.openapi.model.RestListStorageBucketsRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> resp = listStorageBucketsWithHttpInfo(body);
+    public RestNodesCollection listStorageBuckets(RestListStorageBucketsRequest body) throws ApiException {
+        ApiResponse<RestNodesCollection> resp = listStorageBucketsWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -2637,9 +2637,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestNodesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> listStorageBucketsWithHttpInfo(com.pydio.cells.openapi.model.RestListStorageBucketsRequest body) throws ApiException {
+    public ApiResponse<RestNodesCollection> listStorageBucketsWithHttpInfo(RestListStorageBucketsRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listStorageBucketsValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestNodesCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2651,7 +2651,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listStorageBucketsAsync(RestListStorageBucketsRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestNodesCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listStorageBucketsAsync(RestListStorageBucketsRequest body, final ApiCallback<RestNodesCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2673,7 +2673,7 @@ public class ConfigServiceApi {
         }
 
         com.squareup.okhttp.Call call = listStorageBucketsValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestNodesCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -2740,8 +2740,8 @@ public class ConfigServiceApi {
      * @return RestVersioningPolicyCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestVersioningPolicyCollection listVersioningPolicies() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestVersioningPolicyCollection> resp = listVersioningPoliciesWithHttpInfo();
+    public RestVersioningPolicyCollection listVersioningPolicies() throws ApiException {
+        ApiResponse<RestVersioningPolicyCollection> resp = listVersioningPoliciesWithHttpInfo();
         return resp.getData();
     }
 
@@ -2751,9 +2751,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestVersioningPolicyCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestVersioningPolicyCollection> listVersioningPoliciesWithHttpInfo() throws ApiException {
+    public ApiResponse<RestVersioningPolicyCollection> listVersioningPoliciesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listVersioningPoliciesValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestVersioningPolicyCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestVersioningPolicyCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2764,7 +2764,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listVersioningPoliciesAsync(final ApiCallback<com.pydio.cells.openapi.model.RestVersioningPolicyCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listVersioningPoliciesAsync(final ApiCallback<RestVersioningPolicyCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2853,8 +2853,8 @@ public class ConfigServiceApi {
      * @return RestNodesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestNodesCollection listVirtualNodes() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> resp = listVirtualNodesWithHttpInfo();
+    public RestNodesCollection listVirtualNodes() throws ApiException {
+        ApiResponse<RestNodesCollection> resp = listVirtualNodesWithHttpInfo();
         return resp.getData();
     }
 
@@ -2864,9 +2864,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestNodesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestNodesCollection> listVirtualNodesWithHttpInfo() throws ApiException {
+    public ApiResponse<RestNodesCollection> listVirtualNodesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listVirtualNodesValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestNodesCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestNodesCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2877,7 +2877,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listVirtualNodesAsync(final ApiCallback<com.pydio.cells.openapi.model.RestNodesCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listVirtualNodesAsync(final ApiCallback<RestNodesCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2970,8 +2970,8 @@ public class ConfigServiceApi {
      * @return RestOpenApiResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestOpenApiResponse openApiDiscovery(String endpointType) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestOpenApiResponse> resp = openApiDiscoveryWithHttpInfo(endpointType);
+    public RestOpenApiResponse openApiDiscovery(String endpointType) throws ApiException {
+        ApiResponse<RestOpenApiResponse> resp = openApiDiscoveryWithHttpInfo(endpointType);
         return resp.getData();
     }
 
@@ -2982,9 +2982,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestOpenApiResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestOpenApiResponse> openApiDiscoveryWithHttpInfo(String endpointType) throws ApiException {
+    public ApiResponse<RestOpenApiResponse> openApiDiscoveryWithHttpInfo(String endpointType) throws ApiException {
         com.squareup.okhttp.Call call = openApiDiscoveryValidateBeforeCall(endpointType, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestOpenApiResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestOpenApiResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2996,7 +2996,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call openApiDiscoveryAsync(String endpointType, final ApiCallback<com.pydio.cells.openapi.model.RestOpenApiResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call openApiDiscoveryAsync(String endpointType, final ApiCallback<RestOpenApiResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3031,7 +3031,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putConfigCall(String fullPath, com.pydio.cells.openapi.model.RestConfiguration body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putConfigCall(String fullPath, RestConfiguration body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -3074,7 +3074,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putConfigValidateBeforeCall(String fullPath, com.pydio.cells.openapi.model.RestConfiguration body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putConfigValidateBeforeCall(String fullPath, RestConfiguration body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'fullPath' is set
         if (fullPath == null) {
@@ -3100,8 +3100,8 @@ public class ConfigServiceApi {
      * @return RestConfiguration
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestConfiguration putConfig(String fullPath, com.pydio.cells.openapi.model.RestConfiguration body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestConfiguration> resp = putConfigWithHttpInfo(fullPath, body);
+    public RestConfiguration putConfig(String fullPath, RestConfiguration body) throws ApiException {
+        ApiResponse<RestConfiguration> resp = putConfigWithHttpInfo(fullPath, body);
         return resp.getData();
     }
 
@@ -3113,9 +3113,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestConfiguration&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestConfiguration> putConfigWithHttpInfo(String fullPath, com.pydio.cells.openapi.model.RestConfiguration body) throws ApiException {
+    public ApiResponse<RestConfiguration> putConfigWithHttpInfo(String fullPath, RestConfiguration body) throws ApiException {
         com.squareup.okhttp.Call call = putConfigValidateBeforeCall(fullPath, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestConfiguration>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestConfiguration>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -3128,7 +3128,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putConfigAsync(String fullPath, com.pydio.cells.openapi.model.RestConfiguration body, final ApiCallback<com.pydio.cells.openapi.model.RestConfiguration> callback) throws ApiException {
+    public com.squareup.okhttp.Call putConfigAsync(String fullPath, RestConfiguration body, final ApiCallback<RestConfiguration> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3163,7 +3163,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putDataSourceCall(String name, com.pydio.cells.openapi.model.ObjectDataSource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putDataSourceCall(String name, ObjectDataSource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -3206,7 +3206,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putDataSourceValidateBeforeCall(String name, com.pydio.cells.openapi.model.ObjectDataSource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putDataSourceValidateBeforeCall(String name, ObjectDataSource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -3232,8 +3232,8 @@ public class ConfigServiceApi {
      * @return ObjectDataSource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.ObjectDataSource putDataSource(String name, com.pydio.cells.openapi.model.ObjectDataSource body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.ObjectDataSource> resp = putDataSourceWithHttpInfo(name, body);
+    public ObjectDataSource putDataSource(String name, ObjectDataSource body) throws ApiException {
+        ApiResponse<ObjectDataSource> resp = putDataSourceWithHttpInfo(name, body);
         return resp.getData();
     }
 
@@ -3245,9 +3245,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;ObjectDataSource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.ObjectDataSource> putDataSourceWithHttpInfo(String name, com.pydio.cells.openapi.model.ObjectDataSource body) throws ApiException {
+    public ApiResponse<ObjectDataSource> putDataSourceWithHttpInfo(String name, ObjectDataSource body) throws ApiException {
         com.squareup.okhttp.Call call = putDataSourceValidateBeforeCall(name, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.ObjectDataSource>(){}.getType();
+        Type localVarReturnType = new TypeToken<ObjectDataSource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -3260,7 +3260,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putDataSourceAsync(String name, com.pydio.cells.openapi.model.ObjectDataSource body, final ApiCallback<com.pydio.cells.openapi.model.ObjectDataSource> callback) throws ApiException {
+    public com.squareup.okhttp.Call putDataSourceAsync(String name, ObjectDataSource body, final ApiCallback<ObjectDataSource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3357,8 +3357,8 @@ public class ConfigServiceApi {
      * @return RestSchedulerActionFormResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestSchedulerActionFormResponse schedulerActionFormDiscovery(String actionName) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestSchedulerActionFormResponse> resp = schedulerActionFormDiscoveryWithHttpInfo(actionName);
+    public RestSchedulerActionFormResponse schedulerActionFormDiscovery(String actionName) throws ApiException {
+        ApiResponse<RestSchedulerActionFormResponse> resp = schedulerActionFormDiscoveryWithHttpInfo(actionName);
         return resp.getData();
     }
 
@@ -3369,9 +3369,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestSchedulerActionFormResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestSchedulerActionFormResponse> schedulerActionFormDiscoveryWithHttpInfo(String actionName) throws ApiException {
+    public ApiResponse<RestSchedulerActionFormResponse> schedulerActionFormDiscoveryWithHttpInfo(String actionName) throws ApiException {
         com.squareup.okhttp.Call call = schedulerActionFormDiscoveryValidateBeforeCall(actionName, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestSchedulerActionFormResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestSchedulerActionFormResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -3383,7 +3383,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call schedulerActionFormDiscoveryAsync(String actionName, final ApiCallback<com.pydio.cells.openapi.model.RestSchedulerActionFormResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call schedulerActionFormDiscoveryAsync(String actionName, final ApiCallback<RestSchedulerActionFormResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3472,8 +3472,8 @@ public class ConfigServiceApi {
      * @return RestSchedulerActionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestSchedulerActionsResponse schedulerActionsDiscovery() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestSchedulerActionsResponse> resp = schedulerActionsDiscoveryWithHttpInfo();
+    public RestSchedulerActionsResponse schedulerActionsDiscovery() throws ApiException {
+        ApiResponse<RestSchedulerActionsResponse> resp = schedulerActionsDiscoveryWithHttpInfo();
         return resp.getData();
     }
 
@@ -3483,9 +3483,9 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;RestSchedulerActionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestSchedulerActionsResponse> schedulerActionsDiscoveryWithHttpInfo() throws ApiException {
+    public ApiResponse<RestSchedulerActionsResponse> schedulerActionsDiscoveryWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = schedulerActionsDiscoveryValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestSchedulerActionsResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestSchedulerActionsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -3496,7 +3496,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call schedulerActionsDiscoveryAsync(final ApiCallback<com.pydio.cells.openapi.model.RestSchedulerActionsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call schedulerActionsDiscoveryAsync(final ApiCallback<RestSchedulerActionsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

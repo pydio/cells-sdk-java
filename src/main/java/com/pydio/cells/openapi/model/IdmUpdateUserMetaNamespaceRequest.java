@@ -14,27 +14,30 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmUserMetaNamespace;
+import com.pydio.cells.openapi.model.UpdateUserMetaNamespaceRequestUserMetaNsOp;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * IdmUpdateUserMetaNamespaceRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmUpdateUserMetaNamespaceRequest {
   @SerializedName("Operation")
   private UpdateUserMetaNamespaceRequestUserMetaNsOp operation = null;
 
   @SerializedName("Namespaces")
-  private List<com.pydio.cells.openapi.model.IdmUserMetaNamespace> namespaces = null;
+  private List<IdmUserMetaNamespace> namespaces = null;
 
   public IdmUpdateUserMetaNamespaceRequest operation(UpdateUserMetaNamespaceRequestUserMetaNsOp operation) {
     this.operation = operation;
@@ -54,14 +57,14 @@ public class IdmUpdateUserMetaNamespaceRequest {
     this.operation = operation;
   }
 
-  public IdmUpdateUserMetaNamespaceRequest namespaces(List<com.pydio.cells.openapi.model.IdmUserMetaNamespace> namespaces) {
+  public IdmUpdateUserMetaNamespaceRequest namespaces(List<IdmUserMetaNamespace> namespaces) {
     this.namespaces = namespaces;
     return this;
   }
 
-  public IdmUpdateUserMetaNamespaceRequest addNamespacesItem(com.pydio.cells.openapi.model.IdmUserMetaNamespace namespacesItem) {
+  public IdmUpdateUserMetaNamespaceRequest addNamespacesItem(IdmUserMetaNamespace namespacesItem) {
     if (this.namespaces == null) {
-      this.namespaces = new ArrayList<com.pydio.cells.openapi.model.IdmUserMetaNamespace>();
+      this.namespaces = new ArrayList<IdmUserMetaNamespace>();
     }
     this.namespaces.add(namespacesItem);
     return this;
@@ -72,7 +75,7 @@ public class IdmUpdateUserMetaNamespaceRequest {
    * @return namespaces
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmUserMetaNamespace> getNamespaces() {
+  public List<IdmUserMetaNamespace> getNamespaces() {
     return namespaces;
   }
 

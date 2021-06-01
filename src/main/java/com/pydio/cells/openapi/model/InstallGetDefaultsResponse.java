@@ -14,23 +14,26 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.InstallInstallConfig;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * InstallGetDefaultsResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class InstallGetDefaultsResponse {
   @SerializedName("config")
-  private com.pydio.cells.openapi.model.InstallInstallConfig config = null;
+  private InstallInstallConfig config = null;
 
-  public InstallGetDefaultsResponse config(com.pydio.cells.openapi.model.InstallInstallConfig config) {
+  public InstallGetDefaultsResponse config(InstallInstallConfig config) {
     this.config = config;
     return this;
   }
@@ -40,7 +43,7 @@ public class InstallGetDefaultsResponse {
    * @return config
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.InstallInstallConfig getConfig() {
+  public InstallInstallConfig getConfig() {
     return config;
   }
 

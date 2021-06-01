@@ -13,6 +13,10 @@
 
 package com.pydio.cells.openapi.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.IOException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;

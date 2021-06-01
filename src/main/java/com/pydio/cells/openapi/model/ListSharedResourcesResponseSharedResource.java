@@ -14,32 +14,36 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.RestCell;
+import com.pydio.cells.openapi.model.RestShareLink;
+import com.pydio.cells.openapi.model.TreeNode;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * ListSharedResourcesResponseSharedResource
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class ListSharedResourcesResponseSharedResource {
   @SerializedName("Node")
-  private com.pydio.cells.openapi.model.TreeNode node = null;
+  private TreeNode node = null;
 
   @SerializedName("Link")
   private RestShareLink link = null;
 
   @SerializedName("Cells")
-  private List<com.pydio.cells.openapi.model.RestCell> cells = null;
+  private List<RestCell> cells = null;
 
-  public ListSharedResourcesResponseSharedResource node(com.pydio.cells.openapi.model.TreeNode node) {
+  public ListSharedResourcesResponseSharedResource node(TreeNode node) {
     this.node = node;
     return this;
   }
@@ -49,7 +53,7 @@ public class ListSharedResourcesResponseSharedResource {
    * @return node
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeNode getNode() {
+  public TreeNode getNode() {
     return node;
   }
 
@@ -75,14 +79,14 @@ public class ListSharedResourcesResponseSharedResource {
     this.link = link;
   }
 
-  public ListSharedResourcesResponseSharedResource cells(List<com.pydio.cells.openapi.model.RestCell> cells) {
+  public ListSharedResourcesResponseSharedResource cells(List<RestCell> cells) {
     this.cells = cells;
     return this;
   }
 
-  public ListSharedResourcesResponseSharedResource addCellsItem(com.pydio.cells.openapi.model.RestCell cellsItem) {
+  public ListSharedResourcesResponseSharedResource addCellsItem(RestCell cellsItem) {
     if (this.cells == null) {
-      this.cells = new ArrayList<com.pydio.cells.openapi.model.RestCell>();
+      this.cells = new ArrayList<RestCell>();
     }
     this.cells.add(cellsItem);
     return this;
@@ -93,7 +97,7 @@ public class ListSharedResourcesResponseSharedResource {
    * @return cells
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.RestCell> getCells() {
+  public List<RestCell> getCells() {
     return cells;
   }
 

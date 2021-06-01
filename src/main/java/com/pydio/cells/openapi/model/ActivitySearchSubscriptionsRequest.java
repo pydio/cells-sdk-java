@@ -14,27 +14,29 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ActivityOwnerType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * ActivitySearchSubscriptionsRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class ActivitySearchSubscriptionsRequest {
   @SerializedName("UserIds")
   private List<String> userIds = null;
 
   @SerializedName("ObjectTypes")
-  private List<com.pydio.cells.openapi.model.ActivityOwnerType> objectTypes = null;
+  private List<ActivityOwnerType> objectTypes = null;
 
   @SerializedName("ObjectIds")
   private List<String> objectIds = null;
@@ -65,14 +67,14 @@ public class ActivitySearchSubscriptionsRequest {
     this.userIds = userIds;
   }
 
-  public ActivitySearchSubscriptionsRequest objectTypes(List<com.pydio.cells.openapi.model.ActivityOwnerType> objectTypes) {
+  public ActivitySearchSubscriptionsRequest objectTypes(List<ActivityOwnerType> objectTypes) {
     this.objectTypes = objectTypes;
     return this;
   }
 
-  public ActivitySearchSubscriptionsRequest addObjectTypesItem(com.pydio.cells.openapi.model.ActivityOwnerType objectTypesItem) {
+  public ActivitySearchSubscriptionsRequest addObjectTypesItem(ActivityOwnerType objectTypesItem) {
     if (this.objectTypes == null) {
-      this.objectTypes = new ArrayList<com.pydio.cells.openapi.model.ActivityOwnerType>();
+      this.objectTypes = new ArrayList<ActivityOwnerType>();
     }
     this.objectTypes.add(objectTypesItem);
     return this;
@@ -83,7 +85,7 @@ public class ActivitySearchSubscriptionsRequest {
    * @return objectTypes
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.ActivityOwnerType> getObjectTypes() {
+  public List<ActivityOwnerType> getObjectTypes() {
     return objectTypes;
   }
 

@@ -14,12 +14,18 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmWorkspaceScope;
+import com.pydio.cells.openapi.model.ServiceResourcePolicy;
+import com.pydio.cells.openapi.model.TreeNode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,10 +35,7 @@ import java.util.Map;
  * A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.
  */
 @ApiModel(description = "A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmWorkspace {
   @SerializedName("UUID")
   private String UUID = null;
@@ -62,7 +65,7 @@ public class IdmWorkspace {
   private List<String> rootUUIDs = null;
 
   @SerializedName("RootNodes")
-  private Map<String, com.pydio.cells.openapi.model.TreeNode> rootNodes = null;
+  private Map<String, TreeNode> rootNodes = null;
 
   @SerializedName("PoliciesContextEditable")
   private Boolean policiesContextEditable = null;
@@ -245,14 +248,14 @@ public class IdmWorkspace {
     this.rootUUIDs = rootUUIDs;
   }
 
-  public IdmWorkspace rootNodes(Map<String, com.pydio.cells.openapi.model.TreeNode> rootNodes) {
+  public IdmWorkspace rootNodes(Map<String, TreeNode> rootNodes) {
     this.rootNodes = rootNodes;
     return this;
   }
 
-  public IdmWorkspace putRootNodesItem(String key, com.pydio.cells.openapi.model.TreeNode rootNodesItem) {
+  public IdmWorkspace putRootNodesItem(String key, TreeNode rootNodesItem) {
     if (this.rootNodes == null) {
-      this.rootNodes = new HashMap<String, com.pydio.cells.openapi.model.TreeNode>();
+      this.rootNodes = new HashMap<String, TreeNode>();
     }
     this.rootNodes.put(key, rootNodesItem);
     return this;
@@ -263,7 +266,7 @@ public class IdmWorkspace {
    * @return rootNodes
   **/
   @ApiModelProperty(value = "")
-  public Map<String, com.pydio.cells.openapi.model.TreeNode> getRootNodes() {
+  public Map<String, TreeNode> getRootNodes() {
     return rootNodes;
   }
 

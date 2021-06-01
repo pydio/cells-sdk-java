@@ -13,6 +13,8 @@
 
 package com.pydio.cells.openapi;
 
+import java.io.IOException;
+
 import java.util.Map;
 import java.util.List;
 

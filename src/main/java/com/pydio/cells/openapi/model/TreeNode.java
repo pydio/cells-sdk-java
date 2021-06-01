@@ -14,11 +14,18 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.TreeChangeLog;
+import com.pydio.cells.openapi.model.TreeNodeType;
+import com.pydio.cells.openapi.model.TreeWorkspaceRelativePath;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +34,7 @@ import java.util.Map;
 /**
  * TreeNode
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class TreeNode {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -60,7 +64,7 @@ public class TreeNode {
   private Map<String, String> metaStore = null;
 
   @SerializedName("AppearsIn")
-  private List<com.pydio.cells.openapi.model.TreeWorkspaceRelativePath> appearsIn = null;
+  private List<TreeWorkspaceRelativePath> appearsIn = null;
 
   public TreeNode uuid(String uuid) {
     this.uuid = uuid;
@@ -240,14 +244,14 @@ public class TreeNode {
     this.metaStore = metaStore;
   }
 
-  public TreeNode appearsIn(List<com.pydio.cells.openapi.model.TreeWorkspaceRelativePath> appearsIn) {
+  public TreeNode appearsIn(List<TreeWorkspaceRelativePath> appearsIn) {
     this.appearsIn = appearsIn;
     return this;
   }
 
-  public TreeNode addAppearsInItem(com.pydio.cells.openapi.model.TreeWorkspaceRelativePath appearsInItem) {
+  public TreeNode addAppearsInItem(TreeWorkspaceRelativePath appearsInItem) {
     if (this.appearsIn == null) {
-      this.appearsIn = new ArrayList<com.pydio.cells.openapi.model.TreeWorkspaceRelativePath>();
+      this.appearsIn = new ArrayList<TreeWorkspaceRelativePath>();
     }
     this.appearsIn.add(appearsInItem);
     return this;
@@ -258,7 +262,7 @@ public class TreeNode {
    * @return appearsIn
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.TreeWorkspaceRelativePath> getAppearsIn() {
+  public List<TreeWorkspaceRelativePath> getAppearsIn() {
     return appearsIn;
   }
 

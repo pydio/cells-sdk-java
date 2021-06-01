@@ -14,11 +14,19 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.RestShareLinkAccessType;
+import com.pydio.cells.openapi.model.RestShareLinkTargetUser;
+import com.pydio.cells.openapi.model.ServiceResourcePolicy;
+import com.pydio.cells.openapi.model.TreeNode;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +35,7 @@ import java.util.Map;
 /**
  * RestShareLink
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestShareLink {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -72,16 +77,16 @@ public class RestShareLink {
   private String viewTemplateName = null;
 
   @SerializedName("TargetUsers")
-  private Map<String, com.pydio.cells.openapi.model.RestShareLinkTargetUser> targetUsers = null;
+  private Map<String, RestShareLinkTargetUser> targetUsers = null;
 
   @SerializedName("RestrictToTargetUsers")
   private Boolean restrictToTargetUsers = null;
 
   @SerializedName("RootNodes")
-  private List<com.pydio.cells.openapi.model.TreeNode> rootNodes = null;
+  private List<TreeNode> rootNodes = null;
 
   @SerializedName("Permissions")
-  private List<com.pydio.cells.openapi.model.RestShareLinkAccessType> permissions = null;
+  private List<RestShareLinkAccessType> permissions = null;
 
   @SerializedName("Policies")
   private List<ServiceResourcePolicy> policies = null;
@@ -323,14 +328,14 @@ public class RestShareLink {
     this.viewTemplateName = viewTemplateName;
   }
 
-  public RestShareLink targetUsers(Map<String, com.pydio.cells.openapi.model.RestShareLinkTargetUser> targetUsers) {
+  public RestShareLink targetUsers(Map<String, RestShareLinkTargetUser> targetUsers) {
     this.targetUsers = targetUsers;
     return this;
   }
 
-  public RestShareLink putTargetUsersItem(String key, com.pydio.cells.openapi.model.RestShareLinkTargetUser targetUsersItem) {
+  public RestShareLink putTargetUsersItem(String key, RestShareLinkTargetUser targetUsersItem) {
     if (this.targetUsers == null) {
-      this.targetUsers = new HashMap<String, com.pydio.cells.openapi.model.RestShareLinkTargetUser>();
+      this.targetUsers = new HashMap<String, RestShareLinkTargetUser>();
     }
     this.targetUsers.put(key, targetUsersItem);
     return this;
@@ -341,7 +346,7 @@ public class RestShareLink {
    * @return targetUsers
   **/
   @ApiModelProperty(value = "")
-  public Map<String, com.pydio.cells.openapi.model.RestShareLinkTargetUser> getTargetUsers() {
+  public Map<String, RestShareLinkTargetUser> getTargetUsers() {
     return targetUsers;
   }
 
@@ -367,14 +372,14 @@ public class RestShareLink {
     this.restrictToTargetUsers = restrictToTargetUsers;
   }
 
-  public RestShareLink rootNodes(List<com.pydio.cells.openapi.model.TreeNode> rootNodes) {
+  public RestShareLink rootNodes(List<TreeNode> rootNodes) {
     this.rootNodes = rootNodes;
     return this;
   }
 
-  public RestShareLink addRootNodesItem(com.pydio.cells.openapi.model.TreeNode rootNodesItem) {
+  public RestShareLink addRootNodesItem(TreeNode rootNodesItem) {
     if (this.rootNodes == null) {
-      this.rootNodes = new ArrayList<com.pydio.cells.openapi.model.TreeNode>();
+      this.rootNodes = new ArrayList<TreeNode>();
     }
     this.rootNodes.add(rootNodesItem);
     return this;
@@ -385,7 +390,7 @@ public class RestShareLink {
    * @return rootNodes
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.TreeNode> getRootNodes() {
+  public List<TreeNode> getRootNodes() {
     return rootNodes;
   }
 
@@ -393,14 +398,14 @@ public class RestShareLink {
     this.rootNodes = rootNodes;
   }
 
-  public RestShareLink permissions(List<com.pydio.cells.openapi.model.RestShareLinkAccessType> permissions) {
+  public RestShareLink permissions(List<RestShareLinkAccessType> permissions) {
     this.permissions = permissions;
     return this;
   }
 
-  public RestShareLink addPermissionsItem(com.pydio.cells.openapi.model.RestShareLinkAccessType permissionsItem) {
+  public RestShareLink addPermissionsItem(RestShareLinkAccessType permissionsItem) {
     if (this.permissions == null) {
-      this.permissions = new ArrayList<com.pydio.cells.openapi.model.RestShareLinkAccessType>();
+      this.permissions = new ArrayList<RestShareLinkAccessType>();
     }
     this.permissions.add(permissionsItem);
     return this;
@@ -411,7 +416,7 @@ public class RestShareLink {
    * @return permissions
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.RestShareLinkAccessType> getPermissions() {
+  public List<RestShareLinkAccessType> getPermissions() {
     return permissions;
   }
 

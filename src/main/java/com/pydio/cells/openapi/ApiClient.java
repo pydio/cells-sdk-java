@@ -13,10 +13,6 @@
 
 package com.pydio.cells.openapi;
 
-import com.pydio.cells.openapi.auth.ApiKeyAuth;
-import com.pydio.cells.openapi.auth.Authentication;
-import com.pydio.cells.openapi.auth.HttpBasicAuth;
-import com.pydio.cells.openapi.auth.OAuth;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
@@ -32,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.lang.reflect.Type;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -49,6 +47,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.pydio.cells.openapi.auth.Authentication;
+import com.pydio.cells.openapi.auth.HttpBasicAuth;
+import com.pydio.cells.openapi.auth.ApiKeyAuth;
+import com.pydio.cells.openapi.auth.OAuth;
+
 public class ApiClient {
 
     private String basePath = "http://localhost";
@@ -56,7 +59,7 @@ public class ApiClient {
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
 
-    private Map<String, com.pydio.cells.openapi.auth.Authentication> authentications;
+    private Map<String, Authentication> authentications;
 
     private DateFormat dateFormat;
     private DateFormat datetimeFormat;
@@ -68,7 +71,7 @@ public class ApiClient {
     private KeyManager[] keyManagers;
 
     private OkHttpClient httpClient;
-    private com.pydio.cells.openapi.JSON json;
+    private JSON json;
 
     private HttpLoggingInterceptor loggingInterceptor;
 
@@ -81,13 +84,13 @@ public class ApiClient {
 
         verifyingSsl = true;
 
-        json = new com.pydio.cells.openapi.JSON();
+        json = new JSON();
 
         // Set default User-Agent.
-        setUserAgent("PydioCells/v2.2.6/JavaSDK/v0.2.0");
+        setUserAgent("PydioCells/v2.2.8/JavaSDK/v0.2.0");
 
         // Setup authentications (key: authentication name, value: authentication).
-        authentications = new HashMap<String, com.pydio.cells.openapi.auth.Authentication>();
+        authentications = new HashMap<String, Authentication>();
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
     }
@@ -137,7 +140,7 @@ public class ApiClient {
      *
      * @return JSON object
      */
-    public com.pydio.cells.openapi.JSON getJSON() {
+    public JSON getJSON() {
         return json;
     }
 
@@ -248,7 +251,7 @@ public class ApiClient {
      *
      * @return Map of authentication objects
      */
-    public Map<String, com.pydio.cells.openapi.auth.Authentication> getAuthentications() {
+    public Map<String, Authentication> getAuthentications() {
         return authentications;
     }
 
@@ -258,7 +261,7 @@ public class ApiClient {
      * @param authName The authentication name
      * @return The authentication, null if not found
      */
-    public com.pydio.cells.openapi.auth.Authentication getAuthentication(String authName) {
+    public Authentication getAuthentication(String authName) {
         return authentications.get(authName);
     }
 
@@ -268,9 +271,9 @@ public class ApiClient {
      * @param username Username
      */
     public void setUsername(String username) {
-        for (com.pydio.cells.openapi.auth.Authentication auth : authentications.values()) {
-            if (auth instanceof com.pydio.cells.openapi.auth.HttpBasicAuth) {
-                ((com.pydio.cells.openapi.auth.HttpBasicAuth) auth).setUsername(username);
+        for (Authentication auth : authentications.values()) {
+            if (auth instanceof HttpBasicAuth) {
+                ((HttpBasicAuth) auth).setUsername(username);
                 return;
             }
         }
@@ -283,8 +286,8 @@ public class ApiClient {
      * @param password Password
      */
     public void setPassword(String password) {
-        for (com.pydio.cells.openapi.auth.Authentication auth : authentications.values()) {
-            if (auth instanceof com.pydio.cells.openapi.auth.HttpBasicAuth) {
+        for (Authentication auth : authentications.values()) {
+            if (auth instanceof HttpBasicAuth) {
                 ((HttpBasicAuth) auth).setPassword(password);
                 return;
             }
@@ -298,9 +301,9 @@ public class ApiClient {
      * @param apiKey API key
      */
     public void setApiKey(String apiKey) {
-        for (com.pydio.cells.openapi.auth.Authentication auth : authentications.values()) {
-            if (auth instanceof com.pydio.cells.openapi.auth.ApiKeyAuth) {
-                ((com.pydio.cells.openapi.auth.ApiKeyAuth) auth).setApiKey(apiKey);
+        for (Authentication auth : authentications.values()) {
+            if (auth instanceof ApiKeyAuth) {
+                ((ApiKeyAuth) auth).setApiKey(apiKey);
                 return;
             }
         }
@@ -313,8 +316,8 @@ public class ApiClient {
      * @param apiKeyPrefix API key prefix
      */
     public void setApiKeyPrefix(String apiKeyPrefix) {
-        for (com.pydio.cells.openapi.auth.Authentication auth : authentications.values()) {
-            if (auth instanceof com.pydio.cells.openapi.auth.ApiKeyAuth) {
+        for (Authentication auth : authentications.values()) {
+            if (auth instanceof ApiKeyAuth) {
                 ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
                 return;
             }
@@ -328,8 +331,8 @@ public class ApiClient {
      * @param accessToken Access token
      */
     public void setAccessToken(String accessToken) {
-        for (com.pydio.cells.openapi.auth.Authentication auth : authentications.values()) {
-            if (auth instanceof com.pydio.cells.openapi.auth.OAuth) {
+        for (Authentication auth : authentications.values()) {
+            if (auth instanceof OAuth) {
                 ((OAuth) auth).setAccessToken(accessToken);
                 return;
             }
@@ -515,13 +518,13 @@ public class ApiClient {
      * @param value The value of the parameter.
      * @return A list containing a single {@code Pair} object.
      */
-    public List<com.pydio.cells.openapi.Pair> parameterToPair(String name, Object value) {
-        List<com.pydio.cells.openapi.Pair> params = new ArrayList<com.pydio.cells.openapi.Pair>();
+    public List<Pair> parameterToPair(String name, Object value) {
+        List<Pair> params = new ArrayList<Pair>();
 
         // preconditions
         if (name == null || name.isEmpty() || value == null || value instanceof Collection) return params;
 
-        params.add(new com.pydio.cells.openapi.Pair(name, parameterToString(value)));
+        params.add(new Pair(name, parameterToString(value)));
         return params;
     }
 
@@ -535,8 +538,8 @@ public class ApiClient {
      * @param value The value of the parameter.
      * @return A list of {@code Pair} objects.
      */
-    public List<com.pydio.cells.openapi.Pair> parameterToPairs(String collectionFormat, String name, Collection value) {
-        List<com.pydio.cells.openapi.Pair> params = new ArrayList<com.pydio.cells.openapi.Pair>();
+    public List<Pair> parameterToPairs(String collectionFormat, String name, Collection value) {
+        List<Pair> params = new ArrayList<Pair>();
 
         // preconditions
         if (name == null || name.isEmpty() || value == null || value.isEmpty()) {
@@ -546,7 +549,7 @@ public class ApiClient {
         // create the params based on the collection format
         if ("multi".equals(collectionFormat)) {
             for (Object item : value) {
-                params.add(new com.pydio.cells.openapi.Pair(name, escapeString(parameterToString(item))));
+                params.add(new Pair(name, escapeString(parameterToString(item))));
             }
             return params;
         }
@@ -570,7 +573,7 @@ public class ApiClient {
             sb.append(escapeString(parameterToString(item)));
         }
 
-        params.add(new com.pydio.cells.openapi.Pair(name, sb.substring(delimiter.length())));
+        params.add(new Pair(name, sb.substring(delimiter.length())));
 
         return params;
     }
@@ -666,11 +669,11 @@ public class ApiClient {
      * @param response HTTP response
      * @param returnType The type of the Java object
      * @return The deserialized Java object
-     * @throws com.pydio.cells.openapi.ApiException If fail to deserialize response body, i.e. cannot read response body
+     * @throws ApiException If fail to deserialize response body, i.e. cannot read response body
      *   or the Content-Type of the response is not supported.
      */
     @SuppressWarnings("unchecked")
-    public <T> T deserialize(Response response, Type returnType) throws com.pydio.cells.openapi.ApiException {
+    public <T> T deserialize(Response response, Type returnType) throws ApiException {
         if (response == null || returnType == null) {
             return null;
         }
@@ -680,7 +683,7 @@ public class ApiClient {
             try {
                 return (T) response.body().bytes();
             } catch (IOException e) {
-                throw new com.pydio.cells.openapi.ApiException(e);
+                throw new ApiException(e);
             }
         } else if (returnType.equals(File.class)) {
             // Handle file downloading.
@@ -694,7 +697,7 @@ public class ApiClient {
             else
                 respBody = null;
         } catch (IOException e) {
-            throw new com.pydio.cells.openapi.ApiException(e);
+            throw new ApiException(e);
         }
 
         if (respBody == null || "".equals(respBody)) {
@@ -712,7 +715,7 @@ public class ApiClient {
             // Expecting string, return the raw response body.
             return (T) respBody;
         } else {
-            throw new com.pydio.cells.openapi.ApiException(
+            throw new ApiException(
                     "Content type \"" + contentType + "\" is not supported for type: " + returnType,
                     response.code(),
                     response.headers().toMultimap(),
@@ -727,9 +730,9 @@ public class ApiClient {
      * @param obj The Java object
      * @param contentType The request Content-Type
      * @return The serialized request body
-     * @throws com.pydio.cells.openapi.ApiException If fail to serialize the given object
+     * @throws ApiException If fail to serialize the given object
      */
-    public RequestBody serialize(Object obj, String contentType) throws com.pydio.cells.openapi.ApiException {
+    public RequestBody serialize(Object obj, String contentType) throws ApiException {
         if (obj instanceof byte[]) {
             // Binary (byte array) body parameter support.
             return RequestBody.create(MediaType.parse(contentType), (byte[]) obj);
@@ -745,7 +748,7 @@ public class ApiClient {
             }
             return RequestBody.create(MediaType.parse(contentType), content);
         } else {
-            throw new com.pydio.cells.openapi.ApiException("Content type \"" + contentType + "\" is not supported");
+            throw new ApiException("Content type \"" + contentType + "\" is not supported");
         }
     }
 
@@ -753,10 +756,10 @@ public class ApiClient {
      * Download file from the given response.
      *
      * @param response An instance of the Response object
-     * @throws com.pydio.cells.openapi.ApiException If fail to read file content from response and write to disk
+     * @throws ApiException If fail to read file content from response and write to disk
      * @return Downloaded file
      */
-    public File downloadFileFromResponse(Response response) throws com.pydio.cells.openapi.ApiException {
+    public File downloadFileFromResponse(Response response) throws ApiException {
         try {
             File file = prepareDownloadFile(response);
             BufferedSink sink = Okio.buffer(Okio.sink(file));
@@ -764,7 +767,7 @@ public class ApiClient {
             sink.close();
             return file;
         } catch (IOException e) {
-            throw new com.pydio.cells.openapi.ApiException(e);
+            throw new ApiException(e);
         }
     }
 
@@ -806,9 +809,9 @@ public class ApiClient {
         }
 
         if (tempFolderPath == null)
-            return File.createTempFile(prefix, suffix);
+            return Files.createTempFile(prefix, suffix).toFile();
         else
-            return File.createTempFile(prefix, suffix, new File(tempFolderPath));
+            return Files.createTempFile(Paths.get(tempFolderPath), prefix, suffix).toFile();
     }
 
     /**
@@ -816,10 +819,10 @@ public class ApiClient {
      *
      * @param <T> Type
      * @param call An instance of the Call object
-     * @throws com.pydio.cells.openapi.ApiException If fail to execute the call
+     * @throws ApiException If fail to execute the call
      * @return ApiResponse&lt;T&gt;
      */
-    public <T> com.pydio.cells.openapi.ApiResponse<T> execute(Call call) throws com.pydio.cells.openapi.ApiException {
+    public <T> ApiResponse<T> execute(Call call) throws ApiException {
         return execute(call, null);
     }
 
@@ -832,26 +835,26 @@ public class ApiClient {
      * @return ApiResponse object containing response status, headers and
      *   data, which is a Java object deserialized from response body and would be null
      *   when returnType is null.
-     * @throws com.pydio.cells.openapi.ApiException If fail to execute the call
+     * @throws ApiException If fail to execute the call
      */
-    public <T> com.pydio.cells.openapi.ApiResponse<T> execute(Call call, Type returnType) throws com.pydio.cells.openapi.ApiException {
+    public <T> ApiResponse<T> execute(Call call, Type returnType) throws ApiException {
         try {
             Response response = call.execute();
             T data = handleResponse(response, returnType);
             return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
         } catch (IOException e) {
-            throw new com.pydio.cells.openapi.ApiException(e);
+            throw new ApiException(e);
         }
     }
 
     /**
-     * {@link #executeAsync(Call, Type, com.pydio.cells.openapi.ApiCallback)}
+     * {@link #executeAsync(Call, Type, ApiCallback)}
      *
      * @param <T> Type
      * @param call An instance of the Call object
      * @param callback ApiCallback&lt;T&gt;
      */
-    public <T> void executeAsync(Call call, com.pydio.cells.openapi.ApiCallback<T> callback) {
+    public <T> void executeAsync(Call call, ApiCallback<T> callback) {
         executeAsync(call, null, callback);
     }
 
@@ -869,7 +872,7 @@ public class ApiClient {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                callback.onFailure(new com.pydio.cells.openapi.ApiException(e), 0, null);
+                callback.onFailure(new ApiException(e), 0, null);
             }
 
             @Override
@@ -877,7 +880,7 @@ public class ApiClient {
                 T result;
                 try {
                     result = (T) handleResponse(response, returnType);
-                } catch (com.pydio.cells.openapi.ApiException e) {
+                } catch (ApiException e) {
                     callback.onFailure(e, response.code(), response.headers().toMultimap());
                     return;
                 }
@@ -892,11 +895,11 @@ public class ApiClient {
      * @param <T> Type
      * @param response Response
      * @param returnType Return type
-     * @throws com.pydio.cells.openapi.ApiException If the response has a unsuccessful status code or
+     * @throws ApiException If the response has a unsuccessful status code or
      *   fail to deserialize the response body
      * @return Type
      */
-    public <T> T handleResponse(Response response, Type returnType) throws com.pydio.cells.openapi.ApiException {
+    public <T> T handleResponse(Response response, Type returnType) throws ApiException {
         if (response.isSuccessful()) {
             if (returnType == null || response.code() == 204) {
                 // returning null if the returnType is not defined,
@@ -905,7 +908,7 @@ public class ApiClient {
                     try {
                         response.body().close();
                     } catch (IOException e) {
-                        throw new com.pydio.cells.openapi.ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+                        throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
                     }
                 }
                 return null;
@@ -918,10 +921,10 @@ public class ApiClient {
                 try {
                     respBody = response.body().string();
                 } catch (IOException e) {
-                    throw new com.pydio.cells.openapi.ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+                    throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
                 }
             }
-            throw new com.pydio.cells.openapi.ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
+            throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
         }
     }
 
@@ -938,9 +941,9 @@ public class ApiClient {
      * @param authNames The authentications to apply
      * @param progressRequestListener Progress request listener
      * @return The HTTP call
-     * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object
+     * @throws ApiException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, List<com.pydio.cells.openapi.Pair> queryParams, List<com.pydio.cells.openapi.Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws com.pydio.cells.openapi.ApiException {
+    public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
 
         return httpClient.newCall(request);
@@ -958,10 +961,10 @@ public class ApiClient {
      * @param formParams The form parameters
      * @param authNames The authentications to apply
      * @param progressRequestListener Progress request listener
-     * @return The HTTP request 
-     * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object
+     * @return The HTTP request
+     * @throws ApiException If fail to serialize the request body object
      */
-    public Request buildRequest(String path, String method, List<com.pydio.cells.openapi.Pair> queryParams, List<com.pydio.cells.openapi.Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         updateParamsForAuth(authNames, queryParams, headerParams);
 
         final String url = buildUrl(path, queryParams, collectionQueryParams);
@@ -1013,14 +1016,14 @@ public class ApiClient {
      * @param collectionQueryParams The collection query parameters
      * @return The full URL
      */
-    public String buildUrl(String path, List<com.pydio.cells.openapi.Pair> queryParams, List<com.pydio.cells.openapi.Pair> collectionQueryParams) {
+    public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
         url.append(basePath).append(path);
 
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"
             String prefix = path.contains("?") ? "&" : "?";
-            for (com.pydio.cells.openapi.Pair param : queryParams) {
+            for (Pair param : queryParams) {
                 if (param.getValue() != null) {
                     if (prefix != null) {
                         url.append(prefix);
@@ -1036,7 +1039,7 @@ public class ApiClient {
 
         if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
             String prefix = url.toString().contains("?") ? "&" : "?";
-            for (com.pydio.cells.openapi.Pair param : collectionQueryParams) {
+            for (Pair param : collectionQueryParams) {
                 if (param.getValue() != null) {
                     if (prefix != null) {
                         url.append(prefix);

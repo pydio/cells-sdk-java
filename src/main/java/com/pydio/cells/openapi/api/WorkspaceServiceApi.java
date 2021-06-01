@@ -128,8 +128,8 @@ public class WorkspaceServiceApi {
      * @return RestDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDeleteResponse deleteWorkspace(String slug) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDeleteResponse> resp = deleteWorkspaceWithHttpInfo(slug);
+    public RestDeleteResponse deleteWorkspace(String slug) throws ApiException {
+        ApiResponse<RestDeleteResponse> resp = deleteWorkspaceWithHttpInfo(slug);
         return resp.getData();
     }
 
@@ -140,9 +140,9 @@ public class WorkspaceServiceApi {
      * @return ApiResponse&lt;RestDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDeleteResponse> deleteWorkspaceWithHttpInfo(String slug) throws ApiException {
+    public ApiResponse<RestDeleteResponse> deleteWorkspaceWithHttpInfo(String slug) throws ApiException {
         com.squareup.okhttp.Call call = deleteWorkspaceValidateBeforeCall(slug, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDeleteResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDeleteResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -154,7 +154,7 @@ public class WorkspaceServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteWorkspaceAsync(String slug, final ApiCallback<com.pydio.cells.openapi.model.RestDeleteResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteWorkspaceAsync(String slug, final ApiCallback<RestDeleteResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -189,7 +189,7 @@ public class WorkspaceServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putWorkspaceCall(String slug, com.pydio.cells.openapi.model.IdmWorkspace body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putWorkspaceCall(String slug, IdmWorkspace body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -232,7 +232,7 @@ public class WorkspaceServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putWorkspaceValidateBeforeCall(String slug, com.pydio.cells.openapi.model.IdmWorkspace body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putWorkspaceValidateBeforeCall(String slug, IdmWorkspace body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'slug' is set
         if (slug == null) {
@@ -258,8 +258,8 @@ public class WorkspaceServiceApi {
      * @return IdmWorkspace
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmWorkspace putWorkspace(String slug, com.pydio.cells.openapi.model.IdmWorkspace body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmWorkspace> resp = putWorkspaceWithHttpInfo(slug, body);
+    public IdmWorkspace putWorkspace(String slug, IdmWorkspace body) throws ApiException {
+        ApiResponse<IdmWorkspace> resp = putWorkspaceWithHttpInfo(slug, body);
         return resp.getData();
     }
 
@@ -271,9 +271,9 @@ public class WorkspaceServiceApi {
      * @return ApiResponse&lt;IdmWorkspace&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmWorkspace> putWorkspaceWithHttpInfo(String slug, com.pydio.cells.openapi.model.IdmWorkspace body) throws ApiException {
+    public ApiResponse<IdmWorkspace> putWorkspaceWithHttpInfo(String slug, IdmWorkspace body) throws ApiException {
         com.squareup.okhttp.Call call = putWorkspaceValidateBeforeCall(slug, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmWorkspace>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmWorkspace>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -286,7 +286,7 @@ public class WorkspaceServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putWorkspaceAsync(String slug, com.pydio.cells.openapi.model.IdmWorkspace body, final ApiCallback<com.pydio.cells.openapi.model.IdmWorkspace> callback) throws ApiException {
+    public com.squareup.okhttp.Call putWorkspaceAsync(String slug, IdmWorkspace body, final ApiCallback<IdmWorkspace> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -320,7 +320,7 @@ public class WorkspaceServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call searchWorkspacesCall(com.pydio.cells.openapi.model.RestSearchWorkspaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchWorkspacesCall(RestSearchWorkspaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -362,7 +362,7 @@ public class WorkspaceServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call searchWorkspacesValidateBeforeCall(com.pydio.cells.openapi.model.RestSearchWorkspaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchWorkspacesValidateBeforeCall(RestSearchWorkspaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -382,8 +382,8 @@ public class WorkspaceServiceApi {
      * @return RestWorkspaceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestWorkspaceCollection searchWorkspaces(com.pydio.cells.openapi.model.RestSearchWorkspaceRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestWorkspaceCollection> resp = searchWorkspacesWithHttpInfo(body);
+    public RestWorkspaceCollection searchWorkspaces(RestSearchWorkspaceRequest body) throws ApiException {
+        ApiResponse<RestWorkspaceCollection> resp = searchWorkspacesWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -394,9 +394,9 @@ public class WorkspaceServiceApi {
      * @return ApiResponse&lt;RestWorkspaceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestWorkspaceCollection> searchWorkspacesWithHttpInfo(com.pydio.cells.openapi.model.RestSearchWorkspaceRequest body) throws ApiException {
+    public ApiResponse<RestWorkspaceCollection> searchWorkspacesWithHttpInfo(RestSearchWorkspaceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchWorkspacesValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestWorkspaceCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestWorkspaceCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -408,7 +408,7 @@ public class WorkspaceServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchWorkspacesAsync(RestSearchWorkspaceRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestWorkspaceCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchWorkspacesAsync(RestSearchWorkspaceRequest body, final ApiCallback<RestWorkspaceCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

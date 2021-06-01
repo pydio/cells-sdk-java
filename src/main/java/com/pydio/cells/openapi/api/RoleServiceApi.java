@@ -127,8 +127,8 @@ public class RoleServiceApi {
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmRole deleteRole(String uuid) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmRole> resp = deleteRoleWithHttpInfo(uuid);
+    public IdmRole deleteRole(String uuid) throws ApiException {
+        ApiResponse<IdmRole> resp = deleteRoleWithHttpInfo(uuid);
         return resp.getData();
     }
 
@@ -139,9 +139,9 @@ public class RoleServiceApi {
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmRole> deleteRoleWithHttpInfo(String uuid) throws ApiException {
+    public ApiResponse<IdmRole> deleteRoleWithHttpInfo(String uuid) throws ApiException {
         com.squareup.okhttp.Call call = deleteRoleValidateBeforeCall(uuid, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmRole>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -153,7 +153,7 @@ public class RoleServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteRoleAsync(String uuid, final ApiCallback<com.pydio.cells.openapi.model.IdmRole> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteRoleAsync(String uuid, final ApiCallback<IdmRole> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -175,7 +175,7 @@ public class RoleServiceApi {
         }
 
         com.squareup.okhttp.Call call = deleteRoleValidateBeforeCall(uuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmRole>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -282,8 +282,8 @@ public class RoleServiceApi {
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmRole getRole(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmRole> resp = getRoleWithHttpInfo(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride);
+    public IdmRole getRole(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride) throws ApiException {
+        ApiResponse<IdmRole> resp = getRoleWithHttpInfo(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride);
         return resp.getData();
     }
 
@@ -302,9 +302,9 @@ public class RoleServiceApi {
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmRole> getRoleWithHttpInfo(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride) throws ApiException {
+    public ApiResponse<IdmRole> getRoleWithHttpInfo(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride) throws ApiException {
         com.squareup.okhttp.Call call = getRoleValidateBeforeCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmRole>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -324,7 +324,7 @@ public class RoleServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRoleAsync(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ApiCallback<com.pydio.cells.openapi.model.IdmRole> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRoleAsync(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ApiCallback<IdmRole> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -346,7 +346,7 @@ public class RoleServiceApi {
         }
 
         com.squareup.okhttp.Call call = getRoleValidateBeforeCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmRole>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -358,7 +358,7 @@ public class RoleServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call searchRolesCall(com.pydio.cells.openapi.model.RestSearchRoleRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchRolesCall(RestSearchRoleRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -400,7 +400,7 @@ public class RoleServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call searchRolesValidateBeforeCall(com.pydio.cells.openapi.model.RestSearchRoleRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchRolesValidateBeforeCall(RestSearchRoleRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -420,8 +420,8 @@ public class RoleServiceApi {
      * @return RestRolesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestRolesCollection searchRoles(com.pydio.cells.openapi.model.RestSearchRoleRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestRolesCollection> resp = searchRolesWithHttpInfo(body);
+    public RestRolesCollection searchRoles(RestSearchRoleRequest body) throws ApiException {
+        ApiResponse<RestRolesCollection> resp = searchRolesWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -432,9 +432,9 @@ public class RoleServiceApi {
      * @return ApiResponse&lt;RestRolesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestRolesCollection> searchRolesWithHttpInfo(com.pydio.cells.openapi.model.RestSearchRoleRequest body) throws ApiException {
+    public ApiResponse<RestRolesCollection> searchRolesWithHttpInfo(RestSearchRoleRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchRolesValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestRolesCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestRolesCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -446,7 +446,7 @@ public class RoleServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchRolesAsync(RestSearchRoleRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestRolesCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchRolesAsync(RestSearchRoleRequest body, final ApiCallback<RestRolesCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -481,7 +481,7 @@ public class RoleServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call setRoleCall(String uuid, com.pydio.cells.openapi.model.IdmRole body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call setRoleCall(String uuid, IdmRole body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -524,7 +524,7 @@ public class RoleServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call setRoleValidateBeforeCall(String uuid, com.pydio.cells.openapi.model.IdmRole body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call setRoleValidateBeforeCall(String uuid, IdmRole body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
@@ -550,8 +550,8 @@ public class RoleServiceApi {
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmRole setRole(String uuid, com.pydio.cells.openapi.model.IdmRole body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmRole> resp = setRoleWithHttpInfo(uuid, body);
+    public IdmRole setRole(String uuid, IdmRole body) throws ApiException {
+        ApiResponse<IdmRole> resp = setRoleWithHttpInfo(uuid, body);
         return resp.getData();
     }
 
@@ -563,9 +563,9 @@ public class RoleServiceApi {
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmRole> setRoleWithHttpInfo(String uuid, com.pydio.cells.openapi.model.IdmRole body) throws ApiException {
+    public ApiResponse<IdmRole> setRoleWithHttpInfo(String uuid, IdmRole body) throws ApiException {
         com.squareup.okhttp.Call call = setRoleValidateBeforeCall(uuid, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmRole>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -578,7 +578,7 @@ public class RoleServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call setRoleAsync(String uuid, com.pydio.cells.openapi.model.IdmRole body, final ApiCallback<com.pydio.cells.openapi.model.IdmRole> callback) throws ApiException {
+    public com.squareup.okhttp.Call setRoleAsync(String uuid, IdmRole body, final ApiCallback<IdmRole> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

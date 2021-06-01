@@ -14,27 +14,31 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmWorkspaceSingleQuery;
+import com.pydio.cells.openapi.model.RestResourcePolicyQuery;
+import com.pydio.cells.openapi.model.ServiceOperationType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestSearchWorkspaceRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestSearchWorkspaceRequest {
   @SerializedName("Queries")
-  private List<com.pydio.cells.openapi.model.IdmWorkspaceSingleQuery> queries = null;
+  private List<IdmWorkspaceSingleQuery> queries = null;
 
   @SerializedName("ResourcePolicyQuery")
-  private com.pydio.cells.openapi.model.RestResourcePolicyQuery resourcePolicyQuery = null;
+  private RestResourcePolicyQuery resourcePolicyQuery = null;
 
   @SerializedName("Offset")
   private String offset = null;
@@ -51,14 +55,14 @@ public class RestSearchWorkspaceRequest {
   @SerializedName("Operation")
   private ServiceOperationType operation = null;
 
-  public RestSearchWorkspaceRequest queries(List<com.pydio.cells.openapi.model.IdmWorkspaceSingleQuery> queries) {
+  public RestSearchWorkspaceRequest queries(List<IdmWorkspaceSingleQuery> queries) {
     this.queries = queries;
     return this;
   }
 
-  public RestSearchWorkspaceRequest addQueriesItem(com.pydio.cells.openapi.model.IdmWorkspaceSingleQuery queriesItem) {
+  public RestSearchWorkspaceRequest addQueriesItem(IdmWorkspaceSingleQuery queriesItem) {
     if (this.queries == null) {
-      this.queries = new ArrayList<com.pydio.cells.openapi.model.IdmWorkspaceSingleQuery>();
+      this.queries = new ArrayList<IdmWorkspaceSingleQuery>();
     }
     this.queries.add(queriesItem);
     return this;
@@ -69,7 +73,7 @@ public class RestSearchWorkspaceRequest {
    * @return queries
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmWorkspaceSingleQuery> getQueries() {
+  public List<IdmWorkspaceSingleQuery> getQueries() {
     return queries;
   }
 
@@ -77,7 +81,7 @@ public class RestSearchWorkspaceRequest {
     this.queries = queries;
   }
 
-  public RestSearchWorkspaceRequest resourcePolicyQuery(com.pydio.cells.openapi.model.RestResourcePolicyQuery resourcePolicyQuery) {
+  public RestSearchWorkspaceRequest resourcePolicyQuery(RestResourcePolicyQuery resourcePolicyQuery) {
     this.resourcePolicyQuery = resourcePolicyQuery;
     return this;
   }
@@ -87,7 +91,7 @@ public class RestSearchWorkspaceRequest {
    * @return resourcePolicyQuery
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.RestResourcePolicyQuery getResourcePolicyQuery() {
+  public RestResourcePolicyQuery getResourcePolicyQuery() {
     return resourcePolicyQuery;
   }
 

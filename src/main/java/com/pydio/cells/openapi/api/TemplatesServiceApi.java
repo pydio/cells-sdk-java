@@ -23,10 +23,11 @@ import com.pydio.cells.openapi.ProgressRequestBody;
 import com.pydio.cells.openapi.ProgressResponseBody;
 
 import com.google.gson.reflect.TypeToken;
-import com.pydio.cells.openapi.model.RestListTemplatesResponse;
 
 import java.io.IOException;
 
+
+import com.pydio.cells.openapi.model.RestListTemplatesResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -116,8 +117,8 @@ public class TemplatesServiceApi {
      * @return RestListTemplatesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestListTemplatesResponse listTemplates() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestListTemplatesResponse> resp = listTemplatesWithHttpInfo();
+    public RestListTemplatesResponse listTemplates() throws ApiException {
+        ApiResponse<RestListTemplatesResponse> resp = listTemplatesWithHttpInfo();
         return resp.getData();
     }
 
@@ -127,9 +128,9 @@ public class TemplatesServiceApi {
      * @return ApiResponse&lt;RestListTemplatesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestListTemplatesResponse> listTemplatesWithHttpInfo() throws ApiException {
+    public ApiResponse<RestListTemplatesResponse> listTemplatesWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = listTemplatesValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestListTemplatesResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestListTemplatesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -140,7 +141,7 @@ public class TemplatesServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listTemplatesAsync(final ApiCallback<com.pydio.cells.openapi.model.RestListTemplatesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listTemplatesAsync(final ApiCallback<RestListTemplatesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

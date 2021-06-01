@@ -71,7 +71,7 @@ public class JobsServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listTasksLogsCall(com.pydio.cells.openapi.model.LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listTasksLogsCall(LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -113,7 +113,7 @@ public class JobsServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listTasksLogsValidateBeforeCall(com.pydio.cells.openapi.model.LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listTasksLogsValidateBeforeCall(LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -133,8 +133,8 @@ public class JobsServiceApi {
      * @return RestLogMessageCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestLogMessageCollection listTasksLogs(com.pydio.cells.openapi.model.LogListLogRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestLogMessageCollection> resp = listTasksLogsWithHttpInfo(body);
+    public RestLogMessageCollection listTasksLogs(LogListLogRequest body) throws ApiException {
+        ApiResponse<RestLogMessageCollection> resp = listTasksLogsWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -145,9 +145,9 @@ public class JobsServiceApi {
      * @return ApiResponse&lt;RestLogMessageCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestLogMessageCollection> listTasksLogsWithHttpInfo(com.pydio.cells.openapi.model.LogListLogRequest body) throws ApiException {
+    public ApiResponse<RestLogMessageCollection> listTasksLogsWithHttpInfo(LogListLogRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listTasksLogsValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestLogMessageCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestLogMessageCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -159,7 +159,7 @@ public class JobsServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listTasksLogsAsync(LogListLogRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestLogMessageCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call listTasksLogsAsync(LogListLogRequest body, final ApiCallback<RestLogMessageCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -193,7 +193,7 @@ public class JobsServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call userControlJobCall(com.pydio.cells.openapi.model.JobsCtrlCommand body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call userControlJobCall(JobsCtrlCommand body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -235,7 +235,7 @@ public class JobsServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call userControlJobValidateBeforeCall(com.pydio.cells.openapi.model.JobsCtrlCommand body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call userControlJobValidateBeforeCall(JobsCtrlCommand body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -255,8 +255,8 @@ public class JobsServiceApi {
      * @return JobsCtrlCommandResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.JobsCtrlCommandResponse userControlJob(com.pydio.cells.openapi.model.JobsCtrlCommand body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.JobsCtrlCommandResponse> resp = userControlJobWithHttpInfo(body);
+    public JobsCtrlCommandResponse userControlJob(JobsCtrlCommand body) throws ApiException {
+        ApiResponse<JobsCtrlCommandResponse> resp = userControlJobWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -267,9 +267,9 @@ public class JobsServiceApi {
      * @return ApiResponse&lt;JobsCtrlCommandResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.JobsCtrlCommandResponse> userControlJobWithHttpInfo(com.pydio.cells.openapi.model.JobsCtrlCommand body) throws ApiException {
+    public ApiResponse<JobsCtrlCommandResponse> userControlJobWithHttpInfo(JobsCtrlCommand body) throws ApiException {
         com.squareup.okhttp.Call call = userControlJobValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.JobsCtrlCommandResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<JobsCtrlCommandResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -281,7 +281,7 @@ public class JobsServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call userControlJobAsync(JobsCtrlCommand body, final ApiCallback<com.pydio.cells.openapi.model.JobsCtrlCommandResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call userControlJobAsync(JobsCtrlCommand body, final ApiCallback<JobsCtrlCommandResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -316,7 +316,7 @@ public class JobsServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call userCreateJobCall(String jobName, com.pydio.cells.openapi.model.RestUserJobRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call userCreateJobCall(String jobName, RestUserJobRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -359,7 +359,7 @@ public class JobsServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call userCreateJobValidateBeforeCall(String jobName, com.pydio.cells.openapi.model.RestUserJobRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call userCreateJobValidateBeforeCall(String jobName, RestUserJobRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'jobName' is set
         if (jobName == null) {
@@ -385,8 +385,8 @@ public class JobsServiceApi {
      * @return RestUserJobResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestUserJobResponse userCreateJob(String jobName, com.pydio.cells.openapi.model.RestUserJobRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestUserJobResponse> resp = userCreateJobWithHttpInfo(jobName, body);
+    public RestUserJobResponse userCreateJob(String jobName, RestUserJobRequest body) throws ApiException {
+        ApiResponse<RestUserJobResponse> resp = userCreateJobWithHttpInfo(jobName, body);
         return resp.getData();
     }
 
@@ -398,9 +398,9 @@ public class JobsServiceApi {
      * @return ApiResponse&lt;RestUserJobResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestUserJobResponse> userCreateJobWithHttpInfo(String jobName, com.pydio.cells.openapi.model.RestUserJobRequest body) throws ApiException {
+    public ApiResponse<RestUserJobResponse> userCreateJobWithHttpInfo(String jobName, RestUserJobRequest body) throws ApiException {
         com.squareup.okhttp.Call call = userCreateJobValidateBeforeCall(jobName, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestUserJobResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestUserJobResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -413,7 +413,7 @@ public class JobsServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call userCreateJobAsync(String jobName, RestUserJobRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestUserJobResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call userCreateJobAsync(String jobName, RestUserJobRequest body, final ApiCallback<RestUserJobResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -447,7 +447,7 @@ public class JobsServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call userDeleteTasksCall(com.pydio.cells.openapi.model.JobsDeleteTasksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call userDeleteTasksCall(JobsDeleteTasksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -489,7 +489,7 @@ public class JobsServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call userDeleteTasksValidateBeforeCall(com.pydio.cells.openapi.model.JobsDeleteTasksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call userDeleteTasksValidateBeforeCall(JobsDeleteTasksRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -509,8 +509,8 @@ public class JobsServiceApi {
      * @return JobsDeleteTasksResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.JobsDeleteTasksResponse userDeleteTasks(com.pydio.cells.openapi.model.JobsDeleteTasksRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.JobsDeleteTasksResponse> resp = userDeleteTasksWithHttpInfo(body);
+    public JobsDeleteTasksResponse userDeleteTasks(JobsDeleteTasksRequest body) throws ApiException {
+        ApiResponse<JobsDeleteTasksResponse> resp = userDeleteTasksWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -521,9 +521,9 @@ public class JobsServiceApi {
      * @return ApiResponse&lt;JobsDeleteTasksResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.JobsDeleteTasksResponse> userDeleteTasksWithHttpInfo(com.pydio.cells.openapi.model.JobsDeleteTasksRequest body) throws ApiException {
+    public ApiResponse<JobsDeleteTasksResponse> userDeleteTasksWithHttpInfo(JobsDeleteTasksRequest body) throws ApiException {
         com.squareup.okhttp.Call call = userDeleteTasksValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.JobsDeleteTasksResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<JobsDeleteTasksResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -535,7 +535,7 @@ public class JobsServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call userDeleteTasksAsync(JobsDeleteTasksRequest body, final ApiCallback<com.pydio.cells.openapi.model.JobsDeleteTasksResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call userDeleteTasksAsync(JobsDeleteTasksRequest body, final ApiCallback<JobsDeleteTasksResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -569,7 +569,7 @@ public class JobsServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call userListJobsCall(com.pydio.cells.openapi.model.JobsListJobsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call userListJobsCall(JobsListJobsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -611,7 +611,7 @@ public class JobsServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call userListJobsValidateBeforeCall(com.pydio.cells.openapi.model.JobsListJobsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call userListJobsValidateBeforeCall(JobsListJobsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -631,8 +631,8 @@ public class JobsServiceApi {
      * @return RestUserJobsCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestUserJobsCollection userListJobs(com.pydio.cells.openapi.model.JobsListJobsRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestUserJobsCollection> resp = userListJobsWithHttpInfo(body);
+    public RestUserJobsCollection userListJobs(JobsListJobsRequest body) throws ApiException {
+        ApiResponse<RestUserJobsCollection> resp = userListJobsWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -643,9 +643,9 @@ public class JobsServiceApi {
      * @return ApiResponse&lt;RestUserJobsCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestUserJobsCollection> userListJobsWithHttpInfo(com.pydio.cells.openapi.model.JobsListJobsRequest body) throws ApiException {
+    public ApiResponse<RestUserJobsCollection> userListJobsWithHttpInfo(JobsListJobsRequest body) throws ApiException {
         com.squareup.okhttp.Call call = userListJobsValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestUserJobsCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestUserJobsCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -657,7 +657,7 @@ public class JobsServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call userListJobsAsync(JobsListJobsRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestUserJobsCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call userListJobsAsync(JobsListJobsRequest body, final ApiCallback<RestUserJobsCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

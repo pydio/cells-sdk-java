@@ -126,8 +126,8 @@ public class GraphServiceApi {
      * @return RestRelationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestRelationResponse relation(String userId) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestRelationResponse> resp = relationWithHttpInfo(userId);
+    public RestRelationResponse relation(String userId) throws ApiException {
+        ApiResponse<RestRelationResponse> resp = relationWithHttpInfo(userId);
         return resp.getData();
     }
 
@@ -138,9 +138,9 @@ public class GraphServiceApi {
      * @return ApiResponse&lt;RestRelationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestRelationResponse> relationWithHttpInfo(String userId) throws ApiException {
+    public ApiResponse<RestRelationResponse> relationWithHttpInfo(String userId) throws ApiException {
         com.squareup.okhttp.Call call = relationValidateBeforeCall(userId, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestRelationResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestRelationResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -152,7 +152,7 @@ public class GraphServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call relationAsync(String userId, final ApiCallback<com.pydio.cells.openapi.model.RestRelationResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call relationAsync(String userId, final ApiCallback<RestRelationResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -249,8 +249,8 @@ public class GraphServiceApi {
      * @return RestUserStateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestUserStateResponse userState(String segment) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestUserStateResponse> resp = userStateWithHttpInfo(segment);
+    public RestUserStateResponse userState(String segment) throws ApiException {
+        ApiResponse<RestUserStateResponse> resp = userStateWithHttpInfo(segment);
         return resp.getData();
     }
 
@@ -261,9 +261,9 @@ public class GraphServiceApi {
      * @return ApiResponse&lt;RestUserStateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestUserStateResponse> userStateWithHttpInfo(String segment) throws ApiException {
+    public ApiResponse<RestUserStateResponse> userStateWithHttpInfo(String segment) throws ApiException {
         com.squareup.okhttp.Call call = userStateValidateBeforeCall(segment, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestUserStateResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestUserStateResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -275,7 +275,7 @@ public class GraphServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call userStateAsync(String segment, final ApiCallback<com.pydio.cells.openapi.model.RestUserStateResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call userStateAsync(String segment, final ApiCallback<RestUserStateResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

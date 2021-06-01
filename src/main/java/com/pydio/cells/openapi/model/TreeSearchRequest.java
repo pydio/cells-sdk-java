@@ -14,21 +14,24 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.TreeQuery;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * TreeSearchRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class TreeSearchRequest {
   @SerializedName("Query")
-  private com.pydio.cells.openapi.model.TreeQuery query = null;
+  private TreeQuery query = null;
 
   @SerializedName("Size")
   private Integer size = null;
@@ -39,7 +42,7 @@ public class TreeSearchRequest {
   @SerializedName("Details")
   private Boolean details = null;
 
-  public TreeSearchRequest query(com.pydio.cells.openapi.model.TreeQuery query) {
+  public TreeSearchRequest query(TreeQuery query) {
     this.query = query;
     return this;
   }
@@ -49,7 +52,7 @@ public class TreeSearchRequest {
    * @return query
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeQuery getQuery() {
+  public TreeQuery getQuery() {
     return query;
   }
 

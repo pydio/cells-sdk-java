@@ -14,21 +14,30 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.JobsAction;
+import com.pydio.cells.openapi.model.JobsContextMetaFilter;
+import com.pydio.cells.openapi.model.JobsIdmSelector;
+import com.pydio.cells.openapi.model.JobsJobParameter;
+import com.pydio.cells.openapi.model.JobsNodesSelector;
+import com.pydio.cells.openapi.model.JobsSchedule;
+import com.pydio.cells.openapi.model.JobsTask;
+import com.pydio.cells.openapi.model.JobsUsersSelector;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * JobsJob
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class JobsJob {
   @SerializedName("ID")
   private String ID = null;
@@ -52,7 +61,7 @@ public class JobsJob {
   private List<String> eventNames = null;
 
   @SerializedName("Schedule")
-  private com.pydio.cells.openapi.model.JobsSchedule schedule = null;
+  private JobsSchedule schedule = null;
 
   @SerializedName("AutoStart")
   private Boolean autoStart = null;
@@ -70,19 +79,19 @@ public class JobsJob {
   private Boolean tasksSilentUpdate = null;
 
   @SerializedName("Tasks")
-  private List<com.pydio.cells.openapi.model.JobsTask> tasks = null;
+  private List<JobsTask> tasks = null;
 
   @SerializedName("NodeEventFilter")
   private JobsNodesSelector nodeEventFilter = null;
 
   @SerializedName("UserEventFilter")
-  private com.pydio.cells.openapi.model.JobsUsersSelector userEventFilter = null;
+  private JobsUsersSelector userEventFilter = null;
 
   @SerializedName("IdmFilter")
   private JobsIdmSelector idmFilter = null;
 
   @SerializedName("ContextMetaFilter")
-  private com.pydio.cells.openapi.model.JobsContextMetaFilter contextMetaFilter = null;
+  private JobsContextMetaFilter contextMetaFilter = null;
 
   @SerializedName("Parameters")
   private List<JobsJobParameter> parameters = null;
@@ -229,7 +238,7 @@ public class JobsJob {
     this.eventNames = eventNames;
   }
 
-  public JobsJob schedule(com.pydio.cells.openapi.model.JobsSchedule schedule) {
+  public JobsJob schedule(JobsSchedule schedule) {
     this.schedule = schedule;
     return this;
   }
@@ -239,7 +248,7 @@ public class JobsJob {
    * @return schedule
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsSchedule getSchedule() {
+  public JobsSchedule getSchedule() {
     return schedule;
   }
 
@@ -345,14 +354,14 @@ public class JobsJob {
     this.tasksSilentUpdate = tasksSilentUpdate;
   }
 
-  public JobsJob tasks(List<com.pydio.cells.openapi.model.JobsTask> tasks) {
+  public JobsJob tasks(List<JobsTask> tasks) {
     this.tasks = tasks;
     return this;
   }
 
-  public JobsJob addTasksItem(com.pydio.cells.openapi.model.JobsTask tasksItem) {
+  public JobsJob addTasksItem(JobsTask tasksItem) {
     if (this.tasks == null) {
-      this.tasks = new ArrayList<com.pydio.cells.openapi.model.JobsTask>();
+      this.tasks = new ArrayList<JobsTask>();
     }
     this.tasks.add(tasksItem);
     return this;
@@ -363,7 +372,7 @@ public class JobsJob {
    * @return tasks
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.JobsTask> getTasks() {
+  public List<JobsTask> getTasks() {
     return tasks;
   }
 
@@ -389,7 +398,7 @@ public class JobsJob {
     this.nodeEventFilter = nodeEventFilter;
   }
 
-  public JobsJob userEventFilter(com.pydio.cells.openapi.model.JobsUsersSelector userEventFilter) {
+  public JobsJob userEventFilter(JobsUsersSelector userEventFilter) {
     this.userEventFilter = userEventFilter;
     return this;
   }
@@ -399,7 +408,7 @@ public class JobsJob {
    * @return userEventFilter
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsUsersSelector getUserEventFilter() {
+  public JobsUsersSelector getUserEventFilter() {
     return userEventFilter;
   }
 
@@ -425,7 +434,7 @@ public class JobsJob {
     this.idmFilter = idmFilter;
   }
 
-  public JobsJob contextMetaFilter(com.pydio.cells.openapi.model.JobsContextMetaFilter contextMetaFilter) {
+  public JobsJob contextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
     this.contextMetaFilter = contextMetaFilter;
     return this;
   }
@@ -435,7 +444,7 @@ public class JobsJob {
    * @return contextMetaFilter
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsContextMetaFilter getContextMetaFilter() {
+  public JobsContextMetaFilter getContextMetaFilter() {
     return contextMetaFilter;
   }
 

@@ -134,8 +134,8 @@ public class ShareServiceApi {
      * @return RestDeleteCellResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDeleteCellResponse deleteCell(String uuid) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDeleteCellResponse> resp = deleteCellWithHttpInfo(uuid);
+    public RestDeleteCellResponse deleteCell(String uuid) throws ApiException {
+        ApiResponse<RestDeleteCellResponse> resp = deleteCellWithHttpInfo(uuid);
         return resp.getData();
     }
 
@@ -146,9 +146,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestDeleteCellResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDeleteCellResponse> deleteCellWithHttpInfo(String uuid) throws ApiException {
+    public ApiResponse<RestDeleteCellResponse> deleteCellWithHttpInfo(String uuid) throws ApiException {
         com.squareup.okhttp.Call call = deleteCellValidateBeforeCall(uuid, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDeleteCellResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDeleteCellResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -160,7 +160,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteCellAsync(String uuid, final ApiCallback<com.pydio.cells.openapi.model.RestDeleteCellResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteCellAsync(String uuid, final ApiCallback<RestDeleteCellResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -257,8 +257,8 @@ public class ShareServiceApi {
      * @return RestDeleteShareLinkResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDeleteShareLinkResponse deleteShareLink(String uuid) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDeleteShareLinkResponse> resp = deleteShareLinkWithHttpInfo(uuid);
+    public RestDeleteShareLinkResponse deleteShareLink(String uuid) throws ApiException {
+        ApiResponse<RestDeleteShareLinkResponse> resp = deleteShareLinkWithHttpInfo(uuid);
         return resp.getData();
     }
 
@@ -269,9 +269,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestDeleteShareLinkResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDeleteShareLinkResponse> deleteShareLinkWithHttpInfo(String uuid) throws ApiException {
+    public ApiResponse<RestDeleteShareLinkResponse> deleteShareLinkWithHttpInfo(String uuid) throws ApiException {
         com.squareup.okhttp.Call call = deleteShareLinkValidateBeforeCall(uuid, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDeleteShareLinkResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDeleteShareLinkResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -283,7 +283,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteShareLinkAsync(String uuid, final ApiCallback<com.pydio.cells.openapi.model.RestDeleteShareLinkResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteShareLinkAsync(String uuid, final ApiCallback<RestDeleteShareLinkResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -380,8 +380,8 @@ public class ShareServiceApi {
      * @return RestCell
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestCell getCell(String uuid) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestCell> resp = getCellWithHttpInfo(uuid);
+    public RestCell getCell(String uuid) throws ApiException {
+        ApiResponse<RestCell> resp = getCellWithHttpInfo(uuid);
         return resp.getData();
     }
 
@@ -392,9 +392,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestCell&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestCell> getCellWithHttpInfo(String uuid) throws ApiException {
+    public ApiResponse<RestCell> getCellWithHttpInfo(String uuid) throws ApiException {
         com.squareup.okhttp.Call call = getCellValidateBeforeCall(uuid, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestCell>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestCell>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -406,7 +406,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getCellAsync(String uuid, final ApiCallback<com.pydio.cells.openapi.model.RestCell> callback) throws ApiException {
+    public com.squareup.okhttp.Call getCellAsync(String uuid, final ApiCallback<RestCell> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -428,7 +428,7 @@ public class ShareServiceApi {
         }
 
         com.squareup.okhttp.Call call = getCellValidateBeforeCall(uuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestCell>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestCell>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -503,8 +503,8 @@ public class ShareServiceApi {
      * @return RestShareLink
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestShareLink getShareLink(String uuid) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestShareLink> resp = getShareLinkWithHttpInfo(uuid);
+    public RestShareLink getShareLink(String uuid) throws ApiException {
+        ApiResponse<RestShareLink> resp = getShareLinkWithHttpInfo(uuid);
         return resp.getData();
     }
 
@@ -515,9 +515,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestShareLink&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestShareLink> getShareLinkWithHttpInfo(String uuid) throws ApiException {
+    public ApiResponse<RestShareLink> getShareLinkWithHttpInfo(String uuid) throws ApiException {
         com.squareup.okhttp.Call call = getShareLinkValidateBeforeCall(uuid, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestShareLink>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestShareLink>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -529,7 +529,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getShareLinkAsync(String uuid, final ApiCallback<com.pydio.cells.openapi.model.RestShareLink> callback) throws ApiException {
+    public com.squareup.okhttp.Call getShareLinkAsync(String uuid, final ApiCallback<RestShareLink> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -551,7 +551,7 @@ public class ShareServiceApi {
         }
 
         com.squareup.okhttp.Call call = getShareLinkValidateBeforeCall(uuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestShareLink>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestShareLink>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -563,7 +563,7 @@ public class ShareServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listSharedResourcesCall(com.pydio.cells.openapi.model.RestListSharedResourcesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listSharedResourcesCall(RestListSharedResourcesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -605,7 +605,7 @@ public class ShareServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listSharedResourcesValidateBeforeCall(com.pydio.cells.openapi.model.RestListSharedResourcesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listSharedResourcesValidateBeforeCall(RestListSharedResourcesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -625,8 +625,8 @@ public class ShareServiceApi {
      * @return RestListSharedResourcesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestListSharedResourcesResponse listSharedResources(com.pydio.cells.openapi.model.RestListSharedResourcesRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestListSharedResourcesResponse> resp = listSharedResourcesWithHttpInfo(body);
+    public RestListSharedResourcesResponse listSharedResources(RestListSharedResourcesRequest body) throws ApiException {
+        ApiResponse<RestListSharedResourcesResponse> resp = listSharedResourcesWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -637,9 +637,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestListSharedResourcesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestListSharedResourcesResponse> listSharedResourcesWithHttpInfo(com.pydio.cells.openapi.model.RestListSharedResourcesRequest body) throws ApiException {
+    public ApiResponse<RestListSharedResourcesResponse> listSharedResourcesWithHttpInfo(RestListSharedResourcesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = listSharedResourcesValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestListSharedResourcesResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestListSharedResourcesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -651,7 +651,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listSharedResourcesAsync(RestListSharedResourcesRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestListSharedResourcesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listSharedResourcesAsync(RestListSharedResourcesRequest body, final ApiCallback<RestListSharedResourcesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -685,7 +685,7 @@ public class ShareServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putCellCall(com.pydio.cells.openapi.model.RestPutCellRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putCellCall(RestPutCellRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -727,7 +727,7 @@ public class ShareServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putCellValidateBeforeCall(com.pydio.cells.openapi.model.RestPutCellRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putCellValidateBeforeCall(RestPutCellRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -747,8 +747,8 @@ public class ShareServiceApi {
      * @return RestCell
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestCell putCell(com.pydio.cells.openapi.model.RestPutCellRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestCell> resp = putCellWithHttpInfo(body);
+    public RestCell putCell(RestPutCellRequest body) throws ApiException {
+        ApiResponse<RestCell> resp = putCellWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -759,9 +759,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestCell&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestCell> putCellWithHttpInfo(com.pydio.cells.openapi.model.RestPutCellRequest body) throws ApiException {
+    public ApiResponse<RestCell> putCellWithHttpInfo(RestPutCellRequest body) throws ApiException {
         com.squareup.okhttp.Call call = putCellValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestCell>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestCell>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -773,7 +773,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putCellAsync(RestPutCellRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestCell> callback) throws ApiException {
+    public com.squareup.okhttp.Call putCellAsync(RestPutCellRequest body, final ApiCallback<RestCell> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -807,7 +807,7 @@ public class ShareServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putShareLinkCall(com.pydio.cells.openapi.model.RestPutShareLinkRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putShareLinkCall(RestPutShareLinkRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -849,7 +849,7 @@ public class ShareServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putShareLinkValidateBeforeCall(com.pydio.cells.openapi.model.RestPutShareLinkRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putShareLinkValidateBeforeCall(RestPutShareLinkRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -869,8 +869,8 @@ public class ShareServiceApi {
      * @return RestShareLink
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestShareLink putShareLink(com.pydio.cells.openapi.model.RestPutShareLinkRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestShareLink> resp = putShareLinkWithHttpInfo(body);
+    public RestShareLink putShareLink(RestPutShareLinkRequest body) throws ApiException {
+        ApiResponse<RestShareLink> resp = putShareLinkWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -881,9 +881,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestShareLink&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestShareLink> putShareLinkWithHttpInfo(com.pydio.cells.openapi.model.RestPutShareLinkRequest body) throws ApiException {
+    public ApiResponse<RestShareLink> putShareLinkWithHttpInfo(RestPutShareLinkRequest body) throws ApiException {
         com.squareup.okhttp.Call call = putShareLinkValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestShareLink>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestShareLink>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -895,7 +895,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putShareLinkAsync(RestPutShareLinkRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestShareLink> callback) throws ApiException {
+    public com.squareup.okhttp.Call putShareLinkAsync(RestPutShareLinkRequest body, final ApiCallback<RestShareLink> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -929,7 +929,7 @@ public class ShareServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateSharePoliciesCall(com.pydio.cells.openapi.model.RestUpdateSharePoliciesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateSharePoliciesCall(RestUpdateSharePoliciesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -971,7 +971,7 @@ public class ShareServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateSharePoliciesValidateBeforeCall(com.pydio.cells.openapi.model.RestUpdateSharePoliciesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateSharePoliciesValidateBeforeCall(RestUpdateSharePoliciesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -991,8 +991,8 @@ public class ShareServiceApi {
      * @return RestUpdateSharePoliciesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestUpdateSharePoliciesResponse updateSharePolicies(com.pydio.cells.openapi.model.RestUpdateSharePoliciesRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestUpdateSharePoliciesResponse> resp = updateSharePoliciesWithHttpInfo(body);
+    public RestUpdateSharePoliciesResponse updateSharePolicies(RestUpdateSharePoliciesRequest body) throws ApiException {
+        ApiResponse<RestUpdateSharePoliciesResponse> resp = updateSharePoliciesWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -1003,9 +1003,9 @@ public class ShareServiceApi {
      * @return ApiResponse&lt;RestUpdateSharePoliciesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestUpdateSharePoliciesResponse> updateSharePoliciesWithHttpInfo(com.pydio.cells.openapi.model.RestUpdateSharePoliciesRequest body) throws ApiException {
+    public ApiResponse<RestUpdateSharePoliciesResponse> updateSharePoliciesWithHttpInfo(RestUpdateSharePoliciesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = updateSharePoliciesValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestUpdateSharePoliciesResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestUpdateSharePoliciesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1017,7 +1017,7 @@ public class ShareServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateSharePoliciesAsync(RestUpdateSharePoliciesRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestUpdateSharePoliciesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateSharePoliciesAsync(RestUpdateSharePoliciesRequest body, final ApiCallback<RestUpdateSharePoliciesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

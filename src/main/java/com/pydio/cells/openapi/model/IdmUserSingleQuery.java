@@ -14,18 +14,21 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmNodeType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * IdmUserSingleQuery
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmUserSingleQuery {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -58,7 +61,7 @@ public class IdmUserSingleQuery {
   private String hasRole = null;
 
   @SerializedName("NodeType")
-  private com.pydio.cells.openapi.model.IdmNodeType nodeType = null;
+  private IdmNodeType nodeType = null;
 
   @SerializedName("HasProfile")
   private String hasProfile = null;
@@ -249,7 +252,7 @@ public class IdmUserSingleQuery {
     this.hasRole = hasRole;
   }
 
-  public IdmUserSingleQuery nodeType(com.pydio.cells.openapi.model.IdmNodeType nodeType) {
+  public IdmUserSingleQuery nodeType(IdmNodeType nodeType) {
     this.nodeType = nodeType;
     return this;
   }
@@ -259,7 +262,7 @@ public class IdmUserSingleQuery {
    * @return nodeType
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.IdmNodeType getNodeType() {
+  public IdmNodeType getNodeType() {
     return nodeType;
   }
 

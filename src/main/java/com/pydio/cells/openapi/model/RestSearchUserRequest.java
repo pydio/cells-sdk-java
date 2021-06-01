@@ -14,27 +14,31 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmUserSingleQuery;
+import com.pydio.cells.openapi.model.RestResourcePolicyQuery;
+import com.pydio.cells.openapi.model.ServiceOperationType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestSearchUserRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestSearchUserRequest {
   @SerializedName("Queries")
   private List<IdmUserSingleQuery> queries = null;
 
   @SerializedName("ResourcePolicyQuery")
-  private com.pydio.cells.openapi.model.RestResourcePolicyQuery resourcePolicyQuery = null;
+  private RestResourcePolicyQuery resourcePolicyQuery = null;
 
   @SerializedName("Offset")
   private String offset = null;
@@ -77,7 +81,7 @@ public class RestSearchUserRequest {
     this.queries = queries;
   }
 
-  public RestSearchUserRequest resourcePolicyQuery(com.pydio.cells.openapi.model.RestResourcePolicyQuery resourcePolicyQuery) {
+  public RestSearchUserRequest resourcePolicyQuery(RestResourcePolicyQuery resourcePolicyQuery) {
     this.resourcePolicyQuery = resourcePolicyQuery;
     return this;
   }
@@ -87,7 +91,7 @@ public class RestSearchUserRequest {
    * @return resourcePolicyQuery
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.RestResourcePolicyQuery getResourcePolicyQuery() {
+  public RestResourcePolicyQuery getResourcePolicyQuery() {
     return resourcePolicyQuery;
   }
 

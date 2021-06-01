@@ -17,7 +17,9 @@ import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
+import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
+import com.pydio.cells.openapi.ProgressRequestBody;
 import com.pydio.cells.openapi.ProgressResponseBody;
 
 import com.google.gson.reflect.TypeToken;
@@ -25,8 +27,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.pydio.cells.openapi.Configuration;
-import com.pydio.cells.openapi.ProgressRequestBody;
 import com.pydio.cells.openapi.model.InstallGetAgreementResponse;
 import com.pydio.cells.openapi.model.InstallGetDefaultsResponse;
 import com.pydio.cells.openapi.model.InstallInstallEventsResponse;
@@ -67,7 +67,7 @@ public class InstallServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getAgreementCall(final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getAgreementCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -109,7 +109,7 @@ public class InstallServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getAgreementValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getAgreementValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
         com.squareup.okhttp.Call call = getAgreementCall(progressListener, progressRequestListener);
@@ -123,8 +123,8 @@ public class InstallServiceApi {
      * @return InstallGetAgreementResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.InstallGetAgreementResponse getAgreement() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.InstallGetAgreementResponse> resp = getAgreementWithHttpInfo();
+    public InstallGetAgreementResponse getAgreement() throws ApiException {
+        ApiResponse<InstallGetAgreementResponse> resp = getAgreementWithHttpInfo();
         return resp.getData();
     }
 
@@ -134,9 +134,9 @@ public class InstallServiceApi {
      * @return ApiResponse&lt;InstallGetAgreementResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.InstallGetAgreementResponse> getAgreementWithHttpInfo() throws ApiException {
+    public ApiResponse<InstallGetAgreementResponse> getAgreementWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = getAgreementValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.InstallGetAgreementResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<InstallGetAgreementResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -147,10 +147,10 @@ public class InstallServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getAgreementAsync(final ApiCallback<com.pydio.cells.openapi.model.InstallGetAgreementResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getAgreementAsync(final ApiCallback<InstallGetAgreementResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
-        com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
 
         if (callback != null) {
             progressListener = new ProgressResponseBody.ProgressListener() {
@@ -160,7 +160,7 @@ public class InstallServiceApi {
                 }
             };
 
-            progressRequestListener = new com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener() {
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
                 @Override
                 public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
                     callback.onUploadProgress(bytesWritten, contentLength, done);
@@ -180,7 +180,7 @@ public class InstallServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getInstallCall(final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getInstallCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -222,7 +222,7 @@ public class InstallServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getInstallValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getInstallValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
         com.squareup.okhttp.Call call = getInstallCall(progressListener, progressRequestListener);
@@ -236,8 +236,8 @@ public class InstallServiceApi {
      * @return InstallGetDefaultsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.InstallGetDefaultsResponse getInstall() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.InstallGetDefaultsResponse> resp = getInstallWithHttpInfo();
+    public InstallGetDefaultsResponse getInstall() throws ApiException {
+        ApiResponse<InstallGetDefaultsResponse> resp = getInstallWithHttpInfo();
         return resp.getData();
     }
 
@@ -247,9 +247,9 @@ public class InstallServiceApi {
      * @return ApiResponse&lt;InstallGetDefaultsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.InstallGetDefaultsResponse> getInstallWithHttpInfo() throws ApiException {
+    public ApiResponse<InstallGetDefaultsResponse> getInstallWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = getInstallValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.InstallGetDefaultsResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<InstallGetDefaultsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -260,10 +260,10 @@ public class InstallServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getInstallAsync(final ApiCallback<com.pydio.cells.openapi.model.InstallGetDefaultsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getInstallAsync(final ApiCallback<InstallGetDefaultsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
-        com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
 
         if (callback != null) {
             progressListener = new ProgressResponseBody.ProgressListener() {
@@ -273,7 +273,7 @@ public class InstallServiceApi {
                 }
             };
 
-            progressRequestListener = new com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener() {
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
                 @Override
                 public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
                     callback.onUploadProgress(bytesWritten, contentLength, done);
@@ -293,7 +293,7 @@ public class InstallServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call installEventsCall(final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call installEventsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -335,7 +335,7 @@ public class InstallServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call installEventsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call installEventsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
         com.squareup.okhttp.Call call = installEventsCall(progressListener, progressRequestListener);
@@ -349,8 +349,8 @@ public class InstallServiceApi {
      * @return InstallInstallEventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.InstallInstallEventsResponse installEvents() throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.InstallInstallEventsResponse> resp = installEventsWithHttpInfo();
+    public InstallInstallEventsResponse installEvents() throws ApiException {
+        ApiResponse<InstallInstallEventsResponse> resp = installEventsWithHttpInfo();
         return resp.getData();
     }
 
@@ -360,9 +360,9 @@ public class InstallServiceApi {
      * @return ApiResponse&lt;InstallInstallEventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.InstallInstallEventsResponse> installEventsWithHttpInfo() throws ApiException {
+    public ApiResponse<InstallInstallEventsResponse> installEventsWithHttpInfo() throws ApiException {
         com.squareup.okhttp.Call call = installEventsValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.InstallInstallEventsResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<InstallInstallEventsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -373,10 +373,10 @@ public class InstallServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call installEventsAsync(final ApiCallback<com.pydio.cells.openapi.model.InstallInstallEventsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call installEventsAsync(final ApiCallback<InstallInstallEventsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
-        com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
 
         if (callback != null) {
             progressListener = new ProgressResponseBody.ProgressListener() {
@@ -386,7 +386,7 @@ public class InstallServiceApi {
                 }
             };
 
-            progressRequestListener = new com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener() {
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
                 @Override
                 public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
                     callback.onUploadProgress(bytesWritten, contentLength, done);
@@ -407,7 +407,7 @@ public class InstallServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call performInstallCheckCall(com.pydio.cells.openapi.model.InstallPerformCheckRequest body, final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call performInstallCheckCall(InstallPerformCheckRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -449,7 +449,7 @@ public class InstallServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call performInstallCheckValidateBeforeCall(com.pydio.cells.openapi.model.InstallPerformCheckRequest body, final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call performInstallCheckValidateBeforeCall(InstallPerformCheckRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -469,8 +469,8 @@ public class InstallServiceApi {
      * @return InstallPerformCheckResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.InstallPerformCheckResponse performInstallCheck(com.pydio.cells.openapi.model.InstallPerformCheckRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.InstallPerformCheckResponse> resp = performInstallCheckWithHttpInfo(body);
+    public InstallPerformCheckResponse performInstallCheck(InstallPerformCheckRequest body) throws ApiException {
+        ApiResponse<InstallPerformCheckResponse> resp = performInstallCheckWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -481,9 +481,9 @@ public class InstallServiceApi {
      * @return ApiResponse&lt;InstallPerformCheckResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.InstallPerformCheckResponse> performInstallCheckWithHttpInfo(com.pydio.cells.openapi.model.InstallPerformCheckRequest body) throws ApiException {
+    public ApiResponse<InstallPerformCheckResponse> performInstallCheckWithHttpInfo(InstallPerformCheckRequest body) throws ApiException {
         com.squareup.okhttp.Call call = performInstallCheckValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.InstallPerformCheckResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<InstallPerformCheckResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -495,10 +495,10 @@ public class InstallServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call performInstallCheckAsync(InstallPerformCheckRequest body, final ApiCallback<com.pydio.cells.openapi.model.InstallPerformCheckResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call performInstallCheckAsync(InstallPerformCheckRequest body, final ApiCallback<InstallPerformCheckResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
-        com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
 
         if (callback != null) {
             progressListener = new ProgressResponseBody.ProgressListener() {
@@ -508,7 +508,7 @@ public class InstallServiceApi {
                 }
             };
 
-            progressRequestListener = new com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener() {
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
                 @Override
                 public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
                     callback.onUploadProgress(bytesWritten, contentLength, done);
@@ -529,7 +529,7 @@ public class InstallServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call postInstallCall(com.pydio.cells.openapi.model.InstallInstallRequest body, final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call postInstallCall(InstallInstallRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -571,7 +571,7 @@ public class InstallServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postInstallValidateBeforeCall(com.pydio.cells.openapi.model.InstallInstallRequest body, final ProgressResponseBody.ProgressListener progressListener, final com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call postInstallValidateBeforeCall(InstallInstallRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -591,8 +591,8 @@ public class InstallServiceApi {
      * @return InstallInstallResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.InstallInstallResponse postInstall(com.pydio.cells.openapi.model.InstallInstallRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.InstallInstallResponse> resp = postInstallWithHttpInfo(body);
+    public InstallInstallResponse postInstall(InstallInstallRequest body) throws ApiException {
+        ApiResponse<InstallInstallResponse> resp = postInstallWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -603,9 +603,9 @@ public class InstallServiceApi {
      * @return ApiResponse&lt;InstallInstallResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.InstallInstallResponse> postInstallWithHttpInfo(com.pydio.cells.openapi.model.InstallInstallRequest body) throws ApiException {
+    public ApiResponse<InstallInstallResponse> postInstallWithHttpInfo(InstallInstallRequest body) throws ApiException {
         com.squareup.okhttp.Call call = postInstallValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.InstallInstallResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<InstallInstallResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -617,10 +617,10 @@ public class InstallServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call postInstallAsync(InstallInstallRequest body, final ApiCallback<com.pydio.cells.openapi.model.InstallInstallResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call postInstallAsync(InstallInstallRequest body, final ApiCallback<InstallInstallResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
-        com.pydio.cells.openapi.ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
 
         if (callback != null) {
             progressListener = new ProgressResponseBody.ProgressListener() {

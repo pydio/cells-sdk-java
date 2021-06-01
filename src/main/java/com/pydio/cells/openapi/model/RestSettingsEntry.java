@@ -14,21 +14,25 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.RestSettingsAccess;
+import com.pydio.cells.openapi.model.RestSettingsEntryMeta;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * RestSettingsEntry
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestSettingsEntry {
   @SerializedName("Key")
   private String key = null;
@@ -49,7 +53,7 @@ public class RestSettingsEntry {
   private RestSettingsEntryMeta metadata = null;
 
   @SerializedName("Accesses")
-  private Map<String, com.pydio.cells.openapi.model.RestSettingsAccess> accesses = null;
+  private Map<String, RestSettingsAccess> accesses = null;
 
   @SerializedName("Feature")
   private String feature = null;
@@ -162,14 +166,14 @@ public class RestSettingsEntry {
     this.metadata = metadata;
   }
 
-  public RestSettingsEntry accesses(Map<String, com.pydio.cells.openapi.model.RestSettingsAccess> accesses) {
+  public RestSettingsEntry accesses(Map<String, RestSettingsAccess> accesses) {
     this.accesses = accesses;
     return this;
   }
 
-  public RestSettingsEntry putAccessesItem(String key, com.pydio.cells.openapi.model.RestSettingsAccess accessesItem) {
+  public RestSettingsEntry putAccessesItem(String key, RestSettingsAccess accessesItem) {
     if (this.accesses == null) {
-      this.accesses = new HashMap<String, com.pydio.cells.openapi.model.RestSettingsAccess>();
+      this.accesses = new HashMap<String, RestSettingsAccess>();
     }
     this.accesses.put(key, accessesItem);
     return this;
@@ -180,7 +184,7 @@ public class RestSettingsEntry {
    * @return accesses
   **/
   @ApiModelProperty(value = "")
-  public Map<String, com.pydio.cells.openapi.model.RestSettingsAccess> getAccesses() {
+  public Map<String, RestSettingsAccess> getAccesses() {
     return accesses;
   }
 

@@ -66,7 +66,7 @@ public class ActivityServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call searchSubscriptionsCall(com.pydio.cells.openapi.model.ActivitySearchSubscriptionsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchSubscriptionsCall(ActivitySearchSubscriptionsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -108,7 +108,7 @@ public class ActivityServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call searchSubscriptionsValidateBeforeCall(com.pydio.cells.openapi.model.ActivitySearchSubscriptionsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchSubscriptionsValidateBeforeCall(ActivitySearchSubscriptionsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -128,8 +128,8 @@ public class ActivityServiceApi {
      * @return RestSubscriptionsCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestSubscriptionsCollection searchSubscriptions(com.pydio.cells.openapi.model.ActivitySearchSubscriptionsRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestSubscriptionsCollection> resp = searchSubscriptionsWithHttpInfo(body);
+    public RestSubscriptionsCollection searchSubscriptions(ActivitySearchSubscriptionsRequest body) throws ApiException {
+        ApiResponse<RestSubscriptionsCollection> resp = searchSubscriptionsWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -140,9 +140,9 @@ public class ActivityServiceApi {
      * @return ApiResponse&lt;RestSubscriptionsCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestSubscriptionsCollection> searchSubscriptionsWithHttpInfo(com.pydio.cells.openapi.model.ActivitySearchSubscriptionsRequest body) throws ApiException {
+    public ApiResponse<RestSubscriptionsCollection> searchSubscriptionsWithHttpInfo(ActivitySearchSubscriptionsRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchSubscriptionsValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestSubscriptionsCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestSubscriptionsCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -154,7 +154,7 @@ public class ActivityServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchSubscriptionsAsync(ActivitySearchSubscriptionsRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestSubscriptionsCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchSubscriptionsAsync(ActivitySearchSubscriptionsRequest body, final ApiCallback<RestSubscriptionsCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -188,7 +188,7 @@ public class ActivityServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call streamCall(com.pydio.cells.openapi.model.ActivityStreamActivitiesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call streamCall(ActivityStreamActivitiesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -230,7 +230,7 @@ public class ActivityServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call streamValidateBeforeCall(com.pydio.cells.openapi.model.ActivityStreamActivitiesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call streamValidateBeforeCall(ActivityStreamActivitiesRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -250,8 +250,8 @@ public class ActivityServiceApi {
      * @return ActivityObject
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.ActivityObject stream(com.pydio.cells.openapi.model.ActivityStreamActivitiesRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.ActivityObject> resp = streamWithHttpInfo(body);
+    public ActivityObject stream(ActivityStreamActivitiesRequest body) throws ApiException {
+        ApiResponse<ActivityObject> resp = streamWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -262,9 +262,9 @@ public class ActivityServiceApi {
      * @return ApiResponse&lt;ActivityObject&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.ActivityObject> streamWithHttpInfo(com.pydio.cells.openapi.model.ActivityStreamActivitiesRequest body) throws ApiException {
+    public ApiResponse<ActivityObject> streamWithHttpInfo(ActivityStreamActivitiesRequest body) throws ApiException {
         com.squareup.okhttp.Call call = streamValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.ActivityObject>(){}.getType();
+        Type localVarReturnType = new TypeToken<ActivityObject>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -276,7 +276,7 @@ public class ActivityServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call streamAsync(ActivityStreamActivitiesRequest body, final ApiCallback<com.pydio.cells.openapi.model.ActivityObject> callback) throws ApiException {
+    public com.squareup.okhttp.Call streamAsync(ActivityStreamActivitiesRequest body, final ApiCallback<ActivityObject> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -310,7 +310,7 @@ public class ActivityServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call subscribeCall(com.pydio.cells.openapi.model.ActivitySubscription body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call subscribeCall(ActivitySubscription body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -352,7 +352,7 @@ public class ActivityServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call subscribeValidateBeforeCall(com.pydio.cells.openapi.model.ActivitySubscription body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call subscribeValidateBeforeCall(ActivitySubscription body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -372,8 +372,8 @@ public class ActivityServiceApi {
      * @return ActivitySubscription
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.ActivitySubscription subscribe(com.pydio.cells.openapi.model.ActivitySubscription body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.ActivitySubscription> resp = subscribeWithHttpInfo(body);
+    public ActivitySubscription subscribe(ActivitySubscription body) throws ApiException {
+        ApiResponse<ActivitySubscription> resp = subscribeWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -384,9 +384,9 @@ public class ActivityServiceApi {
      * @return ApiResponse&lt;ActivitySubscription&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.ActivitySubscription> subscribeWithHttpInfo(com.pydio.cells.openapi.model.ActivitySubscription body) throws ApiException {
+    public ApiResponse<ActivitySubscription> subscribeWithHttpInfo(ActivitySubscription body) throws ApiException {
         com.squareup.okhttp.Call call = subscribeValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.ActivitySubscription>(){}.getType();
+        Type localVarReturnType = new TypeToken<ActivitySubscription>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -398,7 +398,7 @@ public class ActivityServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call subscribeAsync(com.pydio.cells.openapi.model.ActivitySubscription body, final ApiCallback<com.pydio.cells.openapi.model.ActivitySubscription> callback) throws ApiException {
+    public com.squareup.okhttp.Call subscribeAsync(ActivitySubscription body, final ApiCallback<ActivitySubscription> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

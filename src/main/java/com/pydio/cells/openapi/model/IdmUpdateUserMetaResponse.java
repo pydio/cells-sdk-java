@@ -14,33 +14,35 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmUserMeta;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * IdmUpdateUserMetaResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmUpdateUserMetaResponse {
   @SerializedName("MetaDatas")
-  private List<com.pydio.cells.openapi.model.IdmUserMeta> metaDatas = null;
+  private List<IdmUserMeta> metaDatas = null;
 
-  public IdmUpdateUserMetaResponse metaDatas(List<com.pydio.cells.openapi.model.IdmUserMeta> metaDatas) {
+  public IdmUpdateUserMetaResponse metaDatas(List<IdmUserMeta> metaDatas) {
     this.metaDatas = metaDatas;
     return this;
   }
 
-  public IdmUpdateUserMetaResponse addMetaDatasItem(com.pydio.cells.openapi.model.IdmUserMeta metaDatasItem) {
+  public IdmUpdateUserMetaResponse addMetaDatasItem(IdmUserMeta metaDatasItem) {
     if (this.metaDatas == null) {
-      this.metaDatas = new ArrayList<com.pydio.cells.openapi.model.IdmUserMeta>();
+      this.metaDatas = new ArrayList<IdmUserMeta>();
     }
     this.metaDatas.add(metaDatasItem);
     return this;
@@ -51,7 +53,7 @@ public class IdmUpdateUserMetaResponse {
    * @return metaDatas
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmUserMeta> getMetaDatas() {
+  public List<IdmUserMeta> getMetaDatas() {
     return metaDatas;
   }
 

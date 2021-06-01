@@ -14,24 +14,27 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.JobsCommand;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * JobsCtrlCommand
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class JobsCtrlCommand {
   @SerializedName("Cmd")
-  private com.pydio.cells.openapi.model.JobsCommand cmd = null;
+  private JobsCommand cmd = null;
 
   @SerializedName("JobId")
   private String jobId = null;
@@ -45,7 +48,7 @@ public class JobsCtrlCommand {
   @SerializedName("RunParameters")
   private Map<String, String> runParameters = null;
 
-  public JobsCtrlCommand cmd(com.pydio.cells.openapi.model.JobsCommand cmd) {
+  public JobsCtrlCommand cmd(JobsCommand cmd) {
     this.cmd = cmd;
     return this;
   }
@@ -55,7 +58,7 @@ public class JobsCtrlCommand {
    * @return cmd
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.JobsCommand getCmd() {
+  public JobsCommand getCmd() {
     return cmd;
   }
 

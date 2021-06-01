@@ -65,7 +65,7 @@ public class AclServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteAclCall(com.pydio.cells.openapi.model.IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteAclCall(IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -107,7 +107,7 @@ public class AclServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteAclValidateBeforeCall(com.pydio.cells.openapi.model.IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteAclValidateBeforeCall(IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -127,8 +127,8 @@ public class AclServiceApi {
      * @return RestDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDeleteResponse deleteAcl(com.pydio.cells.openapi.model.IdmACL body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDeleteResponse> resp = deleteAclWithHttpInfo(body);
+    public RestDeleteResponse deleteAcl(IdmACL body) throws ApiException {
+        ApiResponse<RestDeleteResponse> resp = deleteAclWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -139,9 +139,9 @@ public class AclServiceApi {
      * @return ApiResponse&lt;RestDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDeleteResponse> deleteAclWithHttpInfo(com.pydio.cells.openapi.model.IdmACL body) throws ApiException {
+    public ApiResponse<RestDeleteResponse> deleteAclWithHttpInfo(IdmACL body) throws ApiException {
         com.squareup.okhttp.Call call = deleteAclValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDeleteResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDeleteResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -153,7 +153,7 @@ public class AclServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteAclAsync(com.pydio.cells.openapi.model.IdmACL body, final ApiCallback<com.pydio.cells.openapi.model.RestDeleteResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteAclAsync(IdmACL body, final ApiCallback<RestDeleteResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -187,7 +187,7 @@ public class AclServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putAclCall(com.pydio.cells.openapi.model.IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putAclCall(IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -229,7 +229,7 @@ public class AclServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putAclValidateBeforeCall(com.pydio.cells.openapi.model.IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putAclValidateBeforeCall(IdmACL body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -249,8 +249,8 @@ public class AclServiceApi {
      * @return IdmACL
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmACL putAcl(com.pydio.cells.openapi.model.IdmACL body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmACL> resp = putAclWithHttpInfo(body);
+    public IdmACL putAcl(IdmACL body) throws ApiException {
+        ApiResponse<IdmACL> resp = putAclWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -261,9 +261,9 @@ public class AclServiceApi {
      * @return ApiResponse&lt;IdmACL&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmACL> putAclWithHttpInfo(com.pydio.cells.openapi.model.IdmACL body) throws ApiException {
+    public ApiResponse<IdmACL> putAclWithHttpInfo(IdmACL body) throws ApiException {
         com.squareup.okhttp.Call call = putAclValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmACL>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmACL>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -275,7 +275,7 @@ public class AclServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putAclAsync(com.pydio.cells.openapi.model.IdmACL body, final ApiCallback<com.pydio.cells.openapi.model.IdmACL> callback) throws ApiException {
+    public com.squareup.okhttp.Call putAclAsync(IdmACL body, final ApiCallback<IdmACL> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -309,7 +309,7 @@ public class AclServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call searchAclsCall(com.pydio.cells.openapi.model.RestSearchACLRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchAclsCall(RestSearchACLRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -351,7 +351,7 @@ public class AclServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call searchAclsValidateBeforeCall(com.pydio.cells.openapi.model.RestSearchACLRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchAclsValidateBeforeCall(RestSearchACLRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -371,8 +371,8 @@ public class AclServiceApi {
      * @return RestACLCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestACLCollection searchAcls(com.pydio.cells.openapi.model.RestSearchACLRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestACLCollection> resp = searchAclsWithHttpInfo(body);
+    public RestACLCollection searchAcls(RestSearchACLRequest body) throws ApiException {
+        ApiResponse<RestACLCollection> resp = searchAclsWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -383,9 +383,9 @@ public class AclServiceApi {
      * @return ApiResponse&lt;RestACLCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestACLCollection> searchAclsWithHttpInfo(com.pydio.cells.openapi.model.RestSearchACLRequest body) throws ApiException {
+    public ApiResponse<RestACLCollection> searchAclsWithHttpInfo(RestSearchACLRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchAclsValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestACLCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestACLCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -397,7 +397,7 @@ public class AclServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchAclsAsync(RestSearchACLRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestACLCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchAclsAsync(RestSearchACLRequest body, final ApiCallback<RestACLCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

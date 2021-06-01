@@ -14,29 +14,32 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmUserMeta;
+import com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * IdmUpdateUserMetaRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmUpdateUserMetaRequest {
   @SerializedName("Operation")
-  private com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp operation = null;
+  private UpdateUserMetaRequestUserMetaOp operation = null;
 
   @SerializedName("MetaDatas")
-  private List<com.pydio.cells.openapi.model.IdmUserMeta> metaDatas = null;
+  private List<IdmUserMeta> metaDatas = null;
 
-  public IdmUpdateUserMetaRequest operation(com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp operation) {
+  public IdmUpdateUserMetaRequest operation(UpdateUserMetaRequestUserMetaOp operation) {
     this.operation = operation;
     return this;
   }
@@ -46,7 +49,7 @@ public class IdmUpdateUserMetaRequest {
    * @return operation
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp getOperation() {
+  public UpdateUserMetaRequestUserMetaOp getOperation() {
     return operation;
   }
 
@@ -54,14 +57,14 @@ public class IdmUpdateUserMetaRequest {
     this.operation = operation;
   }
 
-  public IdmUpdateUserMetaRequest metaDatas(List<com.pydio.cells.openapi.model.IdmUserMeta> metaDatas) {
+  public IdmUpdateUserMetaRequest metaDatas(List<IdmUserMeta> metaDatas) {
     this.metaDatas = metaDatas;
     return this;
   }
 
-  public IdmUpdateUserMetaRequest addMetaDatasItem(com.pydio.cells.openapi.model.IdmUserMeta metaDatasItem) {
+  public IdmUpdateUserMetaRequest addMetaDatasItem(IdmUserMeta metaDatasItem) {
     if (this.metaDatas == null) {
-      this.metaDatas = new ArrayList<com.pydio.cells.openapi.model.IdmUserMeta>();
+      this.metaDatas = new ArrayList<IdmUserMeta>();
     }
     this.metaDatas.add(metaDatasItem);
     return this;
@@ -72,7 +75,7 @@ public class IdmUpdateUserMetaRequest {
    * @return metaDatas
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmUserMeta> getMetaDatas() {
+  public List<IdmUserMeta> getMetaDatas() {
     return metaDatas;
   }
 

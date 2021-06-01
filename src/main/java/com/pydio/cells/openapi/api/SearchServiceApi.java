@@ -63,7 +63,7 @@ public class SearchServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call nodesCall(com.pydio.cells.openapi.model.TreeSearchRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call nodesCall(TreeSearchRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -105,7 +105,7 @@ public class SearchServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call nodesValidateBeforeCall(com.pydio.cells.openapi.model.TreeSearchRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call nodesValidateBeforeCall(TreeSearchRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -125,8 +125,8 @@ public class SearchServiceApi {
      * @return RestSearchResults
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestSearchResults nodes(com.pydio.cells.openapi.model.TreeSearchRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestSearchResults> resp = nodesWithHttpInfo(body);
+    public RestSearchResults nodes(TreeSearchRequest body) throws ApiException {
+        ApiResponse<RestSearchResults> resp = nodesWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -137,9 +137,9 @@ public class SearchServiceApi {
      * @return ApiResponse&lt;RestSearchResults&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestSearchResults> nodesWithHttpInfo(com.pydio.cells.openapi.model.TreeSearchRequest body) throws ApiException {
+    public ApiResponse<RestSearchResults> nodesWithHttpInfo(TreeSearchRequest body) throws ApiException {
         com.squareup.okhttp.Call call = nodesValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestSearchResults>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestSearchResults>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -151,7 +151,7 @@ public class SearchServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call nodesAsync(TreeSearchRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestSearchResults> callback) throws ApiException {
+    public com.squareup.okhttp.Call nodesAsync(TreeSearchRequest body, final ApiCallback<RestSearchResults> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

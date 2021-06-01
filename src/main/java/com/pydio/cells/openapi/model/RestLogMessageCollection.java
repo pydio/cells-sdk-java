@@ -14,33 +14,35 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.LogLogMessage;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestLogMessageCollection
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestLogMessageCollection {
   @SerializedName("Logs")
-  private List<com.pydio.cells.openapi.model.LogLogMessage> logs = null;
+  private List<LogLogMessage> logs = null;
 
-  public RestLogMessageCollection logs(List<com.pydio.cells.openapi.model.LogLogMessage> logs) {
+  public RestLogMessageCollection logs(List<LogLogMessage> logs) {
     this.logs = logs;
     return this;
   }
 
-  public RestLogMessageCollection addLogsItem(com.pydio.cells.openapi.model.LogLogMessage logsItem) {
+  public RestLogMessageCollection addLogsItem(LogLogMessage logsItem) {
     if (this.logs == null) {
-      this.logs = new ArrayList<com.pydio.cells.openapi.model.LogLogMessage>();
+      this.logs = new ArrayList<LogLogMessage>();
     }
     this.logs.add(logsItem);
     return this;
@@ -51,7 +53,7 @@ public class RestLogMessageCollection {
    * @return logs
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.LogLogMessage> getLogs() {
+  public List<LogLogMessage> getLogs() {
     return logs;
   }
 

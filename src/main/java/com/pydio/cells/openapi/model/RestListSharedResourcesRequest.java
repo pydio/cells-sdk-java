@@ -14,21 +14,24 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ListSharedResourcesRequestListShareType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * RestListSharedResourcesRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestListSharedResourcesRequest {
   @SerializedName("ShareType")
-  private com.pydio.cells.openapi.model.ListSharedResourcesRequestListShareType shareType = null;
+  private ListSharedResourcesRequestListShareType shareType = null;
 
   @SerializedName("Subject")
   private String subject = null;
@@ -42,7 +45,7 @@ public class RestListSharedResourcesRequest {
   @SerializedName("Limit")
   private Integer limit = null;
 
-  public RestListSharedResourcesRequest shareType(com.pydio.cells.openapi.model.ListSharedResourcesRequestListShareType shareType) {
+  public RestListSharedResourcesRequest shareType(ListSharedResourcesRequestListShareType shareType) {
     this.shareType = shareType;
     return this;
   }
@@ -52,7 +55,7 @@ public class RestListSharedResourcesRequest {
    * @return shareType
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.ListSharedResourcesRequestListShareType getShareType() {
+  public ListSharedResourcesRequestListShareType getShareType() {
     return shareType;
   }
 

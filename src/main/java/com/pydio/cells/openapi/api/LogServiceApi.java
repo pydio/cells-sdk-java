@@ -63,7 +63,7 @@ public class LogServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call syslogCall(com.pydio.cells.openapi.model.LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call syslogCall(LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -105,7 +105,7 @@ public class LogServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call syslogValidateBeforeCall(com.pydio.cells.openapi.model.LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call syslogValidateBeforeCall(LogListLogRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -125,8 +125,8 @@ public class LogServiceApi {
      * @return RestLogMessageCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestLogMessageCollection syslog(com.pydio.cells.openapi.model.LogListLogRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestLogMessageCollection> resp = syslogWithHttpInfo(body);
+    public RestLogMessageCollection syslog(LogListLogRequest body) throws ApiException {
+        ApiResponse<RestLogMessageCollection> resp = syslogWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -137,9 +137,9 @@ public class LogServiceApi {
      * @return ApiResponse&lt;RestLogMessageCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestLogMessageCollection> syslogWithHttpInfo(com.pydio.cells.openapi.model.LogListLogRequest body) throws ApiException {
+    public ApiResponse<RestLogMessageCollection> syslogWithHttpInfo(LogListLogRequest body) throws ApiException {
         com.squareup.okhttp.Call call = syslogValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestLogMessageCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestLogMessageCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -151,7 +151,7 @@ public class LogServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call syslogAsync(LogListLogRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestLogMessageCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call syslogAsync(LogListLogRequest body, final ApiCallback<RestLogMessageCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

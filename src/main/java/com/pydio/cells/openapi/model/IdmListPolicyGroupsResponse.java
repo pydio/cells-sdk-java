@@ -14,36 +14,38 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmPolicyGroup;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * IdmListPolicyGroupsResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmListPolicyGroupsResponse {
   @SerializedName("PolicyGroups")
-  private List<com.pydio.cells.openapi.model.IdmPolicyGroup> policyGroups = null;
+  private List<IdmPolicyGroup> policyGroups = null;
 
   @SerializedName("Total")
   private Integer total = null;
 
-  public IdmListPolicyGroupsResponse policyGroups(List<com.pydio.cells.openapi.model.IdmPolicyGroup> policyGroups) {
+  public IdmListPolicyGroupsResponse policyGroups(List<IdmPolicyGroup> policyGroups) {
     this.policyGroups = policyGroups;
     return this;
   }
 
-  public IdmListPolicyGroupsResponse addPolicyGroupsItem(com.pydio.cells.openapi.model.IdmPolicyGroup policyGroupsItem) {
+  public IdmListPolicyGroupsResponse addPolicyGroupsItem(IdmPolicyGroup policyGroupsItem) {
     if (this.policyGroups == null) {
-      this.policyGroups = new ArrayList<com.pydio.cells.openapi.model.IdmPolicyGroup>();
+      this.policyGroups = new ArrayList<IdmPolicyGroup>();
     }
     this.policyGroups.add(policyGroupsItem);
     return this;
@@ -54,7 +56,7 @@ public class IdmListPolicyGroupsResponse {
    * @return policyGroups
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmPolicyGroup> getPolicyGroups() {
+  public List<IdmPolicyGroup> getPolicyGroups() {
     return policyGroups;
   }
 

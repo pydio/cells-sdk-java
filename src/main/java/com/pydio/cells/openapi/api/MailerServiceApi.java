@@ -63,7 +63,7 @@ public class MailerServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call sendCall(com.pydio.cells.openapi.model.MailerMail body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call sendCall(MailerMail body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -105,7 +105,7 @@ public class MailerServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call sendValidateBeforeCall(com.pydio.cells.openapi.model.MailerMail body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call sendValidateBeforeCall(MailerMail body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -125,8 +125,8 @@ public class MailerServiceApi {
      * @return MailerSendMailResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.MailerSendMailResponse send(com.pydio.cells.openapi.model.MailerMail body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.MailerSendMailResponse> resp = sendWithHttpInfo(body);
+    public MailerSendMailResponse send(MailerMail body) throws ApiException {
+        ApiResponse<MailerSendMailResponse> resp = sendWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -137,9 +137,9 @@ public class MailerServiceApi {
      * @return ApiResponse&lt;MailerSendMailResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.MailerSendMailResponse> sendWithHttpInfo(com.pydio.cells.openapi.model.MailerMail body) throws ApiException {
+    public ApiResponse<MailerSendMailResponse> sendWithHttpInfo(MailerMail body) throws ApiException {
         com.squareup.okhttp.Call call = sendValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.MailerSendMailResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<MailerSendMailResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -151,7 +151,7 @@ public class MailerServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call sendAsync(MailerMail body, final ApiCallback<com.pydio.cells.openapi.model.MailerSendMailResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call sendAsync(MailerMail body, final ApiCallback<MailerSendMailResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

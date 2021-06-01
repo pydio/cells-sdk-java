@@ -14,21 +14,23 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ServiceResourcePolicyQuery;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * IdmSearchUserMetaRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmSearchUserMetaRequest {
   @SerializedName("MetaUuids")
   private List<String> metaUuids = null;
@@ -43,7 +45,7 @@ public class IdmSearchUserMetaRequest {
   private String resourceSubjectOwner = null;
 
   @SerializedName("ResourceQuery")
-  private com.pydio.cells.openapi.model.ServiceResourcePolicyQuery resourceQuery = null;
+  private ServiceResourcePolicyQuery resourceQuery = null;
 
   public IdmSearchUserMetaRequest metaUuids(List<String> metaUuids) {
     this.metaUuids = metaUuids;
@@ -133,7 +135,7 @@ public class IdmSearchUserMetaRequest {
     this.resourceSubjectOwner = resourceSubjectOwner;
   }
 
-  public IdmSearchUserMetaRequest resourceQuery(com.pydio.cells.openapi.model.ServiceResourcePolicyQuery resourceQuery) {
+  public IdmSearchUserMetaRequest resourceQuery(ServiceResourcePolicyQuery resourceQuery) {
     this.resourceQuery = resourceQuery;
     return this;
   }
@@ -143,7 +145,7 @@ public class IdmSearchUserMetaRequest {
    * @return resourceQuery
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.ServiceResourcePolicyQuery getResourceQuery() {
+  public ServiceResourcePolicyQuery getResourceQuery() {
     return resourceQuery;
   }
 

@@ -66,7 +66,7 @@ public class UpdateServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call applyUpdateCall(String targetVersion, com.pydio.cells.openapi.model.UpdateApplyUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call applyUpdateCall(String targetVersion, UpdateApplyUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -109,7 +109,7 @@ public class UpdateServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call applyUpdateValidateBeforeCall(String targetVersion, com.pydio.cells.openapi.model.UpdateApplyUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call applyUpdateValidateBeforeCall(String targetVersion, UpdateApplyUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'targetVersion' is set
         if (targetVersion == null) {
@@ -135,8 +135,8 @@ public class UpdateServiceApi {
      * @return UpdateApplyUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.UpdateApplyUpdateResponse applyUpdate(String targetVersion, com.pydio.cells.openapi.model.UpdateApplyUpdateRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.UpdateApplyUpdateResponse> resp = applyUpdateWithHttpInfo(targetVersion, body);
+    public UpdateApplyUpdateResponse applyUpdate(String targetVersion, UpdateApplyUpdateRequest body) throws ApiException {
+        ApiResponse<UpdateApplyUpdateResponse> resp = applyUpdateWithHttpInfo(targetVersion, body);
         return resp.getData();
     }
 
@@ -148,9 +148,9 @@ public class UpdateServiceApi {
      * @return ApiResponse&lt;UpdateApplyUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.UpdateApplyUpdateResponse> applyUpdateWithHttpInfo(String targetVersion, com.pydio.cells.openapi.model.UpdateApplyUpdateRequest body) throws ApiException {
+    public ApiResponse<UpdateApplyUpdateResponse> applyUpdateWithHttpInfo(String targetVersion, UpdateApplyUpdateRequest body) throws ApiException {
         com.squareup.okhttp.Call call = applyUpdateValidateBeforeCall(targetVersion, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.UpdateApplyUpdateResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<UpdateApplyUpdateResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -163,7 +163,7 @@ public class UpdateServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call applyUpdateAsync(String targetVersion, UpdateApplyUpdateRequest body, final ApiCallback<com.pydio.cells.openapi.model.UpdateApplyUpdateResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call applyUpdateAsync(String targetVersion, UpdateApplyUpdateRequest body, final ApiCallback<UpdateApplyUpdateResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -197,7 +197,7 @@ public class UpdateServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateRequiredCall(com.pydio.cells.openapi.model.UpdateUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateRequiredCall(UpdateUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -239,7 +239,7 @@ public class UpdateServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateRequiredValidateBeforeCall(com.pydio.cells.openapi.model.UpdateUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateRequiredValidateBeforeCall(UpdateUpdateRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -259,8 +259,8 @@ public class UpdateServiceApi {
      * @return UpdateUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.UpdateUpdateResponse updateRequired(com.pydio.cells.openapi.model.UpdateUpdateRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.UpdateUpdateResponse> resp = updateRequiredWithHttpInfo(body);
+    public UpdateUpdateResponse updateRequired(UpdateUpdateRequest body) throws ApiException {
+        ApiResponse<UpdateUpdateResponse> resp = updateRequiredWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -271,9 +271,9 @@ public class UpdateServiceApi {
      * @return ApiResponse&lt;UpdateUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.UpdateUpdateResponse> updateRequiredWithHttpInfo(com.pydio.cells.openapi.model.UpdateUpdateRequest body) throws ApiException {
+    public ApiResponse<UpdateUpdateResponse> updateRequiredWithHttpInfo(UpdateUpdateRequest body) throws ApiException {
         com.squareup.okhttp.Call call = updateRequiredValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.UpdateUpdateResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<UpdateUpdateResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -285,7 +285,7 @@ public class UpdateServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateRequiredAsync(UpdateUpdateRequest body, final ApiCallback<com.pydio.cells.openapi.model.UpdateUpdateResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateRequiredAsync(UpdateUpdateRequest body, final ApiCallback<UpdateUpdateResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

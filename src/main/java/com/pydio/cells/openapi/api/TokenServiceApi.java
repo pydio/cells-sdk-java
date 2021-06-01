@@ -68,7 +68,7 @@ public class TokenServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call generateDocumentAccessTokenCall(com.pydio.cells.openapi.model.RestDocumentAccessTokenRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call generateDocumentAccessTokenCall(RestDocumentAccessTokenRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -110,7 +110,7 @@ public class TokenServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call generateDocumentAccessTokenValidateBeforeCall(com.pydio.cells.openapi.model.RestDocumentAccessTokenRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call generateDocumentAccessTokenValidateBeforeCall(RestDocumentAccessTokenRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -130,8 +130,8 @@ public class TokenServiceApi {
      * @return RestDocumentAccessTokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse generateDocumentAccessToken(com.pydio.cells.openapi.model.RestDocumentAccessTokenRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse> resp = generateDocumentAccessTokenWithHttpInfo(body);
+    public RestDocumentAccessTokenResponse generateDocumentAccessToken(RestDocumentAccessTokenRequest body) throws ApiException {
+        ApiResponse<RestDocumentAccessTokenResponse> resp = generateDocumentAccessTokenWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -142,9 +142,9 @@ public class TokenServiceApi {
      * @return ApiResponse&lt;RestDocumentAccessTokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse> generateDocumentAccessTokenWithHttpInfo(com.pydio.cells.openapi.model.RestDocumentAccessTokenRequest body) throws ApiException {
+    public ApiResponse<RestDocumentAccessTokenResponse> generateDocumentAccessTokenWithHttpInfo(RestDocumentAccessTokenRequest body) throws ApiException {
         com.squareup.okhttp.Call call = generateDocumentAccessTokenValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDocumentAccessTokenResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -156,7 +156,7 @@ public class TokenServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call generateDocumentAccessTokenAsync(RestDocumentAccessTokenRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call generateDocumentAccessTokenAsync(RestDocumentAccessTokenRequest body, final ApiCallback<RestDocumentAccessTokenResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -190,7 +190,7 @@ public class TokenServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call resetPasswordCall(com.pydio.cells.openapi.model.RestResetPasswordRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call resetPasswordCall(RestResetPasswordRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -232,7 +232,7 @@ public class TokenServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call resetPasswordValidateBeforeCall(com.pydio.cells.openapi.model.RestResetPasswordRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call resetPasswordValidateBeforeCall(RestResetPasswordRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -252,8 +252,8 @@ public class TokenServiceApi {
      * @return RestResetPasswordResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestResetPasswordResponse resetPassword(com.pydio.cells.openapi.model.RestResetPasswordRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestResetPasswordResponse> resp = resetPasswordWithHttpInfo(body);
+    public RestResetPasswordResponse resetPassword(RestResetPasswordRequest body) throws ApiException {
+        ApiResponse<RestResetPasswordResponse> resp = resetPasswordWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -264,9 +264,9 @@ public class TokenServiceApi {
      * @return ApiResponse&lt;RestResetPasswordResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestResetPasswordResponse> resetPasswordWithHttpInfo(com.pydio.cells.openapi.model.RestResetPasswordRequest body) throws ApiException {
+    public ApiResponse<RestResetPasswordResponse> resetPasswordWithHttpInfo(RestResetPasswordRequest body) throws ApiException {
         com.squareup.okhttp.Call call = resetPasswordValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestResetPasswordResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestResetPasswordResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -278,7 +278,7 @@ public class TokenServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call resetPasswordAsync(RestResetPasswordRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestResetPasswordResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call resetPasswordAsync(RestResetPasswordRequest body, final ApiCallback<RestResetPasswordResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -375,8 +375,8 @@ public class TokenServiceApi {
      * @return RestResetPasswordTokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestResetPasswordTokenResponse resetPasswordToken(String userLogin) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestResetPasswordTokenResponse> resp = resetPasswordTokenWithHttpInfo(userLogin);
+    public RestResetPasswordTokenResponse resetPasswordToken(String userLogin) throws ApiException {
+        ApiResponse<RestResetPasswordTokenResponse> resp = resetPasswordTokenWithHttpInfo(userLogin);
         return resp.getData();
     }
 
@@ -387,9 +387,9 @@ public class TokenServiceApi {
      * @return ApiResponse&lt;RestResetPasswordTokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestResetPasswordTokenResponse> resetPasswordTokenWithHttpInfo(String userLogin) throws ApiException {
+    public ApiResponse<RestResetPasswordTokenResponse> resetPasswordTokenWithHttpInfo(String userLogin) throws ApiException {
         com.squareup.okhttp.Call call = resetPasswordTokenValidateBeforeCall(userLogin, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestResetPasswordTokenResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestResetPasswordTokenResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -401,7 +401,7 @@ public class TokenServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call resetPasswordTokenAsync(String userLogin, final ApiCallback<com.pydio.cells.openapi.model.RestResetPasswordTokenResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call resetPasswordTokenAsync(String userLogin, final ApiCallback<RestResetPasswordTokenResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -435,7 +435,7 @@ public class TokenServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call revokeCall(com.pydio.cells.openapi.model.RestRevokeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call revokeCall(RestRevokeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -477,7 +477,7 @@ public class TokenServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call revokeValidateBeforeCall(com.pydio.cells.openapi.model.RestRevokeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call revokeValidateBeforeCall(RestRevokeRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -497,8 +497,8 @@ public class TokenServiceApi {
      * @return RestRevokeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestRevokeResponse revoke(com.pydio.cells.openapi.model.RestRevokeRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestRevokeResponse> resp = revokeWithHttpInfo(body);
+    public RestRevokeResponse revoke(RestRevokeRequest body) throws ApiException {
+        ApiResponse<RestRevokeResponse> resp = revokeWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -509,9 +509,9 @@ public class TokenServiceApi {
      * @return ApiResponse&lt;RestRevokeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestRevokeResponse> revokeWithHttpInfo(com.pydio.cells.openapi.model.RestRevokeRequest body) throws ApiException {
+    public ApiResponse<RestRevokeResponse> revokeWithHttpInfo(RestRevokeRequest body) throws ApiException {
         com.squareup.okhttp.Call call = revokeValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestRevokeResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestRevokeResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -523,7 +523,7 @@ public class TokenServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call revokeAsync(RestRevokeRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestRevokeResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call revokeAsync(RestRevokeRequest body, final ApiCallback<RestRevokeResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

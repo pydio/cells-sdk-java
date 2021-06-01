@@ -14,11 +14,16 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmWorkspace;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,25 +32,22 @@ import java.util.Map;
 /**
  * RestUserStateResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestUserStateResponse {
   @SerializedName("Workspaces")
-  private List<com.pydio.cells.openapi.model.IdmWorkspace> workspaces = null;
+  private List<IdmWorkspace> workspaces = null;
 
   @SerializedName("WorkspacesAccesses")
   private Map<String, String> workspacesAccesses = null;
 
-  public RestUserStateResponse workspaces(List<com.pydio.cells.openapi.model.IdmWorkspace> workspaces) {
+  public RestUserStateResponse workspaces(List<IdmWorkspace> workspaces) {
     this.workspaces = workspaces;
     return this;
   }
 
-  public RestUserStateResponse addWorkspacesItem(com.pydio.cells.openapi.model.IdmWorkspace workspacesItem) {
+  public RestUserStateResponse addWorkspacesItem(IdmWorkspace workspacesItem) {
     if (this.workspaces == null) {
-      this.workspaces = new ArrayList<com.pydio.cells.openapi.model.IdmWorkspace>();
+      this.workspaces = new ArrayList<IdmWorkspace>();
     }
     this.workspaces.add(workspacesItem);
     return this;
@@ -56,7 +58,7 @@ public class RestUserStateResponse {
    * @return workspaces
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmWorkspace> getWorkspaces() {
+  public List<IdmWorkspace> getWorkspaces() {
     return workspaces;
   }
 

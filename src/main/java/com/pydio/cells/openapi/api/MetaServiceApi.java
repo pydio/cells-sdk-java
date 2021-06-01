@@ -67,7 +67,7 @@ public class MetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteMetaCall(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteMetaCall(String nodePath, RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -110,7 +110,7 @@ public class MetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteMetaValidateBeforeCall(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteMetaValidateBeforeCall(String nodePath, RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'nodePath' is set
         if (nodePath == null) {
@@ -136,8 +136,8 @@ public class MetaServiceApi {
      * @return TreeNode
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.TreeNode deleteMeta(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.TreeNode> resp = deleteMetaWithHttpInfo(nodePath, body);
+    public TreeNode deleteMeta(String nodePath, RestMetaNamespaceRequest body) throws ApiException {
+        ApiResponse<TreeNode> resp = deleteMetaWithHttpInfo(nodePath, body);
         return resp.getData();
     }
 
@@ -149,9 +149,9 @@ public class MetaServiceApi {
      * @return ApiResponse&lt;TreeNode&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.TreeNode> deleteMetaWithHttpInfo(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body) throws ApiException {
+    public ApiResponse<TreeNode> deleteMetaWithHttpInfo(String nodePath, RestMetaNamespaceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = deleteMetaValidateBeforeCall(nodePath, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.TreeNode>(){}.getType();
+        Type localVarReturnType = new TypeToken<TreeNode>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -164,7 +164,7 @@ public class MetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteMetaAsync(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body, final ApiCallback<com.pydio.cells.openapi.model.TreeNode> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteMetaAsync(String nodePath, RestMetaNamespaceRequest body, final ApiCallback<TreeNode> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -186,7 +186,7 @@ public class MetaServiceApi {
         }
 
         com.squareup.okhttp.Call call = deleteMetaValidateBeforeCall(nodePath, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.TreeNode>(){}.getType();
+        Type localVarReturnType = new TypeToken<TreeNode>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -198,7 +198,7 @@ public class MetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getBulkMetaCall(com.pydio.cells.openapi.model.RestGetBulkMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getBulkMetaCall(RestGetBulkMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -240,7 +240,7 @@ public class MetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getBulkMetaValidateBeforeCall(com.pydio.cells.openapi.model.RestGetBulkMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getBulkMetaValidateBeforeCall(RestGetBulkMetaRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -260,8 +260,8 @@ public class MetaServiceApi {
      * @return RestBulkMetaResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestBulkMetaResponse getBulkMeta(com.pydio.cells.openapi.model.RestGetBulkMetaRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestBulkMetaResponse> resp = getBulkMetaWithHttpInfo(body);
+    public RestBulkMetaResponse getBulkMeta(RestGetBulkMetaRequest body) throws ApiException {
+        ApiResponse<RestBulkMetaResponse> resp = getBulkMetaWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -272,9 +272,9 @@ public class MetaServiceApi {
      * @return ApiResponse&lt;RestBulkMetaResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestBulkMetaResponse> getBulkMetaWithHttpInfo(com.pydio.cells.openapi.model.RestGetBulkMetaRequest body) throws ApiException {
+    public ApiResponse<RestBulkMetaResponse> getBulkMetaWithHttpInfo(RestGetBulkMetaRequest body) throws ApiException {
         com.squareup.okhttp.Call call = getBulkMetaValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestBulkMetaResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestBulkMetaResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -286,7 +286,7 @@ public class MetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getBulkMetaAsync(RestGetBulkMetaRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestBulkMetaResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getBulkMetaAsync(RestGetBulkMetaRequest body, final ApiCallback<RestBulkMetaResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -321,7 +321,7 @@ public class MetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getMetaCall(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getMetaCall(String nodePath, RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -364,7 +364,7 @@ public class MetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getMetaValidateBeforeCall(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getMetaValidateBeforeCall(String nodePath, RestMetaNamespaceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'nodePath' is set
         if (nodePath == null) {
@@ -390,8 +390,8 @@ public class MetaServiceApi {
      * @return TreeNode
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.TreeNode getMeta(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.TreeNode> resp = getMetaWithHttpInfo(nodePath, body);
+    public TreeNode getMeta(String nodePath, RestMetaNamespaceRequest body) throws ApiException {
+        ApiResponse<TreeNode> resp = getMetaWithHttpInfo(nodePath, body);
         return resp.getData();
     }
 
@@ -403,9 +403,9 @@ public class MetaServiceApi {
      * @return ApiResponse&lt;TreeNode&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.TreeNode> getMetaWithHttpInfo(String nodePath, com.pydio.cells.openapi.model.RestMetaNamespaceRequest body) throws ApiException {
+    public ApiResponse<TreeNode> getMetaWithHttpInfo(String nodePath, RestMetaNamespaceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = getMetaValidateBeforeCall(nodePath, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.TreeNode>(){}.getType();
+        Type localVarReturnType = new TypeToken<TreeNode>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -418,7 +418,7 @@ public class MetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getMetaAsync(String nodePath, RestMetaNamespaceRequest body, final ApiCallback<com.pydio.cells.openapi.model.TreeNode> callback) throws ApiException {
+    public com.squareup.okhttp.Call getMetaAsync(String nodePath, RestMetaNamespaceRequest body, final ApiCallback<TreeNode> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -440,7 +440,7 @@ public class MetaServiceApi {
         }
 
         com.squareup.okhttp.Call call = getMetaValidateBeforeCall(nodePath, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.TreeNode>(){}.getType();
+        Type localVarReturnType = new TypeToken<TreeNode>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -453,7 +453,7 @@ public class MetaServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call setMetaCall(String nodePath, com.pydio.cells.openapi.model.RestMetaCollection body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call setMetaCall(String nodePath, RestMetaCollection body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -496,7 +496,7 @@ public class MetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call setMetaValidateBeforeCall(String nodePath, com.pydio.cells.openapi.model.RestMetaCollection body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call setMetaValidateBeforeCall(String nodePath, RestMetaCollection body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'nodePath' is set
         if (nodePath == null) {
@@ -522,8 +522,8 @@ public class MetaServiceApi {
      * @return TreeNode
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.TreeNode setMeta(String nodePath, com.pydio.cells.openapi.model.RestMetaCollection body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.TreeNode> resp = setMetaWithHttpInfo(nodePath, body);
+    public TreeNode setMeta(String nodePath, RestMetaCollection body) throws ApiException {
+        ApiResponse<TreeNode> resp = setMetaWithHttpInfo(nodePath, body);
         return resp.getData();
     }
 
@@ -535,9 +535,9 @@ public class MetaServiceApi {
      * @return ApiResponse&lt;TreeNode&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.TreeNode> setMetaWithHttpInfo(String nodePath, com.pydio.cells.openapi.model.RestMetaCollection body) throws ApiException {
+    public ApiResponse<TreeNode> setMetaWithHttpInfo(String nodePath, RestMetaCollection body) throws ApiException {
         com.squareup.okhttp.Call call = setMetaValidateBeforeCall(nodePath, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.TreeNode>(){}.getType();
+        Type localVarReturnType = new TypeToken<TreeNode>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -550,7 +550,7 @@ public class MetaServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call setMetaAsync(String nodePath, RestMetaCollection body, final ApiCallback<com.pydio.cells.openapi.model.TreeNode> callback) throws ApiException {
+    public com.squareup.okhttp.Call setMetaAsync(String nodePath, RestMetaCollection body, final ApiCallback<TreeNode> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

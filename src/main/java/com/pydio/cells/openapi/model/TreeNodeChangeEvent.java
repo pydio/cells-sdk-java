@@ -14,30 +14,34 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.NodeChangeEventEventType;
+import com.pydio.cells.openapi.model.TreeNode;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * TreeNodeChangeEvent
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class TreeNodeChangeEvent {
   @SerializedName("Type")
-  private com.pydio.cells.openapi.model.NodeChangeEventEventType type = null;
+  private NodeChangeEventEventType type = null;
 
   @SerializedName("Source")
-  private com.pydio.cells.openapi.model.TreeNode source = null;
+  private TreeNode source = null;
 
   @SerializedName("Target")
-  private com.pydio.cells.openapi.model.TreeNode target = null;
+  private TreeNode target = null;
 
   @SerializedName("Metadata")
   private Map<String, String> metadata = null;
@@ -48,7 +52,7 @@ public class TreeNodeChangeEvent {
   @SerializedName("Optimistic")
   private Boolean optimistic = null;
 
-  public TreeNodeChangeEvent type(com.pydio.cells.openapi.model.NodeChangeEventEventType type) {
+  public TreeNodeChangeEvent type(NodeChangeEventEventType type) {
     this.type = type;
     return this;
   }
@@ -58,7 +62,7 @@ public class TreeNodeChangeEvent {
    * @return type
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.NodeChangeEventEventType getType() {
+  public NodeChangeEventEventType getType() {
     return type;
   }
 
@@ -66,7 +70,7 @@ public class TreeNodeChangeEvent {
     this.type = type;
   }
 
-  public TreeNodeChangeEvent source(com.pydio.cells.openapi.model.TreeNode source) {
+  public TreeNodeChangeEvent source(TreeNode source) {
     this.source = source;
     return this;
   }
@@ -76,15 +80,15 @@ public class TreeNodeChangeEvent {
    * @return source
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeNode getSource() {
+  public TreeNode getSource() {
     return source;
   }
 
-  public void setSource(com.pydio.cells.openapi.model.TreeNode source) {
+  public void setSource(TreeNode source) {
     this.source = source;
   }
 
-  public TreeNodeChangeEvent target(com.pydio.cells.openapi.model.TreeNode target) {
+  public TreeNodeChangeEvent target(TreeNode target) {
     this.target = target;
     return this;
   }
@@ -94,7 +98,7 @@ public class TreeNodeChangeEvent {
    * @return target
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeNode getTarget() {
+  public TreeNode getTarget() {
     return target;
   }
 

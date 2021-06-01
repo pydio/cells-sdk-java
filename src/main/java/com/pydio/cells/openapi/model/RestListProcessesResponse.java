@@ -14,33 +14,35 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.RestProcess;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestListProcessesResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestListProcessesResponse {
   @SerializedName("Processes")
-  private List<com.pydio.cells.openapi.model.RestProcess> processes = null;
+  private List<RestProcess> processes = null;
 
-  public RestListProcessesResponse processes(List<com.pydio.cells.openapi.model.RestProcess> processes) {
+  public RestListProcessesResponse processes(List<RestProcess> processes) {
     this.processes = processes;
     return this;
   }
 
-  public RestListProcessesResponse addProcessesItem(com.pydio.cells.openapi.model.RestProcess processesItem) {
+  public RestListProcessesResponse addProcessesItem(RestProcess processesItem) {
     if (this.processes == null) {
-      this.processes = new ArrayList<com.pydio.cells.openapi.model.RestProcess>();
+      this.processes = new ArrayList<RestProcess>();
     }
     this.processes.add(processesItem);
     return this;
@@ -51,7 +53,7 @@ public class RestListProcessesResponse {
    * @return processes
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.RestProcess> getProcesses() {
+  public List<RestProcess> getProcesses() {
     return processes;
   }
 

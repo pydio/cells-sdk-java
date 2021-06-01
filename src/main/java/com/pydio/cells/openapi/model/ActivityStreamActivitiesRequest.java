@@ -14,21 +14,25 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ActivityStreamContext;
+import com.pydio.cells.openapi.model.ActivitySummaryPointOfView;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * ActivityStreamActivitiesRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class ActivityStreamActivitiesRequest {
   @SerializedName("Context")
-  private com.pydio.cells.openapi.model.ActivityStreamContext context = null;
+  private ActivityStreamContext context = null;
 
   @SerializedName("ContextData")
   private String contextData = null;
@@ -52,12 +56,12 @@ public class ActivityStreamActivitiesRequest {
   private Boolean asDigest = null;
 
   @SerializedName("PointOfView")
-  private com.pydio.cells.openapi.model.ActivitySummaryPointOfView pointOfView = null;
+  private ActivitySummaryPointOfView pointOfView = null;
 
   @SerializedName("Language")
   private String language = null;
 
-  public ActivityStreamActivitiesRequest context(com.pydio.cells.openapi.model.ActivityStreamContext context) {
+  public ActivityStreamActivitiesRequest context(ActivityStreamContext context) {
     this.context = context;
     return this;
   }
@@ -67,7 +71,7 @@ public class ActivityStreamActivitiesRequest {
    * @return context
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.ActivityStreamContext getContext() {
+  public ActivityStreamContext getContext() {
     return context;
   }
 
@@ -201,7 +205,7 @@ public class ActivityStreamActivitiesRequest {
     this.asDigest = asDigest;
   }
 
-  public ActivityStreamActivitiesRequest pointOfView(com.pydio.cells.openapi.model.ActivitySummaryPointOfView pointOfView) {
+  public ActivityStreamActivitiesRequest pointOfView(ActivitySummaryPointOfView pointOfView) {
     this.pointOfView = pointOfView;
     return this;
   }
@@ -211,7 +215,7 @@ public class ActivityStreamActivitiesRequest {
    * @return pointOfView
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.ActivitySummaryPointOfView getPointOfView() {
+  public ActivitySummaryPointOfView getPointOfView() {
     return pointOfView;
   }
 

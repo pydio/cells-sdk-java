@@ -14,24 +14,27 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmACLSingleQuery;
+import com.pydio.cells.openapi.model.ServiceOperationType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestSearchACLRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestSearchACLRequest {
   @SerializedName("Queries")
-  private List<com.pydio.cells.openapi.model.IdmACLSingleQuery> queries = null;
+  private List<IdmACLSingleQuery> queries = null;
 
   @SerializedName("Offset")
   private String offset = null;
@@ -48,14 +51,14 @@ public class RestSearchACLRequest {
   @SerializedName("Operation")
   private ServiceOperationType operation = null;
 
-  public RestSearchACLRequest queries(List<com.pydio.cells.openapi.model.IdmACLSingleQuery> queries) {
+  public RestSearchACLRequest queries(List<IdmACLSingleQuery> queries) {
     this.queries = queries;
     return this;
   }
 
-  public RestSearchACLRequest addQueriesItem(com.pydio.cells.openapi.model.IdmACLSingleQuery queriesItem) {
+  public RestSearchACLRequest addQueriesItem(IdmACLSingleQuery queriesItem) {
     if (this.queries == null) {
-      this.queries = new ArrayList<com.pydio.cells.openapi.model.IdmACLSingleQuery>();
+      this.queries = new ArrayList<IdmACLSingleQuery>();
     }
     this.queries.add(queriesItem);
     return this;
@@ -66,7 +69,7 @@ public class RestSearchACLRequest {
    * @return queries
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmACLSingleQuery> getQueries() {
+  public List<IdmACLSingleQuery> getQueries() {
     return queries;
   }
 

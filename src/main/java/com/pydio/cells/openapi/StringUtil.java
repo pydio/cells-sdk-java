@@ -13,7 +13,7 @@
 
 package com.pydio.cells.openapi;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class StringUtil {
   /**
    * Check if the given array contains the given value (with case-insensitive comparison).

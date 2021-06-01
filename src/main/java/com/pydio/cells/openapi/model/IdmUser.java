@@ -14,11 +14,17 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmRole;
+import com.pydio.cells.openapi.model.ServiceResourcePolicy;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +33,7 @@ import java.util.Map;
 /**
  * IdmUser
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmUser {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -42,7 +45,7 @@ public class IdmUser {
   private Map<String, String> attributes = null;
 
   @SerializedName("Roles")
-  private List<com.pydio.cells.openapi.model.IdmRole> roles = null;
+  private List<IdmRole> roles = null;
 
   @SerializedName("Login")
   private String login = null;
@@ -63,7 +66,7 @@ public class IdmUser {
   private Integer lastConnected = null;
 
   @SerializedName("Policies")
-  private List<com.pydio.cells.openapi.model.ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies = null;
 
   @SerializedName("PoliciesContextEditable")
   private Boolean policiesContextEditable = null;
@@ -130,14 +133,14 @@ public class IdmUser {
     this.attributes = attributes;
   }
 
-  public IdmUser roles(List<com.pydio.cells.openapi.model.IdmRole> roles) {
+  public IdmUser roles(List<IdmRole> roles) {
     this.roles = roles;
     return this;
   }
 
-  public IdmUser addRolesItem(com.pydio.cells.openapi.model.IdmRole rolesItem) {
+  public IdmUser addRolesItem(IdmRole rolesItem) {
     if (this.roles == null) {
-      this.roles = new ArrayList<com.pydio.cells.openapi.model.IdmRole>();
+      this.roles = new ArrayList<IdmRole>();
     }
     this.roles.add(rolesItem);
     return this;
@@ -148,7 +151,7 @@ public class IdmUser {
    * @return roles
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.IdmRole> getRoles() {
+  public List<IdmRole> getRoles() {
     return roles;
   }
 
@@ -264,14 +267,14 @@ public class IdmUser {
     this.lastConnected = lastConnected;
   }
 
-  public IdmUser policies(List<com.pydio.cells.openapi.model.ServiceResourcePolicy> policies) {
+  public IdmUser policies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
     return this;
   }
 
-  public IdmUser addPoliciesItem(com.pydio.cells.openapi.model.ServiceResourcePolicy policiesItem) {
+  public IdmUser addPoliciesItem(ServiceResourcePolicy policiesItem) {
     if (this.policies == null) {
-      this.policies = new ArrayList<com.pydio.cells.openapi.model.ServiceResourcePolicy>();
+      this.policies = new ArrayList<ServiceResourcePolicy>();
     }
     this.policies.add(policiesItem);
     return this;
@@ -282,7 +285,7 @@ public class IdmUser {
    * @return policies
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.ServiceResourcePolicy> getPolicies() {
+  public List<ServiceResourcePolicy> getPolicies() {
     return policies;
   }
 

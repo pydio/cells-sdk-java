@@ -14,36 +14,38 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.CtlService;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestServiceCollection
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestServiceCollection {
   @SerializedName("Services")
-  private List<com.pydio.cells.openapi.model.CtlService> services = null;
+  private List<CtlService> services = null;
 
   @SerializedName("Total")
   private Integer total = null;
 
-  public RestServiceCollection services(List<com.pydio.cells.openapi.model.CtlService> services) {
+  public RestServiceCollection services(List<CtlService> services) {
     this.services = services;
     return this;
   }
 
-  public RestServiceCollection addServicesItem(com.pydio.cells.openapi.model.CtlService servicesItem) {
+  public RestServiceCollection addServicesItem(CtlService servicesItem) {
     if (this.services == null) {
-      this.services = new ArrayList<com.pydio.cells.openapi.model.CtlService>();
+      this.services = new ArrayList<CtlService>();
     }
     this.services.add(servicesItem);
     return this;
@@ -54,7 +56,7 @@ public class RestServiceCollection {
    * @return services
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.CtlService> getServices() {
+  public List<CtlService> getServices() {
     return services;
   }
 

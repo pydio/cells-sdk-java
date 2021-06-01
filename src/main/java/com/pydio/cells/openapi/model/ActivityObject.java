@@ -14,11 +14,17 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ActivityObject;
+import com.pydio.cells.openapi.model.ActivityObjectType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.threeten.bp.OffsetDateTime;
@@ -26,16 +32,13 @@ import org.threeten.bp.OffsetDateTime;
 /**
  * ActivityObject
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class ActivityObject {
   @SerializedName("jsonLdContext")
   private String jsonLdContext = null;
 
   @SerializedName("type")
-  private com.pydio.cells.openapi.model.ActivityObjectType type = null;
+  private ActivityObjectType type = null;
 
   @SerializedName("id")
   private String id = null;
@@ -167,7 +170,7 @@ public class ActivityObject {
   private ActivityObject relationship = null;
 
   @SerializedName("formerType")
-  private com.pydio.cells.openapi.model.ActivityObjectType formerType = null;
+  private ActivityObjectType formerType = null;
 
   @SerializedName("deleted")
   private OffsetDateTime deleted = null;
@@ -232,7 +235,7 @@ public class ActivityObject {
     this.jsonLdContext = jsonLdContext;
   }
 
-  public ActivityObject type(com.pydio.cells.openapi.model.ActivityObjectType type) {
+  public ActivityObject type(ActivityObjectType type) {
     this.type = type;
     return this;
   }
@@ -242,11 +245,11 @@ public class ActivityObject {
    * @return type
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.ActivityObjectType getType() {
+  public ActivityObjectType getType() {
     return type;
   }
 
-  public void setType(com.pydio.cells.openapi.model.ActivityObjectType type) {
+  public void setType(ActivityObjectType type) {
     this.type = type;
   }
 
@@ -1024,7 +1027,7 @@ public class ActivityObject {
     this.relationship = relationship;
   }
 
-  public ActivityObject formerType(com.pydio.cells.openapi.model.ActivityObjectType formerType) {
+  public ActivityObject formerType(ActivityObjectType formerType) {
     this.formerType = formerType;
     return this;
   }
@@ -1034,7 +1037,7 @@ public class ActivityObject {
    * @return formerType
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.ActivityObjectType getFormerType() {
+  public ActivityObjectType getFormerType() {
     return formerType;
   }
 

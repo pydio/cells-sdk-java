@@ -14,27 +14,29 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.RestMetadata;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * RestMetaCollection
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class RestMetaCollection {
   @SerializedName("NodePath")
   private String nodePath = null;
 
   @SerializedName("Metadatas")
-  private List<com.pydio.cells.openapi.model.RestMetadata> metadatas = null;
+  private List<RestMetadata> metadatas = null;
 
   public RestMetaCollection nodePath(String nodePath) {
     this.nodePath = nodePath;
@@ -54,14 +56,14 @@ public class RestMetaCollection {
     this.nodePath = nodePath;
   }
 
-  public RestMetaCollection metadatas(List<com.pydio.cells.openapi.model.RestMetadata> metadatas) {
+  public RestMetaCollection metadatas(List<RestMetadata> metadatas) {
     this.metadatas = metadatas;
     return this;
   }
 
-  public RestMetaCollection addMetadatasItem(com.pydio.cells.openapi.model.RestMetadata metadatasItem) {
+  public RestMetaCollection addMetadatasItem(RestMetadata metadatasItem) {
     if (this.metadatas == null) {
-      this.metadatas = new ArrayList<com.pydio.cells.openapi.model.RestMetadata>();
+      this.metadatas = new ArrayList<RestMetadata>();
     }
     this.metadatas.add(metadatasItem);
     return this;
@@ -72,7 +74,7 @@ public class RestMetaCollection {
    * @return metadatas
   **/
   @ApiModelProperty(value = "")
-  public List<com.pydio.cells.openapi.model.RestMetadata> getMetadatas() {
+  public List<RestMetadata> getMetadatas() {
     return metadatas;
   }
 

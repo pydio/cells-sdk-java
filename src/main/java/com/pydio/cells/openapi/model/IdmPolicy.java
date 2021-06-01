@@ -14,11 +14,17 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.IdmPolicyCondition;
+import com.pydio.cells.openapi.model.IdmPolicyEffect;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +33,7 @@ import java.util.Map;
 /**
  * IdmPolicy
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class IdmPolicy {
   @SerializedName("id")
   private String id = null;
@@ -48,10 +51,10 @@ public class IdmPolicy {
   private List<String> actions = null;
 
   @SerializedName("effect")
-  private com.pydio.cells.openapi.model.IdmPolicyEffect effect = null;
+  private IdmPolicyEffect effect = null;
 
   @SerializedName("conditions")
-  private Map<String, com.pydio.cells.openapi.model.IdmPolicyCondition> conditions = null;
+  private Map<String, IdmPolicyCondition> conditions = null;
 
   public IdmPolicy id(String id) {
     this.id = id;
@@ -167,7 +170,7 @@ public class IdmPolicy {
     this.actions = actions;
   }
 
-  public IdmPolicy effect(com.pydio.cells.openapi.model.IdmPolicyEffect effect) {
+  public IdmPolicy effect(IdmPolicyEffect effect) {
     this.effect = effect;
     return this;
   }
@@ -177,7 +180,7 @@ public class IdmPolicy {
    * @return effect
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.IdmPolicyEffect getEffect() {
+  public IdmPolicyEffect getEffect() {
     return effect;
   }
 
@@ -185,14 +188,14 @@ public class IdmPolicy {
     this.effect = effect;
   }
 
-  public IdmPolicy conditions(Map<String, com.pydio.cells.openapi.model.IdmPolicyCondition> conditions) {
+  public IdmPolicy conditions(Map<String, IdmPolicyCondition> conditions) {
     this.conditions = conditions;
     return this;
   }
 
-  public IdmPolicy putConditionsItem(String key, com.pydio.cells.openapi.model.IdmPolicyCondition conditionsItem) {
+  public IdmPolicy putConditionsItem(String key, IdmPolicyCondition conditionsItem) {
     if (this.conditions == null) {
-      this.conditions = new HashMap<String, com.pydio.cells.openapi.model.IdmPolicyCondition>();
+      this.conditions = new HashMap<String, IdmPolicyCondition>();
     }
     this.conditions.put(key, conditionsItem);
     return this;
@@ -203,7 +206,7 @@ public class IdmPolicy {
    * @return conditions
   **/
   @ApiModelProperty(value = "")
-  public Map<String, com.pydio.cells.openapi.model.IdmPolicyCondition> getConditions() {
+  public Map<String, IdmPolicyCondition> getConditions() {
     return conditions;
   }
 

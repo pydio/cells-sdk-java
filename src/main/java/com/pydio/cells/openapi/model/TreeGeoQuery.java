@@ -14,32 +14,35 @@
 package com.pydio.cells.openapi.model;
 
 import java.util.Objects;
-
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.TreeGeoPoint;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * TreeGeoQuery
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class TreeGeoQuery {
   @SerializedName("Center")
-  private com.pydio.cells.openapi.model.TreeGeoPoint center = null;
+  private TreeGeoPoint center = null;
 
   @SerializedName("Distance")
   private String distance = null;
 
   @SerializedName("TopLeft")
-  private com.pydio.cells.openapi.model.TreeGeoPoint topLeft = null;
+  private TreeGeoPoint topLeft = null;
 
   @SerializedName("BottomRight")
-  private com.pydio.cells.openapi.model.TreeGeoPoint bottomRight = null;
+  private TreeGeoPoint bottomRight = null;
 
-  public TreeGeoQuery center(com.pydio.cells.openapi.model.TreeGeoPoint center) {
+  public TreeGeoQuery center(TreeGeoPoint center) {
     this.center = center;
     return this;
   }
@@ -49,11 +52,11 @@ public class TreeGeoQuery {
    * @return center
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeGeoPoint getCenter() {
+  public TreeGeoPoint getCenter() {
     return center;
   }
 
-  public void setCenter(com.pydio.cells.openapi.model.TreeGeoPoint center) {
+  public void setCenter(TreeGeoPoint center) {
     this.center = center;
   }
 
@@ -75,7 +78,7 @@ public class TreeGeoQuery {
     this.distance = distance;
   }
 
-  public TreeGeoQuery topLeft(com.pydio.cells.openapi.model.TreeGeoPoint topLeft) {
+  public TreeGeoQuery topLeft(TreeGeoPoint topLeft) {
     this.topLeft = topLeft;
     return this;
   }
@@ -85,15 +88,15 @@ public class TreeGeoQuery {
    * @return topLeft
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeGeoPoint getTopLeft() {
+  public TreeGeoPoint getTopLeft() {
     return topLeft;
   }
 
-  public void setTopLeft(com.pydio.cells.openapi.model.TreeGeoPoint topLeft) {
+  public void setTopLeft(TreeGeoPoint topLeft) {
     this.topLeft = topLeft;
   }
 
-  public TreeGeoQuery bottomRight(com.pydio.cells.openapi.model.TreeGeoPoint bottomRight) {
+  public TreeGeoQuery bottomRight(TreeGeoPoint bottomRight) {
     this.bottomRight = bottomRight;
     return this;
   }
@@ -103,7 +106,7 @@ public class TreeGeoQuery {
    * @return bottomRight
   **/
   @ApiModelProperty(value = "")
-  public com.pydio.cells.openapi.model.TreeGeoPoint getBottomRight() {
+  public TreeGeoPoint getBottomRight() {
     return bottomRight;
   }
 

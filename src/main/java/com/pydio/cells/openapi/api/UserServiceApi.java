@@ -128,8 +128,8 @@ public class UserServiceApi {
      * @return RestDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestDeleteResponse deleteUser(String login) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestDeleteResponse> resp = deleteUserWithHttpInfo(login);
+    public RestDeleteResponse deleteUser(String login) throws ApiException {
+        ApiResponse<RestDeleteResponse> resp = deleteUserWithHttpInfo(login);
         return resp.getData();
     }
 
@@ -140,9 +140,9 @@ public class UserServiceApi {
      * @return ApiResponse&lt;RestDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestDeleteResponse> deleteUserWithHttpInfo(String login) throws ApiException {
+    public ApiResponse<RestDeleteResponse> deleteUserWithHttpInfo(String login) throws ApiException {
         com.squareup.okhttp.Call call = deleteUserValidateBeforeCall(login, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestDeleteResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestDeleteResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -154,7 +154,7 @@ public class UserServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteUserAsync(String login, final ApiCallback<com.pydio.cells.openapi.model.RestDeleteResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteUserAsync(String login, final ApiCallback<RestDeleteResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -283,8 +283,8 @@ public class UserServiceApi {
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmUser getUser(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmUser> resp = getUserWithHttpInfo(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable);
+    public IdmUser getUser(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+        ApiResponse<IdmUser> resp = getUserWithHttpInfo(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable);
         return resp.getData();
     }
 
@@ -303,9 +303,9 @@ public class UserServiceApi {
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmUser> getUserWithHttpInfo(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+    public ApiResponse<IdmUser> getUserWithHttpInfo(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
         com.squareup.okhttp.Call call = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmUser>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -325,7 +325,7 @@ public class UserServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getUserAsync(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback<com.pydio.cells.openapi.model.IdmUser> callback) throws ApiException {
+    public com.squareup.okhttp.Call getUserAsync(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback<IdmUser> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -347,7 +347,7 @@ public class UserServiceApi {
         }
 
         com.squareup.okhttp.Call call = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmUser>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -360,7 +360,7 @@ public class UserServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putRolesCall(String login, com.pydio.cells.openapi.model.IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putRolesCall(String login, IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -403,7 +403,7 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putRolesValidateBeforeCall(String login, com.pydio.cells.openapi.model.IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putRolesValidateBeforeCall(String login, IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'login' is set
         if (login == null) {
@@ -429,8 +429,8 @@ public class UserServiceApi {
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmUser putRoles(String login, com.pydio.cells.openapi.model.IdmUser body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmUser> resp = putRolesWithHttpInfo(login, body);
+    public IdmUser putRoles(String login, IdmUser body) throws ApiException {
+        ApiResponse<IdmUser> resp = putRolesWithHttpInfo(login, body);
         return resp.getData();
     }
 
@@ -442,9 +442,9 @@ public class UserServiceApi {
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmUser> putRolesWithHttpInfo(String login, com.pydio.cells.openapi.model.IdmUser body) throws ApiException {
+    public ApiResponse<IdmUser> putRolesWithHttpInfo(String login, IdmUser body) throws ApiException {
         com.squareup.okhttp.Call call = putRolesValidateBeforeCall(login, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmUser>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -457,7 +457,7 @@ public class UserServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putRolesAsync(String login, com.pydio.cells.openapi.model.IdmUser body, final ApiCallback<com.pydio.cells.openapi.model.IdmUser> callback) throws ApiException {
+    public com.squareup.okhttp.Call putRolesAsync(String login, IdmUser body, final ApiCallback<IdmUser> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -479,7 +479,7 @@ public class UserServiceApi {
         }
 
         com.squareup.okhttp.Call call = putRolesValidateBeforeCall(login, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmUser>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -492,7 +492,7 @@ public class UserServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call putUserCall(String login, com.pydio.cells.openapi.model.IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call putUserCall(String login, IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -535,7 +535,7 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call putUserValidateBeforeCall(String login, com.pydio.cells.openapi.model.IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call putUserValidateBeforeCall(String login, IdmUser body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'login' is set
         if (login == null) {
@@ -561,8 +561,8 @@ public class UserServiceApi {
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.IdmUser putUser(String login, com.pydio.cells.openapi.model.IdmUser body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.IdmUser> resp = putUserWithHttpInfo(login, body);
+    public IdmUser putUser(String login, IdmUser body) throws ApiException {
+        ApiResponse<IdmUser> resp = putUserWithHttpInfo(login, body);
         return resp.getData();
     }
 
@@ -574,9 +574,9 @@ public class UserServiceApi {
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.IdmUser> putUserWithHttpInfo(String login, com.pydio.cells.openapi.model.IdmUser body) throws ApiException {
+    public ApiResponse<IdmUser> putUserWithHttpInfo(String login, IdmUser body) throws ApiException {
         com.squareup.okhttp.Call call = putUserValidateBeforeCall(login, body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.IdmUser>(){}.getType();
+        Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -589,7 +589,7 @@ public class UserServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call putUserAsync(String login, com.pydio.cells.openapi.model.IdmUser body, final ApiCallback<com.pydio.cells.openapi.model.IdmUser> callback) throws ApiException {
+    public com.squareup.okhttp.Call putUserAsync(String login, IdmUser body, final ApiCallback<IdmUser> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -623,7 +623,7 @@ public class UserServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call searchUsersCall(com.pydio.cells.openapi.model.RestSearchUserRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchUsersCall(RestSearchUserRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -665,7 +665,7 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call searchUsersValidateBeforeCall(com.pydio.cells.openapi.model.RestSearchUserRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchUsersValidateBeforeCall(RestSearchUserRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -685,8 +685,8 @@ public class UserServiceApi {
      * @return RestUsersCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public com.pydio.cells.openapi.model.RestUsersCollection searchUsers(com.pydio.cells.openapi.model.RestSearchUserRequest body) throws ApiException {
-        ApiResponse<com.pydio.cells.openapi.model.RestUsersCollection> resp = searchUsersWithHttpInfo(body);
+    public RestUsersCollection searchUsers(RestSearchUserRequest body) throws ApiException {
+        ApiResponse<RestUsersCollection> resp = searchUsersWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -697,9 +697,9 @@ public class UserServiceApi {
      * @return ApiResponse&lt;RestUsersCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<com.pydio.cells.openapi.model.RestUsersCollection> searchUsersWithHttpInfo(com.pydio.cells.openapi.model.RestSearchUserRequest body) throws ApiException {
+    public ApiResponse<RestUsersCollection> searchUsersWithHttpInfo(RestSearchUserRequest body) throws ApiException {
         com.squareup.okhttp.Call call = searchUsersValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<com.pydio.cells.openapi.model.RestUsersCollection>(){}.getType();
+        Type localVarReturnType = new TypeToken<RestUsersCollection>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -711,7 +711,7 @@ public class UserServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchUsersAsync(RestSearchUserRequest body, final ApiCallback<com.pydio.cells.openapi.model.RestUsersCollection> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchUsersAsync(RestSearchUserRequest body, final ApiCallback<RestUsersCollection> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

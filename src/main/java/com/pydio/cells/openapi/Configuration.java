@@ -13,9 +13,9 @@
 
 package com.pydio.cells.openapi;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-04-23T18:11:59.271+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
 public class Configuration {
-    private static com.pydio.cells.openapi.ApiClient defaultApiClient = new com.pydio.cells.openapi.ApiClient();
+    private static ApiClient defaultApiClient = new ApiClient();
 
     /**
      * Get the default API client, which would be used when creating API
@@ -23,7 +23,7 @@ public class Configuration {
      *
      * @return Default API client
      */
-    public static com.pydio.cells.openapi.ApiClient getDefaultApiClient() {
+    public static ApiClient getDefaultApiClient() {
         return defaultApiClient;
     }
 
