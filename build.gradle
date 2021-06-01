@@ -2,23 +2,12 @@ plugins {
     // Enable test as a stand alone project
     id 'java'
 
-    // // Build java project
-    // id 'java-library'
-
     // Publish the generated resources as Maven Artifacts
     // See: https://docs.gradle.org/5.0/userguide/publishing_overview.html#publishing_overview
     id 'maven-publish'
-
-    // TODO useless now.
-    // Push the artifact to bintray
-    // See: https://github.com/bintray/gradle-bintray-plugin
-    id 'com.jfrog.bintray' version '1.8.5'
 }
 
 repositories {
-    // RIP jcenter. honte aux gars qui abusent de l'opensource.
-    // Use jcenter for resolving dependencies.
-    // jcenter()
     mavenCentral()
 }
 
@@ -28,10 +17,8 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
 def sdkVersion = '0.1.99-alpha1'
-
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
 }
@@ -48,16 +35,10 @@ test {
         exclude '**/integration/*'
     }
     
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+//    testLogging {
+//        events "passed", "skipped", "failed"
+//    }
 }
-
-// Uncomment this to get more messages during build during code cleaning sprints.
-// tasks.withType(JavaCompile) {
-//    options.compilerArgs << '-Xlint:unchecked'
-//    options.deprecation = true
-// }
 
 // Pre-create the pom configuration:
 def pomConfig = {
@@ -109,30 +90,6 @@ publishing {
                 root.appendNode('url', 'https://pydio.com')
                 root.children().last() + pomConfig
             }
-        }
-    }
-}
-
-bintray {
-    user = localProperties['bintray.user']
-    key = localProperties['bintray.key']  
-
-    pkg {
-        repo = 'cells'
-        name = 'cells-sdk-java'
-        //userOrg = bintrayUser
-        licenses = ['Apache-2.0']
-        vcsUrl = githubUrl
-
-        publications = ['CellsSdk']
-
-        // Version info
-        version {
-            name = sdkVersion
-            desc = 'Prepare Cells Android App 2.2 release'
-            released  = new Date()
-            vcsTag = 'v' + sdkVersion
-            //attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }
 }
@@ -200,8 +157,13 @@ dependencies {
 
 // Helper tasks to debug
 
-task printSourceSetInformation(){
+// Uncomment this to get more messages during build during code cleaning sprints.
+// tasks.withType(JavaCompile) {
+//    options.compilerArgs << '-Xlint:unchecked'
+//    options.deprecation = true
+// }
 
+task printSourceSetInformation(){
     doLast{
         sourceSets.each { srcSet ->
             println "["+srcSet.name+"]"

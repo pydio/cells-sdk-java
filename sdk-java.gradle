@@ -53,28 +53,6 @@ publishing {
     }
 }
 
-bintray {
-    user = configs['bintray.user']
-    key = configs['bintray.key']
-
-    pkg {
-        repo = bintrayRepoName
-        name = artifactID
-        licenses = ['Apache-2.0']
-        vcsUrl = sdkJavaRepoURL
-
-        publications = ['CellsSdk']
-
-        // Version info
-        version {
-            name = sdkJavaVersion
-            desc = 'Prepare Cells Android App 2.2 release'
-            released = new Date()
-            vcsTag = 'v' + sdkJavaVersion
-        }
-    }
-}
-
 jar {
     manifest {
         attributes('Specification-Title': 'Cells SDK for Java',
@@ -88,7 +66,7 @@ jar {
 
 dependencies {
 
-    // Set of carrefully chosen third-party libraries
+    // Set of carefully chosen third-party libraries
     // Do not update lightly: see build.gradle sibling file.
 
     implementation 'io.swagger:swagger-annotations:1.6.2'
@@ -102,10 +80,7 @@ dependencies {
     implementation 'com.squareup.okhttp:logging-interceptor:2.7.5'
 
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
-
-
     implementation 'commons-codec:commons-codec:1.15'
-    // When running with android these are provided by the platform
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13.2'
