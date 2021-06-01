@@ -1,7 +1,5 @@
 package com.pydio.cells.client.s3;
 
-// public class PojoS3Client {}
-
 import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;

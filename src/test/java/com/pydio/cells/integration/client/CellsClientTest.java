@@ -7,6 +7,7 @@ import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.client.SessionFactory;
+import com.pydio.cells.client.TestSessionFactory;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.Log;
@@ -23,7 +24,7 @@ import java.io.ByteArrayInputStream;
 
 public class CellsClientTest {
 
-    private static SessionFactory factory;
+    private static TestSessionFactory factory;
     private static TestConfiguration config;
     private static String testRunID;
     private static RemoteServerConfig cellsConf;
@@ -32,7 +33,7 @@ public class CellsClientTest {
     public static void setup() {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new SessionFactory(tokens);
+        factory = new TestSessionFactory(tokens);
         config = new TestConfiguration();
         cellsConf = config.getServer("cells-https");
 

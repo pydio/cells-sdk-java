@@ -8,6 +8,7 @@ import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.SessionFactory;
+import com.pydio.cells.client.TestSessionFactory;
 import com.pydio.cells.client.auth.SimpleTokenStore;
 import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.utils.Log;
@@ -40,7 +41,7 @@ import javax.net.ssl.SSLHandshakeException;
  */
 public class BasicConnectionTest {
 
-    private SessionFactory factory;
+    private TestSessionFactory factory;
     private TestConfiguration config;
     private String testRunID;
 
@@ -48,7 +49,7 @@ public class BasicConnectionTest {
     public void setup() {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new SessionFactory(tokens);
+        factory = new TestSessionFactory(tokens);
         config = new TestConfiguration();
     }
 
