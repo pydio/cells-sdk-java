@@ -36,7 +36,6 @@ public class CellsClientTest {
         factory = new TestSessionFactory(tokens);
         config = new TestConfiguration();
         cellsConf = config.getServer("cells-https");
-
     }
 
     @AfterClass
