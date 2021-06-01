@@ -34,7 +34,7 @@ gradle bintrayUpload
 
 Given an URL, we create a ServerNode object to load the server info
 
-```java
+```
 String url = "https://pydio.example.com";
 ServerNode node = new ServerNode();
 Error error = node.resolve();
@@ -58,20 +58,20 @@ System.out.println("version name: " + server.getVersionName());
 
 To create a client pass the resolved server to the client factory
 
-```java
+```
 Client client = Client.get(node);
 ```
 
 ### Setting user credentials
 
-```java
+```
 Credentials credentials = new DefaultCredentials("login", "password");
 client.setCredentials(credentials);
 ```
 
 ### Performing folder list
 
-```java
+```
 // Listing the root of the "My Files" workspace
 try {
     client.ls("my-files", "/", (n) -> {
@@ -90,7 +90,7 @@ try {
 
 ## Examples
 
-Find more examples in [our sample package](./tree/master/src/main/java/com/pydio/sdk/examples) and in the [tests](./tree/master/src/test/java/com/pydio/sdk).
+Find more examples in [our sample package](./tree/master/src/main/java/com/pydio/sdk/examples) and in the [tests](./tree/master/src/test/java/com/pydio/cells).
 
 ## Legacy note
 

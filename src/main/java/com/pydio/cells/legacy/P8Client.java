@@ -168,7 +168,7 @@ public class P8Client implements Client, SdkNames {
 
 
     // TODO used for debug purposes. remove
-    private class RIH extends RegistryItemHandler {
+    private static class RIH extends RegistryItemHandler {
 
         public void onPref(String name, String value) {
             System.out.println("OnPref: " + name);

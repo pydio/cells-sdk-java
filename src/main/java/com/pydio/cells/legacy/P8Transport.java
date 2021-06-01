@@ -312,10 +312,11 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
-    @Override
-    /** In P8 the auth token is bound to a session cookie: we must retrieve and store both
-     *      with the provided credentials.
+    /**
+     * In P8 the auth token is bound to a session cookie: we must retrieve and store both
+     * with the provided credentials.
      */
+    @Override
     public void login() throws SDKException {
 
         Token existingToken = tokens.get(this, getId());

@@ -27,7 +27,6 @@ public class PojoS3Client implements S3Client {
     private final CellsTransport transport;
     private final AmazonS3ClientBuilder clientBuilder;
 
-
     public PojoS3Client(CellsTransport transport) {
         this.transport = transport;
         clientBuilder = AmazonS3ClientBuilder.standard().withEndpointConfiguration(
@@ -63,7 +62,7 @@ public class PojoS3Client implements S3Client {
         if (filename.contains("//")) {
             // This should not happen anymore
             Log.w("Legacy",
-                    "Found a double slash in " + filename + ", this is mot probably a bug. Double check and fix");
+                    "Found a double slash in " + filename + ", this is most probably a bug. Double check and fix");
             Thread.dumpStack();
             filename = filename.replace("//", "/");
         }
