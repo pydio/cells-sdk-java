@@ -1,6 +1,5 @@
 package com.pydio.cells.client;
 
-import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.IServerFactory;
@@ -13,7 +12,6 @@ import com.pydio.cells.client.auth.TokenService;
 import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.client.security.LegacyPasswordCredentials;
-import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
 import com.pydio.cells.transport.CellsServer;

@@ -2,11 +2,10 @@ package com.pydio.cells.client;
 
 import com.google.gson.Gson;
 import com.pydio.cells.api.Client;
-import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
+import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
-import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
@@ -22,7 +21,6 @@ import com.pydio.cells.client.common.http.HttpRequest;
 import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
-import com.pydio.cells.api.S3Client;
 import com.pydio.cells.client.utils.FileNodeUtils;
 import com.pydio.cells.client.utils.IoHelpers;
 import com.pydio.cells.client.utils.Log;
@@ -88,19 +86,11 @@ public class CellsClient implements Client, SdkNames {
     private final CellsTransport transport;
     private final S3Client s3Client;
 
-    private Credentials credentials;
-    private final Boolean skipOAuth = false;
+    // private Credentials credentials;
 
     public CellsClient(Transport transport, S3Client s3Client) {
         this.transport = (CellsTransport) transport;
         this.s3Client = s3Client;
-    }
-
-    public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
-        boolean isLeaf = node.getType() == TreeNodeType.LEAF;
-        long size = Long.parseLong(node.getSize());
-        long lastEdit = Long.parseLong(node.getMtime());
-        return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
     }
 
     @Override
@@ -118,7 +108,6 @@ public class CellsClient implements Client, SdkNames {
 
         HttpURLConnection con = null;
         InputStream in = null;
-        SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             con = transport.openApiConnection("/frontend/state");
             con.setRequestMethod("GET");
@@ -146,52 +135,6 @@ public class CellsClient implements Client, SdkNames {
         } catch (Exception e) {
             throw SDKException.unexpectedContent(e);
         }
-    }
-
-    @Override
-    public FileNode nodeInfo(String ws, String path) throws SDKException {
-        TreeNode node = internalStatNode(ws, path);
-        if (node != null) {
-            return FileNodeUtils.toFileNode(node);
-        } else {
-            return null;
-        }
-    }
-
-    public TreeNodeInfo statNode(String fullPath) throws SDKException {
-        TreeNode node = internalStatNode(fullPath);
-        return node != null ? toTreeNodeinfo(node) : null;
-    }
-
-    /**
-     * Same as statNode() but rather return null than an {@link SDKException}
-     * in case the node is not found
-     */
-    private TreeNodeInfo statOptionalNode(String fullPath) throws SDKException {
-        TreeNode node = null;
-        try {
-            node = internalStatNode(fullPath);
-        } catch (SDKException e) {
-            if (e.getCode() != 404) {
-                throw e;
-            }
-        }
-        return node != null ? toTreeNodeinfo(node) : null;
-    }
-
-    private TreeNode internalStatNode(String ws, String path) throws SDKException {
-        return internalStatNode(FileNodeUtils.toTreeNodePath(ws, path));
-    }
-
-    private TreeNode internalStatNode(String fullPath) throws SDKException {
-
-        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-        try {
-            return api.headNode(fullPath).getNode();
-        } catch (ApiException e) {
-            throw new SDKException(e);
-        }
-        // return toFileNode(response.getNode());
     }
 
     @Override
@@ -259,32 +202,73 @@ public class CellsClient implements Client, SdkNames {
         return nextPageOptions;
     }
 
-    /**
-     * List children of the node at {@code fullPath}. Note that it does nothing if
-     * no node is found at {@code fullPath}.
-     */
-    public void listChildren(String fullPath, TreeNodeHandler handler) throws SDKException {
+    @Override
+    public Message mkdir(String ws, String parent, String name) throws SDKException {
+        TreeNode node = new TreeNode();
+        node.setPath((ws + parent + "/" + name).replace("//", "/"));
+        node.setType(TreeNodeType.COLLECTION);
 
+        RestCreateNodesRequest request = new RestCreateNodesRequest();
+        request.recursive(false);
+        request.addNodesItem(node);
+
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
+
+        RestNodesCollection response;
+        try {
+            response = api.createNodes(request);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw new SDKException(e);
+        }
+
+        Message msg = new Message();
+        /*List<TreeNode> nodes = response.getChildren();
+        node = nodes.get(0);
+        FileNode fileNode = toFileNode(node);
+        msg.added.add(fileNode); */
+        return msg;
+    }
+
+    @Override
+    public FileNode nodeInfo(String ws, String path) throws SDKException {
+        TreeNode node = internalStatNode(ws, path);
+        if (node != null) {
+            return FileNodeUtils.toFileNode(node);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public InputStream previewData(String ws, String file, int dim) throws SDKException {
+        return s3Client.getThumb(file);
+    }
+
+    @Override
+    public Stats stats(String ws, String file, boolean withHash) throws SDKException {
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        request.addNodePathsItem(fullPath + "/*");
+        request.addNodePathsItem(FileNodeUtils.toTreeNodePath(ws, file));
         request.setAllMetaProviders(true);
 
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-        RestBulkMetaResponse response = null;
+        RestBulkMetaResponse response;
         try {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
-            if (e.getCode() != 404) {
-                throw new SDKException(e);
-            }
+            e.printStackTrace();
+            throw new SDKException(e);
         }
 
-        if (response != null && response.getNodes() != null) {
-            Iterator<TreeNode> nodes = response.getNodes().iterator();
-            while (nodes.hasNext()) {
-                handler.onNode(nodes.next());
-            }
+        Stats stats = null;
+        if (response.getNodes() != null) {
+            TreeNode node = response.getNodes().get(0);
+            stats = new Stats();
+            stats.setHash(node.getEtag());
+            stats.setSize(Long.parseLong(node.getSize()));
+            stats.setmTime(Long.parseLong(node.getMtime()));
         }
+        return stats;
     }
 
     @Override
@@ -325,38 +309,208 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public void getBookmarks(NodeHandler h) throws SDKException {
+    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+        String urlStr = fromURL(s3Client.getUploadPreSignedURL(ws, path, name));
+        httpPUT(urlStr, source, length, progressListener);
+        return Message.create(Message.SUCCESS, "SUCCESS");
+    }
 
-        RestUserBookmarksRequest request = new RestUserBookmarksRequest();
-        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
+    @Override
+    public Message upload(File source, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+        return upload(source, ws, path, name, progressListener);
+    }
+
+    @Override
+    public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
+        return null;
+    }
+
+    @Override
+    public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener)
+            throws SDKException {
+        // TODO handle self-signed
+
+        InputStream in = null;
         try {
-            RestBulkMetaResponse response = api.userBookmarks(request);
-            if (response.getNodes() != null) {
-                for (TreeNode node : response.getNodes()) {
-                    try {
-                        FileNode fileNode = FileNodeUtils.toFileNode(node);
-                        if (fileNode != null) {
-                            List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
-                            if (sources != null) {
-                                // Not very clean: the path to the source of the bookmark has no leading slash
-                                // We can tweak here because that's the only location where we use this object.
-                                // Also bookmarks can only refer to **one** source
-                                String path = "/" + sources.get(0).getPath();
-                                fileNode.setProperty(NODE_PROPERTY_PATH, path);
-                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
-                                h.onNode(fileNode);
-                            }
-                        }
-                    } catch (NullPointerException e) {
-                        Log.e("GET_BOOKMARKS", "Unexpected NPE");
-                        e.printStackTrace();
-                    }
-                }
+            URL preSignedURL = s3Client.getDownloadPreSignedURL(ws, file);
+            HttpURLConnection connection = (HttpURLConnection) preSignedURL.openConnection();
+            transport.withUserAgent(connection);
+            in = connection.getInputStream();
+            if (progressListener == null) {
+                return IoHelpers.pipeRead(in, target);
+            } else {
+                return IoHelpers.pipeReadWithProgress(in, target, progressListener::onProgress);
             }
+        } catch (IOException e) {
+            throw SDKException.conReadFailed(e);
+        } finally {
+            IoHelpers.closeQuietly(in);
+        }
+
+    }
+
+    @Override
+    public long download(String ws, String file, File target, TransferProgressListener progressListener)
+            throws SDKException {
+        long totalRead = -1;
+        SDKException dlException = null;
+
+        try (OutputStream out = new FileOutputStream(target)) {
+            totalRead = download(ws, file, out, progressListener);
+        } catch (FileNotFoundException e) {
+            dlException = SDKException.notFound(e);
+        } catch (IOException e) {
+            dlException = SDKException.conWriteFailed(e);
+        } catch (SDKException e) {
+            dlException = new SDKException(ErrorCodes.api_error, "Could not download file " + file + " from " + ws, e);
+        } finally {
+            if (dlException != null) {
+                // Best effort to download non-complete
+                try {
+                    //noinspection ResultOfMethodCallIgnored
+                    target.delete();
+                } catch (Exception e) {
+                    Log.w("Local", "Could not delete file at " + target + " after failed download");
+                }
+                throw dlException;
+            }
+        }
+        return totalRead;
+    }
+
+    @Override
+    public String downloadPath(String ws, String file) throws SDKException {
+        return fromURL(s3Client.getDownloadPreSignedURL(ws, file));
+    }
+
+    @Override
+    public long changes(String ws, String folder, int seq, boolean flatten, ChangeHandler cp) throws SDKException {
+        // RestChangeRequest request = new RestChangeRequest();
+        // request.setFlatten(flatten);
+        // request.setSeqID(String.valueOf(seq));
+        // request.setFilter("/" + ws + folder);
+
+        // this.getJWT();
+        // ApiClient client = getApiClient();
+        // client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
+        // ChangeServiceApi api = new ChangeServiceApi(client);
+        // RestChangeCollection response;
+
+        // try {
+        // response = api.getChanges(String.valueOf(seq), request);
+        // } catch (ApiException e) {
+        // throw new SDKException(e);
+        // }
+
+        // for (TreeSyncChange c : response.getChanges()) {
+        // Change change = new Change();
+        // change.setSeq(Long.parseLong(c.getSeq()));
+        // change.setNodeId(c.getNodeId());
+        // change.setType(c.getType().toString());
+        // change.setSource(c.getSource());
+        // change.setTarget(c.getTarget());
+
+        // ChangeNode node = new ChangeNode();
+        // change.setNode(node);
+
+        // node.setSize(Long.parseLong(c.getNode().getBytesize()));
+        // node.setMd5(c.getNode().getMd5());
+        // node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
+        // node.setWorkspace(ws);
+        // node.setmTime(Long.parseLong(c.getNode().getMtime()));
+
+        // cp.onChange(change);
+        // }
+        // return Long.parseLong(response.getLastSeqId());
+        throw new RuntimeException("This must be reimplemented after API update");
+    }
+
+    @Override
+    public Message copy(String ws, String[] files, String folder) throws SDKException {
+        JSONArray nodes = new JSONArray();
+        for (String file : files) {
+            String path = "/" + ws + file;
+            nodes.put(path);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("nodes", nodes);
+        o.put("target", "/" + ws + folder);
+        o.put("targetParent", true);
+
+        RestUserJobRequest request = new RestUserJobRequest();
+        request.setJobName("copy");
+        request.setJsonParameters(o.toString());
+
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+        try {
+            api.userCreateJob("copy", request);
         } catch (ApiException e) {
             e.printStackTrace();
             throw new SDKException(e);
         }
+        return null;
+    }
+
+    @Override
+    public Message move(String ws, String[] files, String dstFolder) throws SDKException {
+        JSONArray nodes = new JSONArray();
+        for (String file : files) {
+            String path = "/" + ws + file;
+            nodes.put(path);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("nodes", nodes);
+        o.put("target", "/" + ws + dstFolder);
+        o.put("targetParent", true);
+
+        RestUserJobRequest request = new RestUserJobRequest();
+        request.setJobName("move");
+        request.setJsonParameters(o.toString());
+
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+        try {
+            api.userCreateJob("move", request);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw new SDKException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public Message rename(String ws, String srcFile, String newName) throws SDKException {
+        RestUserJobRequest request = new RestUserJobRequest();
+
+        JSONArray nodes = new JSONArray();
+        String path = FileNodeUtils.toTreeNodePath(ws, srcFile);
+        nodes.put(path);
+
+        String parent = new File(srcFile).getParentFile().getPath();
+        String dstFile;
+        if ("/".equals(parent)) {
+            dstFile = parent + newName;
+        } else {
+            dstFile = parent + "/" + newName;
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("nodes", nodes);
+        o.put("target", FileNodeUtils.toTreeNodePath(ws, dstFile));
+        o.put("targetParent", false);
+
+        request.setJobName("move");
+        request.setJsonParameters(o.toString());
+
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+        try {
+            api.userCreateJob("move", request);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw new SDKException(e);
+        }
+        return null;
     }
 
     @Override
@@ -406,91 +560,53 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message rename(String ws, String srcFile, String newName) throws SDKException {
-        RestUserJobRequest request = new RestUserJobRequest();
+    public Message emptyRecycleBin(String ws) throws SDKException {
+        return delete(ws, new String[]{"/recycle_bin"});
+    }
 
-        JSONArray nodes = new JSONArray();
-        String path = FileNodeUtils.toTreeNodePath(ws, srcFile);
-        nodes.put(path);
-
-        String parent = new File(srcFile).getParentFile().getPath();
-        String dstFile;
-        if ("/".equals(parent)) {
-            dstFile = parent + newName;
-        } else {
-            dstFile = parent + "/" + newName;
-        }
-
-        JSONObject o = new JSONObject();
-        o.put("nodes", nodes);
-        o.put("target", FileNodeUtils.toTreeNodePath(ws, dstFile));
-        o.put("targetParent", false);
-
-        request.setJobName("move");
-        request.setJsonParameters(o.toString());
-
-        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-        try {
-            api.userCreateJob("move", request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw new SDKException(e);
-        }
+    @Override
+    public String streamingAudioURL(String ws, String file) throws SDKException {
         return null;
     }
 
     @Override
-    public Message move(String ws, String[] files, String dstFolder) throws SDKException {
-        JSONArray nodes = new JSONArray();
-        for (String file : files) {
-            String path = "/" + ws + file;
-            nodes.put(path);
-        }
-
-        JSONObject o = new JSONObject();
-        o.put("nodes", nodes);
-        o.put("target", "/" + ws + dstFolder);
-        o.put("targetParent", true);
-
-        RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName("move");
-        request.setJsonParameters(o.toString());
-
-        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-        try {
-            api.userCreateJob("move", request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw new SDKException(e);
-        }
+    public String streamingVideoURL(String ws, String file) throws SDKException {
         return null;
     }
 
     @Override
-    public Message copy(String ws, String[] files, String folder) throws SDKException {
-        JSONArray nodes = new JSONArray();
-        for (String file : files) {
-            String path = "/" + ws + file;
-            nodes.put(path);
-        }
+    public void getBookmarks(NodeHandler h) throws SDKException {
 
-        JSONObject o = new JSONObject();
-        o.put("nodes", nodes);
-        o.put("target", "/" + ws + folder);
-        o.put("targetParent", true);
-
-        RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName("copy");
-        request.setJsonParameters(o.toString());
-
-        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+        RestUserBookmarksRequest request = new RestUserBookmarksRequest();
+        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
-            api.userCreateJob("copy", request);
+            RestBulkMetaResponse response = api.userBookmarks(request);
+            if (response.getNodes() != null) {
+                for (TreeNode node : response.getNodes()) {
+                    try {
+                        FileNode fileNode = FileNodeUtils.toFileNode(node);
+                        if (fileNode != null) {
+                            List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
+                            if (sources != null) {
+                                // Not very clean: the path to the source of the bookmark has no leading slash
+                                // We can tweak here because that's the only location where we use this object.
+                                // Also bookmarks can only refer to **one** source
+                                String path = "/" + sources.get(0).getPath();
+                                fileNode.setProperty(NODE_PROPERTY_PATH, path);
+                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
+                                h.onNode(fileNode);
+                            }
+                        }
+                    } catch (NullPointerException e) {
+                        Log.e("GET_BOOKMARKS", "Unexpected NPE");
+                        e.printStackTrace();
+                    }
+                }
+            }
         } catch (ApiException e) {
             e.printStackTrace();
             throw new SDKException(e);
         }
-        return null;
     }
 
     @Override
@@ -532,15 +648,6 @@ public class CellsClient implements Client, SdkNames {
         }
     }
 
-    private ServiceResourcePolicy newPolicy(String nodeId, ServiceResourcePolicyAction action) {
-        ServiceResourcePolicy policy = new ServiceResourcePolicy();
-        policy.setSubject("user:" + transport.getUser());
-        policy.setResource(nodeId);
-        policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
-        policy.setAction(action);
-        return policy;
-    }
-
     @Override
     public Message unbookmark(String ws, String nodeId) throws SDKException {
 
@@ -564,134 +671,6 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw new SDKException(e);
         }
-    }
-
-    @Override
-    public Message mkdir(String ws, String parent, String name) throws SDKException {
-        TreeNode node = new TreeNode();
-        node.setPath((ws + parent + "/" + name).replace("//", "/"));
-        node.setType(TreeNodeType.COLLECTION);
-
-        RestCreateNodesRequest request = new RestCreateNodesRequest();
-        request.recursive(false);
-        request.addNodesItem(node);
-
-        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-
-        RestNodesCollection response;
-        try {
-            response = api.createNodes(request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw new SDKException(e);
-        }
-
-        Message msg = new Message();
-        /*List<TreeNode> nodes = response.getChildren();
-        node = nodes.get(0);
-        FileNode fileNode = toFileNode(node);
-        msg.added.add(fileNode); */
-        return msg;
-    }
-
-    // @Override
-    public Message mkfile(String ws, String name, String folder) throws SDKException {
-
-        TreeNode node = new TreeNode();
-        node.setPath("/" + ws + folder + "/" + name);
-        node.setType(TreeNodeType.LEAF);
-
-        RestCreateNodesRequest request = new RestCreateNodesRequest();
-        request.recursive(false);
-        request.addNodesItem(node);
-
-        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-
-        RestNodesCollection response;
-        try {
-            response = api.createNodes(request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw new SDKException(e);
-        }
-
-        Message msg = new Message();
-        msg.added = new ArrayList<>();
-
-        List<TreeNode> nodes = response.getChildren();
-        node = nodes.get(0);
-
-        FileNode fileNode = FileNodeUtils.toFileNode(node);
-        msg.added.add(fileNode);
-        return msg;
-    }
-
-    @Override
-    public Stats stats(String ws, String file, boolean withHash) throws SDKException {
-        RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-        request.addNodePathsItem(FileNodeUtils.toTreeNodePath(ws, file));
-        request.setAllMetaProviders(true);
-
-        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-        RestBulkMetaResponse response;
-        try {
-            response = api.bulkStatNodes(request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw new SDKException(e);
-        }
-
-        Stats stats = null;
-        if (response.getNodes() != null) {
-            TreeNode node = response.getNodes().get(0);
-            stats = new Stats();
-            stats.setHash(node.getEtag());
-            stats.setSize(Long.parseLong(node.getSize()));
-            stats.setmTime(Long.parseLong(node.getMtime()));
-        }
-        return stats;
-    }
-
-    @Override
-    public long changes(String ws, String folder, int seq, boolean flatten, ChangeHandler cp) throws SDKException {
-        // RestChangeRequest request = new RestChangeRequest();
-        // request.setFlatten(flatten);
-        // request.setSeqID(String.valueOf(seq));
-        // request.setFilter("/" + ws + folder);
-
-        // this.getJWT();
-        // ApiClient client = getApiClient();
-        // client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        // ChangeServiceApi api = new ChangeServiceApi(client);
-        // RestChangeCollection response;
-
-        // try {
-        // response = api.getChanges(String.valueOf(seq), request);
-        // } catch (ApiException e) {
-        // throw new SDKException(e);
-        // }
-
-        // for (TreeSyncChange c : response.getChanges()) {
-        // Change change = new Change();
-        // change.setSeq(Long.parseLong(c.getSeq()));
-        // change.setNodeId(c.getNodeId());
-        // change.setType(c.getType().toString());
-        // change.setSource(c.getSource());
-        // change.setTarget(c.getTarget());
-
-        // ChangeNode node = new ChangeNode();
-        // change.setNode(node);
-
-        // node.setSize(Long.parseLong(c.getNode().getBytesize()));
-        // node.setMd5(c.getNode().getMd5());
-        // node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
-        // node.setWorkspace(ws);
-        // node.setmTime(Long.parseLong(c.getNode().getMtime()));
-
-        // cp.onChange(change);
-        // }
-        // return Long.parseLong(response.getLastSeqId());
-        throw new RuntimeException("This must be reimplemented after API update");
     }
 
     @Override
@@ -763,30 +742,122 @@ public class CellsClient implements Client, SdkNames {
         }
     }
 
-    @Override
-    public Message emptyRecycleBin(String ws) throws SDKException {
-        return delete(ws, new String[]{"/recycle_bin"});
+    public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
+        boolean isLeaf = node.getType() == TreeNodeType.LEAF;
+        long size = Long.parseLong(node.getSize());
+        long lastEdit = Long.parseLong(node.getMtime());
+        return new TreeNodeInfo(node.getEtag(), node.getPath(), isLeaf, size, lastEdit);
+    }
+
+    public TreeNodeInfo statNode(String fullPath) throws SDKException {
+        TreeNode node = internalStatNode(fullPath);
+        return node != null ? toTreeNodeinfo(node) : null;
+    }
+
+    /**
+     * Same as statNode() but rather return null than an {@link SDKException}
+     * in case the node is not found
+     */
+    private TreeNodeInfo statOptionalNode(String fullPath) throws SDKException {
+        TreeNode node = null;
+        try {
+            node = internalStatNode(fullPath);
+        } catch (SDKException e) {
+            if (e.getCode() != 404) {
+                throw e;
+            }
+        }
+        return node != null ? toTreeNodeinfo(node) : null;
+    }
+
+    private TreeNode internalStatNode(String ws, String path) throws SDKException {
+        return internalStatNode(FileNodeUtils.toTreeNodePath(ws, path));
+    }
+
+    private TreeNode internalStatNode(String fullPath) throws SDKException {
+
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
+        try {
+            return api.headNode(fullPath).getNode();
+        } catch (ApiException e) {
+            throw new SDKException(e);
+        }
+        // return toFileNode(response.getNode());
+    }
+
+    /**
+     * List children of the node at {@code fullPath}. Note that it does nothing if
+     * no node is found at {@code fullPath}.
+     */
+    public void listChildren(String fullPath, TreeNodeHandler handler) throws SDKException {
+
+        RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
+        request.addNodePathsItem(fullPath + "/*");
+        request.setAllMetaProviders(true);
+
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
+        RestBulkMetaResponse response = null;
+        try {
+            response = api.bulkStatNodes(request);
+        } catch (ApiException e) {
+            if (e.getCode() != 404) {
+                throw new SDKException(e);
+            }
+        }
+
+        if (response != null && response.getNodes() != null) {
+            Iterator<TreeNode> nodes = response.getNodes().iterator();
+            while (nodes.hasNext()) {
+                handler.onNode(nodes.next());
+            }
+        }
+    }
+
+    public Message mkfile(String ws, String name, String folder) throws SDKException {
+
+        TreeNode node = new TreeNode();
+        node.setPath("/" + ws + folder + "/" + name);
+        node.setType(TreeNodeType.LEAF);
+
+        RestCreateNodesRequest request = new RestCreateNodesRequest();
+        request.recursive(false);
+        request.addNodesItem(node);
+
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
+
+        RestNodesCollection response;
+        try {
+            response = api.createNodes(request);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw new SDKException(e);
+        }
+
+        Message msg = new Message();
+        msg.added = new ArrayList<>();
+
+        List<TreeNode> nodes = response.getChildren();
+        node = nodes.get(0);
+
+        FileNode fileNode = FileNodeUtils.toFileNode(node);
+        msg.added.add(fileNode);
+        return msg;
+    }
+
+    private ServiceResourcePolicy newPolicy(String nodeId, ServiceResourcePolicyAction action) {
+        ServiceResourcePolicy policy = new ServiceResourcePolicy();
+        policy.setSubject("user:" + transport.getUser());
+        policy.setResource(nodeId);
+        policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
+        policy.setAction(action);
+        return policy;
     }
 
     public CellsClient get(Transport session) {
         return new CellsClient(session, s3Client);
     }
 
-
     /* Transfer methods that use S3 */
-
-    @Override
-    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
-        String urlStr = fromURL(s3Client.getUploadPreSignedURL(ws, path, name));
-        httpPUT(urlStr, source, length, progressListener);
-        return Message.create(Message.SUCCESS, "SUCCESS");
-    }
-
-
-    @Override
-    public Message upload(File source, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
-        return upload(source, ws, path, name, progressListener);
-    }
 
     @Deprecated
     private String fromURL(URL url) {
@@ -803,120 +874,14 @@ public class CellsClient implements Client, SdkNames {
         return upload(in, f.length(), ws, path, name, true, tpl);
     }
 
-
-    @Override
-    public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
-        return null;
-    }
-
-
-    @Override
-    public InputStream previewData(String ws, String file, int dim) throws SDKException {
-        return s3Client.getThumb(file);
-    }
-
-    @Override
-    public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener)
-            throws SDKException {
-        // TODO handle self-signed
-
-        InputStream in = null;
-        try {
-            URL preSignedURL = s3Client.getDownloadPreSignedURL(ws, file);
-            HttpURLConnection connection = (HttpURLConnection) preSignedURL.openConnection();
-            transport.withUserAgent(connection);
-            in = connection.getInputStream();
-            if (progressListener == null) {
-                return IoHelpers.pipeRead(in, target);
-            } else {
-                return IoHelpers.pipeReadWithProgress(in, target, progressListener::onProgress);
-            }
-        } catch (IOException e) {
-            throw SDKException.conReadFailed(e);
-        } finally {
-            IoHelpers.closeQuietly(in);
-        }
-
-    }
-
-    @Override
-    public long download(String ws, String file, File target, TransferProgressListener progressListener)
-            throws SDKException {
-        long totalRead = -1;
-        SDKException dlException = null;
-
-        try (OutputStream out = new FileOutputStream(target)) {
-            totalRead = this.download(ws, file, out, progressListener);
-        } catch (FileNotFoundException e) {
-            dlException = SDKException.notFound(e);
-        } catch (IOException e) {
-            dlException = SDKException.conWriteFailed(e);
-        } catch (SDKException e) {
-            dlException = new SDKException(ErrorCodes.api_error, "Could not download file " + file + " from " + ws, e);
-        } finally {
-            if (dlException != null) {
-                // Best effort to download non-complete
-                try {
-                    //noinspection ResultOfMethodCallIgnored
-                    target.delete();
-                } catch (Exception e) {
-                    Log.w("Local", "Could not delete file at " + target + " after failed download");
-                }
-                throw dlException;
-            }
-        }
-        return totalRead;
-    }
-
-    @Deprecated
-    @Override
-    public String downloadPath(String ws, String file) throws SDKException {
-        return fromURL(s3Client.getDownloadPreSignedURL(ws, file));
-    }
-
-
-    @Override
-    public String streamingAudioURL(String ws, String file) throws SDKException {
-        return null;
-    }
-
-    @Override
-    public String streamingVideoURL(String ws, String file) throws SDKException {
-        return null;
-    }
-
-
-    // Local Helpers
-    //  protected String getToken() throws SDKException {
-    //      // TODO use tokenCache
-    //      Token token = TokenService.get(serverNode, credentials, skipOAuth);
-    //      if (token != null) {
-    //          return token.value;
-    //      } else {
-    //          // TODO throw an exception
-    //          return "";
-    //      }
-    //  }
-
-//    protected void getJWT() throws SDKException {
-//        bearerValue = getToken();
+//    private static SDKException fromApiException(ApiException e) {
+//        int code = ErrorCodes.fromHttpStatus(e.getCode());
+//        return new SDKException(code, e);
 //    }
-
-
-    // Simple shortcut to encode URLs
-//    protected String utf8Encode(String value) {
-//        return URLEncoder.encode(value, UTF_8);
-//    }
-
-    private static SDKException fromApiException(ApiException e) {
-        int code = ErrorCodes.fromHttpStatus(e.getCode());
-        return new SDKException(code, e);
-    }
 
     private ApiClient authenticatedClient() throws SDKException {
         return transport.authenticatedClient();
     }
-
 
     private void httpPUT(String url, InputStream source, long length, TransferProgressListener listener) throws SDKException {
         ContentBody body = new ContentBody(source, length);
