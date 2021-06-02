@@ -47,11 +47,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     private int loginFailure;
 
-    // TODO remove this once we have cornered the issue that makes CRUD integration test to fail.
-    private String tmpToken1, tmpToken2;
-
     private Boolean useCaptcha;
-
 
     public P8Transport(Server server, String username, CookieManager manager, CustomEncoder encoder) {
         this.server = server;
@@ -128,8 +124,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         if (null == secureToken || "".equals(secureToken)) {
             login();
             secureToken = getSecureToken();
-            tmpToken2 = secureToken;
-            System.out.println("Comparing first and second token equals ? " + tmpToken2.equals(tmpToken1));
         }
         return secureToken;
     }

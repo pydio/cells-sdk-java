@@ -8,8 +8,6 @@ public class P8Credentials implements PasswordCredentials {
     private final String password;
     private final String captcha;
 
-
-
     public P8Credentials(String login, String password, String captcha) {
         this.login = login;
         this.password = password;

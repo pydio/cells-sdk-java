@@ -603,10 +603,10 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public InputStream previewData(String ws, String file, int dim) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file, dim).setToken(transport);
-        P8Response rsp = null; // cannot use try on closer method or the stream will be closed before it is read
-        rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
+        P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file).setToken(transport);
+        P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
         if (rsp.code() != ErrorCodes.ok) {
+            rsp.close();
             throw new SDKException(rsp.code());
         }
         return rsp.getInputStream();

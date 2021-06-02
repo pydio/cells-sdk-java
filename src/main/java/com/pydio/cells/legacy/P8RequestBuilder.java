@@ -11,6 +11,7 @@ import com.pydio.cells.legacy.consts.P8Names;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 public class P8RequestBuilder {
 
@@ -140,13 +141,12 @@ public class P8RequestBuilder {
     }
 
     public static P8RequestBuilder search(String ws, String dir, String query) {
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setAction(ActionNames.search)
                 .setParam(P8Names.dir, dir)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.query, query)
                 .ignoreCookies(false);
-        return builder;
     }
 
     public static P8RequestBuilder upload(String ws, String dir, String name, boolean autoRename, ContentBody body) throws IOException {
@@ -180,7 +180,7 @@ public class P8RequestBuilder {
         } else {
             int count = 0;
             for (String file : files) {
-                String item = String.format("file_%d", count);
+                String item = String.format(Locale.ROOT,"file_%d", count);
                 builder.setParam(item, file);
                 count++;
             }
@@ -213,13 +213,12 @@ public class P8RequestBuilder {
     }
 
     public static P8RequestBuilder rename(String ws, String file, String newFilename) {
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .setParam(P8Names.filenameNew, newFilename)
                 .setAction(ActionNames.rename)
                 .ignoreCookies(false);
-        return builder;
     }
 
     public static P8RequestBuilder copy(String ws, String[] files, String dest) {
@@ -243,7 +242,7 @@ public class P8RequestBuilder {
         return builder.ignoreCookies(false);
     }
 
-    public static P8RequestBuilder previewImage(String ws, String file, int dim) {
+    public static P8RequestBuilder previewImage(String ws, String file) {
         P8RequestBuilder builder = new P8RequestBuilder()
                 .setAction(ActionNames.previewDataProxy)
                 .setParam(P8Names.tmpRepositoryId, ws)
@@ -252,7 +251,7 @@ public class P8RequestBuilder {
         return builder.ignoreCookies(false);
     }
 
-    public static P8RequestBuilder previewPDF(String ws, String file, int dim) {
+    public static P8RequestBuilder previewPDF(String ws, String file) {
         P8RequestBuilder builder = new P8RequestBuilder()
                 .setAction(ActionNames.imagickDataProxy)
                 .setParam(P8Names.tmpRepositoryId, ws)
@@ -308,7 +307,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder share(String ws, String file, String descripton) {
         File f = new File(file);
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setAction(ActionNames.share)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
@@ -319,50 +318,44 @@ public class P8RequestBuilder {
                 .setParam(P8Names.simpleRightDownload, "on")
                 .setParam(P8Names.simpleRightRead, "on")
                 .ignoreCookies(false);
-        return builder;
     }
 
     public static P8RequestBuilder unShare(String ws, String file) {
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setAction(ActionNames.unshare)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .ignoreCookies(false);
-        return builder;
     }
 
     public static P8RequestBuilder shareInfo(String ws, String file) {
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setAction(ActionNames.loadSharedElementData)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.merged, "true")
                 .setParam(P8Names.file, file)
                 .ignoreCookies(false);
-        return builder;
     }
 
     public static P8RequestBuilder restore(String ws, String file) {
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setAction(ActionNames.restore)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .ignoreCookies(false);
-        return builder;
     }
 
     public static P8RequestBuilder emptyRecycle(String ws) {
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setAction(ActionNames.emptyRecycle)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .ignoreCookies(false);
-        return builder;
     }
 
     public static P8RequestBuilder getCaptcha() {
-        P8RequestBuilder builder = new P8RequestBuilder()
+        return new P8RequestBuilder()
                 .setAction(ActionNames.getCaptcha)
                 .ignoreCookies(false);
-        return builder;
     }
 
     public P8RequestBuilder setAction(String action) {
