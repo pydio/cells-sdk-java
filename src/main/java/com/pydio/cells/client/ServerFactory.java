@@ -201,6 +201,7 @@ public class ServerFactory implements IServerFactory {
 
     }
 
+    @Override
     public CustomEncoder getEncoder(){
         return new JavaCustomEncoder();
     }

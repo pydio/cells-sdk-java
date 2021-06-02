@@ -1,6 +1,7 @@
 package com.pydio.cells.client;
 
 import com.pydio.cells.api.Client;
+import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
