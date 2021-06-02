@@ -43,37 +43,44 @@ public class PojoS3Client implements S3Client {
     }
 
     public URL getUploadPreSignedURL(String ws, String folder, String name) throws SDKException {
-
-        String cleanPath = String.format("%s/%s", folder, name);
-        String filename = String.format("%s%s", ws, cleanPath).replace("//", "/");
-        filename = SdkHttpUtils.urlEncode(filename, true);
-
+        String filename = getCleanPath(ws, folder, name);
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(defaultBucketName, filename);
         request.setMethod(HttpMethod.PUT);
         request.setContentType(S3Names.S3_CONTENT_TYPE_OCTET_STREAM);
         request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getToken());
-
         return getS3Client().generatePresignedUrl(request);
     }
 
     public URL getDownloadPreSignedURL(String ws, String file) throws SDKException {
-        String filename = ws + file;
-
-        if (filename.contains("//")) {
-            // This should not happen anymore
-            Log.w("Legacy",
-                    "Found a double slash in " + filename + ", this is most probably a bug. Double check and fix");
-            Thread.dumpStack();
-            filename = filename.replace("//", "/");
-        }
-
-        filename = SdkHttpUtils.urlEncode(filename, true);
-
+        String filename = getCleanPath(ws, file);
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(defaultBucketName, filename);
         request.setMethod(HttpMethod.GET);
         request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getToken());
-
         return getS3Client().generatePresignedUrl(request);
+    }
+
+    public URL getStreamingPreSignedURL(String slug, String file, String contentType) throws SDKException {
+        String filename = getCleanPath(slug, file);
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(defaultBucketName, filename);
+        request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getToken());
+        request.addRequestParameter(S3Names.RESPONSE_CONTENT_TYPE, contentType);
+        return getS3Client().generatePresignedUrl(request);
+    }
+
+    private String getCleanPath(String slug, String parent, String fileName) {
+        return getCleanPath(slug, parent + "/" + fileName);
+    }
+
+    private String getCleanPath(String slug, String file){
+        String path = slug + file;
+        if (path.contains("//")) {
+            // This should not happen anymore
+            Log.w("Legacy",
+                    "Found a double slash in " + path + ", this is most probably a bug. Double check and fix");
+            Thread.dumpStack();
+            path = path.replace("//", "/");
+        }
+        return SdkHttpUtils.urlEncode(path, true);
     }
 
     private AmazonS3 getS3Client() throws SDKException {

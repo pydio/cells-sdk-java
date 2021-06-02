@@ -565,13 +565,13 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public String streamingAudioURL(String ws, String file) throws SDKException {
-        return null;
+    public String streamingAudioURL(String slug, String file) throws SDKException {
+        return fromURL(s3Client.getStreamingPreSignedURL(slug, file, S3Names.S3_CONTENT_TYPE_MP3));
     }
 
     @Override
-    public String streamingVideoURL(String ws, String file) throws SDKException {
-        return null;
+    public String streamingVideoURL(String slug, String file) throws SDKException {
+        return fromURL(s3Client.getStreamingPreSignedURL(slug, file, S3Names.S3_CONTENT_TYPE_MP4));
     }
 
     @Override
@@ -906,6 +906,7 @@ public class CellsClient implements Client, SdkNames {
             }
         });
         try {
+            // TODO manage self signed here
             HttpRequest request = new HttpRequest();
             request.setMethod("PUT");
             request.setHeaders(Params.create("User-Agent", transport.getUserAgent()));
