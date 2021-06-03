@@ -28,9 +28,14 @@ public class DocumentRegistry implements Registry {
 
     // todo: add constant in SDKNames instead of hardcoded tag names
 
-    final protected String repositoriesXPath = "/ajxp_registry/user/repositories";
-    final protected String actionsXPath = "/ajxp_registry/actions";
-    final protected String pluginsXPath = "/ajxp_registry/plugins";
+    final protected String ajxpRepositoriesXPath = "/ajxp_registry/user/repositories";
+    final protected String pydioRepositoriesXPath = "/pydio_registry/user/repositories";
+
+    final protected String ajxpActionsXPath = "/ajxp_registry/actions";
+    final protected String pydioActionsXPath = "/pydio_registry/actions";
+
+    final protected String ajxpPluginsXPath = "/ajxp_registry/plugins";
+    final protected String pydioPluginsXPath = "/pydio_registry/plugins";
 
     private final Document xmlDocument;
 
@@ -61,7 +66,10 @@ public class DocumentRegistry implements Registry {
         XPath xPath = XPathFactory.newInstance().newXPath();
         try {
             List<WorkspaceNode> workspaceNodes = new ArrayList<>();
-            NodeList repositoriesNode = (NodeList) xPath.compile(repositoriesXPath).evaluate(xmlDocument, XPathConstants.NODESET);
+            NodeList repositoriesNode = (NodeList) xPath.compile(ajxpRepositoriesXPath).evaluate(xmlDocument, XPathConstants.NODESET);
+            if (repositoriesNode.getLength() == 0) {
+                repositoriesNode = (NodeList) xPath.compile(pydioRepositoriesXPath).evaluate(xmlDocument, XPathConstants.NODESET);
+            }
             if (repositoriesNode.getLength() > 0) {
                 NodeList repositoriesChildNodes = repositoriesNode.item(0).getChildNodes();
                 for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
@@ -151,7 +159,8 @@ public class DocumentRegistry implements Registry {
         try {
             List<Action> actions = new ArrayList<>();
 
-            Node repositoriesNode = (Node) xPath.compile(actionsXPath).evaluate(xmlDocument, XPathConstants.NODE);
+            Node repositoriesNode = (Node) xPath.compile(ajxpActionsXPath).evaluate(xmlDocument, XPathConstants.NODE);
+
             NodeList repositoriesChildNodes = repositoriesNode.getChildNodes();
             for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
                 Node node = repositoriesChildNodes.item(i);
@@ -246,7 +255,7 @@ public class DocumentRegistry implements Registry {
         try {
             List<Plugin> plugins = new ArrayList<>();
 
-            Node pluginsNode = (Node) xPath.compile(pluginsXPath).evaluate(xmlDocument, XPathConstants.NODE);
+            Node pluginsNode = (Node) xPath.compile(ajxpPluginsXPath).evaluate(xmlDocument, XPathConstants.NODE);
             NodeList repositoriesChildNodes = pluginsNode.getChildNodes();
             for (int i = 0; i < repositoriesChildNodes.getLength(); i++) {
                 Node node = repositoriesChildNodes.item(i);
