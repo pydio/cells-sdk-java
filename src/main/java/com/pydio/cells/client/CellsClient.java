@@ -18,6 +18,7 @@ import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.client.common.http.HttpClient;
 import com.pydio.cells.client.common.http.HttpRequest;
+import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
@@ -62,6 +63,7 @@ import com.pydio.cells.transport.CellsTransport;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
@@ -79,6 +81,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
 public class CellsClient implements Client, SdkNames {
@@ -124,16 +127,19 @@ public class CellsClient implements Client, SdkNames {
                 WORKSPACE_ACCESS_TYPE_HOMEPAGE, WORKSPACE_ACCESS_TYPE_SETTINGS,
                 WORKSPACE_ACCESS_TYPE_ADMIN, WORKSPACE_ACCESS_TYPE_INBOX,};
 
+        Registry registry;
         try {
-            NodeHandler nh = (n) -> {
-                if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
-                    handler.onNode(n);
-                }
-            };
-            DefaultHandler saxHandler = new WorkspaceNodeSaxHandler(nh, 0, -1);
-            SAXParserFactory.newInstance().newSAXParser().parse(in, saxHandler);
-        } catch (Exception e) {
+            registry = new DocumentRegistry(in);
+        } catch (IOException e) {
+            throw new SDKException(e);
+        } catch (ParserConfigurationException | SAXException e) {
             throw SDKException.unexpectedContent(e);
+        }
+
+        for (WorkspaceNode node : registry.GetWorkspaces()) {
+            if (!Arrays.asList(excluded).contains(node.getAccessType())) {
+                handler.onNode(node);
+            }
         }
     }
 
