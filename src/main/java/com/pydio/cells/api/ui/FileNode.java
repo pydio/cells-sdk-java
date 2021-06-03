@@ -7,6 +7,11 @@ public interface FileNode extends Node {
 
     boolean isImage();
 
+    // TODO finalize this
+    default boolean isViewable() {
+        return isImage();
+    }
+
     boolean isFile();
 
     boolean isFolder();
