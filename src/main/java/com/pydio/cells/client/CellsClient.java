@@ -116,13 +116,6 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.conFailed(e);
         }
-        // TODO probably herited from P8 legacy time... and useless in a Cells context.
-        // Double check and remove
-        String[] excluded = {WORKSPACE_ACCESS_TYPE_CONF, WORKSPACE_ACCESS_TYPE_SHARED,
-                WORKSPACE_ACCESS_TYPE_MYSQL, WORKSPACE_ACCESS_TYPE_IMAP, WORKSPACE_ACCESS_TYPE_JSAPI,
-                WORKSPACE_ACCESS_TYPE_USER, WORKSPACE_ACCESS_TYPE_HOME,
-                WORKSPACE_ACCESS_TYPE_HOMEPAGE, WORKSPACE_ACCESS_TYPE_SETTINGS,
-                WORKSPACE_ACCESS_TYPE_ADMIN, WORKSPACE_ACCESS_TYPE_INBOX,};
 
         Registry registry;
         try {
@@ -134,7 +127,7 @@ public class CellsClient implements Client, SdkNames {
         }
 
         for (WorkspaceNode node : registry.GetWorkspaces()) {
-            if (!Arrays.asList(excluded).contains(node.getAccessType())) {
+            if (!Arrays.asList(defaultExcludedWorkspaces).contains(node.getAccessType())) {
                 handler.onNode(node);
             }
         }
