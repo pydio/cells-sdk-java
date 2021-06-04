@@ -278,7 +278,7 @@ public class PydioCells implements Client {
 
     @Override
     public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-        String fullURI = this.URL + "/a/frontend/state/?ws=login";
+        String fullURI = this.URL + "/a/frontend/state/";
         URL url = null;
         try {
             url = new URL(fullURI);
