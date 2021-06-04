@@ -1,6 +1,6 @@
 package com.pydio.cells.api;
 
-import com.pydio.cells.transport.auth.OAuthConfig;
+import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 
 import java.net.MalformedURLException;
 

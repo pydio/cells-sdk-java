@@ -2,15 +2,15 @@ package com.pydio.cells.integration.auth;
 
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.client.TestSessionFactory;
+import com.pydio.cells.integration.RemoteServerConfig;
+import com.pydio.cells.integration.TestConfiguration;
+import com.pydio.cells.integration.TestUtils;
+import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.auth.SimpleTokenStore;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.transport.auth.TokenStore;
 import com.pydio.cells.utils.Log;
-import com.pydio.cells.integration.RemoteServerConfig;
-import com.pydio.cells.integration.TestConfiguration;
-import com.pydio.cells.integration.TestUtils;
-import com.pydio.cells.transport.CellsTransport;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -31,8 +31,8 @@ public class RefreshTokenTest {
     private static TokenStore tokenStore;
 
     // Replace this with a valid value for cells-https config to enable the test
-    private final static String manualToken = "Do3SfOj4XOj2oQzMBHsRDGWvOB-wQc9XQlhA-3cqMZI.ydWcj44AazUeR4Cwq1zA0uXL65ykOYNC2L5QRcFQZUo";
-//    private final static String manualToken = null;
+    // private final static String manualToken = "Do3SfOj4XOj2oQzMBHsRDGWvOB-wQc9XQlhA-3cqMZI.ydWcj44AazUeR4Cwq1zA0uXL65ykOYNC2L5QRcFQZUo";
+    private final static String manualToken = null;
 
     @BeforeClass
     public static void setup() {

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.S3Client;
+import com.pydio.cells.api.S3Names;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;

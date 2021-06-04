@@ -1,4 +1,4 @@
-package com.pydio.cells.client;
+package com.pydio.cells.api;
 
 public interface S3Names {
 

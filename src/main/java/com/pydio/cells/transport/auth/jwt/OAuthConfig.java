@@ -1,4 +1,4 @@
-package com.pydio.cells.transport.auth;
+package com.pydio.cells.transport.auth.jwt;
 
 import com.pydio.cells.api.SDKException;
 

@@ -11,7 +11,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.util.SdkHttpUtils;
 import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.client.S3Names;
+import com.pydio.cells.api.S3Names;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.transport.CellsTransport;
 

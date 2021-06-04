@@ -9,12 +9,13 @@ import java.text.ParseException;
 
 public class Token {
 
+    // Set by the app in our word to contain the corresponding encoded accountID
     public String subject;
-    // value is the real useful token
+    // value is the real useful token => access_token in OAuth2
     public String value;
-
     // idToken contains encoded information about current session, typically the claims
     public String idToken;
+
     public String scope;
     public String tokenType;
 

@@ -8,9 +8,6 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
-import com.pydio.cells.client.common.http.HttpClient;
-import com.pydio.cells.client.common.http.HttpRequest;
-import com.pydio.cells.client.common.http.HttpResponse;
 import com.pydio.cells.client.encoding.B64;
 import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
@@ -18,12 +15,11 @@ import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
 import com.pydio.cells.openapi.model.RestFrontSessionRequest;
-import com.pydio.cells.transport.auth.OAuthConfig;
+import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
-import com.pydio.cells.utils.Params;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONObject;
@@ -81,11 +77,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return server;
     }
 
-
-    public CustomEncoder getEncoder() {
-        return encoder;
-    }
-
     @Override
     public String getUserAgent() {
         if (userAgent != null) {
@@ -106,13 +97,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     @Override
     public boolean isOffline() {
         return false;
-    }
-
-    @Override
-    @Deprecated
-    public void setCredentials(Credentials credentials) throws SDKException {
-        // This should not be used by a Cells transport
-        throw new SDKException("Directly setting credentials on a Cells transport is prohibited");
     }
 
     @Override
@@ -198,14 +182,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return apiClient;
     }
 
-    @Override
-    public JSONObject userInfo() throws SDKException {
-        // FIXME really ?
-        RestFrontSessionRequest request = new RestFrontSessionRequest();
-        request.setLogout(true);
-        return null;
-    }
-
     public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
         HttpURLConnection con = null;
         InputStream in = null;
@@ -274,12 +250,15 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             authData.put("grant_type", "authorization_code");
             authData.put("code", code);
             authData.put("redirect_uri", cfg.redirectURI);
+
+            // Either this or the 2 lines after are useless.
             authData.put("client_id", ClientData.getClientId());
             authData.put("client_secret", ClientData.getClientSecret());
 
             String authHeader = "Basic " + encoder.encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
             addPostData(con, authData, authHeader);
 
+            // TODO double check: do we need to explicitly open the connection before gettinng the stream ?
             try { // Real call
                 System.out.println(con.getResponseCode());
                 in = con.getInputStream();
@@ -292,8 +271,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             IoHelpers.pipeRead(in, out);
             String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
             return Token.decodeOAuthJWT(jwtStr);
-//            return Token.decodeOAuthJWT(jwt);
-
         } finally {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(out);
@@ -339,7 +316,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     /* Simply pass body parameters as URL encoded form */
     private void addPostData(HttpURLConnection con, Map<String, String> postData, String authHeader) throws SDKException {
-
         try {
             con.setRequestMethod("POST");
             con.setDoOutput(true);
@@ -388,6 +364,26 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             }
         }
     }
+
+    @Override
+    public JSONObject userInfo() throws SDKException {
+        // FIXME really ?
+        RestFrontSessionRequest request = new RestFrontSessionRequest();
+        request.setLogout(true);
+        return null;
+    }
+
+    @Override
+    @Deprecated
+    public void setCredentials(Credentials credentials) throws SDKException {
+        // This should not be used by a Cells transport
+        throw new SDKException("Directly setting credentials on a Cells transport is prohibited");
+    }
+
+    public CustomEncoder getEncoder() {
+        return encoder;
+    }
+
 
 //    private static SDKException fromApiException(ApiException e) {
 //        int code = ErrorCodes.fromHttpStatus(e.getCode());

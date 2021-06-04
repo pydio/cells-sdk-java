@@ -1,9 +1,6 @@
 package com.pydio.cells.transport;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -40,7 +37,7 @@ public class StateID {
         String host = utf8Decode(parts[1]);
 
         String path = null;
-        if (parts.length == 3){
+        if (parts.length == 3) {
             path = utf8Decode(parts[2]);
         }
 
@@ -70,7 +67,7 @@ public class StateID {
 //            e.printStackTrace();
 //           return null;
 
-        }
+    }
 
     /**
      * Retrieves the *encoded* representation of this StateID for serialization.
@@ -137,7 +134,6 @@ public class StateID {
             throw new RuntimeException("Unexpected decoding issue", e);
         }
     }
-
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
