@@ -8,7 +8,7 @@ public abstract class B64 {
         encoder = b;
     }
 
-    public static B64 get() {
+    private static B64 get() {
         /*if (encoder == null) {
             return new DefaultB64Encoder();
         } */
