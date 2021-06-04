@@ -95,20 +95,6 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void workspaceList(NodeHandler handler) throws SDKException {
-        String[] excluded = {
-                WORKSPACE_ACCESS_TYPE_CONF,
-                WORKSPACE_ACCESS_TYPE_SHARED,
-                WORKSPACE_ACCESS_TYPE_MYSQL,
-                WORKSPACE_ACCESS_TYPE_IMAP,
-                WORKSPACE_ACCESS_TYPE_JSAPI,
-                WORKSPACE_ACCESS_TYPE_USER,
-                WORKSPACE_ACCESS_TYPE_HOME,
-                WORKSPACE_ACCESS_TYPE_HOMEPAGE,
-                WORKSPACE_ACCESS_TYPE_SETTINGS,
-                WORKSPACE_ACCESS_TYPE_ADMIN,
-                WORKSPACE_ACCESS_TYPE_INBOX,
-        };
-
         P8RequestBuilder builder = P8RequestBuilder.workspaceList().setToken(transport);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
@@ -117,7 +103,7 @@ public class P8Client implements Client, SdkNames {
 
             // TODO this WorkspaceNodeSaxHandler parser is not reliable.
             final int code = rsp.saxParse(new WorkspaceNodeSaxHandler((n) -> {
-                if (!Arrays.asList(excluded).contains(((WorkspaceNode) n).getAccessType())) {
+                if (!Arrays.asList(defaultExcludedWorkspaces).contains(((WorkspaceNode) n).getAccessType())) {
                     handler.onNode(n);
                 }
             }, 0, -1));
