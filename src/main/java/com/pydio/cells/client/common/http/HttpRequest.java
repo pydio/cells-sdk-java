@@ -1,7 +1,7 @@
 package com.pydio.cells.client.common.http;
 
 import com.pydio.cells.api.callbacks.ServerResolver;
-import com.pydio.cells.client.utils.Params;
+import com.pydio.cells.utils.Params;
 
 import java.net.CookieManager;
 

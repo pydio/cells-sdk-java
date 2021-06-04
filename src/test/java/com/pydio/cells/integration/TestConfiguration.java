@@ -1,6 +1,6 @@
 package com.pydio.cells.integration;
 
-import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.utils.Log;
 
 import java.io.File;
 import java.io.FilenameFilter;

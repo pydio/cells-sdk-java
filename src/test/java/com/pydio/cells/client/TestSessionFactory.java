@@ -2,7 +2,7 @@ package com.pydio.cells.client;
 
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.client.s3.PojoS3Client;
 import com.pydio.cells.transport.CellsTransport;
 

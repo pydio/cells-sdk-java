@@ -1,7 +1,7 @@
 package com.pydio.cells.client.common.http;
 
-import com.pydio.cells.client.ClientData;
-import com.pydio.cells.client.utils.Params;
+import com.pydio.cells.transport.ClientData;
+import com.pydio.cells.utils.Params;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

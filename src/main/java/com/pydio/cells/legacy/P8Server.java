@@ -5,8 +5,8 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.client.auth.OAuthConfig;
-import com.pydio.cells.client.utils.IoHelpers;
+import com.pydio.cells.transport.auth.OAuthConfig;
+import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.legacy.consts.ActionNames;
 
 import org.json.JSONObject;

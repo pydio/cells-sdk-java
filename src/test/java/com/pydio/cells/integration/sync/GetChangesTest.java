@@ -4,9 +4,9 @@ public class GetChangesTest{}
 
 //package com.pydio.cells.integration;
 //
-//import com.pydio.cells.client.auth.SimpleTokenStore;
-//import com.pydio.cells.client.auth.TokenService;
-//import com.pydio.cells.client.auth.jwt.TokenMemoryStore;
+//import com.pydio.cells.transport.auth.SimpleTokenStore;
+//import com.pydio.cells.transport.auth.TokenService;
+//import com.pydio.cells.transport.auth.jwt.TokenMemoryStore;
 //import org.junit.After;
 //import org.junit.Before;
 //

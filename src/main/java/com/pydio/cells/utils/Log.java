@@ -1,4 +1,4 @@
-package com.pydio.cells.client.utils;
+package com.pydio.cells.utils;
 
 import java.io.File;
 import java.util.Iterator;

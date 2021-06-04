@@ -1,7 +1,7 @@
 package com.pydio.cells.sync.fs;
 
 import com.pydio.cells.api.Change;
-import com.pydio.cells.client.utils.io;
+import com.pydio.cells.utils.io;
 import com.pydio.cells.sync.Error;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;

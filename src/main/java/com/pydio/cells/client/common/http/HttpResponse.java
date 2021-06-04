@@ -3,7 +3,7 @@ package com.pydio.cells.client.common.http;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.callbacks.StringHandler;
-import com.pydio.cells.client.utils.io;
+import com.pydio.cells.utils.io;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;

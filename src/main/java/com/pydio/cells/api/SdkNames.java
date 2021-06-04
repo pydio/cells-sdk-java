@@ -8,6 +8,9 @@ public interface SdkNames {
     String TYPE_CELLS = "cells";
     String TYPE_LEGACY_P8 = "pydio";
 
+    String DEFAULT_CLIENT_ID = "cells-client";
+    String DEFAULT_CLIENT_SECRET = "";
+
     String XML_MESSAGE = "message";
     String NODE_PROPERTY_UUID = "Uuid";
     String NODE_PROPERTY_ENCODED = "encoded";

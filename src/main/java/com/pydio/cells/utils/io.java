@@ -1,4 +1,4 @@
-package com.pydio.cells.client.utils;
+package com.pydio.cells.utils;
 
 import com.pydio.cells.api.callbacks.ProgressListener;
 
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+@Deprecated
 public class io {
 
     public static int bufferSize = 4096;

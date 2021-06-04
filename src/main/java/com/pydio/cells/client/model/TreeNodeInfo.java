@@ -2,7 +2,7 @@ package com.pydio.cells.client.model;
 
 import com.google.gson.Gson;
 
-import static com.pydio.cells.client.utils.CellsPath.nameFromFullPath;
+import static com.pydio.cells.utils.CellsPath.nameFromFullPath;
 
 public class TreeNodeInfo {
 

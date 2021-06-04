@@ -21,11 +21,10 @@ import com.pydio.cells.client.common.http.HttpRequest;
 import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.TreeNodeInfo;
-import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
-import com.pydio.cells.client.utils.FileNodeUtils;
-import com.pydio.cells.client.utils.IoHelpers;
-import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.Params;
+import com.pydio.cells.utils.FileNodeUtils;
+import com.pydio.cells.utils.IoHelpers;
+import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.Params;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.JobsServiceApi;
@@ -64,7 +63,6 @@ import com.pydio.cells.transport.CellsTransport;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -82,7 +80,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 
 public class CellsClient implements Client, SdkNames {
 

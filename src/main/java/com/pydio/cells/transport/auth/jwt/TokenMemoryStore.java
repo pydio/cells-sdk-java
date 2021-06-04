@@ -1,11 +1,11 @@
-package com.pydio.cells.client.auth.jwt;
+package com.pydio.cells.transport.auth.jwt;
 
 public class TokenMemoryStore {
 }
 
-//package com.pydio.cells.client.auth.jwt;
+//package com.pydio.cells.transport.auth.jwt;
 //
-//import com.pydio.cells.client.auth.Token;
+//import com.pydio.cells.transport.auth.Token;
 //
 //import java.util.HashMap;
 //

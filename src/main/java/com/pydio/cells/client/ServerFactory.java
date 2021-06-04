@@ -8,7 +8,7 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.client.security.LegacyPasswordCredentials;
@@ -16,6 +16,7 @@ import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
 import com.pydio.cells.transport.CellsServer;
 import com.pydio.cells.transport.CellsTransport;
+import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.StateID;
 
 import java.io.IOException;

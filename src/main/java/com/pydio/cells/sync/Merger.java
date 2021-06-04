@@ -1,7 +1,7 @@
 package com.pydio.cells.sync;
 
 import com.pydio.cells.api.Change;
-import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.sync.changes.ChangeStore;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;

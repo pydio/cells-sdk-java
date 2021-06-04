@@ -25,8 +25,8 @@ import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.TreeNodeSaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
-import com.pydio.cells.client.utils.Log;
-import com.pydio.cells.client.utils.io;
+import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.io;
 import com.pydio.cells.legacy.consts.P8Names;
 
 import org.json.JSONObject;

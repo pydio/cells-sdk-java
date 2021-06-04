@@ -131,7 +131,7 @@ dependencies {
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
 
-    // updating this cause JWT decoding failure
+    // updating this cause IdToken decoding failure
     // implementation 'commons-codec:commons-codec:20041127.091804'
     implementation 'commons-codec:commons-codec:1.15'
     //implementation 'commons-codec:commons-codec:1.10'

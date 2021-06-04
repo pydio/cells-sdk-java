@@ -2,7 +2,7 @@ package com.pydio.cells.sync;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.pydio.cells.client.utils.io;
+import com.pydio.cells.utils.io;
 import com.pydio.cells.sync.fs.Fs;
 
 import java.io.FileNotFoundException;

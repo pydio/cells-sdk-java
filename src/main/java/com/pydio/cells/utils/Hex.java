@@ -1,5 +1,6 @@
-package com.pydio.cells.client.utils;
+package com.pydio.cells.utils;
 
+@Deprecated
 public class Hex {
 
     public static String toString(byte[] bytes) {

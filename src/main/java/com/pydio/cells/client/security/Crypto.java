@@ -1,6 +1,6 @@
 package com.pydio.cells.client.security;
 
-import com.pydio.cells.client.utils.Hex;
+import com.pydio.cells.utils.Hex;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

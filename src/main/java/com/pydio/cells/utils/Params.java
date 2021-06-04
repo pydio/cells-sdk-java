@@ -1,8 +1,9 @@
-package com.pydio.cells.client.utils;
+package com.pydio.cells.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class Params {
     private final Map<String, String> params;
 

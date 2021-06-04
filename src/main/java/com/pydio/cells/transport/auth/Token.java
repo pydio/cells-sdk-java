@@ -1,7 +1,7 @@
-package com.pydio.cells.client.auth;
+package com.pydio.cells.transport.auth;
 
 import com.google.gson.Gson;
-import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.utils.Log;
 
 import org.json.JSONObject;
 
@@ -10,13 +10,17 @@ import java.text.ParseException;
 public class Token {
 
     public String subject;
+    // value is the real useful token
     public String value;
-    public long expiresIn;
-    private long expirationTime;
-    public String refreshToken;
+
+    // idToken contains encoded information about current session, typically the claims
     public String idToken;
     public String scope;
     public String tokenType;
+
+    public String refreshToken;
+    public long expiresIn;
+    private long expirationTime;
 
     public boolean isExpired() {
         if (expirationTime == -1) {
@@ -32,7 +36,7 @@ public class Token {
         long elapsedTimeSinceExpiry = this.currentTimeInSeconds() - this.expirationTime;
         boolean expired = elapsedTimeSinceExpiry > 0;
         if (expired) {
-            Log.i("JWT", String.format("Expired since %s seconds", elapsedTimeSinceExpiry));
+            Log.i("IdToken", String.format("Expired since %s seconds", elapsedTimeSinceExpiry));
         }
         return expired;
     }

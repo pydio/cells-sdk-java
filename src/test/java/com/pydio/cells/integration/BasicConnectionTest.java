@@ -7,11 +7,9 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
-import com.pydio.cells.client.SessionFactory;
 import com.pydio.cells.client.TestSessionFactory;
-import com.pydio.cells.client.auth.SimpleTokenStore;
-import com.pydio.cells.client.auth.TokenService;
-import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.transport.auth.SimpleTokenStore;
+import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.transport.StateID;
 

@@ -5,9 +5,9 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.client.auth.OAuthConfig;
-import com.pydio.cells.client.utils.IoHelpers;
-import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.transport.auth.OAuthConfig;
+import com.pydio.cells.utils.IoHelpers;
+import com.pydio.cells.utils.Log;
 
 import org.json.JSONObject;
 
@@ -46,7 +46,7 @@ public class CellsServer implements Server {
 
     @Override
     public Server refresh(boolean force) throws SDKException {
-        if (force || version == null){
+        if (force || version == null) {
             downloadBootConf();
             downloadOIDCConfiguration();
         }
@@ -170,8 +170,8 @@ public class CellsServer implements Server {
             // long totalRead = IoHelpers.pipeRead(in, out);
             IoHelpers.pipeRead(in, out);
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            JSONObject oidcJson = new JSONObject(oidcStr);
-            authConfig = OAuthConfig.fromJSON(oidcJson);
+//            JSONObject oidcJson = new JSONObject(oidcStr);
+            authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
         } catch (Exception e) {
             Log.w("Initialisation", "Unexpected error while retrieving OIDC configuration"
                     + ", cause: " + e.getMessage());

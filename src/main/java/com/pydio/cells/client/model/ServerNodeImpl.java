@@ -11,8 +11,8 @@ import com.pydio.cells.api.ui.ServerNode;
 import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.security.CertificateTrust;
 import com.pydio.cells.client.security.CertificateTrustManager;
-import com.pydio.cells.client.utils.ServerResolution;
-import com.pydio.cells.client.utils.io;
+import com.pydio.cells.utils.ServerResolution;
+import com.pydio.cells.utils.io;
 import com.pydio.cells.transport.ServerURLImpl;
 
 import org.json.JSONObject;

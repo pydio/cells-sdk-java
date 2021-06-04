@@ -1,4 +1,4 @@
-package com.pydio.cells.client.utils;
+package com.pydio.cells.utils;
 
 /**
  * Provides shortcuts for methods that are widely used when manipulating nodes

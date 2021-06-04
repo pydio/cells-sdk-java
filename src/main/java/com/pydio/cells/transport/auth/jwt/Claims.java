@@ -1,4 +1,4 @@
-package com.pydio.cells.client.auth.jwt;
+package com.pydio.cells.transport.auth.jwt;
 
 public class Claims {
     public String atHash;

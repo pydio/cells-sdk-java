@@ -3,8 +3,8 @@ package com.pydio.cells.legacy;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.callbacks.StringHandler;
 import com.pydio.cells.api.callbacks.TransferProgressListener;
-import com.pydio.cells.client.utils.IoHelpers;
-import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.utils.IoHelpers;
+import com.pydio.cells.utils.Log;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;

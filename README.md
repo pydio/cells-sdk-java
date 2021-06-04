@@ -92,8 +92,15 @@ try {
 
 Find more examples in [our sample package](./tree/master/src/main/java/com/pydio/sdk/examples) and in the [tests](./tree/master/src/test/java/com/pydio/cells).
 
+## References
+
+A list of random resources on the _WWW_ that have helped along the way and are kept here for reference.
+
+- A [must read](https://auth0.com/docs/flows/call-your-api-using-the-authorization-code-flow) to understand how we manage authentication when target remote server is a Pydio Cells instance.
+
 ## Legacy note
 
 This repository has been forked from [this legacy repo in Pydio's code base](https://github.com/pydio/pydio-sdk-java-v2).
+
 
 

@@ -1,4 +1,4 @@
-package com.pydio.cells.client.utils;
+package com.pydio.cells.utils;
 
 import com.pydio.cells.api.callbacks.ServerResolver;
 
@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 
+@Deprecated
 public class ServerResolution {
 
     private static final HashMap<String, ServerResolver> resolvers = new HashMap<>();

@@ -12,7 +12,7 @@ import com.amazonaws.util.SdkHttpUtils;
 import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.client.S3Names;
-import com.pydio.cells.client.utils.Log;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.transport.CellsTransport;
 
 import java.io.InputStream;

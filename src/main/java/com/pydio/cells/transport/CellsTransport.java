@@ -1,6 +1,5 @@
 package com.pydio.cells.transport;
 
-import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ICellsTransport;
@@ -9,19 +8,22 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
-import com.pydio.cells.client.CellsClient;
-import com.pydio.cells.client.ClientData;
-import com.pydio.cells.client.auth.OAuthConfig;
-import com.pydio.cells.client.auth.Token;
-import com.pydio.cells.client.auth.TokenService;
+import com.pydio.cells.client.common.http.HttpClient;
+import com.pydio.cells.client.common.http.HttpRequest;
+import com.pydio.cells.client.common.http.HttpResponse;
+import com.pydio.cells.client.encoding.B64;
 import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
-import com.pydio.cells.client.utils.IoHelpers;
-import com.pydio.cells.client.utils.Log;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
 import com.pydio.cells.openapi.model.RestFrontSessionRequest;
+import com.pydio.cells.transport.auth.OAuthConfig;
+import com.pydio.cells.transport.auth.Token;
+import com.pydio.cells.transport.auth.TokenService;
+import com.pydio.cells.utils.IoHelpers;
+import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.Params;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONObject;
@@ -46,24 +48,21 @@ import static com.pydio.cells.transport.CellsServer.API_PREFIX;
 
 public class CellsTransport implements ICellsTransport, SdkNames {
 
+    private String userAgent;
     private final Server server;
-
-    // TODO final or not ?
-    // private final String login;
-    private String login;
+    private final String login;
 
     private TokenService tokens;
-    // FIXME we should avoid to store the credentials in this object
-    private Credentials credentials;
-    private final Boolean skipOAuth = false;
-    private String userAgent;
-
     protected final CustomEncoder encoder;
 
     public CellsTransport(String login, Server server, CustomEncoder encoder) {
         this.login = login;
         this.server = server;
         this.encoder = encoder;
+    }
+
+    public static CellsTransport asAnonymous(Server server, CustomEncoder encoder) {
+        return new CellsTransport("anon", server, encoder);
     }
 
     public void restore(TokenService tokens) throws SDKException {
@@ -86,22 +85,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     public CustomEncoder getEncoder() {
         return encoder;
     }
-
-//    public void ping() throws IOException {
-//        HttpURLConnection connection = null;
-//        // 10 secs timeout instead of the default unlimited
-//        connection.setConnectTimeout(10000);
-//
-//        try {
-//            connection.setRequestMethod("GET");
-//            if (connection.getResponseCode() != 200) {
-//                throw new IOException("Unvalid response code: " + connection.getResponseCode());
-//            }
-//        } catch (ProtocolException pe) {
-//            throw new RuntimeException("Unvalid protocol GET...", pe);
-//        }
-//    }
-
 
     @Override
     public String getUserAgent() {
@@ -126,11 +109,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     @Override
+    @Deprecated
     public void setCredentials(Credentials credentials) throws SDKException {
-        // FIXME
-        this.credentials = credentials;
-        login = credentials.getLogin();
-        login();
+        // This should not be used by a Cells transport
+        throw new SDKException("Directly setting credentials on a Cells transport is prohibited");
     }
 
     @Override
@@ -167,7 +149,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     @Override
-    public HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
+    public HttpURLConnection openAnonConnection(String path) throws IOException {
         return withUserAgent(server.newURL(path).openConnection());
     }
 
@@ -175,7 +157,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return withAuth(withUserAgent(server.newURL(API_PREFIX + path).openConnection()));
     }
 
-    public HttpURLConnection openAnonApiConnection(String path) throws SDKException, IOException {
+    public HttpURLConnection openAnonApiConnection(String path) throws IOException {
         return withUserAgent(server.newURL(API_PREFIX + path).openConnection());
     }
 
@@ -225,13 +207,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-
         HttpURLConnection con = null;
         InputStream in = null;
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
-
-            con = openAnonApiConnection("/frontend/state/?ws=login");
+            con = openAnonApiConnection("/frontend/state");
             con.setRequestMethod("GET");
             in = con.getInputStream();
 
@@ -246,47 +226,18 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             Log.w("Connection", "connection error while retrieving registry");
             throw SDKException.conFailed(e);
         } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (Exception ignore) {
-                }
-            }
-
-            if (con != null) {
-                con.disconnect();
-            }
+            IoHelpers.closeQuietly(in);
+            IoHelpers.closeQuietly(con);
         }
     }
 
-    //   @Override
-    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-//
-    //       HttpURLConnection con;
-    //       InputStream in;
-    //       SAXParserFactory factory = SAXParserFactory.newInstance();
-    //       try {
-    //           con = openAnonApiConnection("/frontend/state/?ws=" + ws);
-    //           con.setRequestMethod("GET");
-    //           in = con.getInputStream();
-    //           SAXParser parser = factory.newSAXParser();
-    //           parser.parse(in, new RegistrySaxHandler(itemHandler));
-    //       } catch (Exception e) {
-    //           e.printStackTrace();
-    //           throw SDKException.unexpectedContent(e);
-    //       } finally {
-    //           // FIXME handle stream closing
-    //           // io.close(in);
-    //       }
-    //   }
-
-
+    /**
+     * Caller must close the returned stream.
+     */
     @Override
     public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
-        HttpURLConnection con;
-        InputStream in;
         try {
-            con = openAnonApiConnection("/frontend/state/?ws=login");
+            HttpURLConnection con = openAnonApiConnection("/frontend/state");
             con.setRequestMethod("GET");
             return con.getInputStream();
         } catch (IOException e) {
@@ -294,19 +245,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             throw SDKException.conFailed(e);
         }
     }
-
-    //   @Override
-    //   public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-    //       HttpURLConnection con;
-    //       InputStream in;
-    //       try {
-    //           con = openApiConnection("/frontend/state/?ws=" + ws);
-    //           con.setRequestMethod("GET");
-    //           return con.getInputStream();
-    //       } catch (IOException e) {
-    //           throw SDKException.conFailed(e);
-    //       }
-    //   }
 
     @Override
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
@@ -320,34 +258,42 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-    public String getTokenFromCode(String state, String code) throws Exception {
+    // TODO better management of exceptions.
+    public Token getTokenFromCode(B64 encoder, String code, String state) throws Exception {
         InputStream in = null;
         ByteArrayOutputStream out = null;
-        OAuthConfig cfg = server.getOAuthConfig();
-
         try {
-            // For reference see:  https://auth0.com/docs/flows/call-your-api-using-the-authorization-code-flow
+            Log.i("Login", "Retrieving token from OAuth2 code");
+
+            OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
             HttpURLConnection con = openAnonConnection(endpointURI.getPath());
-            con.setRequestMethod("POST");
-            con.setDoOutput(true);
 
             // Manage Body as URL encoded form
             Map<String, String> authData = new HashMap<>();
             authData.put("grant_type", "authorization_code");
-            // TODO make this dynamic
-            authData.put("client_id", "cells-mobile");
-            authData.put("client_secret", "");
             authData.put("code", code);
             authData.put("redirect_uri", cfg.redirectURI);
-            addPostData(con, authData);
+            authData.put("client_id", ClientData.getClientId());
+            authData.put("client_secret", ClientData.getClientSecret());
 
-            // Real call
-            in = con.getInputStream();
+            String authHeader = "Basic " + encoder.encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
+            addPostData(con, authData, authHeader);
+
+            try { // Real call
+                System.out.println(con.getResponseCode());
+                in = con.getInputStream();
+            } catch (IOException ioe) {
+                System.out.println(con.getResponseCode());
+                System.out.println(con.getResponseMessage());
+                throw ioe;
+            }
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
             String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            return jwtStr;
+            return Token.decodeOAuthJWT(jwtStr);
+//            return Token.decodeOAuthJWT(jwt);
+
         } finally {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(out);
@@ -355,37 +301,27 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     public Token refreshOAuthToken(Token t) throws SDKException {
-
-        // FIXME refactor this
         InputStream in = null;
         ByteArrayOutputStream out = null;
-
         try {
             Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
 
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
-
-
             HttpURLConnection con = openAnonConnection(endpointURI.getPath());
-
-            con.setRequestMethod("POST");
-            con.setDoOutput(true);
-            withUserAgent(con);
 
             Map<String, String> authData = new HashMap<>();
             authData.put("grant_type", "refresh_token");
             authData.put("refresh_token", t.refreshToken);
-
-            // TODO make this dynamic
-            authData.put("client_id", "cells-mobile");
-            authData.put("client_secret", "");
-            addPostData(con, authData);
+            authData.put("client_id", ClientData.getClientId());
+            // String secret = "".equals(ClientData.getClientSecret()) ? "whatever" : ClientData.getClientSecret();
+            authData.put("client_secret", ClientData.getClientSecret());
+            addPostData(con, authData, null);
 
             // Real call
             in = con.getInputStream();
             out = new ByteArrayOutputStream();
-            long totalRead = IoHelpers.pipeRead(in, out);
+            IoHelpers.pipeRead(in, out);
             String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
             return Token.decodeOAuthJWT(jwtStr);
         } catch (ParseException e) {
@@ -402,9 +338,12 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     /* Simply pass body parameters as URL encoded form */
-    private void addPostData(HttpURLConnection con, Map<String, String> postData) throws SDKException {
+    private void addPostData(HttpURLConnection con, Map<String, String> postData, String authHeader) throws SDKException {
 
         try {
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+
             StringBuilder builder = new StringBuilder();
             for (Map.Entry<String, String> entry : postData.entrySet()) {
                 if (builder.length() != 0) builder.append('&');
@@ -414,8 +353,12 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             }
             byte[] postDataBytes = encoder.getUTF8Bytes(builder.toString());
 
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-            con.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+
+            if (authHeader != null && !"".equals(authHeader)) {
+                con.setRequestProperty("Authorization", authHeader);
+            }
+            con.setRequestProperty("content-type", "application/x-www-form-urlencoded; charset=utf-8");
+            con.setRequestProperty("content-length", String.valueOf(postDataBytes.length));
             OutputStream postOut = con.getOutputStream();
             postOut.write(postDataBytes);
         } catch (IOException e) {
@@ -503,8 +446,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 ////            throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
 ////        }
 ////
-////        JWT parsedIDToken;
-////        parsedIDToken = com.pydio.sdk.core.auth.jwt.JWT.parse(t.idToken);
+////        IdToken parsedIDToken;
+////        parsedIDToken = com.pydio.sdk.core.auth.jwt.IdToken.parse(t.idToken);
 ////        if (parsedIDToken == null) {
 ////            throw new SDKException(Code.no_token_available);
 ////        }
@@ -515,5 +458,40 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 ////        return t;
 //        return null;
 //    }
+
+    //   @Override
+    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+//
+    //       HttpURLConnection con;
+    //       InputStream in;
+    //       SAXParserFactory factory = SAXParserFactory.newInstance();
+    //       try {
+    //           con = openAnonApiConnection("/frontend/state/?ws=" + ws);
+    //           con.setRequestMethod("GET");
+    //           in = con.getInputStream();
+    //           SAXParser parser = factory.newSAXParser();
+    //           parser.parse(in, new RegistrySaxHandler(itemHandler));
+    //       } catch (Exception e) {
+    //           e.printStackTrace();
+    //           throw SDKException.unexpectedContent(e);
+    //       } finally {
+    //           // io.close(in);
+    //       }
+    //   }
+
+
+    //   @Override
+    //   public InputStream getWorkspaceRegistry(String ws) throws SDKException {
+    //       HttpURLConnection con;
+    //       InputStream in;
+    //       try {
+    //           con = openApiConnection("/frontend/state/?ws=" + ws);
+    //           con.setRequestMethod("GET");
+    //           return con.getInputStream();
+    //       } catch (IOException e) {
+    //           throw SDKException.conFailed(e);
+    //       }
+    //   }
+
 
 }

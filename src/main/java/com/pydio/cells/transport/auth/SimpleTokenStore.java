@@ -1,4 +1,4 @@
-package com.pydio.cells.client.auth;
+package com.pydio.cells.transport.auth;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
