@@ -20,7 +20,7 @@ repositories {
 def localProperties = new Properties();
 localProperties.load(new FileInputStream(rootProject.file("local.properties")));
 
-def sdkVersion = '0.1.5'
+def sdkVersion = '0.1.6'
 
 sourceCompatibility = 1.8
 
