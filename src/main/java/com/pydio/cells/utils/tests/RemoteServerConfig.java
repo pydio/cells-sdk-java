@@ -19,5 +19,4 @@ public class RemoteServerConfig {
 
     /* Client preferences */
     public String defaultWS;
-
 }

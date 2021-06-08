@@ -10,6 +10,7 @@ import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestSessionFactory;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
@@ -36,7 +37,7 @@ public class P8TransportTest {
     public static void setup() {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new SessionFactory(tokens);
+        factory = new TestSessionFactory(tokens);
         config = TestConfiguration.getDefault();
     }
 

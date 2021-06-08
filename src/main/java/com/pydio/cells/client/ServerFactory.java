@@ -193,13 +193,12 @@ public class ServerFactory implements IServerFactory {
         return accountID(username, server.getServerURL());
     }
 
-    private void initAppData() {
 
+    protected void initAppData() {
         ClientData.packageID = this.getClass().getPackage().getName();
-        ClientData.name = "CellsJavaClient";
+        ClientData.name = "CellsJavaTransport";
         ClientData.version = "0.2.0-dev";
         ClientData.platform = "Java";
-
     }
 
     @Override
