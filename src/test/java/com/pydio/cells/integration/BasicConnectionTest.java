@@ -7,13 +7,14 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
-import com.pydio.cells.utils.tests.TestSessionFactory;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
-import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.transport.StateID;
+import com.pydio.cells.transport.auth.SimpleTokenStore;
+import com.pydio.cells.transport.auth.TokenService;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestSessionFactory;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.After;
@@ -33,7 +34,7 @@ import javax.net.ssl.SSLHandshakeException;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * the "src/test/resources/default-target-server.properties" file to match your
+ * the "src/test/resources/default.properties" file to match your
  * setup.
  * <p>
  * You can then launch the test with:
@@ -51,7 +52,7 @@ public class BasicConnectionTest {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new TestSessionFactory(tokens);
-        config = new TestConfiguration();
+        config = TestConfiguration.getDefault();
     }
 
     @After
@@ -85,12 +86,11 @@ public class BasicConnectionTest {
         Transport transport = TestUtils.getTransport(factory, conf);
         Client client = factory.getClient(transport);
 
-        // if (!transport.getServer().isLegacy()) {
-        // // TODO remove this once upload has been done.
-        // Log.w("SKIP", "Could not CRUD for *cells* server at " + conf.serverURL
-        // + ": upload with S3 is not yet implemented in plain Java");
-        // return;
-        // }
+        if (!transport.getServer().isLegacy()) {
+            Log.w("SKIP", "Could not CRUD for *cells* server at " + conf.serverURL
+                    + ": upload with S3 is not implemented in this layer");
+            return;
+        }
 
         System.out.println("... Testing CRUD for " + printableId(transport.getId()));
 
@@ -134,7 +134,7 @@ public class BasicConnectionTest {
 
             // Read updated
             String retrievedMsg = "";
-            loop: for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
                     client.download(conf.defaultWS, baseDir + name, out, null);
                     out.flush();
@@ -143,7 +143,7 @@ public class BasicConnectionTest {
                     System.out.println("Retrieved: " + retrievedMsg);
 
                     if (message.equals(retrievedMsg)) {
-                        break loop;
+                        break;
                     }
                     Thread.sleep(2000);
                     System.out.println("Wait 2s before retry...");
@@ -159,12 +159,12 @@ public class BasicConnectionTest {
         }
 
         // Delete
-        msg = client.delete(conf.defaultWS, new String[] { "/" + name });
+        msg = client.delete(conf.defaultWS, new String[]{"/" + name});
         // Assert.assertNotNull(msg);
         // Assert.assertEquals("EMPTY", msg.type());
 
         boolean deleted = false;
-        loop: for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             try {
 
                 // Check if uploaded files is still there
@@ -175,7 +175,7 @@ public class BasicConnectionTest {
                 });
                 if (founds.size() == 0) {
                     deleted = true;
-                    break loop;
+                    break;
                 }
                 Thread.sleep(2000);
                 System.out.println("Wait 2s before retry...");

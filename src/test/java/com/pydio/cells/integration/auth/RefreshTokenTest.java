@@ -40,7 +40,7 @@ public class RefreshTokenTest {
 
         tokenStore = new SimpleTokenStore();
         factory = new TestSessionFactory(new TokenService(tokenStore));
-        config = new TestConfiguration();
+        config = TestConfiguration.getDefault();
         cellsConf = config.getServer("cells-https");
     }
 

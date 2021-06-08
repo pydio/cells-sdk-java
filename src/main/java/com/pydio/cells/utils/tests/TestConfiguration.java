@@ -8,68 +8,59 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 /**
- * Utilitary class to centralise test configuration retrieval.
+ * Simply retrieve test sessions from properties files that are in user-defined folders.
+ * By default in the resources folder of the calling class.
  */
 public class TestConfiguration {
 
-    private final Map<String, RemoteServerConfig> servers = new HashMap<>();
-    private final String defaultServerConfigId = "default-target-server";
+    // You must adapt these files to your setup in "src/test/resources"
+    // to use the default configuration
+    private static final String defaultServerConfigId = "default";
+    private static final String accountFolder = "/accounts";
 
-    // You must adapt these files to your setup in "src/test/resources" to run the tests
-    private final String defaultServerConfigPath = "/" + defaultServerConfigId + ".properties";
-    private final String variantFolderPath = "/servers";
-    private final Path resourceDirPath;
+    private final Map<String, RemoteServerConfig> accounts = new HashMap<>();
 
-    public TestConfiguration() {
-        URL url = TestConfiguration.class.getResource(defaultServerConfigPath);
-        resourceDirPath = Paths.get(url.getPath()).getParent();
-        setup();
+    public static TestConfiguration getDefault() {
+        URL url = TestConfiguration.class.getResource(accountFolder);
+        return new TestConfiguration(url);
     }
 
-    public void setup() {
+    public TestConfiguration(URL localURL) {
 
-        // Load default
-        loadOne("default", defaultServerConfigPath);
-
-        // Also loads all servers that are not explicitly skipped in servers subfolder
         try {
-            URL url = TestConfiguration.class.getResource(variantFolderPath);
-            File f = new File(url.toURI());
+            File f = new File(localURL.toURI());
             FilenameFilter filter = (f1, name) -> name.endsWith(".properties");
 
             for (String currName : f.list(filter)) {
-                loadOne(currName.substring(0, currName.lastIndexOf('.')), variantFolderPath + "/" + currName);
+                loadOne(currName.substring(0, currName.lastIndexOf('.')), accountFolder + "/" + currName);
             }
-
         } catch (Exception e) {
-            Log.e("Initialisation", "Could not load additional server configuration at " + variantFolderPath);
+            Log.e("Initialisation", "Could not load server configuration at " + accountFolder);
             e.printStackTrace();
         }
     }
 
 
     public RemoteServerConfig getServer(String id) {
-        return servers.get(id);
+        return accounts.get(id);
     }
 
     public RemoteServerConfig getDefaultServer() {
-        return servers.get(defaultServerConfigId);
+        return accounts.get(defaultServerConfigId);
     }
 
     public Map<String, RemoteServerConfig> getDefinedServers() {
-        return servers;
+        return accounts;
     }
 
-    public Path getWorkingDir() {
-        return resourceDirPath;
-    }
+    // public Path getWorkingDir() {
+//        return resourceDirPath;
+//    }
 
     /* Local helpers */
 
@@ -86,10 +77,11 @@ public class TestConfiguration {
             currConf.serverURL = p.getProperty("serverURL");
             currConf.login = p.getProperty("login");
             currConf.pwd = p.getProperty("pwd");
+            currConf.pat = p.getProperty("pat");
             currConf.defaultWS = p.getProperty("defaultWorkspace");
             currConf.skipVerify = "true".equals(p.getProperty("skipVerify"));
 
-            servers.put(id, currConf);
+            accounts.put(id, currConf);
         } catch (IOException e) {
             Log.e("Initialisation", "Could not retrieve configuration file, cause: " + e.getMessage());
             e.printStackTrace();

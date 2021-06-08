@@ -37,7 +37,7 @@ public class P8TransportTest {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new SessionFactory(tokens);
-        config = new TestConfiguration();
+        config = TestConfiguration.getDefault();
     }
 
     @AfterClass

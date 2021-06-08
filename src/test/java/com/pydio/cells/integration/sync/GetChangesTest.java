@@ -14,7 +14,7 @@ public class GetChangesTest{}
 //
 ///**
 // * Performs basic tests against a running Cells instance. You must first adapt
-// * the "src/test/resources/default-target-server.properties" file to match your setup.
+// * the "src/test/resources/default.properties" file to match your setup.
 // *
 // * You can then launch the test with:
 // *

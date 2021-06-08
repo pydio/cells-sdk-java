@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * the "src/test/resources/default-target-server.properties" file to match your setup.
+ * the "src/test/resources/default.properties" file to match your setup.
  * <p>
  * You can then launch the test with:
  *
@@ -46,7 +46,7 @@ public class P8SpecificTest {
         TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new ServerFactory(tokens);
 
-        config = new TestConfiguration();
+        config = TestConfiguration.getDefault();
     }
 
     @After

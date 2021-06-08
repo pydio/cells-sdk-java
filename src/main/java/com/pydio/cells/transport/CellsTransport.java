@@ -45,11 +45,12 @@ import static com.pydio.cells.transport.CellsServer.API_PREFIX;
 public class CellsTransport implements ICellsTransport, SdkNames {
 
     private String userAgent;
-    private final Server server;
-    private final String login;
+    private CustomEncoder encoder;
 
     private TokenService tokens;
-    protected final CustomEncoder encoder;
+
+    private final Server server;
+    private final String login;
 
     public CellsTransport(String login, Server server, CustomEncoder encoder) {
         this.login = login;
@@ -235,7 +236,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     // TODO better management of exceptions.
-    public Token getTokenFromCode(Base64Encoder encoder, String code, String state) throws Exception {
+    public Token getTokenFromCode(CustomEncoder encoder, String code, String state) throws Exception {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
@@ -255,7 +256,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             authData.put("client_id", ClientData.getClientId());
             authData.put("client_secret", ClientData.getClientSecret());
 
-            String authHeader = "Basic " + encoder.encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
+            String authHeader = "Basic " + encoder.base64Encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
             addPostData(con, authData, authHeader);
 
             // TODO double check: do we need to explicitly open the connection before gettinng the stream ?

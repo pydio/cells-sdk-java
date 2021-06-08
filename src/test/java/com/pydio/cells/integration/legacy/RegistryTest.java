@@ -47,7 +47,7 @@ public class RegistryTest {
         testRunID = TestUtils.randomString(4);
         TokenService tokens = new TokenService(new SimpleTokenStore());
         factory = new SessionFactory(tokens);
-        config = new TestConfiguration();
+        config = TestConfiguration.getDefault();
     }
 
     @Test
