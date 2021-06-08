@@ -10,7 +10,7 @@ import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.TokenService;
-import com.pydio.cells.client.encoding.CustomEncoder;
+import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.legacy.consts.ActionNames;
 import com.pydio.cells.legacy.consts.P8Names;

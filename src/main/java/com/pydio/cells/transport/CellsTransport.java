@@ -8,8 +8,8 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
-import com.pydio.cells.client.encoding.B64;
-import com.pydio.cells.client.encoding.CustomEncoder;
+import com.pydio.cells.client.encoding.Base64Encoder;
+import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
@@ -235,7 +235,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     // TODO better management of exceptions.
-    public Token getTokenFromCode(B64 encoder, String code, String state) throws Exception {
+    public Token getTokenFromCode(Base64Encoder encoder, String code, String state) throws Exception {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {

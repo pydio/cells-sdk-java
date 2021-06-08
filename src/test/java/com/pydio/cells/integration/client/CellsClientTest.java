@@ -5,13 +5,13 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
-import com.pydio.cells.client.TestSessionFactory;
+import com.pydio.cells.utils.tests.TestSessionFactory;
 import com.pydio.cells.transport.auth.SimpleTokenStore;
 import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.utils.Log;
-import com.pydio.cells.integration.RemoteServerConfig;
-import com.pydio.cells.integration.TestConfiguration;
-import com.pydio.cells.integration.TestUtils;
+import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
 import org.junit.Assert;

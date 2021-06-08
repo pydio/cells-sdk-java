@@ -5,7 +5,7 @@ import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.transport.auth.TokenService;
-import com.pydio.cells.client.encoding.CustomEncoder;
+import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.transport.ClientData;

@@ -9,7 +9,7 @@ import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.utils.CellsPath;
 import com.pydio.cells.integration.legacy.CecWrapper;
-import com.pydio.cells.integration.TestConfiguration;
+import com.pydio.cells.utils.tests.TestConfiguration;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;
 import com.pydio.cells.sync.fs.CellsFs;

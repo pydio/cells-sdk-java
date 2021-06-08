@@ -1,6 +1,7 @@
 package com.pydio.cells.client;
 
 import com.pydio.cells.api.Credentials;
+import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.IServerFactory;
 import com.pydio.cells.api.SDKException;
@@ -8,16 +9,15 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.transport.auth.TokenService;
-import com.pydio.cells.client.encoding.CustomEncoder;
 import com.pydio.cells.client.encoding.JavaCustomEncoder;
-import com.pydio.cells.client.security.LegacyPasswordCredentials;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
 import com.pydio.cells.transport.CellsServer;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.StateID;
+import com.pydio.cells.transport.auth.TokenService;
+import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -47,7 +47,7 @@ public class ServerFactory implements IServerFactory {
         } catch (ConnectException ce) {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
         } catch (IOException ioe) {
-            throw new SDKException(ErrorCodes.ssl_error, "Unvalid certificate found at " + serverURL.getId() + ", Skip verify: " + serverURL.skipVerify(), ioe);
+            throw new SDKException(ErrorCodes.ssl_error, serverURL.getId() + " does not provide a valid certificate. Skipping verify: " + serverURL.skipVerify(), ioe);
         }
 
         // We do not have any other choice than to try the various well-known endpoints
@@ -99,7 +99,7 @@ public class ServerFactory implements IServerFactory {
             server = register(serverURL);
         }
 
-        Transport transport = null;
+        Transport transport;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
             if (credentials instanceof LegacyPasswordCredentials) {
                 LegacyPasswordCredentials pc = ((LegacyPasswordCredentials) credentials);
@@ -145,7 +145,7 @@ public class ServerFactory implements IServerFactory {
             server = register(serverURL);
         }
 
-        Transport transport = null;
+        Transport transport;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
             transport = new CellsTransport(login, server, getEncoder());
             ((CellsTransport) transport).restore(tokenService);
@@ -203,7 +203,7 @@ public class ServerFactory implements IServerFactory {
     }
 
     @Override
-    public CustomEncoder getEncoder(){
+    public CustomEncoder getEncoder() {
         return new JavaCustomEncoder();
     }
 

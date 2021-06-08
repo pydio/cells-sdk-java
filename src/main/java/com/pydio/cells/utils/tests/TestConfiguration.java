@@ -1,4 +1,4 @@
-package com.pydio.cells.integration;
+package com.pydio.cells.utils.tests;
 
 import com.pydio.cells.utils.Log;
 

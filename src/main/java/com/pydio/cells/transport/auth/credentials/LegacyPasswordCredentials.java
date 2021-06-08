@@ -1,4 +1,4 @@
-package com.pydio.cells.client.security;
+package com.pydio.cells.transport.auth.credentials;
 
 import com.pydio.cells.api.PasswordCredentials;
 

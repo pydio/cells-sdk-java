@@ -850,8 +850,8 @@ public class CellsClient implements Client, SdkNames {
         return policy;
     }
 
-    public CellsClient get(Transport session) {
-        return new CellsClient(session, s3Client);
+    public CellsClient get(Transport transport) {
+        return new CellsClient(transport, s3Client);
     }
 
     /* Transfer methods that use S3 */
@@ -870,11 +870,6 @@ public class CellsClient implements Client, SdkNames {
         }
         return upload(in, f.length(), ws, path, name, true, tpl);
     }
-
-//    private static SDKException fromApiException(ApiException e) {
-//        int code = ErrorCodes.fromHttpStatus(e.getCode());
-//        return new SDKException(code, e);
-//    }
 
     private ApiClient authenticatedClient() throws SDKException {
         return transport.authenticatedClient();

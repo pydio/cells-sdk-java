@@ -7,9 +7,9 @@ import com.pydio.cells.transport.auth.SimpleTokenStore;
 import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.utils.Log;
-import com.pydio.cells.integration.RemoteServerConfig;
-import com.pydio.cells.integration.TestConfiguration;
-import com.pydio.cells.integration.TestUtils;
+import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;

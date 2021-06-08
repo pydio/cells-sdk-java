@@ -261,11 +261,11 @@ public class P8Response implements Closeable {
     public void close() {
 
         if (netStream != null) {
-            IoHelpers.quietlyClose(netStream);
+            IoHelpers.closeQuietly(netStream);
         }
 
         if (concatStream != null) {
-            IoHelpers.quietlyClose(concatStream);
+            IoHelpers.closeQuietly(concatStream);
         }
         try {
             con.disconnect();

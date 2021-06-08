@@ -1,7 +1,7 @@
 package com.pydio.cells.transport.auth.jwt;
 
 import com.google.gson.Gson;
-import com.pydio.cells.client.encoding.B64;
+import com.pydio.cells.client.encoding.Base64Encoder;
 
 import java.text.ParseException;
 
@@ -11,7 +11,7 @@ public class IdToken {
     public Claims claims;
     public String signature;
 
-    public static IdToken parse(B64 decoder, String strJwt) throws ParseException {
+    public static IdToken parse(Base64Encoder decoder, String strJwt) throws ParseException {
         String[] parts = strJwt.split("\\.");
         if (parts.length != 3) {
             throw new ParseException("IdToken string cannot be parsed in 3 parts as expected", -1);

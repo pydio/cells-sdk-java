@@ -25,6 +25,7 @@ import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.TreeNodeSaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
+import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.io;
 import com.pydio.cells.legacy.consts.P8Names;
@@ -464,7 +465,7 @@ public class P8Client implements Client, SdkNames {
         try {
             return download(ws, file, out, progressListener);
         } finally {
-            io.close(out);
+            IoHelpers.closeQuietly(out);
         }
     }
 

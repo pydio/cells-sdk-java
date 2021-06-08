@@ -1,24 +1,38 @@
 package com.pydio.cells.client.encoding;
 
+import com.pydio.cells.api.CustomEncoder;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static java.util.Base64.getEncoder;
+import java.util.Base64;
 
 public class JavaCustomEncoder implements CustomEncoder {
 
     @SuppressWarnings("NewApi")
     @Override
     public byte[] base64Encode(byte[] inValue) {
-        getEncoder().encode(inValue);
+        Base64.getEncoder().encode(inValue);
         return inValue;
     }
 
     @Override
     public String base64Encode(String inValue) {
         return new String(base64Encode(inValue.getBytes()));
+    }
+
+    @Override
+    public byte[] base64Decode(byte[] inValue) {
+        Base64.getDecoder().decode(inValue);
+
+        return new byte[0];
+    }
+
+    @Override
+    public String base64Decode(String inValue) {
+        return null;
     }
 
     @Override

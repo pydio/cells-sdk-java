@@ -9,7 +9,7 @@ import java.text.ParseException;
 
 public class Token {
 
-    // Set by the app in our word to contain the corresponding encoded accountID
+    // Set by Cells layers to contain the corresponding encoded accountID
     public String subject;
     // value is the real useful token => access_token in OAuth2
     public String value;

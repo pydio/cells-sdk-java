@@ -11,14 +11,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
-/* Work in progress: new version of the utilitary static methods
-to solve resource exhaustion issues*/
+/**
+ * Legacy inherited methods to simplify implementation of stream related method
+ * and Exception management
+ */
 public class IoHelpers {
 
     public static int bufferSize = 4096;
 
     public static void consume(InputStream in) throws IOException {
         byte[] buffer = new byte[bufferSize];
+        //noinspection StatementWithEmptyBody
         for (int read = 0; read != -1; read = in.read(buffer)) ;
     }
 
@@ -49,24 +52,6 @@ public class IoHelpers {
         }
     }
 
-    public static boolean quietlyClose(InputStream in) {
-        try {
-            in.close();
-            return true;
-        } catch (Exception ignored) {
-            return false;
-        }
-    }
-
-    public static boolean quietlyClose(OutputStream out) {
-        try {
-            out.close();
-            return true;
-        } catch (Exception ignored) {
-            return false;
-        }
-    }
-
     public static long pipeRead(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[bufferSize];
         long total_read = -1;
@@ -83,7 +68,7 @@ public class IoHelpers {
                 total_read += read;
             }
             return total_read;
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new IOException("Could not pipe read", e);
         }
     }
@@ -100,7 +85,7 @@ public class IoHelpers {
             total_read += read;
             out.write(buffer, 0, read);
         }
-        io.close(in);
+        closeQuietly(in);
         return total_read;
     }
 
@@ -124,16 +109,16 @@ public class IoHelpers {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         InputStream in = new FileInputStream(path);
         byte[] buffer = new byte[bufferSize];
-        long total_read = 0;
+        // long total_read = 0;
         int read;
         for (; ; ) {
             read = in.read(buffer);
             if (read == -1)
                 break;
-            total_read += read;
+            //  total_read += read;
             out.write(buffer, 0, read);
         }
-        io.close(in);
+        closeQuietly(in);
         return out.toByteArray();
     }
 
@@ -150,7 +135,7 @@ public class IoHelpers {
             total_read += read;
             out.write(buffer, 0, read);
         }
-        io.close(out);
+        closeQuietly(out);
         return total_read;
     }
 

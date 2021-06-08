@@ -1,10 +1,10 @@
 package com.pydio.cells.integration.auth;
 
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.client.TestSessionFactory;
-import com.pydio.cells.integration.RemoteServerConfig;
-import com.pydio.cells.integration.TestConfiguration;
-import com.pydio.cells.integration.TestUtils;
+import com.pydio.cells.utils.tests.TestSessionFactory;
+import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestUtils;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.auth.SimpleTokenStore;
 import com.pydio.cells.transport.auth.Token;

@@ -1,7 +1,5 @@
 package com.pydio.cells.api;
 
-import com.pydio.cells.client.encoding.CustomEncoder;
-
 public interface IServerFactory {
 
     Server register(ServerURL serverURL) throws SDKException;
