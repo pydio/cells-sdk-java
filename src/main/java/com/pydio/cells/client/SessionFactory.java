@@ -5,6 +5,7 @@ import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
+import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.client.encoding.JavaCustomEncoder;
@@ -25,12 +26,12 @@ public abstract class SessionFactory extends ServerFactory {
         if (transport.getServer().isLegacy()) {
             return new P8Client(transport);
         } else {
-            return getCellsClient(transport);
+            return getCellsClient((CellsTransport) transport);
         }
     }
 
     /* This is only intended for extending factories, so that they have a single entry point to inject the S3 client */
-    protected abstract CellsClient getCellsClient(Transport transport);
+    protected abstract CellsClient getCellsClient(CellsTransport transport);
 //    {
 //            // return new CellsClient(transport, new PojoS3Client((CellsTransport)transport));
 //            return new CellsClient(transport, s3Client);

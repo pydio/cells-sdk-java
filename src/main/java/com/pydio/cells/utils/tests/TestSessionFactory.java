@@ -6,6 +6,7 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.CellsClient;
 import com.pydio.cells.client.SessionFactory;
 import com.pydio.cells.legacy.NoAwsS3Client;
+import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.auth.TokenService;
 
 /**
@@ -18,14 +19,7 @@ public class TestSessionFactory extends SessionFactory {
         super(tokenService);
     }
 
-    public Client getClient(Transport transport, S3Client s3Client) {
-        if (!transport.getServer().isLegacy()) {
-            return new CellsClient(transport, s3Client);
-        }
-        return super.getClient(transport);
-    }
-
-    protected CellsClient getCellsClient(Transport transport) {
+    protected CellsClient getCellsClient(CellsTransport transport) {
         return new CellsClient(transport, new NoAwsS3Client());
     }
 }
