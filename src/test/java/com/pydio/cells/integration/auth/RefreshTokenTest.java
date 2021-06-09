@@ -1,19 +1,14 @@
 package com.pydio.cells.integration.auth;
 
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.api.Server;
 import com.pydio.cells.api.Store;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.utils.MemoryStore;
-import com.pydio.cells.utils.tests.TestSessionFactory;
+import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
 import com.pydio.cells.utils.tests.TestUtils;
 import com.pydio.cells.transport.CellsTransport;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
 import com.pydio.cells.transport.auth.Token;
-import com.pydio.cells.transport.auth.TokenService;
-import com.pydio.cells.transport.auth.TokenStore;
 import com.pydio.cells.utils.Log;
 
 import org.junit.AfterClass;
@@ -28,7 +23,7 @@ import org.junit.Test;
  */
 public class RefreshTokenTest {
 
-    private static TestSessionFactory factory;
+    private static TestClientFactory factory;
     private static TestConfiguration config;
     private static String testRunID;
     private static RemoteServerConfig cellsConf;
@@ -43,7 +38,7 @@ public class RefreshTokenTest {
         testRunID = TestUtils.randomString(4);
 
         tokenStore = new MemoryStore<>();
-        factory = new TestSessionFactory(tokenStore, new MemoryStore<>(), new MemoryStore<>());
+        factory = new TestClientFactory(tokenStore, new MemoryStore<>(), new MemoryStore<>());
         config = TestConfiguration.getDefault();
         cellsConf = config.getServer("cells-https");
     }

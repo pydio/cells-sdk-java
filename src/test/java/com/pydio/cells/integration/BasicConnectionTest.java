@@ -9,12 +9,10 @@ import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.transport.StateID;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
-import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
-import com.pydio.cells.utils.tests.TestSessionFactory;
+import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.After;
@@ -43,14 +41,14 @@ import javax.net.ssl.SSLHandshakeException;
  */
 public class BasicConnectionTest {
 
-    private TestSessionFactory factory;
+    private TestClientFactory factory;
     private TestConfiguration config;
     private String testRunID;
 
     @Before
     public void setup() {
         testRunID = TestUtils.randomString(4);
-        factory = new TestSessionFactory();
+        factory = new TestClientFactory();
         config = TestConfiguration.getDefault();
     }
 

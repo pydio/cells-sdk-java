@@ -4,13 +4,11 @@ import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Stats;
-import com.pydio.cells.client.SessionFactory;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
-import com.pydio.cells.transport.auth.TokenService;
+import com.pydio.cells.client.ClientFactory;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
-import com.pydio.cells.utils.tests.TestSessionFactory;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
@@ -28,7 +26,7 @@ import java.io.ByteArrayInputStream;
  */
 public class P8TransportTest {
 
-    private static SessionFactory factory;
+    private static ClientFactory factory;
     private static TestConfiguration config;
     private static String testRunID;
 
@@ -36,7 +34,7 @@ public class P8TransportTest {
     @BeforeClass
     public static void setup() {
         testRunID = TestUtils.randomString(4);
-        factory = new TestSessionFactory();
+        factory = new TestClientFactory();
         config = TestConfiguration.getDefault();
     }
 

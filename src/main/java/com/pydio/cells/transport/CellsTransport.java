@@ -11,7 +11,6 @@ import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Store;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
-import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;

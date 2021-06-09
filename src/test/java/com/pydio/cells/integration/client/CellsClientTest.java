@@ -7,8 +7,8 @@ import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
-import com.pydio.cells.utils.tests.TestSessionFactory;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
@@ -21,14 +21,14 @@ import java.io.ByteArrayInputStream;
 
 public class CellsClientTest {
 
-    private static TestSessionFactory factory;
+    private static TestClientFactory factory;
     private static String testRunID;
     private static RemoteServerConfig cellsConf;
 
     @BeforeClass
     public static void setup() {
         testRunID = TestUtils.randomString(4);
-        factory = new TestSessionFactory();
+        factory = new TestClientFactory();
         cellsConf = TestConfiguration.getDefault().getServer("cells-https");
     }
 

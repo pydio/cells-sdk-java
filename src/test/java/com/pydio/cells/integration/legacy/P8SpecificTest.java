@@ -5,24 +5,18 @@ import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.client.ServerFactory;
-import com.pydio.cells.utils.JavaCustomEncoder;
+import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
 import com.pydio.cells.transport.ServerURLImpl;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
-import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.legacy.P8Credentials;
-import com.pydio.cells.legacy.P8Server;
-import com.pydio.cells.legacy.P8Transport;
-import com.pydio.cells.utils.tests.TestSessionFactory;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.Map;
 
@@ -43,7 +37,7 @@ public class P8SpecificTest {
     @Before
     public void setup() {
         //testRunID = TestUtils.randomString(4);
-        factory = new TestSessionFactory();
+        factory = new TestClientFactory();
         config = TestConfiguration.getDefault();
     }
 

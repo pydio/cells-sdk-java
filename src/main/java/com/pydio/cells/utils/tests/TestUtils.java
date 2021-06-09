@@ -7,7 +7,7 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.client.ServerFactory;
+import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
 import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.transport.ServerURLImpl;

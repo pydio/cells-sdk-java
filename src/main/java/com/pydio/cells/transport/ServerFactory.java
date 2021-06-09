@@ -1,4 +1,4 @@
-package com.pydio.cells.client;
+package com.pydio.cells.transport;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.CustomEncoder;
@@ -12,10 +12,6 @@ import com.pydio.cells.api.Store;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
-import com.pydio.cells.transport.CellsServer;
-import com.pydio.cells.transport.CellsTransport;
-import com.pydio.cells.transport.ClientData;
-import com.pydio.cells.transport.StateID;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
 import com.pydio.cells.utils.JavaCustomEncoder;
@@ -51,9 +47,9 @@ public class ServerFactory implements IServerFactory {
     }
 
     public ServerFactory() {
-        this.tokenStore = new MemoryStore<Token>();
-        this.serverStore = new MemoryStore<Server>();
-        this.transportStore = new MemoryStore<Transport>();
+        this.tokenStore = new MemoryStore<>();
+        this.serverStore = new MemoryStore<>();
+        this.transportStore = new MemoryStore<>();
         initAppData();
     }
 
@@ -155,12 +151,12 @@ public class ServerFactory implements IServerFactory {
     }
 
     @Override
-    public Transport getTransport(String accountID) throws SDKException {
+    public Transport getTransport(String accountID) {
         return transportStore.get(accountID);
     }
 
     // @Override
-    public Transport getAnonymousTransport(String serverID) throws SDKException {
+    public Transport getAnonymousTransport(String serverID) {
         Server server = serverStore.get(serverID);
         if (server == null) {
             return null;
