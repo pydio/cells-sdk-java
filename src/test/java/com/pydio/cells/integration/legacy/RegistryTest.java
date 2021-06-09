@@ -1,11 +1,9 @@
 package com.pydio.cells.integration.legacy;
 
 import com.pydio.cells.api.Client;
+import com.pydio.cells.api.Registry;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.SessionFactory;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
-import com.pydio.cells.transport.auth.TokenService;
-import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
@@ -19,21 +17,21 @@ import org.junit.Test;
 
 /**
  * Registry can be downloaded whether the request is authenticated or not.
- *
+ * <p>
  * When requesting the registry without authentication the server responds with what we call the
  * default registry info. The default registry info are actions and plugins. There are more info
  * but currently only plugins and actions are useful.
- *
- *
+ * <p>
+ * <p>
  * When requesting the registry with authentication data the server responds with user info in
  * addition of the default registry info. These additional info are the preferences of the user
  * and workspaces/cells they have access to
- *
- *
+ * <p>
+ * <p>
  * The approach for this test is to request the registry from both unauthenticated and authenticated
  * states and check if plugins and actions are available. When authenticated we check
  * if there are workspaces that reflects what is on the server side.
- *
+ * <p>
  * There is a lot more things that can be tested about the registry but what is described above is
  * ok as a baseline test
  */
@@ -46,8 +44,7 @@ public class RegistryTest {
     @BeforeClass
     public static void setup() {
         testRunID = TestUtils.randomString(4);
-        TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new TestSessionFactory(tokens);
+        factory = new TestSessionFactory();
         config = TestConfiguration.getDefault();
     }
 

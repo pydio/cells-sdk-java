@@ -1,4 +1,4 @@
-package com.pydio.cells.client.encoding;
+package com.pydio.cells.utils;
 
 import com.pydio.cells.api.CustomEncoder;
 

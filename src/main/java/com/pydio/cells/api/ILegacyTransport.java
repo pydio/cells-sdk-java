@@ -12,6 +12,5 @@ public interface ILegacyTransport extends Transport {
 
     JSONObject authenticationInfo() throws SDKException;
 
-    String getToken() throws SDKException;
 
 }

@@ -8,20 +8,21 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.Store;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
 import com.pydio.cells.transport.CellsServer;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.StateID;
-import com.pydio.cells.transport.auth.TokenService;
+import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
+import com.pydio.cells.utils.JavaCustomEncoder;
+import com.pydio.cells.utils.MemoryStore;
 
 import java.io.IOException;
 import java.net.ConnectException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,12 +30,30 @@ import java.util.Map;
  */
 public class ServerFactory implements IServerFactory {
 
-    private final Map<String, Server> servers = new HashMap<>();
-    private final Map<String, Transport> transports = new HashMap<>();
-    private final TokenService tokenService;
+//    private final Map<String, Server> servers = new HashMap<>();
+//    private final Map<String, Transport> transports = new HashMap<>();
+//    private final TokenService tokenService;
 
-    public ServerFactory(TokenService tokenService) {
-        this.tokenService = tokenService;
+    private final Store<Token> tokenStore;
+    private final Store<Server> serverStore;
+    private final Store<Transport> transportStore;
+
+//    public ServerFactory(TokenService tokenService) {
+//        this.tokenService = tokenService;
+//        initAppData();
+//    }
+
+    public ServerFactory(Store<Token> tokenStore, Store<Server> serverStore, Store<Transport> transportStore) {
+        this.tokenStore = tokenStore;
+        this.serverStore = serverStore;
+        this.transportStore = transportStore;
+        initAppData();
+    }
+
+    public ServerFactory() {
+        this.tokenStore = new MemoryStore<Token>();
+        this.serverStore = new MemoryStore<Server>();
+        this.transportStore = new MemoryStore<Transport>();
         initAppData();
     }
 
@@ -71,8 +90,8 @@ public class ServerFactory implements IServerFactory {
     @Override
     public Server register(ServerURL serverURL) throws SDKException {
 
-        if (getServer(serverURL.getId()) != null) {
-            return getServer(serverURL.getId());
+        if (serverStore.get(serverURL.getId()) != null) {
+            return serverStore.get(serverURL.getId());
         }
 
         String type = checkServer(serverURL);
@@ -86,46 +105,71 @@ public class ServerFactory implements IServerFactory {
             throw new SDKException(ErrorCodes.not_pydio_server);
         }
 
-        putServer(serverURL.getId(), server);
+        serverStore.put(serverURL.getId(), server);
         return server;
     }
 
-    @Deprecated
-    @Override
-    public Transport registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
+    protected Map<String, Server> getServers() {
+        return serverStore.getAll();
+    }
 
-        Server server = getServer(serverURL.getId());
+    public Server getServer(String id) {
+        return serverStore.get(id);
+    }
+
+    protected void removeServer(String id) {
+        serverStore.remove(id);
+    }
+
+    @Override
+    public void registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException {
+
+        Server server = serverStore.get(serverURL.getId());
         if (server == null) {
             server = register(serverURL);
         }
 
         Transport transport;
+
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
             if (credentials instanceof LegacyPasswordCredentials) {
-                LegacyPasswordCredentials pc = ((LegacyPasswordCredentials) credentials);
-                transport = new CellsTransport(pc.getLogin(), server, getEncoder());
-                tokenService.legacyLogin((CellsTransport) transport, pc);
-                //tokenService.loginPasswordGetToken((CellsTransport) session, credentials);
-                ((CellsTransport) transport).restore(tokenService);
+                transport = new CellsTransport(tokenStore, credentials.getLogin(), server, getEncoder());
             } else
                 throw new RuntimeException("Unsupported credential " + credentials.getClass().toString() + " for Cells server: " + serverURL.getId());
 
         } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            transport = new P8Transport(server, credentials, getEncoder());
-            ((P8Transport) transport).restore(tokenService);
-            // ((P8Transport) transport).setCredentials(credentials);
+            transport = new P8Transport(tokenStore, server, credentials.getLogin(), getEncoder());
         } else
             throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
 
-        //  Rather do this in the client layer
-        // return storeAccountInfo(accountID(credentials.getLogin(), serverURL), session);
-        return transport;
+        transport.unlock(credentials);
 
+        transportStore.put(accountID(credentials.getLogin(), server), transport);
     }
 
+    @Override
     public void unregisterAccount(String accountID) throws SDKException {
-        // TODO rather introduce another layer to ease use of a persistent store.
-        transports.remove(accountID);
+        transportStore.remove(accountID);
+        tokenStore.remove(accountID);
+        // TODO? if no transport is defined anymore on a server, also remove?
+    }
+
+    @Override
+    public Transport getTransport(String accountID) throws SDKException {
+        return transportStore.get(accountID);
+    }
+
+    // @Override
+    public Transport getAnonymousTransport(String serverID) throws SDKException {
+        Server server = serverStore.get(serverID);
+        if (server == null) {
+            return null;
+        }
+
+        if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
+            return new P8Transport(tokenStore, server, Transport.ANONYMOUS_USERNAME, getEncoder());
+        }
+        return CellsTransport.asAnonymous(server, getEncoder());
     }
 
 
@@ -134,50 +178,15 @@ public class ServerFactory implements IServerFactory {
     }
 
     @Override
-    public Transport getTransport(String login, ServerURL serverURL) throws SDKException {
-
-        if (transports.containsKey(accountID(login, serverURL))) {
-            return transports.get(accountID(login, serverURL));
-        }
-
-        Server server = getServer(serverURL.getId());
-        if (server == null) {
-            server = register(serverURL);
-        }
-
-        Transport transport;
-        if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
-            transport = new CellsTransport(login, server, getEncoder());
-            ((CellsTransport) transport).restore(tokenService);
-        } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            transport = new P8Transport(server, login, getEncoder());
-            ((P8Transport) transport).restore(tokenService);
-        } else
-            throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
-
-        transports.put(accountID(login, serverURL), transport);
-
-        return transport;
+    public CustomEncoder getEncoder() {
+        return new JavaCustomEncoder();
     }
 
-    protected Map<String, Server> getServers() {
-        return servers;
-    }
-
-    public Server getServer(String id) {
-        return servers.get(id);
-    }
-
-    protected Server putServer(String id, Server server) {
-        return servers.put(id, server);
-    }
-
-    protected Server removeServer(String id) {
-        return servers.remove(id);
-    }
-
-    protected TokenService getTokenService() {
-        return tokenService;
+    protected void initAppData() {
+        ClientData.packageID = this.getClass().getPackage().getName();
+        ClientData.name = "CellsJavaTransport";
+        ClientData.version = "0.2.0-dev";
+        ClientData.platform = "Java";
     }
 
     // Static helpers to ease implementation
@@ -193,17 +202,33 @@ public class ServerFactory implements IServerFactory {
         return accountID(username, server.getServerURL());
     }
 
+    //
+//    @Override
+//    public Transport getTransport(String login, ServerURL serverURL) throws SDKException {
+//
+//        if (transports.containsKey(accountID(login, serverURL))) {
+//            return transports.get(accountID(login, serverURL));
+//        }
+//
+//        Server server = getServer(serverURL.getId());
+//        if (server == null) {
+//            server = register(serverURL);
+//        }
+//
+//        Transport transport;
+//        if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
+//            transport = new CellsTransport(login, server, getEncoder());
+//            ((CellsTransport) transport).restore(tokenService);
+//        } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
+//            transport = new P8Transport(server, login, getEncoder());
+//            ((P8Transport) transport).restore(tokenService);
+//        } else
+//            throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
+//
+//        transports.put(accountID(login, serverURL), transport);
+//
+//        return transport;
+//    }
 
-    protected void initAppData() {
-        ClientData.packageID = this.getClass().getPackage().getName();
-        ClientData.name = "CellsJavaTransport";
-        ClientData.version = "0.2.0-dev";
-        ClientData.platform = "Java";
-    }
-
-    @Override
-    public CustomEncoder getEncoder() {
-        return new JavaCustomEncoder();
-    }
 
 }

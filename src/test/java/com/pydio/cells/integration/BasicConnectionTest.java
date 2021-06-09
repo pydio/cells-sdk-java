@@ -34,8 +34,8 @@ import javax.net.ssl.SSLHandshakeException;
 
 /**
  * Performs basic tests against a running Cells instance. You must first adapt
- * the "src/test/resources/default.properties" file to match your
- * setup.
+ * the "src/test/resources/accounts/*.properties" files (at least one of them)
+ * to match your setup.
  * <p>
  * You can then launch the test with:
  * <p>
@@ -50,8 +50,7 @@ public class BasicConnectionTest {
     @Before
     public void setup() {
         testRunID = TestUtils.randomString(4);
-        TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new TestSessionFactory(tokens);
+        factory = new TestSessionFactory();
         config = TestConfiguration.getDefault();
     }
 

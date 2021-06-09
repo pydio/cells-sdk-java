@@ -3,10 +3,13 @@ package com.pydio.cells.legacy;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ILegacyTransport;
+import com.pydio.cells.api.PasswordCredentials;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.Store;
+import com.pydio.cells.client.ServerFactory;
 import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.TokenService;
@@ -32,66 +35,90 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class P8Transport implements ILegacyTransport, SdkNames {
 
+    private final CustomEncoder encoder;
+
     private final Server server;
     private final String username;
-
-    private TokenService tokens;
     private P8Credentials credentials;
-    private CookieManager cookieManager;
 
-    protected final CustomEncoder encoder;
+    // private TokenService tokens;
+    private final Store<Token> tokenStore;
+    private final CookieManager cookieManager;
 
+    private String userAgent;
     private int loginFailure;
-
     private Boolean useCaptcha;
 
-    public P8Transport(Server server, String username, CookieManager manager, CustomEncoder encoder) {
+//    public P8Transport(Server server, String username, CookieManager manager, CustomEncoder encoder) {
+//        this.server = server;
+//        this.username = username;
+//        this.cookieManager = manager;
+//        this.encoder = encoder;
+//
+//        loginFailure = 0;
+//    }
+
+    public P8Transport(Store<Token> tokenStore, Server server, String username, CustomEncoder encoder) {
         this.server = server;
         this.username = username;
-        cookieManager = manager;
         this.encoder = encoder;
 
+        this.tokenStore = tokenStore;
+        this.cookieManager = new CookieManager();
         loginFailure = 0;
     }
 
-    public P8Transport(Server server, String username, CustomEncoder encoder) {
-        this(server, username, new CookieManager(), encoder);
+    public Token unlock(Credentials credentials) throws SDKException {
+        if (credentials instanceof P8Credentials) {
+            this.credentials = (P8Credentials) credentials;
+        } else {
+            throw new SDKException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
+        }
+
+        useCaptcha();
+        login();
+        return null;
     }
 
-    public P8Transport(Server server, Credentials c, CustomEncoder encoder) throws SDKException {
-        this(server, c.getLogin(), new CookieManager(), encoder);
-        if (c instanceof P8Credentials) {
-            this.credentials = (P8Credentials) c;
-        } else
-            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
-    }
+
+//    public P8Transport(Server server, Credentials c, CustomEncoder encoder) throws SDKException {
+//        this(server, c.getLogin(), new CookieManager(), encoder);
+//        if (c instanceof P8Credentials) {
+//            this.credentials = (P8Credentials) c;
+//        } else
+//            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
+//    }
 
     @Deprecated
     public void setCredentials(Credentials c) {
         if (c instanceof P8Credentials) {
             this.credentials = (P8Credentials) c;
-        } else
+        } else {
             throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
     }
-
-    public void restore(TokenService tokens) throws SDKException {
-        this.tokens = tokens;
-        // TODO check if it is already initialized
-        server.init();
-
-        useCaptcha();
-        login();
-        // TODO more init
     }
 
-    @Deprecated
-    public void setCookieManager(CookieManager man) {
-        cookieManager = man;
-    }
+
+
+//    public void restore(TokenService tokens) throws SDKException {
+//        this.tokens = tokens;
+//        // TODO check if it is already initialized
+//        server.init();
+//
+//        useCaptcha();
+//        login();
+//        // TODO more init
+//    }
+
+//    @Deprecated
+//    public void setCookieManager(CookieManager man) {
+//        cookieManager = man;
+//    }
 
     @Override
     public String getId() {
@@ -105,21 +132,31 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public boolean isOffline() {
-        // TODO implement
+        if (username == null || "".equals(username) || ANONYMOUS_USERNAME.equals(username)){
+            return true;
+        }
+        // TODO implement check to see if we have a valid token
         return false;
     }
 
     @Override
     public String getUserAgent() {
-        // FIXME do we want to be able to override the default string ?
-        // if (this.config.userAgent != null) {
-        //     con.setRequestProperty("User-Agent", this.config.userAgent);
-        // } else {
-        return "Pydio-Native-" + ClientData.name + " " + ClientData.version + "." + ClientData.versionCode;
+        if (userAgent != null) {
+            return userAgent;
+        }
+
+        userAgent = String.format(Locale.US, "%s-%s/%d", ClientData.name, ClientData.version, ClientData.versionCode);
+        if (!ClientData.platform.equals("")) {
+            userAgent = ClientData.platform + "/" + userAgent;
+        }
+
+        if (!ClientData.packageID.equals("")) {
+            userAgent = userAgent + "/" + ClientData.packageID;
+        }
+        return userAgent;
     }
 
-    @Override
-    public String getToken() throws SDKException {
+    private String getToken() throws SDKException {
         String secureToken = getSecureToken();
         if (null == secureToken || "".equals(secureToken)) {
             login();
@@ -128,8 +165,12 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return secureToken;
     }
 
+    protected P8RequestBuilder withAuth(P8RequestBuilder builder) throws SDKException {
+        return builder.setToken(getToken());
+    }
+
     public void invalidateToken() {
-        tokens.delete(getId());
+        tokenStore.remove(getId());
     }
 
     @Override
@@ -280,7 +321,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(getSecureToken());
+        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setToken(getSecureToken());
         try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -291,7 +332,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public InputStream getUserData(String binary) throws SDKException {
-        P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setSecureToken(getSecureToken()).getRequest();
+        P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setToken(getSecureToken()).getRequest();
         try (P8Response rsp = execute(req)) {
             final int code = rsp.code();
             if (code != ErrorCodes.ok) {
@@ -310,10 +351,9 @@ public class P8Transport implements ILegacyTransport, SdkNames {
      * In P8 the auth token is bound to a session cookie: we must retrieve and store both
      * with the provided credentials.
      */
-    @Override
     public void login() throws SDKException {
 
-        Token existingToken = tokens.get(this, getId());
+        Token existingToken = tokenStore.get(getId());
         if (existingToken != null) {
             return;
         }
@@ -339,11 +379,11 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             // So before storing the cookie, we must insure it is the correct one.
             Document doc = rsp.toXMLDocument();
             List<String> cookieHeaders = rsp.getHeaders(P8Names.HEADER_SET_COOKIE);
-            handleCookie(doc, cookieHeaders);
+            handleCookie(credentials.getLogin(), doc, cookieHeaders);
         }
     }
 
-    private void handleCookie(Document doc, List<String> cookieHeaders) throws SDKException {
+    private void handleCookie(String username, Document doc, List<String> cookieHeaders) throws SDKException {
 
         // First handle well known error cases
         if (doc == null) {
@@ -362,7 +402,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         if (result.equals("1")) {
             String secureToken = attributes.getNamedItem(P8Names.secureToken).getNodeValue();
             loginFailure = 0;
-            saveSecureToken(secureToken);
+            saveSecureToken(username, secureToken);
 
 //                        Map<String, List<String>> allHeaders = rsp.getAllHeaders();
 //                        for (String currHeader : allHeaders.keySet()) {
@@ -384,7 +424,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
                             // Perform a call with retrieved token and current session cookie
                             // to insure we have a correct session ID
-                            P8RequestBuilder builder = P8RequestBuilder.workspaceList().setSecureToken(secureToken);
+                            P8RequestBuilder builder = P8RequestBuilder.workspaceList().setToken(secureToken);
                             try (P8Response rsp = execute(builder.getRequest())) {
                                 if (rsp.code() == ErrorCodes.ok) {
                                     alreadyStoredValidCookie = true;
@@ -406,12 +446,12 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
-    @Override
-    public void logout() throws SDKException {
-        String secureToken = getSecureToken();
-        P8Response response = execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
-        response.close();
-    }
+//    @Override
+//    public void logout() throws SDKException {
+//        String secureToken = getSecureToken();
+//        P8Response response = execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
+//        response.close();
+//    }
 
     @Override
     public JSONObject userInfo() throws SDKException {
@@ -692,7 +732,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             if (!info.has(P8Names.captchaCode)) {
                 login();
                 String secureToken = getSecureToken();
-                return P8RequestBuilder.update(req).setSecureToken(secureToken).getRequest();
+                return P8RequestBuilder.update(req).setToken(secureToken).getRequest();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -700,48 +740,27 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return null;
     }
 
-    private void saveSecureToken(String secureToken) {
+    private void saveSecureToken(String username, String secureToken) {
         Token t = new Token();
-        t.subject = getId();
+        t.subject = ServerFactory.accountID(username, server);
         t.value = secureToken;
         t.setExpiry(-1);
-        tokens.register(getId(), t);
+        tokenStore.put(t.subject, t);
     }
 
     private String getSecureToken() throws SDKException {
-        // System.out.println(".... In get secure token for " +getId());
-
-        // Map<String, Token> definedTokens = tokens.getAllTokens();
-        // for (String key : definedTokens.keySet()){
-        //     System.out.println("- " + key + ": "+definedTokens.get(key).toString());
-        // }
-
-        Token t = tokens.get(this, getId());
+        Token t = tokenStore.get(getId());
 
         if (t == null) {
             System.out.println("No token found for " + getId() + ", about to background login.");
             login();
-            t = tokens.get(this, getId());
-            // } else {
-            //     System.out.println("Token found for " + getId() + ", returning "+ t.value);
+            t = tokenStore.get(getId());
         }
 
         return t.value;
     }
 
     /* String manipulation Helpers */
-
-//    private String getTokenId() {
-//        String tokenID = secureTokens.get(getId());
-//        if (tokenID != null && !"".equals(tokenID)){
-//            return tokenID;
-//        }
-//
-//        if (credentials != null){
-//
-//        }
-//        return credentials.getLogin() + "@" + server.getServerURL().getId();
-//    }
 
     private StringBuilder appendParam(StringBuilder builder, String key, String value) {
         builder.append(key).append("=").append(value);

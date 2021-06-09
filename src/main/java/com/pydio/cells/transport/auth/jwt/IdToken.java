@@ -2,7 +2,6 @@ package com.pydio.cells.transport.auth.jwt;
 
 import com.google.gson.Gson;
 import com.pydio.cells.api.CustomEncoder;
-import com.pydio.cells.client.encoding.Base64Encoder;
 
 import java.text.ParseException;
 

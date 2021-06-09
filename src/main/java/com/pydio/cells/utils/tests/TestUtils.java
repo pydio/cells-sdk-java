@@ -44,7 +44,10 @@ public class TestUtils {
         } else {
             credentials = new LegacyPasswordCredentials(conf.login, conf.pwd);
         }
-        return factory.registerAccount(sURL, credentials);
+        factory.registerAccount(sURL, credentials);
+
+        return factory.getTransport(ServerFactory.accountID(conf.login, server));
+
     }
 
     /* Optimistic helper to get a unique string */

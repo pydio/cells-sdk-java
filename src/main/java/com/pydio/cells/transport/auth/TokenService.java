@@ -103,40 +103,5 @@ public class TokenService {
 //    }
 
 
-    public Token legacyLogin(CellsTransport transport, PasswordCredentials credentials) throws SDKException {
 
-        Map<String, String> authInfo = new HashMap<>();
-        authInfo.put("login", credentials.getLogin());
-        authInfo.put("password", credentials.getPassword());
-        authInfo.put("type", "credentials");
-
-        // Hack to support legacy credential flow
-        Base64 base64 = new Base64();
-        String clientID = "cells-mobile";
-        String clientSecret = "";
-        String auth = new String(base64.encode((clientID + ":" + clientSecret).getBytes()));
-        authInfo.put("Authorization", "Basic " + auth);
-
-
-        RestFrontSessionRequest request = new RestFrontSessionRequest();
-        request.setClientTime((int) System.currentTimeMillis());
-        request.authInfo(authInfo);
-
-        FrontendServiceApi api = new FrontendServiceApi(transport.getApiClient());
-
-
-        RestFrontSessionResponse response;
-        try {
-            response = api.frontSession(request);
-
-            Token t = new Token();
-            t.subject = transport.getId();
-            t.value = response.getJWT();
-            t.setExpiry((long) response.getExpireTime());
-            store.save(transport.getId(), t);
-            return t;
-        } catch (ApiException e) {
-            throw new SDKException(ErrorCodes.no_token_available, new IOException("login or password incorrect"));
-        }
-    }
 }

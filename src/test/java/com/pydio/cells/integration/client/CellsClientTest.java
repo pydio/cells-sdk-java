@@ -5,8 +5,6 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
-import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
@@ -30,8 +28,7 @@ public class CellsClientTest {
     @BeforeClass
     public static void setup() {
         testRunID = TestUtils.randomString(4);
-        TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new TestSessionFactory(tokens);
+        factory = new TestSessionFactory();
         cellsConf = TestConfiguration.getDefault().getServer("cells-https");
     }
 

@@ -47,7 +47,7 @@ public class PojoS3Client implements S3Client {
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(defaultBucketName, filename);
         request.setMethod(HttpMethod.PUT);
         request.setContentType(S3Names.S3_CONTENT_TYPE_OCTET_STREAM);
-        request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getToken());
+        request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getAccessToken());
         return getS3Client().generatePresignedUrl(request);
     }
 
@@ -55,14 +55,14 @@ public class PojoS3Client implements S3Client {
         String filename = getCleanPath(ws, file);
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(defaultBucketName, filename);
         request.setMethod(HttpMethod.GET);
-        request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getToken());
+        request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getAccessToken());
         return getS3Client().generatePresignedUrl(request);
     }
 
     public URL getStreamingPreSignedURL(String slug, String file, String contentType) throws SDKException {
         String filename = getCleanPath(slug, file);
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(defaultBucketName, filename);
-        request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getToken());
+        request.addRequestParameter(S3Names.S3_TOKEN_KEY, transport.getAccessToken());
         request.addRequestParameter(S3Names.RESPONSE_CONTENT_TYPE, contentType);
         return getS3Client().generatePresignedUrl(request);
     }
@@ -85,7 +85,7 @@ public class PojoS3Client implements S3Client {
 
     private AmazonS3 getS3Client() throws SDKException {
         // TODO improve this to enable refresh when necessary
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(transport.getToken(), defaultGatewaySecret);
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(transport.getAccessToken(), defaultGatewaySecret);
         return clientBuilder.withCredentials(new AWSStaticCredentialsProvider(awsCreds)).build();
     }
 }

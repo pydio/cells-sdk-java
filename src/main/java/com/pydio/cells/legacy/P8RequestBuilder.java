@@ -378,19 +378,19 @@ public class P8RequestBuilder {
         return this;
     }
 
-    public P8RequestBuilder setSecureToken(String token) {
-        if (token != null) {
-            request.setSecureToken(token); // Superstition ?
-            setParam(P8Names.secureToken, token);
-        }
-        return this;
-    }
+//    public P8RequestBuilder setSecureToken(String token) {
+//        if (token != null) {
+//            request.setSecureToken(token); // Superstition ?
+//            setParam(P8Names.secureToken, token);
+//        }
+//        return this;
+//    }
 
-    public P8RequestBuilder setToken(Transport transport) throws SDKException {
-        String token = ((ILegacyTransport) transport).getToken();
-        if (token != null) {
-            return setSecureToken(token);
-        }
+    public P8RequestBuilder setToken(String token) throws SDKException {
+
+        request.setSecureToken(token); // Superstition ?
+        setParam(P8Names.secureToken, token);
+
         return this;
     }
 

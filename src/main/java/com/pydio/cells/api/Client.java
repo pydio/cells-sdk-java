@@ -7,7 +7,6 @@ import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
-import com.pydio.cells.client.model.Registry;
 
 import org.json.JSONObject;
 
@@ -76,5 +75,7 @@ public interface Client {
     void unshare(String ws, String file) throws SDKException;
 
     JSONObject shareInfo(String ws, String file) throws SDKException;
+
+    boolean isLegacy();
 
 }

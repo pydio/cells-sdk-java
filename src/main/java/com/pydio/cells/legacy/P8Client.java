@@ -3,6 +3,7 @@ package com.pydio.cells.legacy;
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ErrorCodes;
+import com.pydio.cells.api.Registry;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;
@@ -21,14 +22,12 @@ import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.NodeDiff;
-import com.pydio.cells.client.model.Registry;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.TreeNodeSaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
+import com.pydio.cells.legacy.consts.P8Names;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
-import com.pydio.cells.utils.io;
-import com.pydio.cells.legacy.consts.P8Names;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -58,7 +57,7 @@ public class P8Client implements Client, SdkNames {
             transport.invalidateToken();
 
             if (!transport.useCaptcha()) {
-                return P8RequestBuilder.update(req).setToken(transport).getRequest();
+                return transport.withAuth(P8RequestBuilder.update(req)).getRequest();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +81,9 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Registry getUserRegistry() throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.userRegistry().setToken(transport);
+
+
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.userRegistry());
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -96,7 +97,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void workspaceList(NodeHandler handler) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.workspaceList().setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.workspaceList());
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -118,7 +119,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.workspaceRegistry(ws));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -135,7 +136,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.nodeInfo(ws, path).setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.nodeInfo(ws, path));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -189,7 +190,7 @@ public class P8Client implements Client, SdkNames {
 */
         PageOptions nextOptions = new PageOptions();
 
-        P8RequestBuilder builder = P8RequestBuilder.ls(ws, folder).setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.ls(ws, folder));
         while (true) {
             try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
 //                try (P8Response rsp = session.execute(builder.getRequest(), this::refreshSecureToken, 0)) {
@@ -224,7 +225,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void search(String ws, String dir, String searchedText, NodeHandler h) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.search(ws, dir, searchedText).setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.search(ws, dir, searchedText));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             int code = rsp.code();
             if (code != ErrorCodes.ok) {
@@ -263,7 +264,7 @@ public class P8Client implements Client, SdkNames {
         // }
 
         for (WorkspaceNode wn : workspaceNodes) {
-            P8RequestBuilder builder = P8RequestBuilder.listBookmarked(wn.getId(), "/").setToken(transport);
+            P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.listBookmarked(wn.getId(), "/"));
             while (true) {
                 try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
                     int code = rsp.code();
@@ -336,7 +337,7 @@ public class P8Client implements Client, SdkNames {
 
         P8RequestBuilder builder;
         try {
-            builder = P8RequestBuilder.upload(ws, path, name, autoRename, cb).setToken(transport);
+            builder = transport.withAuth(P8RequestBuilder.upload(ws, path, name, autoRename, cb));
         } catch (IOException e) {
             e.printStackTrace();
             throw SDKException.encoding(e);
@@ -439,7 +440,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public long download(String ws, String path, OutputStream target, TransferProgressListener progressListener) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.download(ws, path).setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.download(ws, path));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -488,7 +489,7 @@ public class P8Client implements Client, SdkNames {
     public Message delete(String ws, String[] files) throws SDKException {
         Message msg = new Message();
         for (String file : files) {
-            P8RequestBuilder builder = P8RequestBuilder.delete(ws, new String[]{file}).setToken(transport);
+            P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.delete(ws, new String[]{file}));
             try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
                 if (rsp.code() != ErrorCodes.ok) {
                     throw new SDKException(rsp.code());
@@ -505,7 +506,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message restore(String ws, String[] files) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.restore(ws, files).setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.restore(ws, files));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -517,7 +518,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message move(String ws, String[] files, String dstFolder) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.move(ws, files, dstFolder).setToken(transport);
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.move(ws, files, dstFolder));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -529,7 +530,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message rename(String ws, String srcFile, String dstFile) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.rename(ws, srcFile, new File(dstFile).getName()).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.rename(ws, srcFile, new File(dstFile).getName());
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -541,7 +543,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message copy(String ws, String[] files, String folder) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.copy(ws, files, folder).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.copy(ws, files, folder);
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -553,7 +556,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message bookmark(String ws, String file) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.bookmark(ws, file).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.bookmark(ws, file);
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -565,7 +569,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message unbookmark(String ws, String file) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.unbookmark(ws, file).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.unbookmark(ws, file);
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -577,7 +582,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message mkdir(String ws, String parent, String name) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.mkdir(ws, parent, name).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.mkdir(ws, parent, name);
+        builder = transport.withAuth(builder);
         P8Request req = builder.getRequest();
         try (P8Response rsp = transport.execute(req, this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
@@ -590,7 +596,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public InputStream previewData(String ws, String file, int dim) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file);
+        builder = transport.withAuth(builder);
         P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
         if (rsp.code() != ErrorCodes.ok) {
             rsp.close();
@@ -620,7 +627,7 @@ public class P8Client implements Client, SdkNames {
     public String streamingVideoURL(String ws, String file) throws SDKException {
         Thread.dumpStack();
         throw new RuntimeException("Streaming is not supported with Pydio 8 servers.");
-        
+
 //         // loadSecureToken();
 //         P8RequestBuilder builder = P8RequestBuilder.streamingVideo(ws, file).setToken(session);
 //         try {
@@ -637,8 +644,9 @@ public class P8Client implements Client, SdkNames {
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
         // loadSecureToken();
 
-        P8Request request = P8RequestBuilder.stats(ws, file, withHash).setToken(transport).getRequest();
-        try (P8Response rsp = transport.execute(request, this::refreshSecureToken, ErrorCodes.authentication_required)) {
+        P8RequestBuilder builder = P8RequestBuilder.stats(ws, file, withHash);
+        builder = transport.withAuth(builder);
+        try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
@@ -681,7 +689,8 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public long changes(String ws, String filter, int seq, boolean flatten, ChangeHandler handler) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.changes(ws, filter, seq, flatten).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.changes(ws, filter, seq, flatten);
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -786,7 +795,8 @@ public class P8Client implements Client, SdkNames {
     @Override
     public String share(String ws, String file, String ws_label, boolean isFolder, String ws_description, String password, int expiration, int download, boolean canPreview, boolean canDownload) throws SDKException {
         //  loadSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.share(ws, file, ws_description).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.share(ws, file, ws_description);
+        builder = transport.withAuth(builder);
         if (password != null && !"".equals(password)) {
             builder.setParam(P8Names.shareGuestUserPassword, password);
         }
@@ -812,7 +822,8 @@ public class P8Client implements Client, SdkNames {
     @Override
     public void unshare(String ws, String file) throws SDKException {
         // loadSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.unShare(ws, file).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.unShare(ws, file);
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -823,7 +834,8 @@ public class P8Client implements Client, SdkNames {
     @Override
     public JSONObject shareInfo(String ws, String file) throws SDKException {
         // loadSecureToken();
-        P8RequestBuilder builder = P8RequestBuilder.shareInfo(ws, file).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.shareInfo(ws, file);
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
@@ -837,8 +849,14 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
+    public boolean isLegacy() {
+        return true;
+    }
+
+    @Override
     public Message emptyRecycleBin(String ws) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.emptyRecycle(ws).setToken(transport);
+        P8RequestBuilder builder = P8RequestBuilder.emptyRecycle(ws);
+        builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());

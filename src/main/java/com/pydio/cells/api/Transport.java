@@ -1,5 +1,7 @@
 package com.pydio.cells.api;
 
+import com.pydio.cells.transport.auth.Token;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -7,6 +9,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 
 public interface Transport {
+
+    String ANONYMOUS_USERNAME = "anon";
 
     String getId();
 
@@ -17,13 +21,14 @@ public interface Transport {
     String getUserAgent();
 
     /**
-     * This also tries to login the server with the passed credentials.
+     * Tries to login the server with the passed credentials
+     * and stores the resulting token in the local token store.
      */
-    void setCredentials(Credentials c) throws SDKException;
+    Token unlock(Credentials c) throws SDKException;
 
-    void login() throws SDKException;
-
-    void logout() throws SDKException;
+//    void login() throws SDKException;
+//
+//    void logout() throws SDKException;
 
     boolean isOffline();
 

@@ -6,7 +6,7 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.ServerFactory;
-import com.pydio.cells.client.encoding.JavaCustomEncoder;
+import com.pydio.cells.utils.JavaCustomEncoder;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
 import com.pydio.cells.transport.ServerURLImpl;
@@ -15,6 +15,7 @@ import com.pydio.cells.transport.auth.TokenService;
 import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.legacy.P8Server;
 import com.pydio.cells.legacy.P8Transport;
+import com.pydio.cells.utils.tests.TestSessionFactory;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -41,11 +42,8 @@ public class P8SpecificTest {
 
     @Before
     public void setup() {
-
         //testRunID = TestUtils.randomString(4);
-        TokenService tokens = new TokenService(new SimpleTokenStore());
-        factory = new ServerFactory(tokens);
-
+        factory = new TestSessionFactory();
         config = TestConfiguration.getDefault();
     }
 
@@ -112,8 +110,8 @@ public class P8SpecificTest {
 
             Assert.assertTrue(needCaptcha);
 
-            P8Transport anonSession = new P8Transport(new P8Server(p8URL), "anon", new JavaCustomEncoder());
-            InputStream in = anonSession.getCaptcha();
+//            P8Transport anonSession = new P8Transport(new P8Server(p8URL), "anon", new JavaCustomEncoder());
+//            InputStream in = anonSession.getCaptcha();
 
 
         } catch (SDKException sde) {

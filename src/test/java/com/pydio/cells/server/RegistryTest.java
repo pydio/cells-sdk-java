@@ -1,7 +1,7 @@
 package com.pydio.cells.server;
 
 import com.pydio.cells.client.model.DocumentRegistry;
-import com.pydio.cells.client.model.Registry;
+import com.pydio.cells.api.Registry;
 
 import org.junit.Assert;
 import org.junit.Test;

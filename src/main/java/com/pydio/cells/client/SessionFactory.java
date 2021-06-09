@@ -1,26 +1,35 @@
 package com.pydio.cells.client;
 
 import com.pydio.cells.api.Client;
-import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.Server;
-import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.api.Store;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.transport.CellsTransport;
-import com.pydio.cells.transport.auth.TokenService;
-import com.pydio.cells.api.CustomEncoder;
-import com.pydio.cells.client.encoding.JavaCustomEncoder;
 import com.pydio.cells.legacy.P8Client;
+import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.ClientData;
-import com.pydio.cells.transport.StateID;
+import com.pydio.cells.transport.auth.Token;
 
 /**
  * Extend a server factory to manage client concepts.
  */
 public abstract class SessionFactory extends ServerFactory {
 
-    public SessionFactory(TokenService tokenService) {
-        super(tokenService);
+    public SessionFactory(Store<Token> tokenStore, Store<Server> serverStore, Store<Transport> transportStore) {
+        super(tokenStore, serverStore, transportStore);
     }
+
+    /**
+     * Creates a factory with in memory stores for tokens, servers and transports
+     */
+    public SessionFactory() {
+        super();
+    }
+
+    /**
+     * Implement this: it is the single entry point to inject the S3 client
+     * that is platform specific
+     */
+    protected abstract CellsClient getCellsClient(CellsTransport transport);
 
     public Client getClient(Transport transport) {
         if (transport.getServer().isLegacy()) {
@@ -30,21 +39,10 @@ public abstract class SessionFactory extends ServerFactory {
         }
     }
 
-    /* This is only intended for extending factories, so that they have a single entry point to inject the S3 client */
-    protected abstract CellsClient getCellsClient(CellsTransport transport);
-//    {
-//            // return new CellsClient(transport, new PojoS3Client((CellsTransport)transport));
-//            return new CellsClient(transport, s3Client);
-//    }
-
-
     @Override
-    /* Only update info that are specific to this layer */
     protected void initAppData() {
         super.initAppData();
         ClientData.packageID = this.getClass().getPackage().getName();
         ClientData.name = "CellsJavaClient";
     }
-
-
 }

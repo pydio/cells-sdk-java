@@ -20,7 +20,7 @@ import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.client.common.http.HttpClient;
 import com.pydio.cells.client.common.http.HttpRequest;
 import com.pydio.cells.client.model.DocumentRegistry;
-import com.pydio.cells.client.model.Registry;
+import com.pydio.cells.api.Registry;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.utils.FileNodeUtils;
 import com.pydio.cells.utils.IoHelpers;
@@ -87,8 +87,6 @@ public class CellsClient implements Client, SdkNames {
     private final CellsTransport transport;
     private final S3Client s3Client;
 
-    // private Credentials credentials;
-
     public CellsClient(Transport transport, S3Client s3Client) {
         this.transport = (CellsTransport) transport;
         this.s3Client = s3Client;
@@ -109,28 +107,27 @@ public class CellsClient implements Client, SdkNames {
 
         HttpURLConnection con = null;
         InputStream in = null;
+        Registry registry;
         try {
             con = transport.openApiConnection("/frontend/state");
             con.setRequestMethod("GET");
             in = con.getInputStream();
+            registry = new DocumentRegistry(in);
+
+            for (WorkspaceNode node : registry.GetWorkspaces()) {
+                if (!Arrays.asList(defaultExcludedWorkspaces).contains(node.getAccessType())) {
+                    handler.onNode(node);
+                }
+            }
+
+        } catch (ParserConfigurationException | SAXException e) {
+            throw SDKException.unexpectedContent(e);
         } catch (IOException e) {
             e.printStackTrace();
             throw SDKException.conFailed(e);
-        }
-
-        Registry registry;
-        try {
-            registry = new DocumentRegistry(in);
-        } catch (IOException e) {
-            throw new SDKException(e);
-        } catch (ParserConfigurationException | SAXException e) {
-            throw SDKException.unexpectedContent(e);
-        }
-
-        for (WorkspaceNode node : registry.GetWorkspaces()) {
-            if (!Arrays.asList(defaultExcludedWorkspaces).contains(node.getAccessType())) {
-                handler.onNode(node);
-            }
+        } finally {
+            IoHelpers.closeQuietly(in);
+            IoHelpers.closeQuietly(con);
         }
     }
 
@@ -378,48 +375,6 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public String downloadPath(String ws, String file) throws SDKException {
         return fromURL(s3Client.getDownloadPreSignedURL(ws, file));
-    }
-
-    @Override
-    public long changes(String ws, String folder, int seq, boolean flatten, ChangeHandler cp) throws SDKException {
-        // RestChangeRequest request = new RestChangeRequest();
-        // request.setFlatten(flatten);
-        // request.setSeqID(String.valueOf(seq));
-        // request.setFilter("/" + ws + folder);
-
-        // this.getJWT();
-        // ApiClient client = getApiClient();
-        // client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
-        // ChangeServiceApi api = new ChangeServiceApi(client);
-        // RestChangeCollection response;
-
-        // try {
-        // response = api.getChanges(String.valueOf(seq), request);
-        // } catch (ApiException e) {
-        // throw new SDKException(e);
-        // }
-
-        // for (TreeSyncChange c : response.getChanges()) {
-        // Change change = new Change();
-        // change.setSeq(Long.parseLong(c.getSeq()));
-        // change.setNodeId(c.getNodeId());
-        // change.setType(c.getType().toString());
-        // change.setSource(c.getSource());
-        // change.setTarget(c.getTarget());
-
-        // ChangeNode node = new ChangeNode();
-        // change.setNode(node);
-
-        // node.setSize(Long.parseLong(c.getNode().getBytesize()));
-        // node.setMd5(c.getNode().getMd5());
-        // node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
-        // node.setWorkspace(ws);
-        // node.setmTime(Long.parseLong(c.getNode().getMtime()));
-
-        // cp.onChange(change);
-        // }
-        // return Long.parseLong(response.getLastSeqId());
-        throw new RuntimeException("This must be reimplemented after API update");
     }
 
     @Override
@@ -739,6 +694,11 @@ public class CellsClient implements Client, SdkNames {
         }
     }
 
+    @Override
+    public boolean isLegacy() {
+        return false;
+    }
+
     public static TreeNodeInfo toTreeNodeinfo(TreeNode node) {
         boolean isLeaf = node.getType() == TreeNodeType.LEAF;
         long size = Long.parseLong(node.getSize());
@@ -750,6 +710,49 @@ public class CellsClient implements Client, SdkNames {
         TreeNode node = internalStatNode(fullPath);
         return node != null ? toTreeNodeinfo(node) : null;
     }
+
+    @Override
+    public long changes(String ws, String folder, int seq, boolean flatten, ChangeHandler cp) throws SDKException {
+        // RestChangeRequest request = new RestChangeRequest();
+        // request.setFlatten(flatten);
+        // request.setSeqID(String.valueOf(seq));
+        // request.setFilter("/" + ws + folder);
+
+        // this.getJWT();
+        // ApiClient client = getApiClient();
+        // client.addDefaultHeader("Authorization", "Bearer " + this.bearerValue);
+        // ChangeServiceApi api = new ChangeServiceApi(client);
+        // RestChangeCollection response;
+
+        // try {
+        // response = api.getChanges(String.valueOf(seq), request);
+        // } catch (ApiException e) {
+        // throw new SDKException(e);
+        // }
+
+        // for (TreeSyncChange c : response.getChanges()) {
+        // Change change = new Change();
+        // change.setSeq(Long.parseLong(c.getSeq()));
+        // change.setNodeId(c.getNodeId());
+        // change.setType(c.getType().toString());
+        // change.setSource(c.getSource());
+        // change.setTarget(c.getTarget());
+
+        // ChangeNode node = new ChangeNode();
+        // change.setNode(node);
+
+        // node.setSize(Long.parseLong(c.getNode().getBytesize()));
+        // node.setMd5(c.getNode().getMd5());
+        // node.setPath(c.getNode().getNodePath().replaceFirst("/" + ws, ""));
+        // node.setWorkspace(ws);
+        // node.setmTime(Long.parseLong(c.getNode().getMtime()));
+
+        // cp.onChange(change);
+        // }
+        // return Long.parseLong(response.getLastSeqId());
+        throw new RuntimeException("This must be reimplemented after API update");
+    }
+
 
     /**
      * Same as statNode() but rather return null than an {@link SDKException}

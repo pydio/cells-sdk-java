@@ -1,6 +1,10 @@
 package com.pydio.cells.integration.auth;
 
 import com.pydio.cells.api.SDKException;
+import com.pydio.cells.api.Server;
+import com.pydio.cells.api.Store;
+import com.pydio.cells.api.Transport;
+import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.TestSessionFactory;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestConfiguration;
@@ -28,7 +32,7 @@ public class RefreshTokenTest {
     private static TestConfiguration config;
     private static String testRunID;
     private static RemoteServerConfig cellsConf;
-    private static TokenStore tokenStore;
+    private static Store<Token> tokenStore;
 
     // Replace this with a valid value for cells-https config to enable the test
     // private final static String manualToken = "Do3SfOj4XOj2oQzMBHsRDGWvOB-wQc9XQlhA-3cqMZI.ydWcj44AazUeR4Cwq1zA0uXL65ykOYNC2L5QRcFQZUo";
@@ -38,8 +42,8 @@ public class RefreshTokenTest {
     public static void setup() {
         testRunID = TestUtils.randomString(4);
 
-        tokenStore = new SimpleTokenStore();
-        factory = new TestSessionFactory(new TokenService(tokenStore));
+        tokenStore = new MemoryStore<>();
+        factory = new TestSessionFactory(tokenStore, new MemoryStore<>(), new MemoryStore<>());
         config = TestConfiguration.getDefault();
         cellsConf = config.getServer("cells-https");
     }

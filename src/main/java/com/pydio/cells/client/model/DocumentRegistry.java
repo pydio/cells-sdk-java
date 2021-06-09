@@ -1,5 +1,6 @@
 package com.pydio.cells.client.model;
 
+import com.pydio.cells.api.Registry;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.ui.WorkspaceNode;
