@@ -10,8 +10,8 @@ public class ClientData {
     public static String packageID = "";
 
     public static String name = "Cells SDK Java";
-    private static String clientID = SdkNames.DEFAULT_CLIENT_ID;
-    private static String clientSecret = SdkNames.DEFAULT_CLIENT_SECRET;
+    public static String clientID = SdkNames.DEFAULT_CLIENT_ID;
+    public static String clientSecret = SdkNames.DEFAULT_CLIENT_SECRET;
 
     public static int versionCode = 1;
 

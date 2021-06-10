@@ -11,4 +11,6 @@ public interface Store<T> {
     Map<String, T> getAll();
 
     void remove(String id);
+
+    void clear();
 }

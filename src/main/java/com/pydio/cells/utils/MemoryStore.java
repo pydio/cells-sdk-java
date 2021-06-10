@@ -28,4 +28,9 @@ public class MemoryStore<T> implements Store<T> {
     public void remove(String id) {
         objects.remove(id);
     }
+
+    @Override
+    public void clear(){
+        objects.clear();
+    }
 }

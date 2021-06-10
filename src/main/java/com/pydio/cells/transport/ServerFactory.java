@@ -26,18 +26,9 @@ import java.util.Map;
  */
 public class ServerFactory implements IServerFactory {
 
-//    private final Map<String, Server> servers = new HashMap<>();
-//    private final Map<String, Transport> transports = new HashMap<>();
-//    private final TokenService tokenService;
-
     private final Store<Token> tokenStore;
     private final Store<Server> serverStore;
     private final Store<Transport> transportStore;
-
-//    public ServerFactory(TokenService tokenService) {
-//        this.tokenService = tokenService;
-//        initAppData();
-//    }
 
     public ServerFactory(Store<Token> tokenStore, Store<Server> serverStore, Store<Transport> transportStore) {
         this.tokenStore = tokenStore;
@@ -105,12 +96,45 @@ public class ServerFactory implements IServerFactory {
         return server;
     }
 
+
+    /* This relies on the token store to resurrect an account. */
+    public Transport restoreAccount(String username, ServerURL serverURL) throws SDKException {
+        String accountID = accountID(username, serverURL);
+        Transport existing = transportStore.get(accountID);
+        if (existing != null) {
+            return existing;
+        }
+
+        Token token = tokenStore.get(accountID);
+        if (token == null) {
+            throw new SDKException("Could not restore account " + accountID + ", no valid token has been found in local store");
+        }
+
+        Server server = register(serverURL);
+        if (server.isLegacy()) {
+            throw new RuntimeException("Cannot restore a P8 account with no credentials");
+        }
+        CellsTransport transport = new CellsTransport(tokenStore, username, server, getEncoder());
+        if (transport.getAccessToken() == null || "".equals(transport.getAccessToken())) {
+            throw new SDKException("Could not restore account " + accountID + ", refresh token process has failed");
+        }
+        transportStore.put(accountID, transport);
+        return transport;
+    }
+
+
     protected Map<String, Server> getServers() {
         return serverStore.getAll();
     }
 
+    /**
+     * Retrieve an already registered server by id.
+     *
+     * @param id can be a server URL or an encoded account id (including the username)
+     */
     public Server getServer(String id) {
-        return serverStore.get(id);
+        StateID stateID = StateID.fromId(id);
+        return serverStore.get(stateID.getServerUrl());
     }
 
     protected void removeServer(String id) {
