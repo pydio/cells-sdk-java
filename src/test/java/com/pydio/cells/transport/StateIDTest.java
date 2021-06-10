@@ -1,5 +1,8 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.api.CustomEncoder;
+import com.pydio.cells.utils.JavaCustomEncoder;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,7 +63,23 @@ public class StateIDTest {
         Assert.assertEquals(stateID.getFile(), decodedStateID.getFile());
     }
 
+    @Test
+    public void testIDWithUncomplete() {
 
+        CustomEncoder encoder = new JavaCustomEncoder();
 
+        String url = "http://doefiles.com:6767";
+        StateID stateID = StateID.fromId(encoder.utf8Encode(url));
 
+        Assert.assertNull(stateID.getUsername());
+        Assert.assertNull(stateID.getPath());
+        Assert.assertEquals(url, stateID.getServerUrl());
+
+        String userName = "john@carter.com";
+        stateID = StateID.fromId(encoder.utf8Encode(userName).concat("@").concat(encoder.utf8Encode(url)));
+
+        Assert.assertEquals(userName, stateID.getUsername());
+        Assert.assertNull(stateID.getPath());
+        Assert.assertEquals(url, stateID.getServerUrl());
+    }
 }

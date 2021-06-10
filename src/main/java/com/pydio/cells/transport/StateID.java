@@ -1,5 +1,7 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.utils.Log;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -24,6 +26,13 @@ public class StateID {
 
     /**
      * Simply creates a StateID object from its *encoded* string representation.
+     * <p>
+     * Supported combination are
+     * - ServerURL only
+     * - Username@ServerURL
+     * - Username@ServerURL@Path
+     * <p>
+     * It is not very robust for the time being.
      */
     public static StateID fromId(String stateId) {
 
@@ -31,42 +40,30 @@ public class StateID {
             return null;
         }
 
-        // TODO also support missing username ?
-        String[] parts = stateId.split("@");
-        String username = utf8Decode(parts[0]);
-        String host = utf8Decode(parts[1]);
-
+        String username = null;
+        String host = null;
         String path = null;
-        if (parts.length == 3) {
-            path = utf8Decode(parts[2]);
+
+        String[] parts = stateId.split("@");
+        switch (parts.length) {
+            case 1:
+                host = utf8Decode(parts[0]);
+                break;
+            case 2:
+                username = utf8Decode(parts[0]);
+                host = utf8Decode(parts[1]);
+                break;
+            case 3:
+                username = utf8Decode(parts[0]);
+                host = utf8Decode(parts[1]);
+                path = utf8Decode(parts[2]);
+                break;
+            default:
+                Log.e("PARSE", "Could not create State from ID: " + stateId);
+                return null;
         }
 
         return new StateID(username, host, path);
-
-        // try {
-//            String urlStr = utf8Decode(encodedUrl);
-//            System.out.println("#### URLS:");
-//            System.out.println(encodedUrl);
-//            System.out.println(urlStr);
-//
-//            URL url = null;
-//            try {
-//                url = URI.create(encodedUrl).toURL();
-//            } catch (Exception e) {
-//                try {
-//                    url = URI.create(urlStr).toURL();
-//                } catch (Exception e2) {
-//                    System.out.println("double fail");
-//                }
-//            }
-//
-//            serverUrl = url.getProtocol() + "://" + url.getAuthority();
-//            path = utf8Decode(url.getPath());
-//            return new StateID(username, serverUrl, path);
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//           return null;
-
     }
 
     /**
@@ -74,7 +71,9 @@ public class StateID {
      */
     public String getId() {
         StringBuilder builder = new StringBuilder();
-        builder.append(utf8Encode(username)).append("@");
+        if (username != null) {
+            builder.append(utf8Encode(username)).append("@");
+        }
         builder.append(utf8Encode(serverUrl));
         if (path != null && path.length() > 0 && !"/".equals(path)) {
             builder.append("@").append(utf8Encode(path));
@@ -108,7 +107,6 @@ public class StateID {
         if (path == null || "".equals(path) || "/".equals(path)) {
             return null;
         }
-        // TODO: double check and test
         String prefix = "/" + getWorkspace();
         if (path.length() > prefix.length()) {
             return path.substring(prefix.length());
@@ -116,8 +114,20 @@ public class StateID {
         return null;
     }
 
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        if (username != null) {
+            builder.append(username).append("@");
+        }
+        builder.append(serverUrl);
+        if (path != null && path.length() > 0 && !"/".equals(path)) {
+            builder.append(path);
+        }
+        return builder.toString();
+    }
+
     // Not perfect: Might have side effects when switching from plain Java to Android
-    // TODO might need to be improved
+    // TODO find a elegant way to rather inject the CustomEncoder
 
     private static String utf8Encode(String value) {
         try {
@@ -133,15 +143,5 @@ public class StateID {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Unexpected decoding issue", e);
         }
-    }
-
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(username).append("@");
-        builder.append(serverUrl);
-        if (path != null && path.length() > 0 && !"/".equals(path)) {
-            builder.append(path);
-        }
-        return builder.toString();
     }
 }
