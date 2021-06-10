@@ -1,4 +1,4 @@
-package com.pydio.cells.legacy.consts;
+package com.pydio.cells.legacy;
 
 public interface P8Names {
 
@@ -20,15 +20,19 @@ public interface P8Names {
     String CONTENT_TYPE_OCTET_STREAM = "application/octet-stream";
     String CONTENT_TYPE_URL_ENCODED = "application/x-www-form-urlencoded; charset=utf-8";
 
+    String UPLOAD_MAX_SIZE = "UPLOAD_MAX_SIZE";
+
     /* Supported Parameters */
 
     String XML_MESSAGE = "message";
     String COOKIE_KEY = "ajxp_sessid";
 
+    String ajxpBookmarked = "ajxp_bookmarked";
+    String xPathUserRepositories = "user/repositories";
+
     /* Well known XML Tag names to handle the response */
 
     String TAG_LOGIN_RESULT = "logging_result";
-
 
     String subAction = "sub_action";
     String action = "action";
@@ -75,4 +79,39 @@ public interface P8Names {
     String filter = "filter";
     String richPreview = "rich_preview";
 
+    /* Action Names */
+
+    String ls = "ls";
+    String logout = "logout";
+    String upload = "upload";
+    String download = "download";
+    String getCaptcha = "get_captcha";
+    String restore = "restore";
+    String mkdir = "mkdir";
+    String rename = "rename";
+    String copy = "copy";
+    String move = "move";
+    String delete = "delete";
+    String createMinisite = "create_minisite";
+    String share = "share";
+    String search = "search";
+    String searchByKeyword = "search_by_keyword";
+    String getBookmarks = "get_bookmarks";
+    String addBookmark = "add_bookmark";
+    String deleteBookmark = "delete_bookmark";
+    String unshare = "unshare";
+    String GET_BOOT_CONF = "get_boot_conf";
+    String getSeed = "get_seed";
+    String login = "login";
+    String getXmlRegistry = "get_xml_registry";
+    String ajxpConfPrefix = "ajxp_conf/";
+    String previewDataProxy = "preview_data_proxy";
+    String imagickDataProxy = "imagick_data_proxy";
+    String stats = "stat";
+    String changes = "changes";
+    String loadSharedElementData = "load_shared_element_data";
+    String getBinaryParam = "get_binary_param";
+    String readVideoData = "read_video_data";
+    String audioProxy = "audio_proxy";
+    String emptyRecycle = "empty_recycle";
 }

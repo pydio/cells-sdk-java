@@ -3,7 +3,9 @@ package com.pydio.cells.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-@Deprecated
+/**
+ * Class Params implements a wrapper around a simple HashMap to ease implementation of various HTTP requests
+ */
 public class Params {
     private final Map<String, String> params;
 

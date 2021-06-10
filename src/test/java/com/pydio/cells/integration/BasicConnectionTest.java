@@ -31,9 +31,9 @@ import java.util.Map;
 import javax.net.ssl.SSLHandshakeException;
 
 /**
- * Performs basic tests against a running Cells instance. You must first adapt
- * the "src/test/resources/accounts/*.properties" files (at least one of them)
- * to match your setup.
+ * Performs basic tests against a running Pydio Server instance (P8 or Cells).
+ * You must first adapt the "src/test/resources/accounts/*.properties" files
+ * (at least one of them) to match your setup.
  * <p>
  * You can then launch the test with:
  * <p>
@@ -188,8 +188,8 @@ public class BasicConnectionTest {
     }
 
     @Test
-    public void testSkipVerify() {
-        // try {
+    public void testSkipVerify() throws Exception {
+
         Map<String, RemoteServerConfig> servers = config.getDefinedServers();
         for (String key : servers.keySet()) {
 
@@ -214,10 +214,6 @@ public class BasicConnectionTest {
                 }
             }
         }
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // Assert.assertNull(e);
-        // }
     }
 
     private static class DummyHandler implements NodeHandler {

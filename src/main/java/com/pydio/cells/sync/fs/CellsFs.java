@@ -24,7 +24,7 @@ import java.util.TreeMap;
 public class CellsFs implements Fs, ContentLoader {
 
     // private CellsClient cells;
-    private final Transport session;
+    private final Transport transport;
     private final String workspace;
     private final String id;
     private final StateManager stateManager;
@@ -33,9 +33,9 @@ public class CellsFs implements Fs, ContentLoader {
     private final static int ADD = 2;
     private final static int DELETE = 3;
 
-    public CellsFs(String id, Transport session, String workspace, StateManager manager) {
+    public CellsFs(String id, Transport transport, String workspace, StateManager manager) {
         this.id = id;
-        this.session = session;
+        this.transport = transport;
         this.workspace = workspace;
         this.stateManager = manager;
     }

@@ -1,11 +1,12 @@
 #!/bin/bash
 
-PROPERTY_FILE=./config.properties
 CEC=./cells-client
 
-OS_TYPE=$1  # darwin, windows or linux 
+OS_TYPE=$1  # darwin, windows or linux
 
 BASE_PATH=$2
+
+PROPERTY_FILE=$3
 
 echo "... Executing script at [${BASE_PATH}]"
 
@@ -15,6 +16,11 @@ function get_property
 }
 
 cd $BASE_PATH
+
+if [ ! -f $PROPERTY_FILE ]; then
+    echo "Could not find property file at ${PROPERTY_FILE}, exiting"
+    exit 1
+fi
 
 if [ ! -f cells-client ]; then
     if [ $OS_TYPE = "darwin" ]; then
@@ -28,7 +34,7 @@ if [ ! -f cells-client ]; then
     chmod u+x cells-client
 else
     echo "Found an existing cells-client binary, skipping download."
-fi 
+fi
 
 echo "... Using cec version: "
 $CEC version
@@ -37,8 +43,15 @@ url=$(get_property serverURL)
 login=$(get_property login)
 pwd=$(get_property pwd)
 wks=$(get_property defaultWorkspace)
+skip=$(get_property skipVerify)
+
+if [ "${skip}" = "true" ]; then
+  skipVerify="--skip_verify"
+fi
 
 echo "... Configuring connection"
-$CEC configure client-auth --login $login --password $pwd --url "${url}"
+echo "Command: "
+echo "$CEC configure client-auth --login $login --password $pwd --url "${url}" $skipVerify"
+$CEC configure client-auth --login $login --password $pwd --url "${url}" $skipVerify
 
 exit 0

@@ -7,7 +7,6 @@ import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.utils.IoHelpers;
-import com.pydio.cells.legacy.consts.ActionNames;
 
 import org.json.JSONObject;
 
@@ -20,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 public class P8Server implements Server {
 
     public final static String API_PREFIX = "/index.php?";
-    public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + ActionNames.GET_BOOT_CONF;
+    public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + P8Names.GET_BOOT_CONF;
     private final String serverType = SdkNames.TYPE_LEGACY_P8;
     private String version = null;
 

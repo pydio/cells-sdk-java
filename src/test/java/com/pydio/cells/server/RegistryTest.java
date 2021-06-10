@@ -5,30 +5,18 @@ import com.pydio.cells.api.Registry;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.io.InputStream;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 public class RegistryTest {
 
-    final String registryResourcePath = "/registry.xml";
+    private final static String registryResourcePath = "/samples/registry.xml";
 
     @Test
-    public void testRegistryParsing() {
+    public void testRegistryParsing() throws Exception {
+
         InputStream registryContent = getClass().getResourceAsStream(registryResourcePath);
-
-        Registry registry;
-
-        try {
-            registry = new DocumentRegistry(registryContent);
-        } catch (IOException | ParserConfigurationException | SAXException e) {
-            e.printStackTrace();
-            Assert.fail();
-            return;
-        }
+        Registry registry = new DocumentRegistry(registryContent);
 
         // we must have actions and plugins
         Assert.assertNotEquals(0, registry.GetActions().size());

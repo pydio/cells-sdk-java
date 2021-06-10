@@ -1,6 +1,4 @@
-package com.pydio.cells.examples;
-
-import java.util.ArrayList;
+package com.pydio.cells.sandbox;
 
 import org.junit.After;
 import org.junit.AfterClass;

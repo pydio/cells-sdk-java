@@ -13,8 +13,6 @@ import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.utils.Log;
-import com.pydio.cells.legacy.consts.ActionNames;
-import com.pydio.cells.legacy.consts.P8Names;
 import com.pydio.cells.transport.StateID;
 
 import org.json.JSONObject;
@@ -217,7 +215,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public InputStream getCaptcha() throws SDKException {
-        P8Request request = new P8RequestBuilder().setAction(ActionNames.getCaptcha).getRequest();
+        P8Request request = new P8RequestBuilder().setAction(P8Names.getCaptcha).getRequest();
         try (P8Response captchaResponse = execute(request)) {
             return captchaResponse.getInputStream();
         }
@@ -460,11 +458,11 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
         try {
             switch (request.getMethod()) {
-                case Method.get:
+                case "GET":
                     return doGet(request);
-                case Method.post:
+                case "POST":
                     return doPost(request);
-                case Method.put:
+                case "PUT":
                     return doPut(request);
                 default:
                     throw new RuntimeException("Unsupported method type: " + request.getMethod());

@@ -3,7 +3,6 @@ package com.pydio.cells.legacy;
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.utils.Params;
-import com.pydio.cells.legacy.consts.P8Names;
 
 public class P8Request {
 

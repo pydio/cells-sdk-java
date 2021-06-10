@@ -6,6 +6,7 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.transport.ServerFactory;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
@@ -47,7 +48,7 @@ public class P8SpecificTest {
     }
 
     @Test
-    public void testCaptcha() {
+    public void testCaptcha() throws SDKException {
         Map<String, RemoteServerConfig> servers = config.getDefinedServers();
 
         RemoteServerConfig p8Conf = null;
@@ -61,19 +62,18 @@ public class P8SpecificTest {
                     p8URL = serverURL;
                     break;
                 }
-            } catch (SDKException | MalformedURLException sde) {
-                // TODO manage having a standard logger here
-                System.out.println("Warning: could not check " + conf.serverURL + ", cause: " + sde.getMessage());
+            } catch (MalformedURLException sde) {
+                Log.w("Bad Config", "could not check " + conf.serverURL + ", cause: " + sde.getMessage());
             }
         }
 
         if (p8URL == null) {
-            System.out.println("Warning: no Pydio 8 server found in test config, could not test captcha.");
+            Log.w("Bad Config", "No Pydio 8 server found in test config, could not test captcha.");
             return;
         }
 
         if (true) {
-            System.out.println("Warning: we cannot test captcha until we have a mean to create user to trash automatically.");
+            Log.w("Bad Config", "We cannot test captcha until we have a mean to create user to trash automatically.");
             return;
         }
 

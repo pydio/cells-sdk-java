@@ -5,6 +5,7 @@ import com.pydio.cells.api.callbacks.ServerResolver;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 
+@Deprecated
 public class Configuration {
     public String endpoint;
     public String userAgent;

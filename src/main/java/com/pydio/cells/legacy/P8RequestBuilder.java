@@ -1,13 +1,8 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
-import com.pydio.cells.api.ILegacyTransport;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.client.common.http.ContentBody;
-import com.pydio.cells.legacy.consts.ActionNames;
-import com.pydio.cells.legacy.consts.Const;
-import com.pydio.cells.legacy.consts.P8Names;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +26,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder getUserData(String user, String binary) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.getBinaryParam)
+                .setAction(P8Names.getBinaryParam)
                 .setParam(P8Names.userId, user)
                 .setParam(P8Names.binaryId, binary);
         return builder.ignoreCookies(false);
@@ -39,13 +34,13 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder getSeed() {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.getSeed).setMethod(Method.get);
+        builder = builder.setAction(P8Names.getSeed).setMethod("GET");
         return builder.ignoreCookies(false);
     }
 
     public static P8RequestBuilder login(P8Credentials credentials) {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.login).
+        builder = builder.setAction(P8Names.login).
                 setParam(P8Names.loginSeed, credentials.getSeed()).
                 setParam(P8Names.userId, credentials.getLogin()).
                 setParam(P8Names.password, credentials.getPassword());
@@ -57,25 +52,25 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder logout() {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.logout).setMethod(Method.get);
+        builder = builder.setAction(P8Names.logout).setMethod("GET");
         return builder;
     }
 
     public static P8RequestBuilder defaultRegistry() {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.getXmlRegistry).ignoreCookies(true);
+        builder = builder.setAction(P8Names.getXmlRegistry).ignoreCookies(true);
         return builder;
     }
 
     public static P8RequestBuilder userRegistry() {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.getXmlRegistry).ignoreCookies(false);
+        builder = builder.setAction(P8Names.getXmlRegistry).ignoreCookies(false);
         return builder;
     }
 
     public static P8RequestBuilder workspaceRegistry(String wsId) {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.getXmlRegistry).
+        builder = builder.setAction(P8Names.getXmlRegistry).
                 setParam(P8Names.tmpRepositoryId, wsId).
                 ignoreCookies(false);
         return builder;
@@ -83,15 +78,15 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder workspaceList() {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.getXmlRegistry).
-                setParam(P8Names.xPath, Const.xPathUserRepositories).
+        builder = builder.setAction(P8Names.getXmlRegistry).
+                setParam(P8Names.xPath, P8Names.xPathUserRepositories).
                 ignoreCookies(false);
         return builder;
     }
 
     public static P8RequestBuilder nodeInfo(String ws, String file) {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.ls)
+        builder = builder.setAction(P8Names.ls)
                 .setParam(P8Names.options, "al")
                 .setParam(P8Names.file, file)
                 .setParam(P8Names.tmpRepositoryId, ws)
@@ -101,7 +96,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder ls(String ws, String dir) {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.ls)
+        builder = builder.setAction(P8Names.ls)
                 .setParam(P8Names.options, "al")
                 .setParam(P8Names.dir, dir)
                 .setParam(P8Names.tmpRepositoryId, ws)
@@ -111,19 +106,19 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder listBookmarked(String ws, String dir) {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.searchByKeyword)
+        builder = builder.setAction(P8Names.searchByKeyword)
                 .setParam(P8Names.options, "al")
                 .setParam(P8Names.dir, dir)
                 .setParam(P8Names.tmpRepositoryId, ws)
-                .setParam(P8Names.field, Const.ajxpBookmarked)
+                .setParam(P8Names.field, P8Names.ajxpBookmarked)
                 .ignoreCookies(false);
         return builder;
     }
 
     public static P8RequestBuilder unbookmark(String ws, String path) {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.getBookmarks)
-                .setParam(P8Names.bmAction, ActionNames.addBookmark)
+        builder = builder.setAction(P8Names.getBookmarks)
+                .setParam(P8Names.bmAction, P8Names.addBookmark)
                 .setParam(P8Names.bmPath, path)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .ignoreCookies(false);
@@ -132,8 +127,8 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder bookmark(String ws, String path) {
         P8RequestBuilder builder = new P8RequestBuilder();
-        builder = builder.setAction(ActionNames.getBookmarks)
-                .setParam(P8Names.bmAction, ActionNames.addBookmark)
+        builder = builder.setAction(P8Names.getBookmarks)
+                .setParam(P8Names.bmAction, P8Names.addBookmark)
                 .setParam(P8Names.bmPath, path)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .ignoreCookies(false);
@@ -142,7 +137,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder search(String ws, String dir, String query) {
         return new P8RequestBuilder()
-                .setAction(ActionNames.search)
+                .setAction(P8Names.search)
                 .setParam(P8Names.dir, dir)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.query, query)
@@ -151,7 +146,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder upload(String ws, String dir, String name, boolean autoRename, ContentBody body) throws IOException {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.upload)
+                .setAction(P8Names.upload)
                 .setParam(P8Names.dir, dir)
                 .setParam(P8Names.tmpRepositoryId, ws);
         String urlEncodedName = java.net.URLEncoder.encode(name, "utf-8");
@@ -164,7 +159,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder download(String ws, String path) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.download)
+                .setAction(P8Names.download)
                 .setParam(P8Names.file, path)
                 .setParam(P8Names.tmpRepositoryId, ws);
         return builder.ignoreCookies(false);
@@ -173,7 +168,7 @@ public class P8RequestBuilder {
     public static P8RequestBuilder delete(String ws, String[] files) {
         P8RequestBuilder builder = new P8RequestBuilder()
                 .setParam(P8Names.tmpRepositoryId, ws)
-                .setAction(ActionNames.delete);
+                .setAction(P8Names.delete);
 
         if (files.length > 1) {
             builder.setParam(P8Names.file, files[0]);
@@ -190,7 +185,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder restore(String ws, String[] files) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.restore)
+                .setAction(P8Names.restore)
                 .setParam(P8Names.tmpRepositoryId, ws);
 
         int count = 0;
@@ -202,7 +197,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder move(String ws, String[] files, String dest) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.move)
+                .setAction(P8Names.move)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.dest, dest);
         int count = 0;
@@ -217,13 +212,13 @@ public class P8RequestBuilder {
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .setParam(P8Names.filenameNew, newFilename)
-                .setAction(ActionNames.rename)
+                .setAction(P8Names.rename)
                 .ignoreCookies(false);
     }
 
     public static P8RequestBuilder copy(String ws, String[] files, String dest) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.copy)
+                .setAction(P8Names.copy)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.dest, dest);
         int count = 0;
@@ -235,7 +230,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder mkdir(String ws, String dir, String name) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.mkdir)
+                .setAction(P8Names.mkdir)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.dir, dir)
                 .setParam(P8Names.dirname, name);
@@ -244,7 +239,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder previewImage(String ws, String file) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.previewDataProxy)
+                .setAction(P8Names.previewDataProxy)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .setParam(P8Names.getThumb, "true");
@@ -253,7 +248,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder previewPDF(String ws, String file) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.imagickDataProxy)
+                .setAction(P8Names.imagickDataProxy)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .setParam(P8Names.getThumb, "true");
@@ -262,7 +257,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder streamingAudio(String ws, String file) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.audioProxy)
+                .setAction(P8Names.audioProxy)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .setParam(P8Names.richPreview, "true");
@@ -271,7 +266,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder streamingVideo(String ws, String file) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.readVideoData)
+                .setAction(P8Names.readVideoData)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file);
         return builder.ignoreCookies(false);
@@ -283,16 +278,16 @@ public class P8RequestBuilder {
                 .setParam(P8Names.file, file);
 
         if (withHash) {
-            builder.setAction(ActionNames.stats + "_hash");
+            builder.setAction(P8Names.stats + "_hash");
         } else {
-            builder.setAction(ActionNames.stats);
+            builder.setAction(P8Names.stats);
         }
         return builder.ignoreCookies(false);
     }
 
     public static P8RequestBuilder changes(String ws, String filter, int seq, boolean flatten) {
         P8RequestBuilder builder = new P8RequestBuilder()
-                .setAction(ActionNames.changes)
+                .setAction(P8Names.changes)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.flatten, String.valueOf(flatten))
                 .setParam(P8Names.stream, "true")
@@ -308,10 +303,10 @@ public class P8RequestBuilder {
     public static P8RequestBuilder share(String ws, String file, String descripton) {
         File f = new File(file);
         return new P8RequestBuilder()
-                .setAction(ActionNames.share)
+                .setAction(P8Names.share)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
-                .setParam(P8Names.subAction, ActionNames.createMinisite)
+                .setParam(P8Names.subAction, P8Names.createMinisite)
                 .setParam(P8Names.createGuestUser, "true")
                 .setParam(P8Names.workspaceLabel, f.getName())
                 .setParam(P8Names.workspaceDescription, descripton)
@@ -322,7 +317,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder unShare(String ws, String file) {
         return new P8RequestBuilder()
-                .setAction(ActionNames.unshare)
+                .setAction(P8Names.unshare)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .ignoreCookies(false);
@@ -330,7 +325,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder shareInfo(String ws, String file) {
         return new P8RequestBuilder()
-                .setAction(ActionNames.loadSharedElementData)
+                .setAction(P8Names.loadSharedElementData)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.merged, "true")
                 .setParam(P8Names.file, file)
@@ -339,7 +334,7 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder restore(String ws, String file) {
         return new P8RequestBuilder()
-                .setAction(ActionNames.restore)
+                .setAction(P8Names.restore)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .setParam(P8Names.file, file)
                 .ignoreCookies(false);
@@ -347,14 +342,14 @@ public class P8RequestBuilder {
 
     public static P8RequestBuilder emptyRecycle(String ws) {
         return new P8RequestBuilder()
-                .setAction(ActionNames.emptyRecycle)
+                .setAction(P8Names.emptyRecycle)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .ignoreCookies(false);
     }
 
     public static P8RequestBuilder getCaptcha() {
         return new P8RequestBuilder()
-                .setAction(ActionNames.getCaptcha)
+                .setAction(P8Names.getCaptcha)
                 .ignoreCookies(false);
     }
 

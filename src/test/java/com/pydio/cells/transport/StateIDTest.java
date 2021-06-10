@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Basic tests to insure encoding / decoding of states works as expected
+ * Basic tests to insure encoding / decoding of states work as expected.
  */
 public class StateIDTest {
 

@@ -1,25 +1,31 @@
 package com.pydio.cells.integration.sync;
 
 import com.pydio.cells.api.Change;
+import com.pydio.cells.api.Client;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.client.CellsClient;
-import com.pydio.cells.api.ui.ServerNode;
-import com.pydio.cells.transport.auth.SimpleTokenStore;
-import com.pydio.cells.transport.auth.TokenService;
-import com.pydio.cells.client.model.TreeNodeInfo;
-import com.pydio.cells.utils.CellsPath;
-import com.pydio.cells.integration.legacy.CecWrapper;
-import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.api.Transport;
+import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;
 import com.pydio.cells.sync.fs.CellsFs;
+import com.pydio.cells.utils.CellsPath;
+import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.tests.CecWrapper;
+import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestClientFactory;
+import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestUtils;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -33,117 +39,114 @@ import java.util.TreeMap;
  */
 public class CellsFsTest {
 
-    private ServerNode node;
-    private CellsClient cellsClient;
-    private CellsFs cellsFs;
-    private CecWrapper cec;
+    private TestClientFactory factory;
+    private String testRunID;
+    private RemoteServerConfig cellsConf;
+    private String workspace;
 
-    private String serverURL, login, pwd, workspace;
+    private static CellsFs cellsFs;
+    private static CecWrapper cec;
 
-    private TokenService tokens;
-    private TestConfiguration config;
+    private final String currConfId = "cells-https";
 
     @Before
-    public void setup() {
-        tokens = new TokenService(new SimpleTokenStore());
-        config = TestConfiguration.getDefault();
+    public void setup() throws IOException {
+        testRunID = TestUtils.randomString(4);
+        factory = new TestClientFactory();
+        cellsConf = TestConfiguration.getDefault().getServer(currConfId);
+        workspace = cellsConf.defaultWS;
 
-
-//        node = new ServerNodeImpl();
-//        Error error = node.resolve(serverURL);
-//        if (error != null) {
-//            System.out.println("Could not resolve server URL, cause: ");
-//            System.out.println(error);
-//        }
-//
-//        cellsClient = new CellsClient(node);
-//        cellsClient.setCredentials(new LegacyPasswordCredentials(login, pwd));
-//        cellsClient.setSkipOAuthFlag(true);
-//
-//        cellsFs = new CellsFs("test", cellsClient, workspace, new MemoryStateManager());
-//
-//        // Services
-//        TokenService.init(new TokenMemoryStore());
-//
-//        // CellsClient
-//        cec = new CecWrapper();
-//        cec.setUpCec();
-    }
-
-    @Test
-    public void testCecBasic() {
         try {
-            cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test");
-            cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test2");
-            cec.callCommand("ls", workspace + "/from-cec");
-            cec.callCommand("rm", "-f", workspace + "/from-cec-tmp");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Ignore
-    @Test
-    public void testCellsClient() {
-        System.out.println("... Test CellsClient");
-        try {
-            String fp = CellsPath.fullPath(workspace, "parent");
-            TreeNodeInfo tni = cellsClient.statNode(fp);
-
-            if (tni != null) {
-                System.out.println("Found a node at " + fp);
-                System.out.println(tni.getETag());
-                System.out.println(tni.getLastEdit());
+            String fileName = "prepare-cec.sh";
+            ClassLoader classLoader = getClass().getClassLoader();
+            URL scriptURL = classLoader.getResource(fileName);
+            if (scriptURL == null) {
+                throw new IOException("Could not find script to prepare the cec command");
             }
+            Path parent = Path.of(scriptURL.toURI()).getParent();
+            Path props = Path.of(parent.toString(), "accounts", currConfId + ".properties");
+            cec = new CecWrapper();
+            cec.setUpCec(scriptURL.getPath(), parent.toString(), props.toString());
 
-        } catch (SDKException e) {
-            e.printStackTrace();
+        } catch (URISyntaxException e) { // Should not happen...
+            throw new IOException("Could create URI from retrieved URL");
         }
+
+//        basePath = Paths.get(url.getPath()).getParent().toString();
+//        cecCmd = Paths.get(basePath, "cells-client").toString();
+
+    }
+
+    @AfterClass
+    public static void teardown() {
+        // do nothing
+    }
+
+    @Test
+    public void testCecBasic() throws Exception {
+        cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test");
+        cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test2");
+        cec.callCommand("ls", workspace + "/from-cec");
+        cec.callCommand("rm", "-f", workspace + "/from-cec-tmp");
+    }
+
+    @Test
+    public void testCellsClient() throws SDKException {
+        System.out.println("... Test CellsClient");
+
+        if (cellsConf == null) {
+            Log.w("Unsupported conf", "No Pydio Cells configuration found, skipping");
+            return;
+        }
+
+        Transport cellsTransport = TestUtils.getTransport(factory, cellsConf);
+        Client client = factory.getClient(cellsTransport);
+
+
+        String fp = CellsPath.fullPath(workspace, "parent");
+        Stats stats = client.stats(workspace, "/", false);
+
+        if (stats != null) {
+            System.out.println("Found a node at " + fp);
+            System.out.println(stats.getmTime());
+            System.out.println(stats.getHash());
+        }
+
     }
 
     @Ignore
     @Test
-    public void testGetChange() {
+    public void testGetChange() throws SDKException {
         // GetChangeRequest req = new GetChangeRequest();
         // req.setPath("/");
-        try {
 
-            System.out.println("... Listing raw changes at root:");
-            TreeMap<String, Change> changes = cellsFs.getRawChanges("/");
-            for (String key : changes.keySet()) {
-                System.out.println(changes.get(key).getType() + " - " + key);
-            }
-
-            System.out.println("... Listing raw changes under 'parent' folder:");
-            changes = cellsFs.getRawChanges("parent");
-            for (String key : changes.keySet()) {
-                System.out.println(changes.get(key).getType() + " - " + key);
-            }
-
-            System.out.println("... High Level listing of changes at root:");
-            GetChangeRequest req = new GetChangeRequest();
-            req.setPath("/");
-            GetChangesResponse response = cellsFs.getChanges(req);
-            Assert.assertTrue(response.isSuccess());
-
-            Iterator<Change> cIt = response.getChanges().iterator();
-            while (cIt.hasNext()) {
-                Change ch = cIt.next();
-                String path = Change.TYPE_CREATE.equals(ch.getType()) || Change.TYPE_CONTENT.equals(ch.getType())
-                        ? ch.getTarget()
-                        : ch.getSource();
-                System.out.println(ch.getType() + " - " + path);
-            }
-
-        } catch (SDKException e) {
-            e.printStackTrace();
-            // TODO: handle exception
+        System.out.println("... Listing raw changes at root:");
+        TreeMap<String, Change> changes = cellsFs.getRawChanges("/");
+        for (String key : changes.keySet()) {
+            System.out.println(changes.get(key).getType() + " - " + key);
         }
-    }
 
-    @After
-    public void teardown() {
-        // do nothing
+        System.out.println("... Listing raw changes under 'parent' folder:");
+        changes = cellsFs.getRawChanges("parent");
+        for (String key : changes.keySet()) {
+            System.out.println(changes.get(key).getType() + " - " + key);
+        }
+
+        System.out.println("... High Level listing of changes at root:");
+        GetChangeRequest req = new GetChangeRequest();
+        req.setPath("/");
+        GetChangesResponse response = cellsFs.getChanges(req);
+        Assert.assertTrue(response.isSuccess());
+
+        Iterator<Change> cIt = response.getChanges().iterator();
+        while (cIt.hasNext()) {
+            Change ch = cIt.next();
+            String path = Change.TYPE_CREATE.equals(ch.getType()) || Change.TYPE_CONTENT.equals(ch.getType())
+                    ? ch.getTarget()
+                    : ch.getSource();
+            System.out.println(ch.getType() + " - " + path);
+        }
+
     }
 
 }

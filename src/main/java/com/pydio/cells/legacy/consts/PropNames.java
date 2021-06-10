@@ -1,8 +1,8 @@
 package com.pydio.cells.legacy.consts;
 
+@Deprecated
 public interface PropNames {
 
-    String UPLOAD_MAX_SIZE = "UPLOAD_MAX_SIZE";
 
     // What was it for ?
     //  TODO Clean

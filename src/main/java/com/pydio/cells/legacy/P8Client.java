@@ -25,7 +25,6 @@ import com.pydio.cells.client.model.NodeDiff;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.TreeNodeSaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
-import com.pydio.cells.legacy.consts.P8Names;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 
