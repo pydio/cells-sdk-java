@@ -39,7 +39,8 @@ public interface ErrorCodes {
 
     int panic = 100;
     int internal_error = 101;
-    int configuration_error = 102;
+    int init_failed = 102;
+    int configuration_error = 103;
     int bad_config = 103;
     int encoding_failed = 104;
 
@@ -120,8 +121,8 @@ public interface ErrorCodes {
                 return "Panic";
             case internal_error:
                 return "Internal server error";
-            case configuration_error:
-                return "Configuration error";
+            case init_failed:
+                return "Initialisation failed";
             case bad_config:
                 return "Bad configuration";
             case encoding_failed:

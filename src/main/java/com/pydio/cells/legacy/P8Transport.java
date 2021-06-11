@@ -1,6 +1,7 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
+import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ILegacyTransport;
 import com.pydio.cells.api.SDKException;
@@ -8,12 +9,11 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Store;
-import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.ClientData;
-import com.pydio.cells.transport.auth.Token;
-import com.pydio.cells.api.CustomEncoder;
-import com.pydio.cells.utils.Log;
+import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.StateID;
+import com.pydio.cells.transport.auth.Token;
+import com.pydio.cells.utils.Log;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -96,9 +96,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             this.credentials = (P8Credentials) c;
         } else {
             throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
+        }
     }
-    }
-
 
 
 //    public void restore(TokenService tokens) throws SDKException {
@@ -128,7 +127,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public boolean isOffline() {
-        if (username == null || "".equals(username) || ANONYMOUS_USERNAME.equals(username)){
+        if (username == null || "".equals(username) || ANONYMOUS_USERNAME.equals(username)) {
             return true;
         }
         // TODO implement check to see if we have a valid token
@@ -435,7 +434,9 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         } else {
             loginFailure++;
             if (result.equals("-4")) {
-                throw new SDKException(ErrorCodes.authentication_with_captcha_required);
+                throw new SDKException(
+                        ErrorCodes.authentication_with_captcha_required,
+                        new IOException("Could not log as ".concat(credentials.getLogin()).concat("@").concat(getServer().url())));
             }
             throw new SDKException(ErrorCodes.invalid_credentials,
                     new IOException("Could not log as " + credentials.getLogin() + "@" + getServer().url()));

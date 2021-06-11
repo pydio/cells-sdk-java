@@ -54,6 +54,9 @@ public class CellsFsTest {
         testRunID = TestUtils.randomString(4);
         factory = new TestClientFactory();
         cellsConf = TestConfiguration.getDefault().getServer(currConfId);
+        if (cellsConf == null){
+            return;
+        }
         workspace = cellsConf.defaultWS;
 
         try {
@@ -84,6 +87,10 @@ public class CellsFsTest {
 
     @Test
     public void testCecBasic() throws Exception {
+        if (cellsConf == null){
+            return;
+        }
+
         cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test");
         cec.callCommand("mkdir", "-p", workspace + "/from-cec-tmp/test2");
         cec.callCommand("ls", workspace + "/from-cec");
@@ -92,8 +99,6 @@ public class CellsFsTest {
 
     @Test
     public void testCellsClient() throws SDKException {
-        System.out.println("... Test CellsClient");
-
         if (cellsConf == null) {
             Log.w("Unsupported conf", "No Pydio Cells configuration found, skipping");
             return;

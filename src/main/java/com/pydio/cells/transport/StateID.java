@@ -12,16 +12,22 @@ public class StateID {
     private final String serverUrl;
     private final String path;
 
-    public StateID(String username, String serverUrl, String path) {
-        this.username = username;
+    public StateID(String serverUrl) {
+        this.username = null;
         this.serverUrl = serverUrl;
-        this.path = path;
+        this.path = null;
     }
 
     public StateID(String username, String serverUrl) {
         this.username = username;
         this.serverUrl = serverUrl;
         this.path = null;
+    }
+
+    public StateID(String username, String serverUrl, String path) {
+        this.username = username;
+        this.serverUrl = serverUrl;
+        this.path = path;
     }
 
     /**
@@ -41,7 +47,7 @@ public class StateID {
         }
 
         String username = null;
-        String host = null;
+        String host;
         String path = null;
 
         String[] parts = stateId.split("@");

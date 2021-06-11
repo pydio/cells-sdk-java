@@ -6,6 +6,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class Log {
+
+    // Temporary tags
+    public static final String TAG_UI = "CELLS/UI";
+    public static final String TAG_AUTH = "CELLS/AUTH";
+    public static final String TAG_DB = "CELLS/DB";
+    public static final String TAG_BACKEND = "CELLS/BE";
+    public static final String TAG_SDK = "CELLS/SDK";
+
     public static void setLogger(Logger l) {
         logger = l;
     }

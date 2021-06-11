@@ -81,5 +81,9 @@ public class StateIDTest {
         Assert.assertEquals(userName, stateID.getUsername());
         Assert.assertNull(stateID.getPath());
         Assert.assertEquals(url, stateID.getServerUrl());
+
+        stateID = StateID.fromId(null);
+        Assert.assertNull(stateID);
+
     }
 }

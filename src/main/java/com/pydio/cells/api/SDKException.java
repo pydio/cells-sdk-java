@@ -34,6 +34,11 @@ public class SDKException extends Exception {
         this.code = code;
     }
 
+    public SDKException(int code, String message) {
+        this(message);
+        this.code = code;
+    }
+
     public SDKException(int code, Exception cause) {
         this(ErrorCodes.toMessage(code), cause);
         this.cause = cause;
