@@ -41,6 +41,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 public class P8Client implements Client, SdkNames {
@@ -650,7 +651,7 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
             String h = rsp.getHeaders("Content-Type").get(0);
-            /*if (!"application/json".equals(h.toLowerCase())) {
+            /*if (!"application/json".equals(h.toLowerCase(Locale.ENGLISH))) {
                 throw SDKException.unexpectedContent(new IOException(String.format("wrong response content type: %s", h)));
             } */
 
@@ -696,7 +697,7 @@ public class P8Client implements Client, SdkNames {
             }
 
             String h = rsp.getHeaders("Content-Type").get(0);
-            if (!h.toLowerCase().contains("application/json")) {
+            if (!h.toLowerCase(Locale.ENGLISH).contains("application/json")) {
                 throw SDKException.unexpectedContent(new IOException(rsp.asString()));
             }
 
@@ -708,7 +709,7 @@ public class P8Client implements Client, SdkNames {
                     return;
                 }
 
-                if (line.toLowerCase().startsWith("last_seq")) {
+                if (line.toLowerCase(Locale.ENGLISH).startsWith("last_seq")) {
                     readLastLine[0] = true;
                     lastSeq[0] = Integer.parseInt(line.split(":")[1]);
                     return;

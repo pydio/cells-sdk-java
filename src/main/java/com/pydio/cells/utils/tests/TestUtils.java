@@ -7,12 +7,13 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.transport.ServerFactory;
-import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
 import com.pydio.cells.legacy.P8Credentials;
+import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.ServerURLImpl;
+import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
 
 import java.net.MalformedURLException;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -25,7 +26,7 @@ public class TestUtils {
     public final static String OS_LINUX = "linux";
 
     private final static String SEED_CHARS = "abcdef1234567890";
-    private final static String OS = System.getProperty("os.name").toLowerCase();
+    private final static String OS = System.getProperty("os.name").toLowerCase(Locale.ENGLISH);
 
     /**
      * Create a new transport that is already logged in and ready to use.

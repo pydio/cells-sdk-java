@@ -9,6 +9,7 @@ import com.pydio.cells.client.model.NodeFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.Locale;
 import java.util.Properties;
 
 public class TreeNodeSaxHandler extends DefaultHandler {
@@ -52,7 +53,7 @@ public class TreeNodeSaxHandler extends DefaultHandler {
 
         if (!mInsideTree) return;
 
-        if ("label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())) {
+        if ("label".equals(qName.toLowerCase(Locale.ENGLISH)) || "description".equals(qName.toLowerCase(Locale.ENGLISH))) {
             mInnerElement = qName;
         }
     }

@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -338,7 +339,7 @@ public class P8Response implements Closeable {
         public void characters(char[] ch, int start, int length) throws SAXException {
             String str = new String(ch);
             if (tag_msg) {
-                if (str.toLowerCase().contains("you are not allowed to access")) {
+                if (str.toLowerCase(Locale.ENGLISH).contains("you are not allowed to access")) {
                     P8Response.this.code = ErrorCodes.authentication_required;
                     throw new SAXException("token");
                 }

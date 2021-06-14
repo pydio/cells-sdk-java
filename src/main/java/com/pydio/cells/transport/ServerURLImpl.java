@@ -14,6 +14,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.Locale;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -58,7 +59,7 @@ public class ServerURLImpl implements ServerURL {
 
     public static ServerURL fromAddress(String urlString, boolean skipVerify) throws MalformedURLException {
         // URL url = URI.create(urlString).toURL();
-        urlString = urlString.trim().toLowerCase();
+        urlString = urlString.trim().toLowerCase(Locale.ENGLISH);
         URL url = new URL(urlString);
         switch (url.getPath()) {
             case "/":
@@ -322,7 +323,7 @@ public class ServerURLImpl implements ServerURL {
             return ErrorCodes.con_failed;
 
         } catch (Exception e) {
-            if (e instanceof IllegalArgumentException && e.getMessage().toLowerCase().contains("unreachable")) {
+            if (e instanceof IllegalArgumentException && e.getMessage().toLowerCase(Locale.ENGLISH).contains("unreachable")) {
                 return ErrorCodes.unreachable_host;
             }
             return ErrorCodes.con_failed;

@@ -6,6 +6,7 @@ import com.pydio.cells.api.ui.Plugin;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.Locale;
 import java.util.Properties;
 
 @Deprecated
@@ -85,7 +86,7 @@ public class RegistrySaxHandler extends DefaultHandler {
             return;
         }
 
-        if (inside_repo && "label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())) {
+        if (inside_repo && "label".equals(qName.toLowerCase(Locale.ENGLISH)) || "description".equals(qName.toLowerCase(Locale.ENGLISH))) {
             inner_element = qName;
             return;
         }
@@ -174,7 +175,7 @@ public class RegistrySaxHandler extends DefaultHandler {
         }
 
         if (inside_repo) {
-            if ("label".equals(qName.toLowerCase()) || "description".equals(qName.toLowerCase())) {
+            if ("label".equals(qName.toLowerCase(Locale.ENGLISH)) || "description".equals(qName.toLowerCase(Locale.ENGLISH))) {
                 inner_element = "";
                 return;
             }

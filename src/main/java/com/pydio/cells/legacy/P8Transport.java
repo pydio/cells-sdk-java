@@ -236,10 +236,10 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 } else {
                     String contentType = seedResponse.getHeaders("Content-Type").get(0);
                     boolean seemsToBePydio = (contentType != null) && (
-                            (contentType.toLowerCase().contains("text/plain"))
-                                    | (contentType.toLowerCase().contains("text/xml"))
-                                    | (contentType.toLowerCase().contains("text/json"))
-                                    | (contentType.toLowerCase().contains("application/json")));
+                            (contentType.toLowerCase(Locale.ENGLISH).contains("text/plain"))
+                                    | (contentType.toLowerCase(Locale.ENGLISH).contains("text/xml"))
+                                    | (contentType.toLowerCase(Locale.ENGLISH).contains("text/json"))
+                                    | (contentType.toLowerCase(Locale.ENGLISH).contains("application/json")));
 
                     if (!seemsToBePydio) {
                         throw SDKException.unexpectedContent(new IOException(seed));

@@ -360,7 +360,7 @@ public class ServerNodeImpl {}
 //            return ErrorCodes.con_failed;
 //
 //        } catch (Exception e) {
-//            if (e instanceof IllegalArgumentException && e.getMessage().toLowerCase().contains("unreachable")) {
+//            if (e instanceof IllegalArgumentException && e.getMessage().toLowerCase(Locale.ENGLISH).contains("unreachable")) {
 //                return ErrorCodes.unreachable_host;
 //            }
 //            return ErrorCodes.con_failed;
@@ -470,7 +470,7 @@ public class ServerNodeImpl {}
 //            return;
 //
 //        } catch (Exception e) {
-//            if (e instanceof IllegalArgumentException && e.getMessage().toLowerCase().contains("unreachable")) {
+//            if (e instanceof IllegalArgumentException && e.getMessage().toLowerCase(Locale.ENGLISH).contains("unreachable")) {
 //                return;
 //            }
 //            return;
@@ -562,7 +562,7 @@ public class ServerNodeImpl {}
 //
 //    public String url() {
 //        if (url != null) return url;
-//        String path = scheme.toLowerCase() + "://" + host;
+//        String path = scheme.toLowerCase(Locale.ENGLISH) + "://" + host;
 //        if (port > 0 && port != 80) {
 //            path += ":" + port;
 //        }
