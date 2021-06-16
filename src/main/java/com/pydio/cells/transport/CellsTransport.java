@@ -101,12 +101,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-//    public void restore(TokenService tokens) throws SDKException {
-//        this.tokens = tokens;
-//        server.refresh(false);
-//        // TODO more init
-//    }
-
     public String getId() {
         return new StateID(getUser(), getServer().getServerURL().getId()).getId();
     }
@@ -210,22 +204,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return apiClient;
     }
 
-//    @Override
-//    public void login() throws SDKException {
-//        getAccessToken();
-//    }
-
-//    @Override
-//    public void logout() throws SDKException {
-//        RestFrontSessionRequest request = new RestFrontSessionRequest();
-//        request.setLogout(true);
-//        try {
-//            new FrontendServiceApi(getApiClient()).frontSession(request);
-//        } catch (ApiException e) {
-//            throw new SDKException(e);
-//        }
-//    }
-
     public ApiClient getApiClient() {
         ApiClient apiClient = new ApiClient();
         apiClient.setBasePath(getServer().getApiURL());
@@ -317,14 +295,12 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             String authHeader = "Basic " + encoder.base64Encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
             addPostData(con, authData, authHeader);
 
-            // TODO double check: do we need to explicitly open the connection before gettinng the stream ?
             try { // Real call
-                System.out.println(con.getResponseCode());
+                // TODO double check: do we need to explicitly open the connection before getting the stream ?
+                con.connect();
                 in = con.getInputStream();
             } catch (IOException ioe) {
-                System.out.println(con.getResponseCode());
-                System.out.println(con.getResponseMessage());
-                throw ioe;
+                throw new IOException("Unable to open connection to ".concat(endpointURI.toString()), ioe);
             }
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
@@ -373,7 +349,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-    /* Simply pass body parameters as URL encoded form */
+    /* Sets body parameters as URL encoded form */
     private void addPostData(HttpURLConnection con, Map<String, String> postData, String authHeader) throws SDKException {
         try {
             con.setRequestMethod("POST");

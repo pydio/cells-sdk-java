@@ -322,14 +322,17 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener)
             throws SDKException {
-        // TODO handle self-signed
 
         InputStream in = null;
         try {
             URL preSignedURL = s3Client.getDownloadPreSignedURL(ws, file);
-            HttpURLConnection connection = (HttpURLConnection) preSignedURL.openConnection();
-            transport.withUserAgent(connection);
-            in = connection.getInputStream();
+//            ServerURL url = transport.getServer().newURL(preSignedURL.getPath());
+            HttpURLConnection con = transport.openAnonConnection(preSignedURL.getPath());
+            in = con.getInputStream();
+
+//            HttpURLConnection connection = (HttpURLConnection) preSignedURL.openConnection();
+//            transport.withUserAgent(connection);
+            // in = connection.getInputStream();
             if (progressListener == null) {
                 return IoHelpers.pipeRead(in, target);
             } else {
@@ -340,7 +343,6 @@ public class CellsClient implements Client, SdkNames {
         } finally {
             IoHelpers.closeQuietly(in);
         }
-
     }
 
     @Override

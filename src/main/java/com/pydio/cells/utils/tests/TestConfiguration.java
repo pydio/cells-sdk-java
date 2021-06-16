@@ -26,8 +26,14 @@ public class TestConfiguration {
     private final Map<String, RemoteServerConfig> accounts = new HashMap<>();
 
     public static TestConfiguration getDefault() {
+
         URL url = TestConfiguration.class.getResource(accountFolder);
         return new TestConfiguration(url);
+    }
+
+
+    public TestConfiguration() {
+
     }
 
     public TestConfiguration(URL localURL) {
@@ -65,26 +71,30 @@ public class TestConfiguration {
     /* Local helpers */
 
     private void loadOne(String id, String path) {
-        Properties p = new Properties();
         try (InputStream is = TestConfiguration.class.getResourceAsStream(path)) {
-            p.load(new InputStreamReader(is));
-
-            if ("true".equals(p.getProperty("skipServer"))) {
-                return;
-            }
-
-            RemoteServerConfig currConf = new RemoteServerConfig();
-            currConf.serverURL = p.getProperty("serverURL");
-            currConf.login = p.getProperty("login");
-            currConf.pwd = p.getProperty("pwd");
-            currConf.pat = p.getProperty("pat");
-            currConf.defaultWS = p.getProperty("defaultWorkspace");
-            currConf.skipVerify = "true".equals(p.getProperty("skipVerify"));
-
-            accounts.put(id, currConf);
+            loadOne(id, is);
         } catch (IOException e) {
             Log.e("Initialisation", "Could not retrieve configuration file, cause: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+    public void loadOne(String id, InputStream inputStream) throws IOException{
+        Properties p = new Properties();
+        p.load(new InputStreamReader(inputStream));
+        if ("true".equals(p.getProperty("skipServer"))) {
+            return;
+        }
+
+        RemoteServerConfig currConf = new RemoteServerConfig();
+        currConf.serverURL = p.getProperty("serverURL");
+        currConf.login = p.getProperty("login");
+        currConf.pwd = p.getProperty("pwd");
+        currConf.pat = p.getProperty("pat");
+        currConf.defaultWS = p.getProperty("defaultWorkspace");
+        currConf.skipVerify = "true".equals(p.getProperty("skipVerify"));
+
+        accounts.put(id, currConf);
+    }
+
 }

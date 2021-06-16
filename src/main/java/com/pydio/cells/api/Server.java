@@ -6,21 +6,30 @@ import java.net.MalformedURLException;
 
 public interface Server {
 
-    /* Force initialisation of the local Server object, to typically refresh boot configuration */
+    /**
+     * Forces initialisation of the local Server object to typically refresh boot configuration
+     */
     Server init() throws SDKException;
 
-    /* Re-run initialisation if necessary or forced */
+    /**
+     * Re-runs initialisation if necessary or forced
+     */
     Server refresh(boolean force) throws SDKException;
 
-    /* Return the convenient {@code ServerURL} already configured to speak with the server */
+    /**
+     * Returns the convenient {@code ServerURL} already configured to communicate with the server
+     */
     ServerURL getServerURL();
 
+    /**
+     * Returns a ready to use {@code ServerURL} with the passed trailing path.
+     */
     default ServerURL newURL(String path) throws MalformedURLException {
         return getServerURL().withPath(path);
     }
 
     /**
-     * returns the canonical URL of the server as String for various persistence processes.
+     * Returns the canonical URL of the server as String for various persistence processes.
      * This should not be used to create another URL object to try to connect to the server
      * or management of self-signed URLs will be skipped.
      */
@@ -39,11 +48,6 @@ public interface Server {
     }
 
     String getLabel();
-
-//    default String getLabel() {
-//        // TODO implement this from boot config
-//        return url();
-//    }
 
     String getWelcomeMessage();
 
