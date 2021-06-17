@@ -17,12 +17,6 @@ public interface ServerURL {
         return getURL().getProtocol() + "://" + getURL().getAuthority();
     }
 
-    default String idForCredentials() {
-        // Was: String serverID = server.url().replace("://", "+").replace("/", "&");
-        return getURL().getProtocol() + "+" + getURL().getAuthority();
-    }
-
-
     /**
      * Returns the underlying URL Object to perform various checks and/or access to its properties.
      * The returned object should not be used for server request to avoid concurrency issues.

@@ -245,7 +245,7 @@ public class P8Response implements Closeable {
         StringBuilder builder = new StringBuilder();
         try (Reader reader = new BufferedReader(new InputStreamReader
                 (getInputStream(), Charset.forName(StandardCharsets.UTF_8.name())))) {
-            int c = 0;
+            int c;
             while ((c = reader.read()) != -1) {
                 builder.append((char) c);
             }

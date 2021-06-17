@@ -14,6 +14,7 @@ import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.StateID;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.Str;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -127,7 +128,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public boolean isOffline() {
-        if (username == null || "".equals(username) || ANONYMOUS_USERNAME.equals(username)) {
+        if (Str.empty(username) || ANONYMOUS_USERNAME.equals(username)) {
             return true;
         }
         // TODO implement check to see if we have a valid token
@@ -176,13 +177,13 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     @Override
     public boolean useCaptcha() {
         if (useCaptcha != null) {
-            return useCaptcha.booleanValue();
+            return useCaptcha;
         }
 
         try {
             JSONObject info = authenticationInfo();
-            useCaptcha = Boolean.valueOf(info.has(P8Names.captchaCode));
-            return useCaptcha.booleanValue();
+            useCaptcha = info.has(P8Names.captchaCode);
+            return useCaptcha;
         } catch (SDKException se) {
             System.out.println("FIXME: Unexpected SDK error while checking if we use Captcha");
             se.printStackTrace();
@@ -232,7 +233,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 seed = seed.trim();
                 if (seed.contains("\"seed\":-1") || seed.contains("\"seed\": -1")) {
                     withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
-                    o.put(P8Names.seed, "-1");
                 } else {
                     String contentType = seedResponse.getHeaders("Content-Type").get(0);
                     boolean seemsToBePydio = (contentType != null) && (
@@ -244,8 +244,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                     if (!seemsToBePydio) {
                         throw SDKException.unexpectedContent(new IOException(seed));
                     }
-                    o.put(P8Names.seed, "-1");
                 }
+                o.put(P8Names.seed, "-1");
             }
 
             if (withCaptcha) {
@@ -500,29 +500,20 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     private P8Response doGet(P8Request request) throws IOException {
-
         StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
         appendParam(builder, P8Names.getAction, request.getAction());
         withToken(request, builder);
 
-        ServerURL currURL = null;
+        ServerURL currURL;
         try {
             currURL = server.newURL(builder.toString());
         } catch (MalformedURLException mue) {
             throw new RuntimeException("Unexpected Malformed URL for path: " + builder.toString(), mue);
         }
 
-        HttpURLConnection con = currURL.openConnection();
-        withUserAgent(con);
-
-        // c.setSSLSocketFactory(config.sslContext.getSocketFactory());
-        // c.setHostnameVerifier(config.hostnameVerifier);
-
+        HttpURLConnection con = withUserAgent(currURL.openConnection());
         con.setRequestMethod("GET");
-        P8Response response = new P8Response(con);
-        // storeReturnedSetCookies(con.getHeaderFields());
-
-        return response;
+        return new P8Response(con);
     }
 
     private P8Response doPost(P8Request request) throws IOException {
@@ -532,7 +523,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         appendParam(builder, P8Names.getAction, request.getAction());
         withToken(request, builder);
 
-        ServerURL currURL = null;
+        ServerURL currURL;
         try {
             currURL = server.newURL(builder.toString());
         } catch (MalformedURLException mue) {
@@ -579,7 +570,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         // Build effective URL request
         String queryStr = pathFromRequest(request);
 
-        ServerURL currURL = null;
+        ServerURL currURL;
         try {
             currURL = server.newURL(queryStr);
         } catch (MalformedURLException mue) {
@@ -588,11 +579,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
         HttpURLConnection con = currURL.openConnection();
         con.setDoOutput(true);
-
-        /*// TODO remove: useless, or we will get an exception here
-        if (con == null) {
-            return P8Response.error(ErrorCodes.con_failed);
-        }*/
 
         con.setRequestMethod("PUT");
         if (!request.getIgnoreCookies()) {
@@ -603,11 +589,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
         // Handle the response
         OutputStream out = con.getOutputStream();
-        // storeReturnedSetCookies(con.getHeaderFields());
         request.getBody().writeTo(out);
-        P8Response response = new P8Response(con);
-
-        return response;
+        return new P8Response(con);
     }
 
     /**
@@ -707,21 +690,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return con;
     }
 
-//    private void storeReturnedSetCookies(Map<String, List<String>> headerFields) {
-//        List<String> cookiesHeader = headerFields.get(P8Names.HEADER_SET_COOKIE);
-//        if (cookiesHeader != null) {
-//            for (String cookie : cookiesHeader) {
-//                List<HttpCookie> cs = HttpCookie.parse(cookie);
-//                for (HttpCookie hc : cs) {
-//                    cookieManager.getCookieStore().add(null, hc);
-//                }
-//            }
-//        }
-//    }
-
-    /**
-     * Token Management
-     */
+    /* Token Management */
 
     private P8Request refreshSecureToken(P8Request req) {
         try {
@@ -759,28 +728,25 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     /* String manipulation Helpers */
 
-    private StringBuilder appendParam(StringBuilder builder, String key, String value) {
+    private void appendParam(StringBuilder builder, String key, String value) {
         builder.append(key).append("=").append(value);
-        return builder;
     }
 
-    private StringBuilder andAppendParam(StringBuilder builder, String key, String value) {
+    private void andAppendParam(StringBuilder builder, String key, String value) {
         builder.append("&").append(key).append("=").append(value);
-        return builder;
     }
 
-    private StringBuilder appendEncodedParam(StringBuilder builder, String key, String value) {
-        builder.append(key).append("=").append(utf8Encode(value));
-        return builder;
-    }
-
-    private StringBuilder andAppendEncodedParam(StringBuilder builder, String key, String value) {
+    private void andAppendEncodedParam(StringBuilder builder, String key, String value) {
         builder.append("&").append(key).append("=").append(utf8Encode(value));
-        return builder;
     }
 
     private String utf8Encode(String value) {
         return encoder.utf8Encode(value);
     }
+
+    //    private StringBuilder appendEncodedParam(StringBuilder builder, String key, String value) {
+//        builder.append(key).append("=").append(utf8Encode(value));
+//        return builder;
+//    }
 
 }

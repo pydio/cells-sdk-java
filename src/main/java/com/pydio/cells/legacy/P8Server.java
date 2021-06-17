@@ -11,7 +11,6 @@ import com.pydio.cells.utils.IoHelpers;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -20,11 +19,9 @@ public class P8Server implements Server {
 
     public final static String API_PREFIX = "/index.php?";
     public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + P8Names.GET_BOOT_CONF;
-    private final String serverType = SdkNames.TYPE_LEGACY_P8;
     private String version = null;
 
     private final ServerURL serverURL;
-    private final String apiPath = null;
 
     private String title;
     private String welcomeMessage;
@@ -32,10 +29,6 @@ public class P8Server implements Server {
 
     public P8Server(ServerURL serverURL) {
         this.serverURL = serverURL;
-    }
-
-    public static P8Server fromServerURL(ServerURL serverURL) {
-        return new P8Server(serverURL);
     }
 
     @Override
@@ -58,7 +51,7 @@ public class P8Server implements Server {
 
     @Override
     public String getRemoteType() {
-        return serverType;
+        return SdkNames.TYPE_LEGACY_P8;
     }
 
     @Override
@@ -157,18 +150,13 @@ public class P8Server implements Server {
         return serverURL.getId();
     }
 
-
-    private HttpURLConnection openAnonConnection(String path) throws IOException {
-        return serverURL.withSpec(path).openConnection();
-    }
-
     private void refreshBootConf() throws SDKException {
         HttpURLConnection con = null;
         InputStream in = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
-            con = openAnonConnection(BOOTCONF_PATH);
+            con = serverURL.withSpec(BOOTCONF_PATH).openConnection();
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
 
@@ -197,7 +185,7 @@ public class P8Server implements Server {
 
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || !(obj instanceof P8Server))
+        if (!(obj instanceof P8Server))
             return false;
         return url().equals(((P8Server) obj).url());
     }

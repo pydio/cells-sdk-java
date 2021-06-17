@@ -272,7 +272,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     // TODO better management of exceptions.
-    public Token getTokenFromCode(CustomEncoder encoder, String code, String state) throws Exception {
+    public Token getTokenFromCode(String code, CustomEncoder encoder) throws Exception {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {

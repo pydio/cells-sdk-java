@@ -1,7 +1,6 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.S3Client;
-import com.pydio.cells.api.SDKException;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -16,22 +15,22 @@ public class NoAwsS3Client implements S3Client {
     }
 
     @Override
-    public InputStream getThumb(String file) throws SDKException {
+    public InputStream getThumb(String file) {
         throw new RuntimeException("Unsupported call");
     }
 
     @Override
-    public URL getUploadPreSignedURL(String ws, String folder, String name) throws SDKException {
+    public URL getUploadPreSignedURL(String ws, String folder, String name) {
         throw new RuntimeException("Unsupported call");
     }
 
     @Override
-    public URL getDownloadPreSignedURL(String ws, String file) throws SDKException {
+    public URL getDownloadPreSignedURL(String ws, String file) {
         throw new RuntimeException("Unsupported call");
     }
 
     @Override
-    public URL getStreamingPreSignedURL(String slug, String file, String contentType) throws SDKException {
+    public URL getStreamingPreSignedURL(String slug, String file, String contentType) {
         throw new RuntimeException("Unsupported call");
     }
 
