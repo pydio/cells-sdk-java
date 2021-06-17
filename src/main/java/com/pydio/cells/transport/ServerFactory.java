@@ -65,7 +65,7 @@ public class ServerFactory implements IServerFactory {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
         } catch (IOException e) {
             try {
-                ServerURL currURL = serverURL.withPath(P8Server.BOOTCONF_PATH);
+                ServerURL currURL = serverURL.withSpec(P8Server.BOOTCONF_PATH);
                 currURL.ping();
                 return SdkNames.TYPE_LEGACY_P8;
             } catch (IOException e2) {

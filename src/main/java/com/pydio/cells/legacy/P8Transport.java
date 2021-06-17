@@ -192,13 +192,13 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public HttpURLConnection openAnonConnection(String path) throws IOException {
-        return server.newURL(path).openConnection();
+        return server.getServerURL().withSpec(path).openConnection();
     }
 
     @Override
     public HttpURLConnection openConnection(String path) throws IOException, SDKException {
         path = appendAuth(path);
-        return withUserAgent(server.newURL(path).openConnection());
+        return withUserAgent(server.getServerURL().withSpec(path).openConnection());
     }
 
     public String appendAuth(String path) throws SDKException {

@@ -3,6 +3,7 @@ package com.pydio.cells.transport;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.security.CertificateTrust;
 import com.pydio.cells.client.security.CertificateTrustManager;
+import com.pydio.cells.utils.Str;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -44,6 +45,7 @@ public class ServerURLImpl implements ServerURL {
             return true;
         }
     };
+
     private final URL url;
     // To Manage self-signed servers
     private final boolean skipVerify;
@@ -65,16 +67,15 @@ public class ServerURLImpl implements ServerURL {
         switch (url.getPath()) {
             case "/":
             case "":
-                url = new URL(url.getProtocol() + "://" + url.getAuthority());
+                url = new URL(url.getProtocol().concat("://").concat(url.getAuthority()));
                 break;
             default:
-                // Most of the time P8 servers are installed on a apache2 services
-                // and sometimes apache2 site are locate after a path
+                // This works for P8 only. We do not support Cells server on a sub-path of a domain.
                 String path = url.getPath().trim();
                 if (path.endsWith("/")) {
                     path = path.substring(0, path.length() - 1);
                 }
-                url = new URL(url.getProtocol() + "://" + url.getAuthority() + path);
+                url = new URL(url.getProtocol().concat("://").concat(url.getAuthority()).concat(path));
         }
 
         ServerURLImpl serverURL = new ServerURLImpl(url, skipVerify);
@@ -110,11 +111,46 @@ public class ServerURLImpl implements ServerURL {
 
     @Override
     public ServerURL withPath(String path) throws MalformedURLException {
-        // this instruction below ignore the path of the url context when building the new URL
-        // return new ServerURLImpl(new URL(url, path), skipVerify);
+        // String host = url.getProtocol().concat("://").concat(url.getAuthority());
+        StringBuilder specBuilder = new StringBuilder();
+        if (Str.notEmpty(url.getPath())){
+            specBuilder.append(url.getPath());
+        }
+        URL verifyPassedURL = new URL(url, path);
+        specBuilder.append(verifyPassedURL.getPath());
+        if (Str.notEmpty(url.getQuery())){
+            specBuilder.append("?").append(url.getQuery());
+        }
+        return new ServerURLImpl(new URL(url, specBuilder.toString()), skipVerify);
+    }
 
-        String fullURLString = url.toString() + path;
-        return new ServerURLImpl(new URL(fullURLString), skipVerify);
+    @Override
+    public ServerURL withQuery(String query) throws MalformedURLException {
+        if (Str.empty(query)){
+            return this;
+        }
+        String spec = "/";
+        if (Str.notEmpty(url.getPath())){
+            spec = url.getPath();
+        }
+        spec = spec.concat("?").concat(query);
+        return new ServerURLImpl(new URL(url, spec), skipVerify);
+    }
+
+    @Override
+    public ServerURL withSpec(String spec) throws MalformedURLException {
+        StringBuilder specBuilder = new StringBuilder();
+        if (Str.notEmpty(url.getPath())){
+            specBuilder.append(url.getPath());
+        }
+        URL verifyPassedURL = new URL(url, spec);
+        if (Str.notEmpty(verifyPassedURL.getPath())) {
+            specBuilder.append(verifyPassedURL.getPath());
+        }
+        if (Str.notEmpty(verifyPassedURL.getQuery())){
+            specBuilder.append("?").append(verifyPassedURL.getQuery());
+        }
+        return new ServerURLImpl(new URL(url, specBuilder.toString()), skipVerify);
     }
 
     @Override

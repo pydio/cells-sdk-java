@@ -306,7 +306,7 @@ public class CellsClient implements Client, SdkNames {
         URL presignedURL = s3Client.getUploadPreSignedURL(ws, path, name);
         ServerURL serverUrl;
         try {
-            serverUrl = transport.getServer().newURL(presignedURL.getPath().concat("?").concat(presignedURL.getQuery()));
+            serverUrl = transport.getServer().newURL(presignedURL.getPath()).withQuery(presignedURL.getQuery());
         } catch (MalformedURLException e) { // This should never happen with a pre-signed.
             throw new SDKException(ErrorCodes.internal_error, "Unvalid presigned path: ".concat(presignedURL.getPath()), e);
         }
@@ -319,7 +319,7 @@ public class CellsClient implements Client, SdkNames {
             con.setRequestProperty("Content-Type", "application/octet-stream");
             OutputStream out = con.getOutputStream();
 
-            // TODO re-implement multi part upload
+            // TODO implement multi part upload
             IoHelpers.pipeReadWithProgress(source, out, progressListener);
             out.flush();
             System.out.println("Put finished with status " + con.getResponseCode());
@@ -373,7 +373,7 @@ public class CellsClient implements Client, SdkNames {
             URL preSignedURL = s3Client.getDownloadPreSignedURL(ws, file);
             ServerURL serverUrl;
             try {
-                serverUrl = transport.getServer().newURL(preSignedURL.getPath().concat("?").concat(preSignedURL.getQuery()));
+                serverUrl = transport.getServer().newURL(preSignedURL.getPath()).withQuery(preSignedURL.getQuery());
             } catch (MalformedURLException e) { // This should never happen with a pre-signed.
                 throw new SDKException(ErrorCodes.internal_error, "Unvalid presigned path: ".concat(preSignedURL.getPath()), e);
             }

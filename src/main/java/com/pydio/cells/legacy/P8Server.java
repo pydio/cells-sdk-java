@@ -158,8 +158,8 @@ public class P8Server implements Server {
     }
 
 
-    private HttpURLConnection openAnonConnection(String path) throws SDKException, IOException {
-        return newURL(path).openConnection();
+    private HttpURLConnection openAnonConnection(String path) throws IOException {
+        return serverURL.withSpec(path).openConnection();
     }
 
     private void refreshBootConf() throws SDKException {
