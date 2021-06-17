@@ -61,13 +61,20 @@ public class ServerURLImpl implements ServerURL {
         // URL url = URI.create(urlString).toURL();
         urlString = urlString.trim().toLowerCase(Locale.ENGLISH);
         URL url = new URL(urlString);
+
         switch (url.getPath()) {
             case "/":
             case "":
                 url = new URL(url.getProtocol() + "://" + url.getAuthority());
                 break;
             default:
-                throw new MalformedURLException("unsupported server path, this is not yet implemented in Cells API");
+                // Most of the time P8 servers are installed on a apache2 services
+                // and sometimes apache2 site are locate after a path
+                String path = url.getPath().trim();
+                if (path.endsWith("/")) {
+                    path = path.substring(0, path.length() - 1);
+                }
+                url = new URL(url.getProtocol() + "://" + url.getAuthority() + path);
         }
 
         ServerURLImpl serverURL = new ServerURLImpl(url, skipVerify);
@@ -103,7 +110,11 @@ public class ServerURLImpl implements ServerURL {
 
     @Override
     public ServerURL withPath(String path) throws MalformedURLException {
-        return new ServerURLImpl(new URL(url, path), skipVerify);
+        // this instruction below ignore the path of the url context when building the new URL
+        // return new ServerURLImpl(new URL(url, path), skipVerify);
+
+        String fullURLString = url.toString() + path;
+        return new ServerURLImpl(new URL(fullURLString), skipVerify);
     }
 
     @Override
