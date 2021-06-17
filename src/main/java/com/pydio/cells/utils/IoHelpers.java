@@ -2,6 +2,8 @@ package com.pydio.cells.utils;
 
 import com.pydio.cells.api.callbacks.ProgressListener;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -12,8 +14,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
 /**
- * Legacy inherited methods to simplify implementation of stream related method
- * and Exception management
+ * Legacy inherited static helpers to simplify implementation of stream related methods
+ * and {@code Exception} management.
  */
 public class IoHelpers {
 
@@ -89,8 +91,13 @@ public class IoHelpers {
         return total_read;
     }
 
-    public static long pipeReadWithProgress(InputStream in, OutputStream out, ProgressListener listener)
+    public static long pipeReadWithProgress(InputStream in, OutputStream out, @Nullable ProgressListener listener)
             throws IOException {
+
+        if (listener == null){
+            return pipeRead(in, out);
+        }
+
         byte[] buffer = new byte[bufferSize];
         long total_read = 0;
         int read;
