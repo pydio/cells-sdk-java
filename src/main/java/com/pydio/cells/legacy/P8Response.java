@@ -1,8 +1,8 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.ErrorCodes;
+import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.callbacks.StringHandler;
-import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 
@@ -234,12 +234,8 @@ public class P8Response implements Closeable {
         return IoHelpers.pipeRead(getInputStream(), out);
     }
 
-    public long write(OutputStream out, TransferProgressListener progressListener) throws IOException {
-        return IoHelpers.pipeReadWithProgress(getInputStream(), out, (progress) -> {
-            if (progressListener != null) {
-                progressListener.onProgress(progress);
-            }
-        });
+    public long write(OutputStream out, ProgressListener progressListener) throws IOException {
+        return IoHelpers.pipeReadWithProgress(getInputStream(), out, progressListener);
     }
 
     /**

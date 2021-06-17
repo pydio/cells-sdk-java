@@ -1,6 +1,7 @@
 package com.pydio.cells.client.common.http;
 
 import com.pydio.cells.api.SdkNames;
+import com.pydio.cells.api.callbacks.ProgressListener;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -29,6 +30,7 @@ public class ContentBody {
 
     private final String MIME = "application/octet-stream";
 
+    private LocalProgressListener localProgressListener;
 
     public ContentBody(String filename, long length, long maxPartSize) {
         mFilename = filename;
@@ -107,7 +109,6 @@ public class ContentBody {
 
         if (mChunkCount > 1) {
 
-
             if (mFile != null) {
                 byte[] buffer = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
 
@@ -123,8 +124,8 @@ public class ContentBody {
                     read = raf.read(buffer, 0, maximumToRead);
                     out.write(buffer, 0, read);
                     totalRead += read;
-                    if (progressListener != null) {
-                        progressListener.transferred(start + totalRead);
+                    if (localProgressListener != null) {
+                        localProgressListener.transferred(start + totalRead);
                     }
                     limit -= read;
                     maximumToRead = (int) Math.min(bufsize, limit);
@@ -142,8 +143,8 @@ public class ContentBody {
                     read = mInStream.read(buffer, 0, maximumToRead);
                     out.write(buffer, 0, read);
                     totalRead += read;
-                    if (progressListener != null) {
-                        progressListener.transferred(start + totalRead);
+                    if (localProgressListener != null) {
+                        localProgressListener.transferred(start + totalRead);
                     }
                     limit -= read;
                     maximumToRead = (int) Math.min(bufsize, limit);
@@ -163,15 +164,15 @@ public class ContentBody {
             while ((len = mInStream.read(buf)) > 0) {
                 out.write(buf, 0, len);
                 totalRead += len;
-                if (progressListener != null) {
-                    progressListener.transferred(totalRead);
+                if (localProgressListener != null) {
+                    localProgressListener.transferred(totalRead);
                 }
             }
             mInStream.close();
             mChunkIndex++;
         }
-        if (progressListener != null) {
-            progressListener.partTransferred(mChunkIndex, mChunkCount);
+        if (localProgressListener != null) {
+            localProgressListener.partTransferred(mChunkIndex, mChunkCount);
         }
     }
 
@@ -190,8 +191,8 @@ public class ContentBody {
                 read = raf.read(buffer, 0, Math.min(bufsize, (int) (maximumToRead - writtenCount)));
                 out.write(buffer, 0, read);
                 writtenCount += read;
-                if (progressListener != null) {
-                    progressListener.transferred(mCursor + writtenCount);
+                if (localProgressListener != null) {
+                    localProgressListener.transferred(mCursor + writtenCount);
                 }
             }
             raf.close();
@@ -201,8 +202,8 @@ public class ContentBody {
                 read = mInStream.read(buffer, 0, Math.min(bufsize, (int) (maximumToRead - writtenCount)));
                 out.write(buffer, 0, read);
                 writtenCount += read;
-                if (progressListener != null) {
-                    progressListener.transferred(mCursor + writtenCount);
+                if (localProgressListener != null) {
+                    localProgressListener.transferred(mCursor + writtenCount);
                 }
             }
         } else {
@@ -233,17 +234,37 @@ public class ContentBody {
         return mLength - mCursor;
     }
 
-    public ProgressListener listener() {
-        return progressListener;
+    public LocalProgressListener listener() {
+        return localProgressListener;
     }
 
-    private ProgressListener progressListener;
 
-    public void setListener(ProgressListener listener) {
-        progressListener = listener;
+    // TODO double check it works both for Cells anmd P8
+    public void setTransferListener(final ProgressListener listener) {
+        LocalProgressListener localProgressListener = new LocalProgressListener() {
+            @Override
+            public void transferred(long progress) throws IOException {
+                if (listener.onProgress(progress)) {
+                    throw new IOException("stopped");
+                }
+            }
+
+            @Override
+            public void partTransferred(int part, int total) throws IOException {
+                if (total == 0) {
+                    return;
+                }
+
+                long progress = (long) ((float) part / (float) total);
+                if (listener.onProgress(progress)) {
+                    throw new IOException("stopped");
+                }
+            }
+        };
+        this.localProgressListener = localProgressListener;
     }
 
-    public interface ProgressListener {
+    public interface LocalProgressListener {
 
         void transferred(long num) throws IOException;
 

@@ -9,6 +9,7 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
+import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
 import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.api.ui.ChangeNode;
@@ -301,7 +302,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         stats(ws, path, false);
 
         long maxChunkSize = 2 * 1024 * 1204; // Default apache in most php init configs
@@ -317,22 +318,23 @@ public class P8Client implements Client, SdkNames {
 
         ContentBody cb = new ContentBody(source, name, length, maxChunkSize);
         if (progressListener != null) {
-            cb.setListener(new ContentBody.ProgressListener() {
-                @Override
-                public void transferred(long num) throws IOException {
-                    if (progressListener.onProgress(num)) {
-                        throw new IOException("");
-                    }
-                }
-
-                @Override
-                public void partTransferred(int part, int total) throws IOException {
-                    if (total == 0) total = 1;
-                    if (progressListener.onProgress(part * 100 / total)) {
-                        throw new IOException("");
-                    }
-                }
-            });
+            cb.setTransferListener(progressListener);
+//            cb.setListener(new ContentBody.LocalProgressListener() {
+//                @Override
+//                public void transferred(long num) throws IOException {
+//                    if (progressListener.onProgress(num)) {
+//                        throw new IOException("");
+//                    }
+//                }
+//
+//                @Override
+//                public void partTransferred(int part, int total) throws IOException {
+//                    if (total == 0) total = 1;
+//                    if (progressListener.onProgress(part * 100 / total)) {
+//                        throw new IOException("");
+//                    }
+//                }
+//            });
         }
 
         P8RequestBuilder builder;
@@ -403,7 +405,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(File source, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+    public Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         Message msg = null;
         try (FileInputStream in = new FileInputStream(source)) {
             msg = upload(in, source.length(), ws, path, name, autoRename, progressListener);
@@ -439,7 +441,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public long download(String ws, String path, OutputStream target, TransferProgressListener progressListener) throws SDKException {
+    public long download(String ws, String path, OutputStream target, ProgressListener progressListener) throws SDKException {
         P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.download(ws, path));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
@@ -455,7 +457,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public long download(String ws, String file, File target, TransferProgressListener progressListener) throws SDKException {
+    public long download(String ws, String file, File target, ProgressListener progressListener) throws SDKException {
         OutputStream out;
         try {
             out = new FileOutputStream(target);

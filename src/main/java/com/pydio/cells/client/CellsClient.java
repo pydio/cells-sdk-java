@@ -8,18 +8,17 @@ import com.pydio.cells.api.S3Client;
 import com.pydio.cells.api.S3Names;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
+import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
+import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
-import com.pydio.cells.client.common.http.ContentBody;
-import com.pydio.cells.client.common.http.HttpClient;
-import com.pydio.cells.client.common.http.HttpRequest;
 import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.TreeNodeInfo;
 import com.pydio.cells.openapi.ApiClient;
@@ -59,7 +58,6 @@ import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.utils.FileNodeUtils;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
-import com.pydio.cells.utils.Params;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -73,6 +71,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -303,40 +302,90 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
-        String urlStr = fromURL(s3Client.getUploadPreSignedURL(ws, path, name));
-        httpPUT(urlStr, source, length, progressListener);
+    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+        URL presignedURL = s3Client.getUploadPreSignedURL(ws, path, name);
+        ServerURL serverUrl;
+        try {
+            serverUrl = transport.getServer().newURL(presignedURL.getPath().concat("?").concat(presignedURL.getQuery()));
+        } catch (MalformedURLException e) { // This should never happen with a pre-signed.
+            throw new SDKException(ErrorCodes.internal_error, "Unvalid presigned path: ".concat(presignedURL.getPath()), e);
+        }
+
+
+        try {
+            HttpURLConnection con = transport.withUserAgent(serverUrl.openConnection());
+            con.setRequestMethod("PUT");
+            con.setDoOutput(true);
+            con.setRequestProperty("Content-Type", "application/octet-stream");
+            OutputStream out = con.getOutputStream();
+
+            // TODO re-implement multi part upload
+            IoHelpers.pipeReadWithProgress(source, out, progressListener);
+            out.flush();
+            System.out.println("Put finished with status " + con.getResponseCode());
+        } catch (IOException e) {
+            throw SDKException.conWriteFailed(e);
+        }
         return Message.create(Message.SUCCESS, "SUCCESS");
     }
 
+
+//
+//
+//    public ContentBody(String filename, long length, long maxPartSize) {
+//
+//        mFilename = filename;
+//        mLength = length;
+//
+//        // Remove 1 Kb to make sure we do not exceed the client_upload_max_size
+//        if (maxPartSize == 0) {
+//            maxPartSize = mLength;
+//        } else {
+//            mMaxChunckSize = maxPartSize;
+//        }
+//
+//        if (maxPartSize >= length) {
+//            mChunkCount = 1;
+//        } else {
+//            mChunkSize = maxPartSize;
+//            mChunkCount = (int) Math.ceil((float) mLength / mChunkSize);
+//            mLastChunkSize = mLength % mChunkSize;
+//        }
+//    }
+
     @Override
-    public Message upload(File source, String ws, String path, String name, boolean autoRename, TransferProgressListener progressListener) throws SDKException {
+    public Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         return upload(source, ws, path, name, progressListener);
     }
 
+    @Deprecated
     @Override
     public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
-        return null;
+        throw new RuntimeException("Unsupported method for cells client");
     }
 
     @Override
-    public long download(String ws, String file, OutputStream target, TransferProgressListener progressListener)
+    public long download(String ws, String file, OutputStream target, ProgressListener progressListener)
             throws SDKException {
 
         InputStream in = null;
         try {
             URL preSignedURL = s3Client.getDownloadPreSignedURL(ws, file);
-//            ServerURL url = transport.getServer().newURL(preSignedURL.getPath());
-            HttpURLConnection con = transport.openAnonConnection(preSignedURL.getPath());
+            ServerURL serverUrl;
+            try {
+                serverUrl = transport.getServer().newURL(preSignedURL.getPath().concat("?").concat(preSignedURL.getQuery()));
+            } catch (MalformedURLException e) { // This should never happen with a pre-signed.
+                throw new SDKException(ErrorCodes.internal_error, "Unvalid presigned path: ".concat(preSignedURL.getPath()), e);
+            }
+
+            HttpURLConnection con = transport.withUserAgent(serverUrl.openConnection());
+            con.connect();
             in = con.getInputStream();
 
-//            HttpURLConnection connection = (HttpURLConnection) preSignedURL.openConnection();
-//            transport.withUserAgent(connection);
-            // in = connection.getInputStream();
             if (progressListener == null) {
                 return IoHelpers.pipeRead(in, target);
             } else {
-                return IoHelpers.pipeReadWithProgress(in, target, progressListener::onProgress);
+                return IoHelpers.pipeReadWithProgress(in, target, progressListener);
             }
         } catch (IOException e) {
             throw SDKException.conReadFailed(e);
@@ -346,7 +395,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public long download(String ws, String file, File target, TransferProgressListener progressListener)
+    public long download(String ws, String file, File target, ProgressListener progressListener)
             throws SDKException {
         long totalRead = -1;
         SDKException dlException = null;
@@ -866,14 +915,15 @@ public class CellsClient implements Client, SdkNames {
         return url.toString().replace(" ", "%20");
     }
 
-    private Message upload(File f, String ws, String path, String name, TransferProgressListener tpl) throws SDKException {
-        InputStream in;
-        try {
-            in = new FileInputStream(f);
+    private Message upload(File f, String ws, String path, String name, ProgressListener tpl) throws SDKException {
+        try (InputStream in = new FileInputStream(f)) {
+            return upload(in, f.length(), ws, path, name, true, tpl);
         } catch (FileNotFoundException e) {
             throw SDKException.notFound(e);
+        } catch (IOException e) {
+            String msg = "Could not upload to ".concat(ws).concat(path).concat("/").concat(name);
+            throw new SDKException(ErrorCodes.con_write_failed, msg, e);
         }
-        return upload(in, f.length(), ws, path, name, true, tpl);
     }
 
     private ApiClient authenticatedClient() throws SDKException {
@@ -881,38 +931,10 @@ public class CellsClient implements Client, SdkNames {
     }
 
     private void httpPUT(String url, InputStream source, long length, TransferProgressListener listener) throws SDKException {
-        ContentBody body = new ContentBody(source, length);
-        body.setListener(new ContentBody.ProgressListener() {
-            @Override
-            public void transferred(long progress) throws IOException {
-                if (listener.onProgress(progress)) {
-                    throw new IOException("stopped");
-                }
-            }
 
-            @Override
-            public void partTransferred(int part, int total) throws IOException {
-                if (total == 0) {
-                    return;
-                }
+        // With agent / with cookies / with auth
 
-                long progress = (long) ((float) part / (float) total);
-                if (listener.onProgress(progress)) {
-                    throw new IOException("stopped");
-                }
-            }
-        });
-        try {
-            // TODO manage self signed here
-            HttpRequest request = new HttpRequest();
-            request.setMethod("PUT");
-            request.setHeaders(Params.create("User-Agent", transport.getUserAgent()));
-            request.setContentBody(body);
-            request.setEndpoint(url);
-            HttpClient.request(request);
-        } catch (IOException e) {
-            throw SDKException.conWriteFailed(e);
-        }
+
     }
 
 

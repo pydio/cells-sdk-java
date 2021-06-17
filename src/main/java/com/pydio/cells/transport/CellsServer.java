@@ -116,7 +116,6 @@ public class CellsServer implements Server {
         return newURL(path).openConnection();
     }
 
-
     @Deprecated
     @Override
     public boolean supportsOauth() {
@@ -189,86 +188,5 @@ public class CellsServer implements Server {
             return false;
         return url().equals(((CellsServer) obj).url());
     }
-
-
-//    public void setUnverifiedSSL(boolean unverified) {
-//        sslUnverified = unverified;
-//    }
-//
-//    public SSLContext getSslContext() {
-//        if (this.sslContext == null) {
-//            try {
-//                this.sslContext = SSLContext.getInstance("TLS");
-//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//        try {
-//            this.sslContext.getSocketFactory();
-//        } catch (Exception e) {
-//            try {
-//                this.sslContext = SSLContext.getInstance("TLS");
-//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-//            } catch (Exception ex) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//        return this.sslContext;
-//    }
-//
-//    public byte[][] getCertificateChain() {
-//        return this.certificateChain;
-//    }
-//
-//    public HostnameVerifier getHostnameVerifier() {
-//        return (s, sslSession) -> true;
-//    }
-
-    /*  Local helpers */
-
-//    private TrustManager trustManager() {
-//        return new CertificateTrustManager(getTrustHelper());
-//    }
-
-//    private String getId() {
-//        return serverURL.getId();
-//    }
-
-//    private CertificateTrust.Helper getTrustHelper() {
-//        if (trustHelper == null) {
-//            return trustHelper = new CertificateTrust.Helper() {
-//                @Override
-//                public boolean isServerTrusted(X509Certificate[] chain) {
-//                    for (X509Certificate c : chain) {
-//                        for (byte[] trusted : CellsServer.this.certificateChain) {
-//                            try {
-//                                c.checkValidity();
-//                                MessageDigest hash = MessageDigest.getInstance("MD5");
-//                                byte[] c1 = hash.digest(trusted);
-//                                byte[] c2 = hash.digest(c.getEncoded());
-//                                if (Arrays.equals(c1, c2)) {
-//                                    return true;
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                    return false;
-//                }
-//
-//                @Override
-//                public X509Certificate[] getAcceptedIssuers() {
-//                    return null;
-//                }
-//            };
-//        }
-//        return trustHelper;
-//    }
-
 
 }

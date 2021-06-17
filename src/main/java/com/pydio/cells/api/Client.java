@@ -2,7 +2,7 @@ package com.pydio.cells.api;
 
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
-import com.pydio.cells.api.callbacks.TransferProgressListener;
+import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
@@ -34,15 +34,15 @@ public interface Client {
 
     void search(String ws, String dir, String searched, NodeHandler h) throws SDKException;
 
-    Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, final TransferProgressListener progressListener) throws SDKException;
+    Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
 
-    Message upload(File source, String ws, String path, String name, boolean autoRename, final TransferProgressListener progressListener) throws SDKException;
+    Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
 
     String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException;
 
-    long download(String ws, String file, OutputStream target, TransferProgressListener progressListener) throws SDKException;
+    long download(String ws, String file, OutputStream target, ProgressListener progressListener) throws SDKException;
 
-    long download(String ws, String file, File target, TransferProgressListener progressListener) throws SDKException;
+    long download(String ws, String file, File target, ProgressListener progressListener) throws SDKException;
 
     String downloadPath(String ws, String file) throws SDKException;
 

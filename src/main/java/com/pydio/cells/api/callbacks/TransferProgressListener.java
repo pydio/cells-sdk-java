@@ -1,7 +1,9 @@
 package com.pydio.cells.api.callbacks;
 
-public interface TransferProgressListener {
-
-    boolean onProgress(long progress);
+/**
+ * @Deprecated was duplicated. rather use the {@code LocalProgressListener} interface that is identical.
+ */
+@Deprecated
+public interface TransferProgressListener extends ProgressListener {
 
 }

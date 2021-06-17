@@ -74,7 +74,7 @@ public class ServerURLImpl implements ServerURL {
         return serverURL;
     }
 
-    public static ServerURL withSkipverify(ServerURL serverURL) {
+    public static ServerURL withSkipVerify(ServerURL serverURL) {
         try {
             return new ServerURLImpl(new URL(serverURL.getId()), true);
         } catch (MalformedURLException ignore) {
