@@ -22,6 +22,7 @@ hs_err_pid*
 target
 .gradle
 build
+bin
 
 # various IDE specific files 
 .idea

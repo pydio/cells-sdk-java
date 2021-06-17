@@ -27,8 +27,8 @@ public class ServerUrlTest {
         Assert.assertEquals("localhost:8080", httpsSSURL.getURL().getAuthority());
         Assert.assertEquals("", httpsSSURL.getURL().getPath());
 
-        ServerURL httpsFailURL = ServerURLImpl.fromAddress(" https://localhost:8080 ");
-        ServerURL httpsURL = ServerURLImpl.fromAddress("https://cells.example.com ");
+//        ServerURL httpsFailURL = ServerURLImpl.fromAddress(" https://localhost:8080 ");
+//        ServerURL httpsURL = ServerURLImpl.fromAddress("https://cells.example.com ");
         ServerURL p8URL = ServerURLImpl.fromAddress("https://pydio8.example.com/");
         Assert.assertEquals("", p8URL.getURL().getPath());
 
@@ -39,7 +39,7 @@ public class ServerUrlTest {
         String base = "https://cells.example.com";
         String subPath = "/cells";
         String subSubPath = "/api/list";
-        String query = "token=jwqgejgwhqej&type=Bearer";
+        String query = "token=my-token&type=Bearer";
         String spec = subPath.concat("?").concat(query);
         String spec2 = subSubPath.concat("?").concat(query);
         String withPath = base.concat(subPath);
@@ -52,7 +52,7 @@ public class ServerUrlTest {
         ServerURL wrappedURL2 = httpURL.withSpec(spec);
         Assert.assertEquals(subPath, wrappedURL2.getURL().getPath());
         Assert.assertEquals(query, wrappedURL2.getURL().getQuery());
-        
+
         httpURL = ServerURLImpl.fromAddress(withPath);
         wrappedURL = httpURL.withQuery(query);
         wrappedURL = wrappedURL.withPath(subSubPath);
