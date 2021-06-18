@@ -2,7 +2,6 @@ package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.SDKException;
-import com.pydio.cells.client.common.http.ContentBody;
 
 import java.io.File;
 import java.io.IOException;
@@ -144,7 +143,7 @@ public class P8RequestBuilder {
                 .ignoreCookies(false);
     }
 
-    public static P8RequestBuilder upload(String ws, String dir, String name, boolean autoRename, ContentBody body) throws IOException {
+    public static P8RequestBuilder upload(String ws, String dir, String name, boolean autoRename, P8RequestBody body) throws IOException {
         P8RequestBuilder builder = new P8RequestBuilder()
                 .setAction(P8Names.upload)
                 .setParam(P8Names.dir, dir)
@@ -368,7 +367,7 @@ public class P8RequestBuilder {
         return this;
     }
 
-    public P8RequestBuilder setBody(ContentBody body) {
+    public P8RequestBuilder setBody(P8RequestBody body) {
         request.setBody(body);
         return this;
     }

@@ -1,4 +1,4 @@
-package com.pydio.cells.client.common.http;
+package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.ProgressListener;
@@ -12,7 +12,7 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.net.URLConnection;
 
-public class ContentBody {
+public class P8RequestBody {
 
     private final long mLength;
     private long mCursor;
@@ -26,13 +26,13 @@ public class ContentBody {
     private long mChunkSize;
     private long mLastChunkSize;
 
-    private long mMaxChunckSize;
+    private long mMaxChunkSize;
 
     private final String MIME = "application/octet-stream";
 
     private LocalProgressListener localProgressListener;
 
-    public ContentBody(String filename, long length, long maxPartSize) {
+    public P8RequestBody(String filename, long length, long maxPartSize) {
         mFilename = filename;
         mLength = length;
 
@@ -40,7 +40,7 @@ public class ContentBody {
         if (maxPartSize == 0) {
             maxPartSize = mLength;
         } else {
-            mMaxChunckSize = maxPartSize;
+            mMaxChunkSize = maxPartSize;
         }
 
         if (maxPartSize >= length) {
@@ -52,24 +52,24 @@ public class ContentBody {
         }
     }
 
-    public ContentBody(File file, String filename, long maxPartSize) {
+    public P8RequestBody(File file, String filename, long maxPartSize) {
         this(filename, file.length(), maxPartSize);
         mFile = file;
     }
 
-    public ContentBody(byte[] bytes, String filename, long maxPartSize) {
+    public P8RequestBody(byte[] bytes, String filename, long maxPartSize) {
         this(new ByteArrayInputStream(bytes), filename, bytes.length, maxPartSize);
     }
 
-    public ContentBody(InputStream in, String filename, long length, long maxPartSize) {
+    public P8RequestBody(InputStream in, String filename, long length, long maxPartSize) {
         this(filename, length, maxPartSize);
         mInStream = in;
     }
 
-    public ContentBody(InputStream in, long length) {
+    public P8RequestBody(InputStream in, long length) {
         mLength = length;
         mInStream = in;
-        mMaxChunckSize = mLength;
+        mMaxChunkSize = mLength;
     }
 
 
@@ -227,7 +227,7 @@ public class ContentBody {
     }
 
     public long maxChunkSize() {
-        return mMaxChunckSize;
+        return mMaxChunkSize;
     }
 
     public long available() {

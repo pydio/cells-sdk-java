@@ -13,7 +13,6 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.ProgressListener;
-import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
@@ -332,7 +331,7 @@ public class CellsClient implements Client, SdkNames {
 
 //
 //
-//    public ContentBody(String filename, long length, long maxPartSize) {
+//    public P8RequestBody(String filename, long length, long maxPartSize) {
 //
 //        mFilename = filename;
 //        mLength = length;
@@ -341,7 +340,7 @@ public class CellsClient implements Client, SdkNames {
 //        if (maxPartSize == 0) {
 //            maxPartSize = mLength;
 //        } else {
-//            mMaxChunckSize = maxPartSize;
+//            mMaxChunkSize = maxPartSize;
 //        }
 //
 //        if (maxPartSize >= length) {
@@ -928,13 +927,6 @@ public class CellsClient implements Client, SdkNames {
 
     private ApiClient authenticatedClient() throws SDKException {
         return transport.authenticatedClient();
-    }
-
-    private void httpPUT(String url, InputStream source, long length, TransferProgressListener listener) throws SDKException {
-
-        // With agent / with cookies / with auth
-
-
     }
 
 

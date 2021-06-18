@@ -1,7 +1,6 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
-import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.utils.Params;
 
 public class P8Request {
@@ -10,7 +9,7 @@ public class P8Request {
     private String action;
     private Params headers;
     private Params params;
-    private ContentBody body;
+    private P8RequestBody body;
     private String secureToken;
     private boolean ignoreCookies;
     private Credentials credentials;
@@ -48,7 +47,7 @@ public class P8Request {
     }
 
 
-    public ContentBody getBody() {
+    public P8RequestBody getBody() {
         return body;
     }
 
@@ -93,7 +92,7 @@ public class P8Request {
         }
     }
 
-    public void setBody(ContentBody body) {
+    public void setBody(P8RequestBody body) {
         this.body = body;
     }
 

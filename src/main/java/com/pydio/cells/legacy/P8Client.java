@@ -11,7 +11,6 @@ import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
-import com.pydio.cells.api.callbacks.TransferProgressListener;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
@@ -20,7 +19,6 @@ import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
-import com.pydio.cells.client.common.http.ContentBody;
 import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.NodeDiff;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
@@ -316,10 +314,10 @@ public class P8Client implements Client, SdkNames {
         //     }
         //  }
 
-        ContentBody cb = new ContentBody(source, name, length, maxChunkSize);
+        P8RequestBody cb = new P8RequestBody(source, name, length, maxChunkSize);
         if (progressListener != null) {
             cb.setTransferListener(progressListener);
-//            cb.setListener(new ContentBody.LocalProgressListener() {
+//            cb.setListener(new P8RequestBody.LocalProgressListener() {
 //                @Override
 //                public void transferred(long num) throws IOException {
 //                    if (progressListener.onProgress(num)) {
