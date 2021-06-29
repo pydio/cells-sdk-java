@@ -590,10 +590,10 @@ public class CellsClient implements Client, SdkNames {
                         if (fileNode != null) {
                             List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
                             if (sources != null) {
-                                // Not very clean: the path to the source of the bookmark has no leading slash
-                                // We can tweak here because that's the only location where we use this object.
-                                // Also bookmarks can only refer to **one** source
-                                String path = "/" + sources.get(0).getPath();
+                                String path = sources.get(0).getPath();
+                                if (!path.startsWith("/")) {
+                                    path = "/" + path;
+                                }
                                 fileNode.setProperty(NODE_PROPERTY_PATH, path);
                                 fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
                                 h.onNode(fileNode);
