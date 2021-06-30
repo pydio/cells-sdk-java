@@ -84,6 +84,8 @@ public class StateIDTest {
 
         stateID = StateID.fromId(null);
         Assert.assertNull(stateID);
+        stateID = StateID.fromId("");
+        Assert.assertNull(stateID);
 
     }
 }
