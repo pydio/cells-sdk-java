@@ -18,7 +18,6 @@ import com.pydio.cells.utils.JavaCustomEncoder;
 import com.pydio.cells.utils.MemoryStore;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.Map;
 
 /**
@@ -61,15 +60,24 @@ public class ServerFactory implements IServerFactory {
             ServerURL currURL = serverURL.withPath(CellsServer.BOOTCONF_PATH);
             currURL.ping();
             return SdkNames.TYPE_CELLS;
-        } catch (ConnectException ce) {
+        } catch (IOException ce) {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
-        } catch (IOException e) {
-            try {
-                ServerURL currURL = serverURL.withSpec(P8Server.BOOTCONF_PATH);
-                currURL.ping();
-                return SdkNames.TYPE_LEGACY_P8;
-            } catch (IOException e2) {
-                throw new SDKException(ErrorCodes.not_pydio_server, serverURL.getId(), e2);
+        } catch (SDKException e) {
+            if (e.getCode() == 404) {
+                try {
+                    ServerURL currURL = serverURL.withSpec(P8Server.BOOTCONF_PATH);
+                    currURL.ping();
+                    return SdkNames.TYPE_LEGACY_P8;
+                } catch (IOException e2) {
+                    throw new SDKException(ErrorCodes.not_found, serverURL.getId(), e2);
+                } catch (SDKException e2) {
+                    if (e.getCode() == 404) {
+                        throw new SDKException(ErrorCodes.not_pydio_server, serverURL.getId(), e2);
+                    }
+                    throw e2;
+                }
+            } else {
+                throw e;
             }
         }
     }
