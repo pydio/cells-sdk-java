@@ -53,7 +53,7 @@ public interface ServerURL {
 
     HttpURLConnection openConnection() throws IOException;
 
-    void ping() throws IOException;
+    void ping() throws IOException, SDKException;
 
     byte[][] getCertificateChain();
 

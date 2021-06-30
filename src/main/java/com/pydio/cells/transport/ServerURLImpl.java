@@ -1,5 +1,6 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.security.CertificateTrust;
 import com.pydio.cells.client.security.CertificateTrustManager;
@@ -113,12 +114,12 @@ public class ServerURLImpl implements ServerURL {
     public ServerURL withPath(String path) throws MalformedURLException {
         // String host = url.getProtocol().concat("://").concat(url.getAuthority());
         StringBuilder specBuilder = new StringBuilder();
-        if (Str.notEmpty(url.getPath())){
+        if (Str.notEmpty(url.getPath())) {
             specBuilder.append(url.getPath());
         }
         URL verifyPassedURL = new URL(url, path);
         specBuilder.append(verifyPassedURL.getPath());
-        if (Str.notEmpty(url.getQuery())){
+        if (Str.notEmpty(url.getQuery())) {
             specBuilder.append("?").append(url.getQuery());
         }
         return new ServerURLImpl(new URL(url, specBuilder.toString()), skipVerify);
@@ -126,11 +127,11 @@ public class ServerURLImpl implements ServerURL {
 
     @Override
     public ServerURL withQuery(String query) throws MalformedURLException {
-        if (Str.empty(query)){
+        if (Str.empty(query)) {
             return this;
         }
         String spec = "/";
-        if (Str.notEmpty(url.getPath())){
+        if (Str.notEmpty(url.getPath())) {
             spec = url.getPath();
         }
         spec = spec.concat("?").concat(query);
@@ -140,14 +141,14 @@ public class ServerURLImpl implements ServerURL {
     @Override
     public ServerURL withSpec(String spec) throws MalformedURLException {
         StringBuilder specBuilder = new StringBuilder();
-        if (Str.notEmpty(url.getPath())){
+        if (Str.notEmpty(url.getPath())) {
             specBuilder.append(url.getPath());
         }
         URL verifyPassedURL = new URL(url, spec);
         if (Str.notEmpty(verifyPassedURL.getPath())) {
             specBuilder.append(verifyPassedURL.getPath());
         }
-        if (Str.notEmpty(verifyPassedURL.getQuery())){
+        if (Str.notEmpty(verifyPassedURL.getQuery())) {
             specBuilder.append("?").append(verifyPassedURL.getQuery());
         }
         return new ServerURLImpl(new URL(url, specBuilder.toString()), skipVerify);
@@ -169,17 +170,18 @@ public class ServerURLImpl implements ServerURL {
       Thanks to https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check */
 
     @Override
-    public void ping() throws IOException {
+    public void ping() throws SDKException, IOException {
         HttpURLConnection connection = openConnection();
         // 10 secs timeout instead of the default unlimited
         connection.setConnectTimeout(10000);
 
         try {
             connection.setRequestMethod("GET");
-            if (connection.getResponseCode() != 200) {
-                throw new IOException("Unvalid response code: " + connection.getResponseCode());
+            int code = connection.getResponseCode();
+            if (code != 200) {
+                throw new SDKException(code, "Could not reach " + url.getHost() + ": " + connection.getResponseMessage());
             }
-        } catch (ProtocolException pe) {
+        } catch (ProtocolException pe) { // Might not happen very often...
             throw new RuntimeException("Unvalid protocol GET...", pe);
         }
     }

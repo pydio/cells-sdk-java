@@ -7,6 +7,8 @@ import java.io.IOException;
  * It cannot yet extend the swagger generated API exception that is specific to Cells.
  * <p>
  * This can be changed when we stop supporting Pydio 8 in a near future.
+ *
+ * // TODO smelly code, refactor with a clean generic error handling strategy.
  */
 public class SDKException extends Exception {
 
@@ -30,13 +32,15 @@ public class SDKException extends Exception {
 
     public SDKException(int code, String message, Exception cause) {
         this(ErrorCodes.toMessage(code) + ": " + message, cause);
-        this.cause = cause;
         this.code = code;
+        this.message = message;
+        this.cause = cause;
     }
 
     public SDKException(int code, String message) {
         this(message);
         this.code = code;
+        this.message = message;
     }
 
     public SDKException(int code, Exception cause) {

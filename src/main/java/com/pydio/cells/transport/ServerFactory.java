@@ -50,10 +50,10 @@ public class ServerFactory implements IServerFactory {
         // Insure SSL is valid
         try {
             serverURL.ping();
-        } catch (ConnectException ce) {
+        } catch (IOException ce) {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
-        } catch (IOException ioe) {
-            throw new SDKException(ErrorCodes.ssl_error, serverURL.getId() + " does not provide a valid certificate. Skipping verify: " + serverURL.skipVerify(), ioe);
+//        } catch (SDKException ioe) {
+//            throw new SDKException(ErrorCodes.ssl_error, serverURL.getId() + " does not provide a valid certificate. Skipping verify: " + serverURL.skipVerify(), ioe);
         }
 
         // We do not have any other choice than to try the various well-known endpoints
