@@ -41,7 +41,7 @@ public class P8RequestBuilder {
         P8RequestBuilder builder = new P8RequestBuilder();
         builder = builder.setAction(P8Names.login).
                 setParam(P8Names.loginSeed, credentials.getSeed()).
-                setParam(P8Names.userId, credentials.getLogin()).
+                setParam(P8Names.userId, credentials.getUsername()).
                 setParam(P8Names.password, credentials.getPassword());
         if (credentials.getCaptcha() != null) {
             builder.setParam(P8Names.captchaCode, credentials.getCaptcha());

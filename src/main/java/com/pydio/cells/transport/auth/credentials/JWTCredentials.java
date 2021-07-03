@@ -14,7 +14,7 @@ public class JWTCredentials implements Credentials {
     }
 
     @Override
-    public String getLogin() {
+    public String getUsername() {
         return username;
     }
 

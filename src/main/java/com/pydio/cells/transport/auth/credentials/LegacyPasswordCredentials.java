@@ -13,7 +13,7 @@ public class LegacyPasswordCredentials implements PasswordCredentials {
     }
 
     @Override
-    public String getLogin() {
+    public String getUsername() {
         return login;
     }
 

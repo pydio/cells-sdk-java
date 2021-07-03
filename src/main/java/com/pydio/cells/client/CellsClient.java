@@ -886,7 +886,7 @@ public class CellsClient implements Client, SdkNames {
 
     private ServiceResourcePolicy newPolicy(String nodeId, ServiceResourcePolicyAction action) {
         ServiceResourcePolicy policy = new ServiceResourcePolicy();
-        policy.setSubject("user:" + transport.getUser());
+        policy.setSubject("user:" + transport.getUsername());
         policy.setResource(nodeId);
         policy.setEffect(ServiceResourcePolicyPolicyEffect.ALLOW);
         policy.setAction(action);

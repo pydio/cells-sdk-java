@@ -55,13 +55,11 @@ public class ServerFactory implements IServerFactory {
     @Override
     public String checkServer(ServerURL serverURL) throws SDKException {
 
-        // Insure SSL is valid
+        // Insure server is up and SSL is valid
         try {
             serverURL.ping();
         } catch (IOException ce) {
             throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
-//        } catch (SDKException ioe) {
-//            throw new SDKException(ErrorCodes.ssl_error, serverURL.getId() + " does not provide a valid certificate. Skipping verify: " + serverURL.skipVerify(), ioe);
         }
 
         // We do not have any other choice than to try the various well-known endpoints
@@ -92,15 +90,14 @@ public class ServerFactory implements IServerFactory {
     }
 
     @Override
-    public Server registerURL(ServerURL serverURL) throws SDKException {
+    public Server registerServer(ServerURL serverURL) throws SDKException {
 
-        if (serverStore.get(serverURL.getId()) != null) {
-            return serverStore.get(serverURL.getId());
+        Server server = serverStore.get(serverURL.getId());
+        if (server != null) {
+            return server;
         }
 
         String type = checkServer(serverURL);
-
-        Server server;
         if (SdkNames.TYPE_CELLS.equals(type)) {
             server = new CellsServer(serverURL).refresh(false);
         } else if (SdkNames.TYPE_LEGACY_P8.equals(type)) {
@@ -108,7 +105,6 @@ public class ServerFactory implements IServerFactory {
         } else {
             throw new SDKException(ErrorCodes.not_pydio_server);
         }
-
         serverStore.put(serverURL.getId(), server);
         return server;
     }
@@ -135,32 +131,36 @@ public class ServerFactory implements IServerFactory {
     @Override
     public void registerAccountCredentials(Credentials credentials, ServerURL serverURL) throws SDKException {
 
-        String accountID = accountID(credentials.getLogin(), serverURL);
+        String accountID = accountID(credentials.getUsername(), serverURL);
         Server server = serverStore.get(serverURL.getId());
         if (server == null) {
-            server = registerURL(serverURL);
+            server = registerServer(serverURL);
         }
 
         Transport transport;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
-            transport = new CellsTransport(credentialService, credentials.getLogin(), server, getEncoder());
+            transport = new CellsTransport(credentialService, credentials.getUsername(), server, getEncoder());
         } else {
-            transport = new P8Transport(credentialService, server, credentials.getLogin(), getEncoder());
+            transport = new P8Transport(credentialService, server, credentials.getUsername(), getEncoder());
         }
 
         if (credentials instanceof PasswordCredentials) {
+            // In the case of PWD creds,
+            // we then rely on the transport to retrieve the effective secure token
             PasswordCredentials pc = (PasswordCredentials) credentials;
             credentialService.putPassword(accountID, pc.getPassword());
             transport.getTokenFromLegacyCredentials(pc);
         } else if (credentials instanceof JWTCredentials) {
+            // In case of JWT credentials, we directly store the token in the token store
+            // But we do not try to login at this time
             credentialService.put(accountID, ((JWTCredentials) credentials).getToken());
         }
 
         // TODO make a call to the server to insure everything is correctly set ?
-        transportStore.put(accountID(credentials.getLogin(), server), transport);
+        transportStore.put(accountID(credentials.getUsername(), server), transport);
     }
 
-    /* This relies on the token store to resurrect an account. */
+    /* This relies on the CredentialService to resurrect an account. */
     public Transport restoreAccount(String username, ServerURL serverURL) throws SDKException {
         String accountID = accountID(username, serverURL);
         Transport existing = transportStore.get(accountID);
@@ -174,7 +174,7 @@ public class ServerFactory implements IServerFactory {
             throw new SDKException("Could not restore account " + accountID + ", no valid credential has been found in local store");
         }
 
-        Server server = registerURL(serverURL);
+        Server server = registerServer(serverURL);
 
         Transport transport;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {

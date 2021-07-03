@@ -9,7 +9,7 @@ public class RemoteServerConfig {
     /* Main account info */
     public String serverURL;
     public boolean skipVerify;
-    public String login;
+    public String username;
 
     /* Credentials */
     // Personal Access Token

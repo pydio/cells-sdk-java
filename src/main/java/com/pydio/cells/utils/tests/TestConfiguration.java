@@ -88,7 +88,7 @@ public class TestConfiguration {
 
         RemoteServerConfig currConf = new RemoteServerConfig();
         currConf.serverURL = p.getProperty("serverURL");
-        currConf.login = p.getProperty("login");
+        currConf.username = p.getProperty("username");
         currConf.pwd = p.getProperty("pwd");
         currConf.pat = p.getProperty("pat");
         currConf.defaultWS = p.getProperty("defaultWorkspace");

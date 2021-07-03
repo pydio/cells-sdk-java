@@ -8,7 +8,7 @@ public interface Credentials {
     String TYPE_LEGACY_PASSWORD = "Legacy Password";
     String TYPE_P8 = "P8";
 
-    String getLogin();
+    String getUsername();
 
     String getType();
 

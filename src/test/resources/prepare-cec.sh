@@ -40,7 +40,7 @@ echo "... Using cec version: "
 $CEC version
 
 url=$(get_property serverURL)
-login=$(get_property login)
+username=$(get_property username)
 pwd=$(get_property pwd)
 wks=$(get_property defaultWorkspace)
 skip=$(get_property skipVerify)
@@ -51,7 +51,7 @@ fi
 
 echo "... Configuring connection"
 echo "Command: "
-echo "$CEC configure client-auth --login $login --password $pwd --url "${url}" $skipVerify"
-$CEC configure client-auth --login $login --password $pwd --url "${url}" $skipVerify
+echo "$CEC configure client-auth --login $username --password $pwd --url "${url}" $skipVerify"
+$CEC configure client-auth --login $username0 --password $pwd --url "${url}" $skipVerify
 
 exit 0

@@ -19,7 +19,7 @@ public class P8Credentials implements PasswordCredentials {
     }
 
     @Override
-    public String getLogin() {
+    public String getUsername() {
         return login;
     }
 

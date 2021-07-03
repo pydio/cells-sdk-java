@@ -66,7 +66,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     public String getId() {
-        return new StateID(getUser(), getServer().getServerURL().getId()).getId();
+        return new StateID(getUsername(), getServer().getServerURL().getId()).getId();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     @Override
-    public String getUser() {
+    public String getUsername() {
         return username;
     }
 
@@ -119,12 +119,12 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             if (Str.empty(password)) {
                 return null;
             }
-            token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUser(), password));
+            token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
         } else if (token.isExpired()) {
             if (Str.notEmpty(token.refreshToken)) {
                 token = getRefreshedOAuthToken(token);
             } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
-                token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUser(), password));
+                token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
             }
         }
 
@@ -256,7 +256,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     @Override
     public Token getTokenFromLegacyCredentials(PasswordCredentials credentials) throws SDKException {
         Map<String, String> authInfo = new HashMap<>();
-        authInfo.put("login", credentials.getLogin());
+        authInfo.put("login", credentials.getUsername());
         authInfo.put("password", credentials.getPassword());
         authInfo.put("type", "credentials");
         String authHeader = "Basic " + encoder.base64Encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
@@ -273,7 +273,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             response = api.frontSession(request);
 
             Token t = new Token();
-            t.subject = ServerFactory.accountID(credentials.getLogin(), server);
+            t.subject = ServerFactory.accountID(credentials.getUsername(), server);
             t.value = response.getJWT();
             t.setExpiry((long) response.getExpireTime());
             return t;

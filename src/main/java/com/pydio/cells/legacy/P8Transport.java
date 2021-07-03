@@ -61,7 +61,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public String getId() {
-        return new StateID(getUser(), getServer().getServerURL().getId()).getId();
+        return new StateID(getUsername(), getServer().getServerURL().getId()).getId();
     }
 
     @Override
@@ -100,7 +100,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     @Override
-    public String getUser() {
+    public String getUsername() {
         return username;
     }
 
@@ -333,7 +333,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             // So before storing the cookie, we must insure it is the correct one.
             Document doc = rsp.toXMLDocument();
             List<String> cookieHeaders = rsp.getHeaders(P8Names.HEADER_SET_COOKIE);
-            return handleCookie(credentials.getLogin(), doc, cookieHeaders);
+            return handleCookie(credentials.getUsername(), doc, cookieHeaders);
         }
     }
 

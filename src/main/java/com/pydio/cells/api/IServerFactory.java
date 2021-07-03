@@ -19,7 +19,7 @@ public interface IServerFactory {
      * @return
      * @throws SDKException
      */
-    Server registerURL(ServerURL serverURL) throws SDKException;
+    Server registerServer(ServerURL serverURL) throws SDKException;
 
 
     /**

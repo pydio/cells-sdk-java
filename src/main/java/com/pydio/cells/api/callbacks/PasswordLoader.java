@@ -1,5 +1,6 @@
 package com.pydio.cells.api.callbacks;
 
-public interface PasswordLoader {
-    String loadPassword(String url, String login);
-}
+@Deprecated
+public interface PasswordLoader {}
+//    String loadPassword(String url, String login);
+//}

@@ -38,16 +38,16 @@ public class TestUtils {
         } catch (MalformedURLException mue) {
             throw new SDKException(ErrorCodes.configuration_error, conf.serverURL + " is not a correct URL", mue);
         }
-        Server server = factory.registerURL(sURL);
+        Server server = factory.registerServer(sURL);
         Credentials credentials;
         if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-            credentials = new P8Credentials(conf.login, conf.pwd);
+            credentials = new P8Credentials(conf.username, conf.pwd);
         } else {
-            credentials = new LegacyPasswordCredentials(conf.login, conf.pwd);
+            credentials = new LegacyPasswordCredentials(conf.username, conf.pwd);
         }
         factory.registerAccountCredentials(credentials, sURL);
 
-        return factory.getTransport(ServerFactory.accountID(conf.login, server));
+        return factory.getTransport(ServerFactory.accountID(conf.username, server));
 
     }
 

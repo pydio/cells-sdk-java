@@ -14,7 +14,7 @@ public interface Transport {
 
     String getId();
 
-    String getUser();
+    String getUsername();
 
     Server getServer();
 
