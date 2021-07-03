@@ -132,7 +132,7 @@ dependencies {
     // Enable use of @Nullable and such annotations
     implementation 'org.jetbrains:annotations:13.0'
 
-    // updating this cause IdToken decoding failure
+    // Updating this cause IdToken decoding failure
     // implementation 'commons-codec:commons-codec:20041127.091804'
     implementation 'commons-codec:commons-codec:1.15'
 
@@ -143,14 +143,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     // testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
 
-    // S3 transport for direct streams
-    // When running with android these are provided by the platform:
-    // We use testImplementation scope for the time being
-    // because provided scope is not supported by the java plugin
-    testImplementation 'com.amazonaws:aws-java-sdk-core:1.11.1030'
-    testImplementation 'com.amazonaws:aws-java-sdk-s3:1.11.1030'
-    // This brings the full SDK => many libraries are unused and thus useless
-    //implementation 'com.amazonaws:aws-java-sdk:1.11.1030'
+    // S3 transport is configured in calling layer 
+    // _and use a specific either Java or Android implementation_. 
+    // See cells-android-client or cells-java-client repos.
 
 }
 
