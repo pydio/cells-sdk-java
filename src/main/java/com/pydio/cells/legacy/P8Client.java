@@ -595,15 +595,23 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public InputStream previewData(String ws, String file, int dim) throws SDKException {
+    public void previewData(String ws, String file, int dim, OutputStream out) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file);
         builder = transport.withAuth(builder);
         P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
-        if (rsp.code() != ErrorCodes.ok) {
+        try {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
+            }
+            InputStream in = rsp.getInputStream();
+            if (in != null) {
+                IoHelpers.pipeRead(in, out);
+            }
+        } catch (IOException e) {
+            throw SDKException.conReadFailed(e);
+        } finally {
             rsp.close();
-            throw new SDKException(rsp.code());
         }
-        return rsp.getInputStream();
     }
 
     @Deprecated

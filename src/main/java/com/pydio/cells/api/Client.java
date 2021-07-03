@@ -28,7 +28,7 @@ public interface Client {
 
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
-    InputStream previewData(String ws, String file, int dim) throws SDKException;
+    void previewData(String ws, String file, int dim, OutputStream out) throws SDKException;
 
     Stats stats(String ws, String file, boolean withHash) throws SDKException;
 

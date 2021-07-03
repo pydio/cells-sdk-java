@@ -233,8 +233,22 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public InputStream previewData(String ws, String file, int dim) throws SDKException {
-        return s3Client.getThumb(file);
+    public void previewData(String ws, String file, int dim, OutputStream out) throws SDKException {
+        // Workaround: we cannot directly use the s3 client  in case of a self signed certificate
+//        InputStream in = null;
+//        try {
+//            in = s3Client.getThumb(file);
+//            if (in != null) {
+//                IoHelpers.pipeRead(in, out);
+//            }
+//        } catch (IOException e) {
+//            throw SDKException.conReadFailed(e);
+//        } catch (SDKException e) {
+//            throw e;
+//        } finally {
+//            IoHelpers.closeQuietly(in);
+//        }
+        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, file, out, null);
     }
 
     @Override
