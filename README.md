@@ -101,6 +101,3 @@ A list of random resources on the _WWW_ that have helped along the way and are k
 ## Legacy note
 
 This repository has been forked from [this legacy repo in Pydio's code base](https://github.com/pydio/pydio-sdk-java-v2).
-
-
-
