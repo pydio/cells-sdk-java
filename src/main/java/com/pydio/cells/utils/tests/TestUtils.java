@@ -45,7 +45,7 @@ public class TestUtils {
         } else {
             credentials = new LegacyPasswordCredentials(conf.username, conf.pwd);
         }
-        factory.registerAccountCredentials(credentials, sURL);
+        factory.registerAccountCredentials(sURL, credentials);
 
         return factory.getTransport(ServerFactory.accountID(conf.username, server));
 

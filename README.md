@@ -1,8 +1,10 @@
 # Cells SDK for Java
 
-## Getting started
+The Pydio Cells Java SDK wraps a standard [OpenAPI](https://www.openapis.org) client to communicate with a Pydio Cells server via its REST API.
 
-The Pydio Cells Java SDK provides a Java implementation to communicate with a Pydio Cells server (and also with the legacy Pydio 8+ versions). Most of the functions are wrapped into the `com.pydio.cells.api.Client` class that contains methods to easily manage your files on a Cells server.
+The client classes are generated with [Swagger](https://swagger.io) for Cells 2.x release train and we provide a transport layer to ease implementation of client application in Java.
+
+This library also provides a Java implementation of a simplified client that can communicate with both a Cells _and_ a legacy Pydio 8 server. We rely on this implementation to develop the Cells Client for Android.
 
 ## Build
 
@@ -19,78 +21,87 @@ Useful commands:
 # Publish to local maven repo
 ./gradlew publishToMavenLocal
 
-# Publish a release to bintray for public exposure
-
-# IMPORTANT: First update version number in main build.gradle file.
-
-# TODO do this automatically via build agent
-# Retrieve your username and key and then:
-gradle bintrayUpload -Dbintray.user=$UNAME -Dbintray.key=$UKEY
-# you can also define corresponding variable in a local.properties file => simply adapt and rename the provided local.properties.sample file and then do
-gradle bintrayUpload
 ```
 
-## Configure and resolve a Cells server
+## Remote server
 
-Given an URL, we create a ServerNode object to load the server info
+A remote server is completely defined by a ServerURL. It wraps the validated URL of a remote server and is also in charge of managing TLS, it holds:
 
+- a skipVerify flag to violently skip all TLS layers
+- [TODO] a reference to untrusted certificates that have been explicitly accepted by the caller
+
+A successfull call to the `ServerURL.ping()` method insure we perform HTTP requests to this address, with no SSL issue and have a valid ServerURL.
+
+Given a valid ServerURL, the ServerFactory:
+
+- checks various well-known endpoints to determinate the server type (P8 or Cells)
+- instantiates the correct implementation of the server.
+
+## Authentication
+
+Authentication is managed at the transport layer. When you call `transport.getToken()`:
+
+- a token is retrieved from its internal cache
+- it is refreshed if necessary
+- if no token have been found the transport look for persisted credentials and tries to get a token.
+
+To retrieve a transport, you must first register an account via the ServerFactory by providing a valid ServerURL and credentials, that can be:
+
+- JWTCredentials: wraps a JWT Token
+- LegacyPasswordCredentials: wraps a valid password of a Cells user (warning: this is dangerous)
+- P8Credentials: wraps a valid password and optionally a user entered captcha
+
+## File Transfer
+
+Pydio Cells relies on the S3 protocol to effectively transfer files. To ease dependency management, we do not provide implementation of the necessary S3Client at this layer, only an interface.  
+
+Thus, you can instantiate a Client from within the SDK-Java but it will not be able the files themselves, only the metadata.
+
+To see some sample code on how to manage this, please refer to the cells-java-client or the cells-android-client repository depending on your setup.
+
+## Example
+
+```groovy
+TestClientFactory factory = new TestClientFactory();
+ServerURL serverURL = ServerURLImpl.fromAddress("https://localhost:8080", true);
+Credentials credentials = new LegacyPasswordCredentials("user", "password");
+
+String accountID = factory.registerAccountCredentials(serverURL, credentials);
+Transport transport = factory.getTransport(accountID);
+
+/* Use the simplified client*/
+
+Client client = factory.getClient(transport);
+client.mkdir("common-files", "/parent", "child");
+
+
+/* Directly use the generated API (Cells only) */
+
+// Authentication is auto-magically handled by the transport 
+// as long as it has been previously registered
+ApiClient apiClient = ((CellsTransport) transport).authenticatedClient();
+TreeServiceApi api = new TreeServiceApi(apiClient);
+// Build the request
+RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
+request.addNodePathsItem("common-files/parent/child");
+request.setAllMetaProviders(true);
+// Performs the request and handle result
+RestBulkMetaResponse response = api.bulkStatNodes(request);
+TreeNode node = response.getNodes().get(0); 
 ```
-String url = "https://pydio.example.com";
-ServerNode node = new ServerNode();
-Error error = node.resolve();
-if (error != null) {
-    // error.code could be one of:
-    // ErrorCodes.ssl_error
-    // ErrorCodes.pydio_server_not_supported
-    // ErrorCodes.con_failed
-    // ErrorCodes.ssl_certificate_not_signed
-    System.out.println("failed to resolve server");
-    return;
-}
 
-System.out.println("version: " + server.getVersion());
-System.out.println("version name: " + server.getVersionName());
+Refer to the included tests for more examples.
+
+## Testing
+
+At this layer we provide basic unit test for the few classes that need it most, typically to insure encoding / decoding of the StateID is OK.
+
+We have also implemented basic integration tests that need a target server.
+You can configure the various `src/test/resources/accounts` property files to point toward your test instances. Then simply run:
+
+```sh
+./gradlew test -Dtest.profile=integration
 ```
-
-## Working with the Pydio client
-
-### Instantiate a Pydio Client
-
-To create a client pass the resolved server to the client factory
-
-```
-Client client = Client.get(node);
-```
-
-### Setting user credentials
-
-```
-Credentials credentials = new DefaultCredentials("login", "password");
-client.setCredentials(credentials);
-```
-
-### Performing folder list
-
-```
-// Listing the root of the "My Files" workspace
-try {
-    client.ls("my-files", "/", (n) -> {
-        System.out.println(n.label());
-    });
-} catch(SDKexception e) {
-    e.printStackTrace();
-    Error error = Error.fromException(e)
-    // error.code could be one of:
-    // ErrorCodes.ssl_error or
-    // ErrorCodes.pydio_server_not_supported
-    // ErrorCodes.con_failed
-    // ErrorCodes.ssl_certificate_not_signed
-}
-```
-
-## Examples
-
-Find more examples in [our sample package](./tree/master/src/main/java/com/pydio/sdk/examples) and in the [tests](./tree/master/src/test/java/com/pydio/cells).
 
 ## References
 

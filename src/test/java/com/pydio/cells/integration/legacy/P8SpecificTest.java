@@ -81,7 +81,7 @@ public class P8SpecificTest {
             // First log with correct password to reduce useless noise
             String accountId = ServerFactory.accountID(p8Conf.username, p8URL);
             Credentials credentials = new P8Credentials(p8Conf.username, p8Conf.pwd);
-            factory.registerAccountCredentials(credentials, p8URL);
+            factory.registerAccountCredentials(p8URL, credentials);
             factory.unregisterAccount(accountId);
 
             Credentials wrongCreds = new P8Credentials(p8Conf.username, "not a correct password");
@@ -90,7 +90,7 @@ public class P8SpecificTest {
             boolean needCaptcha = false;
             for (int i = 0; i < 5; i++) {
                 try {
-                    factory.registerAccountCredentials(wrongCreds, p8URL);
+                    factory.registerAccountCredentials(p8URL, wrongCreds);
                 } catch (SDKException e) {
                     if (e.getCode() == ErrorCodes.authentication_with_captcha_required) {
                         // Reached the limit we can go on with the test

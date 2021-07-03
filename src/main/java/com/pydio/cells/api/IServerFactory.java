@@ -26,11 +26,11 @@ public interface IServerFactory {
      * Register an account with the provided credentials.
      * The factory can then provide Transport objects with the corresponding AccountId
      *
-     * @param credentials
      * @param serverURL
+     * @param credentials
      * @throws SDKException
      */
-    void registerAccountCredentials(Credentials credentials, ServerURL serverURL) throws SDKException;
+    String registerAccountCredentials(ServerURL serverURL, Credentials credentials) throws SDKException;
 
     /**
      * Cleanly unregister an account, among others, this deletes the relate tokens from the token store.

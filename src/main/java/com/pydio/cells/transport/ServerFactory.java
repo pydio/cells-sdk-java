@@ -133,7 +133,7 @@ public class ServerFactory implements IServerFactory {
 
     // TODO Add a boolean skipCredentialValidation flag ?
     @Override
-    public void registerAccountCredentials(Credentials credentials, ServerURL serverURL) throws SDKException {
+    public String registerAccountCredentials(ServerURL serverURL, Credentials credentials) throws SDKException {
 
         String accountID = accountID(credentials.getUsername(), serverURL);
         Server server = serverStore.get(serverURL.getId());
@@ -162,10 +162,11 @@ public class ServerFactory implements IServerFactory {
 
         // TODO make a call to the server to insure everything is correctly set ?
         transportStore.put(accountID(credentials.getUsername(), server), transport);
+        return  accountID;
     }
 
     /* This relies on the CredentialService to resurrect an account. */
-    public Transport restoreAccount(String username, ServerURL serverURL) throws SDKException {
+    public Transport restoreAccount(ServerURL serverURL, String username) throws SDKException {
         String accountID = accountID(username, serverURL);
         Transport existing = transportStore.get(accountID);
         if (existing != null) {
@@ -198,7 +199,7 @@ public class ServerFactory implements IServerFactory {
         // TODO? if no transport is defined anymore on a server, also remove?
     }
 
-    public void unregisterAccount(String login, ServerURL serverURL) throws SDKException {
+    public void unregisterAccount(ServerURL serverURL, String login) throws SDKException {
         unregisterAccount(accountID(login, serverURL));
     }
 
