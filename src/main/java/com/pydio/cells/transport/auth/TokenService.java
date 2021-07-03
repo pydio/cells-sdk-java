@@ -1,19 +1,9 @@
 package com.pydio.cells.transport.auth;
 
-import com.pydio.cells.api.ErrorCodes;
-import com.pydio.cells.api.PasswordCredentials;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Transport;
-import com.pydio.cells.openapi.ApiException;
-import com.pydio.cells.openapi.api.FrontendServiceApi;
-import com.pydio.cells.openapi.model.RestFrontSessionRequest;
-import com.pydio.cells.openapi.model.RestFrontSessionResponse;
 import com.pydio.cells.transport.CellsTransport;
 
-import org.apache.commons.codec.binary.Base64;
-
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class TokenService {
@@ -36,7 +26,7 @@ public class TokenService {
         if (!token.isExpired()) {
             return token;
         } else {
-            token = ((CellsTransport) transport).refreshOAuthToken(token);
+            token = ((CellsTransport) transport).getRefreshedOAuthToken(token);
             store.save(transport.getId(), token);
         }
 

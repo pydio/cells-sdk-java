@@ -1,6 +1,5 @@
 package com.pydio.cells.transport;
 
-import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ICellsTransport;
@@ -9,7 +8,6 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.api.Store;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.openapi.ApiClient;
@@ -17,10 +15,13 @@ import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
 import com.pydio.cells.openapi.model.RestFrontSessionRequest;
 import com.pydio.cells.openapi.model.RestFrontSessionResponse;
+import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
+import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
 import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.Str;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONObject;
@@ -47,58 +48,21 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     private final CustomEncoder encoder;
 
-    private final Store<Token> tokenStore;
-    private final String login;
+    private final CredentialService credentialService;
+    private final String username;
     private final Server server;
 
     private String userAgent;
 
-    public CellsTransport(Store<Token> tokenStore, String login, Server server, CustomEncoder encoder) {
-        this.tokenStore = tokenStore;
-        this.login = login;
+    public CellsTransport(CredentialService credentialService, String username, Server server, CustomEncoder encoder) {
+        this.credentialService = credentialService;
+        this.username = username;
         this.server = server;
         this.encoder = encoder;
     }
 
     public static CellsTransport asAnonymous(Server server, CustomEncoder encoder) {
         return new CellsTransport(null, ANONYMOUS_USERNAME, server, encoder);
-    }
-
-    public Token unlock(Credentials credentials) throws SDKException {
-        if (credentials instanceof  PasswordCredentials){
-            return legacyLogin((PasswordCredentials) credentials);
-        } else {
-            throw new SDKException("Unsupported credential type: "+ credentials.getClass().getCanonicalName());
-        }
-    }
-
-    public Token legacyLogin(PasswordCredentials credentials) throws SDKException {
-        Map<String, String> authInfo = new HashMap<>();
-        authInfo.put("login", credentials.getLogin());
-        authInfo.put("password", credentials.getPassword());
-        authInfo.put("type", "credentials");
-        String authHeader = "Basic " + encoder.base64Encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
-        authInfo.put("Authorization", authHeader);
-
-        RestFrontSessionRequest request = new RestFrontSessionRequest();
-        request.setClientTime((int) System.currentTimeMillis());
-        request.authInfo(authInfo);
-
-        FrontendServiceApi api = new FrontendServiceApi(getApiClient());
-
-        RestFrontSessionResponse response;
-        try {
-            response = api.frontSession(request);
-
-            Token t = new Token();
-            t.subject = ServerFactory.accountID(credentials.getLogin(), server);
-            t.value = response.getJWT();
-            t.setExpiry((long) response.getExpireTime());
-            tokenStore.put(t.subject, t);
-            return t;
-        } catch (ApiException e) {
-            throw new SDKException(ErrorCodes.no_token_available, new IOException("login or password incorrect"));
-        }
     }
 
     public String getId() {
@@ -134,33 +98,51 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     @Override
     public String getUser() {
-        return login;
+        return username;
     }
 
     public String getAccessToken() throws SDKException {
-
         Token token = getToken();
         if (token == null) {
             return null;
         }
-
         return token.value;
     }
 
     private Token getToken() throws SDKException {
 
-        Token token = tokenStore.get(getId());
+        Token token = credentialService.get(getId());
+        String password;
         if (token == null) {
-            return null;
+            // Check if we have a password for this transport
+            password = credentialService.getPassword(getId());
+            if (Str.empty(password)) {
+                return null;
+            }
+            token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUser(), password));
+        } else if (token.isExpired()) {
+            if (Str.notEmpty(token.refreshToken)) {
+                token = getRefreshedOAuthToken(token);
+            } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
+                token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUser(), password));
+            }
         }
 
-        if (token.isExpired()) {
-            token = refreshOAuthToken(token);
-            tokenStore.put(getId(), token);
+        if (token != null) {
+            credentialService.put(getId(), token);
         }
 
         return token;
     }
+
+    //    public Token unlock(Credentials credentials) throws SDKException {
+//        if (credentials instanceof  PasswordCredentials){
+//            return legacyLogin((PasswordCredentials) credentials);
+//        } else {
+//            throw new SDKException("Unsupported credential type: "+ credentials.getClass().getCanonicalName());
+//        }
+//    }
+
 
     @Override
     public InputStream getUserData(String binary) {
@@ -271,6 +253,35 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
+    @Override
+    public Token getTokenFromLegacyCredentials(PasswordCredentials credentials) throws SDKException {
+        Map<String, String> authInfo = new HashMap<>();
+        authInfo.put("login", credentials.getLogin());
+        authInfo.put("password", credentials.getPassword());
+        authInfo.put("type", "credentials");
+        String authHeader = "Basic " + encoder.base64Encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
+        authInfo.put("Authorization", authHeader);
+
+        RestFrontSessionRequest request = new RestFrontSessionRequest();
+        request.setClientTime((int) System.currentTimeMillis());
+        request.authInfo(authInfo);
+
+        FrontendServiceApi api = new FrontendServiceApi(getApiClient());
+
+        RestFrontSessionResponse response;
+        try {
+            response = api.frontSession(request);
+
+            Token t = new Token();
+            t.subject = ServerFactory.accountID(credentials.getLogin(), server);
+            t.value = response.getJWT();
+            t.setExpiry((long) response.getExpireTime());
+            return t;
+        } catch (ApiException e) {
+            throw new SDKException(ErrorCodes.no_token_available, new IOException("login or password incorrect"));
+        }
+    }
+
     // TODO better management of exceptions.
     public Token getTokenFromCode(String code, CustomEncoder encoder) throws Exception {
         InputStream in = null;
@@ -312,7 +323,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-    public Token refreshOAuthToken(Token t) throws SDKException {
+    public Token getRefreshedOAuthToken(Token t) throws SDKException {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
@@ -523,6 +534,5 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     //           throw SDKException.conFailed(e);
     //       }
     //   }
-
 
 }

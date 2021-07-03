@@ -2,14 +2,15 @@ package com.pydio.cells.integration.auth;
 
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Store;
-import com.pydio.cells.utils.MemoryStore;
-import com.pydio.cells.utils.tests.TestClientFactory;
-import com.pydio.cells.utils.tests.RemoteServerConfig;
-import com.pydio.cells.utils.tests.TestConfiguration;
-import com.pydio.cells.utils.tests.TestUtils;
 import com.pydio.cells.transport.CellsTransport;
+import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.MemoryStore;
+import com.pydio.cells.utils.tests.RemoteServerConfig;
+import com.pydio.cells.utils.tests.TestClientFactory;
+import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -38,7 +39,9 @@ public class RefreshTokenTest {
         testRunID = TestUtils.randomString(4);
 
         tokenStore = new MemoryStore<>();
-        factory = new TestClientFactory(tokenStore, new MemoryStore<>(), new MemoryStore<>());
+        CredentialService credentialService = new CredentialService(tokenStore, new MemoryStore<>());
+
+        factory = new TestClientFactory(credentialService, new MemoryStore<>(), new MemoryStore<>());
         config = TestConfiguration.getDefault();
         cellsConf = config.getServer("cells-https");
     }
@@ -60,6 +63,6 @@ public class RefreshTokenTest {
         Token initialDummyToken = new Token();
         initialDummyToken.refreshToken = manualToken;
 
-        cellsTransport.refreshOAuthToken(initialDummyToken);
+        cellsTransport.getRefreshedOAuthToken(initialDummyToken);
     }
 }

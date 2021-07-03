@@ -19,18 +19,18 @@ public interface IServerFactory {
      * @return
      * @throws SDKException
      */
-    Server register(ServerURL serverURL) throws SDKException;
+    Server registerURL(ServerURL serverURL) throws SDKException;
 
 
     /**
      * Register an account with the provided credentials.
      * The factory can then provide Transport objects with the corresponding AccountId
      *
-     * @param serverURL
      * @param credentials
+     * @param serverURL
      * @throws SDKException
      */
-    void registerAccount(ServerURL serverURL, Credentials credentials) throws SDKException;
+    void registerAccountCredentials(Credentials credentials, ServerURL serverURL) throws SDKException;
 
     /**
      * Cleanly unregister an account, among others, this deletes the relate tokens from the token store.

@@ -328,30 +328,6 @@ public class CellsClient implements Client, SdkNames {
         return Message.create(Message.SUCCESS, "SUCCESS");
     }
 
-
-//
-//
-//    public P8RequestBody(String filename, long length, long maxPartSize) {
-//
-//        mFilename = filename;
-//        mLength = length;
-//
-//        // Remove 1 Kb to make sure we do not exceed the client_upload_max_size
-//        if (maxPartSize == 0) {
-//            maxPartSize = mLength;
-//        } else {
-//            mMaxChunkSize = maxPartSize;
-//        }
-//
-//        if (maxPartSize >= length) {
-//            mChunkCount = 1;
-//        } else {
-//            mChunkSize = maxPartSize;
-//            mChunkCount = (int) Math.ceil((float) mLength / mChunkSize);
-//            mLastChunkSize = mLength % mChunkSize;
-//        }
-//    }
-
     @Override
     public Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         return upload(source, ws, path, name, progressListener);
@@ -928,7 +904,6 @@ public class CellsClient implements Client, SdkNames {
     private ApiClient authenticatedClient() throws SDKException {
         return transport.authenticatedClient();
     }
-
 
     /**
      * This is necessary until min version is 24: we cannot use the consumer pattern:

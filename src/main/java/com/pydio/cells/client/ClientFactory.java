@@ -8,6 +8,7 @@ import com.pydio.cells.legacy.P8Client;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.ServerFactory;
+import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
 
 /**
@@ -15,8 +16,8 @@ import com.pydio.cells.transport.auth.Token;
  */
 public abstract class ClientFactory extends ServerFactory {
 
-    public ClientFactory(Store<Token> tokenStore, Store<Server> serverStore, Store<Transport> transportStore) {
-        super(tokenStore, serverStore, transportStore);
+    public ClientFactory(CredentialService credentialService, Store<Server> serverStore, Store<Transport> transportStore) {
+        super(credentialService, serverStore, transportStore);
     }
 
     /**

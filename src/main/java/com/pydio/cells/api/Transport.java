@@ -23,10 +23,11 @@ public interface Transport {
     /**
      * Tries to login the server with the passed credentials
      * and stores the resulting token in the local token store.
+     * @return
      */
-    Token unlock(Credentials c) throws SDKException;
+    // Token unlock(Credentials c) throws SDKException;
 
-//    void login() throws SDKException;
+    Token getTokenFromLegacyCredentials(PasswordCredentials credentials) throws SDKException;
 //
 //    void logout() throws SDKException;
 

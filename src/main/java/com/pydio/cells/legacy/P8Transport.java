@@ -1,17 +1,17 @@
 package com.pydio.cells.legacy;
 
-import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ILegacyTransport;
+import com.pydio.cells.api.PasswordCredentials;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.api.Store;
 import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.StateID;
+import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
@@ -41,80 +41,23 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     private final Server server;
     private final String username;
-    private P8Credentials credentials;
 
-    // private TokenService tokens;
-    private final Store<Token> tokenStore;
+    private final CredentialService credentialService;
     private final CookieManager cookieManager;
 
     private String userAgent;
     private int loginFailure;
     private Boolean useCaptcha;
 
-//    public P8Transport(Server server, String username, CookieManager manager, CustomEncoder encoder) {
-//        this.server = server;
-//        this.username = username;
-//        this.cookieManager = manager;
-//        this.encoder = encoder;
-//
-//        loginFailure = 0;
-//    }
-
-    public P8Transport(Store<Token> tokenStore, Server server, String username, CustomEncoder encoder) {
+    public P8Transport(CredentialService credentialService, Server server, String username, CustomEncoder encoder) {
         this.server = server;
         this.username = username;
         this.encoder = encoder;
 
-        this.tokenStore = tokenStore;
+        this.credentialService = credentialService;
         this.cookieManager = new CookieManager();
         loginFailure = 0;
     }
-
-    public Token unlock(Credentials credentials) throws SDKException {
-        if (credentials instanceof P8Credentials) {
-            this.credentials = (P8Credentials) credentials;
-        } else {
-            throw new SDKException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
-        }
-
-        useCaptcha();
-        login();
-        return null;
-    }
-
-
-//    public P8Transport(Server server, Credentials c, CustomEncoder encoder) throws SDKException {
-//        this(server, c.getLogin(), new CookieManager(), encoder);
-//        if (c instanceof P8Credentials) {
-//            this.credentials = (P8Credentials) c;
-//        } else
-//            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
-//    }
-
-    @Deprecated
-    public void setCredentials(Credentials c) {
-        if (c instanceof P8Credentials) {
-            this.credentials = (P8Credentials) c;
-        } else {
-            throw new RuntimeException("Unsupported P8 credential " + credentials.getClass().toString() + " for Pydio 8 server: " + server.getServerURL().getId());
-        }
-    }
-
-
-//    public void restore(TokenService tokens) throws SDKException {
-//        this.tokens = tokens;
-//        // TODO check if it is already initialized
-//        server.init();
-//
-//        useCaptcha();
-//        login();
-//        // TODO more init
-//    }
-
-//    @Deprecated
-//    public void setCookieManager(CookieManager man) {
-//        cookieManager = man;
-//    }
 
     @Override
     public String getId() {
@@ -152,21 +95,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return userAgent;
     }
 
-    private String getToken() throws SDKException {
-        String secureToken = getSecureToken();
-        if (null == secureToken || "".equals(secureToken)) {
-            login();
-            secureToken = getSecureToken();
-        }
-        return secureToken;
-    }
-
     protected P8RequestBuilder withAuth(P8RequestBuilder builder) throws SDKException {
-        return builder.setToken(getToken());
-    }
-
-    public void invalidateToken() {
-        tokenStore.remove(getId());
+        return builder.setToken(getSecureToken());
     }
 
     @Override
@@ -257,40 +187,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
-    //  @Override
-    //  public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-    //      P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-    //      try (P8Response rsp = execute(builder.getRequest())) {
-    //          if (rsp.code() != ErrorCodes.ok) {
-    //              throw new SDKException(rsp.code());
-    //          }
-    //          final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
-    //          if (code != ErrorCodes.ok) {
-    //              throw new SDKException(code);
-    //          }
-    //      } catch (IOException ioe) {
-    //          throw new SDKException(ioe);
-    //      }
-//
-    //  }
-
-    //   @Override
-    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-    //       P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
-    //       try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-    //           if (rsp.code() != ErrorCodes.ok) {
-    //               throw new SDKException(rsp.code());
-    //           }
-    //           final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-    //           if (code != ErrorCodes.ok) {
-    //               rsp.close();
-    //               throw new SDKException(code);
-    //           }
-    //       } catch (IOException ioe) {
-    //           throw new SDKException(ioe);
-    //       }
-    //   }
-
     @Override
     public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.defaultRegistry();
@@ -302,17 +198,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
-//     @Override
-//     public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-//         String secureToken = getSecureToken();
-//         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-//         try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-//             if (rsp.code() != ErrorCodes.ok) {
-//                 throw new SDKException(rsp.code());
-//             }
-//             return rsp.getInputStream();
-//         }
-//     }
 
     @Override
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
@@ -327,18 +212,92 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public InputStream getUserData(String binary) throws SDKException {
-        P8Request req = P8RequestBuilder.getUserData(credentials.getLogin(), binary).setToken(getSecureToken()).getRequest();
-        try (P8Response rsp = execute(req)) {
-            final int code = rsp.code();
-            if (code != ErrorCodes.ok) {
-                if (code == ErrorCodes.authentication_required && credentials != null && loginFailure == 0) {
-                    loginFailure++;
-                    login();
-                    return getUserData(binary);
-                }
-                throw new SDKException(code);
+        P8Request req = P8RequestBuilder.getUserData(username, binary).setToken(getSecureToken()).getRequest();
+        try (P8Response rsp = execute(req, this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            if (rsp.code() != ErrorCodes.ok) {
+                throw new SDKException(rsp.code());
             }
             return rsp.getInputStream();
+        } catch (Exception ioe) {
+            throw new SDKException(ioe);
+        }
+
+//        try (P8Response rsp = execute(req)) {
+//            final int code = rsp.code();
+//            if (code != ErrorCodes.ok) {
+//                if (code == ErrorCodes.authentication_required && credentials != null && loginFailure == 0) {
+//                    loginFailure++;
+//                    login();
+//                    return getUserData(binary);
+//                }
+//                throw new SDKException(code);
+//            }
+//            return rsp.getInputStream();
+//        }
+    }
+
+    /* Token Management */
+
+    private String getSecureToken() throws SDKException {
+        Token t = getToken();
+        if (t == null) {
+            return null;
+        }
+        return t.value;
+    }
+
+    private Token getToken() throws SDKException {
+        Token t = credentialService.get(getId());
+        if (t == null) {
+            t = fromPassword();
+            credentialService.put(getId(), t);
+        }
+        return t;
+    }
+
+    private Token fromPassword() throws SDKException {
+        Log.i(Log.TAG_AUTH, "No token found for " + getId() + ", about to background login.");
+        String pwd = credentialService.getPassword(getId());
+        if (Str.notEmpty(pwd)) {
+            return login(new P8Credentials(username, pwd));
+        }
+        return null;
+    }
+
+    private P8Request refreshSecureToken(P8Request req) {
+        try {
+            JSONObject info = authenticationInfo();
+            if (!info.has(P8Names.captchaCode)) {
+                // We remove the cached token so that the GetSecureToken call
+                // will try to retrieve a brand new one with a password
+                credentialService.remove(getId());
+                return P8RequestBuilder.update(req).setToken(getSecureToken()).getRequest();
+            }
+        } catch (Exception e) {
+            Log.e(Log.TAG_AUTH, "Cannot refresh secure token from password");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Token fromSecureToken(String username, String secureToken) {
+        Token t = new Token();
+        t.subject = ServerFactory.accountID(username, server);
+        t.value = secureToken;
+        t.setExpiry(-1);
+        return t;
+    }
+
+    public void invalidateToken() {
+        credentialService.remove(getId());
+    }
+
+    @Override
+    public Token getTokenFromLegacyCredentials(PasswordCredentials credentials) throws SDKException {
+        if (credentials instanceof P8Credentials) {
+            return login((P8Credentials) credentials);
+        } else {
+            throw new SDKException(ErrorCodes.unsupported, credentials.getClass().getCanonicalName() + "credentials are not supported by the P8 transport");
         }
     }
 
@@ -346,11 +305,11 @@ public class P8Transport implements ILegacyTransport, SdkNames {
      * In P8 the auth token is bound to a session cookie: we must retrieve and store both
      * with the provided credentials.
      */
-    public void login() throws SDKException {
+    public Token login(P8Credentials credentials) throws SDKException {
 
-        Token existingToken = tokenStore.get(getId());
+        Token existingToken = credentialService.get(getId());
         if (existingToken != null) {
-            return;
+            return existingToken;
         }
 
         Log.i("Login", "Login process for " + getId());
@@ -374,11 +333,11 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             // So before storing the cookie, we must insure it is the correct one.
             Document doc = rsp.toXMLDocument();
             List<String> cookieHeaders = rsp.getHeaders(P8Names.HEADER_SET_COOKIE);
-            handleCookie(credentials.getLogin(), doc, cookieHeaders);
+            return handleCookie(credentials.getLogin(), doc, cookieHeaders);
         }
     }
 
-    private void handleCookie(String username, Document doc, List<String> cookieHeaders) throws SDKException {
+    private Token handleCookie(String username, Document doc, List<String> cookieHeaders) throws SDKException {
 
         // First handle well known error cases
         if (doc == null) {
@@ -392,12 +351,14 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             throw SDKException.unexpectedContent(new IOException("No cookies returned by the login process, aborting"));
         }
 
+        Token token;
+
         NamedNodeMap attributes = doc.getElementsByTagName(P8Names.TAG_LOGIN_RESULT).item(0).getAttributes();
         String result = attributes.getNamedItem("value").getNodeValue();
         if (result.equals("1")) {
             String secureToken = attributes.getNamedItem(P8Names.secureToken).getNodeValue();
             loginFailure = 0;
-            saveSecureToken(username, secureToken);
+            token = fromSecureToken(username, secureToken);
 
 //                        Map<String, List<String>> allHeaders = rsp.getAllHeaders();
 //                        for (String currHeader : allHeaders.keySet()) {
@@ -436,11 +397,12 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             if (result.equals("-4")) {
                 throw new SDKException(
                         ErrorCodes.authentication_with_captcha_required,
-                        new IOException("Could not log as ".concat(credentials.getLogin()).concat("@").concat(getServer().url())));
+                        new IOException("Could not log as ".concat(username).concat("@").concat(getServer().url())));
             }
             throw new SDKException(ErrorCodes.invalid_credentials,
-                    new IOException("Could not log as " + credentials.getLogin() + "@" + getServer().url()));
+                    new IOException("Could not log as " + username + "@" + getServer().url()));
         }
+        return token;
     }
 
 //    @Override
@@ -491,13 +453,39 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return response;
     }
 
-    /* HTTP Methods */
+    @Override
+    public HttpURLConnection withUserAgent(HttpURLConnection con) {
+        con.setRequestProperty(P8Names.REQ_PROP_USER_AGENT, getUserAgent());
+        return con;
+    }
 
     private void withToken(P8Request request, StringBuilder builder) {
         if (request.getSecureToken() != null) {
             andAppendParam(builder, "secure_token", request.getSecureToken());
         }
     }
+
+    private HttpURLConnection withCookies(HttpURLConnection con) {
+        List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+        if (cookies.size() > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (HttpCookie cookie : cookies) {
+                builder.append(";").append(cookie.toString());
+            }
+            String cookieStr = builder.substring(1);
+            Log.d(Log.TAG_AUTH, "Setting cookies: [" + cookieStr + "]");
+            con.setRequestProperty(P8Names.REQ_PROP_COOKIE, cookieStr);
+        }
+        return con;
+    }
+
+    private HttpURLConnection withReqProp(HttpURLConnection con, String key, String value) {
+        con.setRequestProperty(key, value);
+        return con;
+    }
+
+
+    /* HTTP Methods */
 
     private P8Response doGet(P8Request request) throws IOException {
         StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
@@ -664,68 +652,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
-
-    private HttpURLConnection withCookies(HttpURLConnection con) {
-        List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
-        if (cookies.size() > 0) {
-            StringBuilder builder = new StringBuilder();
-            for (HttpCookie cookie : cookies) {
-                builder.append(";").append(cookie.toString());
-            }
-            String cookieStr = builder.substring(1);
-            // System.out.println("Setting cookies: [" + cookieStr + "]");
-            con.setRequestProperty(P8Names.REQ_PROP_COOKIE, cookieStr);
-        }
-        return con;
-    }
-
-    @Override
-    public HttpURLConnection withUserAgent(HttpURLConnection con) {
-        con.setRequestProperty(P8Names.REQ_PROP_USER_AGENT, getUserAgent());
-        return con;
-    }
-
-    private HttpURLConnection withReqProp(HttpURLConnection con, String key, String value) {
-        con.setRequestProperty(key, value);
-        return con;
-    }
-
-    /* Token Management */
-
-    private P8Request refreshSecureToken(P8Request req) {
-        try {
-            JSONObject info = authenticationInfo();
-            if (!info.has(P8Names.captchaCode)) {
-                login();
-                String secureToken = getSecureToken();
-                return P8RequestBuilder.update(req).setToken(secureToken).getRequest();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void saveSecureToken(String username, String secureToken) {
-        Token t = new Token();
-        t.subject = ServerFactory.accountID(username, server);
-        t.value = secureToken;
-        t.setExpiry(-1);
-        tokenStore.put(t.subject, t);
-    }
-
-    private String getSecureToken() throws SDKException {
-        Token t = tokenStore.get(getId());
-
-        if (t == null) {
-            System.out.println("No token found for " + getId() + ", about to background login.");
-            login();
-            t = tokenStore.get(getId());
-        }
-
-        return t.value;
-    }
-
     /* String manipulation Helpers */
 
     private void appendParam(StringBuilder builder, String key, String value) {
@@ -748,5 +674,53 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 //        builder.append(key).append("=").append(utf8Encode(value));
 //        return builder;
 //    }
+
+    //  @Override
+    //  public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
+    //      P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
+    //      try (P8Response rsp = execute(builder.getRequest())) {
+    //          if (rsp.code() != ErrorCodes.ok) {
+    //              throw new SDKException(rsp.code());
+    //          }
+    //          final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
+    //          if (code != ErrorCodes.ok) {
+    //              throw new SDKException(code);
+    //          }
+    //      } catch (IOException ioe) {
+    //          throw new SDKException(ioe);
+    //      }
+//
+    //  }
+
+    //   @Override
+    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+    //       P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
+    //       try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+    //           if (rsp.code() != ErrorCodes.ok) {
+    //               throw new SDKException(rsp.code());
+    //           }
+    //           final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+    //           if (code != ErrorCodes.ok) {
+    //               rsp.close();
+    //               throw new SDKException(code);
+    //           }
+    //       } catch (IOException ioe) {
+    //           throw new SDKException(ioe);
+    //       }
+    //   }
+
+
+//     @Override
+//     public InputStream getWorkspaceRegistry(String ws) throws SDKException {
+//         String secureToken = getSecureToken();
+//         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
+//         try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+//             if (rsp.code() != ErrorCodes.ok) {
+//                 throw new SDKException(rsp.code());
+//             }
+//             return rsp.getInputStream();
+//         }
+//     }
+
 
 }

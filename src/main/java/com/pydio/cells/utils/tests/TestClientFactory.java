@@ -7,6 +7,7 @@ import com.pydio.cells.client.CellsClient;
 import com.pydio.cells.client.ClientFactory;
 import com.pydio.cells.legacy.NoAwsS3Client;
 import com.pydio.cells.transport.CellsTransport;
+import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
 
 /**
@@ -15,8 +16,8 @@ import com.pydio.cells.transport.auth.Token;
  */
 public class TestClientFactory extends ClientFactory {
 
-    public TestClientFactory(Store<Token> tokenStore, Store<Server> serverStore, Store<Transport> transportStore) {
-        super(tokenStore, serverStore, transportStore);
+    public TestClientFactory(CredentialService credentialService, Store<Server> serverStore, Store<Transport> transportStore) {
+        super(credentialService, serverStore, transportStore);
     }
 
     public TestClientFactory() {

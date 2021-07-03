@@ -18,6 +18,16 @@ public class LegacyPasswordCredentials implements PasswordCredentials {
     }
 
     @Override
+    public String getType() {
+        return TYPE_LEGACY_PASSWORD;
+    }
+
+    @Override
+    public String getEncodedValue() {
+        return getPassword();
+    }
+
+    @Override
     public String getPassword() {
         return password;
     }
