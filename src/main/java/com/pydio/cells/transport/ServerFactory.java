@@ -22,6 +22,8 @@ import com.pydio.cells.utils.MemoryStore;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.net.ssl.SSLException;
+
 /**
  * Optimistic implementation of a IServerFactory that relies on provided stores to persist objects.
  */
@@ -58,8 +60,10 @@ public class ServerFactory implements IServerFactory {
         // Insure server is up and SSL is valid
         try {
             serverURL.ping();
+        } catch (SSLException se){
+            throw new SDKException(ErrorCodes.ssl_error, "Un-valid TLS connection with " + serverURL.getId(), se);
         } catch (IOException ce) {
-            throw new SDKException(ErrorCodes.not_found, serverURL.getId(), ce);
+            throw new SDKException(ErrorCodes.not_found, "Cannot reach server at " + serverURL.getId(), ce);
         }
 
         // We do not have any other choice than to try the various well-known endpoints
