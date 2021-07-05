@@ -32,7 +32,6 @@ test {
     }
 }
 
-
 publishing {
     publications {
         CellsSdk(MavenPublication) {
