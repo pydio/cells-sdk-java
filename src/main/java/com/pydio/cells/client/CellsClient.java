@@ -271,8 +271,12 @@ public class CellsClient implements Client, SdkNames {
             TreeNode node = response.getNodes().get(0);
             stats = new Stats();
             stats.setHash(node.getEtag());
-            stats.setSize(Long.parseLong(node.getSize()));
-            stats.setmTime(Long.parseLong(node.getMtime()));
+            if (node.getSize() != null) {
+                stats.setSize(Long.parseLong(node.getSize()));
+            }
+            if (node.getMtime() != null) {
+                stats.setmTime(Long.parseLong(node.getMtime()));
+            }
         }
         return stats;
     }
