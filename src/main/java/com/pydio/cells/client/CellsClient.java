@@ -334,11 +334,13 @@ public class CellsClient implements Client, SdkNames {
             con.setRequestMethod("PUT");
             con.setDoOutput(true);
             con.setRequestProperty("Content-Type", "application/octet-stream");
-            OutputStream out = con.getOutputStream();
-
+            // Calling setFixedLengthStreamingMode with the length prevents the con
+            // from using buffer for body
+            con.setFixedLengthStreamingMode(length);
+            try (OutputStream out = con.getOutputStream()) {
+                IoHelpers.pipeReadWithProgress(source, out, progressListener);
+            }
             // TODO implement multi part upload
-            IoHelpers.pipeReadWithProgress(source, out, progressListener);
-            out.flush();
             System.out.println("Put finished with status " + con.getResponseCode());
         } catch (IOException e) {
             throw SDKException.conWriteFailed(e);
