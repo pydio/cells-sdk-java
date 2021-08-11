@@ -1,6 +1,6 @@
 # Developer Corner
 
-We gather here info and tips for curret and future developers of the Java SDK.
+We gather here info and tips for current and future developers of the Java SDK.
 
 ## Regenerate the SDK
 
