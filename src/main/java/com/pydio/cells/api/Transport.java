@@ -2,8 +2,6 @@ package com.pydio.cells.api;
 
 import com.pydio.cells.transport.auth.Token;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -40,7 +38,7 @@ public interface Transport {
     @Deprecated
     HttpURLConnection withUserAgent(HttpURLConnection con);
 
-    JSONObject userInfo() throws SDKException;
+//    JSONObject userInfo() throws SDKException;
 
     InputStream getUserData(String binary) throws SDKException;
 

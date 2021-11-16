@@ -16,7 +16,6 @@ import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
-import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 
@@ -44,7 +43,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     private final CredentialService credentialService;
     private final CookieManager cookieManager;
-
+    private final byte[] LF = "\r\n".getBytes();
+    private final byte[] DLF = "\r\n\r\n".getBytes();
     private String userAgent;
     private int loginFailure;
     private Boolean useCaptcha;
@@ -111,8 +111,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
 
         try {
-            JSONObject info = authenticationInfo();
-            useCaptcha = info.has(P8Names.captchaCode);
+            useCaptcha = authenticationInfo().withCaptcha;
             return useCaptcha;
         } catch (SDKException se) {
             System.out.println("FIXME: Unexpected SDK error while checking if we use Captcha");
@@ -141,8 +140,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return builder.toString();
     }
 
-    /* Retrieved from server */
-
+    /* Directly get a streamed image that contains the Captcha from the server. */
     @Override
     public InputStream getCaptcha() throws SDKException {
         P8Request request = new P8RequestBuilder().setAction(P8Names.getCaptcha).getRequest();
@@ -151,18 +149,16 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
-    @Override
-    public JSONObject authenticationInfo() throws SDKException {
+    public AuthInfo authenticationInfo() throws SDKException {
         try (P8Response seedResponse = execute(P8RequestBuilder.getSeed().getRequest())) {
             String seed = seedResponse.asString();
-            JSONObject o = new JSONObject();
 
-            boolean withCaptcha = false;
+            AuthInfo ai = new AuthInfo();
 
             if (!"-1".equals(seed)) {
                 seed = seed.trim();
                 if (seed.contains("\"seed\":-1") || seed.contains("\"seed\": -1")) {
-                    withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
+                    ai.withCaptcha = seed.contains("\"captcha\": true") || seed.contains("\"captcha\":true");
                 } else {
                     String contentType = seedResponse.getHeaders("Content-Type").get(0);
                     boolean seemsToBePydio = (contentType != null) && (
@@ -175,13 +171,13 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                         throw SDKException.unexpectedContent(new IOException(seed));
                     }
                 }
-                o.put(P8Names.seed, "-1");
+                ai.seed = -1;
             }
 
-            if (withCaptcha) {
-                o.put(P8Names.captchaCode, true);
-            }
-            return o;
+//            if (ai.withCaptcha) {
+//                o.put(P8Names.captchaCode, true);
+//            }
+            return ai;
         } catch (IOException ioe) {
             throw new SDKException(ioe);
         }
@@ -197,7 +193,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             return rsp.getInputStream();
         }
     }
-
 
     @Override
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
@@ -266,8 +261,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     private P8Request refreshSecureToken(P8Request req) {
         try {
-            JSONObject info = authenticationInfo();
-            if (!info.has(P8Names.captchaCode)) {
+            if (!authenticationInfo().withCaptcha) {
                 // We remove the cached token so that the GetSecureToken call
                 // will try to retrieve a brand new one with a password
                 credentialService.remove(getId());
@@ -300,6 +294,13 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             throw new SDKException(ErrorCodes.unsupported, credentials.getClass().getCanonicalName() + "credentials are not supported by the P8 transport");
         }
     }
+
+//    @Override
+//    public void logout() throws SDKException {
+//        String secureToken = getSecureToken();
+//        P8Response response = execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
+//        response.close();
+//    }
 
     /**
      * In P8 the auth token is bound to a session cookie: we must retrieve and store both
@@ -406,16 +407,9 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
 //    @Override
-//    public void logout() throws SDKException {
-//        String secureToken = getSecureToken();
-//        P8Response response = execute(P8RequestBuilder.logout().setSecureToken(secureToken).getRequest());
-//        response.close();
+//    public JSONObject userInfo() throws SDKException {
+//        return null;
 //    }
-
-    @Override
-    public JSONObject userInfo() throws SDKException {
-        return null;
-    }
 
     public P8Response execute(P8Request request) {
 
@@ -465,6 +459,9 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
+
+    /* HTTP Methods */
+
     private HttpURLConnection withCookies(HttpURLConnection con) {
         List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
         if (cookies.size() > 0) {
@@ -483,9 +480,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         con.setRequestProperty(key, value);
         return con;
     }
-
-
-    /* HTTP Methods */
 
     private P8Response doGet(P8Request request) throws IOException {
         StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
@@ -604,9 +598,6 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return builder.toString();
     }
 
-    private final byte[] LF = "\r\n".getBytes();
-    private final byte[] DLF = "\r\n\r\n".getBytes();
-
     private void populatePostBody(P8Request request, HttpURLConnection con) throws IOException {
 
         String boundary = "----" + System.currentTimeMillis();
@@ -652,11 +643,13 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         }
     }
 
-    /* String manipulation Helpers */
+    /* Local objects */
 
     private void appendParam(StringBuilder builder, String key, String value) {
         builder.append(key).append("=").append(value);
     }
+
+    /* String manipulation Helpers */
 
     private void andAppendParam(StringBuilder builder, String key, String value) {
         builder.append("&").append(key).append("=").append(value);
@@ -670,6 +663,14 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return encoder.utf8Encode(value);
     }
 
+
+    private class AuthInfo {
+        private int seed = -1;
+        private boolean withCaptcha = false;
+
+        AuthInfo() {
+        }
+    }
     //    private StringBuilder appendEncodedParam(StringBuilder builder, String key, String value) {
 //        builder.append(key).append("=").append(utf8Encode(value));
 //        return builder;
