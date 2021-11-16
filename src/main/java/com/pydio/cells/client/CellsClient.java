@@ -57,6 +57,7 @@ import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.utils.FileNodeUtils;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.Str;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -77,6 +78,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -233,7 +235,12 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public void previewData(String ws, String file, int dim, OutputStream out) throws SDKException {
+    public void previewData(FileNode node, int dim, OutputStream out) throws SDKException {
+        String thumbPath = getThumbPath(node, dim);
+        if (thumbPath == null){
+            throw new SDKException(ErrorCodes.not_found, "No thumbnail is defined for this resource", new IOException());
+        }
+
         // Workaround: we cannot directly use the s3 client  in case of a self signed certificate
 //        InputStream in = null;
 //        try {
@@ -248,8 +255,32 @@ public class CellsClient implements Client, SdkNames {
 //        } finally {
 //            IoHelpers.closeQuietly(in);
 //        }
-        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, file, out, null);
+        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, thumbPath, out, null);
     }
+
+
+    private String getThumbPath(FileNode currNode, int dim) throws SDKException {
+        String thumbsURLs = currNode.getProperty(SdkNames.NODE_PROPERTY_IMAGE_THUMB_PATHS);
+        if (Str.empty(thumbsURLs)) {
+            return null;
+        }
+
+        Gson gson = new Gson();
+        Map<String, String> thumbs = gson.fromJson(thumbsURLs, Map.class);
+        String thumbPath = null;
+        // TODO improve: we rely on the fact that thumbs are ordered by growing size at this point.
+        for (Map.Entry<String,String> entry : thumbs.entrySet())                {
+            if (thumbPath == null){
+                thumbPath = entry.getValue();
+            }
+            int size = Integer.parseInt(entry.getKey());
+            if (size > 0 && size >= dim) {
+                return entry.getValue();
+            }
+        }
+        return thumbPath;
+    }
+
 
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
