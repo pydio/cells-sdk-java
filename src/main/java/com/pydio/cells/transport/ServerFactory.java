@@ -50,7 +50,7 @@ public class ServerFactory implements IServerFactory {
     protected void initAppData() {
         ClientData.packageID = this.getClass().getPackage().getName();
         ClientData.name = "CellsJavaTransport";
-        ClientData.version = "0.2.0-dev";
+        ClientData.version = "0.3.0-dev";
         ClientData.platform = "Java";
     }
 
@@ -165,7 +165,7 @@ public class ServerFactory implements IServerFactory {
         return  accountID;
     }
 
-    /* This relies on the CredentialService to resurrect an account. */
+    /* Relies on the CredentialService to resurrect an account. */
     public Transport restoreAccount(ServerURL serverURL, String username) throws SDKException {
         String accountID = accountID(username, serverURL);
         Transport existing = transportStore.get(accountID);
@@ -208,7 +208,11 @@ public class ServerFactory implements IServerFactory {
         return transportStore.get(accountID);
     }
 
-    // @Override
+    @Override
+    public CustomEncoder getEncoder() {
+        return new JavaCustomEncoder();
+    }
+
     public Transport getAnonymousTransport(String serverID) {
         Server server = serverStore.get(serverID);
         if (server == null) {
@@ -219,11 +223,6 @@ public class ServerFactory implements IServerFactory {
             return new P8Transport(credentialService, server, Transport.ANONYMOUS_USERNAME, getEncoder());
         }
         return CellsTransport.asAnonymous(server, getEncoder());
-    }
-
-    @Override
-    public CustomEncoder getEncoder() {
-        return new JavaCustomEncoder();
     }
 
     // Static helpers to ease implementation

@@ -927,7 +927,7 @@ public class CellsClient implements Client, SdkNames {
 
     /**
      * This is necessary until min version is 24: we cannot use the consumer pattern:
-     * public void listChildren(String fullPath, Consumer<TreeNode> consumer) throws SDKException {
+     * public void listChildren(String fullPath, Consumer&lt;TreeNode&gt; consumer) throws SDKException {
      * ... consumer.onNode(nodes.next());
      */
     public interface TreeNodeHandler {

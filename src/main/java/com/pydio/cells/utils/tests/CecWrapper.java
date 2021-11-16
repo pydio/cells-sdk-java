@@ -87,20 +87,4 @@ public class CecWrapper {
         }
     }
 
-//    // print input stream
-//    private static void printInputStream(InputStream is) {
-//
-//        try (InputStreamReader streamReader =
-//                     new InputStreamReader(is, StandardCharsets.UTF_8);
-//             BufferedReader reader = new BufferedReader(streamReader)) {
-//
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                System.out.println(line);
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
