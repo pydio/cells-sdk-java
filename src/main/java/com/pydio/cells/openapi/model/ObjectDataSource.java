@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * ObjectDataSource
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class ObjectDataSource {
   @SerializedName("Name")
   private String name = null;
@@ -75,6 +75,12 @@ public class ObjectDataSource {
 
   @SerializedName("Watch")
   private Boolean watch = null;
+
+  @SerializedName("FlatStorage")
+  private Boolean flatStorage = null;
+
+  @SerializedName("SkipSyncOnRestart")
+  private Boolean skipSyncOnRestart = null;
 
   @SerializedName("EncryptionMode")
   private ObjectEncryptionMode encryptionMode = null;
@@ -351,6 +357,42 @@ public class ObjectDataSource {
     this.watch = watch;
   }
 
+  public ObjectDataSource flatStorage(Boolean flatStorage) {
+    this.flatStorage = flatStorage;
+    return this;
+  }
+
+   /**
+   * Get flatStorage
+   * @return flatStorage
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isFlatStorage() {
+    return flatStorage;
+  }
+
+  public void setFlatStorage(Boolean flatStorage) {
+    this.flatStorage = flatStorage;
+  }
+
+  public ObjectDataSource skipSyncOnRestart(Boolean skipSyncOnRestart) {
+    this.skipSyncOnRestart = skipSyncOnRestart;
+    return this;
+  }
+
+   /**
+   * Get skipSyncOnRestart
+   * @return skipSyncOnRestart
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isSkipSyncOnRestart() {
+    return skipSyncOnRestart;
+  }
+
+  public void setSkipSyncOnRestart(Boolean skipSyncOnRestart) {
+    this.skipSyncOnRestart = skipSyncOnRestart;
+  }
+
   public ObjectDataSource encryptionMode(ObjectEncryptionMode encryptionMode) {
     this.encryptionMode = encryptionMode;
     return this;
@@ -465,6 +507,8 @@ public class ObjectDataSource {
         Objects.equals(this.apiSecret, objectDataSource.apiSecret) &&
         Objects.equals(this.peerAddress, objectDataSource.peerAddress) &&
         Objects.equals(this.watch, objectDataSource.watch) &&
+        Objects.equals(this.flatStorage, objectDataSource.flatStorage) &&
+        Objects.equals(this.skipSyncOnRestart, objectDataSource.skipSyncOnRestart) &&
         Objects.equals(this.encryptionMode, objectDataSource.encryptionMode) &&
         Objects.equals(this.encryptionKey, objectDataSource.encryptionKey) &&
         Objects.equals(this.versioningPolicyName, objectDataSource.versioningPolicyName) &&
@@ -474,7 +518,7 @@ public class ObjectDataSource {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
+    return Objects.hash(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
   }
 
 
@@ -497,6 +541,8 @@ public class ObjectDataSource {
     sb.append("    apiSecret: ").append(toIndentedString(apiSecret)).append("\n");
     sb.append("    peerAddress: ").append(toIndentedString(peerAddress)).append("\n");
     sb.append("    watch: ").append(toIndentedString(watch)).append("\n");
+    sb.append("    flatStorage: ").append(toIndentedString(flatStorage)).append("\n");
+    sb.append("    skipSyncOnRestart: ").append(toIndentedString(skipSyncOnRestart)).append("\n");
     sb.append("    encryptionMode: ").append(toIndentedString(encryptionMode)).append("\n");
     sb.append("    encryptionKey: ").append(toIndentedString(encryptionKey)).append("\n");
     sb.append("    versioningPolicyName: ").append(toIndentedString(versioningPolicyName)).append("\n");

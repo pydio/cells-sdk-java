@@ -30,7 +30,7 @@ import java.util.List;
  * LogMessage is the format used to transmit log messages to clients via the REST API.
  */
 @ApiModel(description = "LogMessage is the format used to transmit log messages to clients via the REST API.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class LogLogMessage {
   @SerializedName("Ts")
   private Integer ts = null;
@@ -106,6 +106,9 @@ public class LogLogMessage {
 
   @SerializedName("SchedulerTaskActionPath")
   private String schedulerTaskActionPath = null;
+
+  @SerializedName("JsonZaps")
+  private String jsonZaps = null;
 
   public LogLogMessage ts(Integer ts) {
     this.ts = ts;
@@ -565,6 +568,24 @@ public class LogLogMessage {
     this.schedulerTaskActionPath = schedulerTaskActionPath;
   }
 
+  public LogLogMessage jsonZaps(String jsonZaps) {
+    this.jsonZaps = jsonZaps;
+    return this;
+  }
+
+   /**
+   * Get jsonZaps
+   * @return jsonZaps
+  **/
+  @ApiModelProperty(value = "")
+  public String getJsonZaps() {
+    return jsonZaps;
+  }
+
+  public void setJsonZaps(String jsonZaps) {
+    this.jsonZaps = jsonZaps;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -599,12 +620,13 @@ public class LogLogMessage {
         Objects.equals(this.operationLabel, logLogMessage.operationLabel) &&
         Objects.equals(this.schedulerJobUuid, logLogMessage.schedulerJobUuid) &&
         Objects.equals(this.schedulerTaskUuid, logLogMessage.schedulerTaskUuid) &&
-        Objects.equals(this.schedulerTaskActionPath, logLogMessage.schedulerTaskActionPath);
+        Objects.equals(this.schedulerTaskActionPath, logLogMessage.schedulerTaskActionPath) &&
+        Objects.equals(this.jsonZaps, logLogMessage.jsonZaps);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ts, level, logger, msg, msgId, userName, userUuid, groupPath, profile, roleUuids, remoteAddress, userAgent, httpProtocol, nodeUuid, nodePath, wsUuid, wsScope, spanUuid, spanParentUuid, spanRootUuid, operationUuid, operationLabel, schedulerJobUuid, schedulerTaskUuid, schedulerTaskActionPath);
+    return Objects.hash(ts, level, logger, msg, msgId, userName, userUuid, groupPath, profile, roleUuids, remoteAddress, userAgent, httpProtocol, nodeUuid, nodePath, wsUuid, wsScope, spanUuid, spanParentUuid, spanRootUuid, operationUuid, operationLabel, schedulerJobUuid, schedulerTaskUuid, schedulerTaskActionPath, jsonZaps);
   }
 
 
@@ -638,6 +660,7 @@ public class LogLogMessage {
     sb.append("    schedulerJobUuid: ").append(toIndentedString(schedulerJobUuid)).append("\n");
     sb.append("    schedulerTaskUuid: ").append(toIndentedString(schedulerTaskUuid)).append("\n");
     sb.append("    schedulerTaskActionPath: ").append(toIndentedString(schedulerTaskActionPath)).append("\n");
+    sb.append("    jsonZaps: ").append(toIndentedString(jsonZaps)).append("\n");
     sb.append("}");
     return sb.toString();
   }

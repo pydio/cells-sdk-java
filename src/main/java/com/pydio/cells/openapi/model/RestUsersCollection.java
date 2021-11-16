@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * RestUsersCollection
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class RestUsersCollection {
   @SerializedName("Groups")
   private List<IdmUser> groups = null;

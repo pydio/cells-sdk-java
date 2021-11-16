@@ -20,108 +20,36 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.JobsIdmSelectorType;
+import com.pydio.cells.openapi.model.JobsDataSourceSelectorType;
 import com.pydio.cells.openapi.model.ServiceQuery;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * JobsIdmSelector
+ * JobsDataSourceSelector
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
-public class JobsIdmSelector {
-  @SerializedName("Type")
-  private JobsIdmSelectorType type = null;
-
-  @SerializedName("All")
-  private Boolean all = null;
-
-  @SerializedName("Query")
-  private ServiceQuery query = null;
-
-  @SerializedName("Collect")
-  private Boolean collect = null;
-
+public class JobsDataSourceSelector {
   @SerializedName("Label")
   private String label = null;
 
   @SerializedName("Description")
   private String description = null;
 
-  public JobsIdmSelector type(JobsIdmSelectorType type) {
-    this.type = type;
-    return this;
-  }
+  @SerializedName("Type")
+  private JobsDataSourceSelectorType type = null;
 
-   /**
-   * Get type
-   * @return type
-  **/
-  @ApiModelProperty(value = "")
-  public JobsIdmSelectorType getType() {
-    return type;
-  }
+  @SerializedName("All")
+  private Boolean all = null;
 
-  public void setType(JobsIdmSelectorType type) {
-    this.type = type;
-  }
+  @SerializedName("Collect")
+  private Boolean collect = null;
 
-  public JobsIdmSelector all(Boolean all) {
-    this.all = all;
-    return this;
-  }
+  @SerializedName("Query")
+  private ServiceQuery query = null;
 
-   /**
-   * Get all
-   * @return all
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean isAll() {
-    return all;
-  }
-
-  public void setAll(Boolean all) {
-    this.all = all;
-  }
-
-  public JobsIdmSelector query(ServiceQuery query) {
-    this.query = query;
-    return this;
-  }
-
-   /**
-   * Get query
-   * @return query
-  **/
-  @ApiModelProperty(value = "")
-  public ServiceQuery getQuery() {
-    return query;
-  }
-
-  public void setQuery(ServiceQuery query) {
-    this.query = query;
-  }
-
-  public JobsIdmSelector collect(Boolean collect) {
-    this.collect = collect;
-    return this;
-  }
-
-   /**
-   * Get collect
-   * @return collect
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean isCollect() {
-    return collect;
-  }
-
-  public void setCollect(Boolean collect) {
-    this.collect = collect;
-  }
-
-  public JobsIdmSelector label(String label) {
+  public JobsDataSourceSelector label(String label) {
     this.label = label;
     return this;
   }
@@ -139,7 +67,7 @@ public class JobsIdmSelector {
     this.label = label;
   }
 
-  public JobsIdmSelector description(String description) {
+  public JobsDataSourceSelector description(String description) {
     this.description = description;
     return this;
   }
@@ -157,6 +85,78 @@ public class JobsIdmSelector {
     this.description = description;
   }
 
+  public JobsDataSourceSelector type(JobsDataSourceSelectorType type) {
+    this.type = type;
+    return this;
+  }
+
+   /**
+   * Get type
+   * @return type
+  **/
+  @ApiModelProperty(value = "")
+  public JobsDataSourceSelectorType getType() {
+    return type;
+  }
+
+  public void setType(JobsDataSourceSelectorType type) {
+    this.type = type;
+  }
+
+  public JobsDataSourceSelector all(Boolean all) {
+    this.all = all;
+    return this;
+  }
+
+   /**
+   * Get all
+   * @return all
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isAll() {
+    return all;
+  }
+
+  public void setAll(Boolean all) {
+    this.all = all;
+  }
+
+  public JobsDataSourceSelector collect(Boolean collect) {
+    this.collect = collect;
+    return this;
+  }
+
+   /**
+   * Get collect
+   * @return collect
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isCollect() {
+    return collect;
+  }
+
+  public void setCollect(Boolean collect) {
+    this.collect = collect;
+  }
+
+  public JobsDataSourceSelector query(ServiceQuery query) {
+    this.query = query;
+    return this;
+  }
+
+   /**
+   * Get query
+   * @return query
+  **/
+  @ApiModelProperty(value = "")
+  public ServiceQuery getQuery() {
+    return query;
+  }
+
+  public void setQuery(ServiceQuery query) {
+    this.query = query;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -166,32 +166,32 @@ public class JobsIdmSelector {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    JobsIdmSelector jobsIdmSelector = (JobsIdmSelector) o;
-    return Objects.equals(this.type, jobsIdmSelector.type) &&
-        Objects.equals(this.all, jobsIdmSelector.all) &&
-        Objects.equals(this.query, jobsIdmSelector.query) &&
-        Objects.equals(this.collect, jobsIdmSelector.collect) &&
-        Objects.equals(this.label, jobsIdmSelector.label) &&
-        Objects.equals(this.description, jobsIdmSelector.description);
+    JobsDataSourceSelector jobsDataSourceSelector = (JobsDataSourceSelector) o;
+    return Objects.equals(this.label, jobsDataSourceSelector.label) &&
+        Objects.equals(this.description, jobsDataSourceSelector.description) &&
+        Objects.equals(this.type, jobsDataSourceSelector.type) &&
+        Objects.equals(this.all, jobsDataSourceSelector.all) &&
+        Objects.equals(this.collect, jobsDataSourceSelector.collect) &&
+        Objects.equals(this.query, jobsDataSourceSelector.query);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, all, query, collect, label, description);
+    return Objects.hash(label, description, type, all, collect, query);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class JobsIdmSelector {\n");
+    sb.append("class JobsDataSourceSelector {\n");
     
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    all: ").append(toIndentedString(all)).append("\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
-    sb.append("    collect: ").append(toIndentedString(collect)).append("\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    all: ").append(toIndentedString(all)).append("\n");
+    sb.append("    collect: ").append(toIndentedString(collect)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -21,6 +21,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.pydio.cells.openapi.model.TreeVersioningKeepPeriod;
+import com.pydio.cells.openapi.model.TreeVersioningNodeDeletedStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * TreeVersioningPolicy
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class TreeVersioningPolicy {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -58,6 +59,9 @@ public class TreeVersioningPolicy {
 
   @SerializedName("KeepPeriods")
   private List<TreeVersioningKeepPeriod> keepPeriods = null;
+
+  @SerializedName("NodeDeletedStrategy")
+  private TreeVersioningNodeDeletedStrategy nodeDeletedStrategy = null;
 
   public TreeVersioningPolicy uuid(String uuid) {
     this.uuid = uuid;
@@ -229,6 +233,24 @@ public class TreeVersioningPolicy {
     this.keepPeriods = keepPeriods;
   }
 
+  public TreeVersioningPolicy nodeDeletedStrategy(TreeVersioningNodeDeletedStrategy nodeDeletedStrategy) {
+    this.nodeDeletedStrategy = nodeDeletedStrategy;
+    return this;
+  }
+
+   /**
+   * Get nodeDeletedStrategy
+   * @return nodeDeletedStrategy
+  **/
+  @ApiModelProperty(value = "")
+  public TreeVersioningNodeDeletedStrategy getNodeDeletedStrategy() {
+    return nodeDeletedStrategy;
+  }
+
+  public void setNodeDeletedStrategy(TreeVersioningNodeDeletedStrategy nodeDeletedStrategy) {
+    this.nodeDeletedStrategy = nodeDeletedStrategy;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -247,12 +269,13 @@ public class TreeVersioningPolicy {
         Objects.equals(this.maxTotalSize, treeVersioningPolicy.maxTotalSize) &&
         Objects.equals(this.maxSizePerFile, treeVersioningPolicy.maxSizePerFile) &&
         Objects.equals(this.ignoreFilesGreaterThan, treeVersioningPolicy.ignoreFilesGreaterThan) &&
-        Objects.equals(this.keepPeriods, treeVersioningPolicy.keepPeriods);
+        Objects.equals(this.keepPeriods, treeVersioningPolicy.keepPeriods) &&
+        Objects.equals(this.nodeDeletedStrategy, treeVersioningPolicy.nodeDeletedStrategy);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, keepPeriods);
+    return Objects.hash(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, keepPeriods, nodeDeletedStrategy);
   }
 
 
@@ -270,6 +293,7 @@ public class TreeVersioningPolicy {
     sb.append("    maxSizePerFile: ").append(toIndentedString(maxSizePerFile)).append("\n");
     sb.append("    ignoreFilesGreaterThan: ").append(toIndentedString(ignoreFilesGreaterThan)).append("\n");
     sb.append("    keepPeriods: ").append(toIndentedString(keepPeriods)).append("\n");
+    sb.append("    nodeDeletedStrategy: ").append(toIndentedString(nodeDeletedStrategy)).append("\n");
     sb.append("}");
     return sb.toString();
   }

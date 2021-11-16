@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * IdmUserMetaNamespace
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class IdmUserMetaNamespace {
   @SerializedName("Namespace")
   private String namespace = null;
@@ -49,6 +49,9 @@ public class IdmUserMetaNamespace {
 
   @SerializedName("Policies")
   private List<ServiceResourcePolicy> policies = null;
+
+  @SerializedName("PoliciesContextEditable")
+  private Boolean policiesContextEditable = null;
 
   public IdmUserMetaNamespace namespace(String namespace) {
     this.namespace = namespace;
@@ -166,6 +169,24 @@ public class IdmUserMetaNamespace {
     this.policies = policies;
   }
 
+  public IdmUserMetaNamespace policiesContextEditable(Boolean policiesContextEditable) {
+    this.policiesContextEditable = policiesContextEditable;
+    return this;
+  }
+
+   /**
+   * Get policiesContextEditable
+   * @return policiesContextEditable
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isPoliciesContextEditable() {
+    return policiesContextEditable;
+  }
+
+  public void setPoliciesContextEditable(Boolean policiesContextEditable) {
+    this.policiesContextEditable = policiesContextEditable;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -181,12 +202,13 @@ public class IdmUserMetaNamespace {
         Objects.equals(this.order, idmUserMetaNamespace.order) &&
         Objects.equals(this.indexable, idmUserMetaNamespace.indexable) &&
         Objects.equals(this.jsonDefinition, idmUserMetaNamespace.jsonDefinition) &&
-        Objects.equals(this.policies, idmUserMetaNamespace.policies);
+        Objects.equals(this.policies, idmUserMetaNamespace.policies) &&
+        Objects.equals(this.policiesContextEditable, idmUserMetaNamespace.policiesContextEditable);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(namespace, label, order, indexable, jsonDefinition, policies);
+    return Objects.hash(namespace, label, order, indexable, jsonDefinition, policies, policiesContextEditable);
   }
 
 
@@ -201,6 +223,7 @@ public class IdmUserMetaNamespace {
     sb.append("    indexable: ").append(toIndentedString(indexable)).append("\n");
     sb.append("    jsonDefinition: ").append(toIndentedString(jsonDefinition)).append("\n");
     sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
+    sb.append("    policiesContextEditable: ").append(toIndentedString(policiesContextEditable)).append("\n");
     sb.append("}");
     return sb.toString();
   }

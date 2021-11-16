@@ -31,7 +31,7 @@ import java.util.List;
  * Role represents a generic set of permissions that can be applied to any users or groups.
  */
 @ApiModel(description = "Role represents a generic set of permissions that can be applied to any users or groups.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class IdmRole {
   @SerializedName("Uuid")
   private String uuid = null;

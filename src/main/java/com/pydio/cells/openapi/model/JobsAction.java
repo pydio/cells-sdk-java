@@ -23,8 +23,10 @@ import com.google.gson.stream.JsonWriter;
 import com.pydio.cells.openapi.model.JobsAction;
 import com.pydio.cells.openapi.model.JobsActionOutputFilter;
 import com.pydio.cells.openapi.model.JobsContextMetaFilter;
+import com.pydio.cells.openapi.model.JobsDataSourceSelector;
 import com.pydio.cells.openapi.model.JobsIdmSelector;
 import com.pydio.cells.openapi.model.JobsNodesSelector;
+import com.pydio.cells.openapi.model.JobsTriggerFilter;
 import com.pydio.cells.openapi.model.JobsUsersSelector;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -37,7 +39,7 @@ import java.util.Map;
 /**
  * JobsAction
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class JobsAction {
   @SerializedName("ID")
   private String ID = null;
@@ -72,11 +74,20 @@ public class JobsAction {
   @SerializedName("IdmFilter")
   private JobsIdmSelector idmFilter = null;
 
+  @SerializedName("DataSourceSelector")
+  private JobsDataSourceSelector dataSourceSelector = null;
+
+  @SerializedName("DataSourceFilter")
+  private JobsDataSourceSelector dataSourceFilter = null;
+
   @SerializedName("ActionOutputFilter")
   private JobsActionOutputFilter actionOutputFilter = null;
 
   @SerializedName("ContextMetaFilter")
   private JobsContextMetaFilter contextMetaFilter = null;
+
+  @SerializedName("TriggerFilter")
+  private JobsTriggerFilter triggerFilter = null;
 
   @SerializedName("Parameters")
   private Map<String, String> parameters = null;
@@ -285,6 +296,42 @@ public class JobsAction {
     this.idmFilter = idmFilter;
   }
 
+  public JobsAction dataSourceSelector(JobsDataSourceSelector dataSourceSelector) {
+    this.dataSourceSelector = dataSourceSelector;
+    return this;
+  }
+
+   /**
+   * Get dataSourceSelector
+   * @return dataSourceSelector
+  **/
+  @ApiModelProperty(value = "")
+  public JobsDataSourceSelector getDataSourceSelector() {
+    return dataSourceSelector;
+  }
+
+  public void setDataSourceSelector(JobsDataSourceSelector dataSourceSelector) {
+    this.dataSourceSelector = dataSourceSelector;
+  }
+
+  public JobsAction dataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
+    this.dataSourceFilter = dataSourceFilter;
+    return this;
+  }
+
+   /**
+   * Get dataSourceFilter
+   * @return dataSourceFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsDataSourceSelector getDataSourceFilter() {
+    return dataSourceFilter;
+  }
+
+  public void setDataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
+    this.dataSourceFilter = dataSourceFilter;
+  }
+
   public JobsAction actionOutputFilter(JobsActionOutputFilter actionOutputFilter) {
     this.actionOutputFilter = actionOutputFilter;
     return this;
@@ -319,6 +366,24 @@ public class JobsAction {
 
   public void setContextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
     this.contextMetaFilter = contextMetaFilter;
+  }
+
+  public JobsAction triggerFilter(JobsTriggerFilter triggerFilter) {
+    this.triggerFilter = triggerFilter;
+    return this;
+  }
+
+   /**
+   * Get triggerFilter
+   * @return triggerFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsTriggerFilter getTriggerFilter() {
+    return triggerFilter;
+  }
+
+  public void setTriggerFilter(JobsTriggerFilter triggerFilter) {
+    this.triggerFilter = triggerFilter;
   }
 
   public JobsAction parameters(Map<String, String> parameters) {
@@ -420,8 +485,11 @@ public class JobsAction {
         Objects.equals(this.usersFilter, jobsAction.usersFilter) &&
         Objects.equals(this.idmSelector, jobsAction.idmSelector) &&
         Objects.equals(this.idmFilter, jobsAction.idmFilter) &&
+        Objects.equals(this.dataSourceSelector, jobsAction.dataSourceSelector) &&
+        Objects.equals(this.dataSourceFilter, jobsAction.dataSourceFilter) &&
         Objects.equals(this.actionOutputFilter, jobsAction.actionOutputFilter) &&
         Objects.equals(this.contextMetaFilter, jobsAction.contextMetaFilter) &&
+        Objects.equals(this.triggerFilter, jobsAction.triggerFilter) &&
         Objects.equals(this.parameters, jobsAction.parameters) &&
         Objects.equals(this.chainedActions, jobsAction.chainedActions) &&
         Objects.equals(this.failedFilterActions, jobsAction.failedFilterActions);
@@ -429,7 +497,7 @@ public class JobsAction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(ID, label, description, bypass, breakAfter, nodesSelector, usersSelector, nodesFilter, usersFilter, idmSelector, idmFilter, actionOutputFilter, contextMetaFilter, parameters, chainedActions, failedFilterActions);
+    return Objects.hash(ID, label, description, bypass, breakAfter, nodesSelector, usersSelector, nodesFilter, usersFilter, idmSelector, idmFilter, dataSourceSelector, dataSourceFilter, actionOutputFilter, contextMetaFilter, triggerFilter, parameters, chainedActions, failedFilterActions);
   }
 
 
@@ -449,8 +517,11 @@ public class JobsAction {
     sb.append("    usersFilter: ").append(toIndentedString(usersFilter)).append("\n");
     sb.append("    idmSelector: ").append(toIndentedString(idmSelector)).append("\n");
     sb.append("    idmFilter: ").append(toIndentedString(idmFilter)).append("\n");
+    sb.append("    dataSourceSelector: ").append(toIndentedString(dataSourceSelector)).append("\n");
+    sb.append("    dataSourceFilter: ").append(toIndentedString(dataSourceFilter)).append("\n");
     sb.append("    actionOutputFilter: ").append(toIndentedString(actionOutputFilter)).append("\n");
     sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
+    sb.append("    triggerFilter: ").append(toIndentedString(triggerFilter)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("    chainedActions: ").append(toIndentedString(chainedActions)).append("\n");
     sb.append("    failedFilterActions: ").append(toIndentedString(failedFilterActions)).append("\n");
