@@ -595,8 +595,8 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public void previewData(String ws, String file, int dim, OutputStream out) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.previewImage(ws, file);
+    public void previewData(FileNode node, int dim, OutputStream out) throws SDKException {
+        P8RequestBuilder builder = P8RequestBuilder.previewImage(node.getWorkspaceSlug(), node.getPath());
         builder = transport.withAuth(builder);
         P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
         try {
