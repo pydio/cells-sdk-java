@@ -96,9 +96,11 @@ public class P8SpecificTest {
                         // Reached the limit we can go on with the test
                         needCaptcha = true;
                         break;
-                    } else if (e.getCode() == ErrorCodes.invalid_credentials) {
-                        // expected => try another time
-                    } else throw e;
+                    } else if (e.getCode() != ErrorCodes.invalid_credentials) {
+                        throw e;
+                    }
+                    // else expected => try another time
+
                 }
             }
 
