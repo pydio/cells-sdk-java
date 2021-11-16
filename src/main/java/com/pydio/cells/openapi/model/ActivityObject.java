@@ -32,7 +32,7 @@ import org.threeten.bp.OffsetDateTime;
 /**
  * ActivityObject
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class ActivityObject {
   @SerializedName("jsonLdContext")
   private String jsonLdContext = null;
@@ -48,6 +48,9 @@ public class ActivityObject {
 
   @SerializedName("summary")
   private String summary = null;
+
+  @SerializedName("markdown")
+  private String markdown = null;
 
   @SerializedName("context")
   private ActivityObject context = null;
@@ -305,6 +308,24 @@ public class ActivityObject {
 
   public void setSummary(String summary) {
     this.summary = summary;
+  }
+
+  public ActivityObject markdown(String markdown) {
+    this.markdown = markdown;
+    return this;
+  }
+
+   /**
+   * Get markdown
+   * @return markdown
+  **/
+  @ApiModelProperty(value = "")
+  public String getMarkdown() {
+    return markdown;
+  }
+
+  public void setMarkdown(String markdown) {
+    this.markdown = markdown;
   }
 
   public ActivityObject context(ActivityObject context) {
@@ -1338,6 +1359,7 @@ public class ActivityObject {
         Objects.equals(this.id, activityObject.id) &&
         Objects.equals(this.name, activityObject.name) &&
         Objects.equals(this.summary, activityObject.summary) &&
+        Objects.equals(this.markdown, activityObject.markdown) &&
         Objects.equals(this.context, activityObject.context) &&
         Objects.equals(this.attachment, activityObject.attachment) &&
         Objects.equals(this.attributedTo, activityObject.attributedTo) &&
@@ -1398,7 +1420,7 @@ public class ActivityObject {
 
   @Override
   public int hashCode() {
-    return Objects.hash(jsonLdContext, type, id, name, summary, context, attachment, attributedTo, audience, content, startTime, endTime, published, updated, duration, url, mediaType, icon, image, preview, location, inReplyTo, replies, tag, generator, to, bto, cc, bcc, actor, object, target, result, origin, instrument, href, rel, hreflang, height, width, oneOf, anyOf, closed, subject, relationship, formerType, deleted, accuracy, altitude, latitude, longitude, radius, units, items, totalItems, current, first, last, partOf, next, prev);
+    return Objects.hash(jsonLdContext, type, id, name, summary, markdown, context, attachment, attributedTo, audience, content, startTime, endTime, published, updated, duration, url, mediaType, icon, image, preview, location, inReplyTo, replies, tag, generator, to, bto, cc, bcc, actor, object, target, result, origin, instrument, href, rel, hreflang, height, width, oneOf, anyOf, closed, subject, relationship, formerType, deleted, accuracy, altitude, latitude, longitude, radius, units, items, totalItems, current, first, last, partOf, next, prev);
   }
 
 
@@ -1412,6 +1434,7 @@ public class ActivityObject {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    summary: ").append(toIndentedString(summary)).append("\n");
+    sb.append("    markdown: ").append(toIndentedString(markdown)).append("\n");
     sb.append("    context: ").append(toIndentedString(context)).append("\n");
     sb.append("    attachment: ").append(toIndentedString(attachment)).append("\n");
     sb.append("    attributedTo: ").append(toIndentedString(attributedTo)).append("\n");

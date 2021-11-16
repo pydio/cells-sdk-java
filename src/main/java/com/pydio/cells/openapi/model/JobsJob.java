@@ -22,12 +22,14 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.pydio.cells.openapi.model.JobsAction;
 import com.pydio.cells.openapi.model.JobsContextMetaFilter;
+import com.pydio.cells.openapi.model.JobsDataSourceSelector;
 import com.pydio.cells.openapi.model.JobsIdmSelector;
 import com.pydio.cells.openapi.model.JobsJobParameter;
 import com.pydio.cells.openapi.model.JobsNodesSelector;
 import com.pydio.cells.openapi.model.JobsSchedule;
 import com.pydio.cells.openapi.model.JobsTask;
 import com.pydio.cells.openapi.model.JobsUsersSelector;
+import com.pydio.cells.openapi.model.ProtobufAny;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
@@ -37,7 +39,7 @@ import java.util.List;
 /**
  * JobsJob
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class JobsJob {
   @SerializedName("ID")
   private String ID = null;
@@ -93,8 +95,14 @@ public class JobsJob {
   @SerializedName("ContextMetaFilter")
   private JobsContextMetaFilter contextMetaFilter = null;
 
+  @SerializedName("DataSourceFilter")
+  private JobsDataSourceSelector dataSourceFilter = null;
+
   @SerializedName("Parameters")
   private List<JobsJobParameter> parameters = null;
+
+  @SerializedName("ResourcesDependencies")
+  private List<ProtobufAny> resourcesDependencies = null;
 
   public JobsJob ID(String ID) {
     this.ID = ID;
@@ -452,6 +460,24 @@ public class JobsJob {
     this.contextMetaFilter = contextMetaFilter;
   }
 
+  public JobsJob dataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
+    this.dataSourceFilter = dataSourceFilter;
+    return this;
+  }
+
+   /**
+   * Get dataSourceFilter
+   * @return dataSourceFilter
+  **/
+  @ApiModelProperty(value = "")
+  public JobsDataSourceSelector getDataSourceFilter() {
+    return dataSourceFilter;
+  }
+
+  public void setDataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
+    this.dataSourceFilter = dataSourceFilter;
+  }
+
   public JobsJob parameters(List<JobsJobParameter> parameters) {
     this.parameters = parameters;
     return this;
@@ -476,6 +502,32 @@ public class JobsJob {
 
   public void setParameters(List<JobsJobParameter> parameters) {
     this.parameters = parameters;
+  }
+
+  public JobsJob resourcesDependencies(List<ProtobufAny> resourcesDependencies) {
+    this.resourcesDependencies = resourcesDependencies;
+    return this;
+  }
+
+  public JobsJob addResourcesDependenciesItem(ProtobufAny resourcesDependenciesItem) {
+    if (this.resourcesDependencies == null) {
+      this.resourcesDependencies = new ArrayList<ProtobufAny>();
+    }
+    this.resourcesDependencies.add(resourcesDependenciesItem);
+    return this;
+  }
+
+   /**
+   * Get resourcesDependencies
+   * @return resourcesDependencies
+  **/
+  @ApiModelProperty(value = "")
+  public List<ProtobufAny> getResourcesDependencies() {
+    return resourcesDependencies;
+  }
+
+  public void setResourcesDependencies(List<ProtobufAny> resourcesDependencies) {
+    this.resourcesDependencies = resourcesDependencies;
   }
 
 
@@ -506,12 +558,14 @@ public class JobsJob {
         Objects.equals(this.userEventFilter, jobsJob.userEventFilter) &&
         Objects.equals(this.idmFilter, jobsJob.idmFilter) &&
         Objects.equals(this.contextMetaFilter, jobsJob.contextMetaFilter) &&
-        Objects.equals(this.parameters, jobsJob.parameters);
+        Objects.equals(this.dataSourceFilter, jobsJob.dataSourceFilter) &&
+        Objects.equals(this.parameters, jobsJob.parameters) &&
+        Objects.equals(this.resourcesDependencies, jobsJob.resourcesDependencies);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ID, label, owner, inactive, custom, languages, eventNames, schedule, autoStart, autoClean, actions, maxConcurrency, tasksSilentUpdate, tasks, nodeEventFilter, userEventFilter, idmFilter, contextMetaFilter, parameters);
+    return Objects.hash(ID, label, owner, inactive, custom, languages, eventNames, schedule, autoStart, autoClean, actions, maxConcurrency, tasksSilentUpdate, tasks, nodeEventFilter, userEventFilter, idmFilter, contextMetaFilter, dataSourceFilter, parameters, resourcesDependencies);
   }
 
 
@@ -538,7 +592,9 @@ public class JobsJob {
     sb.append("    userEventFilter: ").append(toIndentedString(userEventFilter)).append("\n");
     sb.append("    idmFilter: ").append(toIndentedString(idmFilter)).append("\n");
     sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
+    sb.append("    dataSourceFilter: ").append(toIndentedString(dataSourceFilter)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
+    sb.append("    resourcesDependencies: ").append(toIndentedString(resourcesDependencies)).append("\n");
     sb.append("}");
     return sb.toString();
   }

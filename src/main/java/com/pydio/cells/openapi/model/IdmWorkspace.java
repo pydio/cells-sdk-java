@@ -35,7 +35,7 @@ import java.util.Map;
  * A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.
  */
 @ApiModel(description = "A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class IdmWorkspace {
   @SerializedName("UUID")
   private String UUID = null;

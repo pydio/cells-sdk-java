@@ -26,6 +26,7 @@ import com.pydio.cells.openapi.model.IdmRole;
 import com.pydio.cells.openapi.model.IdmUser;
 import com.pydio.cells.openapi.model.IdmWorkspace;
 import com.pydio.cells.openapi.model.JobsActionOutput;
+import com.pydio.cells.openapi.model.ObjectDataSource;
 import com.pydio.cells.openapi.model.ProtobufAny;
 import com.pydio.cells.openapi.model.TreeNode;
 import io.swagger.annotations.ApiModel;
@@ -37,7 +38,7 @@ import java.util.List;
 /**
  * JobsActionMessage
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class JobsActionMessage {
   @SerializedName("Event")
   private ProtobufAny event = null;
@@ -59,6 +60,9 @@ public class JobsActionMessage {
 
   @SerializedName("Activities")
   private List<ActivityObject> activities = null;
+
+  @SerializedName("DataSources")
+  private List<ObjectDataSource> dataSources = null;
 
   @SerializedName("OutputChain")
   private List<JobsActionOutput> outputChain = null;
@@ -237,6 +241,32 @@ public class JobsActionMessage {
     this.activities = activities;
   }
 
+  public JobsActionMessage dataSources(List<ObjectDataSource> dataSources) {
+    this.dataSources = dataSources;
+    return this;
+  }
+
+  public JobsActionMessage addDataSourcesItem(ObjectDataSource dataSourcesItem) {
+    if (this.dataSources == null) {
+      this.dataSources = new ArrayList<ObjectDataSource>();
+    }
+    this.dataSources.add(dataSourcesItem);
+    return this;
+  }
+
+   /**
+   * Get dataSources
+   * @return dataSources
+  **/
+  @ApiModelProperty(value = "")
+  public List<ObjectDataSource> getDataSources() {
+    return dataSources;
+  }
+
+  public void setDataSources(List<ObjectDataSource> dataSources) {
+    this.dataSources = dataSources;
+  }
+
   public JobsActionMessage outputChain(List<JobsActionOutput> outputChain) {
     this.outputChain = outputChain;
     return this;
@@ -280,12 +310,13 @@ public class JobsActionMessage {
         Objects.equals(this.workspaces, jobsActionMessage.workspaces) &&
         Objects.equals(this.acls, jobsActionMessage.acls) &&
         Objects.equals(this.activities, jobsActionMessage.activities) &&
+        Objects.equals(this.dataSources, jobsActionMessage.dataSources) &&
         Objects.equals(this.outputChain, jobsActionMessage.outputChain);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(event, nodes, users, roles, workspaces, acls, activities, outputChain);
+    return Objects.hash(event, nodes, users, roles, workspaces, acls, activities, dataSources, outputChain);
   }
 
 
@@ -301,6 +332,7 @@ public class JobsActionMessage {
     sb.append("    workspaces: ").append(toIndentedString(workspaces)).append("\n");
     sb.append("    acls: ").append(toIndentedString(acls)).append("\n");
     sb.append("    activities: ").append(toIndentedString(activities)).append("\n");
+    sb.append("    dataSources: ").append(toIndentedString(dataSources)).append("\n");
     sb.append("    outputChain: ").append(toIndentedString(outputChain)).append("\n");
     sb.append("}");
     return sb.toString();

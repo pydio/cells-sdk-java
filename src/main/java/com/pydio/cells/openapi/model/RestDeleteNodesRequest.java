@@ -30,13 +30,16 @@ import java.util.List;
 /**
  * RestDeleteNodesRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class RestDeleteNodesRequest {
   @SerializedName("Nodes")
   private List<TreeNode> nodes = null;
 
   @SerializedName("Recursive")
   private Boolean recursive = null;
+
+  @SerializedName("RemovePermanently")
+  private Boolean removePermanently = null;
 
   public RestDeleteNodesRequest nodes(List<TreeNode> nodes) {
     this.nodes = nodes;
@@ -82,6 +85,24 @@ public class RestDeleteNodesRequest {
     this.recursive = recursive;
   }
 
+  public RestDeleteNodesRequest removePermanently(Boolean removePermanently) {
+    this.removePermanently = removePermanently;
+    return this;
+  }
+
+   /**
+   * Get removePermanently
+   * @return removePermanently
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isRemovePermanently() {
+    return removePermanently;
+  }
+
+  public void setRemovePermanently(Boolean removePermanently) {
+    this.removePermanently = removePermanently;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -93,12 +114,13 @@ public class RestDeleteNodesRequest {
     }
     RestDeleteNodesRequest restDeleteNodesRequest = (RestDeleteNodesRequest) o;
     return Objects.equals(this.nodes, restDeleteNodesRequest.nodes) &&
-        Objects.equals(this.recursive, restDeleteNodesRequest.recursive);
+        Objects.equals(this.recursive, restDeleteNodesRequest.recursive) &&
+        Objects.equals(this.removePermanently, restDeleteNodesRequest.removePermanently);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nodes, recursive);
+    return Objects.hash(nodes, recursive, removePermanently);
   }
 
 
@@ -109,6 +131,7 @@ public class RestDeleteNodesRequest {
     
     sb.append("    nodes: ").append(toIndentedString(nodes)).append("\n");
     sb.append("    recursive: ").append(toIndentedString(recursive)).append("\n");
+    sb.append("    removePermanently: ").append(toIndentedString(removePermanently)).append("\n");
     sb.append("}");
     return sb.toString();
   }

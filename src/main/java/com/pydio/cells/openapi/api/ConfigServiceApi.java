@@ -1214,6 +1214,8 @@ public class ConfigServiceApi {
      * @param apiSecret Corresponding objects service api secret. (optional)
      * @param peerAddress Peer address of the data source. (optional)
      * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param flatStorage Store data in flat format (object-storage like). (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
      * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
      * @param encryptionKey Encryption key used for encrypting data. (optional)
      * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
@@ -1224,7 +1226,7 @@ public class ConfigServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getDataSourceCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getDataSourceCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1257,6 +1259,10 @@ public class ConfigServiceApi {
         localVarQueryParams.addAll(apiClient.parameterToPair("PeerAddress", peerAddress));
         if (watch != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("Watch", watch));
+        if (flatStorage != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("FlatStorage", flatStorage));
+        if (skipSyncOnRestart != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("SkipSyncOnRestart", skipSyncOnRestart));
         if (encryptionMode != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("EncryptionMode", encryptionMode));
         if (encryptionKey != null)
@@ -1301,7 +1307,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -1309,7 +1315,7 @@ public class ConfigServiceApi {
         }
         
 
-        com.squareup.okhttp.Call call = getDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1330,6 +1336,8 @@ public class ConfigServiceApi {
      * @param apiSecret Corresponding objects service api secret. (optional)
      * @param peerAddress Peer address of the data source. (optional)
      * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param flatStorage Store data in flat format (object-storage like). (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
      * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
      * @param encryptionKey Encryption key used for encrypting data. (optional)
      * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
@@ -1338,8 +1346,8 @@ public class ConfigServiceApi {
      * @return ObjectDataSource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ObjectDataSource getDataSource(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
-        ApiResponse<ObjectDataSource> resp = getDataSourceWithHttpInfo(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
+    public ObjectDataSource getDataSource(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+        ApiResponse<ObjectDataSource> resp = getDataSourceWithHttpInfo(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
         return resp.getData();
     }
 
@@ -1359,6 +1367,8 @@ public class ConfigServiceApi {
      * @param apiSecret Corresponding objects service api secret. (optional)
      * @param peerAddress Peer address of the data source. (optional)
      * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param flatStorage Store data in flat format (object-storage like). (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
      * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
      * @param encryptionKey Encryption key used for encrypting data. (optional)
      * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
@@ -1367,8 +1377,8 @@ public class ConfigServiceApi {
      * @return ApiResponse&lt;ObjectDataSource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ObjectDataSource> getDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
-        com.squareup.okhttp.Call call = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null, null);
+    public ApiResponse<ObjectDataSource> getDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+        com.squareup.okhttp.Call call = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null, null);
         Type localVarReturnType = new TypeToken<ObjectDataSource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1389,6 +1399,8 @@ public class ConfigServiceApi {
      * @param apiSecret Corresponding objects service api secret. (optional)
      * @param peerAddress Peer address of the data source. (optional)
      * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
+     * @param flatStorage Store data in flat format (object-storage like). (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
      * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
      * @param encryptionKey Encryption key used for encrypting data. (optional)
      * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
@@ -1398,7 +1410,7 @@ public class ConfigServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getDataSourceAsync(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<ObjectDataSource> callback) throws ApiException {
+    public com.squareup.okhttp.Call getDataSourceAsync(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<ObjectDataSource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1419,7 +1431,7 @@ public class ConfigServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<ObjectDataSource>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1434,12 +1446,13 @@ public class ConfigServiceApi {
      * @param maxTotalSize  (optional)
      * @param maxSizePerFile  (optional)
      * @param ignoreFilesGreaterThan  (optional)
+     * @param nodeDeletedStrategy  (optional, default to KeepAll)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getVersioningPolicyCall(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getVersioningPolicyCall(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, String nodeDeletedStrategy, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1462,6 +1475,8 @@ public class ConfigServiceApi {
         localVarQueryParams.addAll(apiClient.parameterToPair("MaxSizePerFile", maxSizePerFile));
         if (ignoreFilesGreaterThan != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("IgnoreFilesGreaterThan", ignoreFilesGreaterThan));
+        if (nodeDeletedStrategy != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("NodeDeletedStrategy", nodeDeletedStrategy));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1496,7 +1511,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getVersioningPolicyValidateBeforeCall(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getVersioningPolicyValidateBeforeCall(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, String nodeDeletedStrategy, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
@@ -1504,7 +1519,7 @@ public class ConfigServiceApi {
         }
         
 
-        com.squareup.okhttp.Call call = getVersioningPolicyCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getVersioningPolicyCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, nodeDeletedStrategy, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1520,11 +1535,12 @@ public class ConfigServiceApi {
      * @param maxTotalSize  (optional)
      * @param maxSizePerFile  (optional)
      * @param ignoreFilesGreaterThan  (optional)
+     * @param nodeDeletedStrategy  (optional, default to KeepAll)
      * @return TreeVersioningPolicy
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public TreeVersioningPolicy getVersioningPolicy(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
-        ApiResponse<TreeVersioningPolicy> resp = getVersioningPolicyWithHttpInfo(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan);
+    public TreeVersioningPolicy getVersioningPolicy(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, String nodeDeletedStrategy) throws ApiException {
+        ApiResponse<TreeVersioningPolicy> resp = getVersioningPolicyWithHttpInfo(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, nodeDeletedStrategy);
         return resp.getData();
     }
 
@@ -1539,11 +1555,12 @@ public class ConfigServiceApi {
      * @param maxTotalSize  (optional)
      * @param maxSizePerFile  (optional)
      * @param ignoreFilesGreaterThan  (optional)
+     * @param nodeDeletedStrategy  (optional, default to KeepAll)
      * @return ApiResponse&lt;TreeVersioningPolicy&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<TreeVersioningPolicy> getVersioningPolicyWithHttpInfo(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan) throws ApiException {
-        com.squareup.okhttp.Call call = getVersioningPolicyValidateBeforeCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, null, null);
+    public ApiResponse<TreeVersioningPolicy> getVersioningPolicyWithHttpInfo(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, String nodeDeletedStrategy) throws ApiException {
+        com.squareup.okhttp.Call call = getVersioningPolicyValidateBeforeCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, nodeDeletedStrategy, null, null);
         Type localVarReturnType = new TypeToken<TreeVersioningPolicy>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1559,11 +1576,12 @@ public class ConfigServiceApi {
      * @param maxTotalSize  (optional)
      * @param maxSizePerFile  (optional)
      * @param ignoreFilesGreaterThan  (optional)
+     * @param nodeDeletedStrategy  (optional, default to KeepAll)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getVersioningPolicyAsync(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, final ApiCallback<TreeVersioningPolicy> callback) throws ApiException {
+    public com.squareup.okhttp.Call getVersioningPolicyAsync(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, String nodeDeletedStrategy, final ApiCallback<TreeVersioningPolicy> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1584,7 +1602,7 @@ public class ConfigServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getVersioningPolicyValidateBeforeCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getVersioningPolicyValidateBeforeCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, nodeDeletedStrategy, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<TreeVersioningPolicy>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

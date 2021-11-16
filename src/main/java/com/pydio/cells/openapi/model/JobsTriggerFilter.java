@@ -20,76 +20,77 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.ServiceQuery;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * InstallCheckResult
+ * JobsTriggerFilter
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
-public class InstallCheckResult {
-  @SerializedName("Name")
-  private String name = null;
+public class JobsTriggerFilter {
+  @SerializedName("Label")
+  private String label = null;
 
-  @SerializedName("Success")
-  private Boolean success = null;
+  @SerializedName("Description")
+  private String description = null;
 
-  @SerializedName("JsonResult")
-  private String jsonResult = null;
+  @SerializedName("Query")
+  private ServiceQuery query = null;
 
-  public InstallCheckResult name(String name) {
-    this.name = name;
+  public JobsTriggerFilter label(String label) {
+    this.label = label;
     return this;
   }
 
    /**
-   * Get name
-   * @return name
+   * Get label
+   * @return label
   **/
   @ApiModelProperty(value = "")
-  public String getName() {
-    return name;
+  public String getLabel() {
+    return label;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
-  public InstallCheckResult success(Boolean success) {
-    this.success = success;
+  public JobsTriggerFilter description(String description) {
+    this.description = description;
     return this;
   }
 
    /**
-   * Get success
-   * @return success
+   * Get description
+   * @return description
   **/
   @ApiModelProperty(value = "")
-  public Boolean isSuccess() {
-    return success;
+  public String getDescription() {
+    return description;
   }
 
-  public void setSuccess(Boolean success) {
-    this.success = success;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
-  public InstallCheckResult jsonResult(String jsonResult) {
-    this.jsonResult = jsonResult;
+  public JobsTriggerFilter query(ServiceQuery query) {
+    this.query = query;
     return this;
   }
 
    /**
-   * Get jsonResult
-   * @return jsonResult
+   * Get query
+   * @return query
   **/
   @ApiModelProperty(value = "")
-  public String getJsonResult() {
-    return jsonResult;
+  public ServiceQuery getQuery() {
+    return query;
   }
 
-  public void setJsonResult(String jsonResult) {
-    this.jsonResult = jsonResult;
+  public void setQuery(ServiceQuery query) {
+    this.query = query;
   }
 
 
@@ -101,26 +102,26 @@ public class InstallCheckResult {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    InstallCheckResult installCheckResult = (InstallCheckResult) o;
-    return Objects.equals(this.name, installCheckResult.name) &&
-        Objects.equals(this.success, installCheckResult.success) &&
-        Objects.equals(this.jsonResult, installCheckResult.jsonResult);
+    JobsTriggerFilter jobsTriggerFilter = (JobsTriggerFilter) o;
+    return Objects.equals(this.label, jobsTriggerFilter.label) &&
+        Objects.equals(this.description, jobsTriggerFilter.description) &&
+        Objects.equals(this.query, jobsTriggerFilter.query);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, success, jsonResult);
+    return Objects.hash(label, description, query);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class InstallCheckResult {\n");
+    sb.append("class JobsTriggerFilter {\n");
     
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    success: ").append(toIndentedString(success)).append("\n");
-    sb.append("    jsonResult: ").append(toIndentedString(jsonResult)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -20,6 +20,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeChangeEvent;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,7 +29,7 @@ import java.io.IOException;
 /**
  * TreeChangeLog
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-06-01T06:29:01.792+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-16T07:08:43.163+01:00")
 public class TreeChangeLog {
   @SerializedName("Uuid")
   private String uuid = null;
@@ -50,6 +51,9 @@ public class TreeChangeLog {
 
   @SerializedName("Event")
   private TreeNodeChangeEvent event = null;
+
+  @SerializedName("Location")
+  private TreeNode location = null;
 
   public TreeChangeLog uuid(String uuid) {
     this.uuid = uuid;
@@ -177,6 +181,24 @@ public class TreeChangeLog {
     this.event = event;
   }
 
+  public TreeChangeLog location(TreeNode location) {
+    this.location = location;
+    return this;
+  }
+
+   /**
+   * Get location
+   * @return location
+  **/
+  @ApiModelProperty(value = "")
+  public TreeNode getLocation() {
+    return location;
+  }
+
+  public void setLocation(TreeNode location) {
+    this.location = location;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -193,12 +215,13 @@ public class TreeChangeLog {
         Objects.equals(this.size, treeChangeLog.size) &&
         Arrays.equals(this.data, treeChangeLog.data) &&
         Objects.equals(this.ownerUuid, treeChangeLog.ownerUuid) &&
-        Objects.equals(this.event, treeChangeLog.event);
+        Objects.equals(this.event, treeChangeLog.event) &&
+        Objects.equals(this.location, treeChangeLog.location);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, description, mtime, size, Arrays.hashCode(data), ownerUuid, event);
+    return Objects.hash(uuid, description, mtime, size, Arrays.hashCode(data), ownerUuid, event, location);
   }
 
 
@@ -214,6 +237,7 @@ public class TreeChangeLog {
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    ownerUuid: ").append(toIndentedString(ownerUuid)).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
+    sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("}");
     return sb.toString();
   }
