@@ -24,8 +24,6 @@ import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 import com.squareup.okhttp.OkHttpClient;
 
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -411,13 +409,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-    @Override
-    public JSONObject userInfo() throws SDKException {
-        // FIXME really ?
-        RestFrontSessionRequest request = new RestFrontSessionRequest();
-        request.setLogout(true);
-        return null;
-    }
+//    @Override
+//    public JSONObject userInfo() throws SDKException {
+//        // FIXME really ?
+//        RestFrontSessionRequest request = new RestFrontSessionRequest();
+//        request.setLogout(true);
+//        return null;
+//    }
 
 //    @Override
 //    @Deprecated

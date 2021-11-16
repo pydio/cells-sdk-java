@@ -104,11 +104,12 @@ dependencies {
 
     // Used to store info as gson blobs in SQLite 
     implementation 'io.gsonfire:gson-fire:1.8.5'
-    // Old library that is used to manipulate JSON objects
-    implementation 'com.metaparadigm:json-rpc:1.0'
+    // Very old library that has been used to implement dirty shortcuts while manipulating JSON.
+    // TODO clean the code (mainly the Client and Transport classes) and remove.
+       implementation 'com.metaparadigm:json-rpc:1.0'
 
-    // Can we switch from swagger-codegen v2 to branch v3 ? 
-    // This is necessary to update okhttp to the more recent okhttp3 (v3, v4) libraries
+    // We cannot update okhttp to the more recent okhttp3 (v3, v4) libraries
+    // until we switch to OpenAPI v3 in the main Cells API spec. 
     // See this similar issue: https://github.com/launchdarkly/api-client-java/issues/8
     // implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.squareup.okhttp:okhttp:2.7.5'
