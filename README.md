@@ -20,7 +20,6 @@ Useful commands:
 
 # Publish to local maven repo
 ./gradlew publishToMavenLocal
-
 ```
 
 ## Remote server
@@ -30,7 +29,7 @@ A remote server is completely defined by a ServerURL. It wraps the validated URL
 - a skipVerify flag to violently skip all TLS layers
 - [TODO] a reference to untrusted certificates that have been explicitly accepted by the caller
 
-A successfull call to the `ServerURL.ping()` method insure we perform HTTP requests to this address, with no SSL issue and have a valid ServerURL.
+A successful call to the `ServerURL.ping()` method insure we perform HTTP requests to this address, with no SSL issue and have a valid ServerURL.
 
 Given a valid ServerURL, the ServerFactory:
 
@@ -62,32 +61,30 @@ To see some sample code on how to manage this, please refer to the cells-java-cl
 ## Example
 
 ```groovy
-TestClientFactory factory = new TestClientFactory();
-ServerURL serverURL = ServerURLImpl.fromAddress("https://localhost:8080", true);
-Credentials credentials = new LegacyPasswordCredentials("user", "password");
+TestClientFactory factory = new TestClientFactory()
+ServerURL serverURL = ServerURLImpl.fromAddress("https://localhost:8080", true)
+Credentials credentials = new LegacyPasswordCredentials("user", "password")
 
-String accountID = factory.registerAccountCredentials(serverURL, credentials);
-Transport transport = factory.getTransport(accountID);
+String accountID = factory.registerAccountCredentials(serverURL, credentials)
+Transport transport = factory.getTransport(accountID)
 
-/* Use the simplified client*/
-
-Client client = factory.getClient(transport);
-client.mkdir("common-files", "/parent", "child");
+/* Use the simplified client */
+Client client = factory.getClient(transport)
+client.mkdir("common-files", "/parent", "child")
 
 
 /* Directly use the generated API (Cells only) */
-
 // Authentication is auto-magically handled by the transport 
 // as long as it has been previously registered
-ApiClient apiClient = ((CellsTransport) transport).authenticatedClient();
-TreeServiceApi api = new TreeServiceApi(apiClient);
+ApiClient apiClient = ((CellsTransport) transport).authenticatedClient()
+TreeServiceApi api = new TreeServiceApi(apiClient)
 // Build the request
-RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
-request.addNodePathsItem("common-files/parent/child");
-request.setAllMetaProviders(true);
+RestGetBulkMetaRequest request = new RestGetBulkMetaRequest()
+request.addNodePathsItem("common-files/parent/child")
+request.setAllMetaProviders(true)
 // Performs the request and handle result
-RestBulkMetaResponse response = api.bulkStatNodes(request);
-TreeNode node = response.getNodes().get(0); 
+RestBulkMetaResponse response = api.bulkStatNodes(request)
+TreeNode node = response.getNodes().get(0)
 ```
 
 Refer to the included tests for more examples.

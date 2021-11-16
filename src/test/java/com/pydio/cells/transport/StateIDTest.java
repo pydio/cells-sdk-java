@@ -82,6 +82,7 @@ public class StateIDTest {
         Assert.assertNull(stateID.getPath());
         Assert.assertEquals(url, stateID.getServerUrl());
 
+        //noinspection ConstantConditions
         stateID = StateID.fromId(null);
         Assert.assertNull(stateID);
         stateID = StateID.fromId("");
