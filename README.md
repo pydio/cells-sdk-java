@@ -43,9 +43,9 @@ Authentication is managed at the transport layer. When you call `transport.getTo
 
 - a token is retrieved from its internal cache
 - it is refreshed if necessary
-- if no token have been found the transport look for persisted credentials and tries to get a token.
+- if no token have been found, the transport searches for persisted credentials and tries to get a token.
 
-To retrieve a transport, you must first register an account via the ServerFactory by providing a valid ServerURL and credentials, that can be:
+To get a transport, you must first register an account via the ServerFactory by providing a valid ServerURL and credentials, that can be:
 
 - JWTCredentials: wraps a JWT Token
 - LegacyPasswordCredentials: wraps a valid password of a Cells user (warning: this is dangerous)
@@ -94,7 +94,7 @@ Refer to the included tests for more examples.
 
 ## Testing
 
-At this layer we provide basic unit test for the few classes that need it most, typically to insure encoding / decoding of the StateID is OK.
+At this layer we provide basic unit test for the few classes that need it most, typically to insure encoding/decoding of the StateID is OK.
 
 We have also implemented basic integration tests that need a target server.
 You can configure the various `src/test/resources/accounts` property files to point toward your test instances. Then simply run:

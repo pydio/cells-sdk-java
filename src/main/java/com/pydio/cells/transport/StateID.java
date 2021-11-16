@@ -134,7 +134,6 @@ public class StateID {
 
     // Not perfect: Might have side effects when switching from plain Java to Android
     // TODO find a elegant way to rather inject the CustomEncoder
-
     private static String utf8Encode(String value) {
         try {
             return URLEncoder.encode(value, "UTF-8");

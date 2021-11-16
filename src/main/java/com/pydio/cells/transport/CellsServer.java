@@ -38,7 +38,6 @@ public class CellsServer implements Server {
         this.serverURL = serverURL;
     }
 
-
     @Override
     public Server init() throws SDKException {
         return refresh(true);
@@ -166,10 +165,8 @@ public class CellsServer implements Server {
             con = oidcURL.openConnection();
             con.setRequestMethod("GET");
             in = con.getInputStream();
-            // long totalRead = IoHelpers.pipeRead(in, out);
             IoHelpers.pipeRead(in, out);
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-//            JSONObject oidcJson = new JSONObject(oidcStr);
             authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
         } catch (Exception e) {
             Log.w("Initialisation", "Unexpected error while retrieving OIDC configuration"

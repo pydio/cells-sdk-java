@@ -48,7 +48,8 @@ public class ServerURLImpl implements ServerURL {
     };
 
     private final URL url;
-    // To Manage self-signed servers
+
+    // Self-signed servers management
     private final boolean skipVerify;
     private byte[][] certificateChain;
     private SSLContext sslContext;
@@ -235,7 +236,6 @@ public class ServerURLImpl implements ServerURL {
             throw new RuntimeException("Unexpected error while initializing SSL context", e);
         }
     }
-
 
     private void setAcceptAllVerifier(HttpsURLConnection connection) {
         try {
