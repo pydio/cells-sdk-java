@@ -235,7 +235,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public void previewData(FileNode node, int dim, OutputStream out) throws SDKException {
+    public void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException {
         String thumbPath = getThumbPath(node, dim);
         if (thumbPath == null){
             throw new SDKException(ErrorCodes.not_found, "No thumbnail is defined for this resource", new IOException());
@@ -757,17 +757,13 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public JSONObject shareInfo(String ws, String shareID) throws SDKException {
+    public String getShareAddress(String ws, String shareID) throws SDKException {
         ShareServiceApi api = new ShareServiceApi(authenticatedClient());
         try {
             RestShareLink link = api.getShareLink(shareID);
-            Gson gs = new Gson();
-            String jsonString = gs.toJson(link);
-            return new JSONObject(jsonString);
+            return transport.getServer().url() + link;
         } catch (ApiException e) {
             throw new SDKException(e);
-        } catch (ParseException e) {
-            throw SDKException.unexpectedContent(e);
         }
     }
 
