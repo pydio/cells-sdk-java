@@ -8,13 +8,13 @@ import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface Client {
+
+    boolean isLegacy();
 
     Registry getDefaultRegistry() throws SDKException;
 
@@ -22,31 +22,17 @@ public interface Client {
 
     void workspaceList(NodeHandler handler) throws SDKException;
 
-    PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException;
-
     Message mkdir(String ws, String parent, String name) throws SDKException;
+
+    PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException;
 
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
-    void previewData(FileNode node, int dim, OutputStream out) throws SDKException;
-
     Stats stats(String ws, String file, boolean withHash) throws SDKException;
 
+    void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException;
+
     void search(String ws, String dir, String searched, NodeHandler h) throws SDKException;
-
-    Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
-
-    Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
-
-    String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException;
-
-    long download(String ws, String file, OutputStream target, ProgressListener progressListener) throws SDKException;
-
-    long download(String ws, String file, File target, ProgressListener progressListener) throws SDKException;
-
-    String downloadPath(String ws, String file) throws SDKException;
-
-    long changes(String ws, String folder, int seq, boolean flatten, ChangeHandler changeHandler) throws SDKException;
 
     Message copy(String ws, String[] files, String folder) throws SDKException;
 
@@ -59,6 +45,18 @@ public interface Client {
     Message restore(String ws, String[] files) throws SDKException;
 
     Message emptyRecycleBin(String ws) throws SDKException;
+
+    Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
+
+    Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
+
+    String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException;
+
+    long download(String ws, String file, OutputStream target, ProgressListener progressListener) throws SDKException;
+
+    long download(String ws, String file, File target, ProgressListener progressListener) throws SDKException;
+
+    String downloadPath(String ws, String file) throws SDKException;
 
     String streamingAudioURL(String ws, String file) throws SDKException;
 
@@ -74,8 +72,7 @@ public interface Client {
 
     void unshare(String ws, String file) throws SDKException;
 
-    JSONObject shareInfo(String ws, String file) throws SDKException;
+    String getShareAddress(String ws, String file) throws SDKException;
 
-    boolean isLegacy();
-
+    long changes(String ws, String folder, int seq, boolean flatten, ChangeHandler changeHandler) throws SDKException;
 }

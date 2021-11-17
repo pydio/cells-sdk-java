@@ -39,6 +39,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -595,7 +596,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public void previewData(FileNode node, int dim, OutputStream out) throws SDKException {
+    public void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.previewImage(node.getWorkspaceSlug(), node.getPath());
         builder = transport.withAuth(builder);
         P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
@@ -840,8 +841,9 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public JSONObject shareInfo(String ws, String file) throws SDKException {
-        // loadSecureToken();
+    public String getShareAddress(String ws, String file) throws SDKException {
+        String linkAddress = null;
+
         P8RequestBuilder builder = P8RequestBuilder.shareInfo(ws, file);
         builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
@@ -849,11 +851,23 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
             try {
-                return rsp.toJSON();
+                JSONObject json = rsp.toJSON();
+                if (json.has("LinkUrl")) {
+                    return json.getString("LinkUrl");
+                } else {
+                    JSONObject links = json.getJSONObject("links");
+                    Iterator<String> it = links.keys();
+                    while (it.hasNext()) {
+                        String key = it.next();
+                        JSONObject linkDetails = links.getJSONObject(key);
+                        linkAddress = linkDetails.getString("public_link");
+                    }
+                }
             } catch (Exception e) {
                 throw SDKException.unexpectedContent(e);
             }
         }
+        return linkAddress;
     }
 
     @Override
