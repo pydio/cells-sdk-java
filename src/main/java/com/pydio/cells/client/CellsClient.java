@@ -740,7 +740,7 @@ public class CellsClient implements Client, SdkNames {
 
         try {
             RestShareLink link = api.putShareLink(request);
-            return link.getLinkUrl();
+            return transport.getServer().url() + link.getLinkUrl();
         } catch (ApiException e) {
             throw new SDKException(e);
         }
@@ -761,7 +761,7 @@ public class CellsClient implements Client, SdkNames {
         ShareServiceApi api = new ShareServiceApi(authenticatedClient());
         try {
             RestShareLink link = api.getShareLink(shareID);
-            return transport.getServer().url() + link;
+            return transport.getServer().url() + link.getLinkUrl();
         } catch (ApiException e) {
             throw new SDKException(e);
         }
