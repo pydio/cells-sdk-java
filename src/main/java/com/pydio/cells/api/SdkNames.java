@@ -11,8 +11,15 @@ public interface SdkNames {
     String DEFAULT_CLIENT_ID = "cells-client";
     String DEFAULT_CLIENT_SECRET = "";
 
-    String XML_MESSAGE = "message";
+    // TODO these 2 properties should rather be lower cased
+    // But this would necessitate a migration of the cache
     String NODE_PROPERTY_UUID = "Uuid";
+    String NODE_PROPERTY_SHARE_UUID = "share_Uuid";
+    //    String NODE_PROPERTY_UUID = "uuid";
+    //    String NODE_PROPERTY_SHARE_UUID = "share_uuid";
+
+
+    String XML_MESSAGE = "message";
     String NODE_PROPERTY_ENCODED = "encoded";
     String NODE_PROPERTY_ENCODING = "encoding";
     String NODE_PROPERTY_ENCODED_HASH = "encoded_hash";
@@ -24,7 +31,6 @@ public interface SdkNames {
     String NODE_PROPERTY_AJXP_SHARED = "ajxp_shared";
     String NODE_PROPERTY_AJXP_BOOKMARKED = "ajxp_bookmarked";
     String NODE_PROPERTY_SHARE_JSON_INFO = "share_json_info";
-    String NODE_PROPERTY_SHARE_UUID = "share_Uuid";
     String NODE_PROPERTY_META_JSON_ENCODED = "meta_encoded";
     String NODE_PROPERTY_JSON_ENCODED = "encoded";
     String NODE_PROPERTY_AJXP_MODIFTIME = "ajxp_modiftime";

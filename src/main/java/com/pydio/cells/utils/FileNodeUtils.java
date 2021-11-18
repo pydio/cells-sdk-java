@@ -30,6 +30,7 @@ public class FileNodeUtils {
         String path = pathFromTreeNodePath(tnPath);
         String name = nameFromTreeNodePath(tnPath);
 
+        result.setProperty(SdkNames.NODE_PROPERTY_ETAG,node.getEtag());
         result.setProperty(SdkNames.NODE_PROPERTY_UUID, node.getUuid());
         result.setProperty(SdkNames.NODE_PROPERTY_WORKSPACE_SLUG, slug);
         result.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
@@ -53,6 +54,7 @@ public class FileNodeUtils {
                 String shareUUID = shareWs.getString("UUID");
                 result.setProperty(SdkNames.NODE_PROPERTY_SHARE_UUID, shareUUID);
             } catch (ParseException ignored) {
+                // TODO we should not ignore errors...
             }
         }
 
@@ -101,6 +103,7 @@ public class FileNodeUtils {
             }
         }
 
+        // TODO but why do we duplicate the info here, why???
         String encoded = new Gson().toJson(node);
         result.setProperty(SdkNames.NODE_PROPERTY_ENCODED, encoded);
         result.setProperty(SdkNames.NODE_PROPERTY_ENCODING, "gson");
@@ -134,6 +137,6 @@ public class FileNodeUtils {
     }
 
     public static String toTreeNodePath(String ws, String path) {
-        return new StringBuilder(ws).append(path).toString();
+        return ws + path;
     }
 }
