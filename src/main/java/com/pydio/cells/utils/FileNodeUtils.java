@@ -17,33 +17,32 @@ public class FileNodeUtils {
 
     public static FileNode toFileNode(TreeNode node) {
 
+        FileNode result = new FileNodeImpl();
+
         String uuid = node.getUuid();
         if (uuid == null) {
             return null;
         }
+        String treeNodePath = node.getPath();
 
-        FileNode result = new FileNodeImpl();
-        String tnPath = node.getPath();
-        Map<String, String> meta = node.getMetaStore();
-
-        String slug = slugFromTreeNodePath(tnPath);
-        String path = pathFromTreeNodePath(tnPath);
-        String name = nameFromTreeNodePath(tnPath);
+        String slug = slugFrom(treeNodePath);
+        String path = pathFrom(treeNodePath);
+        String name = nameFrom(treeNodePath);
 
         result.setProperty(SdkNames.NODE_PROPERTY_ETAG,node.getEtag());
         result.setProperty(SdkNames.NODE_PROPERTY_UUID, node.getUuid());
         result.setProperty(SdkNames.NODE_PROPERTY_WORKSPACE_SLUG, slug);
         result.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
-        result.setProperty(SdkNames.NODE_PROPERTY_FILENAME, path);
+        result.setProperty(SdkNames.NODE_PROPERTY_FILENAME, name);
+        result.setProperty(SdkNames.NODE_PROPERTY_IS_FILE, String.valueOf(node.getType() == TreeNodeType.LEAF));
 
         result.setProperty(SdkNames.NODE_PROPERTY_TEXT, name);
         result.setProperty(SdkNames.NODE_PROPERTY_LABEL, name);
 
-        boolean isFile = node.getType() == TreeNodeType.LEAF;
-        result.setProperty(SdkNames.NODE_PROPERTY_IS_FILE, String.valueOf(isFile));
-
+        Map<String, String> meta = node.getMetaStore();
         result.setProperty(SdkNames.NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
-        String isImage = meta.get("is_image") == null ? "false" : meta.get("is_image");
+
+        boolean isImage = "true".equals(meta.get("is_image"));
         String ws_shares = meta.get("workspaces_shares");
         if (ws_shares != null) {
             result.setProperty(SdkNames.NODE_PROPERTY_AJXP_SHARED, "true");
@@ -59,19 +58,29 @@ public class FileNodeUtils {
         }
 
         String bookmark = meta.get("bookmark");
-        if (bookmark != null && bookmark.length() > 0) {
-            //  TODO why do we need to sanitize this way?
-            result.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
-        }
-
-        String nodeSize = node.getSize();
-        if (nodeSize == null) {
-            if (!isFile) {
-                result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, "4096");
+        if (Str.notEmpty(bookmark)) {
+            if ("true".equals(bookmark)){
+                result.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark);
+            } else {
+                //  TODO check with P8 and finalize clean
+                Log.e("SKD/SERIALIZATION", "Got an unexpected value for bookmark meta of "+node.getPath()+": "+ bookmark);
+                result.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
             }
-        } else {
-            result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, nodeSize);
         }
+//        if (node.getType() != TreeNodeType.LEAF) {
+//            System.out.println("Here");
+//        }
+
+        // TODO why we had "4096 as default rather than a null value?
+        result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, node.getSize());
+//        String nodeSize = node.getSize();
+//        if (nodeSize == null) {
+//            if (!isFile) {
+//                result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, "4096");
+//            }
+//        } else {
+//            result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, nodeSize);
+//        }
 
         result.setProperty(SdkNames.NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
         String mtime = node.getMtime();
@@ -79,8 +88,8 @@ public class FileNodeUtils {
             result.setProperty(SdkNames.NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
         }
 
-        result.setProperty(SdkNames.NODE_PROPERTY_IS_IMAGE, isImage);
-        if (isImage.equals("true")) {
+        result.setProperty(SdkNames.NODE_PROPERTY_IS_IMAGE, String.valueOf(isImage));
+        if (isImage) {
             result.setProperty(SdkNames.NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_width"));
             result.setProperty(SdkNames.NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
             try {
@@ -119,16 +128,16 @@ public class FileNodeUtils {
         return path.substring(index + 1);
     }
 
-    public static String nameFromTreeNodePath(String path) {
-        return path.substring(path.lastIndexOf("/") + 1);
+    private static String nameFrom(String treeNodePath) {
+        return treeNodePath.substring(treeNodePath.lastIndexOf("/") + 1);
     }
 
-    public static String slugFromTreeNodePath(String path) {
-        return path.substring(0, path.indexOf("/"));
+    private static String slugFrom(String treeNodePath) {
+        return treeNodePath.substring(0, treeNodePath.indexOf("/"));
     }
 
-    public static String pathFromTreeNodePath(String path) {
-        String[] parts = path.substring(path.indexOf("/") + 1).split("/");
+    private static String pathFrom(String treeNodePath) {
+        String[] parts = treeNodePath.substring(treeNodePath.indexOf("/") + 1).split("/");
         StringBuilder pathBuilder = new StringBuilder();
         for (String part : parts) {
             pathBuilder.append("/").append(part);
