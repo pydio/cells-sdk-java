@@ -40,10 +40,13 @@ java -jar swagger-codegen-cli.jar help generate
 
 ### Various
 
+A list of random resources on the _WWW_ that have helped along the way and are kept here for reference.
+
 - We use git submodules to ease day-to-day development work, see [this interesting post](https://blog.bitsrc.io/how-to-utilize-submodules-within-git-repos-5dfdd1c62d09)
+- A [must read](https://auth0.com/docs/flows/call-your-api-using-the-authorization-code-flow) to understand how we manage authentication when target remote server is a Pydio Cells instance.
 
 ### Temporary Tips
 
 #### For refactoring
 
-- We might want to change the package that is used by the swagger generated model and rename packages in a future proof way. We will go trough a temporar phase where we put generated methods at 2 distinct locations while deprecating the legacy one. Some solution can be found in [this stackoverflow question](https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java).
+- We might want to change the package that is used by the swagger generated model and rename packages in a future proof way. We will go trough a temporary phase where we put generated methods at 2 distinct locations while deprecating the legacy one. Some solution can be found in [this stackoverflow question](https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java).
