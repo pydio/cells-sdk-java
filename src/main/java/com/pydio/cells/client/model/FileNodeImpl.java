@@ -14,7 +14,10 @@ public class FileNodeImpl implements FileNode, SdkNames {
 
     @Override
     public boolean isImage() {
-        return Boolean.parseBoolean(properties.getProperty(NODE_PROPERTY_IS_IMAGE))
+        return
+                // Cells
+                Boolean.parseBoolean(properties.getProperty(NODE_PROPERTY_IS_IMAGE))
+                // P8
                 || "1".equals(properties.getProperty(NODE_PROPERTY_IS_IMAGE));
     }
 

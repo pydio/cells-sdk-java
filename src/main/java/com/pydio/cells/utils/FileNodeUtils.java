@@ -15,6 +15,11 @@ import java.util.Map;
 
 public class FileNodeUtils {
 
+    /**
+     * Simply convert a Cells API TreeNode to our local FileNode object.
+     * This is the central point for all dirty tweaks to go on supporting
+     * Pydio8 (and the legacy code).
+     */
     public static FileNode toFileNode(TreeNode node) {
 
         FileNode result = new FileNodeImpl();
@@ -29,7 +34,7 @@ public class FileNodeUtils {
         String path = pathFrom(treeNodePath);
         String name = nameFrom(treeNodePath);
 
-        result.setProperty(SdkNames.NODE_PROPERTY_ETAG,node.getEtag());
+        result.setProperty(SdkNames.NODE_PROPERTY_ETAG, node.getEtag());
         result.setProperty(SdkNames.NODE_PROPERTY_UUID, node.getUuid());
         result.setProperty(SdkNames.NODE_PROPERTY_WORKSPACE_SLUG, slug);
         result.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
@@ -39,10 +44,16 @@ public class FileNodeUtils {
         result.setProperty(SdkNames.NODE_PROPERTY_TEXT, name);
         result.setProperty(SdkNames.NODE_PROPERTY_LABEL, name);
 
+        result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, node.getSize());
+        result.setProperty(SdkNames.NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
+        String mTime = node.getMtime();
+        if (mTime != null) {
+            result.setProperty(SdkNames.NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
+        }
+
         Map<String, String> meta = node.getMetaStore();
         result.setProperty(SdkNames.NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
 
-        boolean isImage = "true".equals(meta.get("is_image"));
         String ws_shares = meta.get("workspaces_shares");
         if (ws_shares != null) {
             result.setProperty(SdkNames.NODE_PROPERTY_AJXP_SHARED, "true");
@@ -59,21 +70,10 @@ public class FileNodeUtils {
 
         String bookmark = meta.get("bookmark");
         if (Str.notEmpty(bookmark)) {
-            if ("true".equals(bookmark)){
-                result.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark);
-            } else {
-                //  TODO check with P8 and finalize clean
-                Log.e("SKD/SERIALIZATION", "Got an unexpected value for bookmark meta of "+node.getPath()+": "+ bookmark);
-                result.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
-            }
-        }
-        result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, node.getSize());
-        result.setProperty(SdkNames.NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
-        String mtime = node.getMtime();
-        if (mtime != null) {
-            result.setProperty(SdkNames.NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
+            result.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark);
         }
 
+        boolean isImage = "true".equals(meta.get("is_image"));
         result.setProperty(SdkNames.NODE_PROPERTY_IS_IMAGE, String.valueOf(isImage));
         if (isImage) {
             result.setProperty(SdkNames.NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_width"));
