@@ -13,12 +13,13 @@ public class Log {
     public static final String TAG_DB = "CELLS/DB";
     public static final String TAG_BACKEND = "CELLS/BE";
     public static final String TAG_SDK = "CELLS/SDK";
+    public static final String TAG_SYNC = "CELLS/SYNC";
+
+    private static Logger logger;
 
     public static void setLogger(Logger l) {
         logger = l;
     }
-
-    private static Logger logger;
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
