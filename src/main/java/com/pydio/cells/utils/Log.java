@@ -14,6 +14,7 @@ public class Log {
     public static final String TAG_BACKEND = "CELLS/BE";
     public static final String TAG_SDK = "CELLS/SDK";
     public static final String TAG_SYNC = "CELLS/SYNC";
+    public static final String TAG_TASK = "CELLS/TASK";
 
     private static Logger logger;
 
