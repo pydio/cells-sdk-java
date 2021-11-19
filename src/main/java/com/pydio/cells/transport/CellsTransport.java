@@ -133,15 +133,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return token;
     }
 
-    //    public Token unlock(Credentials credentials) throws SDKException {
-//        if (credentials instanceof  PasswordCredentials){
-//            return legacyLogin((PasswordCredentials) credentials);
-//        } else {
-//            throw new SDKException("Unsupported credential type: "+ credentials.getClass().getCanonicalName());
-//        }
-//    }
-
-
     @Override
     public InputStream getUserData(String binary) {
         // FIXME  implement
@@ -285,7 +276,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
-            Log.i("Login", "Retrieving token from OAuth2 code");
+            Log.i("SDK/LOGIN", "Retrieving token from OAuth2 code");
 
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
@@ -408,129 +399,5 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             }
         }
     }
-
-//    @Override
-//    public JSONObject userInfo() throws SDKException {
-//        // FIXME really ?
-//        RestFrontSessionRequest request = new RestFrontSessionRequest();
-//        request.setLogout(true);
-//        return null;
-//    }
-
-//    @Override
-//    @Deprecated
-//    public void setCredentials(Credentials credentials) throws SDKException {
-//        // This should not be used by a Cells transport
-//        throw new SDKException("Directly setting credentials on a Cells transport is prohibited");
-//    }
-
-//    public CustomEncoder getEncoder() {
-//        return encoder;
-//    }
-
-
-//    private static SDKException fromApiException(ApiException e) {
-//        int code = ErrorCodes.fromHttpStatus(e.getCode());
-//        return new SDKException(code, e);
-//    }
-//
-//
-//    /**
-//     * This is necessary until min version is 24: we cannot use the consumer pattern:
-//     * public void listChildren(String fullPath, Consumer<TreeNode> consumer) throws SDKException {
-//     * ... consumer.onNode(nodes.next());
-//     */
-//    public interface TreeNodeHandler {
-//        void onNode(TreeNode node);
-//    }
-
-    //    private Token refresh(Token t) throws SDKException {
-//        Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
-//
-//        HttpRequest request = new HttpRequest();
-//        Params params = Params.create("grant_type", "refresh_token").set("refresh_token", t.refreshToken);
-//        request.setParams(params);
-//
-//        OAuthConfig cfg = server.getOAuthConfig();
-//
-//        // String auth = JavaCustomEncoder.base64Encode(cfg.clientID + ":" + cfg.clientSecret);
-//
-//        Base64 base64 = new Base64();
-//        String auth = new String(base64.encode((cfg.clientID + ":" + cfg.clientSecret).getBytes()));
-//
-//        request.setHeaders(Params.create("Authorization", "Basic " + auth));
-//        request.setEndpoint(cfg.tokenEndpoint);
-//        request.setMethod("POST");
-//
-//        HttpResponse response;
-//        try {
-//            response = HttpClient.request(request);
-//        } catch (Exception e) {
-//            Log.w("Token Service", " token request failed: " + e.getLocalizedMessage());
-//            throw new SDKException(ErrorCodes.con_failed);
-//        }
-//
-//        String jwt;
-//        try {
-//            jwt = response.getString();
-//        } catch (IOException e) {
-//            Log.e("Refresh Token Service", "Could not get response string body: " + e.getLocalizedMessage());
-//            e.printStackTrace();
-//            throw new SDKException(ErrorCodes.no_token_available, new IOException("refresh token failed"));
-//        }
-//
-////        try {
-////            t = Token.decodeOAuthJWT(jwt);
-////        } catch (ParseException e) {
-////            Log.e("Refresh Token Service", "Could not parse refreshed token: " + jwt + ". " + e.getLocalizedMessage());
-////            throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
-////        }
-////
-////        IdToken parsedIDToken;
-////        parsedIDToken = com.pydio.sdk.core.auth.jwt.IdToken.parse(t.idToken);
-////        if (parsedIDToken == null) {
-////            throw new SDKException(Code.no_token_available);
-////        }
-////
-////        t.subject = String.format("%s@%s", parsedIDToken.claims.name, server.url());
-////        t.expiry = System.currentTimeMillis() / 1000 + t.expiry;
-////        this.store.save(t);
-////        return t;
-//        return null;
-//    }
-
-    //   @Override
-    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-//
-    //       HttpURLConnection con;
-    //       InputStream in;
-    //       SAXParserFactory factory = SAXParserFactory.newInstance();
-    //       try {
-    //           con = openAnonApiConnection("/frontend/state/?ws=" + ws);
-    //           con.setRequestMethod("GET");
-    //           in = con.getInputStream();
-    //           SAXParser parser = factory.newSAXParser();
-    //           parser.parse(in, new RegistrySaxHandler(itemHandler));
-    //       } catch (Exception e) {
-    //           e.printStackTrace();
-    //           throw SDKException.unexpectedContent(e);
-    //       } finally {
-    //           // io.close(in);
-    //       }
-    //   }
-
-
-    //   @Override
-    //   public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-    //       HttpURLConnection con;
-    //       InputStream in;
-    //       try {
-    //           con = openApiConnection("/frontend/state/?ws=" + ws);
-    //           con.setRequestMethod("GET");
-    //           return con.getInputStream();
-    //       } catch (IOException e) {
-    //           throw SDKException.conFailed(e);
-    //       }
-    //   }
 
 }

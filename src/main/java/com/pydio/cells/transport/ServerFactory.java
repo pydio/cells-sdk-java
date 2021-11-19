@@ -237,34 +237,4 @@ public class ServerFactory implements IServerFactory {
     public static String accountID(String username, Server server) {
         return accountID(username, server.getServerURL());
     }
-
-    //
-//    @Override
-//    public Transport getTransport(String login, ServerURL serverURL) throws SDKException {
-//
-//        if (transports.containsKey(accountID(login, serverURL))) {
-//            return transports.get(accountID(login, serverURL));
-//        }
-//
-//        Server server = getServer(serverURL.getId());
-//        if (server == null) {
-//            server = register(serverURL);
-//        }
-//
-//        Transport transport;
-//        if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
-//            transport = new CellsTransport(login, server, getEncoder());
-//            ((CellsTransport) transport).restore(tokenService);
-//        } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
-//            transport = new P8Transport(server, login, getEncoder());
-//            ((P8Transport) transport).restore(tokenService);
-//        } else
-//            throw new RuntimeException("Unknown type [" + server.getRemoteType() + "] for " + serverURL.getId());
-//
-//        transports.put(accountID(login, serverURL), transport);
-//
-//        return transport;
-//    }
-
-
 }

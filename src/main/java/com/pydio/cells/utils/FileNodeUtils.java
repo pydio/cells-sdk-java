@@ -67,21 +67,7 @@ public class FileNodeUtils {
                 result.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark.replace("\"\"", "\""));
             }
         }
-//        if (node.getType() != TreeNodeType.LEAF) {
-//            System.out.println("Here");
-//        }
-
-        // TODO why we had "4096 as default rather than a null value?
         result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, node.getSize());
-//        String nodeSize = node.getSize();
-//        if (nodeSize == null) {
-//            if (!isFile) {
-//                result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, "4096");
-//            }
-//        } else {
-//            result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, nodeSize);
-//        }
-
         result.setProperty(SdkNames.NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
         String mtime = node.getMtime();
         if (mtime != null) {

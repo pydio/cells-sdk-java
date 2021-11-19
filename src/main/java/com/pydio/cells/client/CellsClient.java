@@ -240,24 +240,8 @@ public class CellsClient implements Client, SdkNames {
         if (thumbPath == null){
             throw new SDKException(ErrorCodes.not_found, "No thumbnail is defined for this resource", new IOException());
         }
-
-        // Workaround: we cannot directly use the s3 client  in case of a self signed certificate
-//        InputStream in = null;
-//        try {
-//            in = s3Client.getThumb(file);
-//            if (in != null) {
-//                IoHelpers.pipeRead(in, out);
-//            }
-//        } catch (IOException e) {
-//            throw SDKException.conReadFailed(e);
-//        } catch (SDKException e) {
-//            throw e;
-//        } finally {
-//            IoHelpers.closeQuietly(in);
-//        }
         download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, thumbPath, out, null);
     }
-
 
     private String getThumbPath(FileNode currNode, int dim) throws SDKException {
         String thumbsURLs = currNode.getProperty(SdkNames.NODE_PROPERTY_IMAGE_THUMB_PATHS);
@@ -280,7 +264,6 @@ public class CellsClient implements Client, SdkNames {
         }
         return thumbPath;
     }
-
 
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
@@ -358,7 +341,6 @@ public class CellsClient implements Client, SdkNames {
         } catch (MalformedURLException e) { // This should never happen with a pre-signed.
             throw new SDKException(ErrorCodes.internal_error, "Unvalid presigned path: ".concat(presignedURL.getPath()), e);
         }
-
 
         try {
             HttpURLConnection con = transport.withUserAgent(serverUrl.openConnection());
@@ -656,12 +638,9 @@ public class CellsClient implements Client, SdkNames {
         ServiceResourcePolicy ownerPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.OWNER);
         ServiceResourcePolicy readPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.READ);
         ServiceResourcePolicy writePolicy = newPolicy(nodeId, ServiceResourcePolicyAction.WRITE);
-        //ServiceResourcePolicy adminPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.WRITE);
-        //adminPolicy.setSubject("profile:admin");
         userMeta.addPoliciesItem(ownerPolicy);
         userMeta.addPoliciesItem(readPolicy);
         userMeta.addPoliciesItem(writePolicy);
-        //userMeta.addPoliciesItem(adminPolicy);
 
         metas.add(userMeta);
 
