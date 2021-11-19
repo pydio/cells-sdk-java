@@ -2,7 +2,7 @@
 
 The Pydio Cells Java SDK wraps a standard [OpenAPI](https://www.openapis.org) client to communicate with a Pydio Cells server via its REST API.
 
-The client classes are generated with [Swagger](https://swagger.io) for Cells 2.x release train and we provide a transport layer to ease implementation of client application in Java.
+The client classes are generated with [Swagger](https://swagger.io) for Cells v2 and v3 and we provide a transport layer to ease implementation of client application in Java.
 
 This library also provides a Java implementation of a simplified client that can communicate with both a Cells _and_ a legacy Pydio 8 server. We rely on this implementation to develop the Cells Client for Android.
 
@@ -24,10 +24,7 @@ Useful commands:
 
 ## Remote server
 
-A remote server is completely defined by a ServerURL. It wraps the validated URL of a remote server and is also in charge of managing TLS, it holds:
-
-- a skipVerify flag to violently skip all TLS layers
-- [TODO] a reference to untrusted certificates that have been explicitly accepted by the caller
+A remote server is completely defined by a ServerURL. It wraps the validated URL of a remote server and is also in charge of managing TLS, it also holds a skipVerify flag to violently skip all TLS layers.
 
 A successful call to the `ServerURL.ping()` method insure we perform HTTP requests to this address, with no SSL issue and have a valid ServerURL.
 
@@ -42,7 +39,7 @@ Authentication is managed at the transport layer. When you call `transport.getTo
 
 - a token is retrieved from its internal cache
 - it is refreshed if necessary
-- if no token have been found, the transport searches for persisted credentials and tries to get a token.
+- if no token has been found, the transport searches for persisted credentials and tries to get a token.
 
 To get a transport, you must first register an account via the ServerFactory by providing a valid ServerURL and credentials, that can be:
 
@@ -91,7 +88,7 @@ Refer to the included tests for more examples.
 
 ## Testing
 
-At this layer we provide basic unit test for the few classes that need it most, typically to insure encoding/decoding of the StateID is OK.
+At this layer, we provide basic unit test for the few classes that need it most, typically to insure encoding/decoding of the StateID is OK.
 
 We have also implemented basic integration tests that need a target server.
 You can configure the various `src/test/resources/accounts` property files to point toward your test instances. Then simply run:
@@ -99,12 +96,6 @@ You can configure the various `src/test/resources/accounts` property files to po
 ```sh
 ./gradlew test -Dtest.profile=integration
 ```
-
-## References
-
-A list of random resources on the _WWW_ that have helped along the way and are kept here for reference.
-
-- A [must read](https://auth0.com/docs/flows/call-your-api-using-the-authorization-code-flow) to understand how we manage authentication when target remote server is a Pydio Cells instance.
 
 ## Legacy note
 
