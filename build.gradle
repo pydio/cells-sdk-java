@@ -49,13 +49,11 @@ def pomConfig = {
             name "Charles du Jeu"
             email "charles@ajaxplorer.info"
         }
-
         developer {
             id "bsinou"
             name "Bruno Sinou"
             email "bruno.sinou@posteo.de"
         }
-
     }
     
     scm {

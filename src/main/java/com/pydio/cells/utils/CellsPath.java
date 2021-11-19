@@ -3,6 +3,11 @@ package com.pydio.cells.utils;
 /**
  * Provides shortcuts for methods that are widely used when manipulating nodes
  * and their path in a Pydio Cells context.
+ * <p>
+ * Note: we talk here about tree node path: that are typically "common-files/folder/file.jpg"
+ * in the below code, we assume path are vpackagealid:
+ * - they never start with a /
+ * - workspace is always provided
  */
 public class CellsPath {
 
