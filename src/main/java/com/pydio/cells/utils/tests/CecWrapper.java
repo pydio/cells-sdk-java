@@ -1,5 +1,6 @@
 package com.pydio.cells.utils.tests;
 
+import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.utils.Log;
 
 import java.io.BufferedReader;
@@ -7,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 /**
  * In order to simplify dependency management, we do not provide an implementation of the S3 client
@@ -28,11 +28,11 @@ public class CecWrapper {
         try {
             ProcessBuilder builder = new ProcessBuilder(prepareCmd, TestUtils.getOS(), workingDir, propsFile);
             builder.redirectErrorStream(true);
-            Log.i(Log.TAG_SDK, "... Launching prepare-cec script");
+            Log.i(SdkNames.TAG_SDK, "... Launching prepare-cec script");
             Process process = builder.start();
 
             int returnValue = process.waitFor();
-            Log.i(Log.TAG_SDK, "## After running prepare-cec script. Exit code: " + returnValue);
+            Log.i(SdkNames.TAG_SDK, "## After running prepare-cec script. Exit code: " + returnValue);
 
             displayOutput(process);
 

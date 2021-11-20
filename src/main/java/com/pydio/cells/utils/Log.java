@@ -7,15 +7,6 @@ import java.util.Set;
 
 public class Log {
 
-    // Temporary tags
-    public static final String TAG_UI = "CELLS/UI";
-    public static final String TAG_AUTH = "CELLS/AUTH";
-    public static final String TAG_DB = "CELLS/DB";
-    public static final String TAG_BACKEND = "CELLS/BE";
-    public static final String TAG_SDK = "CELLS/SDK";
-    public static final String TAG_SYNC = "CELLS/SYNC";
-    public static final String TAG_TASK = "CELLS/TASK";
-
     private static Logger logger;
 
     public static void setLogger(Logger l) {

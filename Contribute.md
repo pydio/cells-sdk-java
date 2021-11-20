@@ -47,6 +47,13 @@ A list of random resources on the _WWW_ that have helped along the way and are k
 
 ### Temporary Tips
 
+#### About Async processing
+
+- https://medium.com/android-news/8-ways-to-do-asynchronous-processing-in-android-and-counting-f634dc6fae4e
+- https://www.baeldung.com/java-wait-notify
+- https://stackoverflow.com/questions/34433957/wait-for-an-asynchronous-task-in-asynctask-in-android
+- https://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android
+
 #### For refactoring
 
 - We might want to change the package that is used by the swagger generated model and rename packages in a future proof way. We will go trough a temporary phase where we put generated methods at 2 distinct locations while deprecating the legacy one. Some solution can be found in [this stackoverflow question](https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java).

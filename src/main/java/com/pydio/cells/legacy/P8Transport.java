@@ -251,7 +251,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     private Token fromPassword() throws SDKException {
-        Log.i(Log.TAG_AUTH, "No token found for " + getId() + ", about to background login.");
+        Log.i(SdkNames.TAG_AUTH, "No token found for " + getId() + ", about to background login.");
         String pwd = credentialService.getPassword(getId());
         if (Str.notEmpty(pwd)) {
             return login(new P8Credentials(username, pwd));
@@ -268,7 +268,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 return P8RequestBuilder.update(req).setToken(getSecureToken()).getRequest();
             }
         } catch (Exception e) {
-            Log.e(Log.TAG_AUTH, "Cannot refresh secure token from password");
+            Log.e(SdkNames.TAG_AUTH, "Cannot refresh secure token from password");
             e.printStackTrace();
         }
         return null;
@@ -470,7 +470,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 builder.append(";").append(cookie.toString());
             }
             String cookieStr = builder.substring(1);
-            Log.d(Log.TAG_AUTH, "Setting cookies: [" + cookieStr + "]");
+            Log.d(SdkNames.TAG_AUTH, "Setting cookies: [" + cookieStr + "]");
             con.setRequestProperty(P8Names.REQ_PROP_COOKIE, cookieStr);
         }
         return con;

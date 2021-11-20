@@ -19,6 +19,15 @@ public interface SdkNames {
     //    String NODE_PROPERTY_SHARE_UUID = "share_uuid";
 
 
+    // Temporary tags
+    String TAG_UI = "CELLS/UI";
+    String TAG_AUTH = "CELLS/AUTH";
+    String TAG_DB = "CELLS/DB";
+    String TAG_BACKEND = "CELLS/BE";
+    String TAG_SDK = "CELLS/SDK";
+    String TAG_SYNC = "CELLS/SYNC";
+    String TAG_TASK = "CELLS/TASK";
+
     String XML_MESSAGE = "message";
     String NODE_PROPERTY_ENCODED = "encoded";
     String NODE_PROPERTY_ENCODING = "encoding";
