@@ -185,7 +185,7 @@ public class CellsClient implements Client, SdkNames {
                     continue;
                 }
 
-                if (fileNode != null) {
+                if (fileNode != null) { // TODO this can probably be cleaned
                     String nodePath = ("/" + node.getPath()).replace("//", "/");
                     if (!nodePath.equals(FileNodeUtils.toTreeNodePath(ws, path)) && !fileNode.getLabel().startsWith(".")) {
                         handler.onNode(fileNode);
