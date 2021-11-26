@@ -73,10 +73,22 @@ public class ServerURLImpl implements ServerURL {
                 break;
             default:
                 // This works for P8 only. We do not support Cells server on a sub-path of a domain.
-                String path = url.getPath().trim();
+                String path = url.getPath();
+                if (path == null){
+                    path = "";
+                }
+                path = path.trim();
                 if (path.endsWith("/")) {
                     path = path.substring(0, path.length() - 1);
                 }
+
+                // FIXME Dirty hack to fix NPE when handling old servers migration
+                String protocol = url.getProtocol() == null ? "https" : url.getProtocol();
+                String authority = url.getAuthority();
+                if (authority == null){
+                    throw new MalformedURLException("Cannot create a server URL without authority for " + urlString);
+                }
+
                 url = new URL(url.getProtocol().concat("://").concat(url.getAuthority()).concat(path));
         }
 
