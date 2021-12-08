@@ -111,6 +111,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
         Token token = credentialService.get(getId());
         String password;
+
+        // We check token validity and try to refresh / get it if necessary
         if (token == null) {
             // Check if we have a password for this transport
             password = credentialService.getPassword(getId());
@@ -118,16 +120,28 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 return null;
             }
             token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
+            credentialService.put(getId(), token);
+            return token;
+
         } else if (token.isExpired()) {
+
             if (Str.notEmpty(token.refreshToken)) {
-                token = getRefreshedOAuthToken(token);
+                String refreshToken = token.refreshToken;
+                // FIXME insure we can access the network before invalidating the refresh token
+                // FIXME: we first delete the refresh token in our store: it can be used only once.
+                token.refreshToken = null;
+                credentialService.put(getId(), token);
+                Token newToken = getRefreshedOAuthToken(refreshToken);
+                credentialService.put(getId(), newToken);
+                return newToken;
             } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
+                credentialService.put(getId(), token);
+                return token;
+            } else {
+                // Expired token and we have no procedure to refresh it, we delete the token
+                credentialService.remove(getId());
             }
-        }
-
-        if (token != null) {
-            credentialService.put(getId(), token);
         }
 
         return token;
@@ -171,7 +185,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     public ApiClient authenticatedClient() throws SDKException {
         ApiClient apiClient = getApiClient();
-        apiClient.addDefaultHeader("Authorization", "Bearer " + getAccessToken());
+        String accessToken = getAccessToken();
+        if (Str.empty(accessToken)){
+            throw new SDKException(ErrorCodes.no_token_available);
+        }
+        apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
         return apiClient;
     }
 
@@ -312,7 +330,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-    public Token getRefreshedOAuthToken(Token t) throws SDKException {
+    public Token getRefreshedOAuthToken(String refreshToken) throws SDKException {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
@@ -324,10 +342,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
             Map<String, String> authData = new HashMap<>();
             authData.put("grant_type", "refresh_token");
-            authData.put("refresh_token", t.refreshToken);
+            authData.put("refresh_token", refreshToken);
             authData.put("client_id", ClientData.getClientId());
-            // String secret = "".equals(ClientData.getClientSecret()) ? "whatever" : ClientData.getClientSecret();
-            authData.put("client_secret", ClientData.getClientSecret());
+//            String secret = Str.empty(ClientData.getClientSecret()) ? "whatever" : ClientData.getClientSecret();
+//            authData.put("client_secret", secret);
+            String secret = ClientData.getClientSecret();
+            authData.put("client_secret", secret);
+
             addPostData(con, authData, null);
 
             // Real call

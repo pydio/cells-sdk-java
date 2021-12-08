@@ -59,10 +59,9 @@ public class RefreshTokenTest {
         }
 
         CellsTransport cellsTransport = (CellsTransport) TestUtils.getTransport(factory, cellsConf);
-        Token token = tokenStore.get(cellsTransport.getId());
-        Token initialDummyToken = new Token();
-        initialDummyToken.refreshToken = manualToken;
-
-        cellsTransport.getRefreshedOAuthToken(initialDummyToken);
+        //Token token = tokenStore.get(cellsTransport.getId());
+        //Token initialDummyToken = new Token();
+        //initialDummyToken.refreshToken = manualToken;
+        cellsTransport.getRefreshedOAuthToken(manualToken);
     }
 }
