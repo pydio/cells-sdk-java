@@ -44,7 +44,11 @@ public class FileNodeUtils {
         result.setProperty(SdkNames.NODE_PROPERTY_TEXT, name);
         result.setProperty(SdkNames.NODE_PROPERTY_LABEL, name);
 
-        result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, node.getSize());
+        String sizeStr = node.getSize();
+        if (Str.empty(sizeStr))  {
+            sizeStr = "0";
+        }
+        result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, sizeStr);
         result.setProperty(SdkNames.NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
         String mTime = node.getMtime();
         if (mTime != null) {

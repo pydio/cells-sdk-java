@@ -38,6 +38,15 @@ java -jar swagger-codegen-cli.jar help generate
 
 ## Developer Tips
 
+### Testing OAuth with a Cells server
+
+When testing OAuth and app behaviour on the long run, it might be useful to reduce the validity duration of the JWT token.
+To do this, simply (backup and) impact your main `pydio.json` configuration file to add this param:
+
+`"services"."pydio.web.oauth"."refreshTokenLifespan":"1m"`
+
+For the record, validity duration is expressed as a [go duration](https://pkg.go.dev/time#Duration), and is set by default to 10 minutes (`10m`).
+
 ### Various
 
 A list of random resources on the _WWW_ that have helped along the way and are kept here for reference.
