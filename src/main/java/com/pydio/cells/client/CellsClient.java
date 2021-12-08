@@ -1,5 +1,7 @@
 package com.pydio.cells.client;
 
+import static com.pydio.cells.utils.FileNodeUtils.toFileNode;
+
 import com.google.gson.Gson;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ErrorCodes;
@@ -180,7 +182,7 @@ public class CellsClient implements Client, SdkNames {
             for (TreeNode node : response.getNodes()) {
                 FileNode fileNode;
                 try {
-                    fileNode = FileNodeUtils.toFileNode(node);
+                    fileNode = toFileNode(node);
                 } catch (NullPointerException ignored) {
                     continue;
                 }
@@ -217,10 +219,10 @@ public class CellsClient implements Client, SdkNames {
         }
 
         Message msg = new Message();
-        /*List<TreeNode> nodes = response.getChildren();
+        List<TreeNode> nodes = response.getChildren();
         node = nodes.get(0);
         FileNode fileNode = toFileNode(node);
-        msg.added.add(fileNode); */
+        msg.added.add(fileNode);
         return msg;
     }
 
@@ -228,7 +230,7 @@ public class CellsClient implements Client, SdkNames {
     public FileNode nodeInfo(String ws, String path) throws SDKException {
         TreeNode node = internalStatNode(ws, path);
         if (node != null) {
-            return FileNodeUtils.toFileNode(node);
+            return toFileNode(node);
         } else {
             return null;
         }
@@ -320,7 +322,7 @@ public class CellsClient implements Client, SdkNames {
             for (TreeNode node : nodes) {
                 FileNode fileNode;
                 try {
-                    fileNode = FileNodeUtils.toFileNode(node);
+                    fileNode = toFileNode(node);
                 } catch (NullPointerException ignored) {
                     continue;
                 }
@@ -595,7 +597,7 @@ public class CellsClient implements Client, SdkNames {
             if (response.getNodes() != null) {
                 for (TreeNode node : response.getNodes()) {
                     try {
-                        FileNode fileNode = FileNodeUtils.toFileNode(node);
+                        FileNode fileNode = toFileNode(node);
                         if (fileNode != null) {
                             List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
                             if (sources != null) {
@@ -891,7 +893,7 @@ public class CellsClient implements Client, SdkNames {
         List<TreeNode> nodes = response.getChildren();
         node = nodes.get(0);
 
-        FileNode fileNode = FileNodeUtils.toFileNode(node);
+        FileNode fileNode = toFileNode(node);
         msg.added.add(fileNode);
         return msg;
     }
