@@ -17,8 +17,8 @@ public class FileNodeImpl implements FileNode, SdkNames {
         return
                 // Cells
                 Boolean.parseBoolean(properties.getProperty(NODE_PROPERTY_IS_IMAGE))
-                // P8
-                || "1".equals(properties.getProperty(NODE_PROPERTY_IS_IMAGE));
+                        // P8
+                        || "1".equals(properties.getProperty(NODE_PROPERTY_IS_IMAGE));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class FileNodeImpl implements FileNode, SdkNames {
 
         if ((path == null || "".equals(path)) && name != null && !"".equals(name)) {
             setProperty(NODE_PROPERTY_PATH, name);
-            return "/"+ name;
+            return "/" + name;
             // TODO should we also extract the real name from the path ?
         }
         return path;
@@ -96,7 +96,9 @@ public class FileNodeImpl implements FileNode, SdkNames {
         if (properties == null) {
             properties = new Properties();
         }
-        properties.put(key, value);
+        if (value != null) {
+            properties.put(key, value);
+        }
     }
 
     @Override
