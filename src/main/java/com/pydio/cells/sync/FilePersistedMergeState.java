@@ -24,7 +24,7 @@ public class FilePersistedMergeState implements MergeState {
 
     @Override
     public void updateSeq(Watch w) {
-        synchronized (lock) {
+        //synchronized (lock) {
             boolean found = false;
             for (Watch item : watches) {
                 if (w.equals(item)) {
@@ -36,12 +36,12 @@ public class FilePersistedMergeState implements MergeState {
             if (!found) {
                 watches.add(w);
             }
-        }
+        //}
     }
 
     @Override
     public synchronized List<Watch> watches(List<Fs> fsList) {
-        synchronized (lock) {
+        // synchronized (lock) {
             ArrayList<Watch> newWatches = new ArrayList<>();
             for (int i = 0; i < fsList.size(); i++) {
                 for (int j = 0; j < fsList.size(); j++) {
@@ -54,11 +54,11 @@ public class FilePersistedMergeState implements MergeState {
                 }
             }
             return newWatches;
-        }
+        // }
     }
 
     private List<Watch> watches(Fs fs1, Fs fs2) {
-        synchronized (lock) {
+        // synchronized (lock) {
             if (fs1.id().equals(fs2.id())) {
                 return null;
             }
@@ -88,19 +88,19 @@ public class FilePersistedMergeState implements MergeState {
 
             this.watches = newWatches;
             return newWatches;
-        }
+        // }
     }
 
     public synchronized void save() throws IOException {
-        synchronized (lock) {
+       //  synchronized (lock) {
             Gson gson = new Gson();
             String encoded = gson.toJson(watches);
             io.writeFile(encoded.getBytes(), this.filePath);
-        }
+        //}
     }
 
     public synchronized void load() throws IOException {
-        synchronized (lock) {
+        // synchronized (lock) {
             try {
                 byte[] bytes = io.readFile(this.filePath);
                 Gson gson = new Gson();
@@ -113,6 +113,6 @@ public class FilePersistedMergeState implements MergeState {
             if (watches == null) {
                 watches = new ArrayList<>();
             }
-        }
+        // }
     }
 }
