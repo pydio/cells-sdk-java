@@ -5,6 +5,7 @@ import com.pydio.cells.api.callbacks.PersistentDataManager;
 
 public class ClientData {
 
+    public static Long buildTimestamp = 0L;
     public static String platform = "";
     public static String version = "0.1";
     public static String packageID = "";
@@ -25,11 +26,11 @@ public class ClientData {
         dataManager = m;
     }
 
-    public static String getClientId(){
+    public static String getClientId() {
         return clientID;
     }
 
-    public static String getClientSecret(){
+    public static String getClientSecret() {
         return clientSecret;
     }
 }

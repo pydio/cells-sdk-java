@@ -50,7 +50,7 @@ public class ServerFactory implements IServerFactory {
     protected void initAppData() {
         ClientData.packageID = this.getClass().getPackage().getName();
         ClientData.name = "CellsJavaTransport";
-        ClientData.version = "0.3.0-dev";
+        ClientData.version = "0.4.0-dev";
         ClientData.platform = "Java";
     }
 
