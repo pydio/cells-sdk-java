@@ -76,16 +76,23 @@ public class StateID {
      * Retrieves the *encoded* representation of this StateID for serialization.
      */
     public String getId() {
-        StringBuilder builder = new StringBuilder();
-        if (username != null) {
-            builder.append(utf8Encode(username)).append("@");
-        }
-        builder.append(utf8Encode(serverUrl));
+        StringBuilder builder = new StringBuilder(getAccountId());
         if (path != null && path.length() > 0 && !"/".equals(path)) {
             builder.append("@").append(utf8Encode(path));
         }
         return builder.toString();
     }
+
+    public String getAccountId() {
+        StringBuilder builder = new StringBuilder();
+        if (username != null) {
+            builder.append(utf8Encode(username)).append("@");
+        }
+        builder.append(utf8Encode(serverUrl));
+        return builder.toString();
+    }
+
+
 
     public String getUsername() {
         return username;
