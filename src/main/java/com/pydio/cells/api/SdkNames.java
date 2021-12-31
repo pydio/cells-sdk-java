@@ -8,6 +8,10 @@ public interface SdkNames {
     String TYPE_CELLS = "cells";
     String TYPE_LEGACY_P8 = "pydio";
 
+    // Auth Management
+    String TOKEN_TYPE_BEARER = "bearer";
+    String TOKEN_TYPE_P8 = "pydio8";
+
     String DEFAULT_CLIENT_ID = "cells-client";
     String DEFAULT_CLIENT_SECRET = "";
 

@@ -278,6 +278,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         Token t = new Token();
         t.subject = ServerFactory.accountID(username, server);
         t.value = secureToken;
+        t.tokenType = SdkNames.TOKEN_TYPE_P8;
         t.setExpiry(-1);
         return t;
     }
