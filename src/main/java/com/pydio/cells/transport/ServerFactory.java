@@ -60,7 +60,7 @@ public class ServerFactory implements IServerFactory {
         // Insure server is up and SSL is valid
         try {
             serverURL.ping();
-        } catch (SSLException se){
+        } catch (SSLException se) {
             throw new SDKException(ErrorCodes.ssl_error, "Un-valid TLS connection with " + serverURL.getId(), se);
         } catch (IOException ce) {
             throw new SDKException(ErrorCodes.not_found, "Cannot reach server at " + serverURL.getId(), ce);
@@ -162,7 +162,7 @@ public class ServerFactory implements IServerFactory {
 
         // TODO make a call to the server to insure everything is correctly set ?
         transportStore.put(accountID(credentials.getUsername(), server), transport);
-        return  accountID;
+        return accountID;
     }
 
     /* Relies on the CredentialService to resurrect an account. */
@@ -184,8 +184,10 @@ public class ServerFactory implements IServerFactory {
         Transport transport;
         if (SdkNames.TYPE_CELLS.equals(server.getRemoteType())) {
             transport = new CellsTransport(credentialService, StateID.fromId(accountID).getUsername(), server, getEncoder());
-        } else {
+        } else if (SdkNames.TYPE_LEGACY_P8.equals(server.getRemoteType())) {
             transport = new P8Transport(credentialService, server, StateID.fromId(accountID).getUsername(), getEncoder());
+        } else {
+            throw new SDKException(ErrorCodes.not_pydio_server, "Unknown server type, " + server.getRemoteType() + " cannot proceed for " + accountID);
         }
         transportStore.put(accountID, transport);
         return transport;
