@@ -14,9 +14,11 @@ import java.util.List;
  */
 public interface Registry {
 
-    List<WorkspaceNode> GetWorkspaces();
+    List<WorkspaceNode> getWorkspaces();
 
-    List<Action> GetActions();
+    List<Action> getActions();
 
-    List<Plugin> GetPlugins();
+    List<Plugin> getPlugins();
+
+    boolean isLoggedIn();
 }

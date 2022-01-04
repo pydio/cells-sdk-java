@@ -3,6 +3,7 @@ package com.pydio.cells.api.ui;
 import java.util.Properties;
 
 public class Plugin {
+
     final private String id;
     final private String name;
     final private String label;

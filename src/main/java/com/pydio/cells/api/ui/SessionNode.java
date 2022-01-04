@@ -9,6 +9,7 @@ import java.util.Properties;
  * Legacy objects renamed from Session for clarity
  * TODO: double-check where it is used and adapt / clean
  */
+@Deprecated
 public class SessionNode implements SdkNames {
 
     public Properties properties = new Properties();

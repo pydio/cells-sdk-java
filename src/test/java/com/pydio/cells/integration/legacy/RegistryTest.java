@@ -62,11 +62,11 @@ public class RegistryTest {
             Registry registry = p8Client.getDefaultRegistry();
 
             // we must have actions and plugins
-            Assert.assertNotEquals(0, registry.GetActions().size());
-            Assert.assertNotEquals(0, registry.GetPlugins().size());
+            Assert.assertNotEquals(0, registry.getActions().size());
+            Assert.assertNotEquals(0, registry.getPlugins().size());
 
             // me must not have workspaces
-            Assert.assertEquals(0, registry.GetWorkspaces().size());
+            Assert.assertEquals(0, registry.getWorkspaces().size());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,11 +91,11 @@ public class RegistryTest {
             Registry registry = p8Client.getUserRegistry();
 
             // we must have actions and plugins
-            Assert.assertNotEquals(0, registry.GetActions().size());
-            Assert.assertNotEquals(0, registry.GetPlugins().size());
+            Assert.assertNotEquals(0, registry.getActions().size());
+            Assert.assertNotEquals(0, registry.getPlugins().size());
 
             // me must not have workspaces
-            Assert.assertNotEquals(0, registry.GetWorkspaces().size());
+            Assert.assertNotEquals(0, registry.getWorkspaces().size());
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -73,15 +73,15 @@ public interface SdkNames {
     String NODE_PROPERTY_DESCRIPTION = "description";
 
     String MESSAGE_PROPERTY_TYPE = "type";
-    String WORKSPACE_PROPERTY_OWNER = "owner";
     String WORKSPACE_PROPERTY_ID = "id";
+    String WORKSPACE_DESCRIPTION = "description";
+    String WORKSPACE_PROPERTY_SLUG = "repositorySlug";
+    String WORKSPACE_PROPERTY_TYPE = "repository_type";
     String WORKSPACE_PROPERTY_ACCESS_TYPE = "access_type";
+    String WORKSPACE_PROPERTY_OWNER = "owner";
     String WORKSPACE_PROPERTY_CROSS_COPY = "allowCrossRepositoryCopy";
     String WORKSPACE_PROPERTY_META_SYNC = "meta_syncable_REPO_SYNCABLE";
-    String WORKSPACE_PROPERTY_SLUG = "repositorySlug";
     String WORKSPACE_PROPERTY_ACL = "acl";
-    String WORKSPACE_PROPERTY_REPO_TYPE = "repository_type";
-    String WORKSPACE_DESCRIPTION = "description";
     String WORKSPACE_IS_PUBLIC = "is_public";
 
 
@@ -110,6 +110,12 @@ public interface SdkNames {
     int LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE = 2048;
 
 
+    String SESSION_ID = "session_id";
+    String ADDRESS = "address";
+    String LOGIN = "user";
+    String DISPLAYED_NAME = "user_display_name";
+    String LOGO = "logo";
+    String SESSION_NAME = "session_name";
     String COOKIES_USER = "user";
     String COOKIES_PASSWORD = "password";
     String WORKSPACE_ID = "workspace_id";
@@ -124,16 +130,10 @@ public interface SdkNames {
     String ALIAS = "alias";
     String CERTIFICATE = "certificate";
     String SERVER = "server";
-    String SESSION_ID = "session_id";
     String TASK_ID = "task_id";
     String FOLDER_NAME = "folder_name";
-    String ADDRESS = "address";
     String NODE_DATA = "node";
     String SERVER_ID = "server_id";
-    String LOGIN = "user";
-    String DISPLAYED_NAME = "user_display_name";
-    String LOGO = "logo";
-    String SESSION_NAME = "session_name";
     String REMEMBER_PASSWORD = "remember_password";
     String CHANGE_LOCATION = "location";
 

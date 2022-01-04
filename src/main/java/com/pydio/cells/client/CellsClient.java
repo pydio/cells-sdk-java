@@ -75,7 +75,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -114,9 +113,20 @@ public class CellsClient implements Client, SdkNames {
             con = transport.openApiConnection("/frontend/state");
             con.setRequestMethod("GET");
             in = con.getInputStream();
+            int responseCode = con.getResponseCode();
+
+            if (responseCode != 200){
+                throw new IOException("could not get registry for "+ transport.getId()+ "("+responseCode+"): "+ con.getResponseMessage());
+            }
+
             registry = new DocumentRegistry(in);
 
-            for (WorkspaceNode node : registry.GetWorkspaces()) {
+            if (!registry.isLoggedIn()){
+                // Double check if we are correctly connected
+                throw new IOException("not logged in "+ transport.getId()+ ", you cannot list workspaces.");
+            }
+
+            for (WorkspaceNode node : registry.getWorkspaces()) {
                 if (!Arrays.asList(defaultExcludedWorkspaces).contains(node.getAccessType())) {
                     handler.onNode(node);
                 }

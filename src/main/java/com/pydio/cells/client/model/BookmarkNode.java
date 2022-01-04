@@ -60,19 +60,13 @@ public class BookmarkNode implements Node {
     }
 
     @Override
-    public int compare(Node node) {
+    public int compareTo(Node node) {
         // TODO implement
         if (node == null) {
-            return Node.different;
+            return -1;
         }
-        if (!label.equals(node.getLabel())) {
-            return Node.different;
-        }
-        return Node.same;
+
+        return label.compareTo(node.getLabel());
     }
 
-    @Override
-    public String getEncodedHash() {
-        return null;
-    }
 }

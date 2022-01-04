@@ -1,7 +1,6 @@
 package com.pydio.cells.transport;
 
 import com.pydio.cells.api.SdkNames;
-import com.pydio.cells.api.callbacks.PersistentDataManager;
 
 public class ClientData {
 
@@ -16,15 +15,15 @@ public class ClientData {
 
     public static int versionCode = 1;
 
-    private static PersistentDataManager dataManager;
-
-    public static PersistentDataManager manager() {
-        return dataManager;
-    }
-
-    public static void setManager(PersistentDataManager m) {
-        dataManager = m;
-    }
+//    private static PersistentDataManager dataManager;
+//
+//    public static PersistentDataManager manager() {
+//        return dataManager;
+//    }
+//
+//    public static void setManager(PersistentDataManager m) {
+//        dataManager = m;
+//    }
 
     public static String getClientId() {
         return clientID;

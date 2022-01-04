@@ -3,7 +3,6 @@ package com.pydio.cells.utils;
 import com.google.gson.Gson;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ui.FileNode;
-import com.pydio.cells.client.model.FileNodeImpl;
 import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
 
@@ -17,12 +16,11 @@ public class FileNodeUtils {
 
     /**
      * Simply convert a Cells API TreeNode to our local FileNode object.
-     * This is the central point for all dirty tweaks to go on supporting
-     * Pydio8 (and the legacy code).
+     * This is the central point for all tweaks to go on supporting  Pydio8 (and the legacy code).
      */
     public static FileNode toFileNode(TreeNode node) {
 
-        FileNode result = new FileNodeImpl();
+        FileNode result = new FileNode();
 
         String uuid = node.getUuid();
         if (uuid == null) {
@@ -45,7 +43,7 @@ public class FileNodeUtils {
         result.setProperty(SdkNames.NODE_PROPERTY_LABEL, name);
 
         String sizeStr = node.getSize();
-        if (Str.empty(sizeStr))  {
+        if (Str.empty(sizeStr)) {
             sizeStr = "0";
         }
         result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, sizeStr);

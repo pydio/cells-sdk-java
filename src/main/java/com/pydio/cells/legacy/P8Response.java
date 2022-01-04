@@ -273,7 +273,7 @@ public class P8Response implements Closeable {
 
     /* This is used to parse the beginning of the returned InputStream and check for API errors */
     // TODO insure all errors are correctly found and handled
-    // Typically, we had to manually repare error messages for not found workspace.
+    // Typically, we had to manually repair error messages for not found workspace.
     private class ErrorMessageHandler extends DefaultHandler {
 
         boolean tag_auth = false;
