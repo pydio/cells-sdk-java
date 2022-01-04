@@ -21,6 +21,7 @@ public interface ErrorCodes {
     int ssl_certificate_not_signed = 21;
     int tls_init = 22;
 
+    int unknown_account = 35;
     int invalid_credentials = 30;
     int authentication_required = 31;
     int authentication_with_captcha_required = 32;

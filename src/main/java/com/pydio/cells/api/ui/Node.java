@@ -17,9 +17,9 @@ public interface Node extends Serializable {
     int TYPE_ACTIVITY = 7;
     int TYPE_SELECTION = 8;
 
-    int same = 0;
-    int content = 1;
-    int different = 2;
+//    int same = 0;
+//    int content = 1;
+//    int different = 2;
 
 
     void setProperties(Properties p);
@@ -38,13 +38,13 @@ public interface Node extends Serializable {
 
     String getLabel();
 
-    int compare(Node node);
+    int compareTo(Node node);
 
     /**
      * Returns the serialized version of the current instance
      */
     String getEncoded();
 
-    String getEncodedHash();
+    //String getEncodedHash();
 
 }

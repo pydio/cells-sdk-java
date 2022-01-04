@@ -4,6 +4,7 @@ import com.pydio.cells.api.Registry;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.ui.WorkspaceNode;
+import com.pydio.cells.utils.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -27,16 +28,19 @@ import javax.xml.xpath.XPathFactory;
 
 public class DocumentRegistry implements Registry {
 
-    // todo: add constant in SDKNames instead of hardcoded tag names
+    private final static String P8_PREFIX = "ajxp_registry";
+    private final static String CELLS_PREFIX = "pydio_registry";
+    private final static String USER_NODE_NAME = "user";
 
-    final protected String ajxpRepositoriesXPath = "/ajxp_registry/user/repositories";
-    final protected String pydioRepositoriesXPath = "/pydio_registry/user/repositories";
+    private String prefix;
+    private boolean isLegacy;
 
+    private Node userNode;
+
+    final protected String ajxpRepositoriesXPath = "/user/repositories";
     final protected String ajxpActionsXPath = "/ajxp_registry/actions";
-    final protected String pydioActionsXPath = "/pydio_registry/actions";
-
     final protected String ajxpPluginsXPath = "/ajxp_registry/plugins";
-    final protected String pydioPluginsXPath = "/pydio_registry/plugins";
+    final protected String pydioRepositoriesXPath = "/pydio_registry/user/repositories";
 
     private final Document xmlDocument;
 
@@ -46,21 +50,56 @@ public class DocumentRegistry implements Registry {
 
     public DocumentRegistry(Document xmlDocument) {
         this.xmlDocument = xmlDocument;
+        handleRoot();
     }
 
     public DocumentRegistry(InputStream in) throws IOException, ParserConfigurationException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        this.xmlDocument = builder.parse(in);
+        xmlDocument = builder.parse(in);
+        handleRoot();
+    }
+
+    private void handleRoot() {
+        if (xmlDocument != null && xmlDocument.hasChildNodes()) {
+            Node root = xmlDocument.getChildNodes().item(0);
+            switch (root.getNodeName()) {
+                case P8_PREFIX:
+                    prefix = "/" + P8_PREFIX + "/";
+                    isLegacy = true;
+                    break;
+                case CELLS_PREFIX:
+                    prefix = "/" + CELLS_PREFIX + "/";
+                    isLegacy = false;
+                    break;
+                default:
+                    throw new RuntimeException("Unexpected root: " + root.getNodeName());
+            }
+
+            if (root != null && root.hasChildNodes()) {
+                NodeList children = root.getChildNodes();
+                for (int i = 0; i < children.getLength(); i++) {
+                    if (USER_NODE_NAME.equals(children.item(i).getNodeName())) {
+                        userNode = children.item(i);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override
-    public List<WorkspaceNode> GetWorkspaces() {
+    public boolean isLoggedIn() {
+        return userNode != null;
+    }
+
+    @Override
+    public List<WorkspaceNode> getWorkspaces() {
         if (parsedWorkspaces != null) {
             return parsedWorkspaces;
         }
-
-        return parsedWorkspaces = parseWorkspaces();
+        parsedWorkspaces = parseWorkspaces();
+        return parsedWorkspaces;
     }
 
     private List<WorkspaceNode> parseWorkspaces() {
@@ -98,7 +137,7 @@ public class DocumentRegistry implements Registry {
         Node owner = attrs.getNamedItem(SdkNames.WORKSPACE_PROPERTY_OWNER);
         Node crossCopy = attrs.getNamedItem(SdkNames.WORKSPACE_PROPERTY_CROSS_COPY);
         Node accessType = attrs.getNamedItem(SdkNames.WORKSPACE_PROPERTY_ACCESS_TYPE);
-        Node repositoryType = attrs.getNamedItem(SdkNames.WORKSPACE_PROPERTY_REPO_TYPE);
+        Node repositoryType = attrs.getNamedItem(SdkNames.WORKSPACE_PROPERTY_TYPE);
         Node metaSync = attrs.getNamedItem(SdkNames.WORKSPACE_PROPERTY_META_SYNC);
 
         WorkspaceNode workspaceNode = new WorkspaceNode();
@@ -122,21 +161,28 @@ public class DocumentRegistry implements Registry {
             workspaceNode.setProperty(SdkNames.WORKSPACE_PROPERTY_ACCESS_TYPE, accessType.getNodeValue());
         }
         if (repositoryType != null) {
-            workspaceNode.setProperty(SdkNames.WORKSPACE_PROPERTY_REPO_TYPE, repositoryType.getNodeValue());
+            String type = repositoryType.getNodeValue();
+            if (isLegacy) { // Tweak when generating the local object to ease implementation of clients
+                if ("my-files".equals(workspaceNode.getSlug())) {
+                    type = WorkspaceNode.TYPE_PERSONAL;
+                } else {
+                    type = WorkspaceNode.TYPE_WS;
+                }
+                Log.e("DocumentRegistry", "Using document registry for a legacy server");
+            }
+            workspaceNode.setProperty(SdkNames.WORKSPACE_PROPERTY_TYPE, type);
         }
         if (metaSync != null) {
             workspaceNode.setProperty(SdkNames.WORKSPACE_PROPERTY_META_SYNC, metaSync.getNodeValue());
         }
 
-        NodeList repoChildNodes = node.getChildNodes();
-        for (int j = 0; j < repoChildNodes.getLength(); j++) {
-            Node repoChildNode = repoChildNodes.item(j);
-            final String name = repoChildNode.getNodeName();
-
+        NodeList repoChildren = node.getChildNodes();
+        for (int j = 0; j < repoChildren.getLength(); j++) {
+            Node repoChildNode = repoChildren.item(j);
+            String name = repoChildNode.getNodeName();
             switch (name) {
                 case SdkNames.NODE_PROPERTY_LABEL:
                     workspaceNode.setProperty(SdkNames.NODE_PROPERTY_LABEL, repoChildNode.getFirstChild().getNodeValue());
-
                     break;
                 case SdkNames.NODE_PROPERTY_DESCRIPTION:
                     workspaceNode.setProperty(SdkNames.NODE_PROPERTY_DESCRIPTION, repoChildNode.getFirstChild().getNodeValue());
@@ -148,7 +194,7 @@ public class DocumentRegistry implements Registry {
     }
 
     @Override
-    public List<Action> GetActions() {
+    public List<Action> getActions() {
         if (parsedActions != null) {
             return parsedActions;
         }
@@ -244,7 +290,7 @@ public class DocumentRegistry implements Registry {
     }
 
     @Override
-    public List<Plugin> GetPlugins() {
+    public List<Plugin> getPlugins() {
         if (parsedPlugins != null) {
             return parsedPlugins;
         }

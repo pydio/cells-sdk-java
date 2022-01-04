@@ -57,7 +57,7 @@ public class ObjectNode implements Node {
     // TODO implement this
 
     @Override
-    public int compare(Node node) {
+    public int compareTo(Node node) {
         return 0;
     }
 
@@ -75,8 +75,4 @@ public class ObjectNode implements Node {
         return null;
     }
 
-    @Override
-    public String getEncodedHash() {
-        return null;
-    }
 }

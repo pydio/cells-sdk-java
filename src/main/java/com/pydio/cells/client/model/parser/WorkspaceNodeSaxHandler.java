@@ -1,7 +1,9 @@
 package com.pydio.cells.client.model.parser;
 
+import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.Node;
+import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.model.NodeFactory;
 
 import org.xml.sax.Attributes;
@@ -11,11 +13,20 @@ import java.util.Properties;
 
 public class WorkspaceNodeSaxHandler extends DefaultHandler {
 
-    private boolean inside_repo = false, inside_label = false, inside_description = false;
-    private String inner_element = "";
     private final NodeHandler handler;
+
+    private String inner_element = "";
     private Properties p = null;
-    //String tabs = "";
+
+    private boolean inside_repo = false;
+    private boolean inside_label = false;
+    private boolean inside_description = false;
+
+
+    public WorkspaceNodeSaxHandler(NodeHandler nodeHandler, int offset, int max) {
+        this.handler = nodeHandler;
+    }
+
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         /*tabs += "\t";
@@ -27,6 +38,16 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
             for (int i = 0; i < attributes.getLength(); i++) {
                 p.setProperty(attributes.getLocalName(i), attributes.getValue(i));
             }
+
+            // Use Cells like categories for workspaces
+            String type = WorkspaceNode.TYPE_WS;
+            String slug = p.getProperty(SdkNames.WORKSPACE_PROPERTY_SLUG);
+            if ("my-files".equals(slug)) {
+                type = WorkspaceNode.TYPE_PERSONAL;
+            }
+            p.setProperty(SdkNames.WORKSPACE_PROPERTY_TYPE, type);
+
+
             return;
         }
 
@@ -68,7 +89,4 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
         }
     }
 
-    public WorkspaceNodeSaxHandler(NodeHandler nodeHandler, int offset, int max) {
-        this.handler = nodeHandler;
-    }
 }

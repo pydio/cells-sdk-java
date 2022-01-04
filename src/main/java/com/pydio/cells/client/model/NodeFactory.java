@@ -1,5 +1,6 @@
 package com.pydio.cells.client.model;
 
+import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.ui.WorkspaceNode;
 
@@ -60,11 +61,11 @@ public class NodeFactory {
     private static Node newNode(int type) {
         switch (type) {
             case Node.TYPE_REMOTE_NODE:
-                return new FileNodeImpl();
+                return new FileNode();
             case Node.TYPE_WORKSPACE:
                 return new WorkspaceNode();
             case Node.TYPE_SERVER:
-                throw new RuntimeException("Broken after refactoring cannot create server node object without URL ");
+                throw new RuntimeException("Broken after refactoring cannot create server node object without URL");
                 // return new ServerNodeImpl();
             case Node.TYPE_LOCAL_NODE:
                 return new ObjectNode();
