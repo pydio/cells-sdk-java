@@ -1,38 +1,12 @@
 package com.pydio.cells.client.model;
 
+import com.pydio.cells.api.ui.AbstractNode;
 import com.pydio.cells.api.ui.Node;
 
-import java.util.Properties;
-
-public class ObjectNode implements Node {
+public class ObjectNode extends AbstractNode {
 
     protected String path;
     protected String label;
-    private Properties properties;
-
-    @Override
-    public void setProperty(String key, String value) {
-        if (properties == null) {
-            properties = new Properties();
-        }
-        properties.setProperty(key, value);
-    }
-
-    @Override
-    public void setProperties(Properties p) {
-    }
-
-    @Override
-    public String getProperty(String key) {
-        return properties.getProperty(key, "");
-    }
-
-    @Override
-    public void deleteProperty(String key) {
-        if (properties != null && properties.contains(key)) {
-            properties.remove(key);
-        }
-    }
 
     @Override
     public int getType() {
@@ -69,10 +43,4 @@ public class ObjectNode implements Node {
             return false;
         }
     }
-
-    @Override
-    public String getEncoded() {
-        return null;
-    }
-
 }

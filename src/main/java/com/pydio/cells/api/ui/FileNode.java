@@ -83,14 +83,6 @@ public class FileNode extends AbstractNode {
     }
 
     @Override
-    public String getEncoded() {
-        if (properties == null) {
-            return null;
-        }
-        return properties.getProperty(NODE_PROPERTY_ENCODED);
-    }
-
-    @Override
     public boolean equals(Object obj) {
 
         if (obj == this) return true;
