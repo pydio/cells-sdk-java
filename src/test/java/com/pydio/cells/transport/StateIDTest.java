@@ -71,10 +71,24 @@ public class StateIDTest {
         Assert.assertEquals("/folder", stateID4.getFile());
         Assert.assertEquals("folder", stateID4.getFileName());
         Assert.assertEquals("/", stateID4.getParentFile());
-
     }
 
     @Test
+    public void testChild() {
+        StateID stateID = new StateID("user", "https://example.com", "/default");
+        StateID child = stateID.child("folder");
+
+        Assert.assertEquals("/default/folder", child.getPath());
+        Assert.assertEquals("/folder", child.getFile());
+        Assert.assertEquals("folder", child.getFileName());
+
+        StateID child2 = child.child("");
+        Assert.assertEquals("/default/folder", child2.getPath());
+        Assert.assertEquals("/folder", child2.getFile());
+        Assert.assertEquals("folder", child2.getFileName());
+    }
+
+        @Test
     public void testIDWithSpaceInPath() {
         String slug = "common-files";
         String parPath = "/Sample Documents to test.../Broken Names";
