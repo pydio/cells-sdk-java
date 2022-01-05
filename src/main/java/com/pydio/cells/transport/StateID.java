@@ -84,6 +84,30 @@ public class StateID {
     }
 
     /**
+     * Creates a copy of this state ID and sets the passed path.
+     *
+     * Warning:
+     * - we assume parent StateID's username **and** serverUrl are already set.
+     * - passing null, an empty string or "/", we return this.
+     * - passing a file name that contains a slash raises a runtime exception
+     *
+     * @return
+     */
+    public StateID child(String fileName) {
+        // TODO make this more robust
+        if (fileName == null || "".equals(fileName) || "/".equals(fileName)){
+            return this;
+        }
+
+        if (fileName.contains("/")){
+            throw new RuntimeException("wrong filename: ["+ fileName+ "], inner slash are forbidden");
+        }
+
+        String newPath = this.getPath()+"/"+fileName;
+        return new StateID(this.username, this.serverUrl, newPath);
+    }
+
+    /**
      * Retrieves the *encoded* representation of this StateID for serialization.
      */
     public String getId() {
