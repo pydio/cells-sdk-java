@@ -73,6 +73,17 @@ public class StateID {
     }
 
     /**
+     * Creates a copy of this state ID and sets the passed path.
+     * Warning: we assume parent StateID's username **and** serverUrl are already set.
+     *
+     * @param path
+     * @return
+     */
+    public StateID withPath(String path) {
+        return new StateID(this.username, this.serverUrl, path);
+    }
+
+    /**
      * Retrieves the *encoded* representation of this StateID for serialization.
      */
     public String getId() {
@@ -91,8 +102,6 @@ public class StateID {
         builder.append(utf8Encode(serverUrl));
         return builder.toString();
     }
-
-
 
     public String getUsername() {
         return username;
@@ -123,9 +132,33 @@ public class StateID {
         String prefix = "/" + getWorkspace();
         if (path.length() > prefix.length()) {
             return path.substring(prefix.length());
+        } else if (path.length() == prefix.length()) {
+            // we only have the workspace, so we consider we are at root of the workspace
+            return "/";
         }
         return null;
     }
+
+    public String getFileName(){
+        String file = getFile();
+        if (file == null || "/".equals(file)){
+            return null;
+        }
+        return file.substring(file.lastIndexOf("/")+1);
+    }
+
+    public String getParentFile(){
+        String file = getFile();
+        if (file == null || "/".equals(file)){
+            return null;
+        }
+        String parentFile = file.substring(0, file.lastIndexOf("/"));
+        if ("".equals(parentFile)){
+            parentFile = "/";
+        }
+        return parentFile;
+    }
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
