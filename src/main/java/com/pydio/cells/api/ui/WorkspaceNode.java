@@ -155,12 +155,6 @@ public class WorkspaceNode extends AbstractNode {
         return getLabel().compareTo(other.getLabel());
     }
 
-    @Override
-    public String getEncoded() {
-        return null;
-    }
-
-
     private int getWeight(WorkspaceNode wn) {
         switch (wn.getWorkspaceType()) {
             case TYPE_PERSONAL:

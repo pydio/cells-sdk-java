@@ -16,6 +16,11 @@ public abstract class AbstractNode implements Node, Comparable<Node>, SdkNames {
     }
 
     @Override
+    public Properties getProperties() {
+        return properties;
+    }
+
+    @Override
     public String getProperty(String key) {
         return properties.getProperty(key, "");
     }
@@ -56,6 +61,4 @@ public abstract class AbstractNode implements Node, Comparable<Node>, SdkNames {
                 return 99;
         }
     }
-
-
 }

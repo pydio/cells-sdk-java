@@ -1,10 +1,11 @@
 package com.pydio.cells.client.model;
 
+import com.pydio.cells.api.ui.AbstractNode;
 import com.pydio.cells.api.ui.Node;
 
 import java.util.Properties;
 
-public class BookmarkNode implements Node {
+public class BookmarkNode extends AbstractNode {
 
     private final String label;
     private Properties properties;
@@ -34,30 +35,6 @@ public class BookmarkNode implements Node {
         return "/";
     }
 
-    @Override
-    public String getProperty(String key) {
-        return this.properties.getProperty(key);
-    }
-
-    @Override
-    public void setProperty(String key, String value) {
-        this.properties.put(key, value);
-    }
-
-    @Override
-    public void deleteProperty(String key) {
-        this.properties.remove(key);
-    }
-
-    @Override
-    public void setProperties(Properties p) {
-        this.properties = p;
-    }
-
-    @Override
-    public String getEncoded() {
-        return "";
-    }
 
     @Override
     public int compareTo(Node node) {
@@ -68,5 +45,4 @@ public class BookmarkNode implements Node {
 
         return label.compareTo(node.getLabel());
     }
-
 }

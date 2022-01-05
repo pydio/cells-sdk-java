@@ -24,6 +24,8 @@ public interface Node extends Serializable {
 
     void setProperties(Properties p);
 
+    Properties getProperties();
+
     String getProperty(String key);
 
     void setProperty(String key, String value);
@@ -43,7 +45,7 @@ public interface Node extends Serializable {
     /**
      * Returns the serialized version of the current instance
      */
-    String getEncoded();
+    // String getEncoded();
 
     //String getEncodedHash();
 
