@@ -34,11 +34,44 @@ public class StateIDTest {
         Assert.assertEquals("/common-files/Documents/Subfolder", decodedStateID.getPath());
         Assert.assertEquals("common-files", decodedStateID.getWorkspace());
         Assert.assertEquals("/Documents/Subfolder", decodedStateID.getFile());
+        Assert.assertEquals("Subfolder", decodedStateID.getFileName());
+        Assert.assertEquals("/Documents", decodedStateID.getParentFile());
 
 
         Assert.assertEquals(stateID.getUsername(), decodedStateID.getUsername());
         Assert.assertEquals(stateID.getServerUrl(), decodedStateID.getServerUrl());
         Assert.assertEquals(stateID.getFile(), decodedStateID.getFile());
+    }
+
+    @Test
+    public void testRoots() {
+        StateID stateID = new StateID("user", "https://example.com");
+        String encodedID = stateID.getId();
+        StateID decodedStateID = StateID.fromId(encodedID);
+
+        Assert.assertNull(decodedStateID.getPath());
+        Assert.assertNull(decodedStateID.getFile());
+        Assert.assertNull(decodedStateID.getFileName());
+        Assert.assertNull(decodedStateID.getParentFile());
+
+        StateID stateID2 = stateID.withPath("/common-files");
+        Assert.assertEquals("/common-files", stateID2.getPath());
+        Assert.assertEquals("/", stateID2.getFile());
+        Assert.assertNull(stateID2.getFileName());
+        Assert.assertNull(stateID2.getParentFile());
+
+        StateID stateID3 = stateID.withPath("/common-files/");
+        Assert.assertEquals("/common-files/", stateID3.getPath());
+        Assert.assertEquals("/", stateID3.getFile());
+        Assert.assertNull(stateID3.getFileName());
+        Assert.assertNull(stateID3.getParentFile());
+
+        StateID stateID4 = stateID.withPath("/common-files/folder");
+        Assert.assertEquals("/common-files/folder", stateID4.getPath());
+        Assert.assertEquals("/folder", stateID4.getFile());
+        Assert.assertEquals("folder", stateID4.getFileName());
+        Assert.assertEquals("/", stateID4.getParentFile());
+
     }
 
     @Test
