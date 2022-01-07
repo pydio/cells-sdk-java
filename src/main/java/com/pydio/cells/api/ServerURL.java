@@ -62,4 +62,6 @@ public interface ServerURL {
     SSLSocketFactory getSslSocketFactory();
 
     boolean skipVerify();
+
+    String toJson();
 }
