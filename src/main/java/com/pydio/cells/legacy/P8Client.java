@@ -22,7 +22,6 @@ import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.NodeDiff;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
-import com.pydio.cells.client.model.parser.TreeNodeSaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
@@ -143,7 +142,7 @@ public class P8Client implements Client, SdkNames {
             }
 
             final FileNode[] node = new FileNode[1];
-            final int resultCode = rsp.saxParse(new TreeNodeSaxHandler((n) -> node[0] = (FileNode) n));
+            final int resultCode = rsp.saxParse(new P8NodeSaxHandler((n) -> node[0] = (FileNode) n));
             if (resultCode != ErrorCodes.ok) {
                 throw new SDKException(resultCode);
             }
@@ -199,7 +198,7 @@ public class P8Client implements Client, SdkNames {
                     throw new SDKException(code);
                 }
 
-                TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
+                P8NodeSaxHandler treeHandler = new P8NodeSaxHandler((n) -> {
                     n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
                     handler.onNode(n);
                 });
@@ -232,7 +231,7 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(code);
             }
 
-            final int resultCode = rsp.saxParse(new TreeNodeSaxHandler(node -> {
+            final int resultCode = rsp.saxParse(new P8NodeSaxHandler(node -> {
                 node.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
                 h.onNode(node);
             }));
@@ -273,7 +272,7 @@ public class P8Client implements Client, SdkNames {
                         //throw SDKException.fromP8Code(code);
                     }
 
-                    TreeNodeSaxHandler treeHandler = new TreeNodeSaxHandler((n) -> {
+                    P8NodeSaxHandler treeHandler = new P8NodeSaxHandler((n) -> {
                         n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, wn.getId());
                         handler.onNode(n);
                     });

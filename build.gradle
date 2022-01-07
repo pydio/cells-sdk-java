@@ -95,12 +95,14 @@ dependencies {
 
     // These dependencies are used internally and not exposed to consumers
     // on their own compile classpath (otherwise, use "api").
-    implementation 'com.google.code.gson:gson:2.8.9'
+
     implementation 'org.threeten:threetenbp:1.5.2'
     // Necessary for swagger (generation of the openapi package from Cells spec)
     implementation 'io.swagger:swagger-annotations:1.6.3'
 
-    // Used to store info as gson blobs in SQLite 
+    // Used to store info as gson blobs in SQLite
+    // TODO what are the differences between the 2 libs, which one is better?
+    implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'io.gsonfire:gson-fire:1.8.5'
     // Very old library that has been used to implement dirty shortcuts while manipulating JSON.
     // TODO clean the code (mainly the Client and Transport classes) and remove.
@@ -128,6 +130,7 @@ dependencies {
 
     // JUnit test framework
     testImplementation 'junit:junit:4.13.2'
+
     // testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
 
     // S3 transport is configured in calling layer 

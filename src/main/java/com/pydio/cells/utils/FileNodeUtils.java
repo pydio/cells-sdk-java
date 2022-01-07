@@ -28,16 +28,41 @@ public class FileNodeUtils {
         }
         String treeNodePath = node.getPath();
 
+        // Retrieve the MetaData
+        Map<String, String> meta = node.getMetaStore();
+
         String slug = slugFrom(treeNodePath);
         String path = pathFrom(treeNodePath);
         String name = nameFrom(treeNodePath);
 
+        result.setProperty(SdkNames.NODE_PROPERTY_UUID, uuid);
         result.setProperty(SdkNames.NODE_PROPERTY_ETAG, node.getEtag());
-        result.setProperty(SdkNames.NODE_PROPERTY_UUID, node.getUuid());
-        result.setProperty(SdkNames.NODE_PROPERTY_WORKSPACE_SLUG, slug);
+        String mTime = node.getMtime();
+        if (mTime != null) {
+            result.setProperty(SdkNames.NODE_PROPERTY_MTIME, node.getMtime());
+        }
+
         result.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
+        result.setProperty(SdkNames.NODE_PROPERTY_WORKSPACE_SLUG, slug);
         result.setProperty(SdkNames.NODE_PROPERTY_FILENAME, name);
-        result.setProperty(SdkNames.NODE_PROPERTY_IS_FILE, String.valueOf(node.getType() == TreeNodeType.LEAF));
+
+        boolean isFile = node.getType() == TreeNodeType.LEAF;
+        result.setProperty(SdkNames.NODE_PROPERTY_IS_FILE, String.valueOf(isFile));
+        String type;
+        if (isFile) {
+            if (meta.containsKey(SdkNames.NODE_PROPERTY_MIME)) {
+                type = meta.get(SdkNames.NODE_PROPERTY_MIME);
+            } else {
+                type = SdkNames.NODE_MIME_DEFAULT;
+            }
+        } else {
+            if (SdkNames.RECYCLE_BIN_NAME.equals(name)) {
+                type = SdkNames.NODE_MIME_RECYCLE;
+            } else {
+                type = SdkNames.NODE_MIME_FOLDER;
+            }
+        }
+        result.setProperty(SdkNames.NODE_PROPERTY_MIME, type);
 
         result.setProperty(SdkNames.NODE_PROPERTY_TEXT, name);
         result.setProperty(SdkNames.NODE_PROPERTY_LABEL, name);
@@ -48,13 +73,6 @@ public class FileNodeUtils {
         }
         result.setProperty(SdkNames.NODE_PROPERTY_BYTESIZE, sizeStr);
         result.setProperty(SdkNames.NODE_PROPERTY_FILE_PERMS, String.valueOf(node.getMode()));
-        String mTime = node.getMtime();
-        if (mTime != null) {
-            result.setProperty(SdkNames.NODE_PROPERTY_AJXP_MODIFTIME, node.getMtime());
-        }
-
-        Map<String, String> meta = node.getMetaStore();
-        result.setProperty(SdkNames.NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
 
         String ws_shares = meta.get("workspaces_shares");
         if (ws_shares != null) {
@@ -99,6 +117,8 @@ public class FileNodeUtils {
                 e.printStackTrace();
             }
         }
+
+        result.setProperty(SdkNames.NODE_PROPERTY_META_JSON_ENCODED, new JSONObject(meta).toString());
 
         // TODO but why do we duplicate the info here, why???
         String encoded = new Gson().toJson(node);

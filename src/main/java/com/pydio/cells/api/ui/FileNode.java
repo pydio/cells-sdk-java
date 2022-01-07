@@ -41,6 +41,9 @@ public class FileNode extends AbstractNode {
     }
 
     /* File and folder specific methods */
+    public String getMimeType() {
+        return properties.getProperty(NODE_PROPERTY_MIME);
+    }
 
     public boolean isImage() {
         return
@@ -65,7 +68,7 @@ public class FileNode extends AbstractNode {
 
     public long lastModified() {
         try {
-            return Long.parseLong(properties.getProperty(NODE_PROPERTY_AJXP_MODIFTIME));
+            return Long.parseLong(properties.getProperty(NODE_PROPERTY_MTIME));
         } catch (Exception e) {
             return 0;
         }
@@ -95,7 +98,7 @@ public class FileNode extends AbstractNode {
 
     @Override
     public int compareTo(Node node) {
-        if (node == null){
+        if (node == null) {
             return 1;
         }
 
@@ -106,37 +109,12 @@ public class FileNode extends AbstractNode {
 
         FileNode other = (FileNode) node;
 
-        if (isFolder() && other.isFile()){
+        if (isFolder() && other.isFile()) {
             return -1;
-        } else if (isFile() && other.isFolder()){
+        } else if (isFile() && other.isFolder()) {
             return 1;
         }
 
         return getLabel().compareTo(other.getLabel());
     }
 }
-
-
-/**
- * Extends Node interface adding File specific methods
- */
-//public interface FileNode extends Node {
-//
-//    boolean isImage();
-//
-//    default boolean isViewable() {
-//        return isImage();
-//    }
-//
-//    boolean isFile();
-//
-//    boolean isFolder();
-//
-//    String getETag();
-//
-//    long lastModified();
-//
-//    long size();
-//
-//    String getWorkspaceSlug();
-//}
