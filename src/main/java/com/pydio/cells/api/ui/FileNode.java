@@ -32,6 +32,10 @@ public class FileNode extends AbstractNode {
         String path = properties.getProperty(NODE_PROPERTY_PATH);
         String name = properties.getProperty(NODE_PROPERTY_FILENAME);
 
+        // FIXME this smells, path =
+        //  "/" + name // on first call
+        //  name // after that
+
         if ((path == null || "".equals(path)) && name != null && !"".equals(name)) {
             setProperty(NODE_PROPERTY_PATH, name);
             return "/" + name;
