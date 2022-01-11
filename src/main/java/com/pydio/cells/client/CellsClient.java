@@ -248,21 +248,22 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException {
-        String thumbPath = getThumbPath(node, dim);
-        if (thumbPath == null){
+        String filename = getThumbFilename(node, dim);
+        if (filename == null){
             throw new SDKException(ErrorCodes.not_found, "No thumbnail is defined for this resource", new IOException());
         }
-        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, thumbPath, out, null);
+        // TODO this can vary from one DS to the next in Cells v3+
+        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, "/"+filename, out, null);
     }
 
-    private String getThumbPath(FileNode currNode, int dim) throws SDKException {
-        String thumbsURLs = currNode.getProperty(SdkNames.NODE_PROPERTY_IMAGE_THUMB_PATHS);
-        if (Str.empty(thumbsURLs)) {
+    private String getThumbFilename(FileNode currNode, int dim) throws SDKException {
+        String remoteThumbsJson = currNode.getProperty(SdkNames.NODE_PROPERTY_REMOTE_THUMBS);
+        if (Str.empty(remoteThumbsJson)) {
             return null;
         }
 
         Gson gson = new Gson();
-        Map<String, String> thumbs = gson.fromJson(thumbsURLs, Map.class);
+        Map<String, String> thumbs = gson.fromJson(remoteThumbsJson, Map.class);
         String thumbPath = null;
         // TODO improve: we rely on the fact that thumbs are ordered by growing size at this point.
         for (Map.Entry<String,String> entry : thumbs.entrySet())                {
