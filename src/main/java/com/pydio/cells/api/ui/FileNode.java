@@ -66,6 +66,14 @@ public class FileNode extends AbstractNode {
         return "false".equals(mime);
     }
 
+    public boolean isBookmark(){
+        return "true".equals(getProperty(NODE_PROPERTY_BOOKMARK));
+    }
+
+    public boolean isShared(){
+        return "true".equals(getProperty(NODE_PROPERTY_SHARED));
+    }
+
     public String getETag() {
         return properties.getProperty(NODE_PROPERTY_ETAG);
     }
@@ -78,7 +86,7 @@ public class FileNode extends AbstractNode {
         }
     }
 
-    public long size() {
+    public long getSize() {
         String strSize = properties.getProperty(NODE_PROPERTY_BYTESIZE);
         if (strSize == null || "".equals(strSize))
             return 0;

@@ -21,6 +21,8 @@ public class P8NodeSaxHandler extends DefaultHandler {
     private final static String AJXP_IM_TIME = "ajxp_im_time";
     private final static String AJXP_IMAGE_TYPE = "image_type";
     private final static String AJXP_MIME = "ajxp_mime";
+    private final static String AJXP_SHARED = "ajxp_shared";
+
 
     // Remarkable values
     private final static String AJXP_MIME_RECYCLE = "ajxp_recycle";
@@ -63,6 +65,12 @@ public class P8NodeSaxHandler extends DefaultHandler {
             }
         }
         p.setProperty(SdkNames.NODE_PROPERTY_MIME, type);
+
+        // Migrate old names
+        if (p.containsKey(AJXP_SHARED)){
+            p.setProperty(SdkNames.NODE_PROPERTY_SHARED, (String) p.get(AJXP_SHARED));
+            p.remove(AJXP_SHARED);
+        }
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) {

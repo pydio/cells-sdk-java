@@ -31,23 +31,24 @@ public interface SdkNames {
     String NODE_PROPERTY_BYTESIZE = "bytesize";
     String NODE_PROPERTY_MIME = "mime";
     String NODE_PROPERTY_MTIME = "ajxp_modiftime";
+    String NODE_PROPERTY_TEXT = "text";
 
     String NODE_PROPERTY_IS_FILE = "is_file";
     String NODE_PROPERTY_IS_IMAGE = "is_image";
-    String NODE_PROPERTY_TEXT = "text";
+    String NODE_PROPERTY_REMOTE_THUMBS = "remote_thumbs";
 
     String NODE_PROPERTY_FILE_PERMS = "file_perms";
-    String NODE_PROPERTY_SHARE_JSON_INFO = "share_json_info";
     String NODE_PROPERTY_IMAGE_HEIGHT = "image_height";
     String NODE_PROPERTY_IMAGE_WIDTH = "image_width";
-    String NODE_PROPERTY_IMAGE_THUMB_PATHS = "image_thumb_url_prefix";
     String NODE_PROPERTY_LABEL = "label";
     String NODE_PROPERTY_ETAG = "etag";
     String NODE_PROPERTY_WORKSPACE_SLUG = "workspace_slug";
 
     String NODE_PROPERTY_BOOKMARK = "bookmark";
 
-    String NODE_PROPERTY_AJXP_SHARED = "ajxp_shared";
+    String NODE_PROPERTY_SHARED = "shared";
+    String NODE_PROPERTY_SHARE_INFO = "share_json_info";
+
     String NODE_PROPERTY_META_JSON_ENCODED = "meta_encoded";
 
     // TODO Clean legacy properties below

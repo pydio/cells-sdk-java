@@ -130,7 +130,7 @@ public class WorkspaceNode extends AbstractNode {
     }
 
     public boolean isShared() {
-        return "true".equals(properties.getProperty(NODE_PROPERTY_AJXP_SHARED)) || "shared".equals(properties.getProperty(WORKSPACE_PROPERTY_OWNER));
+        return "true".equals(properties.getProperty(NODE_PROPERTY_SHARED)) || "shared".equals(properties.getProperty(WORKSPACE_PROPERTY_OWNER));
     }
 
     @Override
