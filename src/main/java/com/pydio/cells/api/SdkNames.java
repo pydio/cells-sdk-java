@@ -90,8 +90,6 @@ public interface SdkNames {
 
     String WORKSPACE_PROPERTY_ID = "id";
     String WORKSPACE_DESCRIPTION = "description";
-    String NODE_PROPERTY_DESCRIPTION = "description";
-
     String WORKSPACE_PROPERTY_SLUG = "repositorySlug";
     String WORKSPACE_PROPERTY_TYPE = "repository_type";
     String WORKSPACE_PROPERTY_ACCESS_TYPE = "access_type";

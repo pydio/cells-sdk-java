@@ -19,7 +19,6 @@ public class FileNodeUtils {
     private final static String META_KEY_THUMB_DATA = "thumbnails";
     private final static String META_KEY_WS_SHARES = "workspaces_shares";
 
-
     /**
      * Simply converts a Cells API TreeNode to our local FileNode object.
      * This is the central point for all tweaks to go on supporting  Pydio8 (and the legacy code).
