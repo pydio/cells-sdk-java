@@ -63,7 +63,7 @@ public class WorkspaceNode extends AbstractNode {
     /* Getters */
 
     public String getDescription() {
-        return properties.getProperty(NODE_PROPERTY_DESCRIPTION);
+        return properties.getProperty(WORKSPACE_DESCRIPTION);
     }
 
     public String getLabel() {
