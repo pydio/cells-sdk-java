@@ -362,7 +362,8 @@ public class CellsClient implements Client, SdkNames {
             con.setRequestProperty("Content-Type", "application/octet-stream");
             // Calling setFixedLengthStreamingMode with the length prevents the con
             // from using buffer for body
-            con.setFixedLengthStreamingMode(length);
+            // FIXME commented out in a first pass
+            // con.setFixedLengthStreamingMode(length);
             try (OutputStream out = con.getOutputStream()) {
                 IoHelpers.pipeReadWithProgress(source, out, progressListener);
             }
