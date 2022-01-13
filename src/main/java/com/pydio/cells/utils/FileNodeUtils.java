@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class FileNodeUtils {
 
+    private final static String TAG = "FileNodeUtils";
+
     private final static String META_KEY_IMG_THUMBS = "ImageThumbnails";
     private final static String META_KEY_THUMB_PROCESSING = "Processing";
     private final static String META_KEY_THUMB_DATA = "thumbnails";
@@ -117,6 +119,7 @@ public class FileNodeUtils {
         if (isImage) {
             result.setProperty(SdkNames.NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_width"));
             result.setProperty(SdkNames.NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
+            String metaStr = meta.get(META_KEY_IMG_THUMBS);
             try {
 
                 // TODO rather use GSON to get rid of legacy JSON Object TP
@@ -127,21 +130,25 @@ public class FileNodeUtils {
 //
 //                    }
 
-                JSONObject imgThumbs = new JSONObject(meta.get(META_KEY_IMG_THUMBS));
-                boolean processing = imgThumbs.getBoolean(META_KEY_THUMB_PROCESSING);
-                if (!processing) {
-                    JSONArray details = imgThumbs.getJSONArray(META_KEY_THUMB_DATA);
-                    JSONObject thumbObject = new JSONObject();
-                    for (int i = 0; i < details.length(); i++) {
-                        JSONObject item = (JSONObject) details.get(i);
-                        int size = item.getInt("size");
-                        String format = item.getString("format");
-                        String thumbName = node.getUuid() + "-" + size + "." + format;
-                        thumbObject.put(String.valueOf(size), thumbName);
+                if (Str.notEmpty(metaStr)){
+                    JSONObject imgThumbs = new JSONObject(metaStr);
+                    boolean processing = imgThumbs.getBoolean(META_KEY_THUMB_PROCESSING);
+                    if (!processing) {
+                        JSONArray details = imgThumbs.getJSONArray(META_KEY_THUMB_DATA);
+                        JSONObject thumbObject = new JSONObject();
+                        for (int i = 0; i < details.length(); i++) {
+                            JSONObject item = (JSONObject) details.get(i);
+                            int size = item.getInt("size");
+                            String format = item.getString("format");
+                            String thumbName = node.getUuid() + "-" + size + "." + format;
+                            thumbObject.put(String.valueOf(size), thumbName);
+                        }
+                        result.setProperty(SdkNames.NODE_PROPERTY_REMOTE_THUMBS, thumbObject.toString());
                     }
-                    result.setProperty(SdkNames.NODE_PROPERTY_REMOTE_THUMBS, thumbObject.toString());
                 }
             } catch (Exception e) {
+                Log.e(TAG, "Could not handle picture meta for " + path + ": " + e.getMessage());
+                Log.e(TAG, "Meta String: " + metaStr);
                 e.printStackTrace();
             }
         }
