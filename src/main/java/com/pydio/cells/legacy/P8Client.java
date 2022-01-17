@@ -555,6 +555,15 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
+    public Message bookmark(String slug, String file, boolean isBookmarked) throws SDKException {
+        if (isBookmarked){
+            return bookmark(slug, file);
+        } else {
+            return  unbookmark(slug, file);
+        }
+    }
+
+    @Override
     public Message bookmark(String ws, String file) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.bookmark(ws, file);
         builder = transport.withAuth(builder);
