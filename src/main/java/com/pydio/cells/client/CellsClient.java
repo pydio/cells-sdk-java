@@ -115,15 +115,15 @@ public class CellsClient implements Client, SdkNames {
             in = con.getInputStream();
             int responseCode = con.getResponseCode();
 
-            if (responseCode != 200){
-                throw new IOException("could not get registry for "+ transport.getId()+ "("+responseCode+"): "+ con.getResponseMessage());
+            if (responseCode != 200) {
+                throw new IOException("could not get registry for " + transport.getId() + "(" + responseCode + "): " + con.getResponseMessage());
             }
 
             registry = new DocumentRegistry(in);
 
-            if (!registry.isLoggedIn()){
+            if (!registry.isLoggedIn()) {
                 // Double check if we are correctly connected
-                throw new IOException("not logged in "+ transport.getId()+ ", you cannot list workspaces.");
+                throw new IOException("not logged in " + transport.getId() + ", you cannot list workspaces.");
             }
 
             for (WorkspaceNode node : registry.getWorkspaces()) {
@@ -249,11 +249,11 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException {
         String filename = getThumbFilename(node, dim);
-        if (filename == null){
+        if (filename == null) {
             throw new SDKException(ErrorCodes.not_found, "No thumbnail is defined for this resource", new IOException());
         }
         // TODO this can vary from one DS to the next in Cells v3+
-        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, "/"+filename, out, null);
+        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, "/" + filename, out, null);
     }
 
     private String getThumbFilename(FileNode currNode, int dim) throws SDKException {
@@ -266,8 +266,8 @@ public class CellsClient implements Client, SdkNames {
         Map<String, String> thumbs = gson.fromJson(remoteThumbsJson, Map.class);
         String thumbPath = null;
         // TODO improve: we rely on the fact that thumbs are ordered by growing size at this point.
-        for (Map.Entry<String,String> entry : thumbs.entrySet())                {
-            if (thumbPath == null){
+        for (Map.Entry<String, String> entry : thumbs.entrySet()) {
+            if (thumbPath == null) {
                 thumbPath = entry.getValue();
             }
             int size = Integer.parseInt(entry.getKey());
@@ -635,7 +635,20 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message bookmark(String ws, String nodeId) throws SDKException {
+    public Message bookmark(String slug, String file, boolean isBookmarked) throws SDKException {
+        if (isBookmarked) {
+            return bookmark(slug, file);
+        } else {
+            return unbookmark(slug, file);
+        }
+    }
+
+    @Override
+    public Message bookmark(String ws, String file) throws SDKException {
+        return bookmark(getNodeUuid(ws, file));
+    }
+
+    public Message bookmark(String UUID) throws SDKException {
 
         UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
 
@@ -645,13 +658,13 @@ public class CellsClient implements Client, SdkNames {
         List<IdmUserMeta> metas = new ArrayList<>();
 
         IdmUserMeta userMeta = new IdmUserMeta();
-        userMeta.setNodeUuid(nodeId);
+        userMeta.setNodeUuid(UUID);
         userMeta.setNamespace("bookmark");
         userMeta.setJsonValue("true");
 
-        ServiceResourcePolicy ownerPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.OWNER);
-        ServiceResourcePolicy readPolicy = newPolicy(nodeId, ServiceResourcePolicyAction.READ);
-        ServiceResourcePolicy writePolicy = newPolicy(nodeId, ServiceResourcePolicyAction.WRITE);
+        ServiceResourcePolicy ownerPolicy = newPolicy(UUID, ServiceResourcePolicyAction.OWNER);
+        ServiceResourcePolicy readPolicy = newPolicy(UUID, ServiceResourcePolicyAction.READ);
+        ServiceResourcePolicy writePolicy = newPolicy(UUID, ServiceResourcePolicyAction.WRITE);
         userMeta.addPoliciesItem(ownerPolicy);
         userMeta.addPoliciesItem(readPolicy);
         userMeta.addPoliciesItem(writePolicy);
@@ -661,13 +674,16 @@ public class CellsClient implements Client, SdkNames {
         request.setMetaDatas(metas);
 
         try {
-            // IdmUpdateUserMetaResponse response =
             api.updateUserMeta(request);
             return null;
+            // TODO Message Api must be re-implemented...
+//            IdmUpdateUserMetaResponse response =
+//             return  response.;
         } catch (ApiException e) {
             e.printStackTrace();
             throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: " + e.getMessage(), e);
         }
+
     }
 
     @Override
@@ -938,6 +954,15 @@ public class CellsClient implements Client, SdkNames {
         } catch (IOException e) {
             String msg = "Could not upload to ".concat(ws).concat(path).concat("/").concat(name);
             throw new SDKException(ErrorCodes.con_write_failed, msg, e);
+        }
+    }
+
+    private String getNodeUuid(String ws, String file) throws SDKException {
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
+        try {
+            return api.headNode(FileNodeUtils.toTreeNodePath(ws, file)).getNode().getUuid();
+        } catch (ApiException e) {
+            throw new SDKException(e);
         }
     }
 

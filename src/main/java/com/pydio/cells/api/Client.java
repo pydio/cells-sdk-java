@@ -64,8 +64,14 @@ public interface Client {
 
     void getBookmarks(NodeHandler h) throws SDKException;
 
+    Message bookmark(String slug, String file, boolean isBookmarked) throws SDKException;
+
+    // Rather use bookmark(slug, path, isBookmarked)
+    @Deprecated
     Message bookmark(String ws, String file) throws SDKException;
 
+    // Rather use bookmark(slug, path, isBookmarked)
+    @Deprecated
     Message unbookmark(String ws, String file) throws SDKException;
 
     String share(String ws, String file, String ws_label, boolean isFolder, String ws_description, String password, int expiration, int download, boolean canPreview, boolean canDownload) throws SDKException;
