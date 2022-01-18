@@ -36,6 +36,7 @@ import com.pydio.cells.openapi.model.RestBulkMetaResponse;
 import com.pydio.cells.openapi.model.RestCreateNodesRequest;
 import com.pydio.cells.openapi.model.RestDeleteNodesRequest;
 import com.pydio.cells.openapi.model.RestGetBulkMetaRequest;
+import com.pydio.cells.openapi.model.RestHeadNodeResponse;
 import com.pydio.cells.openapi.model.RestNodesCollection;
 import com.pydio.cells.openapi.model.RestPagination;
 import com.pydio.cells.openapi.model.RestPutShareLinkRequest;
@@ -712,9 +713,11 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public String share(String ws, String uuid, String ws_label, boolean isFolder, String ws_description,
+    public String share(String workspace, String file, String ws_label, boolean isFolder, String ws_description,
                         String password, int expiration, int download, boolean canPreview, boolean canDownload)
             throws SDKException {
+
+        String uuid = getNodeUuid(workspace, file);
 
         RestPutShareLinkRequest request = new RestPutShareLinkRequest();
         request.createPassword(password);
@@ -756,10 +759,56 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public void unshare(String ws, String file) throws SDKException {
+    public String share(String workspace, String file, String ws_label, String ws_description,
+                        String password, boolean canPreview, boolean canDownload)
+            throws SDKException {
+
+        String uuid = getNodeUuid(workspace, file);
+
+        RestPutShareLinkRequest request = new RestPutShareLinkRequest();
+        request.createPassword(password);
+        request.setCreatePassword(password);
+        request.setPasswordEnabled(Boolean.parseBoolean(password));
+        RestShareLink sl = new RestShareLink();
+
+        TreeNode n = new TreeNode();
+        n.setUuid(uuid);
+
+        List<RestShareLinkAccessType> permissions = new ArrayList<>();
+        if (canPreview) {
+            permissions.add(RestShareLinkAccessType.PREVIEW);
+        }
+        if (canDownload) {
+            permissions.add(RestShareLinkAccessType.DOWNLOAD);
+        }
+
+        List<TreeNode> rootNodes = new ArrayList<>();
+        rootNodes.add(n);
+        sl.setPoliciesContextEditable(true);
+
+        sl.setPermissions(permissions);
+        sl.setRootNodes(rootNodes);
+        sl.setPoliciesContextEditable(true);
+        sl.setDescription(ws_description);
+        sl.setLabel(ws_label);
+        sl.setViewTemplateName("pydio_unique_strip");
+        request.setShareLink(sl);
+
+        ShareServiceApi api = new ShareServiceApi(authenticatedClient());
+
+        try {
+            RestShareLink link = api.putShareLink(request);
+            return transport.getServer().url() + link.getLinkUrl();
+        } catch (ApiException e) {
+            throw new SDKException(e);
+        }
+    }
+
+    @Override
+    public void unshare(String workspace, String file) throws SDKException {
         ShareServiceApi api = new ShareServiceApi(authenticatedClient());
         try {
-            api.deleteShareLink(file);
+            api.deleteShareLink(getNodeUuid(workspace, file));
         } catch (ApiException e) {
             throw new SDKException(e);
         }
@@ -960,7 +1009,9 @@ public class CellsClient implements Client, SdkNames {
     private String getNodeUuid(String ws, String file) throws SDKException {
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         try {
-            return api.headNode(FileNodeUtils.toTreeNodePath(ws, file)).getNode().getUuid();
+            RestHeadNodeResponse response = api.headNode(FileNodeUtils.toTreeNodePath(ws, file));
+            TreeNode node = response.getNode();
+            return node.getUuid();
         } catch (ApiException e) {
             throw new SDKException(e);
         }

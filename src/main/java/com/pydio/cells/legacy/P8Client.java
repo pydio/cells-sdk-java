@@ -556,10 +556,10 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Message bookmark(String slug, String file, boolean isBookmarked) throws SDKException {
-        if (isBookmarked){
+        if (isBookmarked) {
             return bookmark(slug, file);
         } else {
-            return  unbookmark(slug, file);
+            return unbookmark(slug, file);
         }
     }
 
@@ -834,6 +834,14 @@ public class P8Client implements Client, SdkNames {
         } catch (IOException ioe) {
             throw new SDKException(ioe);
         }
+    }
+
+    @Override
+    public String share(String workspace, String file, String ws_label, String ws_description,
+                        String password, boolean canPreview, boolean canDownload)
+            throws SDKException {
+        return share(workspace, file, ws_label, false,
+                ws_description, password, 0, 0, canPreview, canDownload);
     }
 
     @Override
