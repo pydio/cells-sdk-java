@@ -40,13 +40,12 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
             }
 
             // Use Cells like categories for workspaces
-            String type = WorkspaceNode.TYPE_WS;
+            String type = SdkNames.WS_TYPE_DEFAULT;
             String slug = p.getProperty(SdkNames.WORKSPACE_PROPERTY_SLUG);
             if ("my-files".equals(slug)) {
-                type = WorkspaceNode.TYPE_PERSONAL;
+                type = SdkNames.WS_TYPE_PERSONAL;
             }
             p.setProperty(SdkNames.WORKSPACE_PROPERTY_TYPE, type);
-
 
             return;
         }

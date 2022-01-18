@@ -1,5 +1,6 @@
 package com.pydio.cells.api.ui;
 
+import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.client.model.Action;
 
 import java.util.List;
@@ -12,10 +13,6 @@ import java.util.List;
  */
 
 public class WorkspaceNode extends AbstractNode {
-
-    public final static String TYPE_PERSONAL = "workspace-personal";
-    public final static String TYPE_WS = "workspace";
-    public final static String TYPE_CELL = "cell";
 
     private List<Plugin> plugins;
     private List<Action> availableActions;
@@ -69,7 +66,6 @@ public class WorkspaceNode extends AbstractNode {
     public String getLabel() {
         return properties.getProperty(NODE_PROPERTY_LABEL);
     }
-
 
     public String getSlug() {
         return properties.getProperty(WORKSPACE_PROPERTY_SLUG);
@@ -157,11 +153,11 @@ public class WorkspaceNode extends AbstractNode {
 
     private int getWeight(WorkspaceNode wn) {
         switch (wn.getWorkspaceType()) {
-            case TYPE_PERSONAL:
+            case SdkNames.WS_TYPE_PERSONAL:
                 return 3;
-            case TYPE_WS:
+            case SdkNames.WS_TYPE_DEFAULT:
                 return 2;
-            case TYPE_CELL:
+            case SdkNames.WS_TYPE_CELL:
                 return 1;
             default:
                 return 0;
