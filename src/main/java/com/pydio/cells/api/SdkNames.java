@@ -10,9 +10,14 @@ public interface SdkNames {
     String TYPE_CELLS = "cells";
     String TYPE_LEGACY_P8 = "pydio";
 
+    // Well known Pydio specific Mime Types
     String NODE_MIME_FOLDER = "pydio/nodes-list";
     String NODE_MIME_RECYCLE = "pydio/recycle";
     String NODE_MIME_DEFAULT = "application/octet-stream";
+    // Workspaces types
+    String WS_TYPE_PERSONAL = "workspace-personal";
+    String WS_TYPE_CELL = "cell";
+    String WS_TYPE_DEFAULT = "workspace";
 
     String RECYCLE_BIN_NAME = "recycle_bin";
 
@@ -128,7 +133,6 @@ public interface SdkNames {
 
     String REMOTE_CONFIG_UPLOAD_SIZE = "UPLOAD_MAX_SIZE";
     String LOCAL_CONFIG_BUFFER_SIZE = "buffer_size";
-
 
     String SESSION_ID = "session_id";
     String ADDRESS = "address";

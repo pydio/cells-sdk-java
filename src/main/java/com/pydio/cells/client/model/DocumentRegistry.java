@@ -164,9 +164,9 @@ public class DocumentRegistry implements Registry {
             String type = repositoryType.getNodeValue();
             if (isLegacy) { // Tweak when generating the local object to ease implementation of clients
                 if ("my-files".equals(workspaceNode.getSlug())) {
-                    type = WorkspaceNode.TYPE_PERSONAL;
+                    type = SdkNames.WS_TYPE_PERSONAL;
                 } else {
-                    type = WorkspaceNode.TYPE_WS;
+                    type = SdkNames.WS_TYPE_DEFAULT;
                 }
                 Log.e("DocumentRegistry", "Using document registry for a legacy server");
             }
