@@ -1,5 +1,7 @@
 package com.pydio.cells.transport;
 
+import static com.pydio.cells.transport.CellsServer.API_PREFIX;
+
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ICellsTransport;
@@ -40,8 +42,6 @@ import java.util.Map;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import static com.pydio.cells.transport.CellsServer.API_PREFIX;
-
 public class CellsTransport implements ICellsTransport, SdkNames {
 
     private final CustomEncoder encoder;
@@ -74,18 +74,21 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     @Override
     public String getUserAgent() {
+
         if (userAgent != null) {
             return userAgent;
         }
 
-        userAgent = String.format(Locale.US, "%s-%s/%d", ClientData.name, ClientData.version, ClientData.versionCode);
-        if (!ClientData.platform.equals("")) {
-            userAgent = ClientData.platform + "/" + userAgent;
+        ClientData clientData = ClientData.getInstance();
+        userAgent = String.format(Locale.US, "%s-%s/%d",
+                clientData.getName(), clientData.getVersion(), clientData.getVersionCode());
+        if (Str.notEmpty(clientData.getPlatform())) {
+            userAgent = clientData.getPlatform() + "/" + userAgent;
         }
-
-        if (!ClientData.packageID.equals("")) {
-            userAgent = userAgent + "/" + ClientData.packageID;
+        if (Str.notEmpty(clientData.getPackageID())) {
+            userAgent = userAgent + "/" + clientData.getPackageID();
         }
+        Log.i("CellsTransport", "############### User Agent generated: " + userAgent);
         return userAgent;
     }
 
@@ -186,7 +189,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     public ApiClient authenticatedClient() throws SDKException {
         ApiClient apiClient = getApiClient();
         String accessToken = getAccessToken();
-        if (Str.empty(accessToken)){
+        if (Str.empty(accessToken)) {
             throw new SDKException(ErrorCodes.no_token_available);
         }
         apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
@@ -266,7 +269,9 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         authInfo.put("login", credentials.getUsername());
         authInfo.put("password", credentials.getPassword());
         authInfo.put("type", "credentials");
-        String authHeader = "Basic " + encoder.base64Encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
+        ClientData cd = ClientData.getInstance();
+        String authHeader = "Basic "
+                + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
         authInfo.put("Authorization", authHeader);
 
         RestFrontSessionRequest request = new RestFrontSessionRequest();
@@ -307,10 +312,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             authData.put("redirect_uri", cfg.redirectURI);
 
             // Either this or the 2 lines after are useless.
-            authData.put("client_id", ClientData.getClientId());
-            authData.put("client_secret", ClientData.getClientSecret());
+            ClientData cd = ClientData.getInstance();
+            authData.put("client_id", cd.getClientId());
+            authData.put("client_secret", cd.getClientSecret());
 
-            String authHeader = "Basic " + encoder.base64Encode(ClientData.getClientId() + ":" + ClientData.getClientSecret());
+            String authHeader = "Basic " + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
             addPostData(con, authData, authHeader);
 
             try { // Real call
@@ -343,11 +349,12 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             Map<String, String> authData = new HashMap<>();
             authData.put("grant_type", "refresh_token");
             authData.put("refresh_token", refreshToken);
-            authData.put("client_id", ClientData.getClientId());
+
+            ClientData cd = ClientData.getInstance();
+            authData.put("client_id", cd.getClientID());
 //            String secret = Str.empty(ClientData.getClientSecret()) ? "whatever" : ClientData.getClientSecret();
 //            authData.put("client_secret", secret);
-            String secret = ClientData.getClientSecret();
-            authData.put("client_secret", secret);
+            authData.put("client_secret", cd.getClientSecret());
 
             addPostData(con, authData, null);
 

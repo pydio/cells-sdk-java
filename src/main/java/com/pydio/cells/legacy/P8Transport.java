@@ -84,14 +84,17 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             return userAgent;
         }
 
-        userAgent = String.format(Locale.US, "%s-%s/%d", ClientData.name, ClientData.version, ClientData.versionCode);
-        if (!ClientData.platform.equals("")) {
-            userAgent = ClientData.platform + "/" + userAgent;
+        ClientData clientData = ClientData.getInstance();
+        userAgent = String.format(Locale.US, "%s-%s/%d", clientData.getName(), clientData.getVersion(), clientData.getVersionCode());
+        if (Str.notEmpty(clientData.getPlatform())) {
+            userAgent = clientData.getPlatform() + "/" + userAgent;
         }
 
-        if (!ClientData.packageID.equals("")) {
-            userAgent = userAgent + "/" + ClientData.packageID;
+        if (Str.notEmpty(clientData.getPackageID())) {
+            userAgent = userAgent + "/" + clientData.getPackageID();
         }
+
+        Log.i("P8Transport", "User Agent generated: " + userAgent);
         return userAgent;
     }
 

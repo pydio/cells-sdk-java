@@ -6,27 +6,29 @@ public interface ErrorCodes {
     int resource_found = 1;
 
     int no_internet = 10;
-    int not_found = 11;
-    int redirect = 12;
-    int bad_uri = 13;
-    int unreachable_host = 14;
+    int no_un_metered_connection = 11;
+    int no_metered_connection = 12;
 
-    int not_pydio_server = 15;
-    int pydio_server_not_supported = 16;
+    int not_found = 13;
+    int redirect = 14;
+    int bad_uri = 15;
+    int unreachable_host = 16;
 
-    int unsupported_method = 17;
-    int unsupported_scheme = 18;
+    int not_pydio_server = 20;
+    int pydio_server_not_supported = 21;
+    int unsupported_method = 22;
+    int unsupported_scheme = 23;
 
-    int ssl_error = 20;
-    int ssl_certificate_not_signed = 21;
-    int tls_init = 22;
+    int ssl_error = 24;
+    int ssl_certificate_not_signed = 25;
+    int tls_init = 26;
 
-    int unknown_account = 35;
-    int invalid_credentials = 30;
-    int authentication_required = 31;
-    int authentication_with_captcha_required = 32;
-    int token_expired = 33;
-    int no_token_available = 34;
+    int unknown_account = 30;
+    int invalid_credentials = 31;
+    int authentication_required = 32;
+    int authentication_with_captcha_required = 33;
+    int token_expired = 34;
+    int no_token_available = 35;
 
     int con_failed = 40;
     int con_closed = 41;

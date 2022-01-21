@@ -124,7 +124,7 @@ public class CellsClient implements Client, SdkNames {
 
             if (!registry.isLoggedIn()) {
                 // Double check if we are correctly connected
-                throw new IOException("not logged in " + transport.getId() + ", you cannot list workspaces.");
+                throw new SDKException(ErrorCodes.no_token_available, "not logged in " + transport.getId() + ", you cannot list workspaces.");
             }
 
             for (WorkspaceNode node : registry.getWorkspaces()) {

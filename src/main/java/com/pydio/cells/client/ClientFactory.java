@@ -9,7 +9,7 @@ import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.ClientData;
 import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.auth.CredentialService;
-import com.pydio.cells.transport.auth.Token;
+import com.pydio.cells.utils.Log;
 
 /**
  * Extend a server factory to manage client concepts.
@@ -43,8 +43,18 @@ public abstract class ClientFactory extends ServerFactory {
 
     @Override
     protected void initAppData() {
-        super.initAppData();
-        ClientData.packageID = this.getClass().getPackage().getName();
-        ClientData.name = "CellsJavaClient";
+        ClientData instance = ClientData.getInstance();
+
+        // Workaround to insure client data are OK:
+        // if the AppName has changed, we consider client data are already correctly set.
+        if (ClientData.DEFAULT_APP_NAME.equals(instance.getName())) {
+            super.initAppData();
+            instance.setPackageID(this.getClass().getPackage().getName());
+            instance.setLabel("Cells Java Client");
+            instance.setName("CellsJavaClient");
+            Log.i("Client factory", "### After Setting client data, App name: "
+                    + instance.getName() + " - " + instance.toString());
+            ClientData.updateInstance(instance);
+        }
     }
 }
