@@ -17,6 +17,7 @@ import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.credentials.JWTCredentials;
 import com.pydio.cells.utils.JavaCustomEncoder;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.MemoryStore;
 
 import java.io.IOException;
@@ -48,10 +49,17 @@ public class ServerFactory implements IServerFactory {
     }
 
     protected void initAppData() {
-        ClientData.packageID = this.getClass().getPackage().getName();
-        ClientData.name = "CellsJavaTransport";
-        ClientData.version = "0.4.0-dev";
-        ClientData.platform = "Java";
+        ClientData instance = ClientData.getInstance();
+
+        if (ClientData.DEFAULT_APP_NAME.equals(instance.getName())) {
+            instance.setPackageID(this.getClass().getPackage().getName());
+            instance.setName("CellsJavaTransport");
+            instance.setLabel("Cells Java Transport");
+            // TODO this should not be hard coded
+            instance.setVersion("0.4.0-dev");
+            instance.setPlatform("Java");
+            ClientData.updateInstance(instance);
+        }
     }
 
     @Override
@@ -176,7 +184,7 @@ public class ServerFactory implements IServerFactory {
         Token token = credentialService.get(accountID);
         String pwd = credentialService.getPassword(accountID);
         if (token == null && pwd == null) {
-            throw new SDKException(ErrorCodes.authentication_required, "Could not restore account " + accountID + ", no valid credential has been found in local store");
+            throw new SDKException(ErrorCodes.no_token_available, "Could not restore account " + accountID + ", no valid credential has been found in local store");
         }
 
         Server server = registerServer(serverURL);

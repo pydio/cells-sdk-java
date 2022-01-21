@@ -4,32 +4,114 @@ import com.pydio.cells.api.SdkNames;
 
 public class ClientData {
 
-    public static Long buildTimestamp = 0L;
-    public static String platform = "";
-    public static String version = "0.1";
-    public static String packageID = "";
+    public final static String DEFAULT_APP_LABEL = "Cells Java SDK";
+    public final static String DEFAULT_APP_NAME = "CellsJavaSDK";
 
-    public static String name = "Cells SDK Java";
-    public static String clientID = SdkNames.DEFAULT_CLIENT_ID;
-    public static String clientSecret = SdkNames.DEFAULT_CLIENT_SECRET;
+    private static Integer lock = Integer.valueOf(0);
 
-    public static int versionCode = 1;
+    private Long buildTimestamp = 0L;
+    private String platform = "";
+    private String version = "0.1";
+    private String packageID = "";
 
-//    private static PersistentDataManager dataManager;
-//
-//    public static PersistentDataManager manager() {
-//        return dataManager;
-//    }
-//
-//    public static void setManager(PersistentDataManager m) {
-//        dataManager = m;
-//    }
+    private String name = DEFAULT_APP_NAME;
+    private String label = DEFAULT_APP_LABEL;
+    private String clientID = SdkNames.DEFAULT_CLIENT_ID;
+    private String clientSecret = SdkNames.DEFAULT_CLIENT_SECRET;
 
-    public static String getClientId() {
+    private long versionCode = 1;
+
+    private static ClientData instance;
+
+    public static ClientData getInstance() {
+        synchronized (lock) {
+            if (instance != null) {
+                return instance;
+            }
+            instance = new ClientData();
+            return instance;
+        }
+    }
+
+    public static void updateInstance(ClientData clientData) {
+        synchronized (lock) {
+            instance = clientData;
+        }
+    }
+
+    public Long getBuildTimestamp() {
+        return buildTimestamp;
+    }
+
+    public void setBuildTimestamp(Long buildTimestamp) {
+        this.buildTimestamp = buildTimestamp;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public long getVersionCode() {
+        return versionCode;
+    }
+
+    public void setVersionCode(long versionCode) {
+        this.versionCode = versionCode;
+    }
+
+    public String getPackageID() {
+        return packageID;
+    }
+
+    public void setPackageID(String packageID) {
+        this.packageID = packageID;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getClientID() {
         return clientID;
     }
 
-    public static String getClientSecret() {
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
+    }
+
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+    }
+
+    public String getClientId() {
+        return clientID;
+    }
+
+    public String getClientSecret() {
         return clientSecret;
     }
 }
