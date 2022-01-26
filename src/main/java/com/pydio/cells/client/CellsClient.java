@@ -86,6 +86,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class CellsClient implements Client, SdkNames {
 
+    private final static String TAG = CellsClient.class.getSimpleName();
+
     private final CellsTransport transport;
     private final S3Client s3Client;
 
@@ -185,6 +187,7 @@ public class CellsClient implements Client, SdkNames {
                 }
             }
         } catch (ApiException e) {
+            Log.e(TAG, "Could not list. Code: "+ e.getCode()+", msg: "+e.getMessage()+", body: "+e.getResponseBody());
             throw new SDKException(e);
         }
 

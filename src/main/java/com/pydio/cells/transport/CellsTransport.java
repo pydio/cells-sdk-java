@@ -44,6 +44,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class CellsTransport implements ICellsTransport, SdkNames {
 
+    private final static String TAG = CellsTransport.class.getSimpleName();
+
     private final CustomEncoder encoder;
 
     private final CredentialService credentialService;
@@ -127,8 +129,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             return token;
 
         } else if (token.isExpired()) {
-
             if (Str.notEmpty(token.refreshToken)) {
+                // Perform a ping to the server before unvalidating refesh token
+                try {
+                    server.getServerURL().ping();
+                } catch (IOException ioe) {
+                    throw new SDKException(ErrorCodes.unreachable_host, "Could not ping " + server.getServerURL().toString(), ioe);
+                }
                 String refreshToken = token.refreshToken;
                 // FIXME insure we can access the network before invalidating the refresh token
                 // FIXME: we first delete the refresh token in our store: it can be used only once.
@@ -143,10 +150,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 return token;
             } else {
                 // Expired token and we have no procedure to refresh it, we delete the token
+                Log.w(TAG, "About to delete credentials for " + getId());
                 credentialService.remove(getId());
             }
         }
-
         return token;
     }
 
