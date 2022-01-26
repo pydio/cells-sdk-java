@@ -186,9 +186,9 @@ public class ServerURLImpl implements ServerURL {
         try {
             // TODO Dirty tweak until we finalize implementation of self-signed certificates
             // We Assume the passed json is correctly formatted
-            Type type = new TypeToken<Map<String, String>>(){}.getType();
-            Map<String, String> props = new Gson().fromJson(jsonString, type);
-            return ServerURLImpl.fromAddress(props.get("url"), Boolean.parseBoolean(props.get("skipVerify")));
+            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+            Map<String, Object> props = new Gson().fromJson(jsonString, type);
+            return ServerURLImpl.fromAddress(props.get("url").toString(), Boolean.parseBoolean(props.get("skipVerify").toString()));
         } catch (MalformedURLException e) {
             throw new RuntimeException("Unable to decode JSON string: "+ jsonString, e);
         }
