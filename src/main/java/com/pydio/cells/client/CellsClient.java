@@ -167,10 +167,10 @@ public class CellsClient implements Client, SdkNames {
             RestPagination pagination = response.getPagination();
             if (pagination != null) {
                 nextPageOptions.setLimit(pagination.getLimit());
-                if (pagination.getCurrentOffset() == null) {
-                    nextPageOptions.setOffset(0);
+                if (pagination.getNextOffset()!= null) {
+                    nextPageOptions.setOffset(pagination.getNextOffset());
                 } else {
-                    nextPageOptions.setOffset(pagination.getCurrentOffset());
+                    nextPageOptions.setOffset(-1);
                 }
                 nextPageOptions.setTotal(pagination.getTotal());
                 nextPageOptions.setCurrentPage(pagination.getCurrentPage());
