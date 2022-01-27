@@ -73,41 +73,6 @@ public class StateID {
     }
 
     /**
-     * Creates a copy of this state ID and sets the passed path.
-     * Warning: we assume parent StateID's username **and** serverUrl are already set.
-     *
-     * @param path
-     * @return
-     */
-    public StateID withPath(String path) {
-        return new StateID(this.username, this.serverUrl, path);
-    }
-
-    /**
-     * Creates a copy of this state ID and sets the passed path.
-     *
-     * Warning:
-     * - we assume parent StateID's username **and** serverUrl are already set.
-     * - passing null, an empty string or "/", we return this.
-     * - passing a file name that contains a slash raises a runtime exception
-     *
-     * @return
-     */
-    public StateID child(String fileName) {
-        // TODO make this more robust
-        if (fileName == null || "".equals(fileName) || "/".equals(fileName)){
-            return this;
-        }
-
-        if (fileName.contains("/")){
-            throw new RuntimeException("wrong filename: ["+ fileName+ "], inner slash are forbidden");
-        }
-
-        String newPath = this.getPath()+"/"+fileName;
-        return new StateID(this.username, this.serverUrl, newPath);
-    }
-
-    /**
      * Retrieves the *encoded* representation of this StateID for serialization.
      */
     public String getId() {
@@ -163,21 +128,78 @@ public class StateID {
         return null;
     }
 
-    public String getFileName(){
+    public String getFileName() {
         String file = getFile();
-        if (file == null || "/".equals(file)){
+        if (file == null || "/".equals(file)) {
             return null;
         }
-        return file.substring(file.lastIndexOf("/")+1);
+        return file.substring(file.lastIndexOf("/") + 1);
     }
 
-    public String getParentFile(){
+    /** HELPER METHODS **/
+
+    /**
+     * Creates a copy of this state ID and sets the passed path.
+     * Warning: we assume parent StateID's username **and** serverUrl are already set.
+     *
+     * @param path
+     * @return
+     */
+    public StateID withPath(String path) {
+        return new StateID(this.username, this.serverUrl, path);
+    }
+
+    /**
+     * Creates a copy of this state ID and sets the passed path.
+     * <p>
+     * Warning:
+     * - we assume parent StateID's username **and** serverUrl are already set.
+     * - passing null, an empty string or "/", we return this.
+     * - passing a file name that contains a slash raises a runtime exception
+     *
+     * @return
+     */
+    public StateID child(String fileName) {
+        // TODO make this more robust
+        if (fileName == null || "".equals(fileName) || "/".equals(fileName)) {
+            return this;
+        }
+
+        if (fileName.contains("/")) {
+            throw new RuntimeException("wrong filename: [" + fileName + "], inner slash are forbidden");
+        }
+
+        String newPath = this.getPath() + "/" + fileName;
+        return new StateID(this.username, this.serverUrl, newPath);
+    }
+
+    /**
+     * For the time being, we expect that we are not at the root of a workspace.
+     * This is thought to be called on file...
+     *
+     * @return
+     */
+    public StateID parentFolder() {
+        // TODO make this more robust
+        return new StateID(username, serverUrl, "/" + getWorkspace() + getParentFile());
+    }
+
+
+    public Boolean isWorkspaceRoot() {
+        if (getPath() == null) {
+            return false;
+        }
+        return getPath().equals("/" + getWorkspace());
+    }
+
+
+    public String getParentFile() {
         String file = getFile();
-        if (file == null || "/".equals(file)){
+        if (file == null || "/".equals(file)) {
             return null;
         }
         String parentFile = file.substring(0, file.lastIndexOf("/"));
-        if ("".equals(parentFile)){
+        if ("".equals(parentFile)) {
             parentFile = "/";
         }
         return parentFile;
