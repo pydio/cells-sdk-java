@@ -50,6 +50,8 @@ public class FileNodeUtils {
         TreeMap<String, String> sorted = new TreeMap<>(meta);
         StringBuilder builder = new StringBuilder();
         for (String value: sorted.values()) { // we can't use recent Java to support android 21 platform
+            // FIXME: workspace shares are returned in a random **changing** order
+            //  that modifies the hash almost at each call...
             builder.append(value);
         }
         result.setProperty(SdkNames.NODE_PROPERTY_META_HASH, String.valueOf(builder.toString().hashCode()));
