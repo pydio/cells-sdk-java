@@ -45,7 +45,9 @@ public class FileNodeUtils {
 
         // Main meta info: UUID, eTag (md5) and modification type
         result.setProperty(SdkNames.NODE_PROPERTY_UUID, uuid);
-        result.setProperty(SdkNames.NODE_PROPERTY_ETAG, node.getEtag());
+        if (Str.notEmpty(node.getEtag())) {
+            result.setProperty(SdkNames.NODE_PROPERTY_ETAG, node.getEtag());
+        }
         String mTime = node.getMtime();
         if (mTime != null) {
             result.setProperty(SdkNames.NODE_PROPERTY_MTIME, node.getMtime());
@@ -130,7 +132,7 @@ public class FileNodeUtils {
 //
 //                    }
 
-                if (Str.notEmpty(metaStr)){
+                if (Str.notEmpty(metaStr)) {
                     JSONObject imgThumbs = new JSONObject(metaStr);
                     boolean processing = imgThumbs.getBoolean(META_KEY_THUMB_PROCESSING);
                     if (!processing) {
