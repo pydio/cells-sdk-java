@@ -10,7 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class FileNodeUtils {
 
@@ -42,6 +46,13 @@ public class FileNodeUtils {
         // Retrieve the MetaData and store them unmodified as a JSON object for later use
         Map<String, String> meta = node.getMetaStore();
         result.setProperty(SdkNames.NODE_PROPERTY_META_JSON_ENCODED, new Gson().toJson(meta));
+        // We also keep a hash of the meta value to ease detection of change in the meta down the pipe
+        TreeMap<String, String> sorted = new TreeMap<>(meta);
+        StringBuilder builder = new StringBuilder();
+        for (String value: sorted.values()) { // we can't use recent Java to support android 21 platform
+            builder.append(value);
+        }
+        result.setProperty(SdkNames.NODE_PROPERTY_META_HASH, String.valueOf(builder.toString().hashCode()));
 
         // Main meta info: UUID, eTag (md5) and modification type
         result.setProperty(SdkNames.NODE_PROPERTY_UUID, uuid);

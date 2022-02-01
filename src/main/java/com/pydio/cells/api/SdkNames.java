@@ -55,6 +55,7 @@ public interface SdkNames {
     String NODE_PROPERTY_SHARE_INFO = "share_json_info";
 
     String NODE_PROPERTY_META_JSON_ENCODED = "meta_encoded";
+    String NODE_PROPERTY_META_HASH = "meta_hash";
 
     // TODO Clean legacy properties below
     // These 2 should rather be lower cased - necessitate a migration of the cache

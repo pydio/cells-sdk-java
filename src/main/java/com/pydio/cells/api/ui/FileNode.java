@@ -1,5 +1,7 @@
 package com.pydio.cells.api.ui;
 
+import com.pydio.cells.utils.Str;
+
 /**
  * Represents a file or a folder META information.
  * <p>
@@ -45,6 +47,16 @@ public class FileNode extends AbstractNode {
     }
 
     /* File and folder specific methods */
+
+    public int getMetaHashCode() {
+        String hashStr = properties.getProperty(NODE_PROPERTY_META_HASH);
+        if (Str.empty(hashStr)) {
+            return 0;
+        } else {
+            return Integer.parseInt(hashStr);
+        }
+    }
+
     public String getMimeType() {
         return properties.getProperty(NODE_PROPERTY_MIME);
     }
@@ -66,11 +78,11 @@ public class FileNode extends AbstractNode {
         return "false".equals(mime);
     }
 
-    public boolean isBookmark(){
+    public boolean isBookmark() {
         return "true".equals(getProperty(NODE_PROPERTY_BOOKMARK));
     }
 
-    public boolean isShared(){
+    public boolean isShared() {
         return "true".equals(getProperty(NODE_PROPERTY_SHARED));
     }
 
