@@ -46,9 +46,9 @@ public interface Client {
 
     Message emptyRecycleBin(String ws) throws SDKException;
 
-    Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
+    Message upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
 
-    Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
+    Message upload(File source, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
 
     String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException;
 

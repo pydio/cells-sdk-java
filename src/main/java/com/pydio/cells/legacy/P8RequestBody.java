@@ -2,8 +2,8 @@ package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.ProgressListener;
+import com.pydio.cells.utils.Str;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,9 +14,11 @@ import java.net.URLConnection;
 
 public class P8RequestBody {
 
+    private String mFilename;
+    private String mimeType;
+
     private final long mLength;
     private long mCursor;
-    private String mFilename;
     private File mFile;
     private InputStream mInStream;
 
@@ -28,7 +30,7 @@ public class P8RequestBody {
 
     private long mMaxChunkSize;
 
-    private final String MIME = "application/octet-stream";
+    private final String DEFAULT_MIME_TYPE = "application/octet-stream";
 
     private LocalProgressListener localProgressListener;
 
@@ -57,13 +59,14 @@ public class P8RequestBody {
         mFile = file;
     }
 
-    public P8RequestBody(byte[] bytes, String filename, long maxPartSize) {
-        this(new ByteArrayInputStream(bytes), filename, bytes.length, maxPartSize);
-    }
+//    public P8RequestBody(byte[] bytes, String filename, long maxPartSize) {
+//        this(new ByteArrayInputStream(bytes), filename, bytes.length, maxPartSize);
+//    }
 
-    public P8RequestBody(InputStream in, String filename, long length, long maxPartSize) {
+    public P8RequestBody(InputStream in, String filename, long length, String mimeType, long maxPartSize) {
         this(filename, length, maxPartSize);
         mInStream = in;
+        this.mimeType = mimeType;
     }
 
     public P8RequestBody(InputStream in, long length) {
@@ -71,7 +74,6 @@ public class P8RequestBody {
         mInStream = in;
         mMaxChunkSize = mLength;
     }
-
 
     public String getFilename() {
         return mFilename;
@@ -90,9 +92,14 @@ public class P8RequestBody {
     }
 
     public String getContentType() {
+
+        if (Str.notEmpty(mimeType)) {
+            return mimeType;
+        }
+
         String contentType = URLConnection.guessContentTypeFromName(getFilename());
         if (contentType == null) {
-            return MIME;
+            return DEFAULT_MIME_TYPE;
         }
         return contentType;
     }

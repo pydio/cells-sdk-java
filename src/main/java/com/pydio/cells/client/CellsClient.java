@@ -167,7 +167,7 @@ public class CellsClient implements Client, SdkNames {
             RestPagination pagination = response.getPagination();
             if (pagination != null) {
                 nextPageOptions.setLimit(pagination.getLimit());
-                if (pagination.getNextOffset()!= null) {
+                if (pagination.getNextOffset() != null) {
                     nextPageOptions.setOffset(pagination.getNextOffset());
                 } else {
                     nextPageOptions.setOffset(-1);
@@ -187,7 +187,7 @@ public class CellsClient implements Client, SdkNames {
                 }
             }
         } catch (ApiException e) {
-            Log.e(TAG, "Could not list. Code: "+ e.getCode()+", msg: "+e.getMessage()+", body: "+e.getResponseBody());
+            Log.e(TAG, "Could not list. Code: " + e.getCode() + ", msg: " + e.getMessage() + ", body: " + e.getResponseBody());
             throw new SDKException(e);
         }
 
@@ -350,13 +350,13 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+    public Message upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         URL presignedURL = s3Client.getUploadPreSignedURL(ws, path, name);
         ServerURL serverUrl;
         try {
             serverUrl = transport.getServer().newURL(presignedURL.getPath()).withQuery(presignedURL.getQuery());
         } catch (MalformedURLException e) { // This should never happen with a pre-signed.
-            throw new SDKException(ErrorCodes.internal_error, "Unvalid presigned path: ".concat(presignedURL.getPath()), e);
+            throw new SDKException(ErrorCodes.internal_error, "Invalid pre-signed path: ".concat(presignedURL.getPath()), e);
         }
 
         try {
@@ -364,15 +364,12 @@ public class CellsClient implements Client, SdkNames {
             con.setRequestMethod("PUT");
             con.setDoOutput(true);
             con.setRequestProperty("Content-Type", "application/octet-stream");
-            // Calling setFixedLengthStreamingMode with the length prevents the con
-            // from using buffer for body
-            // FIXME commented out in a first pass
-            // con.setFixedLengthStreamingMode(length);
+            con.setFixedLengthStreamingMode(length);
             try (OutputStream out = con.getOutputStream()) {
                 IoHelpers.pipeReadWithProgress(source, out, progressListener);
             }
             // TODO implement multi part upload
-            System.out.println("Put finished with status " + con.getResponseCode());
+            Log.i(TAG, "Put finished with status " + con.getResponseCode());
         } catch (IOException e) {
             throw SDKException.conWriteFailed(e);
         }
@@ -380,8 +377,8 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
-        return upload(source, ws, path, name, progressListener);
+    public Message upload(File source, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+        return upload(source, mime, ws, path, name, progressListener);
     }
 
     @Deprecated
@@ -998,9 +995,9 @@ public class CellsClient implements Client, SdkNames {
         return url.toString().replace(" ", "%20");
     }
 
-    private Message upload(File f, String ws, String path, String name, ProgressListener tpl) throws SDKException {
+    private Message upload(File f, String mime, String ws, String path, String name, ProgressListener tpl) throws SDKException {
         try (InputStream in = new FileInputStream(f)) {
-            return upload(in, f.length(), ws, path, name, true, tpl);
+            return upload(in, f.length(), mime, ws, path, name, true, tpl);
         } catch (FileNotFoundException e) {
             throw SDKException.notFound(e);
         } catch (IOException e) {

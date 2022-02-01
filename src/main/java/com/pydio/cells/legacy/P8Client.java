@@ -300,7 +300,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(InputStream source, long length, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+    public Message upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         stats(ws, path, false);
 
         long maxChunkSize = 2 * 1024 * 1204; // Default apache in most php init configs
@@ -314,7 +314,7 @@ public class P8Client implements Client, SdkNames {
         //     }
         //  }
 
-        P8RequestBody cb = new P8RequestBody(source, name, length, maxChunkSize);
+        P8RequestBody cb = new P8RequestBody(source, name, length, mime, maxChunkSize);
         if (progressListener != null) {
             cb.setTransferListener(progressListener);
 //            cb.setListener(new P8RequestBody.LocalProgressListener() {
@@ -386,7 +386,6 @@ public class P8Client implements Client, SdkNames {
                 }
             }
 
-
             FileNode info = nodeInfo(ws, path + "/" + name);
 
             Message msg = Message.create(Message.SUCCESS, "");
@@ -403,10 +402,10 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(File source, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+    public Message upload(File source, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         Message msg = null;
         try (FileInputStream in = new FileInputStream(source)) {
-            msg = upload(in, source.length(), ws, path, name, autoRename, progressListener);
+            msg = upload(in, source.length(), mime, ws, path, name, autoRename, progressListener);
         } catch (FileNotFoundException e) {
             throw SDKException.notFound(e);
         } catch (IOException e) {
