@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class P8NodeSaxHandler extends DefaultHandler {
 
-    // Legacy P8 properties name, centralised here to avoid overloading
+    // Legacy P8 property names: centralised here to avoid over-loading
     // the main SdkNames reference file.
 
     // Keys
