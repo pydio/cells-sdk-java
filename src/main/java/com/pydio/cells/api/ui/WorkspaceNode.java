@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Holds information about a distant workspace, in both Cells and legacy P8.
  * <p>
- * Warning: for comparison and equality, we assume that the workspaces are **in the same** server;
- * the workspaces don't hold a reference to there hosting server
+ * Warning: for comparison and equality, we assume that the workspaces are **in the same** server:
+ * the workspaces don't hold a reference to their hosting server.
  */
 
 public class WorkspaceNode extends AbstractNode {

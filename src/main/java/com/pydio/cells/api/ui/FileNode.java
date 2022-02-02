@@ -48,6 +48,33 @@ public class FileNode extends AbstractNode {
 
     /* File and folder specific methods */
 
+    public String getWorkspace() {
+        return this.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
+    }
+
+    public String getETag() {
+        return properties.getProperty(NODE_PROPERTY_ETAG);
+    }
+
+    public String getMimeType() {
+        return properties.getProperty(NODE_PROPERTY_MIME);
+    }
+
+    public long getSize() {
+        String strSize = properties.getProperty(NODE_PROPERTY_BYTESIZE);
+        if (strSize == null || "".equals(strSize))
+            return 0;
+        return Long.parseLong(strSize);
+    }
+
+    public long getLastModified() {
+        try {
+            return Long.parseLong(properties.getProperty(NODE_PROPERTY_MTIME));
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
     public int getMetaHashCode() {
         String hashStr = properties.getProperty(NODE_PROPERTY_META_HASH);
         if (Str.empty(hashStr)) {
@@ -57,9 +84,7 @@ public class FileNode extends AbstractNode {
         }
     }
 
-    public String getMimeType() {
-        return properties.getProperty(NODE_PROPERTY_MIME);
-    }
+    /* Various helpers */
 
     public boolean isImage() {
         return
@@ -86,28 +111,9 @@ public class FileNode extends AbstractNode {
         return "true".equals(getProperty(NODE_PROPERTY_SHARED));
     }
 
-    public String getETag() {
-        return properties.getProperty(NODE_PROPERTY_ETAG);
-    }
-
-    public long lastModified() {
-        try {
-            return Long.parseLong(properties.getProperty(NODE_PROPERTY_MTIME));
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    public long getSize() {
-        String strSize = properties.getProperty(NODE_PROPERTY_BYTESIZE);
-        if (strSize == null || "".equals(strSize))
-            return 0;
-        return Long.parseLong(strSize);
-    }
-
-    public String getWorkspaceSlug() {
-        return this.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
-    }
+    /**
+     * Equality methods
+     */
 
     @Override
     public boolean equals(Object obj) {
@@ -116,7 +122,7 @@ public class FileNode extends AbstractNode {
         if (!(obj instanceof FileNode)) return false;
 
         FileNode other = (FileNode) obj;
-        return getWorkspaceSlug().equals(other.getWorkspaceSlug()) &&
+        return getWorkspace().equals(other.getWorkspace()) &&
                 getPath().equals(other.getPath());
     }
 
