@@ -602,31 +602,39 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void getBookmarks(NodeHandler h) throws SDKException {
-
+        // TODO double check this. we might miss some info
         RestUserBookmarksRequest request = new RestUserBookmarksRequest();
         UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
             RestBulkMetaResponse response = api.userBookmarks(request);
-            if (response.getNodes() != null) {
-                for (TreeNode node : response.getNodes()) {
-                    try {
-                        FileNode fileNode = toFileNode(node);
-                        if (fileNode != null) {
-                            List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
-                            if (sources != null) {
-                                String path = sources.get(0).getPath();
-                                if (!path.startsWith("/")) {
-                                    path = "/" + path;
-                                }
-                                fileNode.setProperty(NODE_PROPERTY_PATH, path);
-                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
-                                h.onNode(fileNode);
+            if (response.getNodes() == null) {
+                return;
+            }
+
+            for (TreeNode node : response.getNodes()) {
+                try {
+                    FileNode fileNode = toFileNode(node);
+                    if (fileNode != null) {
+                        List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
+                        if (sources != null) {
+                            // FIXME we only retrieve the first "source" node.
+                            //  When a node is declared 2 times we skip info about the second source.
+                            //  To reproduce, typically favorite a cell that is inside a WS.
+                            String path = sources.get(0).getPath();
+                            if (Str.empty(path)) {
+                                Log.i(TAG, "Got an empty path for: " + fileNode.getPath());
+                                path = "/";
+                            } else if (!path.startsWith("/")) {
+                                path = "/" + path;
                             }
+                            fileNode.setProperty(NODE_PROPERTY_PATH, path);
+                            fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
+                            h.onNode(fileNode);
                         }
-                    } catch (NullPointerException e) {
-                        Log.e("GET_BOOKMARKS", "Unexpected NPE");
-                        e.printStackTrace();
                     }
+                } catch (NullPointerException e) {
+                    Log.e(TAG, "Could node create FileNode for " + node.getPath() + ", skipping");
+                    e.printStackTrace();
                 }
             }
         } catch (ApiException e) {
