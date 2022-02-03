@@ -11,6 +11,7 @@ public interface SdkNames {
     String TYPE_LEGACY_P8 = "pydio";
 
     // Well known Pydio specific Mime Types
+    String NODE_MIME_WS_ROOT = "pydio/workspace-root";
     String NODE_MIME_FOLDER = "pydio/nodes-list";
     String NODE_MIME_RECYCLE = "pydio/recycle";
     String NODE_MIME_DEFAULT = "application/octet-stream";

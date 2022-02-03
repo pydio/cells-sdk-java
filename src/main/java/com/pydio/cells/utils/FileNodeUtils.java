@@ -10,9 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -39,6 +36,7 @@ public class FileNodeUtils {
             return null;
         }
         String treeNodePath = node.getPath();
+        //Log.d(TAG, "Managing path for: " + treeNodePath);
         String slug = slugFrom(treeNodePath);
         String path = pathFrom(treeNodePath);
         String name = nameFrom(treeNodePath);
@@ -49,7 +47,7 @@ public class FileNodeUtils {
         // We also keep a hash of the meta value to ease detection of change in the meta down the pipe
         TreeMap<String, String> sorted = new TreeMap<>(meta);
         StringBuilder builder = new StringBuilder();
-        for (String value: sorted.values()) { // we can't use recent Java to support android 21 platform
+        for (String value : sorted.values()) { // we can't use recent Java to support android 21 platform
             // FIXME: workspace shares are returned in a random **changing** order
             //  that modifies the hash almost at each call...
             builder.append(value);
@@ -91,6 +89,8 @@ public class FileNodeUtils {
         } else {
             if (SdkNames.RECYCLE_BIN_NAME.equals(name)) {
                 type = SdkNames.NODE_MIME_RECYCLE;
+            } else if ("/".equals(path)) {
+                type = SdkNames.NODE_MIME_WS_ROOT;
             } else {
                 type = SdkNames.NODE_MIME_FOLDER;
             }
@@ -176,29 +176,45 @@ public class FileNodeUtils {
         return result;
     }
 
+    // TODO double check. Smelling code.
     public static String getNameFromPath(String path) {
         int index = path.lastIndexOf("/");
-        if (index < 0) {
+        if (index <= 0) {
             return path;
         }
         return path.substring(index + 1);
     }
 
     private static String nameFrom(String treeNodePath) {
-        return treeNodePath.substring(treeNodePath.lastIndexOf("/") + 1);
+        int index = treeNodePath.indexOf("/");
+        if (index == -1) {
+            return "/";
+        } else {
+            return treeNodePath.substring(treeNodePath.lastIndexOf("/") + 1);
+        }
     }
 
     private static String slugFrom(String treeNodePath) {
-        return treeNodePath.substring(0, treeNodePath.indexOf("/"));
+        int index = treeNodePath.indexOf("/");
+        if (index == -1) {
+            return treeNodePath;
+        } else {
+            return treeNodePath.substring(0, index);
+        }
     }
 
     private static String pathFrom(String treeNodePath) {
-        String[] parts = treeNodePath.substring(treeNodePath.indexOf("/") + 1).split("/");
-        StringBuilder pathBuilder = new StringBuilder();
-        for (String part : parts) {
-            pathBuilder.append("/").append(part);
+        int index = treeNodePath.indexOf("/");
+        if (index == -1) {
+            return "/";
+        } else {
+            String[] parts = treeNodePath.substring(index + 1).split("/");
+            StringBuilder pathBuilder = new StringBuilder();
+            for (String part : parts) {
+                pathBuilder.append("/").append(part);
+            }
+            return pathBuilder.toString();
         }
-        return pathBuilder.toString();
     }
 
     public static String toTreeNodePath(String ws, String path) {
