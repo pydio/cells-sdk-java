@@ -70,10 +70,12 @@ public class P8TransportTest {
             byte[] content = message.getBytes();
             ByteArrayInputStream source = new ByteArrayInputStream(content);
 
-            Message msg = factory.getClient(p8Transport).upload(source, content.length, p8Conf.defaultWS, baseDir, name, true, (progress) -> {
-                System.out.printf("\r%d bytes written\n", progress);
-                return false;
-            });
+            Message msg = factory.getClient(p8Transport)
+                    .upload(source, content.length, "text/plain",
+                            p8Conf.defaultWS, baseDir, name, true, (progress) -> {
+                                System.out.printf("\r%d bytes written\n", progress);
+                                return false;
+                            });
             Assert.assertNotNull(msg);
             Assert.assertEquals("SUCCESS", msg.type());
 
@@ -82,5 +84,4 @@ public class P8TransportTest {
             Assert.assertNull(e);
         }
     }
-
 }

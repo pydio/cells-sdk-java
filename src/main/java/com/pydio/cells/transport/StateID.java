@@ -115,7 +115,7 @@ public class StateID {
      * Returns the trailing part of the path without the workspace. Always starts with a slash.
      */
     public String getFile() {
-        if (path == null || "".equals(path) || "/".equals(path)) {
+        if (path == null || "".equals(path) ) { // || "/".equals(path)) {
             return null;
         }
         String prefix = "/" + getWorkspace();
@@ -146,7 +146,7 @@ public class StateID {
      * @return
      */
     public StateID withPath(String path) {
-        return new StateID(this.username, this.serverUrl, path);
+        return new StateID(username, serverUrl, path);
     }
 
     /**
@@ -170,7 +170,7 @@ public class StateID {
         }
 
         String newPath = this.getPath() + "/" + fileName;
-        return new StateID(this.username, this.serverUrl, newPath);
+        return new StateID(username, serverUrl, newPath);
     }
 
     /**
