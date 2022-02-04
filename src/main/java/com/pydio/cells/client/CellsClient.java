@@ -198,6 +198,7 @@ public class CellsClient implements Client, SdkNames {
                 try {
                     fileNode = toFileNode(node);
                 } catch (NullPointerException ignored) {
+                    ignored.printStackTrace();
                     continue;
                 }
 
@@ -281,6 +282,31 @@ public class CellsClient implements Client, SdkNames {
         }
         return thumbPath;
     }
+
+    @Override
+    public FileNode getNodeMeta(String ws, String file) throws SDKException {
+        RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
+        request.addNodePathsItem(FileNodeUtils.toTreeNodePath(ws, file));
+        request.setAllMetaProviders(true);
+
+        TreeServiceApi api = new TreeServiceApi(authenticatedClient());
+        RestBulkMetaResponse response;
+        try {
+            response = api.bulkStatNodes(request);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw new SDKException(e);
+        }
+
+        try {
+            return toFileNode(response.getNodes().get(0));
+        } catch (NullPointerException ignored) {
+            // TODO finalise error handling
+            ignored.printStackTrace();
+            return null;
+        }
+    }
+
 
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {

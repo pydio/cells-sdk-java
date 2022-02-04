@@ -28,6 +28,13 @@ public interface Client {
 
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
+    /** 
+     * Temporary test before cleaning this part of the code 
+     * while testing both P8 and Cells
+     */
+    @Deprecated
+    FileNode getNodeMeta(String ws, String file) throws SDKException;
+
     Stats stats(String ws, String file, boolean withHash) throws SDKException;
 
     void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException;

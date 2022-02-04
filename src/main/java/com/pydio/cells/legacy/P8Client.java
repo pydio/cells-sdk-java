@@ -153,6 +153,10 @@ public class P8Client implements Client, SdkNames {
         }
     }
 
+    @Override
+    public FileNode getNodeMeta(String ws, String file) throws SDKException {
+        return nodeInfo(ws, file);
+    }
 
     // TODO used for debug purposes. remove
     private static class RIH extends RegistryItemHandler {
