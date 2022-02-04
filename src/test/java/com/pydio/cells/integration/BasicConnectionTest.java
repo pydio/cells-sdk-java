@@ -11,8 +11,8 @@ import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.transport.StateID;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
-import com.pydio.cells.utils.tests.TestConfiguration;
 import com.pydio.cells.utils.tests.TestClientFactory;
+import com.pydio.cells.utils.tests.TestConfiguration;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.After;
@@ -98,10 +98,11 @@ public class BasicConnectionTest {
         // Upload
         byte[] content = message.getBytes();
         ByteArrayInputStream source = new ByteArrayInputStream(content);
-        Message msg = client.upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
-            System.out.printf("\r%d bytes written\n", progress);
-            return false;
-        });
+        Message msg = client.upload(source, content.length, "text/plain",
+                conf.defaultWS, baseDir, name, true, (progress) -> {
+                    System.out.printf("\r%d bytes written\n", progress);
+                    return false;
+                });
         Assert.assertNotNull(msg);
         Assert.assertEquals("SUCCESS", msg.type());
 
@@ -117,15 +118,14 @@ public class BasicConnectionTest {
 
         // Update fails in P8
         if (!transport.getServer().isLegacy()) {
-            System.out.println("Legacy, for sure ?");
-
             message += " -- Add with some additional content";
             content = message.getBytes();
             source = new ByteArrayInputStream(content);
-            msg = client.upload(source, content.length, conf.defaultWS, baseDir, name, true, (progress) -> {
-                System.out.printf("\r%d bytes written\n", progress);
-                return false;
-            });
+            msg = client.upload(source, content.length, "text/plain",
+                    conf.defaultWS, baseDir, name, true, (progress) -> {
+                        System.out.printf("\r%d bytes written\n", progress);
+                        return false;
+                    });
             Assert.assertNotNull(msg);
             Assert.assertEquals("SUCCESS", msg.type());
 

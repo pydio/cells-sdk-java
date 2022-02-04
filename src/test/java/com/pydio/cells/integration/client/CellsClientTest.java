@@ -60,10 +60,11 @@ public class CellsClientTest {
         byte[] content = message.getBytes();
         ByteArrayInputStream source = new ByteArrayInputStream(content);
 
-        Message msg = client.upload(source, content.length, cellsConf.defaultWS, baseDir, fileName, true, (progress) -> {
-            System.out.printf("\r%d bytes written\n", progress);
-            return false;
-        });
+        Message msg = client.upload(source, content.length, "text/plain",
+                cellsConf.defaultWS, baseDir, fileName, true, (progress) -> {
+                    System.out.printf("\r%d bytes written\n", progress);
+                    return false;
+                });
         Assert.assertNotNull(msg);
         Assert.assertEquals("SUCCESS", msg.type());
 

@@ -61,6 +61,7 @@ public class StateIDTest {
         Assert.assertNull(stateID2.getParentFile());
 
         StateID stateID3 = stateID.withPath("/common-files/");
+        Assert.assertNotEquals(stateID2.getId(), stateID3.getId());
         Assert.assertEquals("/common-files/", stateID3.getPath());
         Assert.assertEquals("/", stateID3.getFile());
         Assert.assertNull(stateID3.getFileName());
@@ -88,13 +89,13 @@ public class StateIDTest {
         Assert.assertEquals("folder", child2.getFileName());
     }
 
-        @Test
+    @Test
     public void testIDWithSpaceInPath() {
         String slug = "common-files";
         String parPath = "/Sample Documents to test.../Broken Names";
         String name = "Ô my $$… & ¼ !! @ https:breaking.com yeßßß #3.jpg";
         String breakingPath = "/" + slug + parPath + "/" + name;
-        StateID stateID = new StateID("doe@example.com", "http://example.com:6767", breakingPath );
+        StateID stateID = new StateID("doe@example.com", "http://example.com:6767", breakingPath);
         String encodedID = stateID.getId();
 
         StateID decodedStateID = StateID.fromId(encodedID);
