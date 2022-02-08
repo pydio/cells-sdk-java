@@ -187,8 +187,8 @@ public class CellsClient implements Client, SdkNames {
                 }
             }
         } catch (ApiException e) {
-            Log.e(TAG, "Could not list. Code: " + e.getCode() + ", msg: " + e.getMessage() + ", body: " + e.getResponseBody());
-            throw new SDKException(e);
+            String msg = "Could not list: " + e.getMessage();
+            throw new SDKException(e.getCode(), msg, e);
         }
 
         List<TreeNode> nodes = response.getNodes();

@@ -1,5 +1,7 @@
 package com.pydio.cells.api;
 
+import com.pydio.cells.openapi.ApiException;
+
 import java.io.IOException;
 
 /**
@@ -7,7 +9,7 @@ import java.io.IOException;
  * It cannot yet extend the swagger generated API exception that is specific to Cells.
  * <p>
  * This can be changed when we stop supporting Pydio 8 in a near future.
- *
+ * <p>
  * // TODO smelly code, refactor with a clean generic error handling strategy.
  */
 public class SDKException extends Exception {
@@ -22,6 +24,10 @@ public class SDKException extends Exception {
 
     public SDKException(Throwable cause) {
         super(cause);
+    }
+
+    public SDKException(ApiException cause) {
+        this(cause.getCode(), "Unhandled ApiException: " + cause.getMessage(), cause);
     }
 
     public SDKException(String message, Throwable cause) {
