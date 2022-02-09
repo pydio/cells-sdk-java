@@ -150,7 +150,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 return token;
             } else {
                 // Expired token and we have no procedure to refresh it, we delete the token
-                Log.w(TAG, "About to delete credentials for " + getId());
+                Log.w(TAG, "About to delete credentials for " + StateID.fromId(getId()));
+                Log.w(TAG, "Printing stack trace to understand where we come from:");
+                Thread.dumpStack();
+
                 credentialService.remove(getId());
             }
         }
