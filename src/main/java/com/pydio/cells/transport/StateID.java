@@ -3,6 +3,8 @@ package com.pydio.cells.transport;
 import com.pydio.cells.utils.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -100,6 +102,19 @@ public class StateID {
         return serverUrl;
     }
 
+    /**
+     * Best effort to provide a short host name from the URL. If the current url values raises
+     * a malformed URL exception, we return the initial value
+     */
+    public String getServerHost() {
+        try {
+            URL url = new URL(getServerUrl());
+            return url.getHost();
+        } catch (MalformedURLException e) {
+            return serverUrl;
+        }
+    }
+
     public String getPath() {
         return path;
     }
@@ -115,7 +130,7 @@ public class StateID {
      * Returns the trailing part of the path without the workspace. Always starts with a slash.
      */
     public String getFile() {
-        if (path == null || "".equals(path) ) { // || "/".equals(path)) {
+        if (path == null || "".equals(path)) { // || "/".equals(path)) {
             return null;
         }
         String prefix = "/" + getWorkspace();
