@@ -1,5 +1,7 @@
 package com.pydio.cells.transport;
 
+import static com.pydio.cells.transport.CellsServer.API_PREFIX;
+
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ICellsTransport;
@@ -39,8 +41,6 @@ import java.util.Map;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import static com.pydio.cells.transport.CellsServer.API_PREFIX;
 
 public class CellsTransport implements ICellsTransport, SdkNames {
 
@@ -124,15 +124,20 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             return token;
 
         } else if (token.isExpired()) {
+            Log.w("CellsTransport", "... Token is expired, trying to refresh");
 
             if (Str.notEmpty(token.refreshToken)) {
                 String refreshToken = token.refreshToken;
                 // FIXME insure we can access the network before invalidating the refresh token
                 // FIXME: we first delete the refresh token in our store: it can be used only once.
-                token.refreshToken = null;
-                credentialService.put(getId(), token);
+                // token.refreshToken = null;
+                // credentialService.put(getId(), token);
                 Token newToken = getRefreshedOAuthToken(refreshToken);
-                credentialService.put(getId(), newToken);
+                if (newToken != null && !newToken.isExpired() && Str.notEmpty(newToken.refreshToken)) {
+                    Log.w("CellsTransport",
+                            "... And having a new token, expiring in " + newToken.expiresIn + "ms");
+                    credentialService.put(getId(), newToken);
+                }
                 return newToken;
             } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
@@ -186,7 +191,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     public ApiClient authenticatedClient() throws SDKException {
         ApiClient apiClient = getApiClient();
         String accessToken = getAccessToken();
-        if (Str.empty(accessToken)){
+        if (Str.empty(accessToken)) {
             throw new SDKException(ErrorCodes.no_token_available);
         }
         apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
