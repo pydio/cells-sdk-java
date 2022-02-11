@@ -119,11 +119,21 @@ public class FileNodeUtils {
     }
 
     private static String nameFrom(String treeNodePath) {
-        return treeNodePath.substring(treeNodePath.lastIndexOf("/") + 1);
+        int index = treeNodePath.indexOf("/");
+        if (index == -1) {
+            return "/";
+        } else {
+            return treeNodePath.substring(treeNodePath.lastIndexOf("/") + 1);
+        }
     }
 
     private static String slugFrom(String treeNodePath) {
-        return treeNodePath.substring(0, treeNodePath.indexOf("/"));
+        int index = treeNodePath.indexOf("/");
+        if (index == -1) {
+            return treeNodePath;
+        } else {
+            return treeNodePath.substring(0, index);
+        }
     }
 
     private static String pathFrom(String treeNodePath) {

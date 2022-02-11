@@ -52,15 +52,20 @@ public class Token {
     }
 
     public static Token decodeOAuthJWT(String jwt) throws ParseException {
-        Token t = new Token();
-        JSONObject jo = new JSONObject(jwt);
-        t.value = jo.getString("access_token");
-        t.setExpiry(jo.getInt("expires_in"));
-        t.scope = jo.getString("scope");
-        t.idToken = jo.getString("id_token");
-        t.refreshToken = jo.getString("refresh_token");
-        t.tokenType = jo.getString("token_type");
-        return t;
+        try {
+            Token t = new Token();
+            JSONObject jo = new JSONObject(jwt);
+            t.value = jo.getString("access_token");
+            t.setExpiry(jo.getInt("expires_in"));
+            t.scope = jo.getString("scope");
+            t.idToken = jo.getString("id_token");
+            t.refreshToken = jo.getString("refresh_token");
+            t.tokenType = jo.getString("token_type");
+            return t;
+        } catch (Exception jse) {
+            jse.printStackTrace();
+            throw new ParseException("Could not decode token " + jwt, 0);
+        }
     }
 
     public void setExpiry(long expiresIn) {

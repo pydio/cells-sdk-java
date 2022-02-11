@@ -125,20 +125,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
         } else if (token.isExpired()) {
             Log.w("CellsTransport", "... Token is expired, trying to refresh");
-
             if (Str.notEmpty(token.refreshToken)) {
-                String refreshToken = token.refreshToken;
-                // FIXME insure we can access the network before invalidating the refresh token
-                // FIXME: we first delete the refresh token in our store: it can be used only once.
-                // token.refreshToken = null;
-                // credentialService.put(getId(), token);
-                Token newToken = getRefreshedOAuthToken(refreshToken);
-                if (newToken != null && !newToken.isExpired() && Str.notEmpty(newToken.refreshToken)) {
-                    Log.w("CellsTransport",
-                            "... And having a new token, expiring in " + newToken.expiresIn + "ms");
-                    credentialService.put(getId(), newToken);
-                }
-                return newToken;
+                return doRefreshToken(token);
             } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
                 credentialService.put(getId(), token);
@@ -150,6 +138,36 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
 
         return token;
+    }
+
+    private Token doRefreshToken(Token token) throws SDKException {
+
+        String refreshToken = token.refreshToken;
+        Token newToken = null;
+        try {
+            newToken = getRefreshedOAuthToken(refreshToken);
+        } catch (SDKException e) {
+            if (e.getCode() == ErrorCodes.con_failed){
+                // If the ping works, we most probably have a refresh token that has already been used
+                // and that is thus not valid anymore
+                try {
+                    server.getServerURL().ping();
+                    throw new SDKException(ErrorCodes.invalid_credentials, "no valid credentials found", e);
+                } catch (IOException ioe) {
+                    // Could not ping => network issue
+                    throw new SDKException(ErrorCodes.con_failed, "Cannot reach server to refresh token", e);
+                }
+            }
+            throw e;
+        } catch (Exception e) {
+            throw new SDKException(ErrorCodes.internal_error, "Unexpected error, cannot refresh token", e);
+        }
+        if (newToken != null && !newToken.isExpired() && Str.notEmpty(newToken.refreshToken)) {
+            Log.w("CellsTransport",
+                    "... And having a new token, expiring in " + newToken.expiresIn + "ms");
+            credentialService.put(getId(), newToken);
+        }
+        return newToken;
     }
 
     @Override

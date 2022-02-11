@@ -1,5 +1,6 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.security.CertificateTrust;
@@ -74,7 +75,7 @@ public class ServerURLImpl implements ServerURL {
             default:
                 // This works for P8 only. We do not support Cells server on a sub-path of a domain.
                 String path = url.getPath();
-                if (path == null){
+                if (path == null) {
                     path = "";
                 }
                 path = path.trim();
@@ -85,7 +86,7 @@ public class ServerURLImpl implements ServerURL {
                 // FIXME Dirty hack to fix NPE when handling old servers migration
                 String protocol = url.getProtocol() == null ? "https" : url.getProtocol();
                 String authority = url.getAuthority();
-                if (authority == null){
+                if (authority == null) {
                     throw new MalformedURLException("Cannot create a server URL without authority for " + urlString);
                 }
 
@@ -192,7 +193,7 @@ public class ServerURLImpl implements ServerURL {
             connection.setRequestMethod("GET");
             int code = connection.getResponseCode();
             if (code != 200) {
-                throw new SDKException(code, "Could not reach " + url.getHost() + ": " + connection.getResponseMessage());
+                throw new SDKException(ErrorCodes.con_failed, code + ": could not reach " + url.getHost() + ": " + connection.getResponseMessage());
             }
         } catch (ProtocolException pe) { // Might not happen very often...
             throw new RuntimeException("Unvalid protocol GET...", pe);
