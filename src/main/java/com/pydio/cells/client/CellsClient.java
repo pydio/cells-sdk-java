@@ -44,7 +44,6 @@ import com.pydio.cells.openapi.model.RestRestoreNodesRequest;
 import com.pydio.cells.openapi.model.RestSearchResults;
 import com.pydio.cells.openapi.model.RestShareLink;
 import com.pydio.cells.openapi.model.RestShareLinkAccessType;
-import com.pydio.cells.openapi.model.RestUserBookmarksRequest;
 import com.pydio.cells.openapi.model.RestUserJobRequest;
 import com.pydio.cells.openapi.model.RestUserMetaCollection;
 import com.pydio.cells.openapi.model.ServiceResourcePolicy;
@@ -54,7 +53,6 @@ import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
 import com.pydio.cells.openapi.model.TreeQuery;
 import com.pydio.cells.openapi.model.TreeSearchRequest;
-import com.pydio.cells.openapi.model.TreeWorkspaceRelativePath;
 import com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.utils.FileNodeUtils;
@@ -628,7 +626,10 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void getBookmarks(NodeHandler h) throws SDKException {
-        // TODO double check this. we might miss some info
+        //FIXME
+        return;
+
+ /*       // TODO double check this. we might miss some info
         RestUserBookmarksRequest request = new RestUserBookmarksRequest();
         UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
@@ -667,6 +668,7 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw new SDKException(e);
         }
+ */
     }
 
     @Override

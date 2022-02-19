@@ -9,7 +9,6 @@ import com.pydio.cells.api.PasswordCredentials;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
-import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.openapi.ApiClient;
@@ -24,7 +23,6 @@ import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
-import com.squareup.okhttp.OkHttpClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -212,11 +210,14 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         apiClient.setUserAgent(getUserAgent());
 
         if (getServer().isSSLUnverified()) {
-            ServerURL serverURL = getServer().getServerURL();
-            OkHttpClient c = apiClient.getHttpClient();
-            c.setSslSocketFactory(serverURL.getSslSocketFactory());
-            final String serverUrl = serverURL.getId();
-            c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
+            // FIXME we broke the selfsigned Api client when upgrading to okhttp3...
+            //   Repair.
+            Log.w(TAG, "Unimplemented self-signed");
+//            ServerURL serverURL = getServer().getServerURL();
+//            OkHttpClient c = apiClient.getHttpClient();
+//            c.setSslSocketFactory(serverURL.getSslSocketFactory());
+//            final String serverUrl = serverURL.getId();
+//            c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
         }
         return apiClient;
     }
