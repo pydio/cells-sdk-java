@@ -36,6 +36,49 @@ mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
 java -jar swagger-codegen-cli.jar help generate
 ```
 
+### With OpenAPI 3
+
+```sh
+mkdir -p /tmp/forSwagger
+cd /tmp/forSwagger
+git clone https://bsinou@github.com/pydio/cells-sdk-java.git
+cd cells-sdk-java
+
+GENERATOR_VERSION=5.4.0
+wget https://oss.sonatype.org/content/repositories/releases/org/openapitools/openapi-generator-cli/${GENERATOR_VERSION}/openapi-generator-cli-${GENERATOR_VERSION}.jar -O openapi-generator-cli.jar
+
+
+# WARNING: Update
+SDK_DEFAULT_AGENT="PydioCells/v3.0.4/JavaSDK/v0.4.0"
+
+```
+
+(Temp) _A la mano_
+- Retrieve default json swagger v2 spec file: https://raw.githubusercontent.com/pydio/cells/stable/common/proto/rest/rest.swagger.json
+- Copy paste spac file at: https://editor.swagger.io/
+- use Edit / convert to v3
+- paste back the specs in the root java project typically in rest.v3.swagger.yml
+
+```
+java -jar openapi-generator-cli.jar generate -g java \
+    -i ./rest.v3.swagger.yml \
+    -o /tmp/forSwagger/cells-sdk-java \
+    --invoker-package com.pydio.cells.openapi \
+    --api-package com.pydio.cells.openapi.api \
+    --model-package com.pydio.cells.openapi.model
+    --http-user-agent ${SDK_DEFAULT_AGENT}
+
+cd $GITPATH/github.com/bsinou/pydia/sdk-java/src/main/java/com/pydio/cells/
+rm -rf ./openapi
+
+mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
+
+# For the record, more details about the possible options:
+java -jar swagger-codegen-cli.jar help generate
+```
+
+
+
 ## Developer Tips
 
 ### Testing OAuth with a Cells server
