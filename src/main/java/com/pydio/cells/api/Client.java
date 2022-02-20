@@ -49,7 +49,7 @@ public interface Client {
 
     Message delete(String ws, String[] files) throws SDKException;
 
-    Message restore(String ws, String[] files) throws SDKException;
+    Message restore(String ws, FileNode[] files) throws SDKException;
 
     Message emptyRecycleBin(String ws) throws SDKException;
 
