@@ -508,8 +508,13 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Message restore(String ws, String[] files) throws SDKException {
-        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.restore(ws, files));
+    public Message restore(String ws, FileNode[] files) throws SDKException {
+
+        List<String> filesPath = new ArrayList<>();
+        for (FileNode node : files) {
+            filesPath.add(node.getPath());
+        }
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.restore(ws, filesPath.toArray(new String[0])));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());

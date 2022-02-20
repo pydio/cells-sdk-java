@@ -2,21 +2,15 @@ package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.S3Client;
 
-import java.io.InputStream;
 import java.net.URL;
 
 /**
  * Temporary workaround the issue of AWS dependencies to provide
- * a reasonable default when working in a P8 only setup.
+ * a reasonable default when working with a P8-only setup.
  */
 public class NoAwsS3Client implements S3Client {
 
     public NoAwsS3Client() {
-    }
-
-    @Override
-    public InputStream getThumb(String file) {
-        throw new RuntimeException("Unsupported call");
     }
 
     @Override

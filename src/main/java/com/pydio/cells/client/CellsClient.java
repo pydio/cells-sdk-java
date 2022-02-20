@@ -587,11 +587,10 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message restore(String ws, String[] files) throws SDKException {
+    public Message restore(String ws, FileNode[] files) throws SDKException {
         List<TreeNode> nodes = new ArrayList<>();
-        for (String file : files) {
-            TreeNode node = new TreeNode();
-            node.setPath(FileNodeUtils.toTreeNodePath(ws, file));
+        for (FileNode file : files) {
+            TreeNode node = new TreeNode().uuid(file.getId()).path(file.getPath());
             nodes.add(node);
         }
 
