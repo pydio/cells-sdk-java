@@ -175,7 +175,6 @@ public class StateID {
      * @return
      */
     public StateID child(String fileName) {
-        // TODO make this more robust
         if (fileName == null || "".equals(fileName) || "/".equals(fileName)) {
             return this;
         }
@@ -184,8 +183,14 @@ public class StateID {
             throw new RuntimeException("wrong filename: [" + fileName + "], inner slash are forbidden");
         }
 
-        String newPath = this.getPath() + "/" + fileName;
-        return new StateID(username, serverUrl, newPath);
+        String newPath;
+         if ("/".equals(getFile())) {
+             newPath = getPath() + fileName;
+         } else {
+             newPath = getPath() + "/" + fileName;
+         }
+
+         return new StateID(username, serverUrl, newPath);
     }
 
     /**
@@ -195,10 +200,12 @@ public class StateID {
      * @return
      */
     public StateID parentFolder() {
-        // TODO make this more robust
+        if (getParentFile() == null) {
+            // Corner case: parent of a workspace or a cell is the corresponding account
+            return new StateID(username, serverUrl);
+        }
         return new StateID(username, serverUrl, "/" + getWorkspace() + getParentFile());
     }
-
 
     public Boolean isWorkspaceRoot() {
         if (getPath() == null) {
