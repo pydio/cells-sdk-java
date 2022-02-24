@@ -184,13 +184,13 @@ public class StateID {
         }
 
         String newPath;
-         if ("/".equals(getFile())) {
-             newPath = getPath() + fileName;
-         } else {
-             newPath = getPath() + "/" + fileName;
-         }
+        if ("/".equals(getFile())) {
+            newPath = getPath() + fileName;
+        } else {
+            newPath = getPath() + "/" + fileName;
+        }
 
-         return new StateID(username, serverUrl, newPath);
+        return new StateID(username, serverUrl, newPath);
     }
 
     /**
