@@ -184,7 +184,7 @@ public class StateID {
         }
 
         String newPath;
-        if ("/".equals(getFile())) {
+        if (getPath().endsWith("/")) {
             newPath = getPath() + fileName;
         } else {
             newPath = getPath() + "/" + fileName;
