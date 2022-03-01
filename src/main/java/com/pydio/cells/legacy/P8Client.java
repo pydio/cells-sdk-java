@@ -25,6 +25,7 @@ import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.PathUtils;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -44,6 +45,8 @@ import java.util.Locale;
 import java.util.Properties;
 
 public class P8Client implements Client, SdkNames {
+
+    private final String TAG = P8Client.class.getSimpleName();
 
     private final P8Transport transport;
 
@@ -228,7 +231,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void search(String ws, String dir, String searchedText, NodeHandler h) throws SDKException {
-        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.search(ws, dir, searchedText));
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.search(PathUtils.getPath(ws, dir), searchedText));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             int code = rsp.code();
             if (code != ErrorCodes.ok) {
@@ -247,6 +250,36 @@ public class P8Client implements Client, SdkNames {
             throw new SDKException(ioe);
         }
     }
+
+    @Override
+    public List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException {
+
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.search(parentPath, searchedText));
+        try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+            int code = rsp.code();
+            if (code != ErrorCodes.ok) {
+                throw new SDKException(code);
+            }
+
+            List<FileNode> nodes = new ArrayList<>();
+            final int resultCode = rsp.saxParse(new P8NodeSaxHandler(node -> {
+                if (node instanceof FileNode) {
+                    // node.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
+                    nodes.add((FileNode) node);
+                } else {
+                    Log.e(TAG, "Unexcpcted node found: " + node.getPath());
+                }
+            }));
+
+            if (resultCode != ErrorCodes.ok) {
+                throw new SDKException(resultCode);
+            }
+            return nodes;
+        } catch (IOException ioe) {
+            throw new SDKException(ioe);
+        }
+    }
+
 
     @Override
     public void getBookmarks(NodeHandler handler) throws SDKException {
