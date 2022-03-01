@@ -1,9 +1,7 @@
 package com.pydio.cells.utils;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 public class Log {
 
@@ -102,17 +100,16 @@ public class Log {
     }
 
     public static String paramString(Map<String, String> params) {
-        Set<String> keys = params.keySet();
-        String s = " ";
-        Iterator<String> it = keys.iterator();
-        while (it.hasNext()) {
-            String k = it.next();
-            s += " " + k + "=" + params.get(k);
+        StringBuilder builder = new StringBuilder();
+        // API Level 24: params.forEach((k, v) -> builder.append(" " + k + "=" + v));
+        for (String k : params.keySet()){
+            builder.append(" " + k + "=" + params.get(k));
         }
-        if (s.length() > 0) {
-            s = s.substring(1);
+        if (builder.length() == 0) {
+            return "";
+        } else {
+            return builder.substring(1);
         }
-        return s;
     }
 
     private static boolean UNIXLike() {

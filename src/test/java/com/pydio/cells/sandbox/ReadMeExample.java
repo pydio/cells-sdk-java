@@ -26,7 +26,7 @@ public class ReadMeExample {
 
     @Ignore
     @Test
-    public void forTheReadMe() throws MalformedURLException, SDKException, ApiException {
+    public void forTheReadMe() throws SDKException, ApiException, MalformedURLException {
 
         TestClientFactory factory = new TestClientFactory();
         ServerURL serverURL = ServerURLImpl.fromAddress("https://localhost:8080", true);
