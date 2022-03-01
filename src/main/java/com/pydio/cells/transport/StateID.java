@@ -1,6 +1,7 @@
 package com.pydio.cells.transport;
 
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.PathUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -120,27 +121,14 @@ public class StateID {
     }
 
     public String getWorkspace() {
-        if (path == null || "".equals(path) || "/".equals(path)) {
-            return null;
-        }
-        return path.substring(1).split("/")[0];
+        return PathUtils.getWorkspace(path);
     }
 
     /**
      * Returns the trailing part of the path without the workspace. Always starts with a slash.
      */
     public String getFile() {
-        if (path == null || "".equals(path)) { // || "/".equals(path)) {
-            return null;
-        }
-        String prefix = "/" + getWorkspace();
-        if (path.length() > prefix.length()) {
-            return path.substring(prefix.length());
-        } else if (path.length() == prefix.length()) {
-            // we only have the workspace, so we consider we are at root of the workspace
-            return "/";
-        }
-        return null;
+        return PathUtils.getFile(path);
     }
 
     public String getFileName() {

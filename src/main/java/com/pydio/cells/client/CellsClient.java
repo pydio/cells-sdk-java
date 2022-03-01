@@ -374,6 +374,34 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
+    public List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException {
+        try {
+            TreeQuery query = new TreeQuery();
+            query.setFileName(searchedText);
+            query.addPathPrefixItem(parentPath);
+            TreeSearchRequest request = new TreeSearchRequest();
+            request.setSize(size);
+            request.setQuery(query);
+            SearchServiceApi api = new SearchServiceApi(authenticatedClient());
+            RestSearchResults results = api.nodes(request);
+            List<TreeNode> treeNodes = results.getResults();
+            List<FileNode> fileNodes = new ArrayList<>();
+            if (treeNodes == null) {
+                return fileNodes;
+            }
+            for (TreeNode node : treeNodes) {
+                FileNode fileNode = toFileNode(node);
+                if (fileNode != null) {
+                    fileNodes.add(fileNode);
+                }
+            }
+            return fileNodes;
+        } catch (ApiException e) {
+            throw new SDKException(e);
+        }
+    }
+
+    @Override
     public Message upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         URL presignedURL = s3Client.getUploadPreSignedURL(ws, path, name);
         ServerURL serverUrl;

@@ -11,6 +11,7 @@ import com.pydio.cells.api.ui.Stats;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 public interface Client {
 
@@ -28,8 +29,8 @@ public interface Client {
 
     FileNode nodeInfo(String ws, String path) throws SDKException;
 
-    /** 
-     * Temporary test before cleaning this part of the code 
+    /**
+     * Temporary test before cleaning this part of the code
      * while testing both P8 and Cells
      */
     @Deprecated
@@ -39,6 +40,9 @@ public interface Client {
 
     void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException;
 
+    List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException;
+
+    @Deprecated
     void search(String ws, String dir, String searched, NodeHandler h) throws SDKException;
 
     Message copy(String ws, String[] files, String folder) throws SDKException;

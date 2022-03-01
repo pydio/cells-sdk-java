@@ -2,6 +2,8 @@ package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
 import com.pydio.cells.api.SDKException;
+import com.pydio.cells.utils.PathUtils;
+import com.pydio.cells.utils.Str;
 
 import java.io.File;
 import java.io.IOException;
@@ -134,13 +136,21 @@ public class P8RequestBuilder {
         return builder;
     }
 
-    public static P8RequestBuilder search(String ws, String dir, String query) {
-        return new P8RequestBuilder()
-                .setAction(P8Names.search)
-                .setParam(P8Names.dir, dir)
-                .setParam(P8Names.tmpRepositoryId, ws)
-                .setParam(P8Names.query, query)
-                .ignoreCookies(false);
+    public static P8RequestBuilder search(String path, String query) {
+        P8RequestBuilder builder = new P8RequestBuilder();
+        String ws = PathUtils.getWorkspace(path);
+        if (Str.empty(ws)) {
+            builder.setAction(P8Names.multisearch);
+        } else {
+            builder.setAction(P8Names.search)
+                    .setParam(P8Names.tmpRepositoryId, ws);
+
+            String dir = PathUtils.getFile(path);
+            if (Str.empty(dir)) {
+                builder.setParam(P8Names.dir, dir);
+            }
+        }
+        return builder.setParam(P8Names.query, query).ignoreCookies(false);
     }
 
     public static P8RequestBuilder upload(String ws, String dir, String name, boolean autoRename, P8RequestBody body) throws IOException {
@@ -174,7 +184,7 @@ public class P8RequestBuilder {
         } else {
             int count = 0;
             for (String file : files) {
-                String item = String.format(Locale.ROOT,"file_%d", count);
+                String item = String.format(Locale.ROOT, "file_%d", count);
                 builder.setParam(item, file);
                 count++;
             }

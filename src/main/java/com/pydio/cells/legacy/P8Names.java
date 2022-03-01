@@ -95,6 +95,7 @@ public interface P8Names {
     String createMinisite = "create_minisite";
     String share = "share";
     String search = "search";
+    String multisearch = "multisearch";
     String searchByKeyword = "search_by_keyword";
     String getBookmarks = "get_bookmarks";
     String addBookmark = "add_bookmark";
