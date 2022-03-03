@@ -53,13 +53,13 @@ SDK_DEFAULT_AGENT="PydioCells/v3.0.4/JavaSDK/v0.4.0"
 
 ```
 
-(Temp) _A la mano_
+(Temporary) _a la mano_
 - Retrieve default json swagger v2 spec file: https://raw.githubusercontent.com/pydio/cells/stable/common/proto/rest/rest.swagger.json
-- Copy paste spac file at: https://editor.swagger.io/
+- Copy/paste specification file at: https://editor.swagger.io/
 - use Edit / convert to v3
 - paste back the specs in the root java project typically in rest.v3.swagger.yml
 
-```
+```sh
 java -jar openapi-generator-cli.jar generate -g java \
     -i ./rest.v3.swagger.yml \
     -o /tmp/forSwagger/cells-sdk-java \
@@ -76,8 +76,6 @@ mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
 # For the record, more details about the possible options:
 java -jar swagger-codegen-cli.jar help generate
 ```
-
-
 
 ## Developer Tips
 
