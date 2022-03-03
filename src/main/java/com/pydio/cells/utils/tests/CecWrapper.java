@@ -1,5 +1,7 @@
 package com.pydio.cells.utils.tests;
 
+import com.pydio.cells.utils.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +28,11 @@ public class CecWrapper {
         try {
             ProcessBuilder builder = new ProcessBuilder(prepareCmd, TestUtils.getOS(), workingDir, propsFile);
             builder.redirectErrorStream(true);
+            Log.i(Log.TAG_SDK, "... Launching prepare-cec script");
             Process process = builder.start();
 
             int returnValue = process.waitFor();
-            System.out.println("## After running prepare-cec script. Exit code: " + returnValue);
+            Log.i(Log.TAG_SDK, "## After running prepare-cec script. Exit code: " + returnValue);
 
             displayOutput(process);
 
@@ -84,21 +87,20 @@ public class CecWrapper {
         }
     }
 
-
-    // print input stream
-    private static void printInputStream(InputStream is) {
-
-        try (InputStreamReader streamReader =
-                     new InputStreamReader(is, StandardCharsets.UTF_8);
-             BufferedReader reader = new BufferedReader(streamReader)) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    // print input stream
+//    private static void printInputStream(InputStream is) {
+//
+//        try (InputStreamReader streamReader =
+//                     new InputStreamReader(is, StandardCharsets.UTF_8);
+//             BufferedReader reader = new BufferedReader(streamReader)) {
+//
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                System.out.println(line);
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

@@ -55,7 +55,7 @@ public class P8SpecificTest {
         ServerURL p8URL = null;
         for (RemoteServerConfig conf : servers.values()) {
             try {
-                ServerURL serverURL = ServerURLImpl.fromAddress(conf.serverURL);
+                ServerURL serverURL = ServerURLImpl.fromAddress(conf.serverURL, conf.skipVerify);
                 String type = factory.checkServer(serverURL);
                 if (SdkNames.TYPE_LEGACY_P8.equals(type)) {
                     p8Conf = conf;
