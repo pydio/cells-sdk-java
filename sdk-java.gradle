@@ -14,7 +14,7 @@ java.targetCompatibility = JavaVersion.VERSION_1_8
 def vendorName = "Abstrium SAS"
 def sdkJavaRepoURL = 'https://github.com/pydio/cells-sdk-java.git'
 def artifactID = 'cells-sdk-java'
-def sdkJavaSpecVersion = '0.3.3'
+def sdkJavaSpecVersion = '0.3.4'
 def sdkJavaVersion = ownVersions['java.sdk']
 
 // Also publish sources and Javadoc

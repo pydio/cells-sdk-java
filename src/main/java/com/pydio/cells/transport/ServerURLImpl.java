@@ -193,7 +193,7 @@ public class ServerURLImpl implements ServerURL {
             connection.setRequestMethod("GET");
             int code = connection.getResponseCode();
             if (code != 200) {
-                throw new SDKException(ErrorCodes.con_failed, code + ": could not reach " + url.getHost() + ": " + connection.getResponseMessage());
+                throw new SDKException(code, "Could not reach " + url.toString() + ": " + connection.getResponseMessage());
             }
         } catch (ProtocolException pe) { // Might not happen very often...
             throw new RuntimeException("Unvalid protocol GET...", pe);
