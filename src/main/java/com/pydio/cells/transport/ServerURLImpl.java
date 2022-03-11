@@ -19,7 +19,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -46,11 +45,7 @@ public class ServerURLImpl implements ServerURL {
                 }
             }
     };
-    private static final HostnameVerifier SKIP_HOSTNAME_VERIFIER = new HostnameVerifier() {
-        public boolean verify(String hostname, SSLSession session) {
-            return true;
-        }
-    };
+    private static final HostnameVerifier SKIP_HOSTNAME_VERIFIER = (hostname, session) -> true;
 
     private final URL url;
 
@@ -67,7 +62,6 @@ public class ServerURLImpl implements ServerURL {
     }
 
     public static ServerURL fromAddress(String urlString, boolean skipVerify) throws MalformedURLException {
-        // URL url = URI.create(urlString).toURL();
         urlString = urlString.trim().toLowerCase(Locale.ENGLISH);
         URL url = new URL(urlString);
 
@@ -78,27 +72,22 @@ public class ServerURLImpl implements ServerURL {
                 break;
             default:
                 // This works for P8 only. We do not support Cells server on a sub-path of a domain.
-                String path = url.getPath();
-                if (path == null){
-                    path = "";
-                }
-                path = path.trim();
+                String path = url.getPath().trim();
                 if (path.endsWith("/")) {
                     path = path.substring(0, path.length() - 1);
                 }
 
-                // FIXME Dirty hack to fix NPE when handling old servers migration
+                // Double check the protocol to avoid NPE when handling old servers migration
                 String protocol = url.getProtocol() == null ? "https" : url.getProtocol();
                 String authority = url.getAuthority();
-                if (authority == null){
+                if (authority == null) {
                     throw new MalformedURLException("Cannot create a server URL without authority for " + urlString);
                 }
 
-                url = new URL(url.getProtocol().concat("://").concat(url.getAuthority()).concat(path));
+                url = new URL(protocol.concat("://").concat(url.getAuthority()).concat(path));
         }
 
-        ServerURLImpl serverURL = new ServerURLImpl(url, skipVerify);
-        return serverURL;
+        return new ServerURLImpl(url, skipVerify);
     }
 
     public static ServerURL withSkipVerify(ServerURL serverURL) {
@@ -182,15 +171,16 @@ public class ServerURLImpl implements ServerURL {
         return (new Gson()).toJson(this);
     }
 
-    public static ServerURL fromJson(String jsonString){
+    public static ServerURL fromJson(String jsonString) {
         try {
             // TODO Dirty tweak until we finalize implementation of self-signed certificates
             // We Assume the passed json is correctly formatted
-            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+            Type type = new TypeToken<Map<String, Object>>() {
+            }.getType();
             Map<String, Object> props = new Gson().fromJson(jsonString, type);
             return ServerURLImpl.fromAddress(props.get("url").toString(), Boolean.parseBoolean(props.get("skipVerify").toString()));
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Unable to decode JSON string: "+ jsonString, e);
+            throw new RuntimeException("Unable to decode JSON string: " + jsonString, e);
         }
     }
 
@@ -264,9 +254,7 @@ public class ServerURLImpl implements ServerURL {
                 sslSocketFactory = sc.getSocketFactory();
             }
             return sslSocketFactory;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Unexpected error while initializing SSL context", e);
-        } catch (KeyManagementException e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
             throw new RuntimeException("Unexpected error while initializing SSL context", e);
         }
     }
@@ -284,9 +272,7 @@ public class ServerURLImpl implements ServerURL {
 
             // Since we may be using a cert with a different name, we need to ignore the hostname as well.
             connection.setHostnameVerifier(SKIP_HOSTNAME_VERIFIER);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Unexpected error while initializing SSL context", e);
-        } catch (KeyManagementException e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
             throw new RuntimeException("Unexpected error while initializing SSL context", e);
         }
     }
