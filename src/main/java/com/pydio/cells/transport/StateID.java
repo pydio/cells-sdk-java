@@ -11,6 +11,8 @@ import java.net.URLEncoder;
 
 public class StateID {
 
+    private final String tag = StateID.class.getSimpleName();
+
     private final String username;
     private final String serverUrl;
     private final String path;
@@ -172,7 +174,10 @@ public class StateID {
         }
 
         String newPath;
-        if (getPath().endsWith("/")) {
+        if (getPath() == null) {
+            Log.w(tag, "Getting " + fileName + " child for " + toString() + ", path is null");
+            newPath = "/" + fileName;
+        } else if (getPath().endsWith("/")) {
             newPath = getPath() + fileName;
         } else {
             newPath = getPath() + "/" + fileName;
