@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 
 public class CellsServer implements Server {
 
+    public final static String LOG_TAG = CellsServer.class.getSimpleName();
+
     public final static String API_PREFIX = "/a";
     public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
 
@@ -167,10 +169,12 @@ public class CellsServer implements Server {
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            Log.d(LOG_TAG, "Retrieved OIDC string: " + oidcStr);
             authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
         } catch (Exception e) {
-            Log.w("Initialisation", "Unexpected error while retrieving OIDC configuration"
+            Log.e(LOG_TAG, "Unexpected error while retrieving OIDC configuration"
                     + ", cause: " + e.getMessage());
+            e.printStackTrace();
             throw SDKException.unexpectedContent(e);
         } finally {
             IoHelpers.closeQuietly(con);
@@ -185,5 +189,4 @@ public class CellsServer implements Server {
             return false;
         return url().equals(((CellsServer) obj).url());
     }
-
 }
