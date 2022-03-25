@@ -463,6 +463,7 @@ public class CellsClient implements Client, SdkNames {
                 return IoHelpers.pipeReadWithProgress(in, target, progressListener);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             throw SDKException.conReadFailed(e);
         } finally {
             IoHelpers.closeQuietly(in);
