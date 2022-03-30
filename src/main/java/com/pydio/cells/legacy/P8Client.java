@@ -382,9 +382,9 @@ public class P8Client implements Client, SdkNames {
             while (rsp.code() == ErrorCodes.ok && !cb.allChunksWritten()) {
                 NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
                 if (diff.updated != null && diff.updated.size() > 0) {
-                    name = diff.updated.get(0).getLabel();
+                    name = diff.updated.get(0).getName();
                 } else if (diff.added != null && diff.added.size() > 0) {
-                    name = diff.added.get(0).getLabel();
+                    name = diff.added.get(0).getName();
                 } else {
                     //todo: stats "name" to get info
                 }
@@ -402,7 +402,7 @@ public class P8Client implements Client, SdkNames {
                 diff = NodeDiff.create(doc);
                 if (diff.added != null) {
                     Node node = diff.added.get(0);
-                    String label = node.getLabel();
+                    String label = node.getName();
                     if (!label.equals(cb.getFilename())) {
                         cb.setFilename(label);
                     }

@@ -20,8 +20,18 @@ public class FileNode extends AbstractNode {
     }
 
     @Override
+    public String getName() {
+        return properties.getProperty(NODE_PROPERTY_FILENAME);
+    }
+
+    @Override
     public String getLabel() {
-        return properties.getProperty(NODE_PROPERTY_TEXT);
+        String label = properties.getProperty(NODE_PROPERTY_TEXT);
+        if (Str.empty(label)){
+            return getName();
+        } else {
+            return label;
+        }
     }
 
     @Override
@@ -143,6 +153,6 @@ public class FileNode extends AbstractNode {
 //            return 1;
 //        }
 
-        return getLabel().compareTo(other.getLabel());
+        return getName().compareTo(other.getName());
     }
 }

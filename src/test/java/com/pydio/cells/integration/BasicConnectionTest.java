@@ -74,7 +74,7 @@ public class BasicConnectionTest {
         factory.getClient(transport).workspaceList(new DummyHandler());
 
         System.out.println("... Listing object for workspace " + conf.defaultWS);
-        factory.getClient(transport).ls(conf.defaultWS, "/", null, (node) -> System.out.println(node.getLabel()));
+        factory.getClient(transport).ls(conf.defaultWS, "/", null, (node) -> System.out.println(node.getName()));
     }
 
     public void basicCRUD(RemoteServerConfig conf) throws SDKException, IOException {
@@ -167,7 +167,7 @@ public class BasicConnectionTest {
                 // Check if uploaded files is still there
                 final List<String> founds = new ArrayList<>();
                 client.ls(conf.defaultWS, baseDir, null, (node) -> {
-                    if (name.equals(node.getLabel()))
+                    if (name.equals(node.getName()))
                         founds.add(name);
                 });
                 if (founds.size() == 0) {
@@ -222,7 +222,7 @@ public class BasicConnectionTest {
 
         @Override
         public void onNode(Node node) {
-            System.out.println("#" + (++i) + " " + node.getLabel());
+            System.out.println("#" + (++i) + " " + node.getName());
             // System.out.println(node.getPath());
         }
     }

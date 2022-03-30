@@ -10,12 +10,12 @@ public interface Node extends Serializable {
 
     int TYPE_REMOTE_NODE = 1;
     int TYPE_LOCAL_NODE = 4;
-    int TYPE_OFFLINE = 9;
 
     int TYPE_BOOKMARK = 6;
-    int TYPE_SEARCH = 5;
-    int TYPE_ACTIVITY = 7;
-    int TYPE_SELECTION = 8;
+//    int TYPE_SEARCH = 5;
+//    int TYPE_ACTIVITY = 7;
+//    int TYPE_SELECTION = 8;
+//    int TYPE_OFFLINE = 9;
 
 //    int same = 0;
 //    int content = 1;
@@ -37,6 +37,8 @@ public interface Node extends Serializable {
     String getId();
 
     String getPath();
+
+    String getName();
 
     String getLabel();
 
