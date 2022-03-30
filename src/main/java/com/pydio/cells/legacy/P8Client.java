@@ -186,14 +186,6 @@ public class P8Client implements Client, SdkNames {
     @Override
     public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
 
-/*
-        // Dirty hack to debug
-
-        session.downloadWorkspaceRegistry(ws, new RIH());
-
-        System.out.println("After list, fixme");
-        return null;
-*/
         PageOptions nextOptions = new PageOptions();
 
         P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.ls(ws, folder));

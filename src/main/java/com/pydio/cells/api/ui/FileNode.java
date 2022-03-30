@@ -4,10 +4,6 @@ import com.pydio.cells.utils.Str;
 
 /**
  * Represents a file or a folder META information.
- * <p>
- * Warning: comparison only rely on the node type (folders before files) and name,
- * neither on the workspace slug nor on the path so that list can be ordered,
- * even in e.g. search results
  */
 public class FileNode extends AbstractNode {
 
@@ -139,11 +135,13 @@ public class FileNode extends AbstractNode {
 
         FileNode other = (FileNode) node;
 
-        if (isFolder() && other.isFile()) {
-            return -1;
-        } else if (isFile() && other.isFolder()) {
-            return 1;
-        }
+        // We rather only rely on file names for canonical sorting,
+        // The "User friendly sorting" (with folder before files) must be handled by the client.
+//        if (isFolder() && other.isFile()) {
+//            return -1;
+//        } else if (isFile() && other.isFolder()) {
+//            return 1;
+//        }
 
         return getLabel().compareTo(other.getLabel());
     }
