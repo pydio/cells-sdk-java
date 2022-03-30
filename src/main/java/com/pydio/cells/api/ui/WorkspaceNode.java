@@ -140,7 +140,6 @@ public class WorkspaceNode extends AbstractNode {
         return getSlug().equals(((WorkspaceNode) obj).getSlug());
     }
 
-
     /**
      * This is only used for diffs, for UI sorting we rather rely on the sort_name that is added
      * to the RWorkspace object upon creation
@@ -151,24 +150,8 @@ public class WorkspaceNode extends AbstractNode {
         int res = super.compareTo(node);
         if (res != 0) return res;
 
-        // Specific order for workspaces with My File first
         WorkspaceNode other = (WorkspaceNode) node;
-//        res = getWeight(other) - getWeight(this);
-//        if (res != 0) return res;
-
         return getSlug().compareTo(other.getSlug());
     }
 
-//    private int getWeight(WorkspaceNode wn) {
-//        switch (wn.getWorkspaceType()) {
-//            case SdkNames.WS_TYPE_PERSONAL:
-//                return 3;
-//            case SdkNames.WS_TYPE_DEFAULT:
-//                return 2;
-//            case SdkNames.WS_TYPE_CELL:
-//                return 1;
-//            default:
-//                return 0;
-//        }
-//    }
 }

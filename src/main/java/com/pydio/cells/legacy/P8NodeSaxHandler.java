@@ -5,6 +5,7 @@ import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.model.NodeFactory;
+import com.pydio.cells.utils.Str;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -22,7 +23,9 @@ public class P8NodeSaxHandler extends DefaultHandler {
     private final static String AJXP_IMAGE_TYPE = "image_type";
     private final static String AJXP_MIME = "ajxp_mime";
     private final static String AJXP_SHARED = "ajxp_shared";
-
+    // Rather confusing legacy nomenclature, we change this to path and filename in the
+    // adapt property method to have a clearer API
+    private final static String AJXP_PATH = "filename";
 
     // Remarkable values
     private final static String AJXP_MIME_RECYCLE = "ajxp_recycle";
@@ -42,7 +45,7 @@ public class P8NodeSaxHandler extends DefaultHandler {
 
     /**
      * This is the main entry point to tweak the parsed properties to have a cleaner model
-     * (hopefully without breaking anything) and thus prepare a future migration
+     * (hopefully without breaking anything) and thus prepare a future migration.
      */
     private void adaptProperties() {
 
@@ -59,18 +62,36 @@ public class P8NodeSaxHandler extends DefaultHandler {
             } else {
                 type = SdkNames.NODE_MIME_DEFAULT;
             }
-        } else if (p.containsKey(AJXP_MIME)){
-            if (AJXP_MIME_RECYCLE.equals(p.getProperty(AJXP_MIME))){
+        } else if (p.containsKey(AJXP_MIME)) {
+            if (AJXP_MIME_RECYCLE.equals(p.getProperty(AJXP_MIME))) {
                 type = SdkNames.NODE_MIME_RECYCLE;
             }
         }
         p.setProperty(SdkNames.NODE_PROPERTY_MIME, type);
 
         // Migrate old names
-        if (p.containsKey(AJXP_SHARED)){
+        if (p.containsKey(AJXP_SHARED)) {
             p.setProperty(SdkNames.NODE_PROPERTY_SHARED, (String) p.get(AJXP_SHARED));
             p.remove(AJXP_SHARED);
         }
+
+        // Change the legacy "filename" P8 property in Path and extract a filename
+        String path = null;
+        if (p.containsKey(AJXP_PATH)) {
+            path = p.getProperty(AJXP_PATH);
+            p.remove(AJXP_PATH);
+        }
+        if (Str.empty(path)) {
+            path = "/";
+        }
+        p.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
+        String name = "";
+
+        int index = path.lastIndexOf("/");
+        if (index > -1 && path.length() > index + 1) {
+            name = path.substring(path.lastIndexOf("/") + 1);
+        }
+        p.setProperty(SdkNames.NODE_PROPERTY_FILENAME, name);
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
@@ -89,8 +110,8 @@ public class P8NodeSaxHandler extends DefaultHandler {
                 p.setProperty(attributes.getLocalName(i), attributes.getValue(i));
             }
             if (mParsedCount == 1) {
-                if ("".equals(p.getProperty(SdkNames.NODE_PROPERTY_FILENAME))) {
-                    p.setProperty(SdkNames.NODE_PROPERTY_FILENAME, "/");
+                if ("".equals(p.getProperty(AJXP_PATH))) {
+                    p.setProperty(AJXP_PATH, "/");
                 }
                 mRootNode = (FileNode) NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
                 p = null;

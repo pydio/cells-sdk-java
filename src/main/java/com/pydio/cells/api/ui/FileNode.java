@@ -36,24 +36,10 @@ public class FileNode extends AbstractNode {
 
     @Override
     public String getPath() {
-        // TODO hack until we clean this in legacy P8
-        String path = properties.getProperty(NODE_PROPERTY_PATH);
-        String name = properties.getProperty(NODE_PROPERTY_FILENAME);
-
-        // FIXME this smells, path =
-        //  "/" + name // on first call
-        //  name // after that
-
-        if ((path == null || "".equals(path)) && name != null && !"".equals(name)) {
-            setProperty(NODE_PROPERTY_PATH, name);
-            return "/" + name;
-            // TODO should we also extract the real name from the path ?
-        }
-        return path;
+        return  properties.getProperty(NODE_PROPERTY_PATH);
     }
 
     /* File and folder specific methods */
-
     public String getWorkspace() {
         return this.getProperty(NODE_PROPERTY_WORKSPACE_SLUG);
     }
