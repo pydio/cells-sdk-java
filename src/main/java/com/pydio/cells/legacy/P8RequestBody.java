@@ -2,6 +2,7 @@ package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.ProgressListener;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.File;
@@ -14,6 +15,8 @@ import java.net.URLConnection;
 
 public class P8RequestBody {
 
+    private final String logTag = P8RequestBody.class.getSimpleName();
+
     private String mFilename;
     private String mimeType;
 
@@ -22,7 +25,7 @@ public class P8RequestBody {
     private File mFile;
     private InputStream mInStream;
 
-    private int mChunkIndex;
+    private int mChunkIndex = 0;
     private int mChunkCount;
 
     private long mChunkSize;
@@ -111,8 +114,14 @@ public class P8RequestBody {
     public void writeTo(OutputStream out) throws IOException {
 
         long limit = mChunkSize;
-        long bufsize = Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize);
-        long start = mChunkIndex * mChunkSize, totalRead = start;
+        long bufferSize = Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize);
+        long start = mChunkIndex * mChunkSize;
+        long totalRead = start;
+
+        // Log.d(logTag, "... About to write: ");
+        // Log.d(logTag, "limit: " + limit);
+        // Log.d(logTag, "bufferSize: " + bufferSize);
+        // Log.d(logTag, "start: " + start);
 
         if (mChunkCount > 1) {
 
@@ -125,7 +134,7 @@ public class P8RequestBody {
 
                 RandomAccessFile raf = new RandomAccessFile(mFile, "r");
                 raf.seek(start);
-                int read, maximumToRead = (int) Math.min(bufsize, limit);
+                int read, maximumToRead = (int) Math.min(bufferSize, limit);
 
                 while (limit > 0) {
                     read = raf.read(buffer, 0, maximumToRead);
@@ -135,7 +144,7 @@ public class P8RequestBody {
                         localProgressListener.transferred(start + totalRead);
                     }
                     limit -= read;
-                    maximumToRead = (int) Math.min(bufsize, limit);
+                    maximumToRead = (int) Math.min(bufferSize, limit);
                 }
                 raf.close();
 
@@ -145,7 +154,7 @@ public class P8RequestBody {
                 if (mChunkIndex == (mChunkCount - 1)) {
                     limit = mLastChunkSize;
                 }
-                int maximumToRead = (int) Math.min(bufsize, limit), read;
+                int maximumToRead = (int) Math.min(bufferSize, limit), read;
                 while (limit > 0) {
                     read = mInStream.read(buffer, 0, maximumToRead);
                     out.write(buffer, 0, read);
@@ -154,7 +163,7 @@ public class P8RequestBody {
                         localProgressListener.transferred(start + totalRead);
                     }
                     limit -= read;
-                    maximumToRead = (int) Math.min(bufsize, limit);
+                    maximumToRead = (int) Math.min(bufferSize, limit);
                 }
             }
 
@@ -245,15 +254,18 @@ public class P8RequestBody {
         return localProgressListener;
     }
 
-
-    // TODO double check it works both for Cells anmd P8
+    // TODO double check it works both for Cells and P8
     public void setTransferListener(final ProgressListener listener) {
         LocalProgressListener localProgressListener = new LocalProgressListener() {
             @Override
             public void transferred(long progress) throws IOException {
-                if (listener.onProgress(progress)) {
-                    throw new IOException("stopped");
-                }
+
+                //Log.d("LocalProgressListener", "transferred: " + progress);
+                boolean stopRequested = listener.onProgress(progress);
+                // Log.d("LocalProgressListener", "result: " + result);
+               if (stopRequested) {
+                   throw new IOException("canceled by caller");
+               }
             }
 
             @Override
@@ -264,7 +276,7 @@ public class P8RequestBody {
 
                 long progress = (long) ((float) part / (float) total);
                 if (listener.onProgress(progress)) {
-                    throw new IOException("stopped");
+                    throw new IOException("canceled by caller");
                 }
             }
         };
