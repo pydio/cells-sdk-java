@@ -16,7 +16,7 @@ public class FileNode extends AbstractNode {
 
     @Override
     public String getId() {
-        return properties.getProperty(NODE_PROPERTY_UUID);
+        return properties.getProperty(NODE_PROPERTY_UID);
     }
 
     @Override

@@ -26,6 +26,7 @@ import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.PathUtils;
+import com.pydio.cells.utils.Str;
 
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -39,9 +40,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 public class P8Client implements Client, SdkNames {
@@ -145,7 +148,7 @@ public class P8Client implements Client, SdkNames {
             }
 
             final FileNode[] node = new FileNode[1];
-            final int resultCode = rsp.saxParse(new P8NodeSaxHandler((n) -> node[0] = (FileNode) n));
+            final int resultCode = rsp.saxParse(new P8NodeSaxHandler(ws, (n) -> node[0] = (FileNode) n));
             if (resultCode != ErrorCodes.ok) {
                 throw new SDKException(resultCode);
             }
@@ -197,10 +200,7 @@ public class P8Client implements Client, SdkNames {
                     throw new SDKException(code);
                 }
 
-                P8NodeSaxHandler treeHandler = new P8NodeSaxHandler((n) -> {
-                    n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
-                    handler.onNode(n);
-                });
+                P8NodeSaxHandler treeHandler = new P8NodeSaxHandler(ws, handler);
                 final int resultCode = rsp.saxParse(treeHandler);
                 if (resultCode != ErrorCodes.ok) {
                     throw new SDKException(resultCode);
@@ -230,10 +230,7 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(code);
             }
 
-            final int resultCode = rsp.saxParse(new P8NodeSaxHandler(node -> {
-                node.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
-                h.onNode(node);
-            }));
+            final int resultCode = rsp.saxParse(new P8NodeSaxHandler(ws, h));
 
             if (resultCode != ErrorCodes.ok) {
                 throw new SDKException(resultCode);
@@ -245,7 +242,6 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException {
-
         P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.search(parentPath, searchedText));
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             int code = rsp.code();
@@ -254,14 +250,16 @@ public class P8Client implements Client, SdkNames {
             }
 
             List<FileNode> nodes = new ArrayList<>();
-            final int resultCode = rsp.saxParse(new P8NodeSaxHandler(node -> {
-                if (node instanceof FileNode) {
-                    // node.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
-                    nodes.add((FileNode) node);
-                } else {
-                    Log.e(TAG, "Unexcpcted node found: " + node.getPath());
-                }
-            }));
+            P8NodeSaxHandler parser;
+            String ws = PathUtils.getWorkspace(parentPath);
+            if (Str.empty(ws)) {
+                final Map<String, String> wss = new HashMap();
+                workspaceList((n) -> wss.put(n.getProperty("id"), n.getProperty("repositorySlug")));
+                parser = new P8NodeSaxHandler(wss, new SearchNodeHandler(nodes));
+            } else {
+                parser = new P8NodeSaxHandler(ws, new SearchNodeHandler(nodes));
+            }
+            final int resultCode = rsp.saxParse(parser);
 
             if (resultCode != ErrorCodes.ok) {
                 throw new SDKException(resultCode);
@@ -272,24 +270,30 @@ public class P8Client implements Client, SdkNames {
         }
     }
 
+    private class SearchNodeHandler implements NodeHandler {
+
+        private final List<FileNode> nodes;
+
+        SearchNodeHandler(List<FileNode> nodes) {
+            this.nodes = nodes;
+        }
+
+        @Override
+        public void onNode(Node node) {
+            if (node instanceof FileNode) {
+                // node.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
+                nodes.add((FileNode) node);
+            } else {
+                Log.e(TAG, "Unexpected node found: " + node.getPath());
+            }
+        }
+    }
 
     @Override
     public void getBookmarks(NodeHandler handler) throws SDKException {
 
-        List<WorkspaceNode> workspaceNodes = new ArrayList<>();
-
-
-        // FIXME rather handle this in the AccountNode Layer.
-//        if (session.isOffline()) {
-//            workspaceNodes.addAll(session.getCachedWorkspaces().values());
-//        } else {
+        final List<WorkspaceNode> workspaceNodes = new ArrayList<>();
         workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
-        //       }
-
-        // List<WorkspaceNode> workspaceNodes = new ArrayList<>(serverNode.getWorkspaces().values());
-        // if (workspaceNodes.isEmpty()) {
-        //     workspaceList((n) -> workspaceNodes.add((WorkspaceNode) n));
-        // }
 
         for (WorkspaceNode wn : workspaceNodes) {
             P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.listBookmarked(wn.getId(), "/"));
@@ -300,12 +304,7 @@ public class P8Client implements Client, SdkNames {
                         break;
                         //throw SDKException.fromP8Code(code);
                     }
-
-                    P8NodeSaxHandler treeHandler = new P8NodeSaxHandler((n) -> {
-                        n.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, wn.getId());
-                        handler.onNode(n);
-                    });
-
+                    P8NodeSaxHandler treeHandler = new P8NodeSaxHandler(wn.getId(), handler);
                     final int resultCode = rsp.saxParse(treeHandler);
                     if (resultCode != ErrorCodes.ok) {
                         //throw SDKException.fromP8Code(resultCode);

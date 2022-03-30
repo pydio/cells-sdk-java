@@ -60,7 +60,7 @@ public interface SdkNames {
 
     // TODO Clean legacy properties below
     // These 2 should rather be lower cased - necessitate a migration of the cache
-    String NODE_PROPERTY_UUID = "Uuid";
+    String NODE_PROPERTY_UID = "Uuid";
     String NODE_PROPERTY_SHARE_UUID = "share_Uuid";
     //    String NODE_PROPERTY_UUID = "uuid";
     //    String NODE_PROPERTY_SHARE_UUID = "share_uuid";

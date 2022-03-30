@@ -55,7 +55,7 @@ public class FileNodeUtils {
         result.setProperty(SdkNames.NODE_PROPERTY_META_HASH, String.valueOf(builder.toString().hashCode()));
 
         // Main meta info: UUID, eTag (md5) and modification type
-        result.setProperty(SdkNames.NODE_PROPERTY_UUID, uuid);
+        result.setProperty(SdkNames.NODE_PROPERTY_UID, uuid);
         if (Str.notEmpty(node.getEtag())) {
             result.setProperty(SdkNames.NODE_PROPERTY_ETAG, node.getEtag());
         }

@@ -70,7 +70,7 @@ public class CellsClientTest {
 
         // Post with a stat
         FileNode node = client.nodeInfo(cellsConf.defaultWS, file);
-        String uuid = node.getProperty(SdkNames.NODE_PROPERTY_UUID);
+        String uuid = node.getProperty(SdkNames.NODE_PROPERTY_UID);
         String nodePath = node.getProperty(SdkNames.NODE_PROPERTY_PATH);
         System.out.println("... Stats request succeeded");
         System.out.println("UUID: " + uuid);
