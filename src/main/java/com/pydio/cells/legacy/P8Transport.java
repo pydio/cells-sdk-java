@@ -474,7 +474,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 builder.append(";").append(cookie.toString());
             }
             String cookieStr = builder.substring(1);
-            Log.d(Log.TAG_AUTH, "Setting cookies: [" + cookieStr + "]");
+            // Log.d(Log.TAG_AUTH, "Setting cookies: [" + cookieStr + "]");
             con.setRequestProperty(P8Names.REQ_PROP_COOKIE, cookieStr);
         }
         return con;

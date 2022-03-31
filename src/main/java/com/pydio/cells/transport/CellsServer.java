@@ -169,7 +169,7 @@ public class CellsServer implements Server {
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            Log.d(LOG_TAG, "Retrieved OIDC string: " + oidcStr);
+            // Log.d(LOG_TAG, "Retrieved OIDC string: " + oidcStr);
             authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
         } catch (Exception e) {
             Log.e(LOG_TAG, "Unexpected error while retrieving OIDC configuration"
