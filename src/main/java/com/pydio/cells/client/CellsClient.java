@@ -421,7 +421,7 @@ public class CellsClient implements Client, SdkNames {
                 IoHelpers.pipeReadWithProgress(source, out, progressListener);
             }
             // TODO implement multi part upload
-            Log.i(TAG, "Put finished with status " + con.getResponseCode());
+            Log.d(TAG, "PUT request done with status " + con.getResponseCode());
         } catch (IOException e) {
             throw SDKException.conWriteFailed(e);
         }
