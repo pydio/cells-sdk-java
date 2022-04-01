@@ -69,7 +69,6 @@ Transport transport = factory.getTransport(accountID)
 Client client = factory.getClient(transport)
 client.mkdir("common-files", "/parent", "child")
 
-
 /* Directly use the generated API (Cells only) */
 // Authentication is auto-magically handled by the transport 
 // as long as it has been previously registered
