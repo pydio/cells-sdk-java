@@ -7,7 +7,6 @@ plugins {
     id 'maven-publish'
 }
 
-
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -69,7 +68,7 @@ dependencies {
     implementation 'io.swagger:swagger-annotations:1.6.5'
     implementation 'com.metaparadigm:json-rpc:1.0'
 
-    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'io.gsonfire:gson-fire:1.8.5'
     implementation 'org.threeten:threetenbp:1.5.2'
 
@@ -87,5 +86,4 @@ dependencies {
     // When running with android these are provided by the platform
     testImplementation 'com.amazonaws:aws-java-sdk-core:1.11.1030'
     testImplementation 'com.amazonaws:aws-java-sdk-s3:1.11.1030'
-
 }

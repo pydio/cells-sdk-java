@@ -102,7 +102,7 @@ dependencies {
 
     // Used to store info as gson blobs in SQLite
     // TODO what are the differences between the 2 libs, which one is better?
-    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'io.gsonfire:gson-fire:1.8.5'
     // Very old library that has been used to implement dirty shortcuts while manipulating JSON.
     // TODO clean the code (mainly the Client and Transport classes) and remove.
