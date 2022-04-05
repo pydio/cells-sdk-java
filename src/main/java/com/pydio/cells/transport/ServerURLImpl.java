@@ -196,7 +196,7 @@ public class ServerURLImpl implements ServerURL {
                 throw new SDKException(code, "Could not reach " + url.toString() + ": " + connection.getResponseMessage());
             }
         } catch (ProtocolException pe) { // Might not happen very often...
-            throw new RuntimeException("Unvalid protocol GET...", pe);
+            throw new RuntimeException("Invalid protocol GET...", pe);
         }
     }
 
