@@ -305,7 +305,6 @@ public class CellsClient implements Client, SdkNames {
         }
     }
 
-
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
         RestGetBulkMetaRequest request = new RestGetBulkMetaRequest();
