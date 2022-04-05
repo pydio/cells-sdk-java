@@ -206,19 +206,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     public ApiClient getApiClient() {
         ApiClient apiClient = new ApiClient();
+        if (getServer().isSSLUnverified()) {
+            apiClient = apiClient.setVerifyingSsl(false);
+        }
         apiClient.setBasePath(getServer().getApiURL());
         apiClient.setUserAgent(getUserAgent());
-
-        if (getServer().isSSLUnverified()) {
-            // FIXME we broke the selfsigned Api client when upgrading to okhttp3...
-            //   Repair.
-            Log.w(TAG, "Unimplemented self-signed");
-//            ServerURL serverURL = getServer().getServerURL();
-//            OkHttpClient c = apiClient.getHttpClient();
-//            c.setSslSocketFactory(serverURL.getSslSocketFactory());
-//            final String serverUrl = serverURL.getId();
-//            c.setHostnameVerifier((s, sslSession) -> serverUrl.contains(s));
-        }
         return apiClient;
     }
 
