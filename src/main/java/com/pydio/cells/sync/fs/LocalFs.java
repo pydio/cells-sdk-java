@@ -1,6 +1,7 @@
 package com.pydio.cells.sync.fs;
 
 import com.pydio.cells.api.Change;
+import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.io;
 import com.pydio.cells.sync.Error;
 import com.pydio.cells.sync.changes.GetChangeRequest;
@@ -215,7 +216,7 @@ public class LocalFs implements Fs, ContentLoader {
         }
 
         try {
-            io.writeFile(in, fullPath);
+            IoHelpers.writeFile(in, fullPath);
         } catch (IOException e) {
             e.printStackTrace();
             Error error = Error.opFailed(c.getType(), id(), fullPath);

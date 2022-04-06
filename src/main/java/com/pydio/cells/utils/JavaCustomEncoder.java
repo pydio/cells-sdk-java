@@ -26,7 +26,6 @@ public class JavaCustomEncoder implements CustomEncoder {
     @Override
     public byte[] base64Decode(byte[] inValue) {
         Base64.getDecoder().decode(inValue);
-
         return new byte[0];
     }
 

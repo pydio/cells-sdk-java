@@ -3,7 +3,7 @@ package com.pydio.cells.sync.changes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.api.Change;
-import com.pydio.cells.utils.io;
+import com.pydio.cells.utils.IoHelpers;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -79,12 +79,12 @@ public class FileChangeStore implements ChangeStore {
     private void save() throws IOException {
         Gson gson = new Gson();
         String encoded = gson.toJson(changes);
-        io.writeFile(encoded.getBytes(), this.filePath);
+        IoHelpers.writeFile(encoded.getBytes(), this.filePath);
     }
 
     private void load() throws IOException {
         try {
-            byte[] bytes = io.readFile(this.filePath);
+            byte[] bytes = IoHelpers.readFile(this.filePath);
             Gson gson = new Gson();
             changes = gson.fromJson(new String(bytes), classType);
         } catch (IOException ignored) {

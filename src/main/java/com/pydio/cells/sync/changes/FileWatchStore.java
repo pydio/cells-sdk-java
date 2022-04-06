@@ -2,6 +2,7 @@ package com.pydio.cells.sync.changes;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.io;
 
 import java.io.IOException;
@@ -91,12 +92,12 @@ public class FileWatchStore {
     private void save() throws IOException {
         Gson gson = new Gson();
         String encoded = gson.toJson(watches);
-        io.writeFile(encoded.getBytes(), this.filePath);
+        IoHelpers.writeFile(encoded.getBytes(), this.filePath);
     }
 
     private void load() throws IOException {
         try {
-            byte[] bytes = io.readFile(this.filePath);
+            byte[] bytes = IoHelpers.readFile(this.filePath);
             Gson gson = new Gson();
             watches = gson.fromJson(new String(bytes), classType);
         } catch (Exception ignored) {

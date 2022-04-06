@@ -9,6 +9,13 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+/**
+ * Central object to ease manipulation of remote nodes by defining a unique ID
+ * that relies on:
+ * - the username for the current session
+ * - the full URL of the distant server
+ * - a path to a given node (including its containing workspace)
+ */
 public class StateID {
 
     private final String tag = StateID.class.getSimpleName();
@@ -42,8 +49,6 @@ public class StateID {
      * - ServerURL only
      * - Username@ServerURL
      * - Username@ServerURL@Path
-     * <p>
-     * It is not very robust for the time being.
      */
     public static StateID fromId(String stateId) {
 
@@ -107,7 +112,7 @@ public class StateID {
 
     /**
      * Best effort to provide a short host name from the URL. If the current url values raises
-     * a malformed URL exception, we return the initial value
+     * a malformed URL exception, we return the initial value.
      */
     public String getServerHost() {
         try {
@@ -141,14 +146,15 @@ public class StateID {
         return file.substring(file.lastIndexOf("/") + 1);
     }
 
-    /** HELPER METHODS **/
+    /* HELPER METHODS */
 
     /**
      * Creates a copy of this state ID and sets the passed path.
      * Warning: we assume parent StateID's username **and** serverUrl are already set.
      *
-     * @param path
-     * @return
+     * @param path a path including the workspace
+     * @return a valid StateID pointing to this path within the account defined by this username
+     * and server URL
      */
     public StateID withPath(String path) {
         return new StateID(username, serverUrl, path);
@@ -162,7 +168,7 @@ public class StateID {
      * - passing null, an empty string or "/", we return this.
      * - passing a file name that contains a slash raises a runtime exception
      *
-     * @return
+     * @return a valid StateID for a child of the current workspace or folder.
      */
     public StateID child(String fileName) {
         if (fileName == null || "".equals(fileName) || "/".equals(fileName)) {
@@ -175,7 +181,7 @@ public class StateID {
 
         String newPath;
         if (getPath() == null) {
-            Log.w(tag, "Getting " + fileName + " child for " + toString() + ", path is null");
+            Log.w(tag, "Getting " + fileName + " child for " + this + ", path is null");
             newPath = "/" + fileName;
         } else if (getPath().endsWith("/")) {
             newPath = getPath() + fileName;
@@ -186,12 +192,6 @@ public class StateID {
         return new StateID(username, serverUrl, newPath);
     }
 
-    /**
-     * For the time being, we expect that we are not at the root of a workspace.
-     * This is thought to be called on file...
-     *
-     * @return
-     */
     public StateID parentFolder() {
         if (getParentFile() == null) {
             // Corner case: parent of a workspace or a cell is the corresponding account
@@ -207,7 +207,6 @@ public class StateID {
         return getPath().equals("/" + getWorkspace());
     }
 
-
     public String getParentFile() {
         String file = getFile();
         if (file == null || "/".equals(file)) {
@@ -219,7 +218,6 @@ public class StateID {
         }
         return parentFile;
     }
-
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -233,8 +231,8 @@ public class StateID {
         return builder.toString();
     }
 
-    // Not perfect: Might have side effects when switching from plain Java to Android
-    // TODO find a elegant way to rather inject the CustomEncoder
+    // TODO find a elegant way to rather inject the CustomEncoder.
+    //   Not perfect: Might have side effects when switching from plain Java to Android
     private static String utf8Encode(String value) {
         try {
             return URLEncoder.encode(value, "UTF-8");

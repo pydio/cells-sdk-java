@@ -2,6 +2,7 @@ package com.pydio.cells.sync;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.io;
 import com.pydio.cells.sync.fs.Fs;
 
@@ -95,14 +96,14 @@ public class FilePersistedMergeState implements MergeState {
        //  synchronized (lock) {
             Gson gson = new Gson();
             String encoded = gson.toJson(watches);
-            io.writeFile(encoded.getBytes(), this.filePath);
+            IoHelpers.writeFile(encoded.getBytes(), this.filePath);
         //}
     }
 
     public synchronized void load() throws IOException {
         // synchronized (lock) {
             try {
-                byte[] bytes = io.readFile(this.filePath);
+                byte[] bytes = IoHelpers.readFile(this.filePath);
                 Gson gson = new Gson();
                 Type t = new TypeToken<List<Watch>>() {
                 }.getType();

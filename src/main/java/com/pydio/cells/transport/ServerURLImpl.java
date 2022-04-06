@@ -25,7 +25,6 @@ import java.util.Map;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -207,7 +206,7 @@ public class ServerURLImpl implements ServerURL {
                 throw new SDKException(code, "Could not reach " + url.getHost() + ": " + connection.getResponseMessage());
             }
         } catch (ProtocolException pe) { // Might not happen very often...
-            throw new RuntimeException("Unvalid protocol GET...", pe);
+            throw new RuntimeException("Invalid GET request", pe);
         }
     }
 
@@ -243,7 +242,6 @@ public class ServerURLImpl implements ServerURL {
 
         return sslContext;
     }
-
 
     // TODO tweak until we rework the self signed.
     public SSLSocketFactory getSslSocketFactory() {
@@ -312,126 +310,4 @@ public class ServerURLImpl implements ServerURL {
         }
         return trustHelper;
     }
-
-
-    /*
-
-    private int downloadBootConf(String apiURLTail) {
-        InputStream in = null;
-        HttpURLConnection con;
-
-        String apiURL = url();
-        boolean addressEndsWithSlash = apiURL.endsWith("/");
-        boolean tailStartsWithSlash = apiURLTail.startsWith("/");
-
-        if (addressEndsWithSlash && tailStartsWithSlash) {
-            apiURL = apiURL + apiURLTail.substring(1);
-        } else if (!addressEndsWithSlash && !tailStartsWithSlash) {
-            apiURL = apiURL + "/" + apiURLTail;
-        } else {
-            apiURL = apiURL + apiURLTail;
-        }
-
-        if (isSSLUnverified()) {
-            try {
-                sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, new TrustManager[]{trustManager()}, null);
-            } catch (Exception e) {
-                return ErrorCodes.tls_init;
-            }
-            HttpsURLConnection scon;
-            try {
-                scon = (HttpsURLConnection) new URL(apiURL).openConnection();
-            } catch (IOException e) {
-                return ErrorCodes.con_failed;
-            }
-            scon.setSSLSocketFactory(sslContext.getSocketFactory());
-            scon.setHostnameVerifier(getHostnameVerifier());
-            con = scon;
-        } else {
-            try {
-                con = (HttpURLConnection) new URL(apiURL).openConnection();
-            } catch (IOException e) {
-                return ErrorCodes.con_failed;
-            }
-        }
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-            in = con.getInputStream();
-            io.pipeRead(in, out);
-        } catch (IOException e) {
-            if (e instanceof SSLHandshakeException) {
-                Throwable cause = e.getCause();
-                if (cause != null) {
-                    cause = cause.getCause();
-                    if (cause instanceof CertPathValidatorException) {
-                        CertPathValidatorException ex = (CertPathValidatorException) cause;
-                        List<? extends Certificate> certs = ex.getCertPath().getCertificates();
-
-                        int size = certs.size();
-                        this.certificateChain = new byte[size][];
-                        int i = 0;
-                        for (Certificate c : certs) {
-                            try {
-                                this.certificateChain[i] = c.getEncoded();
-                                i++;
-                            } catch (CertificateEncodingException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-                }
-                return ErrorCodes.ssl_certificate_not_signed;
-            }
-
-            if (e instanceof SSLException) {
-                e.printStackTrace();
-                return ErrorCodes.ssl_error;
-            }
-            return ErrorCodes.con_failed;
-
-        } catch (Exception e) {
-            if (e instanceof IllegalArgumentException && e.getMessage().toLowerCase(Locale.ENGLISH).contains("unreachable")) {
-                return ErrorCodes.unreachable_host;
-            }
-            return ErrorCodes.con_failed;
-        } finally {
-            if (in != null) {
-                io.close(in);
-            }
-            io.close(out);
-        }
-
-        try {
-            bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-        } catch (Exception ignored) {
-            return ErrorCodes.unexpected_response;
-        }
-
-        boolean isCells = bootConf.has("backend");
-        version = bootConf.getString("ajxpVersion");
-        versionName = isCells ? "cells" : "pydio";
-
-        JSONObject customWordings = bootConf.getJSONObject("customWording");
-        label = customWordings.getString("title");
-        iconURL = customWordings.getString("icon");
-
-        tailStartsWithSlash = iconURL.startsWith("/");
-        if (addressEndsWithSlash && tailStartsWithSlash) {
-            iconURL = url() + iconURL;
-        } else if (!addressEndsWithSlash && !tailStartsWithSlash) {
-            iconURL = url() + "/" + iconURL;
-        } else {
-            iconURL = url() + iconURL;
-        }
-
-        if (customWordings.has("welcomeMessage")) {
-            welcomeMessage = customWordings.getString("welcomeMessage");
-        }
-        return 0;
-    }
-*/
-
-
 }
