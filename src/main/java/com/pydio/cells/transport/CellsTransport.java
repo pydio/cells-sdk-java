@@ -42,8 +42,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class CellsTransport implements ICellsTransport, SdkNames {
 
-    private final static String TAG = CellsTransport.class.getSimpleName();
-
+    private final static String logTag = CellsTransport.class.getSimpleName();
     private final CustomEncoder encoder;
 
     private final CredentialService credentialService;
@@ -68,13 +67,17 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
     public Server getServer() {
         return server;
     }
 
     @Override
     public String getUserAgent() {
-
         if (userAgent != null) {
             return userAgent;
         }
@@ -88,18 +91,16 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         if (Str.notEmpty(clientData.getPackageID())) {
             userAgent = userAgent + "/" + clientData.getPackageID();
         }
-        Log.i("CellsTransport", "############### User Agent generated: " + userAgent);
+        Log.d(logTag, "New Transport for " + username + " instance with agent: " + userAgent);
+
         return userAgent;
     }
 
     @Override
     public boolean isOffline() {
+        Log.w(logTag, "Hard-coded non relevant offline check from ");
+        Thread.dumpStack();
         return false;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     public String getAccessToken() throws SDKException {
@@ -128,7 +129,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
         } else if (token.isExpired()) {
             if (Str.notEmpty(token.refreshToken)) {
-                // Perform a ping to the server before unvalidating refesh token
+                // Perform a ping to the server before invalidating refresh token
                 try {
                     server.getServerURL().ping();
                 } catch (IOException ioe) {
@@ -141,6 +142,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 credentialService.put(getId(), token);
                 Token newToken = getRefreshedOAuthToken(refreshToken);
                 credentialService.put(getId(), newToken);
+                Log.w(logTag, "Token refreshed");
                 return newToken;
             } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
@@ -148,8 +150,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 return token;
             } else {
                 // Expired token and we have no procedure to refresh it, we delete the token
-                Log.w(TAG, "About to delete credentials for " + StateID.fromId(getId()));
-                Log.w(TAG, "Printing stack trace to understand where we come from:");
+                Log.w(logTag, "About to delete credentials for " + StateID.fromId(getId()));
+                Log.w(logTag, "Printing stack trace to understand where we come from:");
                 Thread.dumpStack();
 
                 credentialService.remove(getId());
@@ -227,11 +229,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 SAXParser parser = factory.newSAXParser();
                 parser.parse(in, new ServerGeneralRegistrySaxHandler(itemHandler));
             } catch (Exception e) {
-                Log.w("Connection", "could not parse registry request response");
+                Log.w(logTag, "could not parse registry request response");
                 throw SDKException.unexpectedContent(e);
             }
         } catch (IOException e) {
-            Log.w("Connection", "connection error while retrieving registry");
+            Log.w(logTag, "IOException while retrieving registry: " + e.getMessage());
             throw SDKException.conFailed(e);
         } finally {
             IoHelpers.closeQuietly(in);
@@ -273,20 +275,23 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         authInfo.put("password", credentials.getPassword());
         authInfo.put("type", "credentials");
         ClientData cd = ClientData.getInstance();
-        String authHeader = "Basic "
-                + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
-        authInfo.put("Authorization", authHeader);
+        authInfo.put("client_id", cd.getClientId());
+        if (Str.notEmpty(cd.getClientSecret())) {
+            // This additional header is only used for "private" clients and not used with
+            // default standard clients that have no client secret
+            String authHeader = "Basic "
+                    + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
+            authInfo.put("Authorization", authHeader);
+        }
 
         RestFrontSessionRequest request = new RestFrontSessionRequest();
         request.setClientTime((int) System.currentTimeMillis());
         request.authInfo(authInfo);
 
         FrontendServiceApi api = new FrontendServiceApi(getApiClient());
-
         RestFrontSessionResponse response;
         try {
             response = api.frontSession(request);
-
             Token t = new Token();
             t.subject = ServerFactory.accountID(credentials.getUsername(), server);
             t.value = response.getJWT();
@@ -302,7 +307,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
-            Log.i("SDK/LOGIN", "Retrieving token from OAuth2 code");
+            Log.i(logTag, "Retrieving token from OAuth2 code");
 
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
@@ -314,13 +319,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             authData.put("code", code);
             authData.put("redirect_uri", cfg.redirectURI);
 
-            // Either this or the 2 lines after are useless.
             ClientData cd = ClientData.getInstance();
             authData.put("client_id", cd.getClientId());
-            authData.put("client_secret", cd.getClientSecret());
-
-            String authHeader = "Basic " + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
-            addPostData(con, authData, authHeader);
+            if (Str.notEmpty(cd.getClientSecret())) {
+                authData.put("client_secret", cd.getClientSecret());
+            }
+            // String authHeader = "Basic " + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
+            addPostData(con, authData, null);
 
             try { // Real call
                 // TODO double check: do we need to explicitly open the connection before getting the stream ?
@@ -343,7 +348,12 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
-            Log.i("Refresh Token Service", System.currentTimeMillis() + ": refreshing token");
+            Log.i(logTag, String.format(
+                    "Launching refresh token flow  for %s@%s at %d ",
+                    username,
+                    getServer().url(),
+                    System.currentTimeMillis())
+            );
 
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
@@ -355,23 +365,21 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
             ClientData cd = ClientData.getInstance();
             authData.put("client_id", cd.getClientID());
-//            String secret = Str.empty(ClientData.getClientSecret()) ? "whatever" : ClientData.getClientSecret();
-//            authData.put("client_secret", secret);
-            authData.put("client_secret", cd.getClientSecret());
-
+            if (Str.notEmpty(cd.getClientSecret())) {
+                authData.put("client_secret", cd.getClientSecret());
+            }
             addPostData(con, authData, null);
 
-            // Real call
             in = con.getInputStream();
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
             String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
             return Token.decodeOAuthJWT(jwtStr);
         } catch (ParseException e) {
-            Log.e("Token Service", "Could not parse refreshed token. " + e.getLocalizedMessage());
+            Log.e(logTag, "Could not parse refreshed token. " + e.getLocalizedMessage());
             throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
         } catch (IOException e) {
-            Log.w("Token Service", " token request failed: " + e.getLocalizedMessage());
+            Log.w(logTag, "Token request failed: " + e.getLocalizedMessage());
             e.printStackTrace();
             throw new SDKException(ErrorCodes.con_failed, e);
         } finally {
@@ -382,10 +390,14 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     /* Sets body parameters as URL encoded form */
     private void addPostData(HttpURLConnection con, Map<String, String> postData, String authHeader) throws SDKException {
+        OutputStream postOut = null;
         try {
             con.setRequestMethod("POST");
             con.setDoOutput(true);
-
+            con.setRequestProperty("content-type", "application/x-www-form-urlencoded; charset=utf-8");
+            if (Str.notEmpty(authHeader)) {
+                con.setRequestProperty("Authorization", authHeader);
+            }
             StringBuilder builder = new StringBuilder();
             for (Map.Entry<String, String> entry : postData.entrySet()) {
                 if (builder.length() != 0) builder.append('&');
@@ -394,24 +406,20 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 builder.append(encoder.utf8Encode(String.valueOf(entry.getValue())));
             }
             byte[] postDataBytes = encoder.getUTF8Bytes(builder.toString());
-
-
-            if (authHeader != null && !"".equals(authHeader)) {
-                con.setRequestProperty("Authorization", authHeader);
-            }
-            con.setRequestProperty("content-type", "application/x-www-form-urlencoded; charset=utf-8");
             con.setRequestProperty("content-length", String.valueOf(postDataBytes.length));
-            OutputStream postOut = con.getOutputStream();
+
+            postOut = con.getOutputStream();
             postOut.write(postDataBytes);
         } catch (IOException e) {
             throw new SDKException(ErrorCodes.bad_config, e);
+        } finally {
+            IoHelpers.closeQuietly(postOut);
         }
     }
 
     @SuppressWarnings("unused")
     private void debugConnection(HttpURLConnection con) {
-        System.out.println(con.getRequestMethod());
-
+        System.out.println("... Debugging " + con.getRequestMethod() + " connection: ");
         Map<String, List<String>> hfs = con.getHeaderFields();
         for (String currHeader : hfs.keySet()) {
             System.out.println("--- " + currHeader);
@@ -421,14 +429,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             }
         }
 
-        Map<String, List<String>> hprops = con.getRequestProperties();
-        for (String currHeader : hprops.keySet()) {
+        Map<String, List<String>> headers = con.getRequestProperties();
+        for (String currHeader : headers.keySet()) {
             System.out.println("--- " + currHeader);
             int ii = 0;
-            for (String val : hprops.get(currHeader)) {
+            for (String val : headers.get(currHeader)) {
                 System.out.println("#" + (++ii) + ": " + val);
             }
         }
     }
-
 }
