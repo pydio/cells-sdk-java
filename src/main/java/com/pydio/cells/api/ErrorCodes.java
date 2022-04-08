@@ -47,7 +47,6 @@ public interface ErrorCodes {
     int bad_config = 103;
     int encoding_failed = 104;
 
-
     /**
      * Returns a message given its code
      * TODO: externalise strings and add i18n

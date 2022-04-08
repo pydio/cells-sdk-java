@@ -84,7 +84,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class CellsClient implements Client, SdkNames {
 
-    private final static String TAG = CellsClient.class.getSimpleName();
+    private final static String logTag = CellsClient.class.getSimpleName();
 
     private final CellsTransport transport;
     private final S3Client s3Client;
@@ -136,7 +136,6 @@ public class CellsClient implements Client, SdkNames {
         } catch (ParserConfigurationException | SAXException e) {
             throw SDKException.unexpectedContent(e);
         } catch (IOException e) {
-            e.printStackTrace();
             throw SDKException.conFailed(e);
         } finally {
             IoHelpers.closeQuietly(in);
@@ -195,8 +194,9 @@ public class CellsClient implements Client, SdkNames {
                 FileNode fileNode;
                 try {
                     fileNode = toFileNode(node);
-                } catch (NullPointerException ignored) {
-                    ignored.printStackTrace();
+                } catch (NullPointerException e) {
+                    Log.e(logTag, "Unexpected error while parsing response, cannot create FileNode");
+                    e.printStackTrace();
                     continue;
                 }
 
@@ -402,12 +402,12 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public Message upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
-        URL presignedURL = s3Client.getUploadPreSignedURL(ws, path, name);
+        URL preSignedURL = s3Client.getUploadPreSignedURL(ws, path, name);
         ServerURL serverUrl;
         try {
-            serverUrl = transport.getServer().newURL(presignedURL.getPath()).withQuery(presignedURL.getQuery());
+            serverUrl = transport.getServer().newURL(preSignedURL.getPath()).withQuery(preSignedURL.getQuery());
         } catch (MalformedURLException e) { // This should never happen with a pre-signed.
-            throw new SDKException(ErrorCodes.internal_error, "Invalid pre-signed path: ".concat(presignedURL.getPath()), e);
+            throw new SDKException(ErrorCodes.internal_error, "Invalid pre-signed path: ".concat(preSignedURL.getPath()), e);
         }
 
         try {
@@ -420,7 +420,7 @@ public class CellsClient implements Client, SdkNames {
                 IoHelpers.pipeReadWithProgress(source, out, progressListener);
             }
             // TODO implement multi part upload
-            Log.d(TAG, "PUT request done with status " + con.getResponseCode());
+            Log.d(logTag, "PUT request done with status " + con.getResponseCode());
         } catch (IOException e) {
             throw SDKException.conWriteFailed(e);
         }
@@ -449,7 +449,7 @@ public class CellsClient implements Client, SdkNames {
             try {
                 serverUrl = transport.getServer().newURL(preSignedURL.getPath()).withQuery(preSignedURL.getQuery());
             } catch (MalformedURLException e) { // This should never happen with a pre-signed.
-                throw new SDKException(ErrorCodes.internal_error, "Unvalid presigned path: ".concat(preSignedURL.getPath()), e);
+                throw new SDKException(ErrorCodes.internal_error, "Invalid pre-signed path: ".concat(preSignedURL.getPath()), e);
             }
 
             HttpURLConnection con = transport.withUserAgent(serverUrl.openConnection());
