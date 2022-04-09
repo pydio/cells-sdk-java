@@ -53,6 +53,7 @@ import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
 import com.pydio.cells.openapi.model.TreeQuery;
 import com.pydio.cells.openapi.model.TreeSearchRequest;
+import com.pydio.cells.openapi.model.TreeWorkspaceRelativePath;
 import com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.utils.FileNodeUtils;
@@ -653,11 +654,15 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void getBookmarks(NodeHandler h) throws SDKException {
-        //FIXME
+
+        // FIXME dummy method: RestUserBookmarksRequest obejct has disappeared
+        Log.e(logTag, "getBookmarks request must be re-implemented.");
+        Thread.dumpStack();
         return;
 
- /*       // TODO double check this. we might miss some info
-        RestUserBookmarksRequest request = new RestUserBookmarksRequest();
+       // TODO double check this. we might miss some info
+
+/*        RestUserBookmarksRequest request = new RestUserBookmarksRequest();
         UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
             RestBulkMetaResponse response = api.userBookmarks(request);
@@ -676,7 +681,7 @@ public class CellsClient implements Client, SdkNames {
                             //  To reproduce, typically favorite a cell that is inside a WS.
                             String path = sources.get(0).getPath();
                             if (Str.empty(path)) {
-                                Log.i(TAG, "Got an empty path for: " + fileNode.getPath());
+                                Log.i(logTag, "Got an empty path for: " + fileNode.getPath());
                                 path = "/";
                             } else if (!path.startsWith("/")) {
                                 path = "/" + path;
@@ -687,7 +692,7 @@ public class CellsClient implements Client, SdkNames {
                         }
                     }
                 } catch (NullPointerException e) {
-                    Log.e(TAG, "Could node create FileNode for " + node.getPath() + ", skipping");
+                    Log.e(logTag, "Could node create FileNode for " + node.getPath() + ", skipping");
                     e.printStackTrace();
                 }
             }
@@ -695,7 +700,7 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw new SDKException(e);
         }
- */
+*/
     }
 
     @Override

@@ -36,6 +36,8 @@ import java.util.Map;
 
 public class P8Transport implements ILegacyTransport, SdkNames {
 
+    private final String logTag = P8Transport.class.getSimpleName();
+
     private final CustomEncoder encoder;
 
     private final Server server;
@@ -94,7 +96,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             userAgent = userAgent + "/" + clientData.getPackageID();
         }
 
-        Log.i("P8Transport", "User Agent generated: " + userAgent);
+        Log.i(logTag, "User Agent generated: " + userAgent);
         return userAgent;
     }
 
@@ -117,7 +119,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             useCaptcha = authenticationInfo().withCaptcha;
             return useCaptcha;
         } catch (SDKException se) {
-            System.out.println("FIXME: Unexpected SDK error while checking if we use Captcha");
+            Log.e(logTag, "Unexpected SDK error while checking if we use Captcha");
             se.printStackTrace();
         }
         return false;
@@ -254,7 +256,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     private Token fromPassword() throws SDKException {
-        Log.i(Log.TAG_AUTH, "No token found for " + getId() + ", about to background login.");
+        Log.i(logTag, "No token found for " + getId() + ", about to background login.");
         String pwd = credentialService.getPassword(getId());
         if (Str.notEmpty(pwd)) {
             return login(new P8Credentials(username, pwd));
@@ -271,7 +273,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 return P8RequestBuilder.update(req).setToken(getSecureToken()).getRequest();
             }
         } catch (Exception e) {
-            Log.e(Log.TAG_AUTH, "Cannot refresh secure token from password");
+            Log.e(logTag, "Cannot refresh secure token from password");
             e.printStackTrace();
         }
         return null;
@@ -317,7 +319,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             return existingToken;
         }
 
-        Log.i("Login", "Login process for " + getId());
+        Log.i(logTag, "Login process for " + getId());
         if (credentials == null) {
             throw new SDKException(ErrorCodes.authentication_required);
         }
@@ -474,7 +476,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 builder.append(";").append(cookie.toString());
             }
             String cookieStr = builder.substring(1);
-            // Log.d(Log.TAG_AUTH, "Setting cookies: [" + cookieStr + "]");
+            // Log.d(logTag, "Setting cookies: [" + cookieStr + "]");
             con.setRequestProperty(P8Names.REQ_PROP_COOKIE, cookieStr);
         }
         return con;

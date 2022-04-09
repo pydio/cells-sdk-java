@@ -444,7 +444,7 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
-        // FIXME
+        // FIXME upload URL must be reimplemented (or not?)
         Thread.dumpStack();
         throw new RuntimeException("Reimplement");
 //

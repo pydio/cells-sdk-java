@@ -71,7 +71,7 @@ public class ServerFactory implements IServerFactory {
         } catch (SSLException se) {
             throw new SDKException(ErrorCodes.ssl_error, "Un-valid TLS connection with " + serverURL.getId(), se);
         } catch (IOException ce) {
-            throw new SDKException(ErrorCodes.not_found, "Cannot reach server at " + serverURL.getId(), ce);
+            throw new SDKException(ErrorCodes.unreachable_host, "Cannot reach server at " + serverURL.getId(), ce);
         }
 
         // We do not have any other choice than to try the various well-known endpoints
