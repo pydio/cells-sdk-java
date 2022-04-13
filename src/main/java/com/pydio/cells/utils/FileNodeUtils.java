@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 public class FileNodeUtils {
 
-    private final static String TAG = "FileNodeUtils";
+    private final static String logTag = "FileNodeUtils";
 
     private final static String META_KEY_IMG_THUMBS = "ImageThumbnails";
     private final static String META_KEY_THUMB_PROCESSING = "Processing";
@@ -84,6 +84,7 @@ public class FileNodeUtils {
             if (meta.containsKey(SdkNames.NODE_PROPERTY_MIME)) {
                 type = meta.get(SdkNames.NODE_PROPERTY_MIME);
             } else {
+                // Log.e(logTag, "No mime found for " + path);
                 type = SdkNames.NODE_MIME_DEFAULT;
             }
         } else {
@@ -162,8 +163,8 @@ public class FileNodeUtils {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Could not handle picture meta for " + path + ": " + e.getMessage());
-                Log.e(TAG, "Meta String: " + metaStr);
+                Log.e(logTag, "Could not handle picture meta for " + path + ": " + e.getMessage());
+                Log.e(logTag, "Meta String: " + metaStr);
                 e.printStackTrace();
             }
         }
