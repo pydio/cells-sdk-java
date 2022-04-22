@@ -82,10 +82,8 @@ public class ServerURLImpl implements ServerURL {
                 if (authority == null) {
                     throw new MalformedURLException("Cannot create a server URL without authority for " + urlString);
                 }
-
                 url = new URL(protocol.concat("://").concat(url.getAuthority()).concat(path));
         }
-
         return new ServerURLImpl(url, skipVerify);
     }
 
@@ -118,7 +116,6 @@ public class ServerURLImpl implements ServerURL {
 
     @Override
     public ServerURL withPath(String path) throws MalformedURLException {
-        // String host = url.getProtocol().concat("://").concat(url.getAuthority());
         StringBuilder specBuilder = new StringBuilder();
         if (Str.notEmpty(url.getPath())) {
             specBuilder.append(url.getPath());

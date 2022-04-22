@@ -13,8 +13,14 @@ import javax.net.ssl.SSLSocketFactory;
  */
 public interface ServerURL {
 
+    /**
+     * Returns a standard id that has been cleaned and normalized.
+     * WARNING: in the case of a legacy remote P8 server, the returned URL might also
+     * contain a sub-path, if the server is not exposed on the root of the domain,
+     * e.g: https://example.com/pydio.
+     */
     default String getId() {
-        return getURL().getProtocol() + "://" + getURL().getAuthority();
+        return getURL().getProtocol() + "://" + getURL().getAuthority() + getURL().getPath();
     }
 
     /**
