@@ -1,8 +1,13 @@
 package com.pydio.cells.api;
 
+import com.google.gson.Gson;
 import com.pydio.cells.openapi.ApiException;
+import com.pydio.cells.utils.Str;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Generic exception for the java SDK that is server type agnostic and supports both Pydio Cells and the legacy Pydio 8 server.
@@ -26,13 +31,36 @@ public class SDKException extends Exception {
         super(cause);
     }
 
-    public SDKException(ApiException cause) {
-        this(cause.getCode(), "Unhandled ApiException: " + cause.getMessage(), cause);
-    }
-
     public SDKException(String message, Throwable cause) {
         super(message, cause);
     }
+
+    public static SDKException fromApiException(ApiException cause) {
+        String body = cause.getResponseBody();
+        Map<String, List<String>> headers = cause.getResponseHeaders();
+        if (Str.notEmpty(body)) {
+//             Log.e("SDKException", "Exception body [" + body + "]");
+            if (headers.containsKey("content-type") && headers.get("content-type").get(0).startsWith("application/json")) {
+                Gson gson = new Gson();
+                HashMap<String, String> responseBody = gson.fromJson(body, HashMap.class);
+                return new SDKException(cause.getCode(), responseBody.get("Title"), cause);
+                // if (headers.containsKey("content-type") && headers.get("content-type").get(0).startsWith("text/plain")) {
+            } else {
+                return new SDKException(cause.getCode(), body, cause);
+            }
+        } else {
+            return new SDKException(cause.getCode(), "Unhandled ApiException: " + cause.getMessage(), cause);
+        }
+    }
+
+
+    public boolean isConnectionFailedError() {
+        return code == ErrorCodes.no_token_available
+                || code == ErrorCodes.authentication_required
+                || code == ErrorCodes.authentication_with_captcha_required
+                || code == ErrorCodes.con_failed;
+    }
+
 
     // Legacy inherited SDK specific constructors => ease implementation of the Android app.
 
@@ -80,7 +108,6 @@ public class SDKException extends Exception {
         return cause;
     }
 
-
     /* Boiler plate shortcuts */
 
     public static SDKException malFormURI(Exception e) {
@@ -103,17 +130,9 @@ public class SDKException extends Exception {
         return new SDKException(ErrorCodes.con_write_failed, e);
     }
 
-    //public static SDKException conClosed(IOException e) {
-    //    return new SDKException(ErrorCodes.con_closed, e);
-    //}
-
     public static SDKException unexpectedContent(Exception e) {
         return new SDKException(ErrorCodes.unexpected_content, e);
     }
-
-    // public static SDKException badConfig(Exception e){
-    //     return new SDKException(ErrorCodes.bad_config, e);
-    // }
 
     public static SDKException notFound(Exception e) {
         return new SDKException(ErrorCodes.not_found, e);

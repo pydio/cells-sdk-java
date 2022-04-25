@@ -229,7 +229,7 @@ public class CellsClient implements Client, SdkNames {
             response = api.createNodes(request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
 
         Message msg = new Message();
@@ -294,7 +294,7 @@ public class CellsClient implements Client, SdkNames {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
 
         try {
@@ -318,7 +318,7 @@ public class CellsClient implements Client, SdkNames {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
 
         Stats stats = null;
@@ -353,7 +353,7 @@ public class CellsClient implements Client, SdkNames {
         try {
             results = api.nodes(request);
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
 
         List<TreeNode> nodes = results.getResults();
@@ -397,7 +397,7 @@ public class CellsClient implements Client, SdkNames {
             }
             return fileNodes;
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
     }
 
@@ -526,7 +526,7 @@ public class CellsClient implements Client, SdkNames {
             api.userCreateJob("copy", request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
         return null;
     }
@@ -553,7 +553,7 @@ public class CellsClient implements Client, SdkNames {
             api.userCreateJob("move", request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
         return null;
     }
@@ -587,7 +587,7 @@ public class CellsClient implements Client, SdkNames {
             api.userCreateJob("move", request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
         return null;
     }
@@ -610,7 +610,7 @@ public class CellsClient implements Client, SdkNames {
             api.deleteNodes(request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
         return null;
     }
@@ -632,7 +632,7 @@ public class CellsClient implements Client, SdkNames {
             api.restoreNodes(request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
         return null;
     }
@@ -698,7 +698,7 @@ public class CellsClient implements Client, SdkNames {
             }
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
 */
     }
@@ -776,7 +776,7 @@ public class CellsClient implements Client, SdkNames {
             return null;
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
     }
 
@@ -822,7 +822,7 @@ public class CellsClient implements Client, SdkNames {
             RestShareLink link = api.putShareLink(request);
             return transport.getServer().url() + link.getLinkUrl();
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
     }
 
@@ -868,7 +868,7 @@ public class CellsClient implements Client, SdkNames {
             RestShareLink link = api.putShareLink(request);
             return transport.getServer().url() + link.getLinkUrl();
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
     }
 
@@ -878,7 +878,7 @@ public class CellsClient implements Client, SdkNames {
         try {
             api.deleteShareLink(getNodeUuid(workspace, file));
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
     }
 
@@ -889,7 +889,7 @@ public class CellsClient implements Client, SdkNames {
             RestShareLink link = api.getShareLink(shareID);
             return transport.getServer().url() + link.getLinkUrl();
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
     }
 
@@ -926,7 +926,7 @@ public class CellsClient implements Client, SdkNames {
         // try {
         // response = api.getChanges(String.valueOf(seq), request);
         // } catch (ApiException e) {
-        // throw new SDKException(e);
+        // throw SDKException.fromApiException(e);
         // }
 
         // for (TreeSyncChange c : response.getChanges()) {
@@ -979,7 +979,7 @@ public class CellsClient implements Client, SdkNames {
         try {
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
         // return toFileNode(response.getNode());
     }
@@ -1000,7 +1000,7 @@ public class CellsClient implements Client, SdkNames {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
             if (e.getCode() != 404) {
-                throw new SDKException(e);
+                throw SDKException.fromApiException(e);
             }
         }
 
@@ -1029,7 +1029,7 @@ public class CellsClient implements Client, SdkNames {
             response = api.createNodes(request);
         } catch (ApiException e) {
             e.printStackTrace();
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
 
         Message msg = new Message();
@@ -1081,7 +1081,7 @@ public class CellsClient implements Client, SdkNames {
             TreeNode node = response.getNode();
             return node.getUuid();
         } catch (ApiException e) {
-            throw new SDKException(e);
+            throw SDKException.fromApiException(e);
         }
     }
 
