@@ -192,6 +192,14 @@ public class StateID {
         return new StateID(username, serverUrl, newPath);
     }
 
+    public StateID parent() {
+        if (getParentPath() == null) {
+            // Corner case: parent of a workspace or a cell is the corresponding account
+            return new StateID(username, serverUrl);
+        }
+        return new StateID(username, serverUrl, getParentPath());
+    }
+
     public StateID parentFolder() {
         if (getParentFile() == null) {
             // Corner case: parent of a workspace or a cell is the corresponding account
@@ -207,6 +215,20 @@ public class StateID {
         return getPath().equals("/" + getWorkspace());
     }
 
+    public String getParentPath() {
+        String path = getPath();
+        if (path == null || "/".equals(path)) {
+            return null;
+        }
+        String parentPath = path.substring(0, path.lastIndexOf("/"));
+        if ("".equals(parentPath)) {
+            return null;
+        }
+        return parentPath;
+    }
+
+    /** Rather use getParentPath, this is not OK when having nodes that are at the root of a workspace. */
+    @Deprecated 
     public String getParentFile() {
         String file = getFile();
         if (file == null || "/".equals(file)) {
