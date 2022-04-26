@@ -843,7 +843,6 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public String share(String ws, String file, String ws_label, boolean isFolder, String ws_description, String password, int expiration, int download, boolean canPreview, boolean canDownload) throws SDKException {
-        //  loadSecureToken();
         P8RequestBuilder builder = P8RequestBuilder.share(ws, file, ws_description);
         builder = transport.withAuth(builder);
         if (password != null && !"".equals(password)) {
@@ -878,7 +877,6 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public void unshare(String ws, String file) throws SDKException {
-        // loadSecureToken();
         P8RequestBuilder builder = P8RequestBuilder.unShare(ws, file);
         builder = transport.withAuth(builder);
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {

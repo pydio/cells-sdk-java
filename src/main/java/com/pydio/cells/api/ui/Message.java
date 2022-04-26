@@ -106,5 +106,4 @@ public class Message implements Serializable {
         m.message = message;
         return m;
     }
-
 }

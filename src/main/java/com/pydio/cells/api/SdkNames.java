@@ -48,15 +48,22 @@ public interface SdkNames {
     String NODE_PROPERTY_IMAGE_WIDTH = "image_width";
     String NODE_PROPERTY_LABEL = "label";
     String NODE_PROPERTY_ETAG = "etag";
+
     String NODE_PROPERTY_WORKSPACE_SLUG = "workspace_slug";
 
     String NODE_PROPERTY_BOOKMARK = "bookmark";
-
     String NODE_PROPERTY_SHARED = "shared";
     String NODE_PROPERTY_SHARE_INFO = "share_json_info";
 
-    String NODE_PROPERTY_META_JSON_ENCODED = "meta_encoded";
+    String NODE_PROPERTY_META_ENCODED = "meta_encoded";
     String NODE_PROPERTY_META_HASH = "meta_hash";
+
+    String META_KEY_IMG_THUMBS = "ImageThumbnails";
+    String META_KEY_THUMB_PROCESSING = "Processing";
+    String META_KEY_THUMB_DATA = "thumbnails";
+    String META_KEY_WS_SHARES = "workspaces_shares";
+
+    String SHARE_DISPLAY_TEMPLATE_DEFAULT = "pydio_unique_strip";
 
     // TODO Clean legacy properties below
     // These 2 should rather be lower cased - necessitate a migration of the cache
@@ -98,6 +105,8 @@ public interface SdkNames {
     String WORKSPACE_PROPERTY_ID = "id";
     String WORKSPACE_DESCRIPTION = "description";
     String WORKSPACE_PROPERTY_SLUG = "repositorySlug";
+    String WORKSPACE_PROPERTY_LABEL = "label";
+
     String WORKSPACE_PROPERTY_TYPE = "repository_type";
     String WORKSPACE_PROPERTY_ACCESS_TYPE = "access_type";
     String WORKSPACE_PROPERTY_OWNER = "owner";
@@ -105,7 +114,6 @@ public interface SdkNames {
     String WORKSPACE_PROPERTY_META_SYNC = "meta_syncable_REPO_SYNCABLE";
     String WORKSPACE_PROPERTY_ACL = "acl";
     String WORKSPACE_IS_PUBLIC = "is_public";
-
 
     String WORKSPACE_ACCESS_TYPE_SHARED = "ajxp_shared";
     String WORKSPACE_ACCESS_TYPE_CONF = "ajxp_conf";

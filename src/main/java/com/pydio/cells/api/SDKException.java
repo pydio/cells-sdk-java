@@ -58,7 +58,8 @@ public class SDKException extends Exception {
         return code == ErrorCodes.no_token_available
                 || code == ErrorCodes.authentication_required
                 || code == ErrorCodes.authentication_with_captcha_required
-                || code == ErrorCodes.con_failed;
+                || code == ErrorCodes.con_failed
+                || code == 401; // HTTP unauthorized. TODO use constant
     }
 
 

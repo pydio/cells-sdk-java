@@ -53,7 +53,6 @@ import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
 import com.pydio.cells.openapi.model.TreeQuery;
 import com.pydio.cells.openapi.model.TreeSearchRequest;
-import com.pydio.cells.openapi.model.TreeWorkspaceRelativePath;
 import com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.utils.FileNodeUtils;
@@ -660,7 +659,7 @@ public class CellsClient implements Client, SdkNames {
         Thread.dumpStack();
         return;
 
-       // TODO double check this. we might miss some info
+        // TODO double check this. we might miss some info
 
 /*        RestUserBookmarksRequest request = new RestUserBookmarksRequest();
         UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
@@ -831,16 +830,24 @@ public class CellsClient implements Client, SdkNames {
                         String password, boolean canPreview, boolean canDownload)
             throws SDKException {
 
-        String uuid = getNodeUuid(workspace, file);
-
         RestPutShareLinkRequest request = new RestPutShareLinkRequest();
-        request.createPassword(password);
-        request.setCreatePassword(password);
-        request.setPasswordEnabled(Boolean.parseBoolean(password));
-        RestShareLink sl = new RestShareLink();
+        boolean hasPwd = Boolean.parseBoolean(password);
+        if (hasPwd) {
+            request.setCreatePassword(password);
+            request.setPasswordEnabled(true);
+        }
+
+        RestShareLink shareLink = new RestShareLink();
+        shareLink.setDescription(ws_description);
+        shareLink.setLabel(ws_label);
+        shareLink.setPoliciesContextEditable(true);
+        shareLink.setViewTemplateName(SdkNames.SHARE_DISPLAY_TEMPLATE_DEFAULT);
 
         TreeNode n = new TreeNode();
-        n.setUuid(uuid);
+        n.setUuid(getNodeUuid(workspace, file));
+        List<TreeNode> rootNodes = new ArrayList<>();
+        rootNodes.add(n);
+        shareLink.setRootNodes(rootNodes);
 
         List<RestShareLinkAccessType> permissions = new ArrayList<>();
         if (canPreview) {
@@ -849,21 +856,11 @@ public class CellsClient implements Client, SdkNames {
         if (canDownload) {
             permissions.add(RestShareLinkAccessType.DOWNLOAD);
         }
+        shareLink.setPermissions(permissions);
 
-        List<TreeNode> rootNodes = new ArrayList<>();
-        rootNodes.add(n);
-        sl.setPoliciesContextEditable(true);
-
-        sl.setPermissions(permissions);
-        sl.setRootNodes(rootNodes);
-        sl.setPoliciesContextEditable(true);
-        sl.setDescription(ws_description);
-        sl.setLabel(ws_label);
-        sl.setViewTemplateName("pydio_unique_strip");
-        request.setShareLink(sl);
+        request.setShareLink(shareLink);
 
         ShareServiceApi api = new ShareServiceApi(authenticatedClient());
-
         try {
             RestShareLink link = api.putShareLink(request);
             return transport.getServer().url() + link.getLinkUrl();

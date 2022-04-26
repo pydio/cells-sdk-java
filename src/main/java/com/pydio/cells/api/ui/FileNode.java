@@ -2,6 +2,8 @@ package com.pydio.cells.api.ui;
 
 import com.pydio.cells.utils.Str;
 
+import java.util.Properties;
+
 /**
  * Represents a file or a folder META information.
  */
@@ -65,6 +67,17 @@ public class FileNode extends AbstractNode {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    // Keep track of all meta returned by tghe server
+    protected Properties meta;
+
+    public void setMeta(Properties p) {
+        meta = p;
+    }
+
+    public Properties getMeta() {
+        return meta;
     }
 
     public int getMetaHashCode() {

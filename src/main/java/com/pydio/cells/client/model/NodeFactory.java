@@ -63,7 +63,8 @@ public class NodeFactory {
             case Node.TYPE_REMOTE_NODE:
                 return new FileNode();
             case Node.TYPE_WORKSPACE:
-                return new WorkspaceNode();
+                throw new RuntimeException("Do we really pass here? ");
+                // return new WorkspaceNode();
             case Node.TYPE_SERVER:
                 throw new RuntimeException("Broken after refactoring cannot create server node object without URL");
                 // return new ServerNodeImpl();

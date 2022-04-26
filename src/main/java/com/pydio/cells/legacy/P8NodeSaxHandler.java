@@ -7,15 +7,16 @@ import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.client.model.NodeFactory;
-import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 
 public class P8NodeSaxHandler extends DefaultHandler {
 
@@ -29,6 +30,7 @@ public class P8NodeSaxHandler extends DefaultHandler {
     private final static String AJXP_IMAGE_TYPE = "image_type";
     private final static String AJXP_MIME = "ajxp_mime";
     private final static String AJXP_SHARED = "ajxp_shared";
+    private final static String AJXP_FAV = "ajxp_bookmarked";
     // Rather confusing legacy nomenclature, we change this to path and filename in the
     // adapt property method to have a clearer API
     private final static String AJXP_PATH = "filename";
@@ -56,7 +58,10 @@ public class P8NodeSaxHandler extends DefaultHandler {
      * This is the main entry point to tweak the parsed properties to have a cleaner model
      * (hopefully without breaking anything) and thus prepare a future migration.
      */
-    private void adaptProperties() {
+    private void commitProperties() {
+
+        // Effective creation
+        FileNode node = new FileNode(); // (FileNode) NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
 
         // The slug is not returned by the query
         if (parentSlug != null) {
@@ -67,10 +72,23 @@ public class P8NodeSaxHandler extends DefaultHandler {
             p.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, "undefined");
         }
 
-        // This timestamp is set at each call: we don't want that as a meta in the persisted node,
-        // otherwise the consequent diffs are always not equals
-        // Rather skip the prop when doing the diff?
-        p.remove(AJXP_IM_TIME);
+        // Change the legacy "filename" P8 property in Path and extract a filename
+        String path = null;
+        if (p.containsKey(AJXP_PATH)) {
+            path = p.getProperty(AJXP_PATH);
+            p.remove(AJXP_PATH);
+        }
+        if (Str.empty(path)) {
+            path = "/";
+        }
+        p.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
+
+        int index = path.lastIndexOf("/");
+        String name = "";
+        if (index > -1 && path.length() > index + 1) {
+            name = path.substring(path.lastIndexOf("/") + 1);
+        }
+        p.setProperty(SdkNames.NODE_PROPERTY_FILENAME, name);
 
         // Best effort to insure we have a usable mime type
         String type = SdkNames.NODE_MIME_FOLDER;
@@ -92,24 +110,43 @@ public class P8NodeSaxHandler extends DefaultHandler {
             p.setProperty(SdkNames.NODE_PROPERTY_SHARED, (String) p.get(AJXP_SHARED));
             p.remove(AJXP_SHARED);
         }
+        if (p.containsKey(AJXP_FAV)) {
+            p.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, (String) p.get(AJXP_FAV));
+            p.remove(AJXP_FAV);
+        }
 
-        // Change the legacy "filename" P8 property in Path and extract a filename
-        String path = null;
-        if (p.containsKey(AJXP_PATH)) {
-            path = p.getProperty(AJXP_PATH);
-            p.remove(AJXP_PATH);
+        // Retrieve the MetaData and store it as properties for later use
+        // Also stores a hash of the meta to ease detection of future change
+        // (remote meta modification not always triggers a modification of the node's timestamp)
+        TreeMap<String, String> metaMap = new TreeMap<>();
+        Iterator itr = p.entrySet().iterator();
+        while (itr.hasNext()) {
+            Map.Entry<String, String> entry = (Map.Entry<String, String>) itr.next();
+            metaMap.put(entry.getKey(), entry.getValue());
         }
-        if (Str.empty(path)) {
-            path = "/";
-        }
-        p.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
-        String name = "";
+        // This timestamp is set at each call: we don't want that as a meta in the persisted node,
+        // otherwise the consequent diffs are always not equals
+        // Rather skip the prop when doing the diff?
+        metaMap.remove(AJXP_IM_TIME);
 
-        int index = path.lastIndexOf("/");
-        if (index > -1 && path.length() > index + 1) {
-            name = path.substring(path.lastIndexOf("/") + 1);
+        StringBuilder builder = new StringBuilder();
+        for (String value : metaMap.values()) {
+            builder.append(value);
         }
-        p.setProperty(SdkNames.NODE_PROPERTY_FILENAME, name);
+        Properties metaProps = new Properties();
+        metaProps.putAll(metaMap);
+
+        node.setProperties(p);
+        node.setMeta(metaProps);
+        node.setProperty(SdkNames.NODE_PROPERTY_META_HASH, String.valueOf(builder.toString().hashCode()));
+
+        // Pydio does not use an UUID, the path is good enough for now
+        // TODO insure we are OK with Cells, should we have to add the slug to the path here?
+        String p8Id = node.getWorkspace() + node.getPath();
+        node.setProperty(SdkNames.NODE_PROPERTY_UID, p8Id);
+
+        // Forward the unmarshalled clean node to the caller
+        mHandler.onNode(node);
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
@@ -128,11 +165,14 @@ public class P8NodeSaxHandler extends DefaultHandler {
                 p.setProperty(attributes.getLocalName(i), attributes.getValue(i));
             }
             if (mParsedCount == 1) {
-                if ("".equals(p.getProperty(AJXP_PATH))) {
-                    p.setProperty(AJXP_PATH, "/");
-                }
-                FileNode mRootNode = (FileNode) NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
+                // Simply skip root node
                 p = null;
+                // TODO smelly code, double check, mRootNode is never used
+//                if ("".equals(p.getProperty(AJXP_PATH))) {
+//                    p.setProperty(AJXP_PATH, "/");
+//                }
+//                FileNode mRootNode = (FileNode) NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
+//                p = null;
             }
         }
 
@@ -149,14 +189,8 @@ public class P8NodeSaxHandler extends DefaultHandler {
 
                 // Prepare model migration from a P8-centered legacy model
                 // to a model based on Cells API
-                adaptProperties();
+                commitProperties();
 
-                FileNode node = (FileNode) NodeFactory.createNode(Node.TYPE_REMOTE_NODE, p);
-                if (node != null) {
-                    String p8Id = node.getWorkspace() + node.getPath();
-                    node.setProperty(SdkNames.NODE_PROPERTY_UID, p8Id);
-                    mHandler.onNode(node);
-                }
                 p = null;
             }
             mInsideTree = false;

@@ -67,7 +67,7 @@ public class WorkspaceNode extends AbstractNode {
     }
 
     public String getLabel() {
-        return properties.getProperty(NODE_PROPERTY_LABEL);
+        return properties.getProperty(WORKSPACE_PROPERTY_LABEL);
     }
 
     public String getSlug() {
@@ -130,6 +130,14 @@ public class WorkspaceNode extends AbstractNode {
 
     public boolean isShared() {
         return "true".equals(properties.getProperty(NODE_PROPERTY_SHARED)) || "shared".equals(properties.getProperty(WORKSPACE_PROPERTY_OWNER));
+    }
+
+    public long getLastModified() {
+        try {
+            return Long.parseLong(properties.getProperty(NODE_PROPERTY_MTIME));
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override

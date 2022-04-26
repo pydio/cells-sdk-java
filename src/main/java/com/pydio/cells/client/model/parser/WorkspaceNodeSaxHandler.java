@@ -2,9 +2,7 @@ package com.pydio.cells.client.model.parser;
 
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.NodeHandler;
-import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.ui.WorkspaceNode;
-import com.pydio.cells.client.model.NodeFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -22,15 +20,21 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
     private boolean inside_label = false;
     private boolean inside_description = false;
 
-
     public WorkspaceNodeSaxHandler(NodeHandler nodeHandler, int offset, int max) {
         this.handler = nodeHandler;
     }
 
+    /**
+     * Main entry point to tweak the parsed properties to prepare a future migration.
+     */
+    private void commitProperties() {
+        // Effective creation
+        WorkspaceNode node = new WorkspaceNode();
+        node.setProperties(p);
+        handler.onNode(node);
+    }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
-        /*tabs += "\t";
-        //Log.info(tabs + qName);*/
 
         if ("repo".equals(qName)) {
             inside_repo = true;
@@ -49,7 +53,6 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
 
             return;
         }
-
         if (!inside_repo) return;
 
         inside_label = "label".equals(qName);
@@ -60,8 +63,6 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String localName, String qName) {
-        /*//Log.info(tabs + qName);
-        tabs = tabs.substring(0, tabs.length() - 1);*/
 
         if (inside_repo && (inside_label || inside_description)) {
             if (inside_label) {
@@ -73,7 +74,7 @@ public class WorkspaceNodeSaxHandler extends DefaultHandler {
         }
 
         if (inside_repo && "repo".equals(qName)) {
-            handler.onNode(NodeFactory.createNode(Node.TYPE_WORKSPACE, p));
+            commitProperties();
             p = null;
             inside_repo = false;
         }
