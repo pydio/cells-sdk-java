@@ -3,7 +3,6 @@ package com.pydio.cells.sync.changes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.utils.IoHelpers;
-import com.pydio.cells.utils.io;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

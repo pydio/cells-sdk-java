@@ -655,7 +655,7 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public void getBookmarks(NodeHandler h) throws SDKException {
 
-        // FIXME dummy method: RestUserBookmarksRequest obejct has disappeared
+        // FIXME dummy method: RestUserBookmarksRequest object has disappeared
         Log.e(logTag, "getBookmarks request must be re-implemented.");
         Thread.dumpStack();
         return;

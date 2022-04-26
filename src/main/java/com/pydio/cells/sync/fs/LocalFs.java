@@ -1,8 +1,6 @@
 package com.pydio.cells.sync.fs;
 
 import com.pydio.cells.api.Change;
-import com.pydio.cells.utils.IoHelpers;
-import com.pydio.cells.utils.io;
 import com.pydio.cells.sync.Error;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;
@@ -11,6 +9,7 @@ import com.pydio.cells.sync.changes.ProcessChangeResponse;
 import com.pydio.cells.sync.content.Content;
 import com.pydio.cells.sync.content.ContentLoader;
 import com.pydio.cells.sync.content.LocalFileContent;
+import com.pydio.cells.utils.IoHelpers;
 
 import java.io.File;
 import java.io.FileInputStream;
