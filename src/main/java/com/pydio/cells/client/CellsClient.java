@@ -755,26 +755,29 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message unbookmark(String ws, String nodeId) throws SDKException {
-
-        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
-
-        IdmSearchUserMetaRequest searchRequest = new IdmSearchUserMetaRequest();
-        searchRequest.setNamespace("bookmark");
-        searchRequest.addNodeUuidsItem(nodeId);
+    public Message unbookmark(String ws, String file) throws SDKException {
 
         try {
+            UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
+
+            // First retrieve the corresponding node to get its ID
+            FileNode fileNode = nodeInfo(ws, file);
+
+            // Retrieve bookmark user meta with node UUID
+            IdmSearchUserMetaRequest searchRequest = new IdmSearchUserMetaRequest();
+            searchRequest.setNamespace("bookmark");
+            searchRequest.addNodeUuidsItem(fileNode.getId());
             RestUserMetaCollection result = api.searchUserMeta(searchRequest);
 
+            // Delete corresponding user meta
             IdmUpdateUserMetaRequest request = new IdmUpdateUserMetaRequest();
             request.setOperation(UpdateUserMetaRequestUserMetaOp.DELETE);
             request.setMetaDatas(result.getMetadatas());
-
             api.updateUserMeta(request);
+
             // IdmUpdateUserMetaResponse response = api.updateUserMeta(request);
             return null;
         } catch (ApiException e) {
-            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
     }
