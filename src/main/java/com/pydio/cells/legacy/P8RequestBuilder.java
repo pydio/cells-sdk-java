@@ -119,7 +119,7 @@ public class P8RequestBuilder {
     public static P8RequestBuilder unbookmark(String ws, String path) {
         P8RequestBuilder builder = new P8RequestBuilder();
         builder = builder.setAction(P8Names.getBookmarks)
-                .setParam(P8Names.bmAction, P8Names.addBookmark)
+                .setParam(P8Names.bmAction, P8Names.deleteBookmark)
                 .setParam(P8Names.bmPath, path)
                 .setParam(P8Names.tmpRepositoryId, ws)
                 .ignoreCookies(false);
