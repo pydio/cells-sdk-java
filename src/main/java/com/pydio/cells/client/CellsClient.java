@@ -760,13 +760,10 @@ public class CellsClient implements Client, SdkNames {
         try {
             UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
 
-            // First retrieve the corresponding node to get its ID
-            FileNode fileNode = nodeInfo(ws, file);
-
             // Retrieve bookmark user meta with node UUID
             IdmSearchUserMetaRequest searchRequest = new IdmSearchUserMetaRequest();
             searchRequest.setNamespace("bookmark");
-            searchRequest.addNodeUuidsItem(fileNode.getId());
+            searchRequest.addNodeUuidsItem(getNodeUuid(ws, file));
             RestUserMetaCollection result = api.searchUserMeta(searchRequest);
 
             // Delete corresponding user meta
@@ -873,10 +870,10 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public void unshare(String workspace, String file) throws SDKException {
+    public void unshare(String workspace, String shareUuid) throws SDKException {
         ShareServiceApi api = new ShareServiceApi(authenticatedClient());
         try {
-            api.deleteShareLink(getNodeUuid(workspace, file));
+            api.deleteShareLink(shareUuid);
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
         }

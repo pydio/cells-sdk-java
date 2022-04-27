@@ -200,6 +200,8 @@ public class StateID {
         return new StateID(username, serverUrl, getParentPath());
     }
 
+    @Deprecated
+    /** Rather use parent() to handle nicely corner cases */
     public StateID parentFolder() {
         if (getParentFile() == null) {
             // Corner case: parent of a workspace or a cell is the corresponding account
@@ -227,8 +229,6 @@ public class StateID {
         return parentPath;
     }
 
-    /** Rather use getParentPath, this is not OK when having nodes that are at the root of a workspace. */
-    @Deprecated 
     public String getParentFile() {
         String file = getFile();
         if (file == null || "/".equals(file)) {
