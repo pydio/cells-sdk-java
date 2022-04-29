@@ -23,6 +23,7 @@ import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.NodeDiff;
 import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
+import com.pydio.cells.transport.StateID;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.PathUtils;
@@ -46,6 +47,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 public class P8Client implements Client, SdkNames {
 
@@ -447,8 +449,6 @@ public class P8Client implements Client, SdkNames {
         // FIXME upload URL must be reimplemented (or not?)
         Thread.dumpStack();
         throw new RuntimeException("Reimplement");
-//
-//        // loadSecureToken();
 //        try {
 //            P8RequestBuilder builder = null;
 //            try {
@@ -636,23 +636,38 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException {
-        P8RequestBuilder builder = P8RequestBuilder.previewImage(node.getWorkspace(), node.getPath());
-        builder = transport.withAuth(builder);
+    public String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException {
+
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.previewImage(stateID.getWorkspace(), stateID.getFile()));
         P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
+        String filename = UUID.randomUUID() + ".jpg";
+
+        InputStream in = null;
+        OutputStream out = null;
         try {
             if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
+                throw new SDKException(rsp.code(), "Could not retrieve thumbnail for "+ stateID);
             }
-            InputStream in = rsp.getInputStream();
+            in = rsp.getInputStream();
             if (in != null) {
+
+                if (!parentFolder.exists()){
+                    //noinspection ResultOfMethodCallIgnored
+                    parentFolder.mkdirs();
+                }
+                File targetFile = new File(parentFolder.getAbsolutePath() + File.separator + filename);
+                out = new FileOutputStream(targetFile);
                 IoHelpers.pipeRead(in, out);
             }
         } catch (IOException e) {
             throw SDKException.conReadFailed(e);
         } finally {
+            IoHelpers.closeQuietly(in);
+            IoHelpers.closeQuietly(out);
             rsp.close();
         }
+
+        return filename;
     }
 
     @Deprecated
@@ -660,8 +675,6 @@ public class P8Client implements Client, SdkNames {
     public String streamingAudioURL(String ws, String file) throws SDKException {
         Thread.dumpStack();
         throw new RuntimeException("Streaming is not supported with Pydio 8 servers.");
-
-//        // loadSecureToken();
 //        P8RequestBuilder builder = P8RequestBuilder.streamingAudio(ws, file).setToken(session);
 //        try {
 //            return session.getURL(builder.getRequest());
@@ -676,9 +689,7 @@ public class P8Client implements Client, SdkNames {
     public String streamingVideoURL(String ws, String file) throws SDKException {
         Thread.dumpStack();
         throw new RuntimeException("Streaming is not supported with Pydio 8 servers.");
-
-//         // loadSecureToken();
-//         P8RequestBuilder builder = P8RequestBuilder.streamingVideo(ws, file).setToken(session);
+        //         P8RequestBuilder builder = P8RequestBuilder.streamingVideo(ws, file).setToken(session);
 //         try {
 //             return session.getURL(builder.getRequest());
 //         } catch (ProtocolException | UnknownHostException e) {
@@ -691,7 +702,6 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Stats stats(String ws, String file, boolean withHash) throws SDKException {
-        // loadSecureToken();
 
         P8RequestBuilder builder = P8RequestBuilder.stats(ws, file, withHash);
         builder = transport.withAuth(builder);

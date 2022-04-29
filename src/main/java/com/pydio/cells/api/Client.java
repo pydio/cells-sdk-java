@@ -7,6 +7,7 @@ import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
+import com.pydio.cells.transport.StateID;
 
 import java.io.File;
 import java.io.InputStream;
@@ -38,7 +39,14 @@ public interface Client {
 
     Stats stats(String ws, String file, boolean withHash) throws SDKException;
 
-    void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException;
+    /**
+     * @param node
+     * @param parentFolder must be writable for current process
+     * @param dim
+     * @return the filename if a thumbnail has been correctly downloaded or generated or null otherwise
+     * @throws SDKException
+     */
+    public String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException;
 
     List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException;
 

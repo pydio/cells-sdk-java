@@ -55,6 +55,7 @@ import com.pydio.cells.openapi.model.TreeQuery;
 import com.pydio.cells.openapi.model.TreeSearchRequest;
 import com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.cells.transport.CellsTransport;
+import com.pydio.cells.transport.StateID;
 import com.pydio.cells.utils.FileNodeUtils;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
@@ -79,6 +80,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -250,35 +252,75 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public void getPreviewData(FileNode node, int dim, OutputStream out) throws SDKException {
+    public String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException {
         String filename = getThumbFilename(node, dim);
         if (filename == null) {
-            throw new SDKException(ErrorCodes.not_found, "No thumbnail is defined for this resource", new IOException());
-        }
-        // TODO this can vary from one DS to the next in Cells v3+
-        download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, "/" + filename, out, null);
-    }
-
-    private String getThumbFilename(FileNode currNode, int dim) throws SDKException {
-        String remoteThumbsJson = currNode.getProperty(SdkNames.NODE_PROPERTY_REMOTE_THUMBS);
-        if (Str.empty(remoteThumbsJson)) {
+            Log.i(logTag, "No thumbnail is defined for " + stateID);
             return null;
         }
-
-        Gson gson = new Gson();
-        Map<String, String> thumbs = gson.fromJson(remoteThumbsJson, Map.class);
-        String thumbPath = null;
-        // TODO improve: we rely on the fact that thumbs are ordered by growing size at this point.
-        for (Map.Entry<String, String> entry : thumbs.entrySet()) {
-            if (thumbPath == null) {
-                thumbPath = entry.getValue();
+        OutputStream out = null;
+        try {
+            if (!parentFolder.exists()) {
+                parentFolder.mkdirs();
             }
-            int size = Integer.parseInt(entry.getKey());
-            if (size > 0 && size >= dim) {
-                return entry.getValue();
+            File targetFile = new File(parentFolder.getAbsolutePath() + File.separator + filename);
+            out = new FileOutputStream(targetFile);
+            download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, "/" + filename, out, null);
+        } catch (IOException e) {
+            throw SDKException.conReadFailed(e);
+        } finally {
+            IoHelpers.closeQuietly(out);
+        }
+        return filename;
+    }
+
+    /*
+     * If no thumb is defined or if it is currently processing, we return null.
+     * If we find only one thumb, we choose this one. Otherwise we return the smaller thumb that has at least required size.
+     *
+     * @param currNode
+     * @param dim
+     * @return
+     * @throws SDKException
+     */
+    private String getThumbFilename(FileNode currNode, int dim) throws SDKException {
+        // String remoteThumbsJson = currNode.getProperty(SdkNames.NODE_PROPERTY_REMOTE_THUMBS);
+
+        String thumbName = null;
+        String imgThumbsStr = (String) currNode.getMeta().get(SdkNames.META_KEY_IMG_THUMBS);
+        if (Str.empty(imgThumbsStr)) {
+            return null;
+        }
+        Properties props = currNode.getMeta();
+        for (Map.Entry<Object, Object> entry : props.entrySet()) {
+            Log.e(logTag, entry.getKey().toString() + " - " + entry.getValue().toString());
+        }
+
+        Map<String, Object> thumbData = new Gson().fromJson(imgThumbsStr, Map.class);
+        if (thumbData.containsKey("Processing")
+                && !((boolean) thumbData.get("Processing"))
+                && thumbData.containsKey("thumbnails")
+        ) {
+            ArrayList<Map<String, Object>> thumbs = (ArrayList<Map<String, Object>>) thumbData.get("thumbnails");
+
+            for (Map<String, Object> currThumb : thumbs) {
+                // Map<String, Object> currThumb = (Map<String, Object>) currThumbObj;
+                int size = Double.valueOf((double) currThumb.get("size")).intValue();
+                String format = (String) currThumb.get("format");
+                String currName = currNode.getId() + "-" + size + "." + format;
+
+                if (thumbName == null) {
+                    thumbName = currName;
+                }
+
+                if (size > 0 && size >= dim) {
+                    thumbName = currName;
+                    break;
+                }
             }
         }
-        return thumbPath;
+
+        return thumbName;
     }
 
     @Override

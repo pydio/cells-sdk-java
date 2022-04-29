@@ -1,14 +1,13 @@
 package com.pydio.cells.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.text.ParseException;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
@@ -51,8 +50,6 @@ public class FileNodeUtils {
         }
         fileNode.setProperty(SdkNames.NODE_PROPERTY_META_HASH, String.valueOf(builder.toString().hashCode()));
 
-
-
         // Main meta info: UUID, eTag (md5) and modification type
         fileNode.setProperty(SdkNames.NODE_PROPERTY_UID, uuid);
         if (Str.notEmpty(treeNode.getEtag())) {
@@ -82,7 +79,13 @@ public class FileNodeUtils {
             // type = meta.getOrDefault(SdkNames.NODE_PROPERTY_MIME, SdkNames.NODE_MIME_DEFAULT);
             if (meta.containsKey(SdkNames.NODE_PROPERTY_MIME)) {
                 type = meta.get(SdkNames.NODE_PROPERTY_MIME);
-                Log.e(logTag, "Found a Mime Type: [" + type + "]");
+                // TODO not very elegant. Sometimes at this point the mime type has leading
+                //  and trailing unnecessary double quotes.
+                if (type.length() > 2 && type.startsWith("\"") && type.endsWith("\"")) {
+                    // Log.e(logTag, "Found a Mime Type: [" + type + "]");
+                    type = type.substring(1, type.length() - 1);
+                    Log.d(logTag, "Updated Mime Type: [" + type + "]");
+                }
             } else {
                 // Log.e(logTag, "No mime found for " + path);
                 // TODO rather leave this at null?
@@ -110,19 +113,23 @@ public class FileNodeUtils {
         fileNode.setProperty(SdkNames.NODE_PROPERTY_FILE_PERMS, String.valueOf(treeNode.getMode()));
 
         // Share info
-        String ws_shares = meta.get(SdkNames.META_KEY_WS_SHARES);
-        if (ws_shares != null) {
-            fileNode.setProperty(SdkNames.NODE_PROPERTY_SHARED, "true");
-            fileNode.setProperty(SdkNames.NODE_PROPERTY_SHARE_INFO, ws_shares);
-            try {
-                JSONArray shareWorkspaces = new JSONArray(ws_shares);
-                JSONObject shareWs = (JSONObject) shareWorkspaces.get(0);
-                String shareUUID = shareWs.getString("UUID");
-                fileNode.setProperty(SdkNames.NODE_PROPERTY_SHARE_UUID, shareUUID);
-            } catch (ParseException ignored) {
-                // TODO we should not ignore errors...
+        String wsSharesStr = meta.get(SdkNames.META_KEY_WS_SHARES);
+        if (wsSharesStr != null) {
+            Gson gson = new Gson();
+            Type objType = new TypeToken<Map<String, Object>[]>() {
+            }.getType();
+            Map<String, Object>[] shares = gson.fromJson(wsSharesStr, objType);
+
+            for (Map<String, Object> currShare : shares) {
+                // Filter out cells (scope = 2) at this point
+                if (currShare.containsKey("Scope") && ((double) currShare.get("Scope")) == 3) {
+                    fileNode.setProperty(SdkNames.NODE_PROPERTY_SHARED, "true");
+                    fileNode.setProperty(SdkNames.NODE_PROPERTY_SHARE_UUID, ((String) currShare.get("UUID")));
+                    break;
+                }
             }
         }
+
         String bookmark = meta.get("bookmark");
         if (Str.notEmpty(bookmark)) {
             fileNode.setProperty(SdkNames.NODE_PROPERTY_BOOKMARK, bookmark);
@@ -136,44 +143,7 @@ public class FileNodeUtils {
         if (isImage) {
             fileNode.setProperty(SdkNames.NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_width"));
             fileNode.setProperty(SdkNames.NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
-            String metaStr = meta.get(SdkNames.META_KEY_IMG_THUMBS);
-            try {
-
-                // TODO rather use GSON to get rid of legacy JSON Object TP
-//                Map<String, Object> thumbData = new Gson().fromJson(meta.get(META_KEY_IMG_THUMBS), Map.class);
-//                if ("false".equals(thumbData.get(META_KEY_THUMB_PROCESSING))){
-//                    Object o = thumbData.get(META_KEY_THUMB_DATA);
-//                    if (o != null && o instanceof String){
-//
-//                    }
-
-                if (Str.notEmpty(metaStr) && !"null".equals(metaStr)) {
-                    JSONObject imgThumbs = new JSONObject(metaStr);
-                    boolean processing = imgThumbs.getBoolean(SdkNames.META_KEY_THUMB_PROCESSING);
-                    if (!processing) {
-                        JSONArray details = imgThumbs.getJSONArray(SdkNames.META_KEY_THUMB_DATA);
-                        JSONObject thumbObject = new JSONObject();
-                        for (int i = 0; i < details.length(); i++) {
-                            JSONObject item = (JSONObject) details.get(i);
-                            int size = item.getInt("size");
-                            String format = item.getString("format");
-                            String thumbName = treeNode.getUuid() + "-" + size + "." + format;
-                            thumbObject.put(String.valueOf(size), thumbName);
-                        }
-                        fileNode.setProperty(SdkNames.NODE_PROPERTY_REMOTE_THUMBS, thumbObject.toString());
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(logTag, "Could not handle picture meta for " + path + ": " + e.getMessage());
-                Log.e(logTag, "Meta String: " + metaStr);
-                e.printStackTrace();
-            }
         }
-
-//        // TODO but why do we duplicate the info here, why???
-//        String encoded = new Gson().toJson(node);
-//        result.setProperty(SdkNames.NODE_PROPERTY_ENCODED, encoded);
-//        result.setProperty(SdkNames.NODE_PROPERTY_ENCODING, "gson");
 
         return fileNode;
     }
