@@ -44,6 +44,7 @@ import com.pydio.cells.openapi.model.RestRestoreNodesRequest;
 import com.pydio.cells.openapi.model.RestSearchResults;
 import com.pydio.cells.openapi.model.RestShareLink;
 import com.pydio.cells.openapi.model.RestShareLinkAccessType;
+import com.pydio.cells.openapi.model.RestUserBookmarksRequest;
 import com.pydio.cells.openapi.model.RestUserJobRequest;
 import com.pydio.cells.openapi.model.RestUserMetaCollection;
 import com.pydio.cells.openapi.model.ServiceResourcePolicy;
@@ -53,6 +54,7 @@ import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
 import com.pydio.cells.openapi.model.TreeQuery;
 import com.pydio.cells.openapi.model.TreeSearchRequest;
+import com.pydio.cells.openapi.model.TreeWorkspaceRelativePath;
 import com.pydio.cells.openapi.model.UpdateUserMetaRequestUserMetaOp;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.StateID;
@@ -559,7 +561,7 @@ public class CellsClient implements Client, SdkNames {
         o.put("targetParent", true);
 
         RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName("copy");
+        // request.setJobName("copy");
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());
@@ -586,7 +588,7 @@ public class CellsClient implements Client, SdkNames {
         o.put("targetParent", true);
 
         RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName("move");
+        // request.setJobName("move");
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());
@@ -620,7 +622,7 @@ public class CellsClient implements Client, SdkNames {
         o.put("target", FileNodeUtils.toTreeNodePath(ws, dstFile));
         o.put("targetParent", false);
 
-        request.setJobName("move");
+        // request.setJobName("move");
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());
@@ -716,44 +718,44 @@ public class CellsClient implements Client, SdkNames {
 //            throw SDKException.fromApiException(apiException);
 //        }
 
-//        RestUserBookmarksRequest request = new RestUserBookmarksRequest();
-//        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
-//        try {
-//            RestBulkMetaResponse response = api.userBookmarks(request);
-//            if (response.getNodes() == null) {
-//                return;
-//            }
-//
-//            for (TreeNode node : response.getNodes()) {
-//                try {
-//                    FileNode fileNode = toFileNode(node);
-//                    if (fileNode != null) {
-//                        List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
-//                        if (sources != null) {
-//                            // FIXME we only retrieve the first "source" node.
-//                            //  When a node is declared 2 times we skip info about the second source.
-//                            //  To reproduce, typically favorite a cell that is inside a WS.
-//                            String path = sources.get(0).getPath();
-//                            if (Str.empty(path)) {
-//                                Log.i(logTag, "Got an empty path for: " + fileNode.getPath());
-//                                path = "/";
-//                            } else if (!path.startsWith("/")) {
-//                                path = "/" + path;
-//                            }
-//                            fileNode.setProperty(NODE_PROPERTY_PATH, path);
-//                            fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
-//                            h.onNode(fileNode);
-//                        }
-//                    }
-//                } catch (NullPointerException e) {
-//                    Log.e(logTag, "Could node create FileNode for " + node.getPath() + ", skipping");
-//                    e.printStackTrace();
-//                }
-//            }
-//        } catch (ApiException e) {
-//            e.printStackTrace();
-//            throw SDKException.fromApiException(e);
-//        }
+        RestUserBookmarksRequest request = new RestUserBookmarksRequest();
+        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
+        try {
+            RestBulkMetaResponse response = api.userBookmarks(request);
+            if (response.getNodes() == null) {
+                return;
+            }
+
+            for (TreeNode node : response.getNodes()) {
+                try {
+                    FileNode fileNode = toFileNode(node);
+                    if (fileNode != null) {
+                        List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
+                        if (sources != null) {
+                            // FIXME we only retrieve the first "source" node.
+                            //  When a node is declared 2 times we skip info about the second source.
+                            //  To reproduce, typically favorite a cell that is inside a WS.
+                            String path = sources.get(0).getPath();
+                            if (Str.empty(path)) {
+                                Log.i(logTag, "Got an empty path for: " + fileNode.getPath());
+                                path = "/";
+                            } else if (!path.startsWith("/")) {
+                                path = "/" + path;
+                            }
+                            fileNode.setProperty(NODE_PROPERTY_PATH, path);
+                            fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
+                            h.onNode(fileNode);
+                        }
+                    }
+                } catch (NullPointerException e) {
+                    Log.e(logTag, "Could node create FileNode for " + node.getPath() + ", skipping");
+                    e.printStackTrace();
+                }
+            }
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw SDKException.fromApiException(e);
+        }
 
     }
 
