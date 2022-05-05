@@ -160,7 +160,6 @@ public class CellsFsTest {
                     : ch.getSource();
             System.out.println(ch.getType() + " - " + path);
         }
-
     }
 
 }
