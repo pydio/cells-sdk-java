@@ -91,7 +91,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         if (Str.notEmpty(clientData.getPackageID())) {
             userAgent = userAgent + "/" + clientData.getPackageID();
         }
-        Log.d(logTag, "New Transport for " + username + " instance with agent: " + userAgent);
+        Log.d(logTag, "New Transport instance for " + username + ", user agent is: " + userAgent);
 
         return userAgent;
     }
