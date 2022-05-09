@@ -31,6 +31,46 @@ SDK_DEFAULT_AGENT="PydioCells/v3.0.7/JavaSDK/v0.4.0"
 - use Edit / convert to v3
 - paste back the specs in the root java project typically in cellsapi-rest.swagger.yml
 
+**WARNING**: temporary tweak to go on supporting pre-v4 Cells remote servers:
+After migrating the swagger spec file to v3 yaml format, we manually edit it to re-add a "JobName" body parameters for job requests, otherwise, such request to a v3 server will fail.
+Typically for v4-beta1, edit at line 2928, add `JobName` parameter to have:
+
+```yml
+...
+/jobs/user/{JobName}:
+    put:
+      tags:
+      - JobsService
+      summary: Create a predefined job to be run directly
+      operationId: UserCreateJob
+      parameters:
+      - name: JobName
+        in: path
+        description: Name of the job to create in the user space
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: RestUserJobRequest
+              type: object
+              properties:
+                ### Add the 3 lines below
+                JobName:
+                  title: Also add JobName in body to keep backward compatibility with pre v4 versions
+                  type: string
+                ### Until here
+                JsonParameters:
+                  title: Json-encoded parameters for this job
+                  type: string
+        required: true
+      responses:
+...
+```
+
+
 ```sh
 java -jar openapi-generator-cli.jar generate -g java \
     -i ./cellsapi-rest.swagger.yml \
