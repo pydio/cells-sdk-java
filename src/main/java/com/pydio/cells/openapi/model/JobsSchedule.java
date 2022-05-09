@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * JobsSchedule
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-05T12:35:48.905699+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
 public class JobsSchedule {
   public static final String SERIALIZED_NAME_ISO8601_MIN_DELTA = "Iso8601MinDelta";
   @SerializedName(SERIALIZED_NAME_ISO8601_MIN_DELTA)

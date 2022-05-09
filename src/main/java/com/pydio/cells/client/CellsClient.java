@@ -561,7 +561,7 @@ public class CellsClient implements Client, SdkNames {
         o.put("targetParent", true);
 
         RestUserJobRequest request = new RestUserJobRequest();
-        // request.setJobName("copy");
+        request.setJobName("copy");
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());
@@ -588,7 +588,7 @@ public class CellsClient implements Client, SdkNames {
         o.put("targetParent", true);
 
         RestUserJobRequest request = new RestUserJobRequest();
-        // request.setJobName("move");
+        request.setJobName("move");
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());

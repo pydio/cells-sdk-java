@@ -1,6 +1,7 @@
 package com.pydio.cells.api.ui;
 
 import com.pydio.cells.client.model.Action;
+import com.pydio.cells.utils.Str;
 
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class WorkspaceNode extends AbstractNode {
 
     @Override
     public String getId() {
+        String id = properties.getProperty(WORKSPACE_PROPERTY_ID);
+        if (Str.notEmpty(id)) {
+            return id;
+        }
         return getSlug();
     }
 
@@ -63,7 +68,11 @@ public class WorkspaceNode extends AbstractNode {
     }
 
     public String getName() {
-        return getSlug();
+        if (Str.notEmpty(getLabel())) {
+            return getLabel();
+        } else {
+            return getSlug();
+        }
     }
 
     public String getLabel() {

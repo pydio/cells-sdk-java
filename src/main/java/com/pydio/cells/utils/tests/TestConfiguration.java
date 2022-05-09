@@ -41,7 +41,6 @@ public class TestConfiguration {
         try {
             File f = new File(localURL.toURI());
             FilenameFilter filter = (f1, name) -> name.endsWith(".properties");
-
             for (String currName : f.list(filter)) {
                 loadOne(currName.substring(0, currName.lastIndexOf('.')), accountFolder + "/" + currName);
             }
@@ -50,7 +49,6 @@ public class TestConfiguration {
             e.printStackTrace();
         }
     }
-
 
     public RemoteServerConfig getServer(String id) {
         return accounts.get(id);

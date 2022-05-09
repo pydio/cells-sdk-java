@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * EncryptionAdminExportKeyResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-05T12:35:48.905699+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
 public class EncryptionAdminExportKeyResponse {
   public static final String SERIALIZED_NAME_KEY = "Key";
   @SerializedName(SERIALIZED_NAME_KEY)

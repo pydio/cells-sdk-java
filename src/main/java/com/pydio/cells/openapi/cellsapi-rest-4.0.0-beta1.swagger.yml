@@ -2925,6 +2925,9 @@ paths:
               title: RestUserJobRequest
               type: object
               properties:
+                JobName:
+                  title: Also add JobName in body to keep backward compatibility with pre v4 versions
+                  type: string
                 JsonParameters:
                   title: Json-encoded parameters for this job
                   type: string
@@ -9579,4 +9582,6 @@ components:
             $ref: '#/components/schemas/updatePackage'
         Channel:
           type: string
+
+
 
