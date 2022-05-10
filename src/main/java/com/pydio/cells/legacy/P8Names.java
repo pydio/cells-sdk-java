@@ -77,6 +77,7 @@ public interface P8Names {
     String flatten = "flatten";
     String stream = "stream";
     String filter = "filter";
+    String filter_value = "filter_value";
     String richPreview = "rich_preview";
 
     /* Action Names */
@@ -104,6 +105,7 @@ public interface P8Names {
     String GET_BOOT_CONF = "get_boot_conf";
     String getSeed = "get_seed";
     String login = "login";
+    String checkAuth = "user_list_authorized_users";
     String getXmlRegistry = "get_xml_registry";
     String ajxpConfPrefix = "ajxp_conf/";
     String previewDataProxy = "preview_data_proxy";

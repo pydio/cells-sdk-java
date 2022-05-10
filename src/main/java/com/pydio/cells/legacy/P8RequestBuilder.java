@@ -77,6 +77,14 @@ public class P8RequestBuilder {
         return builder;
     }
 
+    public static P8RequestBuilder checkAuthStatus() {
+        P8RequestBuilder builder = new P8RequestBuilder();
+        builder = builder.setAction(P8Names.checkAuth).
+                setParam(P8Names.filter_value, "8").
+                ignoreCookies(false);
+        return builder;
+    }
+
     public static P8RequestBuilder workspaceList() {
         P8RequestBuilder builder = new P8RequestBuilder();
         builder = builder.setAction(P8Names.getXmlRegistry).

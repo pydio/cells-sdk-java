@@ -51,7 +51,7 @@ import java.util.UUID;
 
 public class P8Client implements Client, SdkNames {
 
-    private final String TAG = P8Client.class.getSimpleName();
+    private final String logTag = P8Client.class.getSimpleName();
 
     private final P8Transport transport;
 
@@ -88,8 +88,6 @@ public class P8Client implements Client, SdkNames {
 
     @Override
     public Registry getUserRegistry() throws SDKException {
-
-
         P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.userRegistry());
         try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
             if (rsp.code() != ErrorCodes.ok) {
@@ -100,6 +98,20 @@ public class P8Client implements Client, SdkNames {
         } catch (Exception ioe) {
             throw new SDKException(ioe);
         }
+    }
+
+    @Override
+    public boolean stillAuthenticated() throws SDKException {
+        // TODO this is not good enough: a blocked user still returns OK but with empty workspaces
+        return true;
+//        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.checkAuthStatus());
+//        try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+//            return rsp.code() == ErrorCodes.ok;
+//        } catch (Exception e) {
+//            Log.e(logTag, "could not check auth status for " + transport.getId());
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
@@ -154,6 +166,9 @@ public class P8Client implements Client, SdkNames {
             if (resultCode != ErrorCodes.ok) {
                 throw new SDKException(resultCode);
             }
+            if (node[0] == null) {
+                return null;
+            }
             node[0].setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
             return node[0];
         } catch (IOException ioe) {
@@ -186,7 +201,6 @@ public class P8Client implements Client, SdkNames {
             System.out.println("OnPlugin: " + p.getName());
         }
     }
-
 
     @Override
     public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
@@ -286,7 +300,7 @@ public class P8Client implements Client, SdkNames {
                 // node.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, ws);
                 nodes.add((FileNode) node);
             } else {
-                Log.e(TAG, "Unexpected node found: " + node.getPath());
+                Log.e(logTag, "Unexpected node found: " + node.getPath());
             }
         }
     }
@@ -646,12 +660,12 @@ public class P8Client implements Client, SdkNames {
         OutputStream out = null;
         try {
             if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code(), "Could not retrieve thumbnail for "+ stateID);
+                throw new SDKException(rsp.code(), "Could not retrieve thumbnail for " + stateID);
             }
             in = rsp.getInputStream();
             if (in != null) {
 
-                if (!parentFolder.exists()){
+                if (!parentFolder.exists()) {
                     //noinspection ResultOfMethodCallIgnored
                     parentFolder.mkdirs();
                 }

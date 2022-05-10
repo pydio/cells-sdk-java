@@ -22,6 +22,8 @@ public interface Client {
 
     Registry getUserRegistry() throws SDKException;
 
+    boolean stillAuthenticated() throws SDKException;
+
     void workspaceList(NodeHandler handler) throws SDKException;
 
     Message mkdir(String ws, String parent, String name) throws SDKException;

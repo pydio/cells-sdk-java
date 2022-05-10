@@ -29,8 +29,10 @@ import com.pydio.cells.openapi.api.SearchServiceApi;
 import com.pydio.cells.openapi.api.ShareServiceApi;
 import com.pydio.cells.openapi.api.TreeServiceApi;
 import com.pydio.cells.openapi.api.UserMetaServiceApi;
+import com.pydio.cells.openapi.api.UserServiceApi;
 import com.pydio.cells.openapi.model.IdmSearchUserMetaRequest;
 import com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest;
+import com.pydio.cells.openapi.model.IdmUser;
 import com.pydio.cells.openapi.model.IdmUserMeta;
 import com.pydio.cells.openapi.model.RestBulkMetaResponse;
 import com.pydio.cells.openapi.model.RestCreateNodesRequest;
@@ -96,6 +98,27 @@ public class CellsClient implements Client, SdkNames {
     public CellsClient(Transport transport, S3Client s3Client) {
         this.transport = (CellsTransport) transport;
         this.s3Client = s3Client;
+    }
+
+    @Override
+    public boolean stillAuthenticated() throws SDKException {
+        try {
+            UserServiceApi api = new UserServiceApi(authenticatedClient());
+            IdmUser user = api.getUser(transport.getUsername(), null, null, null, null,
+                    false, null, -1, true);
+            return true;
+        } catch (SDKException e){
+            Log.e(logTag, "SDK error while checking authentication for "+ transport.getId());
+            e.printStackTrace();
+            return false;
+        } catch (ApiException e){
+            if (e.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
+                return false;
+            }
+            Log.e(logTag, "API error while checking authentication for "+ transport.getId());
+            e.printStackTrace();
+            throw SDKException.fromApiException(e);
+        }
     }
 
     @Override
