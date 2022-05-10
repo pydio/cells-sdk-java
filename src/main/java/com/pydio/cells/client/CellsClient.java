@@ -107,15 +107,15 @@ public class CellsClient implements Client, SdkNames {
             IdmUser user = api.getUser(transport.getUsername(), null, null, null, null,
                     false, null, -1, true);
             return true;
-        } catch (SDKException e){
-            Log.e(logTag, "SDK error while checking authentication for "+ transport.getId());
+        } catch (SDKException e) {
+            Log.e(logTag, "SDK error while checking authentication for " + transport.getId());
             e.printStackTrace();
             return false;
-        } catch (ApiException e){
-            if (e.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
+        } catch (ApiException e) {
+            if (e.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 return false;
             }
-            Log.e(logTag, "API error while checking authentication for "+ transport.getId());
+            Log.e(logTag, "API error while checking authentication for " + transport.getId());
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
@@ -322,7 +322,7 @@ public class CellsClient implements Client, SdkNames {
         }
 
         Map<String, Object> thumbData = new Gson().fromJson(imgThumbsStr, Map.class);
-        if (thumbData.containsKey("Processing")
+        if (thumbData != null && thumbData.containsKey("Processing")
                 && !((boolean) thumbData.get("Processing"))
                 && thumbData.containsKey("thumbnails")
         ) {
