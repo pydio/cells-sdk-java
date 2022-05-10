@@ -79,12 +79,12 @@ public class FileNodeUtils {
             // type = meta.getOrDefault(SdkNames.NODE_PROPERTY_MIME, SdkNames.NODE_MIME_DEFAULT);
             if (meta.containsKey(SdkNames.NODE_PROPERTY_MIME)) {
                 type = meta.get(SdkNames.NODE_PROPERTY_MIME);
-                // TODO not very elegant. Sometimes at this point the mime type has leading
-                //  and trailing unnecessary double quotes.
                 if (type.length() > 2 && type.startsWith("\"") && type.endsWith("\"")) {
+                    // TODO not very elegant. Sometimes at this point the mime type has leading
+                    //  and trailing unnecessary double quotes.
                     // Log.e(logTag, "Found a Mime Type: [" + type + "]");
                     type = type.substring(1, type.length() - 1);
-                    Log.d(logTag, "Updated Mime Type: [" + type + "]");
+//                    Log.d(logTag, "Updated Mime Type: [" + type + "]");
                 }
             } else {
                 // Log.e(logTag, "No mime found for " + path);
