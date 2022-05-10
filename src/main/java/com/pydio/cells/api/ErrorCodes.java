@@ -29,6 +29,7 @@ public interface ErrorCodes {
     int authentication_with_captcha_required = 33;
     int token_expired = 34;
     int no_token_available = 35;
+    int refresh_token_expired = 36;
 
     int con_failed = 40;
     int con_closed = 41;
@@ -77,7 +78,6 @@ public interface ErrorCodes {
             case pydio_server_not_supported:
                 return "Pydio server is not supported";
 
-
             case unsupported_method:
                 return "Unsupported method";
             case unsupported_scheme:
@@ -90,7 +90,6 @@ public interface ErrorCodes {
             case tls_init:
                 return "TLS init";
 
-
             case invalid_credentials:
                 return "Invalid credentials";
             case authentication_required:
@@ -101,7 +100,8 @@ public interface ErrorCodes {
                 return "Token expired";
             case authentication_with_captcha_required:
                 return "Authentication with captcha required";
-
+            case refresh_token_expired:
+                return "Refresh token is not valid";
 
             case con_failed:
                 return "Connection failed";
@@ -129,7 +129,6 @@ public interface ErrorCodes {
                 return "Bad configuration";
             case encoding_failed:
                 return "Encoding failed";
-
         }
         return "Unknown exception (code: " + code + ")";
     }

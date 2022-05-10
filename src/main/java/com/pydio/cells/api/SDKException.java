@@ -2,6 +2,7 @@ package com.pydio.cells.api;
 
 import com.google.gson.Gson;
 import com.pydio.cells.openapi.ApiException;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.util.Map;
  * // TODO smelly code, refactor with a clean generic error handling strategy.
  */
 public class SDKException extends Exception {
+
+    private final static String logTag = SDKException.class.getSimpleName();
 
     private int code;
     private String message;
@@ -42,8 +45,14 @@ public class SDKException extends Exception {
 //             Log.e("SDKException", "Exception body [" + body + "]");
             if (headers.containsKey("content-type") && headers.get("content-type").get(0).startsWith("application/json")) {
                 Gson gson = new Gson();
-                HashMap<String, String> responseBody = gson.fromJson(body, HashMap.class);
-                return new SDKException(cause.getCode(), responseBody.get("Title"), cause);
+                // Best effort to gather more info about the error
+                try {
+                    HashMap<String, String> responseBody = gson.fromJson(body, HashMap.class);
+                    return new SDKException(cause.getCode(), responseBody.get("Title"), cause);
+                } catch (Exception je) {
+                    Log.w(logTag, "Could not retrieve info from JSON response body: " + je.getMessage());
+                }
+                return new SDKException(cause.getCode(), "JSON parse error", cause);
                 // if (headers.containsKey("content-type") && headers.get("content-type").get(0).startsWith("text/plain")) {
             } else {
                 return new SDKException(cause.getCode(), body, cause);

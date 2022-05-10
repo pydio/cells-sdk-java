@@ -25,6 +25,7 @@ import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -379,9 +380,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             Log.e(logTag, "Could not parse refreshed token. " + e.getLocalizedMessage());
             throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
         } catch (IOException e) {
-            Log.w(logTag, "Token request failed: " + e.getLocalizedMessage());
-            e.printStackTrace();
-            throw new SDKException(ErrorCodes.con_failed, e);
+            if (e instanceof FileNotFoundException) {
+                throw new SDKException(ErrorCodes.refresh_token_expired, e);
+            } else {
+                Log.w(logTag, "Token request failed: " + e.getLocalizedMessage());
+                e.printStackTrace();
+                throw new SDKException(ErrorCodes.con_failed, e);
+            }
         } finally {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(out);
