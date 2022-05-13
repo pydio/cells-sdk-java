@@ -93,6 +93,11 @@ public class StateID {
         return builder.toString();
     }
 
+    /* Simply retrieves the account part of a state as a StateID object */
+    public StateID account() {
+        return fromId(getAccountId());
+    }
+
     public String getAccountId() {
         StringBuilder builder = new StringBuilder();
         if (username != null) {
