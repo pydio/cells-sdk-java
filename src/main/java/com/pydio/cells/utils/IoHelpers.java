@@ -92,7 +92,10 @@ public class IoHelpers {
         for (int read = 0; read > -1; read = in.read(buffer)) {
             total_read += read;
             out.write(buffer, 0, read);
-            listener.onProgress(total_read);
+            boolean cancelRequested = listener.onProgress(total_read);
+            if (cancelRequested){
+                break;
+            }
         }
         return total_read;
     }
