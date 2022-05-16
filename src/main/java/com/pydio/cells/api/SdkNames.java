@@ -42,6 +42,7 @@ public interface SdkNames {
     String NODE_PROPERTY_IS_FILE = "is_file";
     String NODE_PROPERTY_IS_IMAGE = "is_image";
     String NODE_PROPERTY_REMOTE_THUMBS = "remote_thumbs";
+    String NODE_PROPERTY_IMG_EXIF_ORIENTATION = "image_exif_orientation";
 
     String NODE_PROPERTY_FILE_PERMS = "file_perms";
     String NODE_PROPERTY_IMAGE_HEIGHT = "image_height";
