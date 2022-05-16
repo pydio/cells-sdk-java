@@ -78,14 +78,7 @@ public class FileNodeUtils {
             // This needs API level 24
             // type = meta.getOrDefault(SdkNames.NODE_PROPERTY_MIME, SdkNames.NODE_MIME_DEFAULT);
             if (meta.containsKey(SdkNames.NODE_PROPERTY_MIME)) {
-                type = meta.get(SdkNames.NODE_PROPERTY_MIME);
-                if (type.length() > 2 && type.startsWith("\"") && type.endsWith("\"")) {
-                    // TODO not very elegant. Sometimes at this point the mime type has leading
-                    //  and trailing unnecessary double quotes.
-                    // Log.e(logTag, "Found a Mime Type: [" + type + "]");
-                    type = type.substring(1, type.length() - 1);
-//                    Log.d(logTag, "Updated Mime Type: [" + type + "]");
-                }
+                type = extractJSONString(meta.get(SdkNames.NODE_PROPERTY_MIME));
             } else {
                 // Log.e(logTag, "No mime found for " + path);
                 // TODO rather leave this at null?
@@ -146,6 +139,21 @@ public class FileNodeUtils {
         }
 
         return fileNode;
+    }
+
+    /**
+     * The API (and SDK java) add leading and trailing double quotes to JSON Strings
+     * that must be removed before handling the real String value.
+     * Note that this does nothing if the String does not:
+     * - have leading and trailing doule quotes
+     * - is shorter than 3 characters
+     */
+
+    public static String extractJSONString(String jsonStr) {
+        if (jsonStr.length() > 2 && jsonStr.startsWith("\"") && jsonStr.endsWith("\"")) {
+            jsonStr = jsonStr.substring(1, jsonStr.length() - 1);
+        }
+        return jsonStr;
     }
 
     // TODO double check. Smelling code.
