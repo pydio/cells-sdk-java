@@ -62,15 +62,15 @@ public class SDKException extends Exception {
         }
     }
 
-
     public boolean isConnectionFailedError() {
         return code == ErrorCodes.no_token_available
                 || code == ErrorCodes.authentication_required
+                || code == ErrorCodes.refresh_token_expired
+                || code == ErrorCodes.token_expired
                 || code == ErrorCodes.authentication_with_captcha_required
                 || code == ErrorCodes.con_failed
                 || code == 401; // HTTP unauthorized. TODO use constant
     }
-
 
     // Legacy inherited SDK specific constructors => ease implementation of the Android app.
 

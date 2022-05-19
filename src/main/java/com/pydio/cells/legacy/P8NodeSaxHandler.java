@@ -95,6 +95,9 @@ public class P8NodeSaxHandler extends DefaultHandler {
         if ("true".equals(p.getProperty(SdkNames.NODE_PROPERTY_IS_FILE))) {
             if (p.containsKey(AJXP_IMAGE_TYPE)) {
                 type = p.getProperty(AJXP_IMAGE_TYPE);
+                // TODO improve
+                p.setProperty(SdkNames.NODE_PROPERTY_IS_PRE_VIEWABLE, "true");
+                p.setProperty(SdkNames.NODE_PROPERTY_HAS_THUMB, "true");
             } else {
                 type = SdkNames.NODE_MIME_DEFAULT;
             }

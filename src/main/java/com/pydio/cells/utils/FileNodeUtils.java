@@ -8,6 +8,7 @@ import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
@@ -29,12 +30,18 @@ public class FileNodeUtils {
             return null;
         }
         String treeNodePath = treeNode.getPath();
-        //Log.d(TAG, "Managing path for: " + treeNodePath);
+        if (treeNodePath == null){
+            Log.w(logTag, "Cannot create FileNode with no path");
+            return null;
+        }
         String slug = slugFrom(treeNodePath);
         String path = pathFrom(treeNodePath);
         String name = nameFrom(treeNodePath);
 
         Map<String, String> meta = treeNode.getMetaStore();
+        if (meta == null){
+            meta = new HashMap<>();
+        }
         // Retrieve the MetaData and store it as properties for later use
         Properties metaProps = new Properties();
         metaProps.putAll(meta);
@@ -64,9 +71,6 @@ public class FileNodeUtils {
         fileNode.setProperty(SdkNames.NODE_PROPERTY_WORKSPACE_SLUG, slug);
         fileNode.setProperty(SdkNames.NODE_PROPERTY_PATH, path);
         fileNode.setProperty(SdkNames.NODE_PROPERTY_FILENAME, name);
-        // Why do we have 3 times the same info? TODO: clean
-//        result.setProperty(SdkNames.NODE_PROPERTY_TEXT, name);
-//        result.setProperty(SdkNames.NODE_PROPERTY_LABEL, name);
 
         // File or Folder
         boolean isFile = treeNode.getType() == TreeNodeType.LEAF;
@@ -129,13 +133,18 @@ public class FileNodeUtils {
         }
 
         // Image specific info.
-        // TODO check what happens for thumbs that are newly generated via the convert tools
-        // typically for office documents, videos and pdf.
         boolean isImage = "true".equals(meta.get("is_image"));
         fileNode.setProperty(SdkNames.NODE_PROPERTY_IS_IMAGE, String.valueOf(isImage));
         if (isImage) {
             fileNode.setProperty(SdkNames.NODE_PROPERTY_IMAGE_WIDTH, meta.get("image_width"));
             fileNode.setProperty(SdkNames.NODE_PROPERTY_IMAGE_HEIGHT, meta.get("image_height"));
+        }
+        // Also supports generated thumbs for other files (pdf, docs...) with recent Cells server
+        if (meta.containsKey(SdkNames.META_KEY_IMG_THUMBS)) {
+            fileNode.setProperty(SdkNames.NODE_PROPERTY_HAS_THUMB, String.valueOf(true));
+        }
+        if (isImage) {
+            fileNode.setProperty(SdkNames.NODE_PROPERTY_IS_PRE_VIEWABLE, String.valueOf(true));
         }
 
         return fileNode;
@@ -145,10 +154,9 @@ public class FileNodeUtils {
      * The API (and SDK java) add leading and trailing double quotes to JSON Strings
      * that must be removed before handling the real String value.
      * Note that this does nothing if the String does not:
-     * - have leading and trailing doule quotes
+     * - have leading and trailing double quotes
      * - is shorter than 3 characters
      */
-
     public static String extractJSONString(String jsonStr) {
         if (jsonStr.length() > 2 && jsonStr.startsWith("\"") && jsonStr.endsWith("\"")) {
             jsonStr = jsonStr.substring(1, jsonStr.length() - 1);

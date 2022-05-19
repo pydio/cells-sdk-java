@@ -1,5 +1,6 @@
 package com.pydio.cells.api.ui;
 
+import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.utils.Str;
 
 import java.util.Properties;
@@ -114,6 +115,15 @@ public class FileNode extends AbstractNode {
 
     public boolean isShared() {
         return "true".equals(getProperty(NODE_PROPERTY_SHARED));
+    }
+
+
+    public boolean hasThumb() {
+        return "true".equals(getProperty(NODE_PROPERTY_HAS_THUMB));
+    }
+
+    public boolean isPreViewable() {
+        return "true".equals(getProperty(NODE_PROPERTY_IS_PRE_VIEWABLE));
     }
 
     /**
