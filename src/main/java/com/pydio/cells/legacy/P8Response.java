@@ -238,6 +238,10 @@ public class P8Response implements Closeable {
         return IoHelpers.pipeReadWithProgress(getInputStream(), out, progressListener);
     }
 
+    public long incrementalWrite(OutputStream out, ProgressListener progressListener) throws IOException {
+        return IoHelpers.pipeReadWithIncrementalProgress(getInputStream(), out, progressListener);
+    }
+
     /**
      * Simply dumps the connection InputStream to a string
      */

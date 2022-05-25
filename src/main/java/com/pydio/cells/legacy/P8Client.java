@@ -488,7 +488,7 @@ public class P8Client implements Client, SdkNames {
             }
 
             try {
-                return rsp.write(target, progressListener);
+                return rsp.incrementalWrite(target, progressListener);
             } catch (IOException e) {
                 throw SDKException.conReadFailed(e);
             }

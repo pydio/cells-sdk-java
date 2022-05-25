@@ -316,16 +316,18 @@ public class CellsClient implements Client, SdkNames {
         if (Str.empty(imgThumbsStr)) {
             return null;
         }
-        Properties props = currNode.getMeta();
-        for (Map.Entry<Object, Object> entry : props.entrySet()) {
-            Log.e(logTag, entry.getKey().toString() + " - " + entry.getValue().toString());
-        }
+
+        //        Properties props = currNode.getMeta();
+//        for (Map.Entry<Object, Object> entry : props.entrySet()) {
+//            Log.e(logTag, entry.getKey().toString() + " - " + entry.getValue().toString());
+//        }
 
         Map<String, Object> thumbData = new Gson().fromJson(imgThumbsStr, Map.class);
         if (thumbData != null && thumbData.containsKey("Processing")
                 && !((boolean) thumbData.get("Processing"))
                 && thumbData.containsKey("thumbnails")
         ) {
+            @SuppressWarnings("unchecked")
             ArrayList<Map<String, Object>> thumbs = (ArrayList<Map<String, Object>>) thumbData.get("thumbnails");
 
             for (Map<String, Object> currThumb : thumbs) {
@@ -526,7 +528,7 @@ public class CellsClient implements Client, SdkNames {
             if (progressListener == null) {
                 return IoHelpers.pipeRead(in, target);
             } else {
-                return IoHelpers.pipeReadWithProgress(in, target, progressListener);
+                return IoHelpers.pipeReadWithIncrementalProgress(in, target, progressListener);
             }
         } catch (IOException e) {
             // e.printStackTrace();

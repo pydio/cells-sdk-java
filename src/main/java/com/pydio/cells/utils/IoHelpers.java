@@ -80,6 +80,26 @@ public class IoHelpers {
         return total_read;
     }
 
+    public static long pipeReadWithIncrementalProgress(InputStream in, OutputStream out, @Nullable ProgressListener listener)
+            throws IOException {
+
+        if (listener == null){
+            return pipeRead(in, out);
+        }
+
+        byte[] buffer = new byte[bufferSize];
+        long total_read = 0;
+        for (int read = 0; read > -1; read = in.read(buffer)) {
+            total_read += read;
+            out.write(buffer, 0, read);
+            boolean cancelRequested = listener.onProgress(read);
+            if (cancelRequested){
+                break;
+            }
+        }
+        return total_read;
+    }
+
     public static long pipeReadWithProgress(InputStream in, OutputStream out, @Nullable ProgressListener listener)
             throws IOException {
 
