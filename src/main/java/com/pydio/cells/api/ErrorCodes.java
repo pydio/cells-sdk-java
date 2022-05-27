@@ -133,7 +133,6 @@ public interface ErrorCodes {
         return "Unknown exception (code: " + code + ")";
     }
 
-    @Deprecated
     static int fromHttpStatus(int status) {
         switch (status) {
             case 200:
