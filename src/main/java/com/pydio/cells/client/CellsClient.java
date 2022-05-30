@@ -531,7 +531,9 @@ public class CellsClient implements Client, SdkNames {
                 return IoHelpers.pipeReadWithIncrementalProgress(in, target, progressListener);
             }
         } catch (IOException e) {
-            // e.printStackTrace();
+            if (e.getMessage().contains("ENOSPC")){ // no space left on device
+                throw SDKException.noSpaceLeft(e);
+            }
             throw SDKException.conReadFailed(e);
         } finally {
             IoHelpers.closeQuietly(in);

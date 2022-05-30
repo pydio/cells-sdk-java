@@ -140,6 +140,10 @@ public class SDKException extends Exception {
         return new SDKException(ErrorCodes.con_write_failed, e);
     }
 
+    public static SDKException noSpaceLeft(IOException e) {
+        return new SDKException(ErrorCodes.write_failed_no_space, e);
+    }
+
     public static SDKException unexpectedContent(Exception e) {
         return new SDKException(ErrorCodes.unexpected_content, e);
     }

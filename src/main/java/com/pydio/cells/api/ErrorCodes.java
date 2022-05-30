@@ -37,6 +37,7 @@ public interface ErrorCodes {
     int con_write_failed = 43;
     int unexpected_content = 44;
     int unexpected_response = 45;
+    int write_failed_no_space = 46;
 
     int api_error = 50;
     int unsupported = 51;
@@ -111,6 +112,9 @@ public interface ErrorCodes {
                 return "Connection read failed";
             case con_write_failed:
                 return "Connection write failed";
+            case write_failed_no_space:
+                return "No space left on device";
+
             case unexpected_content:
                 return "Unexpected content";
             case unexpected_response:
