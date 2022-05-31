@@ -234,8 +234,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 throw SDKException.unexpectedContent(e);
             }
         } catch (IOException e) {
-            Log.w(logTag, "IOException while retrieving registry: " + e.getMessage());
-            throw SDKException.conFailed(e);
+            throw SDKException.conFailed("cannot retrieve registry", e);
         } finally {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(con);
@@ -252,8 +251,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             con.setRequestMethod("GET");
             return con.getInputStream();
         } catch (IOException e) {
-            Log.w("Connection", "connection error while retrieving registry");
-            throw SDKException.conFailed(e);
+            throw SDKException.conFailed("cannot get registry as anonymous", e);
         }
     }
 
@@ -265,7 +263,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             return con.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
-            throw SDKException.conFailed(e);
+            throw SDKException.conFailed("cannot get registry as authenticated user", e);
         }
     }
 
@@ -350,7 +348,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         ByteArrayOutputStream out = null;
         try {
             Log.i(logTag, String.format(
-                    "Launching refresh token flow  for %s@%s at %d ",
+                    "Launching refresh token flow  for %s@%s at %d",
                     username,
                     getServer().url(),
                     System.currentTimeMillis())

@@ -24,7 +24,7 @@ public class SDKException extends Exception {
 
     private int code;
     private String message;
-    private Exception cause;
+    private Throwable cause;
 
     public SDKException(String message) {
         super(message);
@@ -74,7 +74,7 @@ public class SDKException extends Exception {
 
     // Legacy inherited SDK specific constructors => ease implementation of the Android app.
 
-    public SDKException(int code, String message, Exception cause) {
+    public SDKException(int code, String message, Throwable cause) {
         this(ErrorCodes.toMessage(code) + ": " + message, cause);
         this.code = code;
         this.message = message;
@@ -128,17 +128,6 @@ public class SDKException extends Exception {
         return new SDKException(ErrorCodes.encoding_failed, e);
     }
 
-    public static SDKException conFailed(IOException e) {
-        return new SDKException(ErrorCodes.con_failed, e);
-    }
-
-    public static SDKException conReadFailed(IOException e) {
-        return new SDKException(ErrorCodes.con_read_failed, e);
-    }
-
-    public static SDKException conWriteFailed(IOException e) {
-        return new SDKException(ErrorCodes.con_write_failed, e);
-    }
 
     public static SDKException noSpaceLeft(IOException e) {
         return new SDKException(ErrorCodes.write_failed_no_space, e);
@@ -151,6 +140,36 @@ public class SDKException extends Exception {
     public static SDKException notFound(Exception e) {
         return new SDKException(ErrorCodes.not_found, e);
     }
+
+    static class IO extends SDKException {
+        public IO(int code, String message, Throwable cause) {
+            super(code, message, cause);
+        }
+
+        public IO(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
+    public static SDKException conFailed(String message, IOException e) {
+        return new SDKException.IO(ErrorCodes.con_failed, message, e);
+    }
+
+    public static SDKException conReadFailed(String message, IOException e) {
+        return new SDKException.IO(ErrorCodes.con_read_failed, message, e);
+    }
+
+    public static SDKException conWriteFailed(String message, IOException e) {
+        return new SDKException.IO(ErrorCodes.con_write_failed, message, e);
+    }
+
+
+    class Api extends SDKException {
+    }
+
+    class Auth extends SDKException {
+    }
+
 
     @SuppressWarnings({"unused"})
     private SDKException() {

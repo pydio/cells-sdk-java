@@ -84,7 +84,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -144,7 +143,8 @@ public class CellsClient implements Client, SdkNames {
             int responseCode = con.getResponseCode();
 
             if (responseCode != 200) {
-                throw new IOException("could not get registry for " + transport.getId() + "(" + responseCode + "): " + con.getResponseMessage());
+                String msg = "could not get registry for " + transport.getId() + "(" + responseCode + ")";
+                throw SDKException.conFailed(msg, new IOException(con.getResponseMessage()));
             }
 
             registry = new DocumentRegistry(in);
@@ -163,7 +163,7 @@ public class CellsClient implements Client, SdkNames {
         } catch (ParserConfigurationException | SAXException e) {
             throw SDKException.unexpectedContent(e);
         } catch (IOException e) {
-            throw SDKException.conFailed(e);
+            throw SDKException.conFailed("could not get registry for " + transport.getId(), e);
         } finally {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(con);
@@ -278,6 +278,7 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException {
+
         String filename = getThumbFilename(node, dim);
         if (filename == null) {
             Log.i(logTag, "No thumbnail is defined for " + stateID);
@@ -290,9 +291,11 @@ public class CellsClient implements Client, SdkNames {
             }
             File targetFile = new File(parentFolder.getAbsolutePath() + File.separator + filename);
             out = new FileOutputStream(targetFile);
-            download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, "/" + filename, out, null);
+            // Download API expect a full path starting with a slash (a.k.a a file, not a filename)
+            String file = "/" + filename;
+            download(S3Names.PYDIO_S3_THUMBSTORE_PREFIX, file, out, null);
         } catch (IOException e) {
-            throw SDKException.conReadFailed(e);
+            throw SDKException.conReadFailed("could not get thumb for " + stateID, e);
         } finally {
             IoHelpers.closeQuietly(out);
         }
@@ -491,7 +494,7 @@ public class CellsClient implements Client, SdkNames {
             // TODO implement multi part upload
             Log.d(logTag, "PUT request done with status " + con.getResponseCode());
         } catch (IOException e) {
-            throw SDKException.conWriteFailed(e);
+            throw SDKException.conWriteFailed("Cannot write to server", e);
         }
         return Message.create(Message.SUCCESS, "SUCCESS");
     }
@@ -507,9 +510,13 @@ public class CellsClient implements Client, SdkNames {
         throw new RuntimeException("Unsupported method for cells client");
     }
 
+    /**
+     * Warning, this expect a file (with a leading slash), not a file name
+     */
     @Override
     public long download(String ws, String file, OutputStream target, ProgressListener progressListener)
             throws SDKException {
+        // Log.e(logTag, "about to download [" + file + "]");
 
         InputStream in = null;
         try {
@@ -531,10 +538,10 @@ public class CellsClient implements Client, SdkNames {
                 return IoHelpers.pipeReadWithIncrementalProgress(in, target, progressListener);
             }
         } catch (IOException e) {
-            if (e.getMessage().contains("ENOSPC")){ // no space left on device
+            if (e.getMessage().contains("ENOSPC")) { // no space left on device
                 throw SDKException.noSpaceLeft(e);
             }
-            throw SDKException.conReadFailed(e);
+            throw SDKException.conReadFailed("could not download from " + ws + file, e);
         } finally {
             IoHelpers.closeQuietly(in);
         }
@@ -551,7 +558,7 @@ public class CellsClient implements Client, SdkNames {
         } catch (FileNotFoundException e) {
             dlException = SDKException.notFound(e);
         } catch (IOException e) {
-            dlException = SDKException.conWriteFailed(e);
+            dlException = SDKException.conReadFailed("Could not download file " + file, e);
         } catch (SDKException e) {
             dlException = new SDKException(ErrorCodes.api_error, "Could not download file " + file + " from " + ws, e);
         } finally {

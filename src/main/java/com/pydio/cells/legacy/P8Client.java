@@ -490,7 +490,7 @@ public class P8Client implements Client, SdkNames {
             try {
                 return rsp.incrementalWrite(target, progressListener);
             } catch (IOException e) {
-                throw SDKException.conReadFailed(e);
+                throw SDKException.conReadFailed("could not download from " + ws + "/" + path, e);
             }
         }
     }
@@ -674,7 +674,7 @@ public class P8Client implements Client, SdkNames {
                 IoHelpers.pipeRead(in, out);
             }
         } catch (IOException e) {
-            throw SDKException.conReadFailed(e);
+            throw SDKException.conReadFailed("could not get thumb for " + stateID, e);
         } finally {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(out);
