@@ -35,7 +35,6 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.parsers.SAXParser;
@@ -82,18 +81,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         if (userAgent != null) {
             return userAgent;
         }
-
-        ClientData clientData = ClientData.getInstance();
-        userAgent = String.format(Locale.US, "%s-%s/%d",
-                clientData.getName(), clientData.getVersion(), clientData.getVersionCode());
-        if (Str.notEmpty(clientData.getPlatform())) {
-            userAgent = clientData.getPlatform() + "/" + userAgent;
-        }
-        if (Str.notEmpty(clientData.getPackageID())) {
-            userAgent = userAgent + "/" + clientData.getPackageID();
-        }
-        Log.d(logTag, "New Transport instance for " + username + ", user agent is: " + userAgent);
-
+        userAgent = ClientData.getInstance().userAgent();
+        Log.i(logTag, "New Transport instance for " + username + ", user agent is: " + userAgent);
         return userAgent;
     }
 

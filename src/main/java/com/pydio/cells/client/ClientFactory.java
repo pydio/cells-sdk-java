@@ -53,7 +53,7 @@ public abstract class ClientFactory extends ServerFactory {
             instance.setLabel("Cells Java Client");
             instance.setName("CellsJavaClient");
             Log.i("Client factory", "### After Setting client data, App name: "
-                    + instance.getName() + " - " + instance.toString());
+                    + instance.getName() + " - " + instance);
             ClientData.updateInstance(instance);
         }
     }

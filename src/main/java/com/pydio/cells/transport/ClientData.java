@@ -1,6 +1,9 @@
 package com.pydio.cells.transport;
 
 import com.pydio.cells.api.SdkNames;
+import com.pydio.cells.utils.Str;
+
+import java.util.Locale;
 
 public class ClientData {
 
@@ -37,6 +40,17 @@ public class ClientData {
         synchronized (lock) {
             instance = clientData;
         }
+    }
+
+    public String userAgent() {
+        String userAgent = String.format(Locale.US, "%s-%s/%d", getName(), getVersion(), getVersionCode());
+        if (Str.notEmpty(getPlatform())) {
+            userAgent = getPlatform() + "/" + userAgent;
+        }
+        if (Str.notEmpty(getPackageID())) {
+            userAgent = userAgent + "/" + getPackageID();
+        }
+        return userAgent;
     }
 
     public Long getBuildTimestamp() {
