@@ -446,6 +446,7 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException {
+        Log.d(logTag, "search for [" + searchedText + "] at " + parentPath);
         try {
             TreeQuery query = new TreeQuery();
             query.setFileName(searchedText);
