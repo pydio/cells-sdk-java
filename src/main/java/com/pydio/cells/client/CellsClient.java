@@ -280,7 +280,7 @@ public class CellsClient implements Client, SdkNames {
     public String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException {
 
         String filename = getThumbFilename(node, dim);
-        if (filename == null) {
+        if (Str.empty(filename)) {
             Log.i(logTag, "No thumbnail is defined for " + stateID);
             return null;
         }
