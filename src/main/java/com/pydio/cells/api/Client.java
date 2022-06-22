@@ -48,7 +48,7 @@ public interface Client {
      * @return the filename if a thumbnail has been correctly downloaded or generated or null otherwise
      * @throws SDKException
      */
-    public String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException;
+    String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException;
 
     List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException;
 
