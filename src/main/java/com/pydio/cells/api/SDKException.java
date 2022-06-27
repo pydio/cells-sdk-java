@@ -6,6 +6,8 @@ import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.IOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +59,13 @@ public class SDKException extends Exception {
             } else {
                 return new SDKException(cause.getCode(), body, cause);
             }
+        } else if (cause.getCause() instanceof UnknownHostException ||
+                cause.getCause() instanceof SocketException ||
+                cause.getCause() instanceof IOException) {
+            // Probably network error
+            return new SDKException(ErrorCodes.con_failed, cause.getCause().getMessage(), cause.getCause());
         } else {
-            return new SDKException(cause.getCode(), "Unhandled ApiException: " + cause.getMessage(), cause);
+            return new SDKException(cause.getCode(), "Unhandled ApiException #" + cause.getCode() + ": " + cause.getMessage(), cause);
         }
     }
 
