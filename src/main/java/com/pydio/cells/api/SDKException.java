@@ -148,6 +148,13 @@ public class SDKException extends Exception {
         return new SDKException(ErrorCodes.not_found, e);
     }
 
+    // FIXME factorize and clean exception we have added 2 times the same object
+    public static class RemoteIOException extends SDKException {
+        public RemoteIOException(String s) {
+            super(ErrorCodes.con_failed, s);
+        }
+    }
+
     static class IO extends SDKException {
         public IO(int code, String message, Throwable cause) {
             super(code, message, cause);
@@ -170,13 +177,11 @@ public class SDKException extends Exception {
         return new SDKException.IO(ErrorCodes.con_write_failed, message, e);
     }
 
-
     class Api extends SDKException {
     }
 
     class Auth extends SDKException {
     }
-
 
     @SuppressWarnings({"unused"})
     private SDKException() {

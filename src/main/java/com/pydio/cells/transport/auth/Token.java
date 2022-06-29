@@ -22,6 +22,7 @@ public class Token {
     public String refreshToken;
     public long expiresIn;
     public long expirationTime;
+    public long refreshingSinceTs;
 
     public boolean isExpired() {
         if (expirationTime == -1) {

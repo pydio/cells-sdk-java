@@ -46,6 +46,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     private final CustomEncoder encoder;
 
     private final CredentialService credentialService;
+
+    // TODO rather rely on a state ID
     private final String username;
     private final Server server;
 
@@ -125,15 +127,50 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 } catch (IOException ioe) {
                     throw new SDKException(ErrorCodes.unreachable_host, "Could not ping " + server.getServerURL().toString(), ioe);
                 }
+
+                if (token.refreshingSinceTs > 0) {
+
+                    // TODO PoC make this better
+                    try {
+                        for (int i = 0; i < 10; i++) {
+                            Thread.sleep(2000);
+                            token = credentialService.get(getId());
+                            if (!token.isExpired()) {
+                                // token has been refreshed by  another thread
+                                return token;
+                            }
+                        }
+                        throw new SDKException(ErrorCodes.unreachable_host, "Time-out while waiting for new token for " + server.getServerURL().toString());
+                    } catch (InterruptedException e) {
+                        throw new SDKException(ErrorCodes.unreachable_host, "Interrupt while waiting for refresh token of " + server.getServerURL().toString(), e);
+                    }
+                }
+
                 String refreshToken = token.refreshToken;
-                // FIXME insure we can access the network before invalidating the refresh token
-                // FIXME: we first delete the refresh token in our store: it can be used only once.
-                token.refreshToken = null;
+                token.refreshingSinceTs = System.currentTimeMillis() / 1000;
                 credentialService.put(getId(), token);
-                Token newToken = getRefreshedOAuthToken(refreshToken);
-                credentialService.put(getId(), newToken);
-                Log.w(logTag, "Token refreshed");
-                return newToken;
+
+                try {
+                    Token newToken = getRefreshedOAuthToken(refreshToken);
+                    credentialService.put(getId(), newToken);
+                    Log.w(logTag, "Token refreshed");
+                    return newToken;
+                } catch (SDKException.RemoteIOException re){
+                    Log.d(logTag, "could not refresh token: "+re.getMessage());
+                    token.refreshingSinceTs = 0;
+                    credentialService.put(getId(), token);
+                    throw re;
+                } catch (SDKException se){
+                    if (se.getCode() == ErrorCodes.refresh_token_expired){
+                        // could not refresh, finally deleting referential to avoid being stuck
+                        Log.e(logTag, "refresh_token_expired for " + StateID.fromId(getId()));
+                        Log.d(logTag, "Printing stack trace to understand where we come from:");
+                        Thread.dumpStack();
+                        Log.e(logTag, "... and deleting credentials");
+                        credentialService.remove(getId());
+                    }
+                    throw se;
+                }
             } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
                 credentialService.put(getId(), token);
@@ -370,9 +407,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             if (e instanceof FileNotFoundException) {
                 throw new SDKException(ErrorCodes.refresh_token_expired, e);
             } else {
-                Log.w(logTag, "Token request failed: " + e.getLocalizedMessage());
-                e.printStackTrace();
-                throw new SDKException(ErrorCodes.con_failed, e);
+                throw new SDKException.RemoteIOException("Token request failed: " + e.getLocalizedMessage());
+//                Log.w(logTag, "Token request failed: " + e.getLocalizedMessage());
+//                e.printStackTrace();
+//                throw new SDKException(ErrorCodes.con_failed, e);
             }
         } finally {
             IoHelpers.closeQuietly(in);
