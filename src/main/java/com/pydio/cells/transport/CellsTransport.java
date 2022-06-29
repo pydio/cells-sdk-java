@@ -155,17 +155,17 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                     credentialService.put(getId(), newToken);
                     Log.w(logTag, "Token refreshed");
                     return newToken;
-                } catch (SDKException.RemoteIOException re){
-                    Log.d(logTag, "could not refresh token: "+re.getMessage());
+                } catch (SDKException.RemoteIOException re) {
+                    Log.d(logTag, "could not refresh token: " + re.getMessage());
                     token.refreshingSinceTs = 0;
                     credentialService.put(getId(), token);
                     throw re;
-                } catch (SDKException se){
-                    if (se.getCode() == ErrorCodes.refresh_token_expired){
+                } catch (SDKException se) {
+                    if (se.getCode() == ErrorCodes.refresh_token_expired) {
                         // could not refresh, finally deleting referential to avoid being stuck
                         Log.e(logTag, "refresh_token_expired for " + StateID.fromId(getId()));
                         Log.d(logTag, "Printing stack trace to understand where we come from:");
-                        Thread.dumpStack();
+                        se.printStackTrace();
                         Log.e(logTag, "... and deleting credentials");
                         credentialService.remove(getId());
                     }
