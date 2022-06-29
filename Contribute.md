@@ -122,7 +122,6 @@ mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
 java -jar swagger-codegen-cli.jar help generate
 ```
 
-
 ## Developer Tips
 
 ### Testing OAuth with a Cells server
