@@ -4,6 +4,7 @@ import com.pydio.cells.api.Client;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Stats;
+import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.ClientFactory;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
@@ -17,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Performs basic tests against a running Pydio 8 instance. You must first adapt
@@ -56,7 +58,26 @@ public class P8TransportTest {
             Transport p8Transport = TestUtils.getTransport(factory, p8Conf);
             Client p8Client = factory.getClient(p8Transport);
 
-            // Post with a stat
+            // Try to list workspaces
+            AtomicBoolean hasWs = new AtomicBoolean(false);
+            AtomicBoolean foundDefault = new AtomicBoolean(false);
+
+            p8Client.workspaceList(node -> {
+                if (node instanceof WorkspaceNode) {
+                    WorkspaceNode wn = (WorkspaceNode) node;
+                    hasWs.set(true);
+                    if (p8Conf.defaultWS.equals(wn.getSlug())) {
+                        foundDefault.set(true);
+                    }
+                    System.out.printf("\r %s - %s \n", wn.getName(), wn.getSlug());
+                } else {
+                    Assert.fail(node.getName() + " is not a workspace node, this should not happen: " + node.getClass().getSimpleName());
+                }
+            });
+            Assert.assertTrue(hasWs.get());
+            Assert.assertTrue("default not found. Expected: " + p8Conf.defaultWS, foundDefault.get());
+
+            // Test HTTP POST with a stat
             Stats stats = p8Client.stats(p8Conf.defaultWS, "/", false);
             System.out.println("... Stats request succeeded");
             System.out.println("Size: " + stats.getSize());
@@ -66,12 +87,19 @@ public class P8TransportTest {
             // Upload
             String baseDir = "/";
             final String name = "hello-" + testRunID + ".txt";
-            String message = "Hello Pydio! - this is a message from test run #" + testRunID;
+            String message = "Hello Pydio! - this is a message from test SdkJava Test - Run #" + testRunID + "\n";
+            message += "Current user agent: " + p8Transport.getUserAgent() + "\n";
+
             byte[] content = message.getBytes();
             ByteArrayInputStream source = new ByteArrayInputStream(content);
 
+            // System.out.println("\n\n\n\n\n\n ############### ");
+
             Message msg = factory.getClient(p8Transport)
-                    .upload(source, content.length, "text/plain",
+                    .upload(
+                            source,
+                            content.length,
+                            "text/plain",
                             p8Conf.defaultWS, baseDir, name, true, (progress) -> {
                                 System.out.printf("\r%d bytes written\n", progress);
                                 return false;

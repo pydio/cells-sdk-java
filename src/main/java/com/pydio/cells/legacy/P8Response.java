@@ -51,6 +51,8 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class P8Response implements Closeable {
 
+    private final String logTag = P8Response.class.getSimpleName();
+
     private final HttpURLConnection con;
     private int code;
 
@@ -72,6 +74,7 @@ public class P8Response implements Closeable {
         this.con = con;
         try {
             code = ErrorCodes.fromHttpStatus(con.getResponseCode());
+            Log.d(logTag, "HTTP code: " + con.getResponseCode());
             if (code != ErrorCodes.ok) {
                 return;
             }
@@ -124,10 +127,10 @@ public class P8Response implements Closeable {
      */
     private void parseFirstBytes() throws IOException {
 
-        code = ErrorCodes.fromHttpStatus(con.getResponseCode());
-        if (code != ErrorCodes.ok) {
-            return;
-        }
+//        code = ErrorCodes.fromHttpStatus(con.getResponseCode());
+//        if (code != ErrorCodes.ok) {
+//            return;
+//        }
 
         buffered = new ByteArrayOutputStream();
         netStream = con.getInputStream();
@@ -148,10 +151,19 @@ public class P8Response implements Closeable {
 
             buffer = buffered.toByteArray();
             String xmlString = new String(Arrays.copyOfRange(buffer, 0, buffer.length), StandardCharsets.UTF_8);
+            Log.d(logTag, "... After parsing the first bytes, we have:\n" + xmlString);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(new InputSource(new StringReader(xmlString)), new ErrorMessageHandler());
 
+//            parser.parse(new InputSource(new StringReader(xmlString)), new ErrorMessageHandler());
+
+            try {
+                parser.parse(new InputSource(new StringReader(xmlString)), new ErrorMessageHandler());
+            } catch (P8SAXException e) {
+                Log.d(logTag, "... Got a " + e.getMessage() + " error during request, trying to read full response");
+                Log.d(logTag, asString());
+                throw e;
+            }
         } catch (IOException | ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -296,14 +308,14 @@ public class P8Response implements Closeable {
             if (tag_auth) {
                 if (qName.equals("message")) {
                     P8Response.this.code = ErrorCodes.authentication_required;
-                    throw new SAXException("auth");
+                    throw new P8SAXException("auth");
                     // throw new SAXException("Found error message ["+ attributes.getValue("message")+ "], breaking.");.");
                 }
                 return;
             }
 
             if ("message".equals(qName) && (attributes.getLength() > 0 && "ERROR".equals(attributes.getValue(0)))) {
-                throw new SAXException("not-found");
+                throw new P8SAXException("not-found");
             }
 
             if (tag_msg) {
@@ -327,12 +339,12 @@ public class P8Response implements Closeable {
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if (tag_repo && xpathUser && !repoHasContent) {
                 P8Response.this.code = ErrorCodes.authentication_required;
-                throw new SAXException("auth");
+                throw new P8SAXException("auth");
             }
 
             if (tag_auth && qName.equals("require_auth")) {
                 P8Response.this.code = ErrorCodes.authentication_required;
-                throw new SAXException("auth");
+                throw new P8SAXException("auth");
             }
         }
 
@@ -341,12 +353,18 @@ public class P8Response implements Closeable {
             if (tag_msg) {
                 if (str.toLowerCase(Locale.ENGLISH).contains("you are not allowed to access")) {
                     P8Response.this.code = ErrorCodes.authentication_required;
-                    throw new SAXException("token");
+                    throw new P8SAXException("token");
                 }
             }
         }
 
         public void endDocument() {
+        }
+    }
+
+    private static class P8SAXException extends SAXException {
+        P8SAXException(String message) {
+            super(message);
         }
     }
 }

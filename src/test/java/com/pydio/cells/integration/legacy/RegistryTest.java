@@ -65,7 +65,7 @@ public class RegistryTest {
             Assert.assertNotEquals(0, registry.getActions().size());
             Assert.assertNotEquals(0, registry.getPlugins().size());
 
-            // me must not have workspaces
+            // we should not have workspaces
             Assert.assertEquals(0, registry.getWorkspaces().size());
 
         } catch (Exception e) {
