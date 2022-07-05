@@ -930,8 +930,8 @@ public class CellsClient implements Client, SdkNames {
         }
 
         RestShareLink shareLink = new RestShareLink();
-        shareLink.setDescription(ws_description);
         shareLink.setLabel(ws_label);
+        shareLink.setDescription(ws_description);
         shareLink.setPoliciesContextEditable(true);
         shareLink.setViewTemplateName(SdkNames.SHARE_DISPLAY_TEMPLATE_DEFAULT);
 

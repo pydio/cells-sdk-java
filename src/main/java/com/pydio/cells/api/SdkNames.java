@@ -67,7 +67,8 @@ public interface SdkNames {
     String META_KEY_THUMB_DATA = "thumbnails";
     String META_KEY_WS_SHARES = "workspaces_shares";
 
-    String SHARE_DISPLAY_TEMPLATE_DEFAULT = "pydio_unique_strip";
+    String SHARE_DISPLAY_TEMPLATE_DEFAULT = "pydio_shared_folder";
+    String SHARE_DISPLAY_TEMPLATE_GALLERY = "pydio_unique_strip";
 
     // TODO Clean legacy properties below
     // These 2 should rather be lower cased - necessitate a migration of the cache
