@@ -38,6 +38,7 @@ public interface ErrorCodes {
     int unexpected_content = 44;
     int unexpected_response = 45;
     int write_failed_no_space = 46;
+    int server_configuration_issue = 47;
 
     int api_error = 50;
     int unsupported = 51;
@@ -114,6 +115,8 @@ public interface ErrorCodes {
                 return "Connection write failed";
             case write_failed_no_space:
                 return "No space left on device";
+            case server_configuration_issue:
+                return "Could not retrieve Auth info, please check your server config";
 
             case unexpected_content:
                 return "Unexpected content";

@@ -12,6 +12,7 @@ import com.pydio.cells.utils.Log;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -171,6 +172,11 @@ public class CellsServer implements Server {
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
             // Log.d(LOG_TAG, "Retrieved OIDC string: " + oidcStr);
             authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
+        } catch (FileNotFoundException e) {
+            Log.e(LOG_TAG, "Cannot retrieve OIDC configuration at " + e.getMessage());
+            e.printStackTrace();
+            throw new SDKException(ErrorCodes.server_configuration_issue,
+                    "Cannot retrieve OIDC well known file for " + getServerURL().getURL().toString() + ", please check your server config", e);
         } catch (Exception e) {
             Log.e(LOG_TAG, "Unexpected error while retrieving OIDC configuration"
                     + ", cause: " + e.getMessage());
