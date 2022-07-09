@@ -6,8 +6,8 @@ public interface ErrorCodes {
     int resource_found = 1;
 
     int no_internet = 10;
-    int no_un_metered_connection = 11;
-    int no_metered_connection = 12;
+//    int no_un_metered_connection = 11;
+//    int no_metered_connection = 12;
 
     int not_found = 13;
     int redirect = 14;
@@ -23,7 +23,7 @@ public interface ErrorCodes {
     int ssl_certificate_not_signed = 25;
     int tls_init = 26;
 
-    int unknown_account = 30;
+    //    int unknown_account = 30;
     int invalid_credentials = 31;
     int authentication_required = 32;
     int authentication_with_captcha_required = 33;
@@ -103,7 +103,7 @@ public interface ErrorCodes {
             case authentication_with_captcha_required:
                 return "Authentication with captcha required";
             case refresh_token_expired:
-                return "Refresh token is not valid";
+                return "Refresh token has expired";
 
             case con_failed:
                 return "Connection failed";
