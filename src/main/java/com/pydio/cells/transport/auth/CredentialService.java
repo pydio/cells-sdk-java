@@ -1,16 +1,20 @@
 package com.pydio.cells.transport.auth;
 
 import com.pydio.cells.api.Store;
+import com.pydio.cells.api.Transport;
 
 import java.util.Map;
 
-/** Wraps a token store to add the feature to refresh tokens from password when necessary */
-public class CredentialService implements Store<Token> {
+/**
+ * Wraps a token store to add the feature to refresh tokens from password when
+ * necessary
+ */
+public abstract class CredentialService implements Store<Token> {
 
     private final Store<Token> tokenStore;
     private final Store<String> passwordStore;
 
-    public CredentialService(Store<Token> tokenStore, Store<String> passwordStore){
+    public CredentialService(Store<Token> tokenStore, Store<String> passwordStore) {
         this.tokenStore = tokenStore;
         this.passwordStore = passwordStore;
     }
@@ -30,6 +34,13 @@ public class CredentialService implements Store<Token> {
     public void clearPasswords() {
         passwordStore.clear();
     }
+
+    /**
+     * Provide an entry point to cleanly handle refresh token process,
+     * typically avoiding launching 2 parallel process (or more) at the same time
+     * that will lead to loosing the credentials
+     */
+    public abstract Token refreshToken(String id, Transport transport);
 
     /* Simply wraps passed tokenStore methods */
 

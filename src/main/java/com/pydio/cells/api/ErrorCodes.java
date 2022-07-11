@@ -30,6 +30,7 @@ public interface ErrorCodes {
     int token_expired = 34;
     int no_token_available = 35;
     int refresh_token_expired = 36;
+    int cannot_refresh_token = 37;
 
     int con_failed = 40;
     int con_closed = 41;

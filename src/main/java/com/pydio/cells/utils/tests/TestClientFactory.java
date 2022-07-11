@@ -8,7 +8,6 @@ import com.pydio.cells.client.ClientFactory;
 import com.pydio.cells.legacy.NoAwsS3Client;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.auth.CredentialService;
-import com.pydio.cells.transport.auth.Token;
 
 /**
  * This provides a convenient factory that works for everything,
@@ -20,9 +19,9 @@ public class TestClientFactory extends ClientFactory {
         super(credentialService, serverStore, transportStore);
     }
 
-    public TestClientFactory() {
-        super();
-    }
+//    public TestClientFactory() {
+//        super();
+//    }
 
     protected CellsClient getCellsClient(CellsTransport transport) {
         return new CellsClient(transport, new NoAwsS3Client());

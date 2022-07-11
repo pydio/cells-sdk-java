@@ -17,7 +17,6 @@ import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.credentials.JWTCredentials;
 import com.pydio.cells.utils.JavaCustomEncoder;
-import com.pydio.cells.utils.MemoryStore;
 
 import java.io.IOException;
 import java.util.Map;
@@ -43,10 +42,10 @@ public class ServerFactory implements IServerFactory {
     /**
      * Convenience method to create a server factory that only relies on memory stores for quick testing
      */
-    public ServerFactory() {
-        this(new CredentialService(new MemoryStore<>(), new MemoryStore<>()),
-                new MemoryStore<>(), new MemoryStore<>());
-    }
+//    public ServerFactory() {
+//        this(new CredentialService(new MemoryStore<>(), new MemoryStore<>()),
+//                new MemoryStore<>(), new MemoryStore<>());
+//    }
 
     protected void initAppData() {
         ClientData instance = ClientData.getInstance();

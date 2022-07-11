@@ -23,9 +23,9 @@ public abstract class ClientFactory extends ServerFactory {
     /**
      * Creates a factory with in memory stores for tokens, servers and transports
      */
-    public ClientFactory() {
-        super();
-    }
+//    public ClientFactory() {
+//        super();
+//    }
 
     /**
      * Implement this: it is the single entry point to inject the S3 client

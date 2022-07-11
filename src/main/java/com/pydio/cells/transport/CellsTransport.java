@@ -120,71 +120,34 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             return token;
 
         } else if (token.isExpired()) {
-            if (Str.notEmpty(token.refreshToken)) {
-                // Perform a ping to the server before invalidating refresh token
-                try {
-                    server.getServerURL().ping();
-                } catch (IOException ioe) {
-                    throw new SDKException(ErrorCodes.unreachable_host, "Could not ping " + server.getServerURL().toString(), ioe);
-                }
 
-                if (token.refreshingSinceTs > 0) {
-
-                    // TODO PoC make this better
-                    try {
-                        for (int i = 0; i < 10; i++) {
-                            Thread.sleep(2000);
-                            token = credentialService.get(getId());
-                            if (!token.isExpired()) {
-                                // token has been refreshed by  another thread
-                                return token;
-                            }
-                        }
-                        throw new SDKException(ErrorCodes.unreachable_host, "Time-out while waiting for new token for " + server.getServerURL().toString());
-                    } catch (InterruptedException e) {
-                        throw new SDKException(ErrorCodes.unreachable_host, "Interrupt while waiting for refresh token of " + server.getServerURL().toString(), e);
-                    }
-                }
-
-                String refreshToken = token.refreshToken;
-                token.refreshingSinceTs = System.currentTimeMillis() / 1000;
-                credentialService.put(getId(), token);
-
-                try {
-                    Token newToken = getRefreshedOAuthToken(refreshToken);
-                    credentialService.put(getId(), newToken);
-                    Log.w(logTag, "Token refreshed");
-                    return newToken;
-                } catch (SDKException.RemoteIOException re) {
-                    Log.d(logTag, "could not refresh token: " + re.getMessage());
-                    token.refreshingSinceTs = 0;
-                    credentialService.put(getId(), token);
-                    throw re;
-                } catch (SDKException se) {
-                    if (se.getCode() == ErrorCodes.refresh_token_expired) {
-                        // could not refresh, finally deleting referential to avoid being stuck
-                        Log.e(logTag, "refresh_token_expired for " + StateID.fromId(getId()));
-                        Log.d(logTag, "Printing stack trace to understand where we come from:");
-                        se.printStackTrace();
-                        Log.e(logTag, "... and deleting credentials");
-                        credentialService.remove(getId());
-                    }
-                    throw se;
-                }
-            } else if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
+            if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
                 credentialService.put(getId(), token);
                 return token;
-            } else {
-                // Expired token and we have no procedure to refresh it, we delete the token
-                Log.w(logTag, "About to delete credentials for " + StateID.fromId(getId()));
-                Log.w(logTag, "Printing stack trace to understand where we come from:");
-                Thread.dumpStack();
-
-                credentialService.remove(getId());
             }
+
+            Log.e(logTag, "About to launch refresh token process for [" + getId() + "].");
+            StateID st = StateID.fromId(getId());
+            Log.e(logTag, "BTW state ID: [" + st + "], id: [" + st.getId() + "]");
+            token = credentialService.refreshToken(getId(), this);
+
+//             else {
+//                // Expired token and we have no procedure to refresh it, we delete the token
+//                Log.w(logTag, "About to delete credentials for " + StateID.fromId(getId()));
+//                Log.w(logTag, "Printing stack trace to understand where we come from:");
+//                Thread.dumpStack();
+//
+//                credentialService.remove(getId());
+//            }
         }
+        long expiresIn = token.expirationTime - currentTimeInSeconds();
+        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
         return token;
+    }
+
+    private long currentTimeInSeconds() {
+        return System.currentTimeMillis() / 1000;
     }
 
     @Override
@@ -394,7 +357,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 authData.put("client_secret", cd.getClientSecret());
             }
             addPostData(con, authData, null);
-
+            Log.i(logTag, "Before getting input stream");
             in = con.getInputStream();
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
