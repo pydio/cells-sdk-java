@@ -127,22 +127,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 return token;
             }
 
-            Log.e(logTag, "About to launch refresh token process for [" + getId() + "].");
-            StateID st = StateID.fromId(getId());
-            Log.e(logTag, "BTW state ID: [" + st + "], id: [" + st.getId() + "]");
             token = credentialService.refreshToken(getId(), this);
-
-//             else {
-//                // Expired token and we have no procedure to refresh it, we delete the token
-//                Log.w(logTag, "About to delete credentials for " + StateID.fromId(getId()));
-//                Log.w(logTag, "Printing stack trace to understand where we come from:");
-//                Thread.dumpStack();
-//
-//                credentialService.remove(getId());
-//            }
         }
-        long expiresIn = token.expirationTime - currentTimeInSeconds();
-        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
+//        long expiresIn = token.expirationTime - currentTimeInSeconds();
+//        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
         return token;
     }
 
@@ -336,12 +324,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
-            Log.i(logTag, String.format(
-                    "Launching refresh token flow  for %s@%s at %d",
-                    username,
-                    getServer().url(),
-                    System.currentTimeMillis())
-            );
+            Log.i(logTag, String.format("Launching refresh token flow for %s@%s",
+                    username, getServer().url()));
 
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
@@ -357,7 +341,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
                 authData.put("client_secret", cd.getClientSecret());
             }
             addPostData(con, authData, null);
-            Log.i(logTag, "Before getting input stream");
             in = con.getInputStream();
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
