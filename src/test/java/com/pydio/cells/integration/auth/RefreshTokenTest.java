@@ -10,6 +10,7 @@ import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestCredentialService;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
@@ -39,7 +40,7 @@ public class RefreshTokenTest {
         testRunID = TestUtils.randomString(4);
 
         tokenStore = new MemoryStore<>();
-        CredentialService credentialService = new CredentialService(tokenStore, new MemoryStore<>());
+        CredentialService credentialService = new TestCredentialService(tokenStore, new MemoryStore<>());
 
         factory = new TestClientFactory(credentialService, new MemoryStore<>(), new MemoryStore<>());
         config = TestConfiguration.getDefault();

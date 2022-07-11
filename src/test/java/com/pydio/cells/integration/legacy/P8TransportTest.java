@@ -7,9 +7,11 @@ import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.ClientFactory;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestCredentialService;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
@@ -36,7 +38,8 @@ public class P8TransportTest {
     @BeforeClass
     public static void setup() {
         testRunID = TestUtils.randomString(4);
-        factory = new TestClientFactory();
+        factory = new TestClientFactory(new TestCredentialService(new MemoryStore<>(), new MemoryStore<>()),
+                new MemoryStore<>(), new MemoryStore<>());
         config = TestConfiguration.getDefault();
     }
 

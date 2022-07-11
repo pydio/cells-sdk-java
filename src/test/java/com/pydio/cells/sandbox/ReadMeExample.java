@@ -14,7 +14,9 @@ import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.transport.CellsTransport;
 import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
+import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.TestClientFactory;
+import com.pydio.cells.utils.tests.TestCredentialService;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -28,7 +30,10 @@ public class ReadMeExample {
     @Test
     public void forTheReadMe() throws SDKException, ApiException, MalformedURLException {
 
-        TestClientFactory factory = new TestClientFactory();
+        TestClientFactory factory = new TestClientFactory(
+                new TestCredentialService(new MemoryStore<>(), new MemoryStore<>()),
+                new MemoryStore<>(), new MemoryStore<>());
+
         ServerURL serverURL = ServerURLImpl.fromAddress("https://localhost:8080", true);
         Credentials credentials = new LegacyPasswordCredentials("user", "password");
 

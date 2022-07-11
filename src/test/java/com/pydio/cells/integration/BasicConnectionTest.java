@@ -10,9 +10,11 @@ import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.transport.StateID;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestCredentialService;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.After;
@@ -48,7 +50,8 @@ public class BasicConnectionTest {
     @Before
     public void setup() {
         testRunID = TestUtils.randomString(4);
-        factory = new TestClientFactory();
+        factory = new TestClientFactory(new TestCredentialService(new MemoryStore<>(), new MemoryStore<>()),
+                new MemoryStore<>(), new MemoryStore<>());
         config = TestConfiguration.getDefault();
     }
 

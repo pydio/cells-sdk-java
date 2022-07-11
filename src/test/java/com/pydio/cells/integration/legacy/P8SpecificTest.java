@@ -5,13 +5,15 @@ import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ServerURL;
+import com.pydio.cells.legacy.P8Credentials;
 import com.pydio.cells.transport.ServerFactory;
+import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
-import com.pydio.cells.transport.ServerURLImpl;
-import com.pydio.cells.legacy.P8Credentials;
+import com.pydio.cells.utils.tests.TestCredentialService;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -37,8 +39,8 @@ public class P8SpecificTest {
 
     @Before
     public void setup() {
-        //testRunID = TestUtils.randomString(4);
-        factory = new TestClientFactory();
+        factory = new TestClientFactory(new TestCredentialService(new MemoryStore<>(), new MemoryStore<>()),
+                new MemoryStore<>(), new MemoryStore<>());
         config = TestConfiguration.getDefault();
     }
 

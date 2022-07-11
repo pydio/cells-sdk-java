@@ -1,5 +1,6 @@
 package com.pydio.cells.transport.auth;
 
+import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Store;
 import com.pydio.cells.api.Transport;
 
@@ -40,7 +41,7 @@ public abstract class CredentialService implements Store<Token> {
      * typically avoiding launching 2 parallel process (or more) at the same time
      * that will lead to loosing the credentials
      */
-    public abstract Token refreshToken(String id, Transport transport);
+    public abstract Token refreshToken(String id, Transport transport) throws SDKException;
 
     /* Simply wraps passed tokenStore methods */
 

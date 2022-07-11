@@ -5,10 +5,13 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
+import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestCredentialService;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
@@ -28,7 +31,8 @@ public class CellsClientTest {
     @BeforeClass
     public static void setup() {
         testRunID = TestUtils.randomString(4);
-        factory = new TestClientFactory();
+        factory = new TestClientFactory(new TestCredentialService(new MemoryStore<>(), new MemoryStore<>()),
+                new MemoryStore<>(), new MemoryStore<>());
         cellsConf = TestConfiguration.getDefault().getServer("cells-https");
     }
 

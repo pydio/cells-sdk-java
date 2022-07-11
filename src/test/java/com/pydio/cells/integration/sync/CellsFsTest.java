@@ -10,10 +10,12 @@ import com.pydio.cells.sync.changes.GetChangesResponse;
 import com.pydio.cells.sync.fs.CellsFs;
 import com.pydio.cells.utils.CellsPath;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.CecWrapper;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
 import com.pydio.cells.utils.tests.TestClientFactory;
 import com.pydio.cells.utils.tests.TestConfiguration;
+import com.pydio.cells.utils.tests.TestCredentialService;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
@@ -52,7 +54,8 @@ public class CellsFsTest {
     @Before
     public void setup() throws IOException {
         testRunID = TestUtils.randomString(4);
-        factory = new TestClientFactory();
+        factory = new TestClientFactory(new TestCredentialService(new MemoryStore<>(), new MemoryStore<>()),
+                new MemoryStore<>(), new MemoryStore<>());
         cellsConf = TestConfiguration.getDefault().getServer(currConfId);
         if (cellsConf == null) {
             return;
