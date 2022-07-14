@@ -82,6 +82,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -900,6 +901,11 @@ public class CellsClient implements Client, SdkNames {
                         String password, boolean canPreview, boolean canDownload)
             throws SDKException {
 
+        TreeNode targetRemote = internalStatNode(workspace, file);
+        if (targetRemote == null) {
+            throw new SDKException("Cannot share node " + workspace + "/" + file + ": it has disappeared on remote");
+        }
+
         RestPutShareLinkRequest request = new RestPutShareLinkRequest();
         boolean hasPwd = Boolean.parseBoolean(password);
         if (hasPwd) {
@@ -911,14 +917,22 @@ public class CellsClient implements Client, SdkNames {
         shareLink.setLabel(ws_label);
         shareLink.setDescription(ws_description);
         shareLink.setPoliciesContextEditable(true);
-        shareLink.setViewTemplateName(SdkNames.SHARE_DISPLAY_TEMPLATE_DEFAULT);
+
+        Map<String, String> meta = targetRemote.getMetaStore();
+        if (meta == null){
+            meta = new HashMap<>();
+        }
+        if ("true".equals(meta.get("is_image"))) {
+            shareLink.setViewTemplateName(CellsNames.SHARE_TEMPLATE_GALLERY);
+        } else {
+            shareLink.setViewTemplateName(CellsNames.SHARE_TEMPLATE_FOLDER_LIST);
+        }
 
         TreeNode n = new TreeNode();
         n.setUuid(getNodeUuid(workspace, file));
         List<TreeNode> rootNodes = new ArrayList<>();
         rootNodes.add(n);
         shareLink.setRootNodes(rootNodes);
-
         List<RestShareLinkAccessType> permissions = new ArrayList<>();
         if (canPreview) {
             permissions.add(RestShareLinkAccessType.PREVIEW);
@@ -927,7 +941,6 @@ public class CellsClient implements Client, SdkNames {
             permissions.add(RestShareLinkAccessType.DOWNLOAD);
         }
         shareLink.setPermissions(permissions);
-
         request.setShareLink(shareLink);
 
         ShareServiceApi api = new ShareServiceApi(authenticatedClient());
@@ -1041,7 +1054,6 @@ public class CellsClient implements Client, SdkNames {
     }
 
     private TreeNode internalStatNode(String fullPath) throws SDKException {
-
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         try {
             return api.headNode(fullPath).getNode();
