@@ -199,7 +199,6 @@ public interface SdkNames {
     int CHANGE_INDEX_NODE_PATH = 8;
     int CHANGE_INDEX_NODE_WORKSPACE = 9;
 
-
     String[] defaultExcludedWorkspaces = {
             WORKSPACE_ACCESS_TYPE_CONF,
             WORKSPACE_ACCESS_TYPE_SHARED,

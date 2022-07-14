@@ -3,6 +3,7 @@ package com.pydio.cells.client;
 import static com.pydio.cells.utils.FileNodeUtils.toFileNode;
 
 import com.google.gson.Gson;
+import com.pydio.cells.api.CellsNames;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.Registry;
@@ -312,18 +313,12 @@ public class CellsClient implements Client, SdkNames {
      * @throws SDKException
      */
     private String getThumbFilename(FileNode currNode, int dim) throws SDKException {
-        // String remoteThumbsJson = currNode.getProperty(SdkNames.NODE_PROPERTY_REMOTE_THUMBS);
 
         String thumbName = null;
         String imgThumbsStr = (String) currNode.getMeta().get(SdkNames.META_KEY_IMG_THUMBS);
         if (Str.empty(imgThumbsStr)) {
             return null;
         }
-
-        //        Properties props = currNode.getMeta();
-//        for (Map.Entry<Object, Object> entry : props.entrySet()) {
-//            Log.e(logTag, entry.getKey().toString() + " - " + entry.getValue().toString());
-//        }
 
         Map<String, Object> thumbData = new Gson().fromJson(imgThumbsStr, Map.class);
         if (thumbData != null && thumbData.containsKey("Processing")
@@ -586,22 +581,24 @@ public class CellsClient implements Client, SdkNames {
     public Message copy(String ws, String[] files, String folder) throws SDKException {
         JSONArray nodes = new JSONArray();
         for (String file : files) {
-            String path = "/" + ws + file;
+            // String path = "/" + ws + file;
+            String path = ws + file;
             nodes.put(path);
         }
 
         JSONObject o = new JSONObject();
         o.put("nodes", nodes);
-        o.put("target", "/" + ws + folder);
+        // o.put("target", "/" + ws + folder);
+        o.put("target", ws + folder);
         o.put("targetParent", true);
 
         RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName("copy");
+        request.setJobName(CellsNames.JOB_ID_COPY);
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());
         try {
-            api.userCreateJob("copy", request);
+            api.userCreateJob(CellsNames.JOB_ID_COPY, request);
         } catch (ApiException e) {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
@@ -611,24 +608,27 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public Message move(String ws, String[] files, String dstFolder) throws SDKException {
+
         JSONArray nodes = new JSONArray();
         for (String file : files) {
-            String path = "/" + ws + file;
+            //String path = "/" + ws + file;
+            String path = ws + file;
             nodes.put(path);
         }
 
         JSONObject o = new JSONObject();
         o.put("nodes", nodes);
-        o.put("target", "/" + ws + dstFolder);
+        // o.put("target", "/" + ws + dstFolder);
+        o.put("target", ws + dstFolder);
         o.put("targetParent", true);
 
         RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName("move");
+        request.setJobName(CellsNames.JOB_ID_MOVE);
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());
         try {
-            api.userCreateJob("move", request);
+            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
         } catch (ApiException e) {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
@@ -638,10 +638,10 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public Message rename(String ws, String srcFile, String newName) throws SDKException {
-        RestUserJobRequest request = new RestUserJobRequest();
-
         JSONArray nodes = new JSONArray();
-        String path = FileNodeUtils.toTreeNodePath(ws, srcFile);
+        // In Cells, paths directly start with the WS slug (**NO** leading slash)
+        // String path = "/" + ws + srcFile;
+        String path = ws + srcFile;
         nodes.put(path);
 
         String parent = new File(srcFile).getParentFile().getPath();
@@ -651,18 +651,21 @@ public class CellsClient implements Client, SdkNames {
         } else {
             dstFile = parent + "/" + newName;
         }
+        // String targetFile ="/" + ws + dstFile;
+        String targetFile = ws + dstFile;
 
         JSONObject o = new JSONObject();
         o.put("nodes", nodes);
-        o.put("target", FileNodeUtils.toTreeNodePath(ws, dstFile));
+        o.put("target", targetFile);
         o.put("targetParent", false);
 
-        // request.setJobName("move");
+        RestUserJobRequest request = new RestUserJobRequest();
+        request.setJobName(CellsNames.JOB_ID_MOVE);
         request.setJsonParameters(o.toString());
 
         JobsServiceApi api = new JobsServiceApi(authenticatedClient());
         try {
-            api.userCreateJob("move", request);
+            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
         } catch (ApiException e) {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
@@ -733,26 +736,6 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public void getBookmarks(NodeHandler h) throws SDKException {
 
-        // FIXME this is broken due to an issue while generating the Java SDK.
-        //   Fix and adapt here.
-//        try {
-//
-//            ApiClient client = authenticatedClient();
-//
-//            IdmSearchUserMetaRequest searchRequest = new IdmSearchUserMetaRequest();
-//            searchRequest.setNamespace("bookmark");
-//            UserMetaServiceApi api = new UserMetaServiceApi(client);
-//            RestUserMetaCollection result = api.searchUserMeta(searchRequest);
-//            for (IdmUserMeta currMeta: result.metadatas){
-//            }
-//
-//            Log.i(logTag, result.toString());
-//
-//        } catch (ApiException apiException) {
-//            apiException.printStackTrace();
-//            throw SDKException.fromApiException(apiException);
-//        }
-
         RestUserBookmarksRequest request = new RestUserBookmarksRequest();
         UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
@@ -767,7 +750,7 @@ public class CellsClient implements Client, SdkNames {
                     if (fileNode != null) {
                         List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
                         if (sources != null) {
-                            // FIXME we only retrieve the first "source" node.
+                            // TODO we only retrieve the first "source" node.
                             //  When a node is declared 2 times we skip info about the second source.
                             //  To reproduce, typically favorite a cell that is inside a WS.
                             String path = sources.get(0).getPath();
@@ -791,7 +774,6 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-
     }
 
     @Override
@@ -808,31 +790,28 @@ public class CellsClient implements Client, SdkNames {
         return bookmark(getNodeUuid(ws, file));
     }
 
-    public Message bookmark(String UUID) throws SDKException {
-
-        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
-
-        IdmUpdateUserMetaRequest request = new IdmUpdateUserMetaRequest();
-        request.setOperation(UpdateUserMetaRequestUserMetaOp.PUT);
-
-        List<IdmUserMeta> metas = new ArrayList<>();
+    public Message bookmark(String uuid) throws SDKException {
 
         IdmUserMeta userMeta = new IdmUserMeta();
-        userMeta.setNodeUuid(UUID);
+        userMeta.setNodeUuid(uuid);
         userMeta.setNamespace("bookmark");
         userMeta.setJsonValue("true");
 
-        ServiceResourcePolicy ownerPolicy = newPolicy(UUID, ServiceResourcePolicyAction.OWNER);
-        ServiceResourcePolicy readPolicy = newPolicy(UUID, ServiceResourcePolicyAction.READ);
-        ServiceResourcePolicy writePolicy = newPolicy(UUID, ServiceResourcePolicyAction.WRITE);
+        ServiceResourcePolicy ownerPolicy = newPolicy(uuid, ServiceResourcePolicyAction.OWNER);
+        ServiceResourcePolicy readPolicy = newPolicy(uuid, ServiceResourcePolicyAction.READ);
+        ServiceResourcePolicy writePolicy = newPolicy(uuid, ServiceResourcePolicyAction.WRITE);
         userMeta.addPoliciesItem(ownerPolicy);
         userMeta.addPoliciesItem(readPolicy);
         userMeta.addPoliciesItem(writePolicy);
 
+        List<IdmUserMeta> metas = new ArrayList<>();
         metas.add(userMeta);
 
+        IdmUpdateUserMetaRequest request = new IdmUpdateUserMetaRequest();
         request.setMetaDatas(metas);
+        request.setOperation(UpdateUserMetaRequestUserMetaOp.PUT);
 
+        UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
             api.updateUserMeta(request);
             return null;
@@ -843,7 +822,6 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: " + e.getMessage(), e);
         }
-
     }
 
     @Override
