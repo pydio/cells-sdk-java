@@ -202,8 +202,9 @@ public class ServerURLImpl implements ServerURL {
             if (code != 200) {
                 throw new SDKException(code, "Could not reach " + url.getHost() + ": " + connection.getResponseMessage());
             }
-        } catch (ProtocolException pe) { // Might not happen very often...
-            throw new RuntimeException("Invalid GET request", pe);
+        } catch (ProtocolException pe) {
+            // This might typically be thrown by the underlying OKHttp library when a redirect cycle has been detected
+            throw new SDKException("Could not reach " + url.getHost() + ": " + pe.getMessage(), pe);
         }
     }
 
