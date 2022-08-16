@@ -919,7 +919,7 @@ public class CellsClient implements Client, SdkNames {
         shareLink.setPoliciesContextEditable(true);
 
         Map<String, String> meta = targetRemote.getMetaStore();
-        if (meta == null){
+        if (meta == null) {
             meta = new HashMap<>();
         }
         if ("true".equals(meta.get("is_image"))) {
@@ -1056,6 +1056,8 @@ public class CellsClient implements Client, SdkNames {
     private TreeNode internalStatNode(String fullPath) throws SDKException {
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         try {
+            // RestHeadNodeResponse response = api.headNode(fullPath);
+            // return response.getNode();
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
