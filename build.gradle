@@ -55,9 +55,9 @@ def pomConfig = {
             email "bruno.sinou@posteo.de"
         }
     }
-    
+
     scm {
-       url githubUrl
+        url githubUrl
     }
 }
 
@@ -68,7 +68,7 @@ publishing {
             groupId 'com.pydio.cells'
             artifactId 'cells-sdk-java'
             version = sdkVersion
-            
+
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'Provide base java libraries to communicate with the Pydio Cells stack')
@@ -83,11 +83,11 @@ publishing {
 jar {
     manifest {
         attributes('Specification-Title': 'Cells SDK for Java',
-                   'Specification-Version': '4.0',
-                   'Specification-Vendor': 'Abstrium SAS',
-                   'Implementation-Title': project.name,
-                   'Implementation-Vendor': 'Abstrium SAS',
-                   'Implementation-Version': sdkVersion)
+                'Specification-Version': '4.0',
+                'Specification-Vendor': 'Abstrium SAS',
+                'Implementation-Title': project.name,
+                'Implementation-Vendor': 'Abstrium SAS',
+                'Implementation-Version': sdkVersion)
     }
 }
 
@@ -102,11 +102,11 @@ dependencies {
 
     // Used to store info as gson blobs in SQLite
     // TODO what are the differences between the 2 libs, which one is better?
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.9.1'
     implementation 'io.gsonfire:gson-fire:1.8.5'
     // Very old library that has been used to implement dirty shortcuts while manipulating JSON.
     // TODO clean the code (mainly the Client and Transport classes) and remove.
-       implementation 'com.metaparadigm:json-rpc:1.0'
+    implementation 'com.metaparadigm:json-rpc:1.0'
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
@@ -142,19 +142,17 @@ dependencies {
 //    options.deprecation = true
 // }
 
-task printSourceSetInformation(){
-    doLast{
+task printSourceSetInformation() {
+    doLast {
         sourceSets.each { srcSet ->
-            println "["+srcSet.name+"]"
-            print "-->Source directories: "+srcSet.allJava.srcDirs+"\n"
-            print "-->Output directories: "+srcSet.output.classesDirs.files+"\n"
+            println "[" + srcSet.name + "]"
+            print "-->Source directories: " + srcSet.allJava.srcDirs + "\n"
+            print "-->Output directories: " + srcSet.output.classesDirs.files + "\n"
             print "-->Compile classpath:\n"
-            srcSet.compileClasspath.files.each { 
-                print "  "+it.path+"\n"
+            srcSet.compileClasspath.files.each {
+                print "  " + it.path + "\n"
             }
             println ""
         }
     }
 }
-
-
