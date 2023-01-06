@@ -107,7 +107,7 @@ public class P8Response implements Closeable {
 
                 @Override
                 public int read() throws IOException {
-                    if (netStream == null) {
+                    if (netStream == null && P8Response.this.con != null) {
                         netStream = P8Response.this.con.getInputStream();
                     }
                     int read = buffered.read();
@@ -126,11 +126,6 @@ public class P8Response implements Closeable {
      * Pydio 8 API. We read the first 512 bytes (that is usually enough) and check if it is a known error message
      */
     private void parseFirstBytes() throws IOException {
-
-//        code = ErrorCodes.fromHttpStatus(con.getResponseCode());
-//        if (code != ErrorCodes.ok) {
-//            return;
-//        }
 
         buffered = new ByteArrayOutputStream();
         netStream = con.getInputStream();

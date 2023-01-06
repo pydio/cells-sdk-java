@@ -108,42 +108,10 @@ public class P8Server implements Server {
         return version;
     }
 
-    public String versionName() {
-        // FIXME clean this
-        return version();
-    }
-
     @Override
     public String getVersionName() {
-        return null;
+        return version();
     }
-
-
-//    public SSLContext getSslContext() {
-//        if (this.sslContext == null) {
-//            try {
-//                this.sslContext = SSLContext.getInstance("TLS");
-//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//        try {
-//            this.sslContext.getSocketFactory();
-//        } catch (Exception e) {
-//            try {
-//                this.sslContext = SSLContext.getInstance("TLS");
-//                this.sslContext.init(null, new TrustManager[]{trustManager()}, null);
-//            } catch (Exception ex) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//        return this.sslContext;
-//    }
-
 
     // Local shortcut
     private String getId() {

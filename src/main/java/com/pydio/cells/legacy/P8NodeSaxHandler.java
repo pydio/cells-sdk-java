@@ -5,8 +5,6 @@ import static com.pydio.cells.api.SdkNames.NODE_PROPERTY_WORKSPACE_SLUG;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.ui.FileNode;
-import com.pydio.cells.api.ui.Node;
-import com.pydio.cells.client.model.NodeFactory;
 import com.pydio.cells.utils.Str;
 
 import org.xml.sax.Attributes;
@@ -20,7 +18,7 @@ import java.util.TreeMap;
 
 public class P8NodeSaxHandler extends DefaultHandler {
 
-    private final String logTag = P8NodeSaxHandler.class.getSimpleName();
+    // private final String logTag = P8NodeSaxHandler.class.getSimpleName();
 
     // Legacy P8 property names: centralised here to avoid over-loading
     // the main SdkNames reference file.

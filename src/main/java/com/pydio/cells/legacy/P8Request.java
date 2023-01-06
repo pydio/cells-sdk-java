@@ -14,9 +14,9 @@ public class P8Request {
     private boolean ignoreCookies;
     private Credentials credentials;
 
-    public static P8RequestBuilder newBuilder() {
-        return new P8RequestBuilder();
-    }
+//    public static P8RequestBuilder newBuilder() {
+//        return new P8RequestBuilder();
+//    }
 
     public String getMethod() {
 

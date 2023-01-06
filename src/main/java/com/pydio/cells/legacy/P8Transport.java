@@ -73,11 +73,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public boolean isOffline() {
-        if (Str.empty(username) || ANONYMOUS_USERNAME.equals(username)) {
-            return true;
-        }
+        return Str.empty(username) || ANONYMOUS_USERNAME.equals(username);
         // TODO implement check to see if we have a valid token
-        return false;
     }
 
     @Override
@@ -127,17 +124,16 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
     public String appendAuth(String path) throws SDKException {
-        StringBuilder builder = new StringBuilder(path);
-        builder.append("&");
-        builder.append(P8Names.REQ_PROP_TOKEN);
-        builder.append("=");
-        builder.append(utf8Encode(getSecureToken()));
-        return builder.toString();
+        String suffix =
+                P8Names.REQ_PROP_TOKEN +
+                "=" +
+                utf8Encode(getSecureToken());
+        return path + "&" + suffix;
     }
 
     /* Directly get a streamed image that contains the Captcha from the server. */
     @Override
-    public InputStream getCaptcha() throws SDKException {
+    public InputStream getCaptcha() {
         P8Request request = new P8RequestBuilder().setAction(P8Names.getCaptcha).getRequest();
         try (P8Response captchaResponse = execute(request)) {
             return captchaResponse.getInputStream();
@@ -341,7 +337,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             throw new SDKException(ErrorCodes.invalid_credentials, new IOException("Request sent an OK response, but could not parse XML body"));
         }
         if (doc.getElementsByTagName(P8Names.TAG_LOGIN_RESULT).getLength() == 0) {
-            throw SDKException.unexpectedContent(new IOException("Cannot parse login response: " + doc.toString()));
+            throw SDKException.unexpectedContent(new IOException("Cannot parse login response: " + doc));
         }
 
         if (cookieHeaders == null) {
@@ -486,7 +482,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         try {
             currURL = server.newURL(builder.toString());
         } catch (MalformedURLException mue) {
-            throw new RuntimeException("Unexpected Malformed URL for path: " + builder.toString(), mue);
+            throw new RuntimeException("Unexpected Malformed URL for path: " + builder, mue);
         }
 
         HttpURLConnection con = withUserAgent(currURL.openConnection());
@@ -505,7 +501,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         try {
             currURL = server.newURL(builder.toString());
         } catch (MalformedURLException mue) {
-            throw new RuntimeException("Unexpected Malformed URL for path: " + builder.toString(), mue);
+            throw new RuntimeException("Unexpected Malformed URL for path: " + builder, mue);
         }
         HttpURLConnection con = currURL.openConnection();
         con.setRequestMethod("POST");
@@ -538,9 +534,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             out.write(postDataBytes);
         }
 
-        P8Response response = new P8Response(con);
-        // storeReturnedSetCookies(con.getHeaderFields());
-        return response;
+        return new P8Response(con);
     }
 
     private P8Response doPut(P8Request request) throws IOException {
@@ -660,64 +654,11 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     }
 
 
-    private class AuthInfo {
+    private static class AuthInfo {
         private int seed = -1;
         private boolean withCaptcha = false;
 
         AuthInfo() {
         }
     }
-    //    private StringBuilder appendEncodedParam(StringBuilder builder, String key, String value) {
-//        builder.append(key).append("=").append(utf8Encode(value));
-//        return builder;
-//    }
-
-    //  @Override
-    //  public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-    //      P8RequestBuilder builder = P8RequestBuilder.serverRegistry();
-    //      try (P8Response rsp = execute(builder.getRequest())) {
-    //          if (rsp.code() != ErrorCodes.ok) {
-    //              throw new SDKException(rsp.code());
-    //          }
-    //          final int code = rsp.saxParse(new ServerGeneralRegistrySaxHandler(itemHandler));
-    //          if (code != ErrorCodes.ok) {
-    //              throw new SDKException(code);
-    //          }
-    //      } catch (IOException ioe) {
-    //          throw new SDKException(ioe);
-    //      }
-//
-    //  }
-
-    //   @Override
-    //   public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-    //       P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(getToken());
-    //       try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-    //           if (rsp.code() != ErrorCodes.ok) {
-    //               throw new SDKException(rsp.code());
-    //           }
-    //           final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-    //           if (code != ErrorCodes.ok) {
-    //               rsp.close();
-    //               throw new SDKException(code);
-    //           }
-    //       } catch (IOException ioe) {
-    //           throw new SDKException(ioe);
-    //       }
-    //   }
-
-
-//     @Override
-//     public InputStream getWorkspaceRegistry(String ws) throws SDKException {
-//         String secureToken = getSecureToken();
-//         P8RequestBuilder builder = P8RequestBuilder.workspaceRegistry(ws).setSecureToken(secureToken);
-//         try (P8Response rsp = execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-//             if (rsp.code() != ErrorCodes.ok) {
-//                 throw new SDKException(rsp.code());
-//             }
-//             return rsp.getInputStream();
-//         }
-//     }
-
-
 }

@@ -1,7 +1,6 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.Credentials;
-import com.pydio.cells.api.SDKException;
 import com.pydio.cells.utils.PathUtils;
 import com.pydio.cells.utils.Str;
 
@@ -390,19 +389,9 @@ public class P8RequestBuilder {
         return this;
     }
 
-//    public P8RequestBuilder setSecureToken(String token) {
-//        if (token != null) {
-//            request.setSecureToken(token); // Superstition ?
-//            setParam(P8Names.secureToken, token);
-//        }
-//        return this;
-//    }
-
-    public P8RequestBuilder setToken(String token) throws SDKException {
-
+    public P8RequestBuilder setToken(String token) {
         request.setSecureToken(token); // Superstition ?
         setParam(P8Names.secureToken, token);
-
         return this;
     }
 

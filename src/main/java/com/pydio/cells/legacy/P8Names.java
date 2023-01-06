@@ -20,11 +20,11 @@ public interface P8Names {
     String CONTENT_TYPE_OCTET_STREAM = "application/octet-stream";
     String CONTENT_TYPE_URL_ENCODED = "application/x-www-form-urlencoded; charset=utf-8";
 
-    String UPLOAD_MAX_SIZE = "UPLOAD_MAX_SIZE";
+    // String UPLOAD_MAX_SIZE = "UPLOAD_MAX_SIZE";
 
     /* Supported Parameters */
 
-    String XML_MESSAGE = "message";
+    // String XML_MESSAGE = "message";
     String COOKIE_KEY = "ajxp_sessid";
 
     String ajxpBookmarked = "ajxp_bookmarked";

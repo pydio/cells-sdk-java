@@ -101,7 +101,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public boolean stillAuthenticated() throws SDKException {
+    public boolean stillAuthenticated() { // throws SDKException {
         // TODO this is not good enough: a blocked user still returns OK but with empty workspaces
         return true;
 //        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.checkAuthStatus());
@@ -723,10 +723,10 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            String h = rsp.getHeaders("Content-Type").get(0);
-            /*if (!"application/json".equals(h.toLowerCase(Locale.ENGLISH))) {
-                throw SDKException.unexpectedContent(new IOException(String.format("wrong response content type: %s", h)));
-            } */
+//            String h = rsp.getHeaders("Content-Type").get(0);
+//            if (!"application/json".equals(h.toLowerCase(Locale.ENGLISH))) {
+//                throw SDKException.unexpectedContent(new IOException(String.format("wrong response content type: %s", h)));
+//            }
 
             try {
 

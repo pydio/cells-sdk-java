@@ -2,7 +2,6 @@ package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.ProgressListener;
-import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.File;
@@ -15,7 +14,7 @@ import java.net.URLConnection;
 
 public class P8RequestBody {
 
-    private final String logTag = P8RequestBody.class.getSimpleName();
+    // private final String logTag = P8RequestBody.class.getSimpleName();
 
     private String mFilename;
     private String mimeType;
@@ -57,13 +56,9 @@ public class P8RequestBody {
         }
     }
 
-    public P8RequestBody(File file, String filename, long maxPartSize) {
-        this(filename, file.length(), maxPartSize);
-        mFile = file;
-    }
-
-//    public P8RequestBody(byte[] bytes, String filename, long maxPartSize) {
-//        this(new ByteArrayInputStream(bytes), filename, bytes.length, maxPartSize);
+//    public P8RequestBody(File file, String filename, long maxPartSize) {
+//        this(filename, file.length(), maxPartSize);
+//        mFile = file;
 //    }
 
     public P8RequestBody(InputStream in, String filename, long length, String mimeType, long maxPartSize) {
@@ -72,11 +67,11 @@ public class P8RequestBody {
         this.mimeType = mimeType;
     }
 
-    public P8RequestBody(InputStream in, long length) {
-        mLength = length;
-        mInStream = in;
-        mMaxChunkSize = mLength;
-    }
+//    public P8RequestBody(InputStream in, long length) {
+//        mLength = length;
+//        mInStream = in;
+//        mMaxChunkSize = mLength;
+//    }
 
     public String getFilename() {
         return mFilename;
@@ -256,16 +251,16 @@ public class P8RequestBody {
 
     // TODO double check it works both for Cells and P8
     public void setTransferListener(final ProgressListener listener) {
-        LocalProgressListener localProgressListener = new LocalProgressListener() {
+        this.localProgressListener = new LocalProgressListener() {
             @Override
             public void transferred(long progress) throws IOException {
 
                 //Log.d("LocalProgressListener", "transferred: " + progress);
                 boolean stopRequested = listener.onProgress(progress);
                 // Log.d("LocalProgressListener", "result: " + result);
-               if (stopRequested) {
-                   throw new IOException("canceled by caller");
-               }
+                if (stopRequested) {
+                    throw new IOException("canceled by caller");
+                }
             }
 
             @Override
@@ -280,7 +275,6 @@ public class P8RequestBody {
                 }
             }
         };
-        this.localProgressListener = localProgressListener;
     }
 
     public interface LocalProgressListener {
