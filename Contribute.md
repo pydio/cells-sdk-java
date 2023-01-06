@@ -94,6 +94,13 @@ cp /tmp/forSwagger/cells-sdk-java/cellsapi-rest.swagger.yml $GITPATH/github.com/
 java -jar swagger-codegen-cli.jar help generate
 ```
 
+#### More tweaks
+
+In Jan. 2023, we should also do the following to finalize SDK generation:
+
+- change packame name for generated classes, we should rather import `jakarta.ws...` than `javax.ws...` that is not updated anymore.
+- perform a "optimize import" on the `com.pydio.cells.openapi` client to remove unnecessary warnings.
+
 ### Legacy (with swagger v2)
 
 ```sh
