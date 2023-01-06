@@ -98,7 +98,9 @@ dependencies {
 
     implementation 'org.threeten:threetenbp:1.5.2'
     // Necessary for swagger (generation of the openapi package from Cells spec)
-//    implementation 'io.swagger:swagger-annotations:1.6.3'
+    implementation 'io.swagger:swagger-annotations:1.6.9'
+    // Add the @Nullable annotation
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
     // Used to store info as gson blobs in SQLite
     // TODO what are the differences between the 2 libs, which one is better?
@@ -113,8 +115,14 @@ dependencies {
 
     // Necessary when developing / building with a JDK 11
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    // https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api
+    implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.1.0'
+/*
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+    implementation 'org.glassfish.jersey.core:jersey-common:3.1.0'
+*/
     // Enable use of @Nullable and such annotations
-    implementation 'org.jetbrains:annotations:23.0.0'
+    // implementation 'org.jetbrains:annotations:23.0.0'
 
     // Updating this cause IdToken decoding failure
     // implementation 'commons-codec:commons-codec:20041127.091804'

@@ -17,11 +17,8 @@ cd /tmp/forSwagger
 git clone https://github.com/pydio/cells-sdk-java.git
 cd cells-sdk-java
 
-GENERATOR_VERSION=5.4.0
+GENERATOR_VERSION=6.2.1
 wget https://oss.sonatype.org/content/repositories/releases/org/openapitools/openapi-generator-cli/${GENERATOR_VERSION}/openapi-generator-cli-${GENERATOR_VERSION}.jar -O openapi-generator-cli.jar
-
-# WARNING: Update
-SDK_DEFAULT_AGENT="PydioCells/v3.0.7/JavaSDK/v0.4.0"
 
 ```
 
@@ -33,7 +30,7 @@ SDK_DEFAULT_AGENT="PydioCells/v3.0.7/JavaSDK/v0.4.0"
 
 **WARNING**: temporary tweak to go on supporting pre-v4 Cells remote servers:
 After migrating the swagger spec file to v3 yaml format, we manually edit it to re-add a "JobName" body parameters for job requests, otherwise, such request to a v3 server will fail.
-Typically for v4-beta1, edit at line 2928, add `JobName` parameter to have:
+Typically for v4-beta1, edit at line 3015, add `JobName` parameter to have:
 
 ```yml
 ...
@@ -70,8 +67,12 @@ Typically for v4-beta1, edit at line 2928, add `JobName` parameter to have:
 ...
 ```
 
+Then generate the SDK
 
 ```sh
+# WARNING: Update
+SDK_DEFAULT_AGENT="PydioCells/v4.0.6/JavaSDK/v0.4.2"
+
 java -jar openapi-generator-cli.jar generate -g java \
     -i ./cellsapi-rest.swagger.yml \
     -o /tmp/forSwagger/cells-sdk-java \
@@ -80,13 +81,13 @@ java -jar openapi-generator-cli.jar generate -g java \
     --model-package com.pydio.cells.openapi.model \
     --http-user-agent ${SDK_DEFAULT_AGENT}
 
-cd $GITPATH/github.com/pydio/cells-android-app/sdk-java/src/main/java/com/pydio/cells/
+cd $GITPATH/github.com/pydio/cells-sdk-java/src/main/java/com/pydio/cells/
 rm -rf ./openapi
 
 mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
 
 # Also copy used sagger file for later references
-export CELLS_VERSION=4.0.0-beta1
+export CELLS_VERSION=4.0.6
 cp /tmp/forSwagger/cells-sdk-java/cellsapi-rest.swagger.yml $GITPATH/github.com/pydio/cells-android-app/sdk-java/src/main/java/com/pydio/cells/openapi/cellsapi-rest-${CELLS_VERSION}.swagger.yml
 
 # For the record, more details about the possible options:

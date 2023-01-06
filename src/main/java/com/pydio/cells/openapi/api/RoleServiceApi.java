@@ -13,25 +13,17 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.IdmRole;
-import com.pydio.cells.openapi.model.InlineObject;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestRolesCollection;
 import com.pydio.cells.openapi.model.RestSearchRoleRequest;
+import com.pydio.cells.openapi.model.SetRoleRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -102,7 +94,6 @@ public class RoleServiceApi {
      */
     public okhttp3.Call deleteRoleCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -119,7 +110,7 @@ public class RoleServiceApi {
 
         // create path and map variables
         String localVarPath = "/role/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -168,7 +159,6 @@ public class RoleServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -181,15 +171,12 @@ public class RoleServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteRoleValidateBeforeCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling deleteRole(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteRoleCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, _callback);
-        return localVarCall;
+        return deleteRoleCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, _callback);
 
     }
 
@@ -310,7 +297,6 @@ public class RoleServiceApi {
      */
     public okhttp3.Call getRoleCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -327,7 +313,7 @@ public class RoleServiceApi {
 
         // create path and map variables
         String localVarPath = "/role/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -376,7 +362,6 @@ public class RoleServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -389,15 +374,12 @@ public class RoleServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getRoleValidateBeforeCall(String uuid, String label, Boolean isTeam, Boolean groupRole, Boolean userRole, Integer lastUpdated, List<String> autoApplies, Boolean policiesContextEditable, Boolean forceOverride, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling getRole(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getRoleCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, _callback);
-        return localVarCall;
+        return getRoleCall(uuid, label, isTeam, groupRole, userRole, lastUpdated, autoApplies, policiesContextEditable, forceOverride, _callback);
 
     }
 
@@ -510,7 +492,6 @@ public class RoleServiceApi {
      */
     public okhttp3.Call searchRolesCall(RestSearchRoleRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -556,15 +537,12 @@ public class RoleServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call searchRolesValidateBeforeCall(RestSearchRoleRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling searchRoles(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = searchRolesCall(body, _callback);
-        return localVarCall;
+        return searchRolesCall(body, _callback);
 
     }
 
@@ -652,9 +630,8 @@ public class RoleServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setRoleCall(String uuid, InlineObject body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call setRoleCall(String uuid, SetRoleRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -671,7 +648,7 @@ public class RoleServiceApi {
 
         // create path and map variables
         String localVarPath = "/role/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -700,21 +677,18 @@ public class RoleServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call setRoleValidateBeforeCall(String uuid, InlineObject body, final ApiCallback _callback) throws ApiException {
-        
+    private okhttp3.Call setRoleValidateBeforeCall(String uuid, SetRoleRequest body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling setRole(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling setRole(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = setRoleCall(uuid, body, _callback);
-        return localVarCall;
+        return setRoleCall(uuid, body, _callback);
 
     }
 
@@ -735,7 +709,7 @@ public class RoleServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public IdmRole setRole(String uuid, InlineObject body) throws ApiException {
+    public IdmRole setRole(String uuid, SetRoleRequest body) throws ApiException {
         ApiResponse<IdmRole> localVarResp = setRoleWithHttpInfo(uuid, body);
         return localVarResp.getData();
     }
@@ -757,7 +731,7 @@ public class RoleServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<IdmRole> setRoleWithHttpInfo(String uuid, InlineObject body) throws ApiException {
+    public ApiResponse<IdmRole> setRoleWithHttpInfo(String uuid, SetRoleRequest body) throws ApiException {
         okhttp3.Call localVarCall = setRoleValidateBeforeCall(uuid, body, null);
         Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -781,7 +755,7 @@ public class RoleServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setRoleAsync(String uuid, InlineObject body, final ApiCallback<IdmRole> _callback) throws ApiException {
+    public okhttp3.Call setRoleAsync(String uuid, SetRoleRequest body, final ApiCallback<IdmRole> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = setRoleValidateBeforeCall(uuid, body, _callback);
         Type localVarReturnType = new TypeToken<IdmRole>(){}.getType();

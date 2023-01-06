@@ -13,24 +13,16 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.IdmACL;
 import com.pydio.cells.openapi.model.RestACLCollection;
 import com.pydio.cells.openapi.model.RestDeleteResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestSearchACLRequest;
 
 import java.lang.reflect.Type;
@@ -94,7 +86,6 @@ public class AclServiceApi {
      */
     public okhttp3.Call deleteAclCall(IdmACL body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -140,15 +131,12 @@ public class AclServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteAclValidateBeforeCall(IdmACL body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling deleteAcl(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteAclCall(body, _callback);
-        return localVarCall;
+        return deleteAclCall(body, _callback);
 
     }
 
@@ -237,7 +225,6 @@ public class AclServiceApi {
      */
     public okhttp3.Call putAclCall(IdmACL body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -283,15 +270,12 @@ public class AclServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call putAclValidateBeforeCall(IdmACL body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putAcl(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putAclCall(body, _callback);
-        return localVarCall;
+        return putAclCall(body, _callback);
 
     }
 
@@ -380,7 +364,6 @@ public class AclServiceApi {
      */
     public okhttp3.Call searchAclsCall(RestSearchACLRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -426,15 +409,12 @@ public class AclServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call searchAclsValidateBeforeCall(RestSearchACLRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling searchAcls(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = searchAclsCall(body, _callback);
-        return localVarCall;
+        return searchAclsCall(body, _callback);
 
     }
 

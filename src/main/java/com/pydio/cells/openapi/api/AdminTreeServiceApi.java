@@ -13,21 +13,13 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestNodesCollection;
 import com.pydio.cells.openapi.model.TreeListNodesRequest;
 import com.pydio.cells.openapi.model.TreeReadNodeRequest;
@@ -94,7 +86,6 @@ public class AdminTreeServiceApi {
      */
     public okhttp3.Call listAdminTreeCall(TreeListNodesRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -140,15 +131,12 @@ public class AdminTreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listAdminTreeValidateBeforeCall(TreeListNodesRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listAdminTree(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listAdminTreeCall(body, _callback);
-        return localVarCall;
+        return listAdminTreeCall(body, _callback);
 
     }
 
@@ -237,7 +225,6 @@ public class AdminTreeServiceApi {
      */
     public okhttp3.Call statAdminTreeCall(TreeReadNodeRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -283,15 +270,12 @@ public class AdminTreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call statAdminTreeValidateBeforeCall(TreeReadNodeRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling statAdminTree(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = statAdminTreeCall(body, _callback);
-        return localVarCall;
+        return statAdminTreeCall(body, _callback);
 
     }
 

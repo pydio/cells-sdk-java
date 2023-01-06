@@ -13,12 +13,12 @@
 
 package com.pydio.cells.openapi.auth;
 
-import com.pydio.cells.openapi.Pair;
 import com.pydio.cells.openapi.ApiException;
+import com.pydio.cells.openapi.Pair;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 public interface Authentication {
     /**

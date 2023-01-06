@@ -13,25 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmACLSingleQuery;
-import com.pydio.cells.openapi.model.ServiceOperationType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestSearchACLRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestSearchACLRequest {
   public static final String SERIALIZED_NAME_COUNT_ONLY = "CountOnly";
   @SerializedName(SERIALIZED_NAME_COUNT_ONLY)
@@ -57,7 +64,7 @@ public class RestSearchACLRequest {
   @SerializedName(SERIALIZED_NAME_QUERIES)
   private List<IdmACLSingleQuery> queries = null;
 
-  public RestSearchACLRequest() { 
+  public RestSearchACLRequest() {
   }
 
   public RestSearchACLRequest countOnly(Boolean countOnly) {
@@ -183,7 +190,7 @@ public class RestSearchACLRequest {
 
   public RestSearchACLRequest addQueriesItem(IdmACLSingleQuery queriesItem) {
     if (this.queries == null) {
-      this.queries = new ArrayList<IdmACLSingleQuery>();
+      this.queries = new ArrayList<>();
     }
     this.queries.add(queriesItem);
     return this;
@@ -204,6 +211,7 @@ public class RestSearchACLRequest {
   public void setQueries(List<IdmACLSingleQuery> queries) {
     this.queries = queries;
   }
+
 
 
   @Override
@@ -253,5 +261,113 @@ public class RestSearchACLRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("CountOnly");
+    openapiFields.add("GroupBy");
+    openapiFields.add("Limit");
+    openapiFields.add("Offset");
+    openapiFields.add("Operation");
+    openapiFields.add("Queries");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestSearchACLRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestSearchACLRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestSearchACLRequest is not found in the empty JSON string", RestSearchACLRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestSearchACLRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSearchACLRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Limit") != null && !jsonObj.get("Limit").isJsonNull()) && !jsonObj.get("Limit").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Limit` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Limit").toString()));
+      }
+      if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
+      }
+      if (jsonObj.get("Queries") != null && !jsonObj.get("Queries").isJsonNull()) {
+        JsonArray jsonArrayqueries = jsonObj.getAsJsonArray("Queries");
+        if (jsonArrayqueries != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Queries").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Queries` to be an array in the JSON string but got `%s`", jsonObj.get("Queries").toString()));
+          }
+
+          // validate the optional field `Queries` (array)
+          for (int i = 0; i < jsonArrayqueries.size(); i++) {
+            IdmACLSingleQuery.validateJsonObject(jsonArrayqueries.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestSearchACLRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestSearchACLRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestSearchACLRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestSearchACLRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestSearchACLRequest>() {
+           @Override
+           public void write(JsonWriter out, RestSearchACLRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestSearchACLRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestSearchACLRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestSearchACLRequest
+  * @throws IOException if the JSON string is invalid with respect to RestSearchACLRequest
+  */
+  public static RestSearchACLRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestSearchACLRequest.class);
+  }
+
+ /**
+  * Convert an instance of RestSearchACLRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

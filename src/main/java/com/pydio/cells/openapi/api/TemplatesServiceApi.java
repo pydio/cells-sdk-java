@@ -13,21 +13,13 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestListTemplatesResponse;
 
 import java.lang.reflect.Type;
@@ -91,7 +83,6 @@ public class TemplatesServiceApi {
      */
     public okhttp3.Call listTemplatesCall(String templateType, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -128,7 +119,6 @@ public class TemplatesServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -141,10 +131,7 @@ public class TemplatesServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listTemplatesValidateBeforeCall(String templateType, final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = listTemplatesCall(templateType, _callback);
-        return localVarCall;
+        return listTemplatesCall(templateType, _callback);
 
     }
 

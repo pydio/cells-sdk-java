@@ -13,27 +13,19 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.RestBulkMetaResponse;
 import com.pydio.cells.openapi.model.RestCreateNodesRequest;
 import com.pydio.cells.openapi.model.RestCreateSelectionRequest;
 import com.pydio.cells.openapi.model.RestCreateSelectionResponse;
 import com.pydio.cells.openapi.model.RestDeleteNodesRequest;
 import com.pydio.cells.openapi.model.RestDeleteNodesResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestGetBulkMetaRequest;
 import com.pydio.cells.openapi.model.RestHeadNodeResponse;
 import com.pydio.cells.openapi.model.RestNodesCollection;
@@ -101,7 +93,6 @@ public class TreeServiceApi {
      */
     public okhttp3.Call bulkStatNodesCall(RestGetBulkMetaRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -147,15 +138,12 @@ public class TreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call bulkStatNodesValidateBeforeCall(RestGetBulkMetaRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling bulkStatNodes(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = bulkStatNodesCall(body, _callback);
-        return localVarCall;
+        return bulkStatNodesCall(body, _callback);
 
     }
 
@@ -244,7 +232,6 @@ public class TreeServiceApi {
      */
     public okhttp3.Call createNodesCall(RestCreateNodesRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -290,15 +277,12 @@ public class TreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call createNodesValidateBeforeCall(RestCreateNodesRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createNodes(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = createNodesCall(body, _callback);
-        return localVarCall;
+        return createNodesCall(body, _callback);
 
     }
 
@@ -387,7 +371,6 @@ public class TreeServiceApi {
      */
     public okhttp3.Call createSelectionCall(RestCreateSelectionRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -433,15 +416,12 @@ public class TreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call createSelectionValidateBeforeCall(RestCreateSelectionRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createSelection(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = createSelectionCall(body, _callback);
-        return localVarCall;
+        return createSelectionCall(body, _callback);
 
     }
 
@@ -530,7 +510,6 @@ public class TreeServiceApi {
      */
     public okhttp3.Call deleteNodesCall(RestDeleteNodesRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -576,15 +555,12 @@ public class TreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteNodesValidateBeforeCall(RestDeleteNodesRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling deleteNodes(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteNodesCall(body, _callback);
-        return localVarCall;
+        return deleteNodesCall(body, _callback);
 
     }
 
@@ -673,7 +649,6 @@ public class TreeServiceApi {
      */
     public okhttp3.Call headNodeCall(String node, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -690,7 +665,7 @@ public class TreeServiceApi {
 
         // create path and map variables
         String localVarPath = "/tree/stat/{Node}"
-            .replaceAll("\\{" + "Node" + "\\}", localVarApiClient.escapeString(node.toString()));
+            .replace("{" + "Node" + "}", localVarApiClient.escapeString(node.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -707,7 +682,6 @@ public class TreeServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -720,15 +694,12 @@ public class TreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call headNodeValidateBeforeCall(String node, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'node' is set
         if (node == null) {
             throw new ApiException("Missing the required parameter 'node' when calling headNode(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = headNodeCall(node, _callback);
-        return localVarCall;
+        return headNodeCall(node, _callback);
 
     }
 
@@ -817,7 +788,6 @@ public class TreeServiceApi {
      */
     public okhttp3.Call restoreNodesCall(RestRestoreNodesRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -863,15 +833,12 @@ public class TreeServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call restoreNodesValidateBeforeCall(RestRestoreNodesRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling restoreNodes(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = restoreNodesCall(body, _callback);
-        return localVarCall;
+        return restoreNodesCall(body, _callback);
 
     }
 

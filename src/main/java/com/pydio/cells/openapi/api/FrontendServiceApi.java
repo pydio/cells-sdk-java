@@ -13,21 +13,13 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestFrontBinaryResponse;
 import com.pydio.cells.openapi.model.RestFrontBootConfResponse;
 import com.pydio.cells.openapi.model.RestFrontEnrollAuthRequest;
@@ -99,7 +91,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontBootConfCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -132,7 +123,6 @@ public class FrontendServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -145,10 +135,7 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontBootConfValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = frontBootConfCall(_callback);
-        return localVarCall;
+        return frontBootConfCall(_callback);
 
     }
 
@@ -234,7 +221,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontEnrollAuthCall(RestFrontEnrollAuthRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -280,15 +266,12 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontEnrollAuthValidateBeforeCall(RestFrontEnrollAuthRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling frontEnrollAuth(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = frontEnrollAuthCall(body, _callback);
-        return localVarCall;
+        return frontEnrollAuthCall(body, _callback);
 
     }
 
@@ -377,7 +360,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontMessagesCall(String lang, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -394,7 +376,7 @@ public class FrontendServiceApi {
 
         // create path and map variables
         String localVarPath = "/frontend/messages/{Lang}"
-            .replaceAll("\\{" + "Lang" + "\\}", localVarApiClient.escapeString(lang.toString()));
+            .replace("{" + "Lang" + "}", localVarApiClient.escapeString(lang.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -411,7 +393,6 @@ public class FrontendServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -424,15 +405,12 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontMessagesValidateBeforeCall(String lang, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'lang' is set
         if (lang == null) {
             throw new ApiException("Missing the required parameter 'lang' when calling frontMessages(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = frontMessagesCall(lang, _callback);
-        return localVarCall;
+        return frontMessagesCall(lang, _callback);
 
     }
 
@@ -521,7 +499,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontPluginsCall(String lang, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -538,7 +515,7 @@ public class FrontendServiceApi {
 
         // create path and map variables
         String localVarPath = "/frontend/plugins/{Lang}"
-            .replaceAll("\\{" + "Lang" + "\\}", localVarApiClient.escapeString(lang.toString()));
+            .replace("{" + "Lang" + "}", localVarApiClient.escapeString(lang.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -555,7 +532,6 @@ public class FrontendServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -568,15 +544,12 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontPluginsValidateBeforeCall(String lang, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'lang' is set
         if (lang == null) {
             throw new ApiException("Missing the required parameter 'lang' when calling frontPlugins(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = frontPluginsCall(lang, _callback);
-        return localVarCall;
+        return frontPluginsCall(lang, _callback);
 
     }
 
@@ -666,7 +639,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontPutBinaryCall(String binaryType, String uuid, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -683,8 +655,8 @@ public class FrontendServiceApi {
 
         // create path and map variables
         String localVarPath = "/frontend/binaries/{BinaryType}/{Uuid}"
-            .replaceAll("\\{" + "BinaryType" + "\\}", localVarApiClient.escapeString(binaryType.toString()))
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "BinaryType" + "}", localVarApiClient.escapeString(binaryType.toString()))
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -701,7 +673,6 @@ public class FrontendServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -714,20 +685,17 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontPutBinaryValidateBeforeCall(String binaryType, String uuid, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'binaryType' is set
         if (binaryType == null) {
             throw new ApiException("Missing the required parameter 'binaryType' when calling frontPutBinary(Async)");
         }
-        
+
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling frontPutBinary(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = frontPutBinaryCall(binaryType, uuid, _callback);
-        return localVarCall;
+        return frontPutBinaryCall(binaryType, uuid, _callback);
 
     }
 
@@ -820,7 +788,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontServeBinaryCall(String binaryType, String uuid, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -837,8 +804,8 @@ public class FrontendServiceApi {
 
         // create path and map variables
         String localVarPath = "/frontend/binaries/{BinaryType}/{Uuid}"
-            .replaceAll("\\{" + "BinaryType" + "\\}", localVarApiClient.escapeString(binaryType.toString()))
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "BinaryType" + "}", localVarApiClient.escapeString(binaryType.toString()))
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -855,7 +822,6 @@ public class FrontendServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -868,20 +834,17 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontServeBinaryValidateBeforeCall(String binaryType, String uuid, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'binaryType' is set
         if (binaryType == null) {
             throw new ApiException("Missing the required parameter 'binaryType' when calling frontServeBinary(Async)");
         }
-        
+
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling frontServeBinary(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = frontServeBinaryCall(binaryType, uuid, _callback);
-        return localVarCall;
+        return frontServeBinaryCall(binaryType, uuid, _callback);
 
     }
 
@@ -973,7 +936,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontSessionCall(RestFrontSessionRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1019,15 +981,12 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontSessionValidateBeforeCall(RestFrontSessionRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling frontSession(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = frontSessionCall(body, _callback);
-        return localVarCall;
+        return frontSessionCall(body, _callback);
 
     }
 
@@ -1116,7 +1075,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call frontStateCall(String xpath, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1153,7 +1111,6 @@ public class FrontendServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1166,10 +1123,7 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call frontStateValidateBeforeCall(String xpath, final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = frontStateCall(xpath, _callback);
-        return localVarCall;
+        return frontStateCall(xpath, _callback);
 
     }
 
@@ -1257,7 +1211,6 @@ public class FrontendServiceApi {
      */
     public okhttp3.Call settingsMenuCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1290,7 +1243,6 @@ public class FrontendServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1303,10 +1255,7 @@ public class FrontendServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call settingsMenuValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = settingsMenuCall(_callback);
-        return localVarCall;
+        return settingsMenuCall(_callback);
 
     }
 

@@ -13,30 +13,38 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.RestBackgroundJobResult;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestRestoreNodesResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestRestoreNodesResponse {
   public static final String SERIALIZED_NAME_RESTORE_JOBS = "RestoreJobs";
   @SerializedName(SERIALIZED_NAME_RESTORE_JOBS)
   private List<RestBackgroundJobResult> restoreJobs = null;
 
-  public RestRestoreNodesResponse() { 
+  public RestRestoreNodesResponse() {
   }
 
   public RestRestoreNodesResponse restoreJobs(List<RestBackgroundJobResult> restoreJobs) {
@@ -47,7 +55,7 @@ public class RestRestoreNodesResponse {
 
   public RestRestoreNodesResponse addRestoreJobsItem(RestBackgroundJobResult restoreJobsItem) {
     if (this.restoreJobs == null) {
-      this.restoreJobs = new ArrayList<RestBackgroundJobResult>();
+      this.restoreJobs = new ArrayList<>();
     }
     this.restoreJobs.add(restoreJobsItem);
     return this;
@@ -68,6 +76,7 @@ public class RestRestoreNodesResponse {
   public void setRestoreJobs(List<RestBackgroundJobResult> restoreJobs) {
     this.restoreJobs = restoreJobs;
   }
+
 
 
   @Override
@@ -107,5 +116,102 @@ public class RestRestoreNodesResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("RestoreJobs");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestRestoreNodesResponse
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestRestoreNodesResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestRestoreNodesResponse is not found in the empty JSON string", RestRestoreNodesResponse.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestRestoreNodesResponse.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestRestoreNodesResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("RestoreJobs") != null && !jsonObj.get("RestoreJobs").isJsonNull()) {
+        JsonArray jsonArrayrestoreJobs = jsonObj.getAsJsonArray("RestoreJobs");
+        if (jsonArrayrestoreJobs != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("RestoreJobs").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `RestoreJobs` to be an array in the JSON string but got `%s`", jsonObj.get("RestoreJobs").toString()));
+          }
+
+          // validate the optional field `RestoreJobs` (array)
+          for (int i = 0; i < jsonArrayrestoreJobs.size(); i++) {
+            RestBackgroundJobResult.validateJsonObject(jsonArrayrestoreJobs.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestRestoreNodesResponse.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestRestoreNodesResponse' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestRestoreNodesResponse> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestRestoreNodesResponse.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestRestoreNodesResponse>() {
+           @Override
+           public void write(JsonWriter out, RestRestoreNodesResponse value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestRestoreNodesResponse read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestRestoreNodesResponse given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestRestoreNodesResponse
+  * @throws IOException if the JSON string is invalid with respect to RestRestoreNodesResponse
+  */
+  public static RestRestoreNodesResponse fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestRestoreNodesResponse.class);
+  }
+
+ /**
+  * Convert an instance of RestRestoreNodesResponse to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

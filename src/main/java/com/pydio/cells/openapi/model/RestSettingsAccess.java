@@ -13,24 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.RestSettingsAccessRestPolicy;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestSettingsAccess
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestSettingsAccess {
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -44,7 +52,7 @@ public class RestSettingsAccess {
   @SerializedName(SERIALIZED_NAME_POLICIES)
   private List<RestSettingsAccessRestPolicy> policies = null;
 
-  public RestSettingsAccess() { 
+  public RestSettingsAccess() {
   }
 
   public RestSettingsAccess description(String description) {
@@ -101,7 +109,7 @@ public class RestSettingsAccess {
 
   public RestSettingsAccess addPoliciesItem(RestSettingsAccessRestPolicy policiesItem) {
     if (this.policies == null) {
-      this.policies = new ArrayList<RestSettingsAccessRestPolicy>();
+      this.policies = new ArrayList<>();
     }
     this.policies.add(policiesItem);
     return this;
@@ -122,6 +130,7 @@ public class RestSettingsAccess {
   public void setPolicies(List<RestSettingsAccessRestPolicy> policies) {
     this.policies = policies;
   }
+
 
 
   @Override
@@ -165,5 +174,110 @@ public class RestSettingsAccess {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Description");
+    openapiFields.add("Label");
+    openapiFields.add("Policies");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestSettingsAccess
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestSettingsAccess.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestSettingsAccess is not found in the empty JSON string", RestSettingsAccess.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestSettingsAccess.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSettingsAccess` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
+      }
+      if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
+      }
+      if (jsonObj.get("Policies") != null && !jsonObj.get("Policies").isJsonNull()) {
+        JsonArray jsonArraypolicies = jsonObj.getAsJsonArray("Policies");
+        if (jsonArraypolicies != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Policies").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Policies` to be an array in the JSON string but got `%s`", jsonObj.get("Policies").toString()));
+          }
+
+          // validate the optional field `Policies` (array)
+          for (int i = 0; i < jsonArraypolicies.size(); i++) {
+            RestSettingsAccessRestPolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestSettingsAccess.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestSettingsAccess' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestSettingsAccess> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestSettingsAccess.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestSettingsAccess>() {
+           @Override
+           public void write(JsonWriter out, RestSettingsAccess value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestSettingsAccess read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestSettingsAccess given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestSettingsAccess
+  * @throws IOException if the JSON string is invalid with respect to RestSettingsAccess
+  */
+  public static RestSettingsAccess fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestSettingsAccess.class);
+  }
+
+ /**
+  * Convert an instance of RestSettingsAccess to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

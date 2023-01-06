@@ -13,26 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.InstallTLSCertificate;
-import com.pydio.cells.openapi.model.InstallTLSLetsEncrypt;
-import com.pydio.cells.openapi.model.InstallTLSSelfSigned;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * InstallProxyConfig
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class InstallProxyConfig {
   public static final String SERIALIZED_NAME_BINDS = "Binds";
   @SerializedName(SERIALIZED_NAME_BINDS)
@@ -66,7 +71,7 @@ public class InstallProxyConfig {
   @SerializedName(SERIALIZED_NAME_SELF_SIGNED)
   private InstallTLSSelfSigned selfSigned;
 
-  public InstallProxyConfig() { 
+  public InstallProxyConfig() {
   }
 
   public InstallProxyConfig binds(List<String> binds) {
@@ -77,7 +82,7 @@ public class InstallProxyConfig {
 
   public InstallProxyConfig addBindsItem(String bindsItem) {
     if (this.binds == null) {
-      this.binds = new ArrayList<String>();
+      this.binds = new ArrayList<>();
     }
     this.binds.add(bindsItem);
     return this;
@@ -177,7 +182,7 @@ public class InstallProxyConfig {
 
   public InstallProxyConfig addMaintenanceConditionsItem(String maintenanceConditionsItem) {
     if (this.maintenanceConditions == null) {
-      this.maintenanceConditions = new ArrayList<String>();
+      this.maintenanceConditions = new ArrayList<>();
     }
     this.maintenanceConditions.add(maintenanceConditionsItem);
     return this;
@@ -269,6 +274,7 @@ public class InstallProxyConfig {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -320,5 +326,118 @@ public class InstallProxyConfig {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Binds");
+    openapiFields.add("Certificate");
+    openapiFields.add("LetsEncrypt");
+    openapiFields.add("Maintenance");
+    openapiFields.add("MaintenanceConditions");
+    openapiFields.add("ReverseProxyURL");
+    openapiFields.add("SSLRedirect");
+    openapiFields.add("SelfSigned");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to InstallProxyConfig
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!InstallProxyConfig.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in InstallProxyConfig is not found in the empty JSON string", InstallProxyConfig.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!InstallProxyConfig.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `InstallProxyConfig` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("Binds") != null && !jsonObj.get("Binds").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Binds` to be an array in the JSON string but got `%s`", jsonObj.get("Binds").toString()));
+      }
+      // validate the optional field `Certificate`
+      if (jsonObj.get("Certificate") != null && !jsonObj.get("Certificate").isJsonNull()) {
+        InstallTLSCertificate.validateJsonObject(jsonObj.getAsJsonObject("Certificate"));
+      }
+      // validate the optional field `LetsEncrypt`
+      if (jsonObj.get("LetsEncrypt") != null && !jsonObj.get("LetsEncrypt").isJsonNull()) {
+        InstallTLSLetsEncrypt.validateJsonObject(jsonObj.getAsJsonObject("LetsEncrypt"));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("MaintenanceConditions") != null && !jsonObj.get("MaintenanceConditions").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `MaintenanceConditions` to be an array in the JSON string but got `%s`", jsonObj.get("MaintenanceConditions").toString()));
+      }
+      if ((jsonObj.get("ReverseProxyURL") != null && !jsonObj.get("ReverseProxyURL").isJsonNull()) && !jsonObj.get("ReverseProxyURL").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ReverseProxyURL` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ReverseProxyURL").toString()));
+      }
+      // validate the optional field `SelfSigned`
+      if (jsonObj.get("SelfSigned") != null && !jsonObj.get("SelfSigned").isJsonNull()) {
+        InstallTLSSelfSigned.validateJsonObject(jsonObj.getAsJsonObject("SelfSigned"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!InstallProxyConfig.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'InstallProxyConfig' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<InstallProxyConfig> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(InstallProxyConfig.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<InstallProxyConfig>() {
+           @Override
+           public void write(JsonWriter out, InstallProxyConfig value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public InstallProxyConfig read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of InstallProxyConfig given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of InstallProxyConfig
+  * @throws IOException if the JSON string is invalid with respect to InstallProxyConfig
+  */
+  public static InstallProxyConfig fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, InstallProxyConfig.class);
+  }
+
+ /**
+  * Convert an instance of InstallProxyConfig to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

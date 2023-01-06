@@ -13,21 +13,13 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.UpdateApplyUpdateRequest;
 import com.pydio.cells.openapi.model.UpdateApplyUpdateResponse;
 import com.pydio.cells.openapi.model.UpdateUpdateRequest;
@@ -95,7 +87,6 @@ public class UpdateServiceApi {
      */
     public okhttp3.Call applyUpdateCall(String targetVersion, UpdateApplyUpdateRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -112,7 +103,7 @@ public class UpdateServiceApi {
 
         // create path and map variables
         String localVarPath = "/update/{TargetVersion}"
-            .replaceAll("\\{" + "TargetVersion" + "\\}", localVarApiClient.escapeString(targetVersion.toString()));
+            .replace("{" + "TargetVersion" + "}", localVarApiClient.escapeString(targetVersion.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -142,20 +133,17 @@ public class UpdateServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call applyUpdateValidateBeforeCall(String targetVersion, UpdateApplyUpdateRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'targetVersion' is set
         if (targetVersion == null) {
             throw new ApiException("Missing the required parameter 'targetVersion' when calling applyUpdate(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling applyUpdate(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = applyUpdateCall(targetVersion, body, _callback);
-        return localVarCall;
+        return applyUpdateCall(targetVersion, body, _callback);
 
     }
 
@@ -247,7 +235,6 @@ public class UpdateServiceApi {
      */
     public okhttp3.Call updateRequiredCall(UpdateUpdateRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -293,15 +280,12 @@ public class UpdateServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call updateRequiredValidateBeforeCall(UpdateUpdateRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updateRequired(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = updateRequiredCall(body, _callback);
-        return localVarCall;
+        return updateRequiredCall(body, _callback);
 
     }
 

@@ -13,28 +13,34 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.RegistryDao;
-import com.pydio.cells.openapi.model.RegistryEdge;
-import com.pydio.cells.openapi.model.RegistryGeneric;
-import com.pydio.cells.openapi.model.RegistryServer;
-import com.pydio.cells.openapi.model.RegistryService;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RegistryItem
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RegistryItem {
   public static final String SERIALIZED_NAME_ADJACENTS = "adjacents";
   @SerializedName(SERIALIZED_NAME_ADJACENTS)
@@ -52,6 +58,22 @@ public class RegistryItem {
   @SerializedName(SERIALIZED_NAME_GENERIC)
   private RegistryGeneric generic;
 
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private String id;
+
+  public static final String SERIALIZED_NAME_METADATA = "metadata";
+  @SerializedName(SERIALIZED_NAME_METADATA)
+  private Map<String, String> metadata = null;
+
+  public static final String SERIALIZED_NAME_NAME = "name";
+  @SerializedName(SERIALIZED_NAME_NAME)
+  private String name;
+
+  public static final String SERIALIZED_NAME_NODE = "node";
+  @SerializedName(SERIALIZED_NAME_NODE)
+  private RegistryNode node;
+
   public static final String SERIALIZED_NAME_SERVER = "server";
   @SerializedName(SERIALIZED_NAME_SERVER)
   private RegistryServer server;
@@ -60,7 +82,7 @@ public class RegistryItem {
   @SerializedName(SERIALIZED_NAME_SERVICE)
   private RegistryService service;
 
-  public RegistryItem() { 
+  public RegistryItem() {
   }
 
   public RegistryItem adjacents(List<RegistryItem> adjacents) {
@@ -71,7 +93,7 @@ public class RegistryItem {
 
   public RegistryItem addAdjacentsItem(RegistryItem adjacentsItem) {
     if (this.adjacents == null) {
-      this.adjacents = new ArrayList<RegistryItem>();
+      this.adjacents = new ArrayList<>();
     }
     this.adjacents.add(adjacentsItem);
     return this;
@@ -163,6 +185,106 @@ public class RegistryItem {
   }
 
 
+  public RegistryItem id(String id) {
+    
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * Get id
+   * @return id
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getId() {
+    return id;
+  }
+
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+
+  public RegistryItem metadata(Map<String, String> metadata) {
+    
+    this.metadata = metadata;
+    return this;
+  }
+
+  public RegistryItem putMetadataItem(String key, String metadataItem) {
+    if (this.metadata == null) {
+      this.metadata = new HashMap<>();
+    }
+    this.metadata.put(key, metadataItem);
+    return this;
+  }
+
+   /**
+   * Get metadata
+   * @return metadata
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Map<String, String> getMetadata() {
+    return metadata;
+  }
+
+
+  public void setMetadata(Map<String, String> metadata) {
+    this.metadata = metadata;
+  }
+
+
+  public RegistryItem name(String name) {
+    
+    this.name = name;
+    return this;
+  }
+
+   /**
+   * Get name
+   * @return name
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getName() {
+    return name;
+  }
+
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+
+  public RegistryItem node(RegistryNode node) {
+    
+    this.node = node;
+    return this;
+  }
+
+   /**
+   * Get node
+   * @return node
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public RegistryNode getNode() {
+    return node;
+  }
+
+
+  public void setNode(RegistryNode node) {
+    this.node = node;
+  }
+
+
   public RegistryItem server(RegistryServer server) {
     
     this.server = server;
@@ -209,6 +331,7 @@ public class RegistryItem {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -222,13 +345,17 @@ public class RegistryItem {
         Objects.equals(this.dao, registryItem.dao) &&
         Objects.equals(this.edge, registryItem.edge) &&
         Objects.equals(this.generic, registryItem.generic) &&
+        Objects.equals(this.id, registryItem.id) &&
+        Objects.equals(this.metadata, registryItem.metadata) &&
+        Objects.equals(this.name, registryItem.name) &&
+        Objects.equals(this.node, registryItem.node) &&
         Objects.equals(this.server, registryItem.server) &&
         Objects.equals(this.service, registryItem.service);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(adjacents, dao, edge, generic, server, service);
+    return Objects.hash(adjacents, dao, edge, generic, id, metadata, name, node, server, service);
   }
 
   @Override
@@ -239,6 +366,10 @@ public class RegistryItem {
     sb.append("    dao: ").append(toIndentedString(dao)).append("\n");
     sb.append("    edge: ").append(toIndentedString(edge)).append("\n");
     sb.append("    generic: ").append(toIndentedString(generic)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    node: ").append(toIndentedString(node)).append("\n");
     sb.append("    server: ").append(toIndentedString(server)).append("\n");
     sb.append("    service: ").append(toIndentedString(service)).append("\n");
     sb.append("}");
@@ -256,5 +387,141 @@ public class RegistryItem {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("adjacents");
+    openapiFields.add("dao");
+    openapiFields.add("edge");
+    openapiFields.add("generic");
+    openapiFields.add("id");
+    openapiFields.add("metadata");
+    openapiFields.add("name");
+    openapiFields.add("node");
+    openapiFields.add("server");
+    openapiFields.add("service");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RegistryItem
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RegistryItem.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RegistryItem is not found in the empty JSON string", RegistryItem.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RegistryItem.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryItem` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("adjacents") != null && !jsonObj.get("adjacents").isJsonNull()) {
+        JsonArray jsonArrayadjacents = jsonObj.getAsJsonArray("adjacents");
+        if (jsonArrayadjacents != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("adjacents").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `adjacents` to be an array in the JSON string but got `%s`", jsonObj.get("adjacents").toString()));
+          }
+
+          // validate the optional field `adjacents` (array)
+          for (int i = 0; i < jsonArrayadjacents.size(); i++) {
+            RegistryItem.validateJsonObject(jsonArrayadjacents.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // validate the optional field `dao`
+      if (jsonObj.get("dao") != null && !jsonObj.get("dao").isJsonNull()) {
+        RegistryDao.validateJsonObject(jsonObj.getAsJsonObject("dao"));
+      }
+      // validate the optional field `edge`
+      if (jsonObj.get("edge") != null && !jsonObj.get("edge").isJsonNull()) {
+        RegistryEdge.validateJsonObject(jsonObj.getAsJsonObject("edge"));
+      }
+      // validate the optional field `generic`
+      if (jsonObj.get("generic") != null && !jsonObj.get("generic").isJsonNull()) {
+        RegistryGeneric.validateJsonObject(jsonObj.getAsJsonObject("generic"));
+      }
+      if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
+      }
+      if ((jsonObj.get("name") != null && !jsonObj.get("name").isJsonNull()) && !jsonObj.get("name").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
+      }
+      // validate the optional field `node`
+      if (jsonObj.get("node") != null && !jsonObj.get("node").isJsonNull()) {
+        RegistryNode.validateJsonObject(jsonObj.getAsJsonObject("node"));
+      }
+      // validate the optional field `server`
+      if (jsonObj.get("server") != null && !jsonObj.get("server").isJsonNull()) {
+        RegistryServer.validateJsonObject(jsonObj.getAsJsonObject("server"));
+      }
+      // validate the optional field `service`
+      if (jsonObj.get("service") != null && !jsonObj.get("service").isJsonNull()) {
+        RegistryService.validateJsonObject(jsonObj.getAsJsonObject("service"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RegistryItem.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RegistryItem' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RegistryItem> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RegistryItem.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RegistryItem>() {
+           @Override
+           public void write(JsonWriter out, RegistryItem value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RegistryItem read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RegistryItem given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RegistryItem
+  * @throws IOException if the JSON string is invalid with respect to RegistryItem
+  */
+  public static RegistryItem fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RegistryItem.class);
+  }
+
+ /**
+  * Convert an instance of RegistryItem to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

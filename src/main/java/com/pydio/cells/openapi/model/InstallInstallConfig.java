@@ -13,25 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.InstallCheckResult;
-import com.pydio.cells.openapi.model.InstallProxyConfig;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * InstallInstallConfig
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class InstallInstallConfig {
   public static final String SERIALIZED_NAME_CHECK_RESULTS = "CheckResults";
   @SerializedName(SERIALIZED_NAME_CHECK_RESULTS)
@@ -189,7 +196,7 @@ public class InstallInstallConfig {
   @SerializedName(SERIALIZED_NAME_LICENSE_STRING)
   private String licenseString;
 
-  public InstallInstallConfig() { 
+  public InstallInstallConfig() {
   }
 
   public InstallInstallConfig checkResults(List<InstallCheckResult> checkResults) {
@@ -200,7 +207,7 @@ public class InstallInstallConfig {
 
   public InstallInstallConfig addCheckResultsItem(InstallCheckResult checkResultsItem) {
     if (this.checkResults == null) {
-      this.checkResults = new ArrayList<InstallCheckResult>();
+      this.checkResults = new ArrayList<>();
     }
     this.checkResults.add(checkResultsItem);
     return this;
@@ -1097,6 +1104,7 @@ public class InstallInstallConfig {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -1210,5 +1218,246 @@ public class InstallInstallConfig {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("CheckResults");
+    openapiFields.add("DocumentsDSN");
+    openapiFields.add("ProxyConfig");
+    openapiFields.add("UseDocumentsDSN");
+    openapiFields.add("dbConnectionType");
+    openapiFields.add("dbManualDSN");
+    openapiFields.add("dbSocketFile");
+    openapiFields.add("dbSocketName");
+    openapiFields.add("dbSocketPassword");
+    openapiFields.add("dbSocketUser");
+    openapiFields.add("dbTCPHostname");
+    openapiFields.add("dbTCPName");
+    openapiFields.add("dbTCPPassword");
+    openapiFields.add("dbTCPPort");
+    openapiFields.add("dbTCPUser");
+    openapiFields.add("dbUseDefaults");
+    openapiFields.add("dsFolder");
+    openapiFields.add("dsName");
+    openapiFields.add("dsPort");
+    openapiFields.add("dsS3ApiKey");
+    openapiFields.add("dsS3ApiSecret");
+    openapiFields.add("dsS3BucketBinaries");
+    openapiFields.add("dsS3BucketCells");
+    openapiFields.add("dsS3BucketDefault");
+    openapiFields.add("dsS3BucketPersonal");
+    openapiFields.add("dsS3BucketThumbs");
+    openapiFields.add("dsS3BucketVersions");
+    openapiFields.add("dsS3Custom");
+    openapiFields.add("dsS3CustomRegion");
+    openapiFields.add("dsType");
+    openapiFields.add("frontendApplicationTitle");
+    openapiFields.add("frontendDefaultLanguage");
+    openapiFields.add("frontendHosts");
+    openapiFields.add("frontendLogin");
+    openapiFields.add("frontendPassword");
+    openapiFields.add("frontendRepeatPassword");
+    openapiFields.add("internalUrl");
+    openapiFields.add("licenseRequired");
+    openapiFields.add("licenseString");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to InstallInstallConfig
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!InstallInstallConfig.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in InstallInstallConfig is not found in the empty JSON string", InstallInstallConfig.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!InstallInstallConfig.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `InstallInstallConfig` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("CheckResults") != null && !jsonObj.get("CheckResults").isJsonNull()) {
+        JsonArray jsonArraycheckResults = jsonObj.getAsJsonArray("CheckResults");
+        if (jsonArraycheckResults != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("CheckResults").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `CheckResults` to be an array in the JSON string but got `%s`", jsonObj.get("CheckResults").toString()));
+          }
+
+          // validate the optional field `CheckResults` (array)
+          for (int i = 0; i < jsonArraycheckResults.size(); i++) {
+            InstallCheckResult.validateJsonObject(jsonArraycheckResults.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if ((jsonObj.get("DocumentsDSN") != null && !jsonObj.get("DocumentsDSN").isJsonNull()) && !jsonObj.get("DocumentsDSN").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `DocumentsDSN` to be a primitive type in the JSON string but got `%s`", jsonObj.get("DocumentsDSN").toString()));
+      }
+      // validate the optional field `ProxyConfig`
+      if (jsonObj.get("ProxyConfig") != null && !jsonObj.get("ProxyConfig").isJsonNull()) {
+        InstallProxyConfig.validateJsonObject(jsonObj.getAsJsonObject("ProxyConfig"));
+      }
+      if ((jsonObj.get("dbConnectionType") != null && !jsonObj.get("dbConnectionType").isJsonNull()) && !jsonObj.get("dbConnectionType").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbConnectionType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbConnectionType").toString()));
+      }
+      if ((jsonObj.get("dbManualDSN") != null && !jsonObj.get("dbManualDSN").isJsonNull()) && !jsonObj.get("dbManualDSN").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbManualDSN` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbManualDSN").toString()));
+      }
+      if ((jsonObj.get("dbSocketFile") != null && !jsonObj.get("dbSocketFile").isJsonNull()) && !jsonObj.get("dbSocketFile").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbSocketFile` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbSocketFile").toString()));
+      }
+      if ((jsonObj.get("dbSocketName") != null && !jsonObj.get("dbSocketName").isJsonNull()) && !jsonObj.get("dbSocketName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbSocketName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbSocketName").toString()));
+      }
+      if ((jsonObj.get("dbSocketPassword") != null && !jsonObj.get("dbSocketPassword").isJsonNull()) && !jsonObj.get("dbSocketPassword").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbSocketPassword` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbSocketPassword").toString()));
+      }
+      if ((jsonObj.get("dbSocketUser") != null && !jsonObj.get("dbSocketUser").isJsonNull()) && !jsonObj.get("dbSocketUser").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbSocketUser` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbSocketUser").toString()));
+      }
+      if ((jsonObj.get("dbTCPHostname") != null && !jsonObj.get("dbTCPHostname").isJsonNull()) && !jsonObj.get("dbTCPHostname").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbTCPHostname` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbTCPHostname").toString()));
+      }
+      if ((jsonObj.get("dbTCPName") != null && !jsonObj.get("dbTCPName").isJsonNull()) && !jsonObj.get("dbTCPName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbTCPName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbTCPName").toString()));
+      }
+      if ((jsonObj.get("dbTCPPassword") != null && !jsonObj.get("dbTCPPassword").isJsonNull()) && !jsonObj.get("dbTCPPassword").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbTCPPassword` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbTCPPassword").toString()));
+      }
+      if ((jsonObj.get("dbTCPPort") != null && !jsonObj.get("dbTCPPort").isJsonNull()) && !jsonObj.get("dbTCPPort").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbTCPPort` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbTCPPort").toString()));
+      }
+      if ((jsonObj.get("dbTCPUser") != null && !jsonObj.get("dbTCPUser").isJsonNull()) && !jsonObj.get("dbTCPUser").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dbTCPUser` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbTCPUser").toString()));
+      }
+      if ((jsonObj.get("dsFolder") != null && !jsonObj.get("dsFolder").isJsonNull()) && !jsonObj.get("dsFolder").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsFolder` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsFolder").toString()));
+      }
+      if ((jsonObj.get("dsName") != null && !jsonObj.get("dsName").isJsonNull()) && !jsonObj.get("dsName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsName").toString()));
+      }
+      if ((jsonObj.get("dsPort") != null && !jsonObj.get("dsPort").isJsonNull()) && !jsonObj.get("dsPort").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsPort` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsPort").toString()));
+      }
+      if ((jsonObj.get("dsS3ApiKey") != null && !jsonObj.get("dsS3ApiKey").isJsonNull()) && !jsonObj.get("dsS3ApiKey").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3ApiKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3ApiKey").toString()));
+      }
+      if ((jsonObj.get("dsS3ApiSecret") != null && !jsonObj.get("dsS3ApiSecret").isJsonNull()) && !jsonObj.get("dsS3ApiSecret").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3ApiSecret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3ApiSecret").toString()));
+      }
+      if ((jsonObj.get("dsS3BucketBinaries") != null && !jsonObj.get("dsS3BucketBinaries").isJsonNull()) && !jsonObj.get("dsS3BucketBinaries").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3BucketBinaries` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3BucketBinaries").toString()));
+      }
+      if ((jsonObj.get("dsS3BucketCells") != null && !jsonObj.get("dsS3BucketCells").isJsonNull()) && !jsonObj.get("dsS3BucketCells").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3BucketCells` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3BucketCells").toString()));
+      }
+      if ((jsonObj.get("dsS3BucketDefault") != null && !jsonObj.get("dsS3BucketDefault").isJsonNull()) && !jsonObj.get("dsS3BucketDefault").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3BucketDefault` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3BucketDefault").toString()));
+      }
+      if ((jsonObj.get("dsS3BucketPersonal") != null && !jsonObj.get("dsS3BucketPersonal").isJsonNull()) && !jsonObj.get("dsS3BucketPersonal").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3BucketPersonal` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3BucketPersonal").toString()));
+      }
+      if ((jsonObj.get("dsS3BucketThumbs") != null && !jsonObj.get("dsS3BucketThumbs").isJsonNull()) && !jsonObj.get("dsS3BucketThumbs").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3BucketThumbs` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3BucketThumbs").toString()));
+      }
+      if ((jsonObj.get("dsS3BucketVersions") != null && !jsonObj.get("dsS3BucketVersions").isJsonNull()) && !jsonObj.get("dsS3BucketVersions").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3BucketVersions` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3BucketVersions").toString()));
+      }
+      if ((jsonObj.get("dsS3Custom") != null && !jsonObj.get("dsS3Custom").isJsonNull()) && !jsonObj.get("dsS3Custom").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3Custom` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3Custom").toString()));
+      }
+      if ((jsonObj.get("dsS3CustomRegion") != null && !jsonObj.get("dsS3CustomRegion").isJsonNull()) && !jsonObj.get("dsS3CustomRegion").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsS3CustomRegion` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsS3CustomRegion").toString()));
+      }
+      if ((jsonObj.get("dsType") != null && !jsonObj.get("dsType").isJsonNull()) && !jsonObj.get("dsType").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dsType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dsType").toString()));
+      }
+      if ((jsonObj.get("frontendApplicationTitle") != null && !jsonObj.get("frontendApplicationTitle").isJsonNull()) && !jsonObj.get("frontendApplicationTitle").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `frontendApplicationTitle` to be a primitive type in the JSON string but got `%s`", jsonObj.get("frontendApplicationTitle").toString()));
+      }
+      if ((jsonObj.get("frontendDefaultLanguage") != null && !jsonObj.get("frontendDefaultLanguage").isJsonNull()) && !jsonObj.get("frontendDefaultLanguage").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `frontendDefaultLanguage` to be a primitive type in the JSON string but got `%s`", jsonObj.get("frontendDefaultLanguage").toString()));
+      }
+      if ((jsonObj.get("frontendHosts") != null && !jsonObj.get("frontendHosts").isJsonNull()) && !jsonObj.get("frontendHosts").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `frontendHosts` to be a primitive type in the JSON string but got `%s`", jsonObj.get("frontendHosts").toString()));
+      }
+      if ((jsonObj.get("frontendLogin") != null && !jsonObj.get("frontendLogin").isJsonNull()) && !jsonObj.get("frontendLogin").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `frontendLogin` to be a primitive type in the JSON string but got `%s`", jsonObj.get("frontendLogin").toString()));
+      }
+      if ((jsonObj.get("frontendPassword") != null && !jsonObj.get("frontendPassword").isJsonNull()) && !jsonObj.get("frontendPassword").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `frontendPassword` to be a primitive type in the JSON string but got `%s`", jsonObj.get("frontendPassword").toString()));
+      }
+      if ((jsonObj.get("frontendRepeatPassword") != null && !jsonObj.get("frontendRepeatPassword").isJsonNull()) && !jsonObj.get("frontendRepeatPassword").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `frontendRepeatPassword` to be a primitive type in the JSON string but got `%s`", jsonObj.get("frontendRepeatPassword").toString()));
+      }
+      if ((jsonObj.get("internalUrl") != null && !jsonObj.get("internalUrl").isJsonNull()) && !jsonObj.get("internalUrl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `internalUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("internalUrl").toString()));
+      }
+      if ((jsonObj.get("licenseString") != null && !jsonObj.get("licenseString").isJsonNull()) && !jsonObj.get("licenseString").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `licenseString` to be a primitive type in the JSON string but got `%s`", jsonObj.get("licenseString").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!InstallInstallConfig.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'InstallInstallConfig' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<InstallInstallConfig> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(InstallInstallConfig.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<InstallInstallConfig>() {
+           @Override
+           public void write(JsonWriter out, InstallInstallConfig value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public InstallInstallConfig read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of InstallInstallConfig given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of InstallInstallConfig
+  * @throws IOException if the JSON string is invalid with respect to InstallInstallConfig
+  */
+  public static InstallInstallConfig fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, InstallInstallConfig.class);
+  }
+
+ /**
+  * Convert an instance of InstallInstallConfig to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

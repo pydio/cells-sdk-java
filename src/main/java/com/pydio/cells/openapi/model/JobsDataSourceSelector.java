@@ -13,23 +13,29 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.JobsDataSourceSelectorType;
-import com.pydio.cells.openapi.model.ServiceQuery;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsDataSourceSelector
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsDataSourceSelector {
   public static final String SERIALIZED_NAME_ALL = "All";
   @SerializedName(SERIALIZED_NAME_ALL)
@@ -43,6 +49,10 @@ public class JobsDataSourceSelector {
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
   private String description;
 
+  public static final String SERIALIZED_NAME_FAN_OUT_INPUT = "FanOutInput";
+  @SerializedName(SERIALIZED_NAME_FAN_OUT_INPUT)
+  private Boolean fanOutInput;
+
   public static final String SERIALIZED_NAME_LABEL = "Label";
   @SerializedName(SERIALIZED_NAME_LABEL)
   private String label;
@@ -51,11 +61,15 @@ public class JobsDataSourceSelector {
   @SerializedName(SERIALIZED_NAME_QUERY)
   private ServiceQuery query;
 
+  public static final String SERIALIZED_NAME_TIMEOUT = "Timeout";
+  @SerializedName(SERIALIZED_NAME_TIMEOUT)
+  private String timeout;
+
   public static final String SERIALIZED_NAME_TYPE = "Type";
   @SerializedName(SERIALIZED_NAME_TYPE)
   private JobsDataSourceSelectorType type = JobsDataSourceSelectorType.DATASOURCE;
 
-  public JobsDataSourceSelector() { 
+  public JobsDataSourceSelector() {
   }
 
   public JobsDataSourceSelector all(Boolean all) {
@@ -127,6 +141,29 @@ public class JobsDataSourceSelector {
   }
 
 
+  public JobsDataSourceSelector fanOutInput(Boolean fanOutInput) {
+    
+    this.fanOutInput = fanOutInput;
+    return this;
+  }
+
+   /**
+   * Get fanOutInput
+   * @return fanOutInput
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getFanOutInput() {
+    return fanOutInput;
+  }
+
+
+  public void setFanOutInput(Boolean fanOutInput) {
+    this.fanOutInput = fanOutInput;
+  }
+
+
   public JobsDataSourceSelector label(String label) {
     
     this.label = label;
@@ -173,6 +210,29 @@ public class JobsDataSourceSelector {
   }
 
 
+  public JobsDataSourceSelector timeout(String timeout) {
+    
+    this.timeout = timeout;
+    return this;
+  }
+
+   /**
+   * Get timeout
+   * @return timeout
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getTimeout() {
+    return timeout;
+  }
+
+
+  public void setTimeout(String timeout) {
+    this.timeout = timeout;
+  }
+
+
   public JobsDataSourceSelector type(JobsDataSourceSelectorType type) {
     
     this.type = type;
@@ -196,6 +256,7 @@ public class JobsDataSourceSelector {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -208,14 +269,16 @@ public class JobsDataSourceSelector {
     return Objects.equals(this.all, jobsDataSourceSelector.all) &&
         Objects.equals(this.collect, jobsDataSourceSelector.collect) &&
         Objects.equals(this.description, jobsDataSourceSelector.description) &&
+        Objects.equals(this.fanOutInput, jobsDataSourceSelector.fanOutInput) &&
         Objects.equals(this.label, jobsDataSourceSelector.label) &&
         Objects.equals(this.query, jobsDataSourceSelector.query) &&
+        Objects.equals(this.timeout, jobsDataSourceSelector.timeout) &&
         Objects.equals(this.type, jobsDataSourceSelector.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(all, collect, description, label, query, type);
+    return Objects.hash(all, collect, description, fanOutInput, label, query, timeout, type);
   }
 
   @Override
@@ -225,8 +288,10 @@ public class JobsDataSourceSelector {
     sb.append("    all: ").append(toIndentedString(all)).append("\n");
     sb.append("    collect: ").append(toIndentedString(collect)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    fanOutInput: ").append(toIndentedString(fanOutInput)).append("\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    timeout: ").append(toIndentedString(timeout)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -243,5 +308,108 @@ public class JobsDataSourceSelector {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("All");
+    openapiFields.add("Collect");
+    openapiFields.add("Description");
+    openapiFields.add("FanOutInput");
+    openapiFields.add("Label");
+    openapiFields.add("Query");
+    openapiFields.add("Timeout");
+    openapiFields.add("Type");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsDataSourceSelector
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsDataSourceSelector.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsDataSourceSelector is not found in the empty JSON string", JobsDataSourceSelector.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsDataSourceSelector.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsDataSourceSelector` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
+      }
+      if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
+      }
+      // validate the optional field `Query`
+      if (jsonObj.get("Query") != null && !jsonObj.get("Query").isJsonNull()) {
+        ServiceQuery.validateJsonObject(jsonObj.getAsJsonObject("Query"));
+      }
+      if ((jsonObj.get("Timeout") != null && !jsonObj.get("Timeout").isJsonNull()) && !jsonObj.get("Timeout").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Timeout` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Timeout").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsDataSourceSelector.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsDataSourceSelector' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsDataSourceSelector> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsDataSourceSelector.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsDataSourceSelector>() {
+           @Override
+           public void write(JsonWriter out, JobsDataSourceSelector value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsDataSourceSelector read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsDataSourceSelector given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsDataSourceSelector
+  * @throws IOException if the JSON string is invalid with respect to JobsDataSourceSelector
+  */
+  public static JobsDataSourceSelector fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsDataSourceSelector.class);
+  }
+
+ /**
+  * Convert an instance of JobsDataSourceSelector to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

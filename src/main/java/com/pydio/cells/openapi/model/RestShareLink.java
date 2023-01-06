@@ -13,29 +13,34 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.RestShareLinkAccessType;
-import com.pydio.cells.openapi.model.RestShareLinkTargetUser;
-import com.pydio.cells.openapi.model.ServiceResourcePolicy;
-import com.pydio.cells.openapi.model.TreeNode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestShareLink
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestShareLink {
   public static final String SERIALIZED_NAME_ACCESS_END = "AccessEnd";
   @SerializedName(SERIALIZED_NAME_ACCESS_END)
@@ -113,7 +118,7 @@ public class RestShareLink {
   @SerializedName(SERIALIZED_NAME_VIEW_TEMPLATE_NAME)
   private String viewTemplateName;
 
-  public RestShareLink() { 
+  public RestShareLink() {
   }
 
   public RestShareLink accessEnd(String accessEnd) {
@@ -331,7 +336,7 @@ public class RestShareLink {
 
   public RestShareLink addPermissionsItem(RestShareLinkAccessType permissionsItem) {
     if (this.permissions == null) {
-      this.permissions = new ArrayList<RestShareLinkAccessType>();
+      this.permissions = new ArrayList<>();
     }
     this.permissions.add(permissionsItem);
     return this;
@@ -362,7 +367,7 @@ public class RestShareLink {
 
   public RestShareLink addPoliciesItem(ServiceResourcePolicy policiesItem) {
     if (this.policies == null) {
-      this.policies = new ArrayList<ServiceResourcePolicy>();
+      this.policies = new ArrayList<>();
     }
     this.policies.add(policiesItem);
     return this;
@@ -439,7 +444,7 @@ public class RestShareLink {
 
   public RestShareLink addRootNodesItem(TreeNode rootNodesItem) {
     if (this.rootNodes == null) {
-      this.rootNodes = new ArrayList<TreeNode>();
+      this.rootNodes = new ArrayList<>();
     }
     this.rootNodes.add(rootNodesItem);
     return this;
@@ -470,7 +475,7 @@ public class RestShareLink {
 
   public RestShareLink putTargetUsersItem(String key, RestShareLinkTargetUser targetUsersItem) {
     if (this.targetUsers == null) {
-      this.targetUsers = new HashMap<String, RestShareLinkTargetUser>();
+      this.targetUsers = new HashMap<>();
     }
     this.targetUsers.put(key, targetUsersItem);
     return this;
@@ -585,6 +590,7 @@ public class RestShareLink {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -658,5 +664,174 @@ public class RestShareLink {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("AccessEnd");
+    openapiFields.add("AccessStart");
+    openapiFields.add("CurrentDownloads");
+    openapiFields.add("Description");
+    openapiFields.add("Label");
+    openapiFields.add("LinkHash");
+    openapiFields.add("LinkUrl");
+    openapiFields.add("MaxDownloads");
+    openapiFields.add("PasswordRequired");
+    openapiFields.add("Permissions");
+    openapiFields.add("Policies");
+    openapiFields.add("PoliciesContextEditable");
+    openapiFields.add("RestrictToTargetUsers");
+    openapiFields.add("RootNodes");
+    openapiFields.add("TargetUsers");
+    openapiFields.add("UserLogin");
+    openapiFields.add("UserUuid");
+    openapiFields.add("Uuid");
+    openapiFields.add("ViewTemplateName");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestShareLink
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestShareLink.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestShareLink is not found in the empty JSON string", RestShareLink.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestShareLink.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestShareLink` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("AccessEnd") != null && !jsonObj.get("AccessEnd").isJsonNull()) && !jsonObj.get("AccessEnd").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `AccessEnd` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AccessEnd").toString()));
+      }
+      if ((jsonObj.get("AccessStart") != null && !jsonObj.get("AccessStart").isJsonNull()) && !jsonObj.get("AccessStart").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `AccessStart` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AccessStart").toString()));
+      }
+      if ((jsonObj.get("CurrentDownloads") != null && !jsonObj.get("CurrentDownloads").isJsonNull()) && !jsonObj.get("CurrentDownloads").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `CurrentDownloads` to be a primitive type in the JSON string but got `%s`", jsonObj.get("CurrentDownloads").toString()));
+      }
+      if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
+      }
+      if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
+      }
+      if ((jsonObj.get("LinkHash") != null && !jsonObj.get("LinkHash").isJsonNull()) && !jsonObj.get("LinkHash").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `LinkHash` to be a primitive type in the JSON string but got `%s`", jsonObj.get("LinkHash").toString()));
+      }
+      if ((jsonObj.get("LinkUrl") != null && !jsonObj.get("LinkUrl").isJsonNull()) && !jsonObj.get("LinkUrl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `LinkUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("LinkUrl").toString()));
+      }
+      if ((jsonObj.get("MaxDownloads") != null && !jsonObj.get("MaxDownloads").isJsonNull()) && !jsonObj.get("MaxDownloads").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `MaxDownloads` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MaxDownloads").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("Permissions") != null && !jsonObj.get("Permissions").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Permissions` to be an array in the JSON string but got `%s`", jsonObj.get("Permissions").toString()));
+      }
+      if (jsonObj.get("Policies") != null && !jsonObj.get("Policies").isJsonNull()) {
+        JsonArray jsonArraypolicies = jsonObj.getAsJsonArray("Policies");
+        if (jsonArraypolicies != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Policies").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Policies` to be an array in the JSON string but got `%s`", jsonObj.get("Policies").toString()));
+          }
+
+          // validate the optional field `Policies` (array)
+          for (int i = 0; i < jsonArraypolicies.size(); i++) {
+            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("RootNodes") != null && !jsonObj.get("RootNodes").isJsonNull()) {
+        JsonArray jsonArrayrootNodes = jsonObj.getAsJsonArray("RootNodes");
+        if (jsonArrayrootNodes != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("RootNodes").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `RootNodes` to be an array in the JSON string but got `%s`", jsonObj.get("RootNodes").toString()));
+          }
+
+          // validate the optional field `RootNodes` (array)
+          for (int i = 0; i < jsonArrayrootNodes.size(); i++) {
+            TreeNode.validateJsonObject(jsonArrayrootNodes.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if ((jsonObj.get("UserLogin") != null && !jsonObj.get("UserLogin").isJsonNull()) && !jsonObj.get("UserLogin").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UserLogin` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UserLogin").toString()));
+      }
+      if ((jsonObj.get("UserUuid") != null && !jsonObj.get("UserUuid").isJsonNull()) && !jsonObj.get("UserUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UserUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UserUuid").toString()));
+      }
+      if ((jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonNull()) && !jsonObj.get("Uuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Uuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Uuid").toString()));
+      }
+      if ((jsonObj.get("ViewTemplateName") != null && !jsonObj.get("ViewTemplateName").isJsonNull()) && !jsonObj.get("ViewTemplateName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ViewTemplateName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ViewTemplateName").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestShareLink.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestShareLink' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestShareLink> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestShareLink.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestShareLink>() {
+           @Override
+           public void write(JsonWriter out, RestShareLink value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestShareLink read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestShareLink given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestShareLink
+  * @throws IOException if the JSON string is invalid with respect to RestShareLink
+  */
+  public static RestShareLink fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestShareLink.class);
+  }
+
+ /**
+  * Convert an instance of RestShareLink to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

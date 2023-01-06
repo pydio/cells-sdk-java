@@ -13,24 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.TreeNode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestDeleteNodesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestDeleteNodesRequest {
   public static final String SERIALIZED_NAME_NODES = "Nodes";
   @SerializedName(SERIALIZED_NAME_NODES)
@@ -44,7 +52,7 @@ public class RestDeleteNodesRequest {
   @SerializedName(SERIALIZED_NAME_REMOVE_PERMANENTLY)
   private Boolean removePermanently;
 
-  public RestDeleteNodesRequest() { 
+  public RestDeleteNodesRequest() {
   }
 
   public RestDeleteNodesRequest nodes(List<TreeNode> nodes) {
@@ -55,7 +63,7 @@ public class RestDeleteNodesRequest {
 
   public RestDeleteNodesRequest addNodesItem(TreeNode nodesItem) {
     if (this.nodes == null) {
-      this.nodes = new ArrayList<TreeNode>();
+      this.nodes = new ArrayList<>();
     }
     this.nodes.add(nodesItem);
     return this;
@@ -124,6 +132,7 @@ public class RestDeleteNodesRequest {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -165,5 +174,104 @@ public class RestDeleteNodesRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Nodes");
+    openapiFields.add("Recursive");
+    openapiFields.add("RemovePermanently");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestDeleteNodesRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestDeleteNodesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestDeleteNodesRequest is not found in the empty JSON string", RestDeleteNodesRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestDeleteNodesRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestDeleteNodesRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Nodes") != null && !jsonObj.get("Nodes").isJsonNull()) {
+        JsonArray jsonArraynodes = jsonObj.getAsJsonArray("Nodes");
+        if (jsonArraynodes != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Nodes").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Nodes` to be an array in the JSON string but got `%s`", jsonObj.get("Nodes").toString()));
+          }
+
+          // validate the optional field `Nodes` (array)
+          for (int i = 0; i < jsonArraynodes.size(); i++) {
+            TreeNode.validateJsonObject(jsonArraynodes.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestDeleteNodesRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestDeleteNodesRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestDeleteNodesRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestDeleteNodesRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestDeleteNodesRequest>() {
+           @Override
+           public void write(JsonWriter out, RestDeleteNodesRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestDeleteNodesRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestDeleteNodesRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestDeleteNodesRequest
+  * @throws IOException if the JSON string is invalid with respect to RestDeleteNodesRequest
+  */
+  public static RestDeleteNodesRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestDeleteNodesRequest.class);
+  }
+
+ /**
+  * Convert an instance of RestDeleteNodesRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

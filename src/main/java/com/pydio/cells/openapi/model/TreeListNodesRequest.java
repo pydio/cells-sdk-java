@@ -13,25 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.TreeNode;
-import com.pydio.cells.openapi.model.TreeNodeType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * TreeListNodesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class TreeListNodesRequest {
   public static final String SERIALIZED_NAME_ANCESTORS = "Ancestors";
   @SerializedName(SERIALIZED_NAME_ANCESTORS)
@@ -69,7 +75,7 @@ public class TreeListNodesRequest {
   @SerializedName(SERIALIZED_NAME_WITH_VERSIONS)
   private Boolean withVersions;
 
-  public TreeListNodesRequest() { 
+  public TreeListNodesRequest() {
   }
 
   public TreeListNodesRequest ancestors(Boolean ancestors) {
@@ -218,7 +224,7 @@ public class TreeListNodesRequest {
 
   public TreeListNodesRequest addStatFlagsItem(Long statFlagsItem) {
     if (this.statFlags == null) {
-      this.statFlags = new ArrayList<Long>();
+      this.statFlags = new ArrayList<>();
     }
     this.statFlags.add(statFlagsItem);
     return this;
@@ -287,6 +293,7 @@ public class TreeListNodesRequest {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -340,5 +347,110 @@ public class TreeListNodesRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Ancestors");
+    openapiFields.add("FilterType");
+    openapiFields.add("Limit");
+    openapiFields.add("Node");
+    openapiFields.add("Offset");
+    openapiFields.add("Recursive");
+    openapiFields.add("StatFlags");
+    openapiFields.add("WithCommits");
+    openapiFields.add("WithVersions");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to TreeListNodesRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!TreeListNodesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in TreeListNodesRequest is not found in the empty JSON string", TreeListNodesRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!TreeListNodesRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeListNodesRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Limit") != null && !jsonObj.get("Limit").isJsonNull()) && !jsonObj.get("Limit").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Limit` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Limit").toString()));
+      }
+      // validate the optional field `Node`
+      if (jsonObj.get("Node") != null && !jsonObj.get("Node").isJsonNull()) {
+        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Node"));
+      }
+      if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("StatFlags") != null && !jsonObj.get("StatFlags").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `StatFlags` to be an array in the JSON string but got `%s`", jsonObj.get("StatFlags").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!TreeListNodesRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'TreeListNodesRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<TreeListNodesRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(TreeListNodesRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<TreeListNodesRequest>() {
+           @Override
+           public void write(JsonWriter out, TreeListNodesRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public TreeListNodesRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of TreeListNodesRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of TreeListNodesRequest
+  * @throws IOException if the JSON string is invalid with respect to TreeListNodesRequest
+  */
+  public static TreeListNodesRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, TreeListNodesRequest.class);
+  }
+
+ /**
+  * Convert an instance of TreeListNodesRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

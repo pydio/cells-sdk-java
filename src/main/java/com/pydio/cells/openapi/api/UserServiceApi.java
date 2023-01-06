@@ -13,27 +13,18 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.IdmUser;
 import com.pydio.cells.openapi.model.RestDeleteResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestSearchUserRequest;
 import com.pydio.cells.openapi.model.RestUsersCollection;
 import com.pydio.cells.openapi.model.UserCanRepresentEitherAUserOrAGroup;
-import com.pydio.cells.openapi.model.UserCanRepresentEitherAUserOrAGroup1;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -104,7 +95,6 @@ public class UserServiceApi {
      */
     public okhttp3.Call deleteUserCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -121,7 +111,7 @@ public class UserServiceApi {
 
         // create path and map variables
         String localVarPath = "/user/{Login}"
-            .replaceAll("\\{" + "Login" + "\\}", localVarApiClient.escapeString(login.toString()));
+            .replace("{" + "Login" + "}", localVarApiClient.escapeString(login.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -170,7 +160,6 @@ public class UserServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -183,15 +172,12 @@ public class UserServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteUserValidateBeforeCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling deleteUser(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
-        return localVarCall;
+        return deleteUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
 
     }
 
@@ -312,7 +298,6 @@ public class UserServiceApi {
      */
     public okhttp3.Call getUserCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -329,7 +314,7 @@ public class UserServiceApi {
 
         // create path and map variables
         String localVarPath = "/user/{Login}"
-            .replaceAll("\\{" + "Login" + "\\}", localVarApiClient.escapeString(login.toString()));
+            .replace("{" + "Login" + "}", localVarApiClient.escapeString(login.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -378,7 +363,6 @@ public class UserServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -391,15 +375,12 @@ public class UserServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getUserValidateBeforeCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling getUser(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
-        return localVarCall;
+        return getUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
 
     }
 
@@ -513,7 +494,6 @@ public class UserServiceApi {
      */
     public okhttp3.Call putRolesCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -530,7 +510,7 @@ public class UserServiceApi {
 
         // create path and map variables
         String localVarPath = "/user/roles/{Login}"
-            .replaceAll("\\{" + "Login" + "\\}", localVarApiClient.escapeString(login.toString()));
+            .replace("{" + "Login" + "}", localVarApiClient.escapeString(login.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -560,20 +540,17 @@ public class UserServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call putRolesValidateBeforeCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling putRoles(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putRoles(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putRolesCall(login, body, _callback);
-        return localVarCall;
+        return putRolesCall(login, body, _callback);
 
     }
 
@@ -664,9 +641,8 @@ public class UserServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putUserCall(String login, UserCanRepresentEitherAUserOrAGroup1 body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putUserCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -683,7 +659,7 @@ public class UserServiceApi {
 
         // create path and map variables
         String localVarPath = "/user/{Login}"
-            .replaceAll("\\{" + "Login" + "\\}", localVarApiClient.escapeString(login.toString()));
+            .replace("{" + "Login" + "}", localVarApiClient.escapeString(login.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -712,21 +688,18 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putUserValidateBeforeCall(String login, UserCanRepresentEitherAUserOrAGroup1 body, final ApiCallback _callback) throws ApiException {
-        
+    private okhttp3.Call putUserValidateBeforeCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling putUser(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putUser(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putUserCall(login, body, _callback);
-        return localVarCall;
+        return putUserCall(login, body, _callback);
 
     }
 
@@ -747,7 +720,7 @@ public class UserServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public IdmUser putUser(String login, UserCanRepresentEitherAUserOrAGroup1 body) throws ApiException {
+    public IdmUser putUser(String login, UserCanRepresentEitherAUserOrAGroup body) throws ApiException {
         ApiResponse<IdmUser> localVarResp = putUserWithHttpInfo(login, body);
         return localVarResp.getData();
     }
@@ -769,7 +742,7 @@ public class UserServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<IdmUser> putUserWithHttpInfo(String login, UserCanRepresentEitherAUserOrAGroup1 body) throws ApiException {
+    public ApiResponse<IdmUser> putUserWithHttpInfo(String login, UserCanRepresentEitherAUserOrAGroup body) throws ApiException {
         okhttp3.Call localVarCall = putUserValidateBeforeCall(login, body, null);
         Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -793,7 +766,7 @@ public class UserServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putUserAsync(String login, UserCanRepresentEitherAUserOrAGroup1 body, final ApiCallback<IdmUser> _callback) throws ApiException {
+    public okhttp3.Call putUserAsync(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback<IdmUser> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putUserValidateBeforeCall(login, body, _callback);
         Type localVarReturnType = new TypeToken<IdmUser>(){}.getType();
@@ -818,7 +791,6 @@ public class UserServiceApi {
      */
     public okhttp3.Call searchUsersCall(RestSearchUserRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -864,15 +836,12 @@ public class UserServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call searchUsersValidateBeforeCall(RestSearchUserRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling searchUsers(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = searchUsersCall(body, _callback);
-        return localVarCall;
+        return searchUsersCall(body, _callback);
 
     }
 

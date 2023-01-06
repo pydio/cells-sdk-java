@@ -13,121 +13,38 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RegistryEdge
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RegistryEdge {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private String id;
-
-  public static final String SERIALIZED_NAME_METADATA = "metadata";
-  @SerializedName(SERIALIZED_NAME_METADATA)
-  private Map<String, String> metadata = null;
-
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
-
   public static final String SERIALIZED_NAME_VERTICES = "vertices";
   @SerializedName(SERIALIZED_NAME_VERTICES)
   private List<String> vertices = null;
 
-  public RegistryEdge() { 
+  public RegistryEdge() {
   }
-
-  public RegistryEdge id(String id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Get id
-   * @return id
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getId() {
-    return id;
-  }
-
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-
-  public RegistryEdge metadata(Map<String, String> metadata) {
-    
-    this.metadata = metadata;
-    return this;
-  }
-
-  public RegistryEdge putMetadataItem(String key, String metadataItem) {
-    if (this.metadata == null) {
-      this.metadata = new HashMap<String, String>();
-    }
-    this.metadata.put(key, metadataItem);
-    return this;
-  }
-
-   /**
-   * Get metadata
-   * @return metadata
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public Map<String, String> getMetadata() {
-    return metadata;
-  }
-
-
-  public void setMetadata(Map<String, String> metadata) {
-    this.metadata = metadata;
-  }
-
-
-  public RegistryEdge name(String name) {
-    
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * Get name
-   * @return name
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getName() {
-    return name;
-  }
-
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
 
   public RegistryEdge vertices(List<String> vertices) {
     
@@ -137,7 +54,7 @@ public class RegistryEdge {
 
   public RegistryEdge addVerticesItem(String verticesItem) {
     if (this.vertices == null) {
-      this.vertices = new ArrayList<String>();
+      this.vertices = new ArrayList<>();
     }
     this.vertices.add(verticesItem);
     return this;
@@ -160,6 +77,7 @@ public class RegistryEdge {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -169,24 +87,18 @@ public class RegistryEdge {
       return false;
     }
     RegistryEdge registryEdge = (RegistryEdge) o;
-    return Objects.equals(this.id, registryEdge.id) &&
-        Objects.equals(this.metadata, registryEdge.metadata) &&
-        Objects.equals(this.name, registryEdge.name) &&
-        Objects.equals(this.vertices, registryEdge.vertices);
+    return Objects.equals(this.vertices, registryEdge.vertices);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, metadata, name, vertices);
+    return Objects.hash(vertices);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RegistryEdge {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    vertices: ").append(toIndentedString(vertices)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -203,5 +115,92 @@ public class RegistryEdge {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("vertices");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RegistryEdge
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RegistryEdge.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RegistryEdge is not found in the empty JSON string", RegistryEdge.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RegistryEdge.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryEdge` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("vertices") != null && !jsonObj.get("vertices").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `vertices` to be an array in the JSON string but got `%s`", jsonObj.get("vertices").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RegistryEdge.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RegistryEdge' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RegistryEdge> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RegistryEdge.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RegistryEdge>() {
+           @Override
+           public void write(JsonWriter out, RegistryEdge value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RegistryEdge read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RegistryEdge given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RegistryEdge
+  * @throws IOException if the JSON string is invalid with respect to RegistryEdge
+  */
+  public static RegistryEdge fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RegistryEdge.class);
+  }
+
+ /**
+  * Convert an instance of RegistryEdge to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

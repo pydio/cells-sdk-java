@@ -13,20 +13,13 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue;
 import com.pydio.cells.openapi.model.CtlService;
 import com.pydio.cells.openapi.model.DataSourceObjectDescription;
@@ -47,10 +40,11 @@ import com.pydio.cells.openapi.model.RestConfiguration;
 import com.pydio.cells.openapi.model.RestControlServiceRequest;
 import com.pydio.cells.openapi.model.RestCreatePeerFolderRequest;
 import com.pydio.cells.openapi.model.RestCreatePeerFolderResponse;
+import com.pydio.cells.openapi.model.RestCreateStorageBucketRequest;
+import com.pydio.cells.openapi.model.RestCreateStorageBucketResponse;
 import com.pydio.cells.openapi.model.RestDataSourceCollection;
 import com.pydio.cells.openapi.model.RestDeleteDataSourceResponse;
 import com.pydio.cells.openapi.model.RestDiscoveryResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestListPeerFoldersRequest;
 import com.pydio.cells.openapi.model.RestListPeersAddressesResponse;
 import com.pydio.cells.openapi.model.RestListProcessesRequest;
@@ -126,7 +120,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call configFormsDiscoveryCall(String serviceName, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -143,7 +136,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/discovery/forms/{ServiceName}"
-            .replaceAll("\\{" + "ServiceName" + "\\}", localVarApiClient.escapeString(serviceName.toString()));
+            .replace("{" + "ServiceName" + "}", localVarApiClient.escapeString(serviceName.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -160,7 +153,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -173,15 +165,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call configFormsDiscoveryValidateBeforeCall(String serviceName, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'serviceName' is set
         if (serviceName == null) {
             throw new ApiException("Missing the required parameter 'serviceName' when calling configFormsDiscovery(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = configFormsDiscoveryCall(serviceName, _callback);
-        return localVarCall;
+        return configFormsDiscoveryCall(serviceName, _callback);
 
     }
 
@@ -270,7 +259,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call controlServiceCall(RestControlServiceRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -316,15 +304,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call controlServiceValidateBeforeCall(RestControlServiceRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling controlService(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = controlServiceCall(body, _callback);
-        return localVarCall;
+        return controlServiceCall(body, _callback);
 
     }
 
@@ -413,7 +398,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call createEncryptionKeyCall(EncryptionAdminCreateKeyRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -459,15 +443,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call createEncryptionKeyValidateBeforeCall(EncryptionAdminCreateKeyRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createEncryptionKey(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = createEncryptionKeyCall(body, _callback);
-        return localVarCall;
+        return createEncryptionKeyCall(body, _callback);
 
     }
 
@@ -557,7 +538,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call createPeerFolderCall(String peerAddress, RestCreatePeerFolderRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -574,7 +554,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/peers/{PeerAddress}"
-            .replaceAll("\\{" + "PeerAddress" + "\\}", localVarApiClient.escapeString(peerAddress.toString()));
+            .replace("{" + "PeerAddress" + "}", localVarApiClient.escapeString(peerAddress.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -604,20 +584,17 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call createPeerFolderValidateBeforeCall(String peerAddress, RestCreatePeerFolderRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'peerAddress' is set
         if (peerAddress == null) {
             throw new ApiException("Missing the required parameter 'peerAddress' when calling createPeerFolder(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createPeerFolder(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = createPeerFolderCall(peerAddress, body, _callback);
-        return localVarCall;
+        return createPeerFolderCall(peerAddress, body, _callback);
 
     }
 
@@ -692,6 +669,155 @@ public class ConfigServiceApi {
         return localVarCall;
     }
     /**
+     * Build call for createStorageBucket
+     * @param bucketName  (required)
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call createStorageBucketCall(String bucketName, RestCreateStorageBucketRequest body, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/config/buckets/{BucketName}"
+            .replace("{" + "BucketName" + "}", localVarApiClient.escapeString(bucketName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call createStorageBucketValidateBeforeCall(String bucketName, RestCreateStorageBucketRequest body, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new ApiException("Missing the required parameter 'bucketName' when calling createStorageBucket(Async)");
+        }
+
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling createStorageBucket(Async)");
+        }
+
+        return createStorageBucketCall(bucketName, body, _callback);
+
+    }
+
+    /**
+     * List Buckets on a given object storage
+     * 
+     * @param bucketName  (required)
+     * @param body  (required)
+     * @return RestCreateStorageBucketResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public RestCreateStorageBucketResponse createStorageBucket(String bucketName, RestCreateStorageBucketRequest body) throws ApiException {
+        ApiResponse<RestCreateStorageBucketResponse> localVarResp = createStorageBucketWithHttpInfo(bucketName, body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * List Buckets on a given object storage
+     * 
+     * @param bucketName  (required)
+     * @param body  (required)
+     * @return ApiResponse&lt;RestCreateStorageBucketResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<RestCreateStorageBucketResponse> createStorageBucketWithHttpInfo(String bucketName, RestCreateStorageBucketRequest body) throws ApiException {
+        okhttp3.Call localVarCall = createStorageBucketValidateBeforeCall(bucketName, body, null);
+        Type localVarReturnType = new TypeToken<RestCreateStorageBucketResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * List Buckets on a given object storage (asynchronously)
+     * 
+     * @param bucketName  (required)
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call createStorageBucketAsync(String bucketName, RestCreateStorageBucketRequest body, final ApiCallback<RestCreateStorageBucketResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = createStorageBucketValidateBeforeCall(bucketName, body, _callback);
+        Type localVarReturnType = new TypeToken<RestCreateStorageBucketResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for deleteDataSource
      * @param name Name of the data source (max length 34) (required)
      * @param disabled Whether this data source is disabled or running. (optional)
@@ -728,7 +854,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call deleteDataSourceCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -745,7 +870,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/datasource/{Name}"
-            .replaceAll("\\{" + "Name" + "\\}", localVarApiClient.escapeString(name.toString()));
+            .replace("{" + "Name" + "}", localVarApiClient.escapeString(name.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -838,7 +963,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -851,15 +975,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'name' is set
         if (name == null) {
             throw new ApiException("Missing the required parameter 'name' when calling deleteDataSource(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
-        return localVarCall;
+        return deleteDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
 
     }
 
@@ -1005,7 +1126,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call deleteEncryptionKeyCall(EncryptionAdminDeleteKeyRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1051,15 +1171,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteEncryptionKeyValidateBeforeCall(EncryptionAdminDeleteKeyRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling deleteEncryptionKey(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteEncryptionKeyCall(body, _callback);
-        return localVarCall;
+        return deleteEncryptionKeyCall(body, _callback);
 
     }
 
@@ -1148,7 +1265,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call endpointsDiscoveryCall(String endpointType, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1185,7 +1301,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1198,10 +1313,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call endpointsDiscoveryValidateBeforeCall(String endpointType, final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = endpointsDiscoveryCall(endpointType, _callback);
-        return localVarCall;
+        return endpointsDiscoveryCall(endpointType, _callback);
 
     }
 
@@ -1290,7 +1402,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call exportEncryptionKeyCall(EncryptionAdminExportKeyRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1336,15 +1447,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call exportEncryptionKeyValidateBeforeCall(EncryptionAdminExportKeyRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling exportEncryptionKey(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = exportEncryptionKeyCall(body, _callback);
-        return localVarCall;
+        return exportEncryptionKeyCall(body, _callback);
 
     }
 
@@ -1434,7 +1542,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call getConfigCall(String fullPath, String data, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1451,7 +1558,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/{FullPath}"
-            .replaceAll("\\{" + "FullPath" + "\\}", localVarApiClient.escapeString(fullPath.toString()));
+            .replace("{" + "FullPath" + "}", localVarApiClient.escapeString(fullPath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1472,7 +1579,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1485,15 +1591,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getConfigValidateBeforeCall(String fullPath, String data, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'fullPath' is set
         if (fullPath == null) {
             throw new ApiException("Missing the required parameter 'fullPath' when calling getConfig(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getConfigCall(fullPath, data, _callback);
-        return localVarCall;
+        return getConfigCall(fullPath, data, _callback);
 
     }
 
@@ -1604,7 +1707,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call getDataSourceCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1621,7 +1723,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/datasource/{Name}"
-            .replaceAll("\\{" + "Name" + "\\}", localVarApiClient.escapeString(name.toString()));
+            .replace("{" + "Name" + "}", localVarApiClient.escapeString(name.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1714,7 +1816,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1727,15 +1828,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'name' is set
         if (name == null) {
             throw new ApiException("Missing the required parameter 'name' when calling getDataSource(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
-        return localVarCall;
+        return getDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
 
     }
 
@@ -1889,7 +1987,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call getVersioningPolicyCall(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, String nodeDeletedStrategy, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1906,7 +2003,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/versioning/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1955,7 +2052,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1968,15 +2064,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getVersioningPolicyValidateBeforeCall(String uuid, String name, String description, String versionsDataSourceName, String versionsDataSourceBucket, String maxTotalSize, String maxSizePerFile, String ignoreFilesGreaterThan, String nodeDeletedStrategy, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling getVersioningPolicy(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getVersioningPolicyCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, nodeDeletedStrategy, _callback);
-        return localVarCall;
+        return getVersioningPolicyCall(uuid, name, description, versionsDataSourceName, versionsDataSourceBucket, maxTotalSize, maxSizePerFile, ignoreFilesGreaterThan, nodeDeletedStrategy, _callback);
 
     }
 
@@ -2089,7 +2182,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call importEncryptionKeyCall(EncryptionAdminImportKeyRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -2135,15 +2227,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call importEncryptionKeyValidateBeforeCall(EncryptionAdminImportKeyRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling importEncryptionKey(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = importEncryptionKeyCall(body, _callback);
-        return localVarCall;
+        return importEncryptionKeyCall(body, _callback);
 
     }
 
@@ -2231,7 +2320,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listDataSourcesCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -2264,7 +2352,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2277,10 +2364,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listDataSourcesValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = listDataSourcesCall(_callback);
-        return localVarCall;
+        return listDataSourcesCall(_callback);
 
     }
 
@@ -2366,7 +2450,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listEncryptionKeysCall(EncryptionAdminListKeysRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -2412,15 +2495,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listEncryptionKeysValidateBeforeCall(EncryptionAdminListKeysRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listEncryptionKeys(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listEncryptionKeysCall(body, _callback);
-        return localVarCall;
+        return listEncryptionKeysCall(body, _callback);
 
     }
 
@@ -2510,7 +2590,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listPeerFoldersCall(String peerAddress, RestListPeerFoldersRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -2527,7 +2606,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/peers/{PeerAddress}"
-            .replaceAll("\\{" + "PeerAddress" + "\\}", localVarApiClient.escapeString(peerAddress.toString()));
+            .replace("{" + "PeerAddress" + "}", localVarApiClient.escapeString(peerAddress.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -2557,20 +2636,17 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listPeerFoldersValidateBeforeCall(String peerAddress, RestListPeerFoldersRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'peerAddress' is set
         if (peerAddress == null) {
             throw new ApiException("Missing the required parameter 'peerAddress' when calling listPeerFolders(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listPeerFolders(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listPeerFoldersCall(peerAddress, body, _callback);
-        return localVarCall;
+        return listPeerFoldersCall(peerAddress, body, _callback);
 
     }
 
@@ -2661,7 +2737,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listPeersAddressesCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -2694,7 +2769,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2707,10 +2781,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listPeersAddressesValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = listPeersAddressesCall(_callback);
-        return localVarCall;
+        return listPeersAddressesCall(_callback);
 
     }
 
@@ -2796,7 +2867,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listProcessesCall(RestListProcessesRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -2842,15 +2912,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listProcessesValidateBeforeCall(RestListProcessesRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listProcesses(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listProcessesCall(body, _callback);
-        return localVarCall;
+        return listProcessesCall(body, _callback);
 
     }
 
@@ -2939,7 +3006,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listRegistryCall(RegistryListRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -2985,15 +3051,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listRegistryValidateBeforeCall(RegistryListRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listRegistry(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listRegistryCall(body, _callback);
-        return localVarCall;
+        return listRegistryCall(body, _callback);
 
     }
 
@@ -3082,7 +3145,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listServicesCall(String statusFilter, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -3119,7 +3181,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3132,10 +3193,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listServicesValidateBeforeCall(String statusFilter, final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = listServicesCall(statusFilter, _callback);
-        return localVarCall;
+        return listServicesCall(statusFilter, _callback);
 
     }
 
@@ -3224,7 +3282,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listSitesCall(String filter, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -3241,7 +3298,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/sites/{Filter}"
-            .replaceAll("\\{" + "Filter" + "\\}", localVarApiClient.escapeString(filter.toString()));
+            .replace("{" + "Filter" + "}", localVarApiClient.escapeString(filter.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -3258,7 +3315,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3271,15 +3327,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listSitesValidateBeforeCall(String filter, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'filter' is set
         if (filter == null) {
             throw new ApiException("Missing the required parameter 'filter' when calling listSites(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listSitesCall(filter, _callback);
-        return localVarCall;
+        return listSitesCall(filter, _callback);
 
     }
 
@@ -3368,7 +3421,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listStorageBucketsCall(RestListStorageBucketsRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -3414,15 +3466,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listStorageBucketsValidateBeforeCall(RestListStorageBucketsRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listStorageBuckets(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listStorageBucketsCall(body, _callback);
-        return localVarCall;
+        return listStorageBucketsCall(body, _callback);
 
     }
 
@@ -3510,7 +3559,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listVersioningPoliciesCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -3543,7 +3591,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3556,10 +3603,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listVersioningPoliciesValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = listVersioningPoliciesCall(_callback);
-        return localVarCall;
+        return listVersioningPoliciesCall(_callback);
 
     }
 
@@ -3644,7 +3688,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call listVirtualNodesCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -3677,7 +3720,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3690,10 +3732,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listVirtualNodesValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = listVirtualNodesCall(_callback);
-        return localVarCall;
+        return listVirtualNodesCall(_callback);
 
     }
 
@@ -3779,7 +3818,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call openApiDiscoveryCall(String endpointType, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -3816,7 +3854,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3829,10 +3866,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call openApiDiscoveryValidateBeforeCall(String endpointType, final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = openApiDiscoveryCall(endpointType, _callback);
-        return localVarCall;
+        return openApiDiscoveryCall(endpointType, _callback);
 
     }
 
@@ -3922,7 +3956,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call putConfigCall(String fullPath, ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -3939,7 +3972,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/{FullPath}"
-            .replaceAll("\\{" + "FullPath" + "\\}", localVarApiClient.escapeString(fullPath.toString()));
+            .replace("{" + "FullPath" + "}", localVarApiClient.escapeString(fullPath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -3969,20 +4002,17 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call putConfigValidateBeforeCall(String fullPath, ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'fullPath' is set
         if (fullPath == null) {
             throw new ApiException("Missing the required parameter 'fullPath' when calling putConfig(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putConfig(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putConfigCall(fullPath, body, _callback);
-        return localVarCall;
+        return putConfigCall(fullPath, body, _callback);
 
     }
 
@@ -4075,7 +4105,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call putDataSourceCall(String name, DataSourceObjectDescription body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -4092,7 +4121,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/datasource/{Name}"
-            .replaceAll("\\{" + "Name" + "\\}", localVarApiClient.escapeString(name.toString()));
+            .replace("{" + "Name" + "}", localVarApiClient.escapeString(name.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -4122,20 +4151,17 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call putDataSourceValidateBeforeCall(String name, DataSourceObjectDescription body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'name' is set
         if (name == null) {
             throw new ApiException("Missing the required parameter 'name' when calling putDataSource(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putDataSource(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putDataSourceCall(name, body, _callback);
-        return localVarCall;
+        return putDataSourceCall(name, body, _callback);
 
     }
 
@@ -4227,7 +4253,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call schedulerActionFormDiscoveryCall(String actionName, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -4244,7 +4269,7 @@ public class ConfigServiceApi {
 
         // create path and map variables
         String localVarPath = "/config/scheduler/actions/{ActionName}"
-            .replaceAll("\\{" + "ActionName" + "\\}", localVarApiClient.escapeString(actionName.toString()));
+            .replace("{" + "ActionName" + "}", localVarApiClient.escapeString(actionName.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -4261,7 +4286,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -4274,15 +4298,12 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call schedulerActionFormDiscoveryValidateBeforeCall(String actionName, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'actionName' is set
         if (actionName == null) {
             throw new ApiException("Missing the required parameter 'actionName' when calling schedulerActionFormDiscovery(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = schedulerActionFormDiscoveryCall(actionName, _callback);
-        return localVarCall;
+        return schedulerActionFormDiscoveryCall(actionName, _callback);
 
     }
 
@@ -4370,7 +4391,6 @@ public class ConfigServiceApi {
      */
     public okhttp3.Call schedulerActionsDiscoveryCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -4403,7 +4423,6 @@ public class ConfigServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -4416,10 +4435,7 @@ public class ConfigServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call schedulerActionsDiscoveryValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = schedulerActionsDiscoveryCall(_callback);
-        return localVarCall;
+        return schedulerActionsDiscoveryCall(_callback);
 
     }
 

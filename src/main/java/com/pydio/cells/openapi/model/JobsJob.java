@@ -13,33 +13,34 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.JobsAction;
-import com.pydio.cells.openapi.model.JobsContextMetaFilter;
-import com.pydio.cells.openapi.model.JobsDataSourceSelector;
-import com.pydio.cells.openapi.model.JobsIdmSelector;
-import com.pydio.cells.openapi.model.JobsJobParameter;
-import com.pydio.cells.openapi.model.JobsNodesSelector;
-import com.pydio.cells.openapi.model.JobsSchedule;
-import com.pydio.cells.openapi.model.JobsTask;
-import com.pydio.cells.openapi.model.JobsUsersSelector;
-import com.pydio.cells.openapi.model.ProtobufAny;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsJob
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsJob {
   public static final String SERIALIZED_NAME_ACTIONS = "Actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
@@ -57,6 +58,10 @@ public class JobsJob {
   @SerializedName(SERIALIZED_NAME_CONTEXT_META_FILTER)
   private JobsContextMetaFilter contextMetaFilter;
 
+  public static final String SERIALIZED_NAME_CREATED_AT = "CreatedAt";
+  @SerializedName(SERIALIZED_NAME_CREATED_AT)
+  private Integer createdAt;
+
   public static final String SERIALIZED_NAME_CUSTOM = "Custom";
   @SerializedName(SERIALIZED_NAME_CUSTOM)
   private Boolean custom;
@@ -68,6 +73,10 @@ public class JobsJob {
   public static final String SERIALIZED_NAME_EVENT_NAMES = "EventNames";
   @SerializedName(SERIALIZED_NAME_EVENT_NAMES)
   private List<String> eventNames = null;
+
+  public static final String SERIALIZED_NAME_HOOKS = "Hooks";
+  @SerializedName(SERIALIZED_NAME_HOOKS)
+  private List<JobsJobHook> hooks = null;
 
   public static final String SERIALIZED_NAME_I_D = "ID";
   @SerializedName(SERIALIZED_NAME_I_D)
@@ -92,6 +101,14 @@ public class JobsJob {
   public static final String SERIALIZED_NAME_MAX_CONCURRENCY = "MaxConcurrency";
   @SerializedName(SERIALIZED_NAME_MAX_CONCURRENCY)
   private Integer maxConcurrency;
+
+  public static final String SERIALIZED_NAME_MERGE_ACTION = "MergeAction";
+  @SerializedName(SERIALIZED_NAME_MERGE_ACTION)
+  private JobsAction mergeAction;
+
+  public static final String SERIALIZED_NAME_MODIFIED_AT = "ModifiedAt";
+  @SerializedName(SERIALIZED_NAME_MODIFIED_AT)
+  private Integer modifiedAt;
 
   public static final String SERIALIZED_NAME_NODE_EVENT_FILTER = "NodeEventFilter";
   @SerializedName(SERIALIZED_NAME_NODE_EVENT_FILTER)
@@ -121,11 +138,19 @@ public class JobsJob {
   @SerializedName(SERIALIZED_NAME_TASKS_SILENT_UPDATE)
   private Boolean tasksSilentUpdate;
 
+  public static final String SERIALIZED_NAME_TIMEOUT = "Timeout";
+  @SerializedName(SERIALIZED_NAME_TIMEOUT)
+  private String timeout;
+
   public static final String SERIALIZED_NAME_USER_EVENT_FILTER = "UserEventFilter";
   @SerializedName(SERIALIZED_NAME_USER_EVENT_FILTER)
   private JobsUsersSelector userEventFilter;
 
-  public JobsJob() { 
+  public static final String SERIALIZED_NAME_VERSION_META = "VersionMeta";
+  @SerializedName(SERIALIZED_NAME_VERSION_META)
+  private Map<String, String> versionMeta = null;
+
+  public JobsJob() {
   }
 
   public JobsJob actions(List<JobsAction> actions) {
@@ -136,7 +161,7 @@ public class JobsJob {
 
   public JobsJob addActionsItem(JobsAction actionsItem) {
     if (this.actions == null) {
-      this.actions = new ArrayList<JobsAction>();
+      this.actions = new ArrayList<>();
     }
     this.actions.add(actionsItem);
     return this;
@@ -228,6 +253,29 @@ public class JobsJob {
   }
 
 
+  public JobsJob createdAt(Integer createdAt) {
+    
+    this.createdAt = createdAt;
+    return this;
+  }
+
+   /**
+   * Get createdAt
+   * @return createdAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getCreatedAt() {
+    return createdAt;
+  }
+
+
+  public void setCreatedAt(Integer createdAt) {
+    this.createdAt = createdAt;
+  }
+
+
   public JobsJob custom(Boolean custom) {
     
     this.custom = custom;
@@ -282,7 +330,7 @@ public class JobsJob {
 
   public JobsJob addEventNamesItem(String eventNamesItem) {
     if (this.eventNames == null) {
-      this.eventNames = new ArrayList<String>();
+      this.eventNames = new ArrayList<>();
     }
     this.eventNames.add(eventNamesItem);
     return this;
@@ -302,6 +350,37 @@ public class JobsJob {
 
   public void setEventNames(List<String> eventNames) {
     this.eventNames = eventNames;
+  }
+
+
+  public JobsJob hooks(List<JobsJobHook> hooks) {
+    
+    this.hooks = hooks;
+    return this;
+  }
+
+  public JobsJob addHooksItem(JobsJobHook hooksItem) {
+    if (this.hooks == null) {
+      this.hooks = new ArrayList<>();
+    }
+    this.hooks.add(hooksItem);
+    return this;
+  }
+
+   /**
+   * Get hooks
+   * @return hooks
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<JobsJobHook> getHooks() {
+    return hooks;
+  }
+
+
+  public void setHooks(List<JobsJobHook> hooks) {
+    this.hooks = hooks;
   }
 
 
@@ -405,7 +484,7 @@ public class JobsJob {
 
   public JobsJob addLanguagesItem(String languagesItem) {
     if (this.languages == null) {
-      this.languages = new ArrayList<String>();
+      this.languages = new ArrayList<>();
     }
     this.languages.add(languagesItem);
     return this;
@@ -448,6 +527,52 @@ public class JobsJob {
 
   public void setMaxConcurrency(Integer maxConcurrency) {
     this.maxConcurrency = maxConcurrency;
+  }
+
+
+  public JobsJob mergeAction(JobsAction mergeAction) {
+    
+    this.mergeAction = mergeAction;
+    return this;
+  }
+
+   /**
+   * Get mergeAction
+   * @return mergeAction
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public JobsAction getMergeAction() {
+    return mergeAction;
+  }
+
+
+  public void setMergeAction(JobsAction mergeAction) {
+    this.mergeAction = mergeAction;
+  }
+
+
+  public JobsJob modifiedAt(Integer modifiedAt) {
+    
+    this.modifiedAt = modifiedAt;
+    return this;
+  }
+
+   /**
+   * Get modifiedAt
+   * @return modifiedAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getModifiedAt() {
+    return modifiedAt;
+  }
+
+
+  public void setModifiedAt(Integer modifiedAt) {
+    this.modifiedAt = modifiedAt;
   }
 
 
@@ -505,7 +630,7 @@ public class JobsJob {
 
   public JobsJob addParametersItem(JobsJobParameter parametersItem) {
     if (this.parameters == null) {
-      this.parameters = new ArrayList<JobsJobParameter>();
+      this.parameters = new ArrayList<>();
     }
     this.parameters.add(parametersItem);
     return this;
@@ -536,7 +661,7 @@ public class JobsJob {
 
   public JobsJob addResourcesDependenciesItem(ProtobufAny resourcesDependenciesItem) {
     if (this.resourcesDependencies == null) {
-      this.resourcesDependencies = new ArrayList<ProtobufAny>();
+      this.resourcesDependencies = new ArrayList<>();
     }
     this.resourcesDependencies.add(resourcesDependenciesItem);
     return this;
@@ -590,7 +715,7 @@ public class JobsJob {
 
   public JobsJob addTasksItem(JobsTask tasksItem) {
     if (this.tasks == null) {
-      this.tasks = new ArrayList<JobsTask>();
+      this.tasks = new ArrayList<>();
     }
     this.tasks.add(tasksItem);
     return this;
@@ -636,6 +761,29 @@ public class JobsJob {
   }
 
 
+  public JobsJob timeout(String timeout) {
+    
+    this.timeout = timeout;
+    return this;
+  }
+
+   /**
+   * Get timeout
+   * @return timeout
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getTimeout() {
+    return timeout;
+  }
+
+
+  public void setTimeout(String timeout) {
+    this.timeout = timeout;
+  }
+
+
   public JobsJob userEventFilter(JobsUsersSelector userEventFilter) {
     
     this.userEventFilter = userEventFilter;
@@ -659,6 +807,38 @@ public class JobsJob {
   }
 
 
+  public JobsJob versionMeta(Map<String, String> versionMeta) {
+    
+    this.versionMeta = versionMeta;
+    return this;
+  }
+
+  public JobsJob putVersionMetaItem(String key, String versionMetaItem) {
+    if (this.versionMeta == null) {
+      this.versionMeta = new HashMap<>();
+    }
+    this.versionMeta.put(key, versionMetaItem);
+    return this;
+  }
+
+   /**
+   * Get versionMeta
+   * @return versionMeta
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Map<String, String> getVersionMeta() {
+    return versionMeta;
+  }
+
+
+  public void setVersionMeta(Map<String, String> versionMeta) {
+    this.versionMeta = versionMeta;
+  }
+
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -672,15 +852,19 @@ public class JobsJob {
         Objects.equals(this.autoClean, jobsJob.autoClean) &&
         Objects.equals(this.autoStart, jobsJob.autoStart) &&
         Objects.equals(this.contextMetaFilter, jobsJob.contextMetaFilter) &&
+        Objects.equals(this.createdAt, jobsJob.createdAt) &&
         Objects.equals(this.custom, jobsJob.custom) &&
         Objects.equals(this.dataSourceFilter, jobsJob.dataSourceFilter) &&
         Objects.equals(this.eventNames, jobsJob.eventNames) &&
+        Objects.equals(this.hooks, jobsJob.hooks) &&
         Objects.equals(this.ID, jobsJob.ID) &&
         Objects.equals(this.idmFilter, jobsJob.idmFilter) &&
         Objects.equals(this.inactive, jobsJob.inactive) &&
         Objects.equals(this.label, jobsJob.label) &&
         Objects.equals(this.languages, jobsJob.languages) &&
         Objects.equals(this.maxConcurrency, jobsJob.maxConcurrency) &&
+        Objects.equals(this.mergeAction, jobsJob.mergeAction) &&
+        Objects.equals(this.modifiedAt, jobsJob.modifiedAt) &&
         Objects.equals(this.nodeEventFilter, jobsJob.nodeEventFilter) &&
         Objects.equals(this.owner, jobsJob.owner) &&
         Objects.equals(this.parameters, jobsJob.parameters) &&
@@ -688,12 +872,14 @@ public class JobsJob {
         Objects.equals(this.schedule, jobsJob.schedule) &&
         Objects.equals(this.tasks, jobsJob.tasks) &&
         Objects.equals(this.tasksSilentUpdate, jobsJob.tasksSilentUpdate) &&
-        Objects.equals(this.userEventFilter, jobsJob.userEventFilter);
+        Objects.equals(this.timeout, jobsJob.timeout) &&
+        Objects.equals(this.userEventFilter, jobsJob.userEventFilter) &&
+        Objects.equals(this.versionMeta, jobsJob.versionMeta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(actions, autoClean, autoStart, contextMetaFilter, custom, dataSourceFilter, eventNames, ID, idmFilter, inactive, label, languages, maxConcurrency, nodeEventFilter, owner, parameters, resourcesDependencies, schedule, tasks, tasksSilentUpdate, userEventFilter);
+    return Objects.hash(actions, autoClean, autoStart, contextMetaFilter, createdAt, custom, dataSourceFilter, eventNames, hooks, ID, idmFilter, inactive, label, languages, maxConcurrency, mergeAction, modifiedAt, nodeEventFilter, owner, parameters, resourcesDependencies, schedule, tasks, tasksSilentUpdate, timeout, userEventFilter, versionMeta);
   }
 
   @Override
@@ -704,15 +890,19 @@ public class JobsJob {
     sb.append("    autoClean: ").append(toIndentedString(autoClean)).append("\n");
     sb.append("    autoStart: ").append(toIndentedString(autoStart)).append("\n");
     sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
+    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
     sb.append("    dataSourceFilter: ").append(toIndentedString(dataSourceFilter)).append("\n");
     sb.append("    eventNames: ").append(toIndentedString(eventNames)).append("\n");
+    sb.append("    hooks: ").append(toIndentedString(hooks)).append("\n");
     sb.append("    ID: ").append(toIndentedString(ID)).append("\n");
     sb.append("    idmFilter: ").append(toIndentedString(idmFilter)).append("\n");
     sb.append("    inactive: ").append(toIndentedString(inactive)).append("\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    maxConcurrency: ").append(toIndentedString(maxConcurrency)).append("\n");
+    sb.append("    mergeAction: ").append(toIndentedString(mergeAction)).append("\n");
+    sb.append("    modifiedAt: ").append(toIndentedString(modifiedAt)).append("\n");
     sb.append("    nodeEventFilter: ").append(toIndentedString(nodeEventFilter)).append("\n");
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
@@ -720,7 +910,9 @@ public class JobsJob {
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
     sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
     sb.append("    tasksSilentUpdate: ").append(toIndentedString(tasksSilentUpdate)).append("\n");
+    sb.append("    timeout: ").append(toIndentedString(timeout)).append("\n");
     sb.append("    userEventFilter: ").append(toIndentedString(userEventFilter)).append("\n");
+    sb.append("    versionMeta: ").append(toIndentedString(versionMeta)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -736,5 +928,222 @@ public class JobsJob {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Actions");
+    openapiFields.add("AutoClean");
+    openapiFields.add("AutoStart");
+    openapiFields.add("ContextMetaFilter");
+    openapiFields.add("CreatedAt");
+    openapiFields.add("Custom");
+    openapiFields.add("DataSourceFilter");
+    openapiFields.add("EventNames");
+    openapiFields.add("Hooks");
+    openapiFields.add("ID");
+    openapiFields.add("IdmFilter");
+    openapiFields.add("Inactive");
+    openapiFields.add("Label");
+    openapiFields.add("Languages");
+    openapiFields.add("MaxConcurrency");
+    openapiFields.add("MergeAction");
+    openapiFields.add("ModifiedAt");
+    openapiFields.add("NodeEventFilter");
+    openapiFields.add("Owner");
+    openapiFields.add("Parameters");
+    openapiFields.add("ResourcesDependencies");
+    openapiFields.add("Schedule");
+    openapiFields.add("Tasks");
+    openapiFields.add("TasksSilentUpdate");
+    openapiFields.add("Timeout");
+    openapiFields.add("UserEventFilter");
+    openapiFields.add("VersionMeta");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsJob
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsJob.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsJob is not found in the empty JSON string", JobsJob.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsJob.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsJob` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Actions") != null && !jsonObj.get("Actions").isJsonNull()) {
+        JsonArray jsonArrayactions = jsonObj.getAsJsonArray("Actions");
+        if (jsonArrayactions != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Actions").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Actions` to be an array in the JSON string but got `%s`", jsonObj.get("Actions").toString()));
+          }
+
+          // validate the optional field `Actions` (array)
+          for (int i = 0; i < jsonArrayactions.size(); i++) {
+            JobsAction.validateJsonObject(jsonArrayactions.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // validate the optional field `ContextMetaFilter`
+      if (jsonObj.get("ContextMetaFilter") != null && !jsonObj.get("ContextMetaFilter").isJsonNull()) {
+        JobsContextMetaFilter.validateJsonObject(jsonObj.getAsJsonObject("ContextMetaFilter"));
+      }
+      // validate the optional field `DataSourceFilter`
+      if (jsonObj.get("DataSourceFilter") != null && !jsonObj.get("DataSourceFilter").isJsonNull()) {
+        JobsDataSourceSelector.validateJsonObject(jsonObj.getAsJsonObject("DataSourceFilter"));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("EventNames") != null && !jsonObj.get("EventNames").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `EventNames` to be an array in the JSON string but got `%s`", jsonObj.get("EventNames").toString()));
+      }
+      if (jsonObj.get("Hooks") != null && !jsonObj.get("Hooks").isJsonNull()) {
+        JsonArray jsonArrayhooks = jsonObj.getAsJsonArray("Hooks");
+        if (jsonArrayhooks != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Hooks").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Hooks` to be an array in the JSON string but got `%s`", jsonObj.get("Hooks").toString()));
+          }
+
+          // validate the optional field `Hooks` (array)
+          for (int i = 0; i < jsonArrayhooks.size(); i++) {
+            JobsJobHook.validateJsonObject(jsonArrayhooks.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if ((jsonObj.get("ID") != null && !jsonObj.get("ID").isJsonNull()) && !jsonObj.get("ID").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ID").toString()));
+      }
+      // validate the optional field `IdmFilter`
+      if (jsonObj.get("IdmFilter") != null && !jsonObj.get("IdmFilter").isJsonNull()) {
+        JobsIdmSelector.validateJsonObject(jsonObj.getAsJsonObject("IdmFilter"));
+      }
+      if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("Languages") != null && !jsonObj.get("Languages").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Languages` to be an array in the JSON string but got `%s`", jsonObj.get("Languages").toString()));
+      }
+      // validate the optional field `MergeAction`
+      if (jsonObj.get("MergeAction") != null && !jsonObj.get("MergeAction").isJsonNull()) {
+        JobsAction.validateJsonObject(jsonObj.getAsJsonObject("MergeAction"));
+      }
+      // validate the optional field `NodeEventFilter`
+      if (jsonObj.get("NodeEventFilter") != null && !jsonObj.get("NodeEventFilter").isJsonNull()) {
+        JobsNodesSelector.validateJsonObject(jsonObj.getAsJsonObject("NodeEventFilter"));
+      }
+      if ((jsonObj.get("Owner") != null && !jsonObj.get("Owner").isJsonNull()) && !jsonObj.get("Owner").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Owner` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Owner").toString()));
+      }
+      if (jsonObj.get("Parameters") != null && !jsonObj.get("Parameters").isJsonNull()) {
+        JsonArray jsonArrayparameters = jsonObj.getAsJsonArray("Parameters");
+        if (jsonArrayparameters != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Parameters").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Parameters` to be an array in the JSON string but got `%s`", jsonObj.get("Parameters").toString()));
+          }
+
+          // validate the optional field `Parameters` (array)
+          for (int i = 0; i < jsonArrayparameters.size(); i++) {
+            JobsJobParameter.validateJsonObject(jsonArrayparameters.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("ResourcesDependencies") != null && !jsonObj.get("ResourcesDependencies").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ResourcesDependencies` to be an array in the JSON string but got `%s`", jsonObj.get("ResourcesDependencies").toString()));
+      }
+      // validate the optional field `Schedule`
+      if (jsonObj.get("Schedule") != null && !jsonObj.get("Schedule").isJsonNull()) {
+        JobsSchedule.validateJsonObject(jsonObj.getAsJsonObject("Schedule"));
+      }
+      if (jsonObj.get("Tasks") != null && !jsonObj.get("Tasks").isJsonNull()) {
+        JsonArray jsonArraytasks = jsonObj.getAsJsonArray("Tasks");
+        if (jsonArraytasks != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Tasks").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Tasks` to be an array in the JSON string but got `%s`", jsonObj.get("Tasks").toString()));
+          }
+
+          // validate the optional field `Tasks` (array)
+          for (int i = 0; i < jsonArraytasks.size(); i++) {
+            JobsTask.validateJsonObject(jsonArraytasks.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if ((jsonObj.get("Timeout") != null && !jsonObj.get("Timeout").isJsonNull()) && !jsonObj.get("Timeout").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Timeout` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Timeout").toString()));
+      }
+      // validate the optional field `UserEventFilter`
+      if (jsonObj.get("UserEventFilter") != null && !jsonObj.get("UserEventFilter").isJsonNull()) {
+        JobsUsersSelector.validateJsonObject(jsonObj.getAsJsonObject("UserEventFilter"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsJob.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsJob' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsJob> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsJob.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsJob>() {
+           @Override
+           public void write(JsonWriter out, JobsJob value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsJob read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsJob given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsJob
+  * @throws IOException if the JSON string is invalid with respect to JobsJob
+  */
+  public static JobsJob fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsJob.class);
+  }
+
+ /**
+  * Convert an instance of JobsJob to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

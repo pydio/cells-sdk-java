@@ -13,23 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestSettingsEntryMeta
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestSettingsEntryMeta {
   public static final String SERIALIZED_NAME_ADVANCED = "advanced";
   @SerializedName(SERIALIZED_NAME_ADVANCED)
@@ -51,7 +59,7 @@ public class RestSettingsEntryMeta {
   @SerializedName(SERIALIZED_NAME_PROPS)
   private String props;
 
-  public RestSettingsEntryMeta() { 
+  public RestSettingsEntryMeta() {
   }
 
   public RestSettingsEntryMeta advanced(Boolean advanced) {
@@ -131,7 +139,7 @@ public class RestSettingsEntryMeta {
 
   public RestSettingsEntryMeta addIndexedItem(String indexedItem) {
     if (this.indexed == null) {
-      this.indexed = new ArrayList<String>();
+      this.indexed = new ArrayList<>();
     }
     this.indexed.add(indexedItem);
     return this;
@@ -175,6 +183,7 @@ public class RestSettingsEntryMeta {
   public void setProps(String props) {
     this.props = props;
   }
+
 
 
   @Override
@@ -222,5 +231,105 @@ public class RestSettingsEntryMeta {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("advanced");
+    openapiFields.add("component");
+    openapiFields.add("icon_class");
+    openapiFields.add("indexed");
+    openapiFields.add("props");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestSettingsEntryMeta
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestSettingsEntryMeta.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestSettingsEntryMeta is not found in the empty JSON string", RestSettingsEntryMeta.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestSettingsEntryMeta.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSettingsEntryMeta` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("component") != null && !jsonObj.get("component").isJsonNull()) && !jsonObj.get("component").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `component` to be a primitive type in the JSON string but got `%s`", jsonObj.get("component").toString()));
+      }
+      if ((jsonObj.get("icon_class") != null && !jsonObj.get("icon_class").isJsonNull()) && !jsonObj.get("icon_class").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `icon_class` to be a primitive type in the JSON string but got `%s`", jsonObj.get("icon_class").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("indexed") != null && !jsonObj.get("indexed").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `indexed` to be an array in the JSON string but got `%s`", jsonObj.get("indexed").toString()));
+      }
+      if ((jsonObj.get("props") != null && !jsonObj.get("props").isJsonNull()) && !jsonObj.get("props").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `props` to be a primitive type in the JSON string but got `%s`", jsonObj.get("props").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestSettingsEntryMeta.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestSettingsEntryMeta' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestSettingsEntryMeta> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestSettingsEntryMeta.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestSettingsEntryMeta>() {
+           @Override
+           public void write(JsonWriter out, RestSettingsEntryMeta value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestSettingsEntryMeta read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestSettingsEntryMeta given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestSettingsEntryMeta
+  * @throws IOException if the JSON string is invalid with respect to RestSettingsEntryMeta
+  */
+  public static RestSettingsEntryMeta fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestSettingsEntryMeta.class);
+  }
+
+ /**
+  * Convert an instance of RestSettingsEntryMeta to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

@@ -13,21 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsActionOutput
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsActionOutput {
   public static final String SERIALIZED_NAME_ERROR_STRING = "ErrorString";
   @SerializedName(SERIALIZED_NAME_ERROR_STRING)
@@ -57,7 +68,11 @@ public class JobsActionOutput {
   @SerializedName(SERIALIZED_NAME_TIME)
   private Integer time;
 
-  public JobsActionOutput() { 
+  public static final String SERIALIZED_NAME_VARS = "Vars";
+  @SerializedName(SERIALIZED_NAME_VARS)
+  private Map<String, String> vars = null;
+
+  public JobsActionOutput() {
   }
 
   public JobsActionOutput errorString(String errorString) {
@@ -221,6 +236,38 @@ public class JobsActionOutput {
   }
 
 
+  public JobsActionOutput vars(Map<String, String> vars) {
+    
+    this.vars = vars;
+    return this;
+  }
+
+  public JobsActionOutput putVarsItem(String key, String varsItem) {
+    if (this.vars == null) {
+      this.vars = new HashMap<>();
+    }
+    this.vars.put(key, varsItem);
+    return this;
+  }
+
+   /**
+   * Vars container, values are json-encoded.
+   * @return vars
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Vars container, values are json-encoded.")
+
+  public Map<String, String> getVars() {
+    return vars;
+  }
+
+
+  public void setVars(Map<String, String> vars) {
+    this.vars = vars;
+  }
+
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -236,12 +283,13 @@ public class JobsActionOutput {
         Arrays.equals(this.rawBody, jobsActionOutput.rawBody) &&
         Objects.equals(this.stringBody, jobsActionOutput.stringBody) &&
         Objects.equals(this.success, jobsActionOutput.success) &&
-        Objects.equals(this.time, jobsActionOutput.time);
+        Objects.equals(this.time, jobsActionOutput.time) &&
+        Objects.equals(this.vars, jobsActionOutput.vars);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(errorString, ignored, Arrays.hashCode(jsonBody), Arrays.hashCode(rawBody), stringBody, success, time);
+    return Objects.hash(errorString, ignored, Arrays.hashCode(jsonBody), Arrays.hashCode(rawBody), stringBody, success, time, vars);
   }
 
   @Override
@@ -255,6 +303,7 @@ public class JobsActionOutput {
     sb.append("    stringBody: ").append(toIndentedString(stringBody)).append("\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    time: ").append(toIndentedString(time)).append("\n");
+    sb.append("    vars: ").append(toIndentedString(vars)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -270,5 +319,101 @@ public class JobsActionOutput {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("ErrorString");
+    openapiFields.add("Ignored");
+    openapiFields.add("JsonBody");
+    openapiFields.add("RawBody");
+    openapiFields.add("StringBody");
+    openapiFields.add("Success");
+    openapiFields.add("Time");
+    openapiFields.add("Vars");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsActionOutput
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsActionOutput.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsActionOutput is not found in the empty JSON string", JobsActionOutput.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsActionOutput.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsActionOutput` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("ErrorString") != null && !jsonObj.get("ErrorString").isJsonNull()) && !jsonObj.get("ErrorString").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ErrorString` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ErrorString").toString()));
+      }
+      if ((jsonObj.get("StringBody") != null && !jsonObj.get("StringBody").isJsonNull()) && !jsonObj.get("StringBody").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `StringBody` to be a primitive type in the JSON string but got `%s`", jsonObj.get("StringBody").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsActionOutput.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsActionOutput' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsActionOutput> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsActionOutput.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsActionOutput>() {
+           @Override
+           public void write(JsonWriter out, JobsActionOutput value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsActionOutput read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsActionOutput given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsActionOutput
+  * @throws IOException if the JSON string is invalid with respect to JobsActionOutput
+  */
+  public static JobsActionOutput fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsActionOutput.class);
+  }
+
+ /**
+  * Convert an instance of JobsActionOutput to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

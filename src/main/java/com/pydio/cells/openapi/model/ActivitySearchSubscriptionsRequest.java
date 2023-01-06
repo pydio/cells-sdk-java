@@ -13,24 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.ActivityOwnerType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * ActivitySearchSubscriptionsRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class ActivitySearchSubscriptionsRequest {
   public static final String SERIALIZED_NAME_OBJECT_IDS = "ObjectIds";
   @SerializedName(SERIALIZED_NAME_OBJECT_IDS)
@@ -44,7 +51,7 @@ public class ActivitySearchSubscriptionsRequest {
   @SerializedName(SERIALIZED_NAME_USER_IDS)
   private List<String> userIds = null;
 
-  public ActivitySearchSubscriptionsRequest() { 
+  public ActivitySearchSubscriptionsRequest() {
   }
 
   public ActivitySearchSubscriptionsRequest objectIds(List<String> objectIds) {
@@ -55,7 +62,7 @@ public class ActivitySearchSubscriptionsRequest {
 
   public ActivitySearchSubscriptionsRequest addObjectIdsItem(String objectIdsItem) {
     if (this.objectIds == null) {
-      this.objectIds = new ArrayList<String>();
+      this.objectIds = new ArrayList<>();
     }
     this.objectIds.add(objectIdsItem);
     return this;
@@ -86,7 +93,7 @@ public class ActivitySearchSubscriptionsRequest {
 
   public ActivitySearchSubscriptionsRequest addObjectTypesItem(ActivityOwnerType objectTypesItem) {
     if (this.objectTypes == null) {
-      this.objectTypes = new ArrayList<ActivityOwnerType>();
+      this.objectTypes = new ArrayList<>();
     }
     this.objectTypes.add(objectTypesItem);
     return this;
@@ -117,7 +124,7 @@ public class ActivitySearchSubscriptionsRequest {
 
   public ActivitySearchSubscriptionsRequest addUserIdsItem(String userIdsItem) {
     if (this.userIds == null) {
-      this.userIds = new ArrayList<String>();
+      this.userIds = new ArrayList<>();
     }
     this.userIds.add(userIdsItem);
     return this;
@@ -138,6 +145,7 @@ public class ActivitySearchSubscriptionsRequest {
   public void setUserIds(List<String> userIds) {
     this.userIds = userIds;
   }
+
 
 
   @Override
@@ -181,5 +189,102 @@ public class ActivitySearchSubscriptionsRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("ObjectIds");
+    openapiFields.add("ObjectTypes");
+    openapiFields.add("UserIds");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to ActivitySearchSubscriptionsRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!ActivitySearchSubscriptionsRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ActivitySearchSubscriptionsRequest is not found in the empty JSON string", ActivitySearchSubscriptionsRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!ActivitySearchSubscriptionsRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivitySearchSubscriptionsRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("ObjectIds") != null && !jsonObj.get("ObjectIds").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ObjectIds` to be an array in the JSON string but got `%s`", jsonObj.get("ObjectIds").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("ObjectTypes") != null && !jsonObj.get("ObjectTypes").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ObjectTypes` to be an array in the JSON string but got `%s`", jsonObj.get("ObjectTypes").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("UserIds") != null && !jsonObj.get("UserIds").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UserIds` to be an array in the JSON string but got `%s`", jsonObj.get("UserIds").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!ActivitySearchSubscriptionsRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ActivitySearchSubscriptionsRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<ActivitySearchSubscriptionsRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ActivitySearchSubscriptionsRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<ActivitySearchSubscriptionsRequest>() {
+           @Override
+           public void write(JsonWriter out, ActivitySearchSubscriptionsRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public ActivitySearchSubscriptionsRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of ActivitySearchSubscriptionsRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of ActivitySearchSubscriptionsRequest
+  * @throws IOException if the JSON string is invalid with respect to ActivitySearchSubscriptionsRequest
+  */
+  public static ActivitySearchSubscriptionsRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ActivitySearchSubscriptionsRequest.class);
+  }
+
+ /**
+  * Convert an instance of ActivitySearchSubscriptionsRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

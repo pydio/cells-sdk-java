@@ -13,26 +13,34 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmWorkspace;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestUserStateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestUserStateResponse {
   public static final String SERIALIZED_NAME_WORKSPACES = "Workspaces";
   @SerializedName(SERIALIZED_NAME_WORKSPACES)
@@ -42,7 +50,7 @@ public class RestUserStateResponse {
   @SerializedName(SERIALIZED_NAME_WORKSPACES_ACCESSES)
   private Map<String, String> workspacesAccesses = null;
 
-  public RestUserStateResponse() { 
+  public RestUserStateResponse() {
   }
 
   public RestUserStateResponse workspaces(List<IdmWorkspace> workspaces) {
@@ -53,7 +61,7 @@ public class RestUserStateResponse {
 
   public RestUserStateResponse addWorkspacesItem(IdmWorkspace workspacesItem) {
     if (this.workspaces == null) {
-      this.workspaces = new ArrayList<IdmWorkspace>();
+      this.workspaces = new ArrayList<>();
     }
     this.workspaces.add(workspacesItem);
     return this;
@@ -84,7 +92,7 @@ public class RestUserStateResponse {
 
   public RestUserStateResponse putWorkspacesAccessesItem(String key, String workspacesAccessesItem) {
     if (this.workspacesAccesses == null) {
-      this.workspacesAccesses = new HashMap<String, String>();
+      this.workspacesAccesses = new HashMap<>();
     }
     this.workspacesAccesses.put(key, workspacesAccessesItem);
     return this;
@@ -105,6 +113,7 @@ public class RestUserStateResponse {
   public void setWorkspacesAccesses(Map<String, String> workspacesAccesses) {
     this.workspacesAccesses = workspacesAccesses;
   }
+
 
 
   @Override
@@ -146,5 +155,103 @@ public class RestUserStateResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Workspaces");
+    openapiFields.add("WorkspacesAccesses");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestUserStateResponse
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestUserStateResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestUserStateResponse is not found in the empty JSON string", RestUserStateResponse.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestUserStateResponse.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestUserStateResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Workspaces") != null && !jsonObj.get("Workspaces").isJsonNull()) {
+        JsonArray jsonArrayworkspaces = jsonObj.getAsJsonArray("Workspaces");
+        if (jsonArrayworkspaces != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Workspaces").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Workspaces` to be an array in the JSON string but got `%s`", jsonObj.get("Workspaces").toString()));
+          }
+
+          // validate the optional field `Workspaces` (array)
+          for (int i = 0; i < jsonArrayworkspaces.size(); i++) {
+            IdmWorkspace.validateJsonObject(jsonArrayworkspaces.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestUserStateResponse.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestUserStateResponse' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestUserStateResponse> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestUserStateResponse.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestUserStateResponse>() {
+           @Override
+           public void write(JsonWriter out, RestUserStateResponse value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestUserStateResponse read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestUserStateResponse given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestUserStateResponse
+  * @throws IOException if the JSON string is invalid with respect to RestUserStateResponse
+  */
+  public static RestUserStateResponse fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestUserStateResponse.class);
+  }
+
+ /**
+  * Convert an instance of RestUserStateResponse to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

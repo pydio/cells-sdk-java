@@ -13,24 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.JobsTaskStatus;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsListJobsRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsListJobsRequest {
   public static final String SERIALIZED_NAME_EVENTS_ONLY = "EventsOnly";
   @SerializedName(SERIALIZED_NAME_EVENTS_ONLY)
@@ -60,7 +67,7 @@ public class JobsListJobsRequest {
   @SerializedName(SERIALIZED_NAME_TIMERS_ONLY)
   private Boolean timersOnly;
 
-  public JobsListJobsRequest() { 
+  public JobsListJobsRequest() {
   }
 
   public JobsListJobsRequest eventsOnly(Boolean eventsOnly) {
@@ -94,7 +101,7 @@ public class JobsListJobsRequest {
 
   public JobsListJobsRequest addJobIDsItem(String jobIDsItem) {
     if (this.jobIDs == null) {
-      this.jobIDs = new ArrayList<String>();
+      this.jobIDs = new ArrayList<>();
     }
     this.jobIDs.add(jobIDsItem);
     return this;
@@ -232,6 +239,7 @@ public class JobsListJobsRequest {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -281,5 +289,101 @@ public class JobsListJobsRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("EventsOnly");
+    openapiFields.add("JobIDs");
+    openapiFields.add("LoadTasks");
+    openapiFields.add("Owner");
+    openapiFields.add("TasksLimit");
+    openapiFields.add("TasksOffset");
+    openapiFields.add("TimersOnly");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsListJobsRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsListJobsRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsListJobsRequest is not found in the empty JSON string", JobsListJobsRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsListJobsRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsListJobsRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("JobIDs") != null && !jsonObj.get("JobIDs").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `JobIDs` to be an array in the JSON string but got `%s`", jsonObj.get("JobIDs").toString()));
+      }
+      if ((jsonObj.get("Owner") != null && !jsonObj.get("Owner").isJsonNull()) && !jsonObj.get("Owner").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Owner` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Owner").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsListJobsRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsListJobsRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsListJobsRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsListJobsRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsListJobsRequest>() {
+           @Override
+           public void write(JsonWriter out, JobsListJobsRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsListJobsRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsListJobsRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsListJobsRequest
+  * @throws IOException if the JSON string is invalid with respect to JobsListJobsRequest
+  */
+  public static JobsListJobsRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsListJobsRequest.class);
+  }
+
+ /**
+  * Convert an instance of JobsListJobsRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

@@ -13,21 +13,29 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsSchedule
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsSchedule {
   public static final String SERIALIZED_NAME_ISO8601_MIN_DELTA = "Iso8601MinDelta";
   @SerializedName(SERIALIZED_NAME_ISO8601_MIN_DELTA)
@@ -37,7 +45,7 @@ public class JobsSchedule {
   @SerializedName(SERIALIZED_NAME_ISO8601_SCHEDULE)
   private String iso8601Schedule;
 
-  public JobsSchedule() { 
+  public JobsSchedule() {
   }
 
   public JobsSchedule iso8601MinDelta(String iso8601MinDelta) {
@@ -86,6 +94,7 @@ public class JobsSchedule {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -125,5 +134,95 @@ public class JobsSchedule {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Iso8601MinDelta");
+    openapiFields.add("Iso8601Schedule");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsSchedule
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsSchedule.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsSchedule is not found in the empty JSON string", JobsSchedule.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsSchedule.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsSchedule` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Iso8601MinDelta") != null && !jsonObj.get("Iso8601MinDelta").isJsonNull()) && !jsonObj.get("Iso8601MinDelta").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Iso8601MinDelta` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Iso8601MinDelta").toString()));
+      }
+      if ((jsonObj.get("Iso8601Schedule") != null && !jsonObj.get("Iso8601Schedule").isJsonNull()) && !jsonObj.get("Iso8601Schedule").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Iso8601Schedule` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Iso8601Schedule").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsSchedule.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsSchedule' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsSchedule> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsSchedule.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsSchedule>() {
+           @Override
+           public void write(JsonWriter out, JobsSchedule value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsSchedule read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsSchedule given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsSchedule
+  * @throws IOException if the JSON string is invalid with respect to JobsSchedule
+  */
+  public static JobsSchedule fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsSchedule.class);
+  }
+
+ /**
+  * Convert an instance of JobsSchedule to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

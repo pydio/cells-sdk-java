@@ -13,25 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.ServiceResourcePolicy;
-import com.pydio.cells.openapi.model.TreeNode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IdmUserMeta
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class IdmUserMeta {
   public static final String SERIALIZED_NAME_JSON_VALUE = "JsonValue";
   @SerializedName(SERIALIZED_NAME_JSON_VALUE)
@@ -61,7 +68,7 @@ public class IdmUserMeta {
   @SerializedName(SERIALIZED_NAME_UUID)
   private String uuid;
 
-  public IdmUserMeta() { 
+  public IdmUserMeta() {
   }
 
   public IdmUserMeta jsonValue(String jsonValue) {
@@ -141,7 +148,7 @@ public class IdmUserMeta {
 
   public IdmUserMeta addPoliciesItem(ServiceResourcePolicy policiesItem) {
     if (this.policies == null) {
-      this.policies = new ArrayList<ServiceResourcePolicy>();
+      this.policies = new ArrayList<>();
     }
     this.policies.add(policiesItem);
     return this;
@@ -233,6 +240,7 @@ public class IdmUserMeta {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -282,5 +290,124 @@ public class IdmUserMeta {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("JsonValue");
+    openapiFields.add("Namespace");
+    openapiFields.add("NodeUuid");
+    openapiFields.add("Policies");
+    openapiFields.add("PoliciesContextEditable");
+    openapiFields.add("ResolvedNode");
+    openapiFields.add("Uuid");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to IdmUserMeta
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!IdmUserMeta.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in IdmUserMeta is not found in the empty JSON string", IdmUserMeta.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!IdmUserMeta.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmUserMeta` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("JsonValue") != null && !jsonObj.get("JsonValue").isJsonNull()) && !jsonObj.get("JsonValue").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `JsonValue` to be a primitive type in the JSON string but got `%s`", jsonObj.get("JsonValue").toString()));
+      }
+      if ((jsonObj.get("Namespace") != null && !jsonObj.get("Namespace").isJsonNull()) && !jsonObj.get("Namespace").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Namespace` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Namespace").toString()));
+      }
+      if ((jsonObj.get("NodeUuid") != null && !jsonObj.get("NodeUuid").isJsonNull()) && !jsonObj.get("NodeUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `NodeUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("NodeUuid").toString()));
+      }
+      if (jsonObj.get("Policies") != null && !jsonObj.get("Policies").isJsonNull()) {
+        JsonArray jsonArraypolicies = jsonObj.getAsJsonArray("Policies");
+        if (jsonArraypolicies != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Policies").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Policies` to be an array in the JSON string but got `%s`", jsonObj.get("Policies").toString()));
+          }
+
+          // validate the optional field `Policies` (array)
+          for (int i = 0; i < jsonArraypolicies.size(); i++) {
+            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // validate the optional field `ResolvedNode`
+      if (jsonObj.get("ResolvedNode") != null && !jsonObj.get("ResolvedNode").isJsonNull()) {
+        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("ResolvedNode"));
+      }
+      if ((jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonNull()) && !jsonObj.get("Uuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Uuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Uuid").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!IdmUserMeta.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'IdmUserMeta' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<IdmUserMeta> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(IdmUserMeta.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<IdmUserMeta>() {
+           @Override
+           public void write(JsonWriter out, IdmUserMeta value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public IdmUserMeta read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of IdmUserMeta given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of IdmUserMeta
+  * @throws IOException if the JSON string is invalid with respect to IdmUserMeta
+  */
+  public static IdmUserMeta fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, IdmUserMeta.class);
+  }
+
+ /**
+  * Convert an instance of IdmUserMeta to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

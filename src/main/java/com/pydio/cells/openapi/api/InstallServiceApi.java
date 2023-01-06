@@ -13,20 +13,13 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.InstallGetAgreementResponse;
 import com.pydio.cells.openapi.model.InstallGetDefaultsResponse;
 import com.pydio.cells.openapi.model.InstallInstallEventsResponse;
@@ -34,7 +27,6 @@ import com.pydio.cells.openapi.model.InstallInstallRequest;
 import com.pydio.cells.openapi.model.InstallInstallResponse;
 import com.pydio.cells.openapi.model.InstallPerformCheckRequest;
 import com.pydio.cells.openapi.model.InstallPerformCheckResponse;
-import com.pydio.cells.openapi.model.RestError;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -96,7 +88,6 @@ public class InstallServiceApi {
      */
     public okhttp3.Call getAgreementCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -129,7 +120,6 @@ public class InstallServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -142,10 +132,7 @@ public class InstallServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getAgreementValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = getAgreementCall(_callback);
-        return localVarCall;
+        return getAgreementCall(_callback);
 
     }
 
@@ -230,7 +217,6 @@ public class InstallServiceApi {
      */
     public okhttp3.Call getInstallCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -263,7 +249,6 @@ public class InstallServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -276,10 +261,7 @@ public class InstallServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getInstallValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = getInstallCall(_callback);
-        return localVarCall;
+        return getInstallCall(_callback);
 
     }
 
@@ -364,7 +346,6 @@ public class InstallServiceApi {
      */
     public okhttp3.Call installEventsCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -397,7 +378,6 @@ public class InstallServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -410,10 +390,7 @@ public class InstallServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call installEventsValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = installEventsCall(_callback);
-        return localVarCall;
+        return installEventsCall(_callback);
 
     }
 
@@ -499,7 +476,6 @@ public class InstallServiceApi {
      */
     public okhttp3.Call performInstallCheckCall(InstallPerformCheckRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -545,15 +521,12 @@ public class InstallServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call performInstallCheckValidateBeforeCall(InstallPerformCheckRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling performInstallCheck(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = performInstallCheckCall(body, _callback);
-        return localVarCall;
+        return performInstallCheckCall(body, _callback);
 
     }
 
@@ -642,7 +615,6 @@ public class InstallServiceApi {
      */
     public okhttp3.Call postInstallCall(InstallInstallRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -688,15 +660,12 @@ public class InstallServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call postInstallValidateBeforeCall(InstallInstallRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling postInstall(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = postInstallCall(body, _callback);
-        return localVarCall;
+        return postInstallCall(body, _callback);
 
     }
 

@@ -13,27 +13,33 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmPolicyCondition;
-import com.pydio.cells.openapi.model.IdmPolicyEffect;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IdmPolicy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class IdmPolicy {
   public static final String SERIALIZED_NAME_ACTIONS = "actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
@@ -63,7 +69,7 @@ public class IdmPolicy {
   @SerializedName(SERIALIZED_NAME_SUBJECTS)
   private List<String> subjects = null;
 
-  public IdmPolicy() { 
+  public IdmPolicy() {
   }
 
   public IdmPolicy actions(List<String> actions) {
@@ -74,7 +80,7 @@ public class IdmPolicy {
 
   public IdmPolicy addActionsItem(String actionsItem) {
     if (this.actions == null) {
-      this.actions = new ArrayList<String>();
+      this.actions = new ArrayList<>();
     }
     this.actions.add(actionsItem);
     return this;
@@ -105,7 +111,7 @@ public class IdmPolicy {
 
   public IdmPolicy putConditionsItem(String key, IdmPolicyCondition conditionsItem) {
     if (this.conditions == null) {
-      this.conditions = new HashMap<String, IdmPolicyCondition>();
+      this.conditions = new HashMap<>();
     }
     this.conditions.put(key, conditionsItem);
     return this;
@@ -205,7 +211,7 @@ public class IdmPolicy {
 
   public IdmPolicy addResourcesItem(String resourcesItem) {
     if (this.resources == null) {
-      this.resources = new ArrayList<String>();
+      this.resources = new ArrayList<>();
     }
     this.resources.add(resourcesItem);
     return this;
@@ -236,7 +242,7 @@ public class IdmPolicy {
 
   public IdmPolicy addSubjectsItem(String subjectsItem) {
     if (this.subjects == null) {
-      this.subjects = new ArrayList<String>();
+      this.subjects = new ArrayList<>();
     }
     this.subjects.add(subjectsItem);
     return this;
@@ -257,6 +263,7 @@ public class IdmPolicy {
   public void setSubjects(List<String> subjects) {
     this.subjects = subjects;
   }
+
 
 
   @Override
@@ -308,5 +315,112 @@ public class IdmPolicy {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("actions");
+    openapiFields.add("conditions");
+    openapiFields.add("description");
+    openapiFields.add("effect");
+    openapiFields.add("id");
+    openapiFields.add("resources");
+    openapiFields.add("subjects");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to IdmPolicy
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!IdmPolicy.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in IdmPolicy is not found in the empty JSON string", IdmPolicy.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!IdmPolicy.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmPolicy` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("actions") != null && !jsonObj.get("actions").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `actions` to be an array in the JSON string but got `%s`", jsonObj.get("actions").toString()));
+      }
+      if ((jsonObj.get("description") != null && !jsonObj.get("description").isJsonNull()) && !jsonObj.get("description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("description").toString()));
+      }
+      if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("resources") != null && !jsonObj.get("resources").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `resources` to be an array in the JSON string but got `%s`", jsonObj.get("resources").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("subjects") != null && !jsonObj.get("subjects").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `subjects` to be an array in the JSON string but got `%s`", jsonObj.get("subjects").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!IdmPolicy.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'IdmPolicy' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<IdmPolicy> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(IdmPolicy.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<IdmPolicy>() {
+           @Override
+           public void write(JsonWriter out, IdmPolicy value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public IdmPolicy read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of IdmPolicy given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of IdmPolicy
+  * @throws IOException if the JSON string is invalid with respect to IdmPolicy
+  */
+  public static IdmPolicy fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, IdmPolicy.class);
+  }
+
+ /**
+  * Convert an instance of IdmPolicy to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

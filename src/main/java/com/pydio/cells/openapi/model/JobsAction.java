@@ -13,32 +13,34 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.JobsActionOutputFilter;
-import com.pydio.cells.openapi.model.JobsContextMetaFilter;
-import com.pydio.cells.openapi.model.JobsDataSourceSelector;
-import com.pydio.cells.openapi.model.JobsIdmSelector;
-import com.pydio.cells.openapi.model.JobsNodesSelector;
-import com.pydio.cells.openapi.model.JobsTriggerFilter;
-import com.pydio.cells.openapi.model.JobsUsersSelector;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsAction
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsAction {
   public static final String SERIALIZED_NAME_ACTION_OUTPUT_FILTER = "ActionOutputFilter";
   @SerializedName(SERIALIZED_NAME_ACTION_OUTPUT_FILTER)
@@ -92,6 +94,10 @@ public class JobsAction {
   @SerializedName(SERIALIZED_NAME_LABEL)
   private String label;
 
+  public static final String SERIALIZED_NAME_MERGE_ACTION = "MergeAction";
+  @SerializedName(SERIALIZED_NAME_MERGE_ACTION)
+  private JobsAction mergeAction;
+
   public static final String SERIALIZED_NAME_NODES_FILTER = "NodesFilter";
   @SerializedName(SERIALIZED_NAME_NODES_FILTER)
   private JobsNodesSelector nodesFilter;
@@ -103,6 +109,10 @@ public class JobsAction {
   public static final String SERIALIZED_NAME_PARAMETERS = "Parameters";
   @SerializedName(SERIALIZED_NAME_PARAMETERS)
   private Map<String, String> parameters = null;
+
+  public static final String SERIALIZED_NAME_TIMEOUT = "Timeout";
+  @SerializedName(SERIALIZED_NAME_TIMEOUT)
+  private String timeout;
 
   public static final String SERIALIZED_NAME_TRIGGER_FILTER = "TriggerFilter";
   @SerializedName(SERIALIZED_NAME_TRIGGER_FILTER)
@@ -116,7 +126,7 @@ public class JobsAction {
   @SerializedName(SERIALIZED_NAME_USERS_SELECTOR)
   private JobsUsersSelector usersSelector;
 
-  public JobsAction() { 
+  public JobsAction() {
   }
 
   public JobsAction actionOutputFilter(JobsActionOutputFilter actionOutputFilter) {
@@ -196,7 +206,7 @@ public class JobsAction {
 
   public JobsAction addChainedActionsItem(JobsAction chainedActionsItem) {
     if (this.chainedActions == null) {
-      this.chainedActions = new ArrayList<JobsAction>();
+      this.chainedActions = new ArrayList<>();
     }
     this.chainedActions.add(chainedActionsItem);
     return this;
@@ -319,7 +329,7 @@ public class JobsAction {
 
   public JobsAction addFailedFilterActionsItem(JobsAction failedFilterActionsItem) {
     if (this.failedFilterActions == null) {
-      this.failedFilterActions = new ArrayList<JobsAction>();
+      this.failedFilterActions = new ArrayList<>();
     }
     this.failedFilterActions.add(failedFilterActionsItem);
     return this;
@@ -434,6 +444,29 @@ public class JobsAction {
   }
 
 
+  public JobsAction mergeAction(JobsAction mergeAction) {
+    
+    this.mergeAction = mergeAction;
+    return this;
+  }
+
+   /**
+   * Get mergeAction
+   * @return mergeAction
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public JobsAction getMergeAction() {
+    return mergeAction;
+  }
+
+
+  public void setMergeAction(JobsAction mergeAction) {
+    this.mergeAction = mergeAction;
+  }
+
+
   public JobsAction nodesFilter(JobsNodesSelector nodesFilter) {
     
     this.nodesFilter = nodesFilter;
@@ -488,7 +521,7 @@ public class JobsAction {
 
   public JobsAction putParametersItem(String key, String parametersItem) {
     if (this.parameters == null) {
-      this.parameters = new HashMap<String, String>();
+      this.parameters = new HashMap<>();
     }
     this.parameters.put(key, parametersItem);
     return this;
@@ -508,6 +541,29 @@ public class JobsAction {
 
   public void setParameters(Map<String, String> parameters) {
     this.parameters = parameters;
+  }
+
+
+  public JobsAction timeout(String timeout) {
+    
+    this.timeout = timeout;
+    return this;
+  }
+
+   /**
+   * Get timeout
+   * @return timeout
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getTimeout() {
+    return timeout;
+  }
+
+
+  public void setTimeout(String timeout) {
+    this.timeout = timeout;
   }
 
 
@@ -580,6 +636,7 @@ public class JobsAction {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -602,9 +659,11 @@ public class JobsAction {
         Objects.equals(this.idmFilter, jobsAction.idmFilter) &&
         Objects.equals(this.idmSelector, jobsAction.idmSelector) &&
         Objects.equals(this.label, jobsAction.label) &&
+        Objects.equals(this.mergeAction, jobsAction.mergeAction) &&
         Objects.equals(this.nodesFilter, jobsAction.nodesFilter) &&
         Objects.equals(this.nodesSelector, jobsAction.nodesSelector) &&
         Objects.equals(this.parameters, jobsAction.parameters) &&
+        Objects.equals(this.timeout, jobsAction.timeout) &&
         Objects.equals(this.triggerFilter, jobsAction.triggerFilter) &&
         Objects.equals(this.usersFilter, jobsAction.usersFilter) &&
         Objects.equals(this.usersSelector, jobsAction.usersSelector);
@@ -612,7 +671,7 @@ public class JobsAction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(actionOutputFilter, breakAfter, bypass, chainedActions, contextMetaFilter, dataSourceFilter, dataSourceSelector, description, failedFilterActions, ID, idmFilter, idmSelector, label, nodesFilter, nodesSelector, parameters, triggerFilter, usersFilter, usersSelector);
+    return Objects.hash(actionOutputFilter, breakAfter, bypass, chainedActions, contextMetaFilter, dataSourceFilter, dataSourceSelector, description, failedFilterActions, ID, idmFilter, idmSelector, label, mergeAction, nodesFilter, nodesSelector, parameters, timeout, triggerFilter, usersFilter, usersSelector);
   }
 
   @Override
@@ -632,9 +691,11 @@ public class JobsAction {
     sb.append("    idmFilter: ").append(toIndentedString(idmFilter)).append("\n");
     sb.append("    idmSelector: ").append(toIndentedString(idmSelector)).append("\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    mergeAction: ").append(toIndentedString(mergeAction)).append("\n");
     sb.append("    nodesFilter: ").append(toIndentedString(nodesFilter)).append("\n");
     sb.append("    nodesSelector: ").append(toIndentedString(nodesSelector)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
+    sb.append("    timeout: ").append(toIndentedString(timeout)).append("\n");
     sb.append("    triggerFilter: ").append(toIndentedString(triggerFilter)).append("\n");
     sb.append("    usersFilter: ").append(toIndentedString(usersFilter)).append("\n");
     sb.append("    usersSelector: ").append(toIndentedString(usersSelector)).append("\n");
@@ -653,5 +714,196 @@ public class JobsAction {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("ActionOutputFilter");
+    openapiFields.add("BreakAfter");
+    openapiFields.add("Bypass");
+    openapiFields.add("ChainedActions");
+    openapiFields.add("ContextMetaFilter");
+    openapiFields.add("DataSourceFilter");
+    openapiFields.add("DataSourceSelector");
+    openapiFields.add("Description");
+    openapiFields.add("FailedFilterActions");
+    openapiFields.add("ID");
+    openapiFields.add("IdmFilter");
+    openapiFields.add("IdmSelector");
+    openapiFields.add("Label");
+    openapiFields.add("MergeAction");
+    openapiFields.add("NodesFilter");
+    openapiFields.add("NodesSelector");
+    openapiFields.add("Parameters");
+    openapiFields.add("Timeout");
+    openapiFields.add("TriggerFilter");
+    openapiFields.add("UsersFilter");
+    openapiFields.add("UsersSelector");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsAction
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsAction.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsAction is not found in the empty JSON string", JobsAction.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsAction.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsAction` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // validate the optional field `ActionOutputFilter`
+      if (jsonObj.get("ActionOutputFilter") != null && !jsonObj.get("ActionOutputFilter").isJsonNull()) {
+        JobsActionOutputFilter.validateJsonObject(jsonObj.getAsJsonObject("ActionOutputFilter"));
+      }
+      if (jsonObj.get("ChainedActions") != null && !jsonObj.get("ChainedActions").isJsonNull()) {
+        JsonArray jsonArraychainedActions = jsonObj.getAsJsonArray("ChainedActions");
+        if (jsonArraychainedActions != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("ChainedActions").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `ChainedActions` to be an array in the JSON string but got `%s`", jsonObj.get("ChainedActions").toString()));
+          }
+
+          // validate the optional field `ChainedActions` (array)
+          for (int i = 0; i < jsonArraychainedActions.size(); i++) {
+            JobsAction.validateJsonObject(jsonArraychainedActions.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // validate the optional field `ContextMetaFilter`
+      if (jsonObj.get("ContextMetaFilter") != null && !jsonObj.get("ContextMetaFilter").isJsonNull()) {
+        JobsContextMetaFilter.validateJsonObject(jsonObj.getAsJsonObject("ContextMetaFilter"));
+      }
+      // validate the optional field `DataSourceFilter`
+      if (jsonObj.get("DataSourceFilter") != null && !jsonObj.get("DataSourceFilter").isJsonNull()) {
+        JobsDataSourceSelector.validateJsonObject(jsonObj.getAsJsonObject("DataSourceFilter"));
+      }
+      // validate the optional field `DataSourceSelector`
+      if (jsonObj.get("DataSourceSelector") != null && !jsonObj.get("DataSourceSelector").isJsonNull()) {
+        JobsDataSourceSelector.validateJsonObject(jsonObj.getAsJsonObject("DataSourceSelector"));
+      }
+      if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
+      }
+      if (jsonObj.get("FailedFilterActions") != null && !jsonObj.get("FailedFilterActions").isJsonNull()) {
+        JsonArray jsonArrayfailedFilterActions = jsonObj.getAsJsonArray("FailedFilterActions");
+        if (jsonArrayfailedFilterActions != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("FailedFilterActions").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `FailedFilterActions` to be an array in the JSON string but got `%s`", jsonObj.get("FailedFilterActions").toString()));
+          }
+
+          // validate the optional field `FailedFilterActions` (array)
+          for (int i = 0; i < jsonArrayfailedFilterActions.size(); i++) {
+            JobsAction.validateJsonObject(jsonArrayfailedFilterActions.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if ((jsonObj.get("ID") != null && !jsonObj.get("ID").isJsonNull()) && !jsonObj.get("ID").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ID").toString()));
+      }
+      // validate the optional field `IdmFilter`
+      if (jsonObj.get("IdmFilter") != null && !jsonObj.get("IdmFilter").isJsonNull()) {
+        JobsIdmSelector.validateJsonObject(jsonObj.getAsJsonObject("IdmFilter"));
+      }
+      // validate the optional field `IdmSelector`
+      if (jsonObj.get("IdmSelector") != null && !jsonObj.get("IdmSelector").isJsonNull()) {
+        JobsIdmSelector.validateJsonObject(jsonObj.getAsJsonObject("IdmSelector"));
+      }
+      if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
+      }
+      // validate the optional field `MergeAction`
+      if (jsonObj.get("MergeAction") != null && !jsonObj.get("MergeAction").isJsonNull()) {
+        JobsAction.validateJsonObject(jsonObj.getAsJsonObject("MergeAction"));
+      }
+      // validate the optional field `NodesFilter`
+      if (jsonObj.get("NodesFilter") != null && !jsonObj.get("NodesFilter").isJsonNull()) {
+        JobsNodesSelector.validateJsonObject(jsonObj.getAsJsonObject("NodesFilter"));
+      }
+      // validate the optional field `NodesSelector`
+      if (jsonObj.get("NodesSelector") != null && !jsonObj.get("NodesSelector").isJsonNull()) {
+        JobsNodesSelector.validateJsonObject(jsonObj.getAsJsonObject("NodesSelector"));
+      }
+      if ((jsonObj.get("Timeout") != null && !jsonObj.get("Timeout").isJsonNull()) && !jsonObj.get("Timeout").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Timeout` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Timeout").toString()));
+      }
+      // validate the optional field `TriggerFilter`
+      if (jsonObj.get("TriggerFilter") != null && !jsonObj.get("TriggerFilter").isJsonNull()) {
+        JobsTriggerFilter.validateJsonObject(jsonObj.getAsJsonObject("TriggerFilter"));
+      }
+      // validate the optional field `UsersFilter`
+      if (jsonObj.get("UsersFilter") != null && !jsonObj.get("UsersFilter").isJsonNull()) {
+        JobsUsersSelector.validateJsonObject(jsonObj.getAsJsonObject("UsersFilter"));
+      }
+      // validate the optional field `UsersSelector`
+      if (jsonObj.get("UsersSelector") != null && !jsonObj.get("UsersSelector").isJsonNull()) {
+        JobsUsersSelector.validateJsonObject(jsonObj.getAsJsonObject("UsersSelector"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsAction.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsAction' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsAction> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsAction.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsAction>() {
+           @Override
+           public void write(JsonWriter out, JobsAction value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsAction read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsAction given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsAction
+  * @throws IOException if the JSON string is invalid with respect to JobsAction
+  */
+  public static JobsAction fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsAction.class);
+  }
+
+ /**
+  * Convert an instance of JobsAction to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

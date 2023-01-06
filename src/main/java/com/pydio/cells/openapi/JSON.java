@@ -15,20 +15,12 @@ package com.pydio.cells.openapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.google.gson.JsonElement;
-import io.gsonfire.GsonFireBuilder;
-import io.gsonfire.TypeSelector;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
-import org.threeten.bp.format.DateTimeFormatter;
-
-import com.pydio.cells.openapi.model.*;
-import okio.ByteString;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -36,19 +28,29 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
-import java.util.HashMap;
 
+import io.gsonfire.GsonFireBuilder;
+import okio.ByteString;
+
+/*
+ * A JSON utility class
+ *
+ * NOTE: in the future, this class may be converted to static, which may break
+ *       backward-compatibility
+ */
 public class JSON {
-    private Gson gson;
-    private boolean isLenientOnJson = false;
-    private DateTypeAdapter dateTypeAdapter = new DateTypeAdapter();
-    private SqlDateTypeAdapter sqlDateTypeAdapter = new SqlDateTypeAdapter();
-    private OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
-    private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
-    private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
+    private static Gson gson;
+    private static boolean isLenientOnJson = false;
+    private static DateTypeAdapter dateTypeAdapter = new DateTypeAdapter();
+    private static SqlDateTypeAdapter sqlDateTypeAdapter = new SqlDateTypeAdapter();
+    private static OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
+    private static LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
+    private static ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
 
     @SuppressWarnings("unchecked")
     public static GsonBuilder createGson() {
@@ -81,14 +83,240 @@ public class JSON {
         return clazz;
     }
 
-    public JSON() {
-        gson = createGson()
-            .registerTypeAdapter(Date.class, dateTypeAdapter)
-            .registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter)
-            .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
-            .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
-            .registerTypeAdapter(byte[].class, byteArrayAdapter)
-            .create();
+    {
+        GsonBuilder gsonBuilder = createGson();
+        gsonBuilder.registerTypeAdapter(Date.class, dateTypeAdapter);
+        gsonBuilder.registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter);
+        gsonBuilder.registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter);
+        gsonBuilder.registerTypeAdapter(LocalDate.class, localDateTypeAdapter);
+        gsonBuilder.registerTypeAdapter(byte[].class, byteArrayAdapter);
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ActivityObject.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ActivitySearchSubscriptionsRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ActivityStreamActivitiesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ActivitySubscription.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.AuthToken.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.CtlPeer.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.CtlService.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.DataSourceObjectDescription.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminCreateKeyRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminCreateKeyResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminExportKeyRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminExportKeyResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminImportKeyRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminImportKeyResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminListKeysRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionAdminListKeysResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionExport.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionImport.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionKey.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.EncryptionKeyInfo.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmACL.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmACLAction.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmACLSingleQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmListPolicyGroupsRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmListPolicyGroupsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmPolicy.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmPolicyCondition.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmPolicyGroup.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmRole.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmRoleSingleQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmSearchUserMetaRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUpdateUserMetaResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUser.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUserMeta.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUserMetaNamespace.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmUserSingleQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmWorkspace.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.IdmWorkspaceSingleQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallCheckResult.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallGetAgreementResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallGetDefaultsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallInstallConfig.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallInstallEventsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallInstallRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallInstallResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallPerformCheckRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallPerformCheckResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallProxyConfig.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallTLSCertificate.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallTLSLetsEncrypt.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.InstallTLSSelfSigned.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsAction.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsActionLog.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsActionMessage.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsActionOutput.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsActionOutputFilter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsContextMetaFilter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsCtrlCommand.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsCtrlCommandResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsDataSourceSelector.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsDeleteTasksRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsDeleteTasksResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsIdmSelector.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsJob.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsJobHook.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsJobParameter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsListJobsRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsNodesSelector.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsSchedule.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsTask.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsTriggerFilter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsUsersSelector.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ListSharedResourcesResponseSharedResource.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.LogListLogRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.LogLogMessage.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.MailerMail.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.MailerSendMailResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.MailerUser.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ObjectDataSource.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ProtobufAny.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.PutWorkspaceRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryDao.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryEdge.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryGeneric.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryItem.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryListRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryListResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryNode.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryOptions.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryServer.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RegistryService.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ResetPasswordTokenRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestACLCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestActionDescription.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestBackgroundJobResult.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestBulkMetaResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCell.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCellAcl.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestConfiguration.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestControlServiceRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCreateNodesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCreatePeerFolderRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCreatePeerFolderResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCreateSelectionRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCreateSelectionResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCreateStorageBucketRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestCreateStorageBucketResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDataSourceCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDeleteCellResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDeleteDataSourceResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDeleteNodesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDeleteNodesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDeleteResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDeleteShareLinkResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDeleteUserMetaTagsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDiscoveryResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDocumentAccessTokenRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestError.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontBinaryResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontBootConfResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontEnrollAuthRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontEnrollAuthResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontMessagesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontPluginsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontSessionRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontSessionResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestFrontStateResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestGetBulkMetaRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestHeadNodeResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListPeerFoldersRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListPeersAddressesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListProcessesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListProcessesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListSharedResourcesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListSharedResourcesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListSitesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListStorageBucketsRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListTemplatesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestListUserMetaTagsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestLogMessageCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestMetaCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestMetaNamespaceRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestMetadata.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestNodesCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestOpenApiResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestPagination.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestProcess.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestPutCellRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestPutShareLinkRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestPutUserMetaTagRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestPutUserMetaTagResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRecommendRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRecommendResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRelationResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestResetPasswordRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestResetPasswordResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestResetPasswordTokenResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestResourcePolicyQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRestoreNodesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRestoreNodesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRevokeRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRevokeResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestRolesCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSchedulerActionFormResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSchedulerActionsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSearchACLRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSearchResults.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSearchRoleRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSearchUserRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSearchWorkspaceRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestServiceCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSettingsAccess.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSettingsAccessRestPolicy.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSettingsEntry.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSettingsEntryMeta.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSettingsMenuResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSettingsSection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestShareLink.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestShareLinkTargetUser.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestSubscriptionsCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestTemplate.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestTemplateNode.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUpdateSharePoliciesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUpdateSharePoliciesResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUserBookmarksRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUserJobRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUserJobResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUserJobsCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUserMetaCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUserMetaNamespaceCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUserStateResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestUsersCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestVersioningPolicyCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RestWorkspaceCollection.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.RpcStatus.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ServiceQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ServiceResourcePolicy.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.ServiceResourcePolicyQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.SetRoleRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeChangeLog.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeGeoPoint.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeGeoQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeListNodesRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeNode.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeNodeChangeEvent.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeQuery.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeReadNodeRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeReadNodeResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeSearchFacet.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeSearchRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeVersioningKeepPeriod.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeVersioningPolicy.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.TreeWorkspaceRelativePath.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.UpdateApplyUpdateRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.UpdateApplyUpdateResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.UpdatePackage.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.UpdateUpdateRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.UpdateUpdateResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.UserCanRepresentEitherAUserOrAGroup.CustomTypeAdapterFactory());
+        gson = gsonBuilder.create();
     }
 
     /**
@@ -96,7 +324,7 @@ public class JSON {
      *
      * @return Gson
      */
-    public Gson getGson() {
+    public static Gson getGson() {
         return gson;
     }
 
@@ -104,23 +332,13 @@ public class JSON {
      * Set Gson.
      *
      * @param gson Gson
-     * @return JSON
      */
-    public JSON setGson(Gson gson) {
-        this.gson = gson;
-        return this;
+    public static void setGson(Gson gson) {
+        JSON.gson = gson;
     }
 
-    /**
-     * Configure the parser to be liberal in what it accepts.
-     *
-     * @param lenientOnJson Set it to true to ignore some syntax errors
-     * @return JSON
-     * @see <a href="https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.5/com/google/gson/stream/JsonReader.html">https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.5/com/google/gson/stream/JsonReader.html</a>
-     */
-    public JSON setLenientOnJson(boolean lenientOnJson) {
+    public static void setLenientOnJson(boolean lenientOnJson) {
         isLenientOnJson = lenientOnJson;
-        return this;
     }
 
     /**
@@ -129,7 +347,7 @@ public class JSON {
      * @param obj Object
      * @return String representation of the JSON
      */
-    public String serialize(Object obj) {
+    public static String serialize(Object obj) {
         return gson.toJson(obj);
     }
 
@@ -142,11 +360,11 @@ public class JSON {
      * @return The deserialized Java object
      */
     @SuppressWarnings("unchecked")
-    public <T> T deserialize(String body, Type returnType) {
+    public static <T> T deserialize(String body, Type returnType) {
         try {
             if (isLenientOnJson) {
                 JsonReader jsonReader = new JsonReader(new StringReader(body));
-                // see https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.5/com/google/gson/stream/JsonReader.html
+                // see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
                 jsonReader.setLenient(true);
                 return gson.fromJson(jsonReader, returnType);
             } else {
@@ -166,7 +384,7 @@ public class JSON {
     /**
      * Gson TypeAdapter for Byte Array type
      */
-    public class ByteArrayAdapter extends TypeAdapter<byte[]> {
+    public static class ByteArrayAdapter extends TypeAdapter<byte[]> {
 
         @Override
         public void write(JsonWriter out, byte[] value) throws IOException {
@@ -238,7 +456,7 @@ public class JSON {
     /**
      * Gson TypeAdapter for JSR310 LocalDate type
      */
-    public class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
+    public static class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
 
         private DateTimeFormatter formatter;
 
@@ -276,14 +494,12 @@ public class JSON {
         }
     }
 
-    public JSON setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
+    public static void setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
         offsetDateTimeTypeAdapter.setFormat(dateFormat);
-        return this;
     }
 
-    public JSON setLocalDateFormat(DateTimeFormatter dateFormat) {
+    public static void setLocalDateFormat(DateTimeFormatter dateFormat) {
         localDateTypeAdapter.setFormat(dateFormat);
-        return this;
     }
 
     /**
@@ -397,14 +613,11 @@ public class JSON {
         }
     }
 
-    public JSON setDateFormat(DateFormat dateFormat) {
+    public static void setDateFormat(DateFormat dateFormat) {
         dateTypeAdapter.setFormat(dateFormat);
-        return this;
     }
 
-    public JSON setSqlDateFormat(DateFormat dateFormat) {
+    public static void setSqlDateFormat(DateFormat dateFormat) {
         sqlDateTypeAdapter.setFormat(dateFormat);
-        return this;
     }
-
 }

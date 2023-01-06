@@ -13,23 +13,16 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
+import com.pydio.cells.openapi.model.ResetPasswordTokenRequest;
 import com.pydio.cells.openapi.model.RestDocumentAccessTokenRequest;
 import com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestResetPasswordRequest;
 import com.pydio.cells.openapi.model.RestResetPasswordResponse;
 import com.pydio.cells.openapi.model.RestResetPasswordTokenResponse;
@@ -97,7 +90,6 @@ public class TokenServiceApi {
      */
     public okhttp3.Call generateDocumentAccessTokenCall(RestDocumentAccessTokenRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -143,15 +135,12 @@ public class TokenServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call generateDocumentAccessTokenValidateBeforeCall(RestDocumentAccessTokenRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling generateDocumentAccessToken(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = generateDocumentAccessTokenCall(body, _callback);
-        return localVarCall;
+        return generateDocumentAccessTokenCall(body, _callback);
 
     }
 
@@ -240,7 +229,6 @@ public class TokenServiceApi {
      */
     public okhttp3.Call resetPasswordCall(RestResetPasswordRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -286,15 +274,12 @@ public class TokenServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call resetPasswordValidateBeforeCall(RestResetPasswordRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling resetPassword(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = resetPasswordCall(body, _callback);
-        return localVarCall;
+        return resetPasswordCall(body, _callback);
 
     }
 
@@ -368,6 +353,7 @@ public class TokenServiceApi {
     /**
      * Build call for resetPasswordToken
      * @param userLogin Start a ResetPassword workflow for this user (required)
+     * @param body  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -381,9 +367,8 @@ public class TokenServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call resetPasswordTokenCall(String userLogin, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call resetPasswordTokenCall(String userLogin, ResetPasswordTokenRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -396,11 +381,11 @@ public class TokenServiceApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/auth/reset-password-token/{UserLogin}"
-            .replaceAll("\\{" + "UserLogin" + "\\}", localVarApiClient.escapeString(userLogin.toString()));
+            .replace("{" + "UserLogin" + "}", localVarApiClient.escapeString(userLogin.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -417,7 +402,7 @@ public class TokenServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -429,16 +414,18 @@ public class TokenServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call resetPasswordTokenValidateBeforeCall(String userLogin, final ApiCallback _callback) throws ApiException {
-        
+    private okhttp3.Call resetPasswordTokenValidateBeforeCall(String userLogin, ResetPasswordTokenRequest body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'userLogin' is set
         if (userLogin == null) {
             throw new ApiException("Missing the required parameter 'userLogin' when calling resetPasswordToken(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = resetPasswordTokenCall(userLogin, _callback);
-        return localVarCall;
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling resetPasswordToken(Async)");
+        }
+
+        return resetPasswordTokenCall(userLogin, body, _callback);
 
     }
 
@@ -446,6 +433,7 @@ public class TokenServiceApi {
      * Generate a unique token for the reset password process
      * 
      * @param userLogin Start a ResetPassword workflow for this user (required)
+     * @param body  (required)
      * @return RestResetPasswordTokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -458,8 +446,8 @@ public class TokenServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public RestResetPasswordTokenResponse resetPasswordToken(String userLogin) throws ApiException {
-        ApiResponse<RestResetPasswordTokenResponse> localVarResp = resetPasswordTokenWithHttpInfo(userLogin);
+    public RestResetPasswordTokenResponse resetPasswordToken(String userLogin, ResetPasswordTokenRequest body) throws ApiException {
+        ApiResponse<RestResetPasswordTokenResponse> localVarResp = resetPasswordTokenWithHttpInfo(userLogin, body);
         return localVarResp.getData();
     }
 
@@ -467,6 +455,7 @@ public class TokenServiceApi {
      * Generate a unique token for the reset password process
      * 
      * @param userLogin Start a ResetPassword workflow for this user (required)
+     * @param body  (required)
      * @return ApiResponse&lt;RestResetPasswordTokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -479,8 +468,8 @@ public class TokenServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<RestResetPasswordTokenResponse> resetPasswordTokenWithHttpInfo(String userLogin) throws ApiException {
-        okhttp3.Call localVarCall = resetPasswordTokenValidateBeforeCall(userLogin, null);
+    public ApiResponse<RestResetPasswordTokenResponse> resetPasswordTokenWithHttpInfo(String userLogin, ResetPasswordTokenRequest body) throws ApiException {
+        okhttp3.Call localVarCall = resetPasswordTokenValidateBeforeCall(userLogin, body, null);
         Type localVarReturnType = new TypeToken<RestResetPasswordTokenResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -489,6 +478,7 @@ public class TokenServiceApi {
      * Generate a unique token for the reset password process (asynchronously)
      * 
      * @param userLogin Start a ResetPassword workflow for this user (required)
+     * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -502,9 +492,9 @@ public class TokenServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call resetPasswordTokenAsync(String userLogin, final ApiCallback<RestResetPasswordTokenResponse> _callback) throws ApiException {
+    public okhttp3.Call resetPasswordTokenAsync(String userLogin, ResetPasswordTokenRequest body, final ApiCallback<RestResetPasswordTokenResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = resetPasswordTokenValidateBeforeCall(userLogin, _callback);
+        okhttp3.Call localVarCall = resetPasswordTokenValidateBeforeCall(userLogin, body, _callback);
         Type localVarReturnType = new TypeToken<RestResetPasswordTokenResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -527,7 +517,6 @@ public class TokenServiceApi {
      */
     public okhttp3.Call revokeCall(RestRevokeRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -573,15 +562,12 @@ public class TokenServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call revokeValidateBeforeCall(RestRevokeRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling revoke(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = revokeCall(body, _callback);
-        return localVarCall;
+        return revokeCall(body, _callback);
 
     }
 

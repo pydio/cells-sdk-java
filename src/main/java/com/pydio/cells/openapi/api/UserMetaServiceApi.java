@@ -13,20 +13,13 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.IdmSearchUserMetaRequest;
 import com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceRequest;
 import com.pydio.cells.openapi.model.IdmUpdateUserMetaNamespaceResponse;
@@ -34,7 +27,6 @@ import com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest;
 import com.pydio.cells.openapi.model.IdmUpdateUserMetaResponse;
 import com.pydio.cells.openapi.model.RestBulkMetaResponse;
 import com.pydio.cells.openapi.model.RestDeleteUserMetaTagsResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestListUserMetaTagsResponse;
 import com.pydio.cells.openapi.model.RestPutUserMetaTagRequest;
 import com.pydio.cells.openapi.model.RestPutUserMetaTagResponse;
@@ -104,7 +96,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call deleteUserMetaTagsCall(String namespace, String tags, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -121,8 +112,8 @@ public class UserMetaServiceApi {
 
         // create path and map variables
         String localVarPath = "/user-meta/tags/{Namespace}/{Tags}"
-            .replaceAll("\\{" + "Namespace" + "\\}", localVarApiClient.escapeString(namespace.toString()))
-            .replaceAll("\\{" + "Tags" + "\\}", localVarApiClient.escapeString(tags.toString()));
+            .replace("{" + "Namespace" + "}", localVarApiClient.escapeString(namespace.toString()))
+            .replace("{" + "Tags" + "}", localVarApiClient.escapeString(tags.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -139,7 +130,6 @@ public class UserMetaServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -152,20 +142,17 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteUserMetaTagsValidateBeforeCall(String namespace, String tags, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
             throw new ApiException("Missing the required parameter 'namespace' when calling deleteUserMetaTags(Async)");
         }
-        
+
         // verify the required parameter 'tags' is set
         if (tags == null) {
             throw new ApiException("Missing the required parameter 'tags' when calling deleteUserMetaTags(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteUserMetaTagsCall(namespace, tags, _callback);
-        return localVarCall;
+        return deleteUserMetaTagsCall(namespace, tags, _callback);
 
     }
 
@@ -256,7 +243,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call listUserMetaNamespaceCall(final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -289,7 +275,6 @@ public class UserMetaServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -302,10 +287,7 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listUserMetaNamespaceValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = listUserMetaNamespaceCall(_callback);
-        return localVarCall;
+        return listUserMetaNamespaceCall(_callback);
 
     }
 
@@ -391,7 +373,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call listUserMetaTagsCall(String namespace, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -408,7 +389,7 @@ public class UserMetaServiceApi {
 
         // create path and map variables
         String localVarPath = "/user-meta/tags/{Namespace}"
-            .replaceAll("\\{" + "Namespace" + "\\}", localVarApiClient.escapeString(namespace.toString()));
+            .replace("{" + "Namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -425,7 +406,6 @@ public class UserMetaServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -438,15 +418,12 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listUserMetaTagsValidateBeforeCall(String namespace, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
             throw new ApiException("Missing the required parameter 'namespace' when calling listUserMetaTags(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listUserMetaTagsCall(namespace, _callback);
-        return localVarCall;
+        return listUserMetaTagsCall(namespace, _callback);
 
     }
 
@@ -536,7 +513,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call putUserMetaTagCall(String namespace, RestPutUserMetaTagRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -553,7 +529,7 @@ public class UserMetaServiceApi {
 
         // create path and map variables
         String localVarPath = "/user-meta/tags/{Namespace}"
-            .replaceAll("\\{" + "Namespace" + "\\}", localVarApiClient.escapeString(namespace.toString()));
+            .replace("{" + "Namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -583,20 +559,17 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call putUserMetaTagValidateBeforeCall(String namespace, RestPutUserMetaTagRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
             throw new ApiException("Missing the required parameter 'namespace' when calling putUserMetaTag(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putUserMetaTag(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putUserMetaTagCall(namespace, body, _callback);
-        return localVarCall;
+        return putUserMetaTagCall(namespace, body, _callback);
 
     }
 
@@ -688,7 +661,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call searchUserMetaCall(IdmSearchUserMetaRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -734,15 +706,12 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call searchUserMetaValidateBeforeCall(IdmSearchUserMetaRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling searchUserMeta(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = searchUserMetaCall(body, _callback);
-        return localVarCall;
+        return searchUserMetaCall(body, _callback);
 
     }
 
@@ -831,7 +800,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call updateUserMetaCall(IdmUpdateUserMetaRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -877,15 +845,12 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call updateUserMetaValidateBeforeCall(IdmUpdateUserMetaRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updateUserMeta(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = updateUserMetaCall(body, _callback);
-        return localVarCall;
+        return updateUserMetaCall(body, _callback);
 
     }
 
@@ -974,7 +939,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call updateUserMetaNamespaceCall(IdmUpdateUserMetaNamespaceRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1020,15 +984,12 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call updateUserMetaNamespaceValidateBeforeCall(IdmUpdateUserMetaNamespaceRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updateUserMetaNamespace(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = updateUserMetaNamespaceCall(body, _callback);
-        return localVarCall;
+        return updateUserMetaNamespaceCall(body, _callback);
 
     }
 
@@ -1117,7 +1078,6 @@ public class UserMetaServiceApi {
      */
     public okhttp3.Call userBookmarksCall(RestUserBookmarksRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1163,15 +1123,12 @@ public class UserMetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call userBookmarksValidateBeforeCall(RestUserBookmarksRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling userBookmarks(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = userBookmarksCall(body, _callback);
-        return localVarCall;
+        return userBookmarksCall(body, _callback);
 
     }
 

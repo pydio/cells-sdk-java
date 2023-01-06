@@ -13,26 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.TreeNode;
-import com.pydio.cells.openapi.model.TreeNodeChangeEventEventType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * TreeNodeChangeEvent
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class TreeNodeChangeEvent {
   public static final String SERIALIZED_NAME_METADATA = "Metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
@@ -58,7 +63,7 @@ public class TreeNodeChangeEvent {
   @SerializedName(SERIALIZED_NAME_TYPE)
   private TreeNodeChangeEventEventType type = TreeNodeChangeEventEventType.CREATE;
 
-  public TreeNodeChangeEvent() { 
+  public TreeNodeChangeEvent() {
   }
 
   public TreeNodeChangeEvent metadata(Map<String, String> metadata) {
@@ -69,7 +74,7 @@ public class TreeNodeChangeEvent {
 
   public TreeNodeChangeEvent putMetadataItem(String key, String metadataItem) {
     if (this.metadata == null) {
-      this.metadata = new HashMap<String, String>();
+      this.metadata = new HashMap<>();
     }
     this.metadata.put(key, metadataItem);
     return this;
@@ -207,6 +212,7 @@ public class TreeNodeChangeEvent {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -254,5 +260,101 @@ public class TreeNodeChangeEvent {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Metadata");
+    openapiFields.add("Optimistic");
+    openapiFields.add("Silent");
+    openapiFields.add("Source");
+    openapiFields.add("Target");
+    openapiFields.add("Type");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to TreeNodeChangeEvent
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!TreeNodeChangeEvent.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in TreeNodeChangeEvent is not found in the empty JSON string", TreeNodeChangeEvent.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!TreeNodeChangeEvent.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeNodeChangeEvent` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // validate the optional field `Source`
+      if (jsonObj.get("Source") != null && !jsonObj.get("Source").isJsonNull()) {
+        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Source"));
+      }
+      // validate the optional field `Target`
+      if (jsonObj.get("Target") != null && !jsonObj.get("Target").isJsonNull()) {
+        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Target"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!TreeNodeChangeEvent.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'TreeNodeChangeEvent' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<TreeNodeChangeEvent> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(TreeNodeChangeEvent.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<TreeNodeChangeEvent>() {
+           @Override
+           public void write(JsonWriter out, TreeNodeChangeEvent value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public TreeNodeChangeEvent read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of TreeNodeChangeEvent given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of TreeNodeChangeEvent
+  * @throws IOException if the JSON string is invalid with respect to TreeNodeChangeEvent
+  */
+  public static TreeNodeChangeEvent fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, TreeNodeChangeEvent.class);
+  }
+
+ /**
+  * Convert an instance of TreeNodeChangeEvent to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

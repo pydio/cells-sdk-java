@@ -13,30 +13,38 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmUserMetaNamespace;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IdmUpdateUserMetaNamespaceResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class IdmUpdateUserMetaNamespaceResponse {
   public static final String SERIALIZED_NAME_NAMESPACES = "Namespaces";
   @SerializedName(SERIALIZED_NAME_NAMESPACES)
   private List<IdmUserMetaNamespace> namespaces = null;
 
-  public IdmUpdateUserMetaNamespaceResponse() { 
+  public IdmUpdateUserMetaNamespaceResponse() {
   }
 
   public IdmUpdateUserMetaNamespaceResponse namespaces(List<IdmUserMetaNamespace> namespaces) {
@@ -47,7 +55,7 @@ public class IdmUpdateUserMetaNamespaceResponse {
 
   public IdmUpdateUserMetaNamespaceResponse addNamespacesItem(IdmUserMetaNamespace namespacesItem) {
     if (this.namespaces == null) {
-      this.namespaces = new ArrayList<IdmUserMetaNamespace>();
+      this.namespaces = new ArrayList<>();
     }
     this.namespaces.add(namespacesItem);
     return this;
@@ -68,6 +76,7 @@ public class IdmUpdateUserMetaNamespaceResponse {
   public void setNamespaces(List<IdmUserMetaNamespace> namespaces) {
     this.namespaces = namespaces;
   }
+
 
 
   @Override
@@ -107,5 +116,102 @@ public class IdmUpdateUserMetaNamespaceResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Namespaces");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to IdmUpdateUserMetaNamespaceResponse
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!IdmUpdateUserMetaNamespaceResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in IdmUpdateUserMetaNamespaceResponse is not found in the empty JSON string", IdmUpdateUserMetaNamespaceResponse.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!IdmUpdateUserMetaNamespaceResponse.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmUpdateUserMetaNamespaceResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Namespaces") != null && !jsonObj.get("Namespaces").isJsonNull()) {
+        JsonArray jsonArraynamespaces = jsonObj.getAsJsonArray("Namespaces");
+        if (jsonArraynamespaces != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Namespaces").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Namespaces` to be an array in the JSON string but got `%s`", jsonObj.get("Namespaces").toString()));
+          }
+
+          // validate the optional field `Namespaces` (array)
+          for (int i = 0; i < jsonArraynamespaces.size(); i++) {
+            IdmUserMetaNamespace.validateJsonObject(jsonArraynamespaces.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!IdmUpdateUserMetaNamespaceResponse.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'IdmUpdateUserMetaNamespaceResponse' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<IdmUpdateUserMetaNamespaceResponse> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(IdmUpdateUserMetaNamespaceResponse.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<IdmUpdateUserMetaNamespaceResponse>() {
+           @Override
+           public void write(JsonWriter out, IdmUpdateUserMetaNamespaceResponse value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public IdmUpdateUserMetaNamespaceResponse read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of IdmUpdateUserMetaNamespaceResponse given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of IdmUpdateUserMetaNamespaceResponse
+  * @throws IOException if the JSON string is invalid with respect to IdmUpdateUserMetaNamespaceResponse
+  */
+  public static IdmUpdateUserMetaNamespaceResponse fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, IdmUpdateUserMetaNamespaceResponse.class);
+  }
+
+ /**
+  * Convert an instance of IdmUpdateUserMetaNamespaceResponse to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

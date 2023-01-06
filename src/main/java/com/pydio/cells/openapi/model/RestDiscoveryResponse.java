@@ -13,24 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestDiscoveryResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestDiscoveryResponse {
   public static final String SERIALIZED_NAME_BUILD_REVISION = "BuildRevision";
   @SerializedName(SERIALIZED_NAME_BUILD_REVISION)
@@ -56,7 +63,7 @@ public class RestDiscoveryResponse {
   @SerializedName(SERIALIZED_NAME_VERSION)
   private String version;
 
-  public RestDiscoveryResponse() { 
+  public RestDiscoveryResponse() {
   }
 
   public RestDiscoveryResponse buildRevision(String buildRevision) {
@@ -113,7 +120,7 @@ public class RestDiscoveryResponse {
 
   public RestDiscoveryResponse putEndpointsItem(String key, String endpointsItem) {
     if (this.endpoints == null) {
-      this.endpoints = new HashMap<String, String>();
+      this.endpoints = new HashMap<>();
     }
     this.endpoints.put(key, endpointsItem);
     return this;
@@ -205,6 +212,7 @@ public class RestDiscoveryResponse {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -252,5 +260,105 @@ public class RestDiscoveryResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("BuildRevision");
+    openapiFields.add("BuildStamp");
+    openapiFields.add("Endpoints");
+    openapiFields.add("PackageLabel");
+    openapiFields.add("PackageType");
+    openapiFields.add("Version");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestDiscoveryResponse
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestDiscoveryResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestDiscoveryResponse is not found in the empty JSON string", RestDiscoveryResponse.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestDiscoveryResponse.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestDiscoveryResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("BuildRevision") != null && !jsonObj.get("BuildRevision").isJsonNull()) && !jsonObj.get("BuildRevision").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `BuildRevision` to be a primitive type in the JSON string but got `%s`", jsonObj.get("BuildRevision").toString()));
+      }
+      if ((jsonObj.get("PackageLabel") != null && !jsonObj.get("PackageLabel").isJsonNull()) && !jsonObj.get("PackageLabel").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `PackageLabel` to be a primitive type in the JSON string but got `%s`", jsonObj.get("PackageLabel").toString()));
+      }
+      if ((jsonObj.get("PackageType") != null && !jsonObj.get("PackageType").isJsonNull()) && !jsonObj.get("PackageType").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `PackageType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("PackageType").toString()));
+      }
+      if ((jsonObj.get("Version") != null && !jsonObj.get("Version").isJsonNull()) && !jsonObj.get("Version").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Version` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Version").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestDiscoveryResponse.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestDiscoveryResponse' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestDiscoveryResponse> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestDiscoveryResponse.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestDiscoveryResponse>() {
+           @Override
+           public void write(JsonWriter out, RestDiscoveryResponse value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestDiscoveryResponse read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestDiscoveryResponse given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestDiscoveryResponse
+  * @throws IOException if the JSON string is invalid with respect to RestDiscoveryResponse
+  */
+  public static RestDiscoveryResponse fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestDiscoveryResponse.class);
+  }
+
+ /**
+  * Convert an instance of RestDiscoveryResponse to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

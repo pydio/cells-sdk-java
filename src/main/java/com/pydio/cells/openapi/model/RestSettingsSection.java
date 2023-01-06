@@ -13,24 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.RestSettingsEntry;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestSettingsSection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestSettingsSection {
   public static final String SERIALIZED_NAME_C_H_I_L_D_R_E_N = "CHILDREN";
   @SerializedName(SERIALIZED_NAME_C_H_I_L_D_R_E_N)
@@ -48,7 +56,7 @@ public class RestSettingsSection {
   @SerializedName(SERIALIZED_NAME_L_A_B_E_L)
   private String LABEL;
 
-  public RestSettingsSection() { 
+  public RestSettingsSection() {
   }
 
   public RestSettingsSection CHILDREN(List<RestSettingsEntry> CHILDREN) {
@@ -59,7 +67,7 @@ public class RestSettingsSection {
 
   public RestSettingsSection addCHILDRENItem(RestSettingsEntry CHILDRENItem) {
     if (this.CHILDREN == null) {
-      this.CHILDREN = new ArrayList<RestSettingsEntry>();
+      this.CHILDREN = new ArrayList<>();
     }
     this.CHILDREN.add(CHILDRENItem);
     return this;
@@ -151,6 +159,7 @@ public class RestSettingsSection {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -194,5 +203,114 @@ public class RestSettingsSection {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("CHILDREN");
+    openapiFields.add("DESCRIPTION");
+    openapiFields.add("Key");
+    openapiFields.add("LABEL");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestSettingsSection
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestSettingsSection.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestSettingsSection is not found in the empty JSON string", RestSettingsSection.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestSettingsSection.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSettingsSection` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("CHILDREN") != null && !jsonObj.get("CHILDREN").isJsonNull()) {
+        JsonArray jsonArrayCHILDREN = jsonObj.getAsJsonArray("CHILDREN");
+        if (jsonArrayCHILDREN != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("CHILDREN").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `CHILDREN` to be an array in the JSON string but got `%s`", jsonObj.get("CHILDREN").toString()));
+          }
+
+          // validate the optional field `CHILDREN` (array)
+          for (int i = 0; i < jsonArrayCHILDREN.size(); i++) {
+            RestSettingsEntry.validateJsonObject(jsonArrayCHILDREN.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if ((jsonObj.get("DESCRIPTION") != null && !jsonObj.get("DESCRIPTION").isJsonNull()) && !jsonObj.get("DESCRIPTION").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `DESCRIPTION` to be a primitive type in the JSON string but got `%s`", jsonObj.get("DESCRIPTION").toString()));
+      }
+      if ((jsonObj.get("Key") != null && !jsonObj.get("Key").isJsonNull()) && !jsonObj.get("Key").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Key` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Key").toString()));
+      }
+      if ((jsonObj.get("LABEL") != null && !jsonObj.get("LABEL").isJsonNull()) && !jsonObj.get("LABEL").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `LABEL` to be a primitive type in the JSON string but got `%s`", jsonObj.get("LABEL").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestSettingsSection.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestSettingsSection' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestSettingsSection> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestSettingsSection.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestSettingsSection>() {
+           @Override
+           public void write(JsonWriter out, RestSettingsSection value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestSettingsSection read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestSettingsSection given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestSettingsSection
+  * @throws IOException if the JSON string is invalid with respect to RestSettingsSection
+  */
+  public static RestSettingsSection fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestSettingsSection.class);
+  }
+
+ /**
+  * Convert an instance of RestSettingsSection to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

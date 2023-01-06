@@ -13,21 +13,29 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * AuthToken
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class AuthToken {
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "AccessToken";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
@@ -45,7 +53,7 @@ public class AuthToken {
   @SerializedName(SERIALIZED_NAME_REFRESH_TOKEN)
   private String refreshToken;
 
-  public AuthToken() { 
+  public AuthToken() {
   }
 
   public AuthToken accessToken(String accessToken) {
@@ -140,6 +148,7 @@ public class AuthToken {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -183,5 +192,103 @@ public class AuthToken {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("AccessToken");
+    openapiFields.add("ExpiresAt");
+    openapiFields.add("IDToken");
+    openapiFields.add("RefreshToken");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to AuthToken
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!AuthToken.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthToken is not found in the empty JSON string", AuthToken.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!AuthToken.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthToken` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("AccessToken") != null && !jsonObj.get("AccessToken").isJsonNull()) && !jsonObj.get("AccessToken").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `AccessToken` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AccessToken").toString()));
+      }
+      if ((jsonObj.get("ExpiresAt") != null && !jsonObj.get("ExpiresAt").isJsonNull()) && !jsonObj.get("ExpiresAt").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ExpiresAt` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ExpiresAt").toString()));
+      }
+      if ((jsonObj.get("IDToken") != null && !jsonObj.get("IDToken").isJsonNull()) && !jsonObj.get("IDToken").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `IDToken` to be a primitive type in the JSON string but got `%s`", jsonObj.get("IDToken").toString()));
+      }
+      if ((jsonObj.get("RefreshToken") != null && !jsonObj.get("RefreshToken").isJsonNull()) && !jsonObj.get("RefreshToken").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `RefreshToken` to be a primitive type in the JSON string but got `%s`", jsonObj.get("RefreshToken").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!AuthToken.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'AuthToken' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<AuthToken> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(AuthToken.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<AuthToken>() {
+           @Override
+           public void write(JsonWriter out, AuthToken value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public AuthToken read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of AuthToken given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of AuthToken
+  * @throws IOException if the JSON string is invalid with respect to AuthToken
+  */
+  public static AuthToken fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, AuthToken.class);
+  }
+
+ /**
+  * Convert an instance of AuthToken to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

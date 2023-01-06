@@ -13,26 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.ProtobufAny;
-import com.pydio.cells.openapi.model.ServiceOperationType;
-import com.pydio.cells.openapi.model.ServiceResourcePolicyQuery;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * ServiceQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class ServiceQuery {
   public static final String SERIALIZED_NAME_LIMIT = "Limit";
   @SerializedName(SERIALIZED_NAME_LIMIT)
@@ -58,7 +63,7 @@ public class ServiceQuery {
   @SerializedName(SERIALIZED_NAME_GROUP_BY)
   private Integer groupBy;
 
-  public ServiceQuery() { 
+  public ServiceQuery() {
   }
 
   public ServiceQuery limit(String limit) {
@@ -161,7 +166,7 @@ public class ServiceQuery {
 
   public ServiceQuery addSubQueriesItem(ProtobufAny subQueriesItem) {
     if (this.subQueries == null) {
-      this.subQueries = new ArrayList<ProtobufAny>();
+      this.subQueries = new ArrayList<>();
     }
     this.subQueries.add(subQueriesItem);
     return this;
@@ -205,6 +210,7 @@ public class ServiceQuery {
   public void setGroupBy(Integer groupBy) {
     this.groupBy = groupBy;
   }
+
 
 
   @Override
@@ -254,5 +260,107 @@ public class ServiceQuery {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Limit");
+    openapiFields.add("Offset");
+    openapiFields.add("Operation");
+    openapiFields.add("ResourcePolicyQuery");
+    openapiFields.add("SubQueries");
+    openapiFields.add("groupBy");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to ServiceQuery
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!ServiceQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ServiceQuery is not found in the empty JSON string", ServiceQuery.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!ServiceQuery.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ServiceQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Limit") != null && !jsonObj.get("Limit").isJsonNull()) && !jsonObj.get("Limit").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Limit` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Limit").toString()));
+      }
+      if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
+      }
+      // validate the optional field `ResourcePolicyQuery`
+      if (jsonObj.get("ResourcePolicyQuery") != null && !jsonObj.get("ResourcePolicyQuery").isJsonNull()) {
+        ServiceResourcePolicyQuery.validateJsonObject(jsonObj.getAsJsonObject("ResourcePolicyQuery"));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("SubQueries") != null && !jsonObj.get("SubQueries").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SubQueries` to be an array in the JSON string but got `%s`", jsonObj.get("SubQueries").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!ServiceQuery.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ServiceQuery' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<ServiceQuery> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ServiceQuery.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<ServiceQuery>() {
+           @Override
+           public void write(JsonWriter out, ServiceQuery value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public ServiceQuery read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of ServiceQuery given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of ServiceQuery
+  * @throws IOException if the JSON string is invalid with respect to ServiceQuery
+  */
+  public static ServiceQuery fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ServiceQuery.class);
+  }
+
+ /**
+  * Convert an instance of ServiceQuery to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

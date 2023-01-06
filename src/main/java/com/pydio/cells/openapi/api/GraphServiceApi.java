@@ -13,21 +13,15 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
-import com.pydio.cells.openapi.model.RestError;
+import com.pydio.cells.openapi.model.RestRecommendRequest;
+import com.pydio.cells.openapi.model.RestRecommendResponse;
 import com.pydio.cells.openapi.model.RestRelationResponse;
 import com.pydio.cells.openapi.model.RestUserStateResponse;
 
@@ -75,6 +69,145 @@ public class GraphServiceApi {
     }
 
     /**
+     * Build call for recommend
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call recommendCall(RestRecommendRequest body, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/graph/recommend";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call recommendValidateBeforeCall(RestRecommendRequest body, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling recommend(Async)");
+        }
+
+        return recommendCall(body, _callback);
+
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return RestRecommendResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public RestRecommendResponse recommend(RestRecommendRequest body) throws ApiException {
+        ApiResponse<RestRecommendResponse> localVarResp = recommendWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;RestRecommendResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<RestRecommendResponse> recommendWithHttpInfo(RestRecommendRequest body) throws ApiException {
+        okhttp3.Call localVarCall = recommendValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<RestRecommendResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * 
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> User has no permission to access this particular resource </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Resource does not exist in the system </td><td>  -  </td></tr>
+        <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call recommendAsync(RestRecommendRequest body, final ApiCallback<RestRecommendResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = recommendValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<RestRecommendResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for relation
      * @param userId  (required)
      * @param _callback Callback for upload/download progress
@@ -92,7 +225,6 @@ public class GraphServiceApi {
      */
     public okhttp3.Call relationCall(String userId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -109,7 +241,7 @@ public class GraphServiceApi {
 
         // create path and map variables
         String localVarPath = "/graph/relation/{UserId}"
-            .replaceAll("\\{" + "UserId" + "\\}", localVarApiClient.escapeString(userId.toString()));
+            .replace("{" + "UserId" + "}", localVarApiClient.escapeString(userId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -126,7 +258,6 @@ public class GraphServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -139,15 +270,12 @@ public class GraphServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call relationValidateBeforeCall(String userId, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'userId' is set
         if (userId == null) {
             throw new ApiException("Missing the required parameter 'userId' when calling relation(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = relationCall(userId, _callback);
-        return localVarCall;
+        return relationCall(userId, _callback);
 
     }
 
@@ -236,7 +364,6 @@ public class GraphServiceApi {
      */
     public okhttp3.Call userStateCall(String segment, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -253,7 +380,7 @@ public class GraphServiceApi {
 
         // create path and map variables
         String localVarPath = "/graph/state/{Segment}"
-            .replaceAll("\\{" + "Segment" + "\\}", localVarApiClient.escapeString(segment.toString()));
+            .replace("{" + "Segment" + "}", localVarApiClient.escapeString(segment.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -270,7 +397,6 @@ public class GraphServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -283,15 +409,12 @@ public class GraphServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call userStateValidateBeforeCall(String segment, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'segment' is set
         if (segment == null) {
             throw new ApiException("Missing the required parameter 'segment' when calling userState(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = userStateCall(segment, _callback);
-        return localVarCall;
+        return userStateCall(segment, _callback);
 
     }
 

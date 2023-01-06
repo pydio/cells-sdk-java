@@ -13,27 +13,35 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.RegistryActionType;
-import com.pydio.cells.openapi.model.RegistryItemType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RegistryOptions
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RegistryOptions {
-  public static final String SERIALIZED_NAME_ACTION = "action";
-  @SerializedName(SERIALIZED_NAME_ACTION)
-  private RegistryActionType action = RegistryActionType.ANY;
+  public static final String SERIALIZED_NAME_ACTIONS = "actions";
+  @SerializedName(SERIALIZED_NAME_ACTIONS)
+  private List<RegistryActionType> actions = null;
 
   public static final String SERIALIZED_NAME_META_NAME = "metaName";
   @SerializedName(SERIALIZED_NAME_META_NAME)
@@ -43,41 +51,49 @@ public class RegistryOptions {
   @SerializedName(SERIALIZED_NAME_META_VALUE)
   private String metaValue;
 
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
+  public static final String SERIALIZED_NAME_NAMES = "names";
+  @SerializedName(SERIALIZED_NAME_NAMES)
+  private List<String> names = null;
 
   public static final String SERIALIZED_NAME_TTL = "ttl";
   @SerializedName(SERIALIZED_NAME_TTL)
   private String ttl;
 
-  public static final String SERIALIZED_NAME_TYPE = "type";
-  @SerializedName(SERIALIZED_NAME_TYPE)
-  private RegistryItemType type = RegistryItemType.ALL;
+  public static final String SERIALIZED_NAME_TYPES = "types";
+  @SerializedName(SERIALIZED_NAME_TYPES)
+  private List<RegistryItemType> types = null;
 
-  public RegistryOptions() { 
+  public RegistryOptions() {
   }
 
-  public RegistryOptions action(RegistryActionType action) {
+  public RegistryOptions actions(List<RegistryActionType> actions) {
     
-    this.action = action;
+    this.actions = actions;
+    return this;
+  }
+
+  public RegistryOptions addActionsItem(RegistryActionType actionsItem) {
+    if (this.actions == null) {
+      this.actions = new ArrayList<>();
+    }
+    this.actions.add(actionsItem);
     return this;
   }
 
    /**
-   * Get action
-   * @return action
+   * Get actions
+   * @return actions
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public RegistryActionType getAction() {
-    return action;
+  public List<RegistryActionType> getActions() {
+    return actions;
   }
 
 
-  public void setAction(RegistryActionType action) {
-    this.action = action;
+  public void setActions(List<RegistryActionType> actions) {
+    this.actions = actions;
   }
 
 
@@ -127,26 +143,34 @@ public class RegistryOptions {
   }
 
 
-  public RegistryOptions name(String name) {
+  public RegistryOptions names(List<String> names) {
     
-    this.name = name;
+    this.names = names;
+    return this;
+  }
+
+  public RegistryOptions addNamesItem(String namesItem) {
+    if (this.names == null) {
+      this.names = new ArrayList<>();
+    }
+    this.names.add(namesItem);
     return this;
   }
 
    /**
-   * Get name
-   * @return name
+   * Get names
+   * @return names
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public String getName() {
-    return name;
+  public List<String> getNames() {
+    return names;
   }
 
 
-  public void setName(String name) {
-    this.name = name;
+  public void setNames(List<String> names) {
+    this.names = names;
   }
 
 
@@ -173,27 +197,36 @@ public class RegistryOptions {
   }
 
 
-  public RegistryOptions type(RegistryItemType type) {
+  public RegistryOptions types(List<RegistryItemType> types) {
     
-    this.type = type;
+    this.types = types;
+    return this;
+  }
+
+  public RegistryOptions addTypesItem(RegistryItemType typesItem) {
+    if (this.types == null) {
+      this.types = new ArrayList<>();
+    }
+    this.types.add(typesItem);
     return this;
   }
 
    /**
-   * Get type
-   * @return type
+   * Get types
+   * @return types
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public RegistryItemType getType() {
-    return type;
+  public List<RegistryItemType> getTypes() {
+    return types;
   }
 
 
-  public void setType(RegistryItemType type) {
-    this.type = type;
+  public void setTypes(List<RegistryItemType> types) {
+    this.types = types;
   }
+
 
 
   @Override
@@ -205,29 +238,29 @@ public class RegistryOptions {
       return false;
     }
     RegistryOptions registryOptions = (RegistryOptions) o;
-    return Objects.equals(this.action, registryOptions.action) &&
+    return Objects.equals(this.actions, registryOptions.actions) &&
         Objects.equals(this.metaName, registryOptions.metaName) &&
         Objects.equals(this.metaValue, registryOptions.metaValue) &&
-        Objects.equals(this.name, registryOptions.name) &&
+        Objects.equals(this.names, registryOptions.names) &&
         Objects.equals(this.ttl, registryOptions.ttl) &&
-        Objects.equals(this.type, registryOptions.type);
+        Objects.equals(this.types, registryOptions.types);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(action, metaName, metaValue, name, ttl, type);
+    return Objects.hash(actions, metaName, metaValue, names, ttl, types);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RegistryOptions {\n");
-    sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    actions: ").append(toIndentedString(actions)).append("\n");
     sb.append("    metaName: ").append(toIndentedString(metaName)).append("\n");
     sb.append("    metaValue: ").append(toIndentedString(metaValue)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    names: ").append(toIndentedString(names)).append("\n");
     sb.append("    ttl: ").append(toIndentedString(ttl)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    types: ").append(toIndentedString(types)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -243,5 +276,114 @@ public class RegistryOptions {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("actions");
+    openapiFields.add("metaName");
+    openapiFields.add("metaValue");
+    openapiFields.add("names");
+    openapiFields.add("ttl");
+    openapiFields.add("types");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RegistryOptions
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RegistryOptions.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RegistryOptions is not found in the empty JSON string", RegistryOptions.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RegistryOptions.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryOptions` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("actions") != null && !jsonObj.get("actions").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `actions` to be an array in the JSON string but got `%s`", jsonObj.get("actions").toString()));
+      }
+      if ((jsonObj.get("metaName") != null && !jsonObj.get("metaName").isJsonNull()) && !jsonObj.get("metaName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `metaName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("metaName").toString()));
+      }
+      if ((jsonObj.get("metaValue") != null && !jsonObj.get("metaValue").isJsonNull()) && !jsonObj.get("metaValue").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `metaValue` to be a primitive type in the JSON string but got `%s`", jsonObj.get("metaValue").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("names") != null && !jsonObj.get("names").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `names` to be an array in the JSON string but got `%s`", jsonObj.get("names").toString()));
+      }
+      if ((jsonObj.get("ttl") != null && !jsonObj.get("ttl").isJsonNull()) && !jsonObj.get("ttl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ttl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ttl").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("types") != null && !jsonObj.get("types").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `types` to be an array in the JSON string but got `%s`", jsonObj.get("types").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RegistryOptions.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RegistryOptions' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RegistryOptions> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RegistryOptions.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RegistryOptions>() {
+           @Override
+           public void write(JsonWriter out, RegistryOptions value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RegistryOptions read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RegistryOptions given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RegistryOptions
+  * @throws IOException if the JSON string is invalid with respect to RegistryOptions
+  */
+  public static RegistryOptions fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RegistryOptions.class);
+  }
+
+ /**
+  * Convert an instance of RegistryOptions to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

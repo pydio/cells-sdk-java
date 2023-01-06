@@ -13,29 +13,37 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestMetaNamespaceRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestMetaNamespaceRequest {
   public static final String SERIALIZED_NAME_NAMESPACE = "Namespace";
   @SerializedName(SERIALIZED_NAME_NAMESPACE)
   private List<String> namespace = null;
 
-  public RestMetaNamespaceRequest() { 
+  public RestMetaNamespaceRequest() {
   }
 
   public RestMetaNamespaceRequest namespace(List<String> namespace) {
@@ -46,7 +54,7 @@ public class RestMetaNamespaceRequest {
 
   public RestMetaNamespaceRequest addNamespaceItem(String namespaceItem) {
     if (this.namespace == null) {
-      this.namespace = new ArrayList<String>();
+      this.namespace = new ArrayList<>();
     }
     this.namespace.add(namespaceItem);
     return this;
@@ -67,6 +75,7 @@ public class RestMetaNamespaceRequest {
   public void setNamespace(List<String> namespace) {
     this.namespace = namespace;
   }
+
 
 
   @Override
@@ -106,5 +115,92 @@ public class RestMetaNamespaceRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Namespace");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestMetaNamespaceRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestMetaNamespaceRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestMetaNamespaceRequest is not found in the empty JSON string", RestMetaNamespaceRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestMetaNamespaceRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestMetaNamespaceRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("Namespace") != null && !jsonObj.get("Namespace").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Namespace` to be an array in the JSON string but got `%s`", jsonObj.get("Namespace").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestMetaNamespaceRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestMetaNamespaceRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestMetaNamespaceRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestMetaNamespaceRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestMetaNamespaceRequest>() {
+           @Override
+           public void write(JsonWriter out, RestMetaNamespaceRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestMetaNamespaceRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestMetaNamespaceRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestMetaNamespaceRequest
+  * @throws IOException if the JSON string is invalid with respect to RestMetaNamespaceRequest
+  */
+  public static RestMetaNamespaceRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestMetaNamespaceRequest.class);
+  }
+
+ /**
+  * Convert an instance of RestMetaNamespaceRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

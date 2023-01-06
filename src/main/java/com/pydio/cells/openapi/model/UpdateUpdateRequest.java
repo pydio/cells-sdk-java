@@ -13,24 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * UpdateUpdateRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class UpdateUpdateRequest {
   public static final String SERIALIZED_NAME_CHANNEL = "Channel";
   @SerializedName(SERIALIZED_NAME_CHANNEL)
@@ -60,7 +67,7 @@ public class UpdateUpdateRequest {
   @SerializedName(SERIALIZED_NAME_SERVICE_NAME)
   private String serviceName;
 
-  public UpdateUpdateRequest() { 
+  public UpdateUpdateRequest() {
   }
 
   public UpdateUpdateRequest channel(String channel) {
@@ -163,7 +170,7 @@ public class UpdateUpdateRequest {
 
   public UpdateUpdateRequest putLicenseInfoItem(String key, String licenseInfoItem) {
     if (this.licenseInfo == null) {
-      this.licenseInfo = new HashMap<String, String>();
+      this.licenseInfo = new HashMap<>();
     }
     this.licenseInfo.put(key, licenseInfoItem);
     return this;
@@ -232,6 +239,7 @@ public class UpdateUpdateRequest {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -281,5 +289,112 @@ public class UpdateUpdateRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Channel");
+    openapiFields.add("CurrentVersion");
+    openapiFields.add("GOARCH");
+    openapiFields.add("GOOS");
+    openapiFields.add("LicenseInfo");
+    openapiFields.add("PackageName");
+    openapiFields.add("ServiceName");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to UpdateUpdateRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!UpdateUpdateRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in UpdateUpdateRequest is not found in the empty JSON string", UpdateUpdateRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!UpdateUpdateRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `UpdateUpdateRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Channel") != null && !jsonObj.get("Channel").isJsonNull()) && !jsonObj.get("Channel").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Channel` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Channel").toString()));
+      }
+      if ((jsonObj.get("CurrentVersion") != null && !jsonObj.get("CurrentVersion").isJsonNull()) && !jsonObj.get("CurrentVersion").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `CurrentVersion` to be a primitive type in the JSON string but got `%s`", jsonObj.get("CurrentVersion").toString()));
+      }
+      if ((jsonObj.get("GOARCH") != null && !jsonObj.get("GOARCH").isJsonNull()) && !jsonObj.get("GOARCH").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `GOARCH` to be a primitive type in the JSON string but got `%s`", jsonObj.get("GOARCH").toString()));
+      }
+      if ((jsonObj.get("GOOS") != null && !jsonObj.get("GOOS").isJsonNull()) && !jsonObj.get("GOOS").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `GOOS` to be a primitive type in the JSON string but got `%s`", jsonObj.get("GOOS").toString()));
+      }
+      if ((jsonObj.get("PackageName") != null && !jsonObj.get("PackageName").isJsonNull()) && !jsonObj.get("PackageName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `PackageName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("PackageName").toString()));
+      }
+      if ((jsonObj.get("ServiceName") != null && !jsonObj.get("ServiceName").isJsonNull()) && !jsonObj.get("ServiceName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ServiceName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ServiceName").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!UpdateUpdateRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'UpdateUpdateRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<UpdateUpdateRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(UpdateUpdateRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<UpdateUpdateRequest>() {
+           @Override
+           public void write(JsonWriter out, UpdateUpdateRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public UpdateUpdateRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of UpdateUpdateRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of UpdateUpdateRequest
+  * @throws IOException if the JSON string is invalid with respect to UpdateUpdateRequest
+  */
+  public static UpdateUpdateRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, UpdateUpdateRequest.class);
+  }
+
+ /**
+  * Convert an instance of UpdateUpdateRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

@@ -13,24 +13,33 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * LogMessage is the format used to transmit log messages to clients via the REST API.
  */
 @ApiModel(description = "LogMessage is the format used to transmit log messages to clients via the REST API.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class LogLogMessage {
   public static final String SERIALIZED_NAME_GROUP_PATH = "GroupPath";
   @SerializedName(SERIALIZED_NAME_GROUP_PATH)
@@ -136,7 +145,7 @@ public class LogLogMessage {
   @SerializedName(SERIALIZED_NAME_WS_UUID)
   private String wsUuid;
 
-  public LogLogMessage() { 
+  public LogLogMessage() {
   }
 
   public LogLogMessage groupPath(String groupPath) {
@@ -446,7 +455,7 @@ public class LogLogMessage {
 
   public LogLogMessage addRoleUuidsItem(String roleUuidsItem) {
     if (this.roleUuids == null) {
-      this.roleUuids = new ArrayList<String>();
+      this.roleUuids = new ArrayList<>();
     }
     this.roleUuids.add(roleUuidsItem);
     return this;
@@ -745,6 +754,7 @@ public class LogLogMessage {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -832,5 +842,189 @@ public class LogLogMessage {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("GroupPath");
+    openapiFields.add("HttpProtocol");
+    openapiFields.add("JsonZaps");
+    openapiFields.add("Level");
+    openapiFields.add("Logger");
+    openapiFields.add("Msg");
+    openapiFields.add("MsgId");
+    openapiFields.add("NodePath");
+    openapiFields.add("NodeUuid");
+    openapiFields.add("OperationLabel");
+    openapiFields.add("OperationUuid");
+    openapiFields.add("Profile");
+    openapiFields.add("RemoteAddress");
+    openapiFields.add("RoleUuids");
+    openapiFields.add("SchedulerJobUuid");
+    openapiFields.add("SchedulerTaskActionPath");
+    openapiFields.add("SchedulerTaskUuid");
+    openapiFields.add("SpanParentUuid");
+    openapiFields.add("SpanRootUuid");
+    openapiFields.add("SpanUuid");
+    openapiFields.add("Ts");
+    openapiFields.add("UserAgent");
+    openapiFields.add("UserName");
+    openapiFields.add("UserUuid");
+    openapiFields.add("WsScope");
+    openapiFields.add("WsUuid");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to LogLogMessage
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!LogLogMessage.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in LogLogMessage is not found in the empty JSON string", LogLogMessage.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!LogLogMessage.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `LogLogMessage` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("GroupPath") != null && !jsonObj.get("GroupPath").isJsonNull()) && !jsonObj.get("GroupPath").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `GroupPath` to be a primitive type in the JSON string but got `%s`", jsonObj.get("GroupPath").toString()));
+      }
+      if ((jsonObj.get("HttpProtocol") != null && !jsonObj.get("HttpProtocol").isJsonNull()) && !jsonObj.get("HttpProtocol").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `HttpProtocol` to be a primitive type in the JSON string but got `%s`", jsonObj.get("HttpProtocol").toString()));
+      }
+      if ((jsonObj.get("JsonZaps") != null && !jsonObj.get("JsonZaps").isJsonNull()) && !jsonObj.get("JsonZaps").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `JsonZaps` to be a primitive type in the JSON string but got `%s`", jsonObj.get("JsonZaps").toString()));
+      }
+      if ((jsonObj.get("Level") != null && !jsonObj.get("Level").isJsonNull()) && !jsonObj.get("Level").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Level` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Level").toString()));
+      }
+      if ((jsonObj.get("Logger") != null && !jsonObj.get("Logger").isJsonNull()) && !jsonObj.get("Logger").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Logger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Logger").toString()));
+      }
+      if ((jsonObj.get("Msg") != null && !jsonObj.get("Msg").isJsonNull()) && !jsonObj.get("Msg").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Msg").toString()));
+      }
+      if ((jsonObj.get("MsgId") != null && !jsonObj.get("MsgId").isJsonNull()) && !jsonObj.get("MsgId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `MsgId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MsgId").toString()));
+      }
+      if ((jsonObj.get("NodePath") != null && !jsonObj.get("NodePath").isJsonNull()) && !jsonObj.get("NodePath").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `NodePath` to be a primitive type in the JSON string but got `%s`", jsonObj.get("NodePath").toString()));
+      }
+      if ((jsonObj.get("NodeUuid") != null && !jsonObj.get("NodeUuid").isJsonNull()) && !jsonObj.get("NodeUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `NodeUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("NodeUuid").toString()));
+      }
+      if ((jsonObj.get("OperationLabel") != null && !jsonObj.get("OperationLabel").isJsonNull()) && !jsonObj.get("OperationLabel").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `OperationLabel` to be a primitive type in the JSON string but got `%s`", jsonObj.get("OperationLabel").toString()));
+      }
+      if ((jsonObj.get("OperationUuid") != null && !jsonObj.get("OperationUuid").isJsonNull()) && !jsonObj.get("OperationUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `OperationUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("OperationUuid").toString()));
+      }
+      if ((jsonObj.get("Profile") != null && !jsonObj.get("Profile").isJsonNull()) && !jsonObj.get("Profile").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Profile` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Profile").toString()));
+      }
+      if ((jsonObj.get("RemoteAddress") != null && !jsonObj.get("RemoteAddress").isJsonNull()) && !jsonObj.get("RemoteAddress").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `RemoteAddress` to be a primitive type in the JSON string but got `%s`", jsonObj.get("RemoteAddress").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("RoleUuids") != null && !jsonObj.get("RoleUuids").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `RoleUuids` to be an array in the JSON string but got `%s`", jsonObj.get("RoleUuids").toString()));
+      }
+      if ((jsonObj.get("SchedulerJobUuid") != null && !jsonObj.get("SchedulerJobUuid").isJsonNull()) && !jsonObj.get("SchedulerJobUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SchedulerJobUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SchedulerJobUuid").toString()));
+      }
+      if ((jsonObj.get("SchedulerTaskActionPath") != null && !jsonObj.get("SchedulerTaskActionPath").isJsonNull()) && !jsonObj.get("SchedulerTaskActionPath").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SchedulerTaskActionPath` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SchedulerTaskActionPath").toString()));
+      }
+      if ((jsonObj.get("SchedulerTaskUuid") != null && !jsonObj.get("SchedulerTaskUuid").isJsonNull()) && !jsonObj.get("SchedulerTaskUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SchedulerTaskUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SchedulerTaskUuid").toString()));
+      }
+      if ((jsonObj.get("SpanParentUuid") != null && !jsonObj.get("SpanParentUuid").isJsonNull()) && !jsonObj.get("SpanParentUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SpanParentUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SpanParentUuid").toString()));
+      }
+      if ((jsonObj.get("SpanRootUuid") != null && !jsonObj.get("SpanRootUuid").isJsonNull()) && !jsonObj.get("SpanRootUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SpanRootUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SpanRootUuid").toString()));
+      }
+      if ((jsonObj.get("SpanUuid") != null && !jsonObj.get("SpanUuid").isJsonNull()) && !jsonObj.get("SpanUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SpanUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SpanUuid").toString()));
+      }
+      if ((jsonObj.get("UserAgent") != null && !jsonObj.get("UserAgent").isJsonNull()) && !jsonObj.get("UserAgent").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UserAgent` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UserAgent").toString()));
+      }
+      if ((jsonObj.get("UserName") != null && !jsonObj.get("UserName").isJsonNull()) && !jsonObj.get("UserName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UserName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UserName").toString()));
+      }
+      if ((jsonObj.get("UserUuid") != null && !jsonObj.get("UserUuid").isJsonNull()) && !jsonObj.get("UserUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UserUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UserUuid").toString()));
+      }
+      if ((jsonObj.get("WsScope") != null && !jsonObj.get("WsScope").isJsonNull()) && !jsonObj.get("WsScope").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `WsScope` to be a primitive type in the JSON string but got `%s`", jsonObj.get("WsScope").toString()));
+      }
+      if ((jsonObj.get("WsUuid") != null && !jsonObj.get("WsUuid").isJsonNull()) && !jsonObj.get("WsUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `WsUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("WsUuid").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!LogLogMessage.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'LogLogMessage' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<LogLogMessage> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(LogLogMessage.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<LogLogMessage>() {
+           @Override
+           public void write(JsonWriter out, LogLogMessage value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public LogLogMessage read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of LogLogMessage given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of LogLogMessage
+  * @throws IOException if the JSON string is invalid with respect to LogLogMessage
+  */
+  public static LogLogMessage fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, LogLogMessage.class);
+  }
+
+ /**
+  * Convert an instance of LogLogMessage to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

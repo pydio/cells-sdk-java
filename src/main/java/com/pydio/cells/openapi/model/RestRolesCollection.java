@@ -13,24 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmRole;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestRolesCollection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestRolesCollection {
   public static final String SERIALIZED_NAME_ROLES = "Roles";
   @SerializedName(SERIALIZED_NAME_ROLES)
@@ -40,7 +48,7 @@ public class RestRolesCollection {
   @SerializedName(SERIALIZED_NAME_TOTAL)
   private Integer total;
 
-  public RestRolesCollection() { 
+  public RestRolesCollection() {
   }
 
   public RestRolesCollection roles(List<IdmRole> roles) {
@@ -51,7 +59,7 @@ public class RestRolesCollection {
 
   public RestRolesCollection addRolesItem(IdmRole rolesItem) {
     if (this.roles == null) {
-      this.roles = new ArrayList<IdmRole>();
+      this.roles = new ArrayList<>();
     }
     this.roles.add(rolesItem);
     return this;
@@ -97,6 +105,7 @@ public class RestRolesCollection {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -136,5 +145,103 @@ public class RestRolesCollection {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Roles");
+    openapiFields.add("Total");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestRolesCollection
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestRolesCollection.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestRolesCollection is not found in the empty JSON string", RestRolesCollection.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestRolesCollection.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestRolesCollection` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Roles") != null && !jsonObj.get("Roles").isJsonNull()) {
+        JsonArray jsonArrayroles = jsonObj.getAsJsonArray("Roles");
+        if (jsonArrayroles != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Roles").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Roles` to be an array in the JSON string but got `%s`", jsonObj.get("Roles").toString()));
+          }
+
+          // validate the optional field `Roles` (array)
+          for (int i = 0; i < jsonArrayroles.size(); i++) {
+            IdmRole.validateJsonObject(jsonArrayroles.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestRolesCollection.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestRolesCollection' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestRolesCollection> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestRolesCollection.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestRolesCollection>() {
+           @Override
+           public void write(JsonWriter out, RestRolesCollection value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestRolesCollection read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestRolesCollection given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestRolesCollection
+  * @throws IOException if the JSON string is invalid with respect to RestRolesCollection
+  */
+  public static RestRolesCollection fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestRolesCollection.class);
+  }
+
+ /**
+  * Convert an instance of RestRolesCollection to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

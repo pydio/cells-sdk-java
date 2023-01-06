@@ -13,26 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmUserSingleQuery;
-import com.pydio.cells.openapi.model.RestResourcePolicyQuery;
-import com.pydio.cells.openapi.model.ServiceOperationType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestSearchUserRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestSearchUserRequest {
   public static final String SERIALIZED_NAME_COUNT_ONLY = "CountOnly";
   @SerializedName(SERIALIZED_NAME_COUNT_ONLY)
@@ -62,7 +68,7 @@ public class RestSearchUserRequest {
   @SerializedName(SERIALIZED_NAME_RESOURCE_POLICY_QUERY)
   private RestResourcePolicyQuery resourcePolicyQuery;
 
-  public RestSearchUserRequest() { 
+  public RestSearchUserRequest() {
   }
 
   public RestSearchUserRequest countOnly(Boolean countOnly) {
@@ -188,7 +194,7 @@ public class RestSearchUserRequest {
 
   public RestSearchUserRequest addQueriesItem(IdmUserSingleQuery queriesItem) {
     if (this.queries == null) {
-      this.queries = new ArrayList<IdmUserSingleQuery>();
+      this.queries = new ArrayList<>();
     }
     this.queries.add(queriesItem);
     return this;
@@ -232,6 +238,7 @@ public class RestSearchUserRequest {
   public void setResourcePolicyQuery(RestResourcePolicyQuery resourcePolicyQuery) {
     this.resourcePolicyQuery = resourcePolicyQuery;
   }
+
 
 
   @Override
@@ -283,5 +290,118 @@ public class RestSearchUserRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("CountOnly");
+    openapiFields.add("GroupBy");
+    openapiFields.add("Limit");
+    openapiFields.add("Offset");
+    openapiFields.add("Operation");
+    openapiFields.add("Queries");
+    openapiFields.add("ResourcePolicyQuery");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestSearchUserRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestSearchUserRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestSearchUserRequest is not found in the empty JSON string", RestSearchUserRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestSearchUserRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSearchUserRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Limit") != null && !jsonObj.get("Limit").isJsonNull()) && !jsonObj.get("Limit").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Limit` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Limit").toString()));
+      }
+      if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
+      }
+      if (jsonObj.get("Queries") != null && !jsonObj.get("Queries").isJsonNull()) {
+        JsonArray jsonArrayqueries = jsonObj.getAsJsonArray("Queries");
+        if (jsonArrayqueries != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Queries").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Queries` to be an array in the JSON string but got `%s`", jsonObj.get("Queries").toString()));
+          }
+
+          // validate the optional field `Queries` (array)
+          for (int i = 0; i < jsonArrayqueries.size(); i++) {
+            IdmUserSingleQuery.validateJsonObject(jsonArrayqueries.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // validate the optional field `ResourcePolicyQuery`
+      if (jsonObj.get("ResourcePolicyQuery") != null && !jsonObj.get("ResourcePolicyQuery").isJsonNull()) {
+        RestResourcePolicyQuery.validateJsonObject(jsonObj.getAsJsonObject("ResourcePolicyQuery"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestSearchUserRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestSearchUserRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestSearchUserRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestSearchUserRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestSearchUserRequest>() {
+           @Override
+           public void write(JsonWriter out, RestSearchUserRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestSearchUserRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestSearchUserRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestSearchUserRequest
+  * @throws IOException if the JSON string is invalid with respect to RestSearchUserRequest
+  */
+  public static RestSearchUserRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestSearchUserRequest.class);
+  }
+
+ /**
+  * Convert an instance of RestSearchUserRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

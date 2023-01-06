@@ -13,26 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.ObjectEncryptionMode;
-import com.pydio.cells.openapi.model.ObjectStorageType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * ObjectDataSource
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class ObjectDataSource {
   public static final String SERIALIZED_NAME_API_KEY = "ApiKey";
   @SerializedName(SERIALIZED_NAME_API_KEY)
@@ -118,7 +123,7 @@ public class ObjectDataSource {
   @SerializedName(SERIALIZED_NAME_WATCH)
   private Boolean watch;
 
-  public ObjectDataSource() { 
+  public ObjectDataSource() {
   }
 
   public ObjectDataSource apiKey(String apiKey) {
@@ -520,7 +525,7 @@ public class ObjectDataSource {
 
   public ObjectDataSource putStorageConfigurationItem(String key, String storageConfigurationItem) {
     if (this.storageConfiguration == null) {
-      this.storageConfiguration = new HashMap<String, String>();
+      this.storageConfiguration = new HashMap<>();
     }
     this.storageConfiguration.put(key, storageConfigurationItem);
     return this;
@@ -612,6 +617,7 @@ public class ObjectDataSource {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -689,5 +695,138 @@ public class ObjectDataSource {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("ApiKey");
+    openapiFields.add("ApiSecret");
+    openapiFields.add("CreationDate");
+    openapiFields.add("Disabled");
+    openapiFields.add("EncryptionKey");
+    openapiFields.add("EncryptionMode");
+    openapiFields.add("FlatStorage");
+    openapiFields.add("LastSynchronizationDate");
+    openapiFields.add("Name");
+    openapiFields.add("ObjectsBaseFolder");
+    openapiFields.add("ObjectsBucket");
+    openapiFields.add("ObjectsHost");
+    openapiFields.add("ObjectsPort");
+    openapiFields.add("ObjectsSecure");
+    openapiFields.add("ObjectsServiceName");
+    openapiFields.add("PeerAddress");
+    openapiFields.add("SkipSyncOnRestart");
+    openapiFields.add("StorageConfiguration");
+    openapiFields.add("StorageType");
+    openapiFields.add("VersioningPolicyName");
+    openapiFields.add("Watch");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to ObjectDataSource
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!ObjectDataSource.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ObjectDataSource is not found in the empty JSON string", ObjectDataSource.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!ObjectDataSource.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ObjectDataSource` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("ApiKey") != null && !jsonObj.get("ApiKey").isJsonNull()) && !jsonObj.get("ApiKey").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ApiKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ApiKey").toString()));
+      }
+      if ((jsonObj.get("ApiSecret") != null && !jsonObj.get("ApiSecret").isJsonNull()) && !jsonObj.get("ApiSecret").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ApiSecret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ApiSecret").toString()));
+      }
+      if ((jsonObj.get("EncryptionKey") != null && !jsonObj.get("EncryptionKey").isJsonNull()) && !jsonObj.get("EncryptionKey").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `EncryptionKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("EncryptionKey").toString()));
+      }
+      if ((jsonObj.get("Name") != null && !jsonObj.get("Name").isJsonNull()) && !jsonObj.get("Name").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Name").toString()));
+      }
+      if ((jsonObj.get("ObjectsBaseFolder") != null && !jsonObj.get("ObjectsBaseFolder").isJsonNull()) && !jsonObj.get("ObjectsBaseFolder").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ObjectsBaseFolder` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ObjectsBaseFolder").toString()));
+      }
+      if ((jsonObj.get("ObjectsBucket") != null && !jsonObj.get("ObjectsBucket").isJsonNull()) && !jsonObj.get("ObjectsBucket").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ObjectsBucket` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ObjectsBucket").toString()));
+      }
+      if ((jsonObj.get("ObjectsHost") != null && !jsonObj.get("ObjectsHost").isJsonNull()) && !jsonObj.get("ObjectsHost").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ObjectsHost` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ObjectsHost").toString()));
+      }
+      if ((jsonObj.get("ObjectsServiceName") != null && !jsonObj.get("ObjectsServiceName").isJsonNull()) && !jsonObj.get("ObjectsServiceName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ObjectsServiceName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ObjectsServiceName").toString()));
+      }
+      if ((jsonObj.get("PeerAddress") != null && !jsonObj.get("PeerAddress").isJsonNull()) && !jsonObj.get("PeerAddress").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `PeerAddress` to be a primitive type in the JSON string but got `%s`", jsonObj.get("PeerAddress").toString()));
+      }
+      if ((jsonObj.get("VersioningPolicyName") != null && !jsonObj.get("VersioningPolicyName").isJsonNull()) && !jsonObj.get("VersioningPolicyName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `VersioningPolicyName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("VersioningPolicyName").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!ObjectDataSource.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ObjectDataSource' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<ObjectDataSource> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ObjectDataSource.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<ObjectDataSource>() {
+           @Override
+           public void write(JsonWriter out, ObjectDataSource value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public ObjectDataSource read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of ObjectDataSource given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of ObjectDataSource
+  * @throws IOException if the JSON string is invalid with respect to ObjectDataSource
+  */
+  public static ObjectDataSource fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ObjectDataSource.class);
+  }
+
+ /**
+  * Convert an instance of ObjectDataSource to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

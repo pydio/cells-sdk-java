@@ -354,6 +354,15 @@ paths:
         required: true
         schema:
           type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Create:
+                  type: boolean
+        required: true
       responses:
         200:
           description: A successful response.
@@ -385,6 +394,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/restError'
+      x-codegen-request-body-name: body
   /auth/token/document:
     post:
       tags:
@@ -493,6 +503,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/restNodesCollection'
+        401:
+          description: User is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+        403:
+          description: User has no permission to access this particular resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+        404:
+          description: Resource does not exist in the system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+        500:
+          description: An internal error occurred in the backend
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+      x-codegen-request-body-name: body
+  /config/buckets/{BucketName}:
+    put:
+      tags:
+      - ConfigService
+      summary: List Buckets on a given object storage
+      operationId: CreateStorageBucket
+      parameters:
+      - name: BucketName
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: RestCreateStorageBucketRequest
+              type: object
+              properties:
+                DataSource:
+                  $ref: '#/components/schemas/objectDataSource'
+        required: true
+      responses:
+        200:
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restCreateStorageBucketResponse'
         401:
           description: User is not authenticated
           content:
@@ -2447,6 +2511,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/restError'
+  /graph/recommend:
+    post:
+      tags:
+      - GraphService
+      operationId: Recommend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restRecommendRequest'
+        required: true
+      responses:
+        200:
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restRecommendResponse'
+        401:
+          description: User is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+        403:
+          description: User has no permission to access this particular resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+        404:
+          description: Resource does not exist in the system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+        500:
+          description: An internal error occurred in the backend
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+      x-codegen-request-body-name: body
   /graph/relation/{UserId}:
     get:
       tags:
@@ -2925,6 +3032,7 @@ paths:
               title: RestUserJobRequest
               type: object
               properties:
+                ### Manual tweak to insure compatibility with the remote server that are pre v4
                 JobName:
                   title: Also add JobName in body to keep backward compatibility with pre v4 versions
                   type: string
@@ -6772,6 +6880,8 @@ components:
         Label:
           title: User-defined label for this action
           type: string
+        MergeAction:
+          $ref: '#/components/schemas/jobsAction'
         NodesFilter:
           $ref: '#/components/schemas/jobsNodesSelector'
         NodesSelector:
@@ -6781,6 +6891,9 @@ components:
           type: object
           additionalProperties:
             type: string
+        Timeout:
+          title: Optional timeout for this action
+          type: string
         TriggerFilter:
           $ref: '#/components/schemas/jobsTriggerFilter'
         UsersFilter:
@@ -6877,6 +6990,11 @@ components:
           title: Time taken to run the action
           type: integer
           format: int32
+        Vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Vars container, values are json-encoded.
     jobsActionOutputFilter:
       title: ActionOutputFilter can be used to filter last message output
       type: object
@@ -6960,11 +7078,17 @@ components:
         Description:
           title: Selector additional description
           type: string
+        FanOutInput:
+          title: Ignore query and just fan out input.DataSources
+          type: boolean
         Label:
           title: Selector custom label
           type: string
         Query:
           $ref: '#/components/schemas/serviceQuery'
+        Timeout:
+          title: Optional Timeout for this selector
+          type: string
         Type:
           $ref: '#/components/schemas/jobsDataSourceSelectorType'
     jobsDataSourceSelectorType:
@@ -7014,11 +7138,17 @@ components:
         Description:
           title: Selector additional description
           type: string
+        FanOutInput:
+          title: Ignore query and just fan out input.[Type]
+          type: boolean
         Label:
           title: Selector custom label
           type: string
         Query:
           $ref: '#/components/schemas/serviceQuery'
+        Timeout:
+          title: Optional Timeout for this selector
+          type: string
         Type:
           $ref: '#/components/schemas/jobsIdmSelectorType'
     jobsIdmSelectorType:
@@ -7046,6 +7176,10 @@ components:
           type: boolean
         ContextMetaFilter:
           $ref: '#/components/schemas/jobsContextMetaFilter'
+        CreatedAt:
+          title: Timestamp for creation time
+          type: integer
+          format: int32
         Custom:
           title: Job created by application or by administrator
           type: boolean
@@ -7059,6 +7193,11 @@ components:
           type: array
           items:
             type: string
+        Hooks:
+          title: Expose this job through one or more-userspace APIs
+          type: array
+          items:
+            $ref: '#/components/schemas/jobsJobHook'
         ID:
           title: Unique ID for this Job
           type: string
@@ -7077,6 +7216,12 @@ components:
             type: string
         MaxConcurrency:
           title: Task properties
+          type: integer
+          format: int32
+        MergeAction:
+          $ref: '#/components/schemas/jobsAction'
+        ModifiedAt:
+          title: Timestamp for modification time
           type: integer
           format: int32
         NodeEventFilter:
@@ -7104,8 +7249,42 @@ components:
         TasksSilentUpdate:
           title: Do not send notification on task update
           type: boolean
+        Timeout:
+          title: Optional Timeout any running job
+          type: string
         UserEventFilter:
           $ref: '#/components/schemas/jobsUsersSelector'
+        VersionMeta:
+          title: Additional Versioning Metadata
+          type: object
+          additionalProperties:
+            type: string
+    jobsJobHook:
+      title: Dynamically expose a job trigger via API
+      type: object
+      properties:
+        AllowOverridePresets:
+          title: Allow trigger parameters to override default presets
+          type: boolean
+        ApiSlug:
+          title: Custom ApiSlug, otherwise use the job UUID
+          type: string
+        Metadata:
+          title: Additional arbitrary metadata attached to this hook
+          type: object
+          additionalProperties:
+            type: string
+        Policies:
+          title: Set permissions for accessing this endpoint
+          type: array
+          items:
+            $ref: '#/components/schemas/serviceResourcePolicy'
+        PresetParameters:
+          title: Preset parameters values when calling this endpoint. May be overriden
+            by a map[string]string in the body
+          type: object
+          additionalProperties:
+            type: string
     jobsJobParameter:
       type: object
       properties:
@@ -7172,6 +7351,9 @@ components:
         Description:
           title: Selector additional description
           type: string
+        FanOutInput:
+          title: Ignore query and just fan out input.Nodes
+          type: boolean
         Label:
           title: Selector custom label
           type: string
@@ -7182,6 +7364,9 @@ components:
             type: string
         Query:
           $ref: '#/components/schemas/serviceQuery'
+        Timeout:
+          title: Optional Timeout for this selector
+          type: string
     jobsSchedule:
       type: object
       properties:
@@ -7280,6 +7465,9 @@ components:
           type: string
         Query:
           $ref: '#/components/schemas/serviceQuery'
+        Timeout:
+          title: Optional Timeout for this selector
+          type: string
         Users:
           title: Preset set of Users
           type: array
@@ -7678,25 +7866,9 @@ components:
           type: string
         dsn:
           type: string
-        id:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        name:
-          type: string
     registryEdge:
       type: object
       properties:
-        id:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        name:
-          type: string
         vertices:
           type: array
           items:
@@ -7704,14 +7876,8 @@ components:
     registryGeneric:
       type: object
       properties:
-        id:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        name:
-          type: string
+        type:
+          $ref: '#/components/schemas/registryItemType'
     registryItem:
       type: object
       properties:
@@ -7725,6 +7891,16 @@ components:
           $ref: '#/components/schemas/registryEdge'
         generic:
           $ref: '#/components/schemas/registryGeneric'
+        id:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        name:
+          type: string
+        node:
+          $ref: '#/components/schemas/registryNode'
         server:
           $ref: '#/components/schemas/registryServer'
         service:
@@ -7734,11 +7910,17 @@ components:
       default: ALL
       enum:
       - ALL
+      - EDGE
+      - NODE
       - SERVICE
       - SERVER
       - DAO
       - GENERIC
-      - EDGE
+      - ADDRESS
+      - TAG
+      - PROCESS
+      - ENDPOINT
+      - STATS
     registryListRequest:
       type: object
       properties:
@@ -7753,55 +7935,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/registryItem'
+    registryNode:
+      type: object
+      properties:
+        advertiseIp:
+          type: string
+        hostname:
+          type: string
+        ips:
+          type: array
+          items:
+            type: string
+        machine:
+          type: string
     registryOptions:
       title: Options are registry options
       type: object
       properties:
-        action:
-          $ref: '#/components/schemas/registryActionType'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/registryActionType'
         metaName:
           type: string
         metaValue:
           type: string
-        name:
-          type: string
+        names:
+          type: array
+          items:
+            type: string
         ttl:
           type: string
           format: int64
-        type:
-          $ref: '#/components/schemas/registryItemType'
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/registryItemType'
     registryServer:
       title: Server represents the node the service is on
       type: object
       properties:
-        address:
-          type: array
-          items:
-            type: string
-        endpoints:
-          type: array
-          items:
-            type: string
-        id:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        name:
+        protocol:
           type: string
     registryService:
       title: Service represents a go-micro service
       type: object
       properties:
-        id:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        name:
-          type: string
         options:
           $ref: '#/components/schemas/registryOptions'
         tags:
@@ -8002,6 +8181,13 @@ components:
             $ref: '#/components/schemas/treeNode'
         SelectionUUID:
           type: string
+    restCreateStorageBucketResponse:
+      type: object
+      properties:
+        BucketName:
+          type: string
+        Success:
+          type: boolean
     restDataSourceCollection:
       title: Collection of datasources
       type: object
@@ -8464,6 +8650,25 @@ components:
         Success:
           title: Operation success
           type: boolean
+    restRecommendRequest:
+      type: object
+      properties:
+        Category:
+          type: string
+        Limit:
+          type: integer
+          format: int32
+        Neighbor:
+          type: string
+        Segment:
+          type: string
+    restRecommendResponse:
+      type: object
+      properties:
+        Nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/treeNode'
     restRelationResponse:
       type: object
       properties:
@@ -9283,6 +9488,9 @@ components:
         DurationDate:
           title: Pass a duration with > or < to compute MinDate / MaxDate
           type: string
+        ETag:
+          title: Look for a specific eTag value
+          type: string
         Extension:
           title: Search files by extension
           type: string
@@ -9582,6 +9790,4 @@ components:
             $ref: '#/components/schemas/updatePackage'
         Channel:
           type: string
-
-
 

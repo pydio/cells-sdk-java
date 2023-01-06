@@ -13,24 +13,16 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.RestCell;
 import com.pydio.cells.openapi.model.RestDeleteCellResponse;
 import com.pydio.cells.openapi.model.RestDeleteShareLinkResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestListSharedResourcesRequest;
 import com.pydio.cells.openapi.model.RestListSharedResourcesResponse;
 import com.pydio.cells.openapi.model.RestPutCellRequest;
@@ -100,7 +92,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call deleteCellCall(String uuid, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -117,7 +108,7 @@ public class ShareServiceApi {
 
         // create path and map variables
         String localVarPath = "/share/cell/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -134,7 +125,6 @@ public class ShareServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -147,15 +137,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteCellValidateBeforeCall(String uuid, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling deleteCell(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteCellCall(uuid, _callback);
-        return localVarCall;
+        return deleteCellCall(uuid, _callback);
 
     }
 
@@ -244,7 +231,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call deleteShareLinkCall(String uuid, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -261,7 +247,7 @@ public class ShareServiceApi {
 
         // create path and map variables
         String localVarPath = "/share/link/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -278,7 +264,6 @@ public class ShareServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -291,15 +276,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteShareLinkValidateBeforeCall(String uuid, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling deleteShareLink(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteShareLinkCall(uuid, _callback);
-        return localVarCall;
+        return deleteShareLinkCall(uuid, _callback);
 
     }
 
@@ -388,7 +370,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call getCellCall(String uuid, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -405,7 +386,7 @@ public class ShareServiceApi {
 
         // create path and map variables
         String localVarPath = "/share/cell/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -422,7 +403,6 @@ public class ShareServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -435,15 +415,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getCellValidateBeforeCall(String uuid, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling getCell(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getCellCall(uuid, _callback);
-        return localVarCall;
+        return getCellCall(uuid, _callback);
 
     }
 
@@ -532,7 +509,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call getShareLinkCall(String uuid, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -549,7 +525,7 @@ public class ShareServiceApi {
 
         // create path and map variables
         String localVarPath = "/share/link/{Uuid}"
-            .replaceAll("\\{" + "Uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
+            .replace("{" + "Uuid" + "}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -566,7 +542,6 @@ public class ShareServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -579,15 +554,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getShareLinkValidateBeforeCall(String uuid, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling getShareLink(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getShareLinkCall(uuid, _callback);
-        return localVarCall;
+        return getShareLinkCall(uuid, _callback);
 
     }
 
@@ -676,7 +648,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call listSharedResourcesCall(RestListSharedResourcesRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -722,15 +693,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listSharedResourcesValidateBeforeCall(RestListSharedResourcesRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listSharedResources(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listSharedResourcesCall(body, _callback);
-        return localVarCall;
+        return listSharedResourcesCall(body, _callback);
 
     }
 
@@ -819,7 +787,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call putCellCall(RestPutCellRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -865,15 +832,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call putCellValidateBeforeCall(RestPutCellRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putCell(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putCellCall(body, _callback);
-        return localVarCall;
+        return putCellCall(body, _callback);
 
     }
 
@@ -962,7 +926,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call putShareLinkCall(RestPutShareLinkRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1008,15 +971,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call putShareLinkValidateBeforeCall(RestPutShareLinkRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putShareLink(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putShareLinkCall(body, _callback);
-        return localVarCall;
+        return putShareLinkCall(body, _callback);
 
     }
 
@@ -1105,7 +1065,6 @@ public class ShareServiceApi {
      */
     public okhttp3.Call updateSharePoliciesCall(RestUpdateSharePoliciesRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -1151,15 +1110,12 @@ public class ShareServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call updateSharePoliciesValidateBeforeCall(RestUpdateSharePoliciesRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updateSharePolicies(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = updateSharePoliciesCall(body, _callback);
-        return localVarCall;
+        return updateSharePoliciesCall(body, _callback);
 
     }
 

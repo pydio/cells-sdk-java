@@ -13,32 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.ActivityObject;
-import com.pydio.cells.openapi.model.IdmACL;
-import com.pydio.cells.openapi.model.IdmRole;
-import com.pydio.cells.openapi.model.IdmUser;
-import com.pydio.cells.openapi.model.IdmWorkspace;
-import com.pydio.cells.openapi.model.JobsActionOutput;
-import com.pydio.cells.openapi.model.ObjectDataSource;
-import com.pydio.cells.openapi.model.ProtobufAny;
-import com.pydio.cells.openapi.model.TreeNode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsActionMessage
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsActionMessage {
   public static final String SERIALIZED_NAME_ACLS = "Acls";
   @SerializedName(SERIALIZED_NAME_ACLS)
@@ -76,7 +76,7 @@ public class JobsActionMessage {
   @SerializedName(SERIALIZED_NAME_WORKSPACES)
   private List<IdmWorkspace> workspaces = null;
 
-  public JobsActionMessage() { 
+  public JobsActionMessage() {
   }
 
   public JobsActionMessage acls(List<IdmACL> acls) {
@@ -87,7 +87,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addAclsItem(IdmACL aclsItem) {
     if (this.acls == null) {
-      this.acls = new ArrayList<IdmACL>();
+      this.acls = new ArrayList<>();
     }
     this.acls.add(aclsItem);
     return this;
@@ -118,7 +118,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addActivitiesItem(ActivityObject activitiesItem) {
     if (this.activities == null) {
-      this.activities = new ArrayList<ActivityObject>();
+      this.activities = new ArrayList<>();
     }
     this.activities.add(activitiesItem);
     return this;
@@ -149,7 +149,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addDataSourcesItem(ObjectDataSource dataSourcesItem) {
     if (this.dataSources == null) {
-      this.dataSources = new ArrayList<ObjectDataSource>();
+      this.dataSources = new ArrayList<>();
     }
     this.dataSources.add(dataSourcesItem);
     return this;
@@ -203,7 +203,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addNodesItem(TreeNode nodesItem) {
     if (this.nodes == null) {
-      this.nodes = new ArrayList<TreeNode>();
+      this.nodes = new ArrayList<>();
     }
     this.nodes.add(nodesItem);
     return this;
@@ -234,7 +234,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addOutputChainItem(JobsActionOutput outputChainItem) {
     if (this.outputChain == null) {
-      this.outputChain = new ArrayList<JobsActionOutput>();
+      this.outputChain = new ArrayList<>();
     }
     this.outputChain.add(outputChainItem);
     return this;
@@ -265,7 +265,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addRolesItem(IdmRole rolesItem) {
     if (this.roles == null) {
-      this.roles = new ArrayList<IdmRole>();
+      this.roles = new ArrayList<>();
     }
     this.roles.add(rolesItem);
     return this;
@@ -296,7 +296,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addUsersItem(IdmUser usersItem) {
     if (this.users == null) {
-      this.users = new ArrayList<IdmUser>();
+      this.users = new ArrayList<>();
     }
     this.users.add(usersItem);
     return this;
@@ -327,7 +327,7 @@ public class JobsActionMessage {
 
   public JobsActionMessage addWorkspacesItem(IdmWorkspace workspacesItem) {
     if (this.workspaces == null) {
-      this.workspaces = new ArrayList<IdmWorkspace>();
+      this.workspaces = new ArrayList<>();
     }
     this.workspaces.add(workspacesItem);
     return this;
@@ -348,6 +348,7 @@ public class JobsActionMessage {
   public void setWorkspaces(List<IdmWorkspace> workspaces) {
     this.workspaces = workspaces;
   }
+
 
 
   @Override
@@ -403,5 +404,208 @@ public class JobsActionMessage {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Acls");
+    openapiFields.add("Activities");
+    openapiFields.add("DataSources");
+    openapiFields.add("Event");
+    openapiFields.add("Nodes");
+    openapiFields.add("OutputChain");
+    openapiFields.add("Roles");
+    openapiFields.add("Users");
+    openapiFields.add("Workspaces");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsActionMessage
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsActionMessage.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsActionMessage is not found in the empty JSON string", JobsActionMessage.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsActionMessage.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsActionMessage` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Acls") != null && !jsonObj.get("Acls").isJsonNull()) {
+        JsonArray jsonArrayacls = jsonObj.getAsJsonArray("Acls");
+        if (jsonArrayacls != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Acls").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Acls` to be an array in the JSON string but got `%s`", jsonObj.get("Acls").toString()));
+          }
+
+          // validate the optional field `Acls` (array)
+          for (int i = 0; i < jsonArrayacls.size(); i++) {
+            IdmACL.validateJsonObject(jsonArrayacls.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("Activities") != null && !jsonObj.get("Activities").isJsonNull()) {
+        JsonArray jsonArrayactivities = jsonObj.getAsJsonArray("Activities");
+        if (jsonArrayactivities != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Activities").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Activities` to be an array in the JSON string but got `%s`", jsonObj.get("Activities").toString()));
+          }
+
+          // validate the optional field `Activities` (array)
+          for (int i = 0; i < jsonArrayactivities.size(); i++) {
+            ActivityObject.validateJsonObject(jsonArrayactivities.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("DataSources") != null && !jsonObj.get("DataSources").isJsonNull()) {
+        JsonArray jsonArraydataSources = jsonObj.getAsJsonArray("DataSources");
+        if (jsonArraydataSources != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("DataSources").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `DataSources` to be an array in the JSON string but got `%s`", jsonObj.get("DataSources").toString()));
+          }
+
+          // validate the optional field `DataSources` (array)
+          for (int i = 0; i < jsonArraydataSources.size(); i++) {
+            ObjectDataSource.validateJsonObject(jsonArraydataSources.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("Nodes") != null && !jsonObj.get("Nodes").isJsonNull()) {
+        JsonArray jsonArraynodes = jsonObj.getAsJsonArray("Nodes");
+        if (jsonArraynodes != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Nodes").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Nodes` to be an array in the JSON string but got `%s`", jsonObj.get("Nodes").toString()));
+          }
+
+          // validate the optional field `Nodes` (array)
+          for (int i = 0; i < jsonArraynodes.size(); i++) {
+            TreeNode.validateJsonObject(jsonArraynodes.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("OutputChain") != null && !jsonObj.get("OutputChain").isJsonNull()) {
+        JsonArray jsonArrayoutputChain = jsonObj.getAsJsonArray("OutputChain");
+        if (jsonArrayoutputChain != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("OutputChain").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `OutputChain` to be an array in the JSON string but got `%s`", jsonObj.get("OutputChain").toString()));
+          }
+
+          // validate the optional field `OutputChain` (array)
+          for (int i = 0; i < jsonArrayoutputChain.size(); i++) {
+            JobsActionOutput.validateJsonObject(jsonArrayoutputChain.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("Roles") != null && !jsonObj.get("Roles").isJsonNull()) {
+        JsonArray jsonArrayroles = jsonObj.getAsJsonArray("Roles");
+        if (jsonArrayroles != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Roles").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Roles` to be an array in the JSON string but got `%s`", jsonObj.get("Roles").toString()));
+          }
+
+          // validate the optional field `Roles` (array)
+          for (int i = 0; i < jsonArrayroles.size(); i++) {
+            IdmRole.validateJsonObject(jsonArrayroles.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("Users") != null && !jsonObj.get("Users").isJsonNull()) {
+        JsonArray jsonArrayusers = jsonObj.getAsJsonArray("Users");
+        if (jsonArrayusers != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Users").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Users` to be an array in the JSON string but got `%s`", jsonObj.get("Users").toString()));
+          }
+
+          // validate the optional field `Users` (array)
+          for (int i = 0; i < jsonArrayusers.size(); i++) {
+            IdmUser.validateJsonObject(jsonArrayusers.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("Workspaces") != null && !jsonObj.get("Workspaces").isJsonNull()) {
+        JsonArray jsonArrayworkspaces = jsonObj.getAsJsonArray("Workspaces");
+        if (jsonArrayworkspaces != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Workspaces").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Workspaces` to be an array in the JSON string but got `%s`", jsonObj.get("Workspaces").toString()));
+          }
+
+          // validate the optional field `Workspaces` (array)
+          for (int i = 0; i < jsonArrayworkspaces.size(); i++) {
+            IdmWorkspace.validateJsonObject(jsonArrayworkspaces.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsActionMessage.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsActionMessage' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsActionMessage> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsActionMessage.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsActionMessage>() {
+           @Override
+           public void write(JsonWriter out, JobsActionMessage value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsActionMessage read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsActionMessage given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsActionMessage
+  * @throws IOException if the JSON string is invalid with respect to JobsActionMessage
+  */
+  public static JobsActionMessage fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsActionMessage.class);
+  }
+
+ /**
+  * Convert an instance of JobsActionMessage to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

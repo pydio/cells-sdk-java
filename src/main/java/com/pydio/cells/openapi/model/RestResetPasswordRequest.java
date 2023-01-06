@@ -13,21 +13,29 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestResetPasswordRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestResetPasswordRequest {
   public static final String SERIALIZED_NAME_NEW_PASSWORD = "NewPassword";
   @SerializedName(SERIALIZED_NAME_NEW_PASSWORD)
@@ -41,7 +49,7 @@ public class RestResetPasswordRequest {
   @SerializedName(SERIALIZED_NAME_USER_LOGIN)
   private String userLogin;
 
-  public RestResetPasswordRequest() { 
+  public RestResetPasswordRequest() {
   }
 
   public RestResetPasswordRequest newPassword(String newPassword) {
@@ -113,6 +121,7 @@ public class RestResetPasswordRequest {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -154,5 +163,99 @@ public class RestResetPasswordRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("NewPassword");
+    openapiFields.add("ResetPasswordToken");
+    openapiFields.add("UserLogin");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestResetPasswordRequest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestResetPasswordRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestResetPasswordRequest is not found in the empty JSON string", RestResetPasswordRequest.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestResetPasswordRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestResetPasswordRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("NewPassword") != null && !jsonObj.get("NewPassword").isJsonNull()) && !jsonObj.get("NewPassword").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `NewPassword` to be a primitive type in the JSON string but got `%s`", jsonObj.get("NewPassword").toString()));
+      }
+      if ((jsonObj.get("ResetPasswordToken") != null && !jsonObj.get("ResetPasswordToken").isJsonNull()) && !jsonObj.get("ResetPasswordToken").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ResetPasswordToken` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ResetPasswordToken").toString()));
+      }
+      if ((jsonObj.get("UserLogin") != null && !jsonObj.get("UserLogin").isJsonNull()) && !jsonObj.get("UserLogin").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UserLogin` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UserLogin").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestResetPasswordRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestResetPasswordRequest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestResetPasswordRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestResetPasswordRequest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestResetPasswordRequest>() {
+           @Override
+           public void write(JsonWriter out, RestResetPasswordRequest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestResetPasswordRequest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestResetPasswordRequest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestResetPasswordRequest
+  * @throws IOException if the JSON string is invalid with respect to RestResetPasswordRequest
+  */
+  public static RestResetPasswordRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestResetPasswordRequest.class);
+  }
+
+ /**
+  * Convert an instance of RestResetPasswordRequest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

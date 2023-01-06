@@ -13,186 +13,59 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RegistryServer
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RegistryServer {
-  public static final String SERIALIZED_NAME_ADDRESS = "address";
-  @SerializedName(SERIALIZED_NAME_ADDRESS)
-  private List<String> address = null;
+  public static final String SERIALIZED_NAME_PROTOCOL = "protocol";
+  @SerializedName(SERIALIZED_NAME_PROTOCOL)
+  private String protocol;
 
-  public static final String SERIALIZED_NAME_ENDPOINTS = "endpoints";
-  @SerializedName(SERIALIZED_NAME_ENDPOINTS)
-  private List<String> endpoints = null;
-
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private String id;
-
-  public static final String SERIALIZED_NAME_METADATA = "metadata";
-  @SerializedName(SERIALIZED_NAME_METADATA)
-  private Map<String, String> metadata = null;
-
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
-
-  public RegistryServer() { 
+  public RegistryServer() {
   }
 
-  public RegistryServer address(List<String> address) {
+  public RegistryServer protocol(String protocol) {
     
-    this.address = address;
-    return this;
-  }
-
-  public RegistryServer addAddressItem(String addressItem) {
-    if (this.address == null) {
-      this.address = new ArrayList<String>();
-    }
-    this.address.add(addressItem);
+    this.protocol = protocol;
     return this;
   }
 
    /**
-   * Get address
-   * @return address
+   * Get protocol
+   * @return protocol
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public List<String> getAddress() {
-    return address;
+  public String getProtocol() {
+    return protocol;
   }
 
 
-  public void setAddress(List<String> address) {
-    this.address = address;
+  public void setProtocol(String protocol) {
+    this.protocol = protocol;
   }
 
-
-  public RegistryServer endpoints(List<String> endpoints) {
-    
-    this.endpoints = endpoints;
-    return this;
-  }
-
-  public RegistryServer addEndpointsItem(String endpointsItem) {
-    if (this.endpoints == null) {
-      this.endpoints = new ArrayList<String>();
-    }
-    this.endpoints.add(endpointsItem);
-    return this;
-  }
-
-   /**
-   * Get endpoints
-   * @return endpoints
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public List<String> getEndpoints() {
-    return endpoints;
-  }
-
-
-  public void setEndpoints(List<String> endpoints) {
-    this.endpoints = endpoints;
-  }
-
-
-  public RegistryServer id(String id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Get id
-   * @return id
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getId() {
-    return id;
-  }
-
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-
-  public RegistryServer metadata(Map<String, String> metadata) {
-    
-    this.metadata = metadata;
-    return this;
-  }
-
-  public RegistryServer putMetadataItem(String key, String metadataItem) {
-    if (this.metadata == null) {
-      this.metadata = new HashMap<String, String>();
-    }
-    this.metadata.put(key, metadataItem);
-    return this;
-  }
-
-   /**
-   * Get metadata
-   * @return metadata
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public Map<String, String> getMetadata() {
-    return metadata;
-  }
-
-
-  public void setMetadata(Map<String, String> metadata) {
-    this.metadata = metadata;
-  }
-
-
-  public RegistryServer name(String name) {
-    
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * Get name
-   * @return name
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getName() {
-    return name;
-  }
-
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
 
   @Override
@@ -204,27 +77,19 @@ public class RegistryServer {
       return false;
     }
     RegistryServer registryServer = (RegistryServer) o;
-    return Objects.equals(this.address, registryServer.address) &&
-        Objects.equals(this.endpoints, registryServer.endpoints) &&
-        Objects.equals(this.id, registryServer.id) &&
-        Objects.equals(this.metadata, registryServer.metadata) &&
-        Objects.equals(this.name, registryServer.name);
+    return Objects.equals(this.protocol, registryServer.protocol);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(address, endpoints, id, metadata, name);
+    return Objects.hash(protocol);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RegistryServer {\n");
-    sb.append("    address: ").append(toIndentedString(address)).append("\n");
-    sb.append("    endpoints: ").append(toIndentedString(endpoints)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    protocol: ").append(toIndentedString(protocol)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -240,5 +105,91 @@ public class RegistryServer {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("protocol");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RegistryServer
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RegistryServer.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RegistryServer is not found in the empty JSON string", RegistryServer.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RegistryServer.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryServer` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("protocol") != null && !jsonObj.get("protocol").isJsonNull()) && !jsonObj.get("protocol").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `protocol` to be a primitive type in the JSON string but got `%s`", jsonObj.get("protocol").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RegistryServer.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RegistryServer' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RegistryServer> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RegistryServer.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RegistryServer>() {
+           @Override
+           public void write(JsonWriter out, RegistryServer value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RegistryServer read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RegistryServer given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RegistryServer
+  * @throws IOException if the JSON string is invalid with respect to RegistryServer
+  */
+  public static RegistryServer fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RegistryServer.class);
+  }
+
+ /**
+  * Convert an instance of RegistryServer to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

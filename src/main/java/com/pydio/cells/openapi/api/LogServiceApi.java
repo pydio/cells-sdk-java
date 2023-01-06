@@ -13,22 +13,14 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.LogListLogRequest;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestLogMessageCollection;
 
 import java.lang.reflect.Type;
@@ -92,7 +84,6 @@ public class LogServiceApi {
      */
     public okhttp3.Call syslogCall(LogListLogRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -138,15 +129,12 @@ public class LogServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call syslogValidateBeforeCall(LogListLogRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling syslog(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = syslogCall(body, _callback);
-        return localVarCall;
+        return syslogCall(body, _callback);
 
     }
 

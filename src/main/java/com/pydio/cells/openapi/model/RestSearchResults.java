@@ -13,25 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.TreeNode;
-import com.pydio.cells.openapi.model.TreeSearchFacet;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestSearchResults
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestSearchResults {
   public static final String SERIALIZED_NAME_FACETS = "Facets";
   @SerializedName(SERIALIZED_NAME_FACETS)
@@ -45,7 +52,7 @@ public class RestSearchResults {
   @SerializedName(SERIALIZED_NAME_TOTAL)
   private Integer total;
 
-  public RestSearchResults() { 
+  public RestSearchResults() {
   }
 
   public RestSearchResults facets(List<TreeSearchFacet> facets) {
@@ -56,7 +63,7 @@ public class RestSearchResults {
 
   public RestSearchResults addFacetsItem(TreeSearchFacet facetsItem) {
     if (this.facets == null) {
-      this.facets = new ArrayList<TreeSearchFacet>();
+      this.facets = new ArrayList<>();
     }
     this.facets.add(facetsItem);
     return this;
@@ -87,7 +94,7 @@ public class RestSearchResults {
 
   public RestSearchResults addResultsItem(TreeNode resultsItem) {
     if (this.results == null) {
-      this.results = new ArrayList<TreeNode>();
+      this.results = new ArrayList<>();
     }
     this.results.add(resultsItem);
     return this;
@@ -133,6 +140,7 @@ public class RestSearchResults {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -174,5 +182,118 @@ public class RestSearchResults {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Facets");
+    openapiFields.add("Results");
+    openapiFields.add("Total");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestSearchResults
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestSearchResults.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestSearchResults is not found in the empty JSON string", RestSearchResults.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestSearchResults.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSearchResults` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Facets") != null && !jsonObj.get("Facets").isJsonNull()) {
+        JsonArray jsonArrayfacets = jsonObj.getAsJsonArray("Facets");
+        if (jsonArrayfacets != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Facets").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Facets` to be an array in the JSON string but got `%s`", jsonObj.get("Facets").toString()));
+          }
+
+          // validate the optional field `Facets` (array)
+          for (int i = 0; i < jsonArrayfacets.size(); i++) {
+            TreeSearchFacet.validateJsonObject(jsonArrayfacets.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("Results") != null && !jsonObj.get("Results").isJsonNull()) {
+        JsonArray jsonArrayresults = jsonObj.getAsJsonArray("Results");
+        if (jsonArrayresults != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Results").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Results` to be an array in the JSON string but got `%s`", jsonObj.get("Results").toString()));
+          }
+
+          // validate the optional field `Results` (array)
+          for (int i = 0; i < jsonArrayresults.size(); i++) {
+            TreeNode.validateJsonObject(jsonArrayresults.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestSearchResults.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestSearchResults' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestSearchResults> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestSearchResults.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestSearchResults>() {
+           @Override
+           public void write(JsonWriter out, RestSearchResults value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestSearchResults read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestSearchResults given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestSearchResults
+  * @throws IOException if the JSON string is invalid with respect to RestSearchResults
+  */
+  public static RestSearchResults fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestSearchResults.class);
+  }
+
+ /**
+  * Convert an instance of RestSearchResults to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

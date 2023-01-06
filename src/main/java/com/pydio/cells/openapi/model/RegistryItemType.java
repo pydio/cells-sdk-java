@@ -13,15 +13,12 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
-import com.google.gson.annotations.SerializedName;
-
-import java.io.IOException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
+import java.io.IOException;
 
 /**
  * Gets or Sets registryItemType
@@ -31,6 +28,10 @@ public enum RegistryItemType {
   
   ALL("ALL"),
   
+  EDGE("EDGE"),
+  
+  NODE("NODE"),
+  
   SERVICE("SERVICE"),
   
   SERVER("SERVER"),
@@ -39,7 +40,15 @@ public enum RegistryItemType {
   
   GENERIC("GENERIC"),
   
-  EDGE("EDGE");
+  ADDRESS("ADDRESS"),
+  
+  TAG("TAG"),
+  
+  PROCESS("PROCESS"),
+  
+  ENDPOINT("ENDPOINT"),
+  
+  STATS("STATS");
 
   private String value;
 

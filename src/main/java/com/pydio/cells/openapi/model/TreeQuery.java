@@ -13,25 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.TreeGeoQuery;
-import com.pydio.cells.openapi.model.TreeNodeType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * TreeQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class TreeQuery {
   public static final String SERIALIZED_NAME_CONTENT = "Content";
   @SerializedName(SERIALIZED_NAME_CONTENT)
@@ -40,6 +46,10 @@ public class TreeQuery {
   public static final String SERIALIZED_NAME_DURATION_DATE = "DurationDate";
   @SerializedName(SERIALIZED_NAME_DURATION_DATE)
   private String durationDate;
+
+  public static final String SERIALIZED_NAME_ETAG = "ETag";
+  @SerializedName(SERIALIZED_NAME_ETAG)
+  private String etag;
 
   public static final String SERIALIZED_NAME_EXTENSION = "Extension";
   @SerializedName(SERIALIZED_NAME_EXTENSION)
@@ -101,7 +111,7 @@ public class TreeQuery {
   @SerializedName(SERIALIZED_NAME_UU_I_DS)
   private List<String> uuIDs = null;
 
-  public TreeQuery() { 
+  public TreeQuery() {
   }
 
   public TreeQuery content(String content) {
@@ -147,6 +157,29 @@ public class TreeQuery {
 
   public void setDurationDate(String durationDate) {
     this.durationDate = durationDate;
+  }
+
+
+  public TreeQuery etag(String etag) {
+    
+    this.etag = etag;
+    return this;
+  }
+
+   /**
+   * Get etag
+   * @return etag
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getEtag() {
+    return etag;
+  }
+
+
+  public void setEtag(String etag) {
+    this.etag = etag;
   }
 
 
@@ -411,7 +444,7 @@ public class TreeQuery {
 
   public TreeQuery addPathPrefixItem(String pathPrefixItem) {
     if (this.pathPrefix == null) {
-      this.pathPrefix = new ArrayList<String>();
+      this.pathPrefix = new ArrayList<>();
     }
     this.pathPrefix.add(pathPrefixItem);
     return this;
@@ -442,7 +475,7 @@ public class TreeQuery {
 
   public TreeQuery addPathsItem(String pathsItem) {
     if (this.paths == null) {
-      this.paths = new ArrayList<String>();
+      this.paths = new ArrayList<>();
     }
     this.paths.add(pathsItem);
     return this;
@@ -496,7 +529,7 @@ public class TreeQuery {
 
   public TreeQuery addUuIDsItem(String uuIDsItem) {
     if (this.uuIDs == null) {
-      this.uuIDs = new ArrayList<String>();
+      this.uuIDs = new ArrayList<>();
     }
     this.uuIDs.add(uuIDsItem);
     return this;
@@ -519,6 +552,7 @@ public class TreeQuery {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -530,6 +564,7 @@ public class TreeQuery {
     TreeQuery treeQuery = (TreeQuery) o;
     return Objects.equals(this.content, treeQuery.content) &&
         Objects.equals(this.durationDate, treeQuery.durationDate) &&
+        Objects.equals(this.etag, treeQuery.etag) &&
         Objects.equals(this.extension, treeQuery.extension) &&
         Objects.equals(this.fileName, treeQuery.fileName) &&
         Objects.equals(this.fileNameOrContent, treeQuery.fileNameOrContent) &&
@@ -549,7 +584,7 @@ public class TreeQuery {
 
   @Override
   public int hashCode() {
-    return Objects.hash(content, durationDate, extension, fileName, fileNameOrContent, freeString, geoQuery, maxDate, maxSize, minDate, minSize, not, pathDepth, pathPrefix, paths, type, uuIDs);
+    return Objects.hash(content, durationDate, etag, extension, fileName, fileNameOrContent, freeString, geoQuery, maxDate, maxSize, minDate, minSize, not, pathDepth, pathPrefix, paths, type, uuIDs);
   }
 
   @Override
@@ -558,6 +593,7 @@ public class TreeQuery {
     sb.append("class TreeQuery {\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    durationDate: ").append(toIndentedString(durationDate)).append("\n");
+    sb.append("    etag: ").append(toIndentedString(etag)).append("\n");
     sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
     sb.append("    fileName: ").append(toIndentedString(fileName)).append("\n");
     sb.append("    fileNameOrContent: ").append(toIndentedString(fileNameOrContent)).append("\n");
@@ -588,5 +624,154 @@ public class TreeQuery {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Content");
+    openapiFields.add("DurationDate");
+    openapiFields.add("ETag");
+    openapiFields.add("Extension");
+    openapiFields.add("FileName");
+    openapiFields.add("FileNameOrContent");
+    openapiFields.add("FreeString");
+    openapiFields.add("GeoQuery");
+    openapiFields.add("MaxDate");
+    openapiFields.add("MaxSize");
+    openapiFields.add("MinDate");
+    openapiFields.add("MinSize");
+    openapiFields.add("Not");
+    openapiFields.add("PathDepth");
+    openapiFields.add("PathPrefix");
+    openapiFields.add("Paths");
+    openapiFields.add("Type");
+    openapiFields.add("UUIDs");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to TreeQuery
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!TreeQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in TreeQuery is not found in the empty JSON string", TreeQuery.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!TreeQuery.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("Content") != null && !jsonObj.get("Content").isJsonNull()) && !jsonObj.get("Content").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Content` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Content").toString()));
+      }
+      if ((jsonObj.get("DurationDate") != null && !jsonObj.get("DurationDate").isJsonNull()) && !jsonObj.get("DurationDate").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `DurationDate` to be a primitive type in the JSON string but got `%s`", jsonObj.get("DurationDate").toString()));
+      }
+      if ((jsonObj.get("ETag") != null && !jsonObj.get("ETag").isJsonNull()) && !jsonObj.get("ETag").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ETag` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ETag").toString()));
+      }
+      if ((jsonObj.get("Extension") != null && !jsonObj.get("Extension").isJsonNull()) && !jsonObj.get("Extension").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Extension` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Extension").toString()));
+      }
+      if ((jsonObj.get("FileName") != null && !jsonObj.get("FileName").isJsonNull()) && !jsonObj.get("FileName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `FileName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("FileName").toString()));
+      }
+      if ((jsonObj.get("FileNameOrContent") != null && !jsonObj.get("FileNameOrContent").isJsonNull()) && !jsonObj.get("FileNameOrContent").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `FileNameOrContent` to be a primitive type in the JSON string but got `%s`", jsonObj.get("FileNameOrContent").toString()));
+      }
+      if ((jsonObj.get("FreeString") != null && !jsonObj.get("FreeString").isJsonNull()) && !jsonObj.get("FreeString").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `FreeString` to be a primitive type in the JSON string but got `%s`", jsonObj.get("FreeString").toString()));
+      }
+      // validate the optional field `GeoQuery`
+      if (jsonObj.get("GeoQuery") != null && !jsonObj.get("GeoQuery").isJsonNull()) {
+        TreeGeoQuery.validateJsonObject(jsonObj.getAsJsonObject("GeoQuery"));
+      }
+      if ((jsonObj.get("MaxDate") != null && !jsonObj.get("MaxDate").isJsonNull()) && !jsonObj.get("MaxDate").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `MaxDate` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MaxDate").toString()));
+      }
+      if ((jsonObj.get("MaxSize") != null && !jsonObj.get("MaxSize").isJsonNull()) && !jsonObj.get("MaxSize").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `MaxSize` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MaxSize").toString()));
+      }
+      if ((jsonObj.get("MinDate") != null && !jsonObj.get("MinDate").isJsonNull()) && !jsonObj.get("MinDate").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `MinDate` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MinDate").toString()));
+      }
+      if ((jsonObj.get("MinSize") != null && !jsonObj.get("MinSize").isJsonNull()) && !jsonObj.get("MinSize").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `MinSize` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MinSize").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("PathPrefix") != null && !jsonObj.get("PathPrefix").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `PathPrefix` to be an array in the JSON string but got `%s`", jsonObj.get("PathPrefix").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("Paths") != null && !jsonObj.get("Paths").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Paths` to be an array in the JSON string but got `%s`", jsonObj.get("Paths").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("UUIDs") != null && !jsonObj.get("UUIDs").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `UUIDs` to be an array in the JSON string but got `%s`", jsonObj.get("UUIDs").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!TreeQuery.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'TreeQuery' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<TreeQuery> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(TreeQuery.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<TreeQuery>() {
+           @Override
+           public void write(JsonWriter out, TreeQuery value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public TreeQuery read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of TreeQuery given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of TreeQuery
+  * @throws IOException if the JSON string is invalid with respect to TreeQuery
+  */
+  public static TreeQuery fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, TreeQuery.class);
+  }
+
+ /**
+  * Convert an instance of TreeQuery to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

@@ -13,25 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.JobsCommand;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * JobsCtrlCommand
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class JobsCtrlCommand {
   public static final String SERIALIZED_NAME_CMD = "Cmd";
   @SerializedName(SERIALIZED_NAME_CMD)
@@ -53,7 +59,7 @@ public class JobsCtrlCommand {
   @SerializedName(SERIALIZED_NAME_TASK_ID)
   private String taskId;
 
-  public JobsCtrlCommand() { 
+  public JobsCtrlCommand() {
   }
 
   public JobsCtrlCommand cmd(JobsCommand cmd) {
@@ -133,7 +139,7 @@ public class JobsCtrlCommand {
 
   public JobsCtrlCommand putRunParametersItem(String key, String runParametersItem) {
     if (this.runParameters == null) {
-      this.runParameters = new HashMap<String, String>();
+      this.runParameters = new HashMap<>();
     }
     this.runParameters.put(key, runParametersItem);
     return this;
@@ -177,6 +183,7 @@ public class JobsCtrlCommand {
   public void setTaskId(String taskId) {
     this.taskId = taskId;
   }
+
 
 
   @Override
@@ -224,5 +231,101 @@ public class JobsCtrlCommand {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Cmd");
+    openapiFields.add("JobId");
+    openapiFields.add("OwnerId");
+    openapiFields.add("RunParameters");
+    openapiFields.add("TaskId");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to JobsCtrlCommand
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!JobsCtrlCommand.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in JobsCtrlCommand is not found in the empty JSON string", JobsCtrlCommand.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!JobsCtrlCommand.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsCtrlCommand` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("JobId") != null && !jsonObj.get("JobId").isJsonNull()) && !jsonObj.get("JobId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `JobId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("JobId").toString()));
+      }
+      if ((jsonObj.get("OwnerId") != null && !jsonObj.get("OwnerId").isJsonNull()) && !jsonObj.get("OwnerId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `OwnerId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("OwnerId").toString()));
+      }
+      if ((jsonObj.get("TaskId") != null && !jsonObj.get("TaskId").isJsonNull()) && !jsonObj.get("TaskId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `TaskId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("TaskId").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!JobsCtrlCommand.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'JobsCtrlCommand' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<JobsCtrlCommand> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(JobsCtrlCommand.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<JobsCtrlCommand>() {
+           @Override
+           public void write(JsonWriter out, JobsCtrlCommand value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public JobsCtrlCommand read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of JobsCtrlCommand given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of JobsCtrlCommand
+  * @throws IOException if the JSON string is invalid with respect to JobsCtrlCommand
+  */
+  public static JobsCtrlCommand fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, JobsCtrlCommand.class);
+  }
+
+ /**
+  * Convert an instance of JobsCtrlCommand to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

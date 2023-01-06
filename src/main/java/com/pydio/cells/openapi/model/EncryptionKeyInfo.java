@@ -13,25 +13,32 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.EncryptionExport;
-import com.pydio.cells.openapi.model.EncryptionImport;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * EncryptionKeyInfo
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class EncryptionKeyInfo {
   public static final String SERIALIZED_NAME_EXPORTS = "Exports";
   @SerializedName(SERIALIZED_NAME_EXPORTS)
@@ -41,7 +48,7 @@ public class EncryptionKeyInfo {
   @SerializedName(SERIALIZED_NAME_IMPORTS)
   private List<EncryptionImport> imports = null;
 
-  public EncryptionKeyInfo() { 
+  public EncryptionKeyInfo() {
   }
 
   public EncryptionKeyInfo exports(List<EncryptionExport> exports) {
@@ -52,7 +59,7 @@ public class EncryptionKeyInfo {
 
   public EncryptionKeyInfo addExportsItem(EncryptionExport exportsItem) {
     if (this.exports == null) {
-      this.exports = new ArrayList<EncryptionExport>();
+      this.exports = new ArrayList<>();
     }
     this.exports.add(exportsItem);
     return this;
@@ -83,7 +90,7 @@ public class EncryptionKeyInfo {
 
   public EncryptionKeyInfo addImportsItem(EncryptionImport importsItem) {
     if (this.imports == null) {
-      this.imports = new ArrayList<EncryptionImport>();
+      this.imports = new ArrayList<>();
     }
     this.imports.add(importsItem);
     return this;
@@ -104,6 +111,7 @@ public class EncryptionKeyInfo {
   public void setImports(List<EncryptionImport> imports) {
     this.imports = imports;
   }
+
 
 
   @Override
@@ -145,5 +153,117 @@ public class EncryptionKeyInfo {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Exports");
+    openapiFields.add("Imports");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to EncryptionKeyInfo
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!EncryptionKeyInfo.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in EncryptionKeyInfo is not found in the empty JSON string", EncryptionKeyInfo.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!EncryptionKeyInfo.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `EncryptionKeyInfo` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("Exports") != null && !jsonObj.get("Exports").isJsonNull()) {
+        JsonArray jsonArrayexports = jsonObj.getAsJsonArray("Exports");
+        if (jsonArrayexports != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Exports").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Exports` to be an array in the JSON string but got `%s`", jsonObj.get("Exports").toString()));
+          }
+
+          // validate the optional field `Exports` (array)
+          for (int i = 0; i < jsonArrayexports.size(); i++) {
+            EncryptionExport.validateJsonObject(jsonArrayexports.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if (jsonObj.get("Imports") != null && !jsonObj.get("Imports").isJsonNull()) {
+        JsonArray jsonArrayimports = jsonObj.getAsJsonArray("Imports");
+        if (jsonArrayimports != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Imports").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Imports` to be an array in the JSON string but got `%s`", jsonObj.get("Imports").toString()));
+          }
+
+          // validate the optional field `Imports` (array)
+          for (int i = 0; i < jsonArrayimports.size(); i++) {
+            EncryptionImport.validateJsonObject(jsonArrayimports.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!EncryptionKeyInfo.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'EncryptionKeyInfo' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<EncryptionKeyInfo> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(EncryptionKeyInfo.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<EncryptionKeyInfo>() {
+           @Override
+           public void write(JsonWriter out, EncryptionKeyInfo value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public EncryptionKeyInfo read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of EncryptionKeyInfo given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of EncryptionKeyInfo
+  * @throws IOException if the JSON string is invalid with respect to EncryptionKeyInfo
+  */
+  public static EncryptionKeyInfo fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, EncryptionKeyInfo.class);
+  }
+
+ /**
+  * Convert an instance of EncryptionKeyInfo to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

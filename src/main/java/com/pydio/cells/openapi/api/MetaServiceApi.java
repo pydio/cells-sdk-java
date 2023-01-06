@@ -13,26 +13,17 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.RestBulkMetaResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestGetBulkMetaRequest;
 import com.pydio.cells.openapi.model.RestMetaCollection;
 import com.pydio.cells.openapi.model.RestMetaNamespaceRequest;
-import com.pydio.cells.openapi.model.RestMetaNamespaceRequest1;
 import com.pydio.cells.openapi.model.TreeNode;
 
 import java.lang.reflect.Type;
@@ -97,7 +88,6 @@ public class MetaServiceApi {
      */
     public okhttp3.Call deleteMetaCall(String nodePath, RestMetaNamespaceRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -114,7 +104,7 @@ public class MetaServiceApi {
 
         // create path and map variables
         String localVarPath = "/meta/delete/{NodePath}"
-            .replaceAll("\\{" + "NodePath" + "\\}", localVarApiClient.escapeString(nodePath.toString()));
+            .replace("{" + "NodePath" + "}", localVarApiClient.escapeString(nodePath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -144,20 +134,17 @@ public class MetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteMetaValidateBeforeCall(String nodePath, RestMetaNamespaceRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'nodePath' is set
         if (nodePath == null) {
             throw new ApiException("Missing the required parameter 'nodePath' when calling deleteMeta(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling deleteMeta(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteMetaCall(nodePath, body, _callback);
-        return localVarCall;
+        return deleteMetaCall(nodePath, body, _callback);
 
     }
 
@@ -249,7 +236,6 @@ public class MetaServiceApi {
      */
     public okhttp3.Call getBulkMetaCall(RestGetBulkMetaRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -295,15 +281,12 @@ public class MetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getBulkMetaValidateBeforeCall(RestGetBulkMetaRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling getBulkMeta(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getBulkMetaCall(body, _callback);
-        return localVarCall;
+        return getBulkMetaCall(body, _callback);
 
     }
 
@@ -391,9 +374,8 @@ public class MetaServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getMetaCall(String nodePath, RestMetaNamespaceRequest1 body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getMetaCall(String nodePath, RestMetaNamespaceRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -410,7 +392,7 @@ public class MetaServiceApi {
 
         // create path and map variables
         String localVarPath = "/meta/get/{NodePath}"
-            .replaceAll("\\{" + "NodePath" + "\\}", localVarApiClient.escapeString(nodePath.toString()));
+            .replace("{" + "NodePath" + "}", localVarApiClient.escapeString(nodePath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -439,21 +421,18 @@ public class MetaServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getMetaValidateBeforeCall(String nodePath, RestMetaNamespaceRequest1 body, final ApiCallback _callback) throws ApiException {
-        
+    private okhttp3.Call getMetaValidateBeforeCall(String nodePath, RestMetaNamespaceRequest body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'nodePath' is set
         if (nodePath == null) {
             throw new ApiException("Missing the required parameter 'nodePath' when calling getMeta(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling getMeta(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = getMetaCall(nodePath, body, _callback);
-        return localVarCall;
+        return getMetaCall(nodePath, body, _callback);
 
     }
 
@@ -474,7 +453,7 @@ public class MetaServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public TreeNode getMeta(String nodePath, RestMetaNamespaceRequest1 body) throws ApiException {
+    public TreeNode getMeta(String nodePath, RestMetaNamespaceRequest body) throws ApiException {
         ApiResponse<TreeNode> localVarResp = getMetaWithHttpInfo(nodePath, body);
         return localVarResp.getData();
     }
@@ -496,7 +475,7 @@ public class MetaServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TreeNode> getMetaWithHttpInfo(String nodePath, RestMetaNamespaceRequest1 body) throws ApiException {
+    public ApiResponse<TreeNode> getMetaWithHttpInfo(String nodePath, RestMetaNamespaceRequest body) throws ApiException {
         okhttp3.Call localVarCall = getMetaValidateBeforeCall(nodePath, body, null);
         Type localVarReturnType = new TypeToken<TreeNode>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -520,7 +499,7 @@ public class MetaServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getMetaAsync(String nodePath, RestMetaNamespaceRequest1 body, final ApiCallback<TreeNode> _callback) throws ApiException {
+    public okhttp3.Call getMetaAsync(String nodePath, RestMetaNamespaceRequest body, final ApiCallback<TreeNode> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getMetaValidateBeforeCall(nodePath, body, _callback);
         Type localVarReturnType = new TypeToken<TreeNode>(){}.getType();
@@ -546,7 +525,6 @@ public class MetaServiceApi {
      */
     public okhttp3.Call setMetaCall(String nodePath, RestMetaCollection body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -563,7 +541,7 @@ public class MetaServiceApi {
 
         // create path and map variables
         String localVarPath = "/meta/set/{NodePath}"
-            .replaceAll("\\{" + "NodePath" + "\\}", localVarApiClient.escapeString(nodePath.toString()));
+            .replace("{" + "NodePath" + "}", localVarApiClient.escapeString(nodePath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -593,20 +571,17 @@ public class MetaServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call setMetaValidateBeforeCall(String nodePath, RestMetaCollection body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'nodePath' is set
         if (nodePath == null) {
             throw new ApiException("Missing the required parameter 'nodePath' when calling setMeta(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling setMeta(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = setMetaCall(nodePath, body, _callback);
-        return localVarCall;
+        return setMetaCall(nodePath, body, _callback);
 
     }
 

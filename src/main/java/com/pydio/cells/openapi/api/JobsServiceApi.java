@@ -13,27 +13,19 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.JobsCtrlCommand;
 import com.pydio.cells.openapi.model.JobsCtrlCommandResponse;
 import com.pydio.cells.openapi.model.JobsDeleteTasksRequest;
 import com.pydio.cells.openapi.model.JobsDeleteTasksResponse;
 import com.pydio.cells.openapi.model.JobsListJobsRequest;
 import com.pydio.cells.openapi.model.LogListLogRequest;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestLogMessageCollection;
 import com.pydio.cells.openapi.model.RestUserJobRequest;
 import com.pydio.cells.openapi.model.RestUserJobResponse;
@@ -100,7 +92,6 @@ public class JobsServiceApi {
      */
     public okhttp3.Call listTasksLogsCall(LogListLogRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -146,15 +137,12 @@ public class JobsServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call listTasksLogsValidateBeforeCall(LogListLogRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling listTasksLogs(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = listTasksLogsCall(body, _callback);
-        return localVarCall;
+        return listTasksLogsCall(body, _callback);
 
     }
 
@@ -243,7 +231,6 @@ public class JobsServiceApi {
      */
     public okhttp3.Call userControlJobCall(JobsCtrlCommand body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -289,15 +276,12 @@ public class JobsServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call userControlJobValidateBeforeCall(JobsCtrlCommand body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling userControlJob(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = userControlJobCall(body, _callback);
-        return localVarCall;
+        return userControlJobCall(body, _callback);
 
     }
 
@@ -387,7 +371,6 @@ public class JobsServiceApi {
      */
     public okhttp3.Call userCreateJobCall(String jobName, RestUserJobRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -404,7 +387,7 @@ public class JobsServiceApi {
 
         // create path and map variables
         String localVarPath = "/jobs/user/{JobName}"
-            .replaceAll("\\{" + "JobName" + "\\}", localVarApiClient.escapeString(jobName.toString()));
+            .replace("{" + "JobName" + "}", localVarApiClient.escapeString(jobName.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -434,20 +417,17 @@ public class JobsServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call userCreateJobValidateBeforeCall(String jobName, RestUserJobRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'jobName' is set
         if (jobName == null) {
             throw new ApiException("Missing the required parameter 'jobName' when calling userCreateJob(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling userCreateJob(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = userCreateJobCall(jobName, body, _callback);
-        return localVarCall;
+        return userCreateJobCall(jobName, body, _callback);
 
     }
 
@@ -539,7 +519,6 @@ public class JobsServiceApi {
      */
     public okhttp3.Call userDeleteTasksCall(JobsDeleteTasksRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -585,15 +564,12 @@ public class JobsServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call userDeleteTasksValidateBeforeCall(JobsDeleteTasksRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling userDeleteTasks(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = userDeleteTasksCall(body, _callback);
-        return localVarCall;
+        return userDeleteTasksCall(body, _callback);
 
     }
 
@@ -682,7 +658,6 @@ public class JobsServiceApi {
      */
     public okhttp3.Call userListJobsCall(JobsListJobsRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -728,15 +703,12 @@ public class JobsServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call userListJobsValidateBeforeCall(JobsListJobsRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling userListJobs(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = userListJobsCall(body, _callback);
-        return localVarCall;
+        return userListJobsCall(body, _callback);
 
     }
 

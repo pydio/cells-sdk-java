@@ -13,23 +13,31 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmACLAction;
+import com.pydio.cells.openapi.JSON;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 
 /**
  * ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace.
  */
 @ApiModel(description = "ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class IdmACL {
   public static final String SERIALIZED_NAME_ACTION = "Action";
   @SerializedName(SERIALIZED_NAME_ACTION)
@@ -51,7 +59,7 @@ public class IdmACL {
   @SerializedName(SERIALIZED_NAME_WORKSPACE_I_D)
   private String workspaceID;
 
-  public IdmACL() { 
+  public IdmACL() {
   }
 
   public IdmACL action(IdmACLAction action) {
@@ -169,6 +177,7 @@ public class IdmACL {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -214,5 +223,108 @@ public class IdmACL {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Action");
+    openapiFields.add("ID");
+    openapiFields.add("NodeID");
+    openapiFields.add("RoleID");
+    openapiFields.add("WorkspaceID");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to IdmACL
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!IdmACL.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in IdmACL is not found in the empty JSON string", IdmACL.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!IdmACL.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmACL` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // validate the optional field `Action`
+      if (jsonObj.get("Action") != null && !jsonObj.get("Action").isJsonNull()) {
+        IdmACLAction.validateJsonObject(jsonObj.getAsJsonObject("Action"));
+      }
+      if ((jsonObj.get("ID") != null && !jsonObj.get("ID").isJsonNull()) && !jsonObj.get("ID").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ID").toString()));
+      }
+      if ((jsonObj.get("NodeID") != null && !jsonObj.get("NodeID").isJsonNull()) && !jsonObj.get("NodeID").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `NodeID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("NodeID").toString()));
+      }
+      if ((jsonObj.get("RoleID") != null && !jsonObj.get("RoleID").isJsonNull()) && !jsonObj.get("RoleID").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `RoleID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("RoleID").toString()));
+      }
+      if ((jsonObj.get("WorkspaceID") != null && !jsonObj.get("WorkspaceID").isJsonNull()) && !jsonObj.get("WorkspaceID").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `WorkspaceID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("WorkspaceID").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!IdmACL.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'IdmACL' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<IdmACL> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(IdmACL.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<IdmACL>() {
+           @Override
+           public void write(JsonWriter out, IdmACL value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public IdmACL read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of IdmACL given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of IdmACL
+  * @throws IOException if the JSON string is invalid with respect to IdmACL
+  */
+  public static IdmACL fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, IdmACL.class);
+  }
+
+ /**
+  * Convert an instance of IdmACL to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

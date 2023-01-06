@@ -13,26 +13,34 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.MailerUser;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * MailerMail
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class MailerMail {
   public static final String SERIALIZED_NAME_ATTACHMENTS = "Attachments";
   @SerializedName(SERIALIZED_NAME_ATTACHMENTS)
@@ -98,7 +106,7 @@ public class MailerMail {
   @SerializedName(SERIALIZED_NAME_SEND_ERRORS)
   private List<String> sendErrors = null;
 
-  public MailerMail() { 
+  public MailerMail() {
   }
 
   public MailerMail attachments(List<String> attachments) {
@@ -109,7 +117,7 @@ public class MailerMail {
 
   public MailerMail addAttachmentsItem(String attachmentsItem) {
     if (this.attachments == null) {
-      this.attachments = new ArrayList<String>();
+      this.attachments = new ArrayList<>();
     }
     this.attachments.add(attachmentsItem);
     return this;
@@ -140,7 +148,7 @@ public class MailerMail {
 
   public MailerMail addCcItem(MailerUser ccItem) {
     if (this.cc == null) {
-      this.cc = new ArrayList<MailerUser>();
+      this.cc = new ArrayList<>();
     }
     this.cc.add(ccItem);
     return this;
@@ -355,7 +363,7 @@ public class MailerMail {
 
   public MailerMail putTemplateDataItem(String key, String templateDataItem) {
     if (this.templateData == null) {
-      this.templateData = new HashMap<String, String>();
+      this.templateData = new HashMap<>();
     }
     this.templateData.put(key, templateDataItem);
     return this;
@@ -455,7 +463,7 @@ public class MailerMail {
 
   public MailerMail addToItem(MailerUser toItem) {
     if (this.to == null) {
-      this.to = new ArrayList<MailerUser>();
+      this.to = new ArrayList<>();
     }
     this.to.add(toItem);
     return this;
@@ -486,7 +494,7 @@ public class MailerMail {
 
   public MailerMail addSendErrorsItem(String sendErrorsItem) {
     if (this.sendErrors == null) {
-      this.sendErrors = new ArrayList<String>();
+      this.sendErrors = new ArrayList<>();
     }
     this.sendErrors.add(sendErrorsItem);
     return this;
@@ -507,6 +515,7 @@ public class MailerMail {
   public void setSendErrors(List<String> sendErrors) {
     this.sendErrors = sendErrors;
   }
+
 
 
   @Override
@@ -576,5 +585,171 @@ public class MailerMail {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("Attachments");
+    openapiFields.add("Cc");
+    openapiFields.add("ContentHtml");
+    openapiFields.add("ContentMarkdown");
+    openapiFields.add("ContentPlain");
+    openapiFields.add("DateSent");
+    openapiFields.add("From");
+    openapiFields.add("Retries");
+    openapiFields.add("Sender");
+    openapiFields.add("Subject");
+    openapiFields.add("TemplateData");
+    openapiFields.add("TemplateId");
+    openapiFields.add("ThreadIndex");
+    openapiFields.add("ThreadUuid");
+    openapiFields.add("To");
+    openapiFields.add("sendErrors");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to MailerMail
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!MailerMail.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in MailerMail is not found in the empty JSON string", MailerMail.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!MailerMail.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MailerMail` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("Attachments") != null && !jsonObj.get("Attachments").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Attachments` to be an array in the JSON string but got `%s`", jsonObj.get("Attachments").toString()));
+      }
+      if (jsonObj.get("Cc") != null && !jsonObj.get("Cc").isJsonNull()) {
+        JsonArray jsonArraycc = jsonObj.getAsJsonArray("Cc");
+        if (jsonArraycc != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("Cc").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `Cc` to be an array in the JSON string but got `%s`", jsonObj.get("Cc").toString()));
+          }
+
+          // validate the optional field `Cc` (array)
+          for (int i = 0; i < jsonArraycc.size(); i++) {
+            MailerUser.validateJsonObject(jsonArraycc.get(i).getAsJsonObject());
+          };
+        }
+      }
+      if ((jsonObj.get("ContentHtml") != null && !jsonObj.get("ContentHtml").isJsonNull()) && !jsonObj.get("ContentHtml").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ContentHtml` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ContentHtml").toString()));
+      }
+      if ((jsonObj.get("ContentMarkdown") != null && !jsonObj.get("ContentMarkdown").isJsonNull()) && !jsonObj.get("ContentMarkdown").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ContentMarkdown` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ContentMarkdown").toString()));
+      }
+      if ((jsonObj.get("ContentPlain") != null && !jsonObj.get("ContentPlain").isJsonNull()) && !jsonObj.get("ContentPlain").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ContentPlain` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ContentPlain").toString()));
+      }
+      if ((jsonObj.get("DateSent") != null && !jsonObj.get("DateSent").isJsonNull()) && !jsonObj.get("DateSent").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `DateSent` to be a primitive type in the JSON string but got `%s`", jsonObj.get("DateSent").toString()));
+      }
+      // validate the optional field `From`
+      if (jsonObj.get("From") != null && !jsonObj.get("From").isJsonNull()) {
+        MailerUser.validateJsonObject(jsonObj.getAsJsonObject("From"));
+      }
+      // validate the optional field `Sender`
+      if (jsonObj.get("Sender") != null && !jsonObj.get("Sender").isJsonNull()) {
+        MailerUser.validateJsonObject(jsonObj.getAsJsonObject("Sender"));
+      }
+      if ((jsonObj.get("Subject") != null && !jsonObj.get("Subject").isJsonNull()) && !jsonObj.get("Subject").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Subject` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Subject").toString()));
+      }
+      if ((jsonObj.get("TemplateId") != null && !jsonObj.get("TemplateId").isJsonNull()) && !jsonObj.get("TemplateId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `TemplateId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("TemplateId").toString()));
+      }
+      if ((jsonObj.get("ThreadIndex") != null && !jsonObj.get("ThreadIndex").isJsonNull()) && !jsonObj.get("ThreadIndex").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ThreadIndex` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ThreadIndex").toString()));
+      }
+      if ((jsonObj.get("ThreadUuid") != null && !jsonObj.get("ThreadUuid").isJsonNull()) && !jsonObj.get("ThreadUuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ThreadUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ThreadUuid").toString()));
+      }
+      if (jsonObj.get("To") != null && !jsonObj.get("To").isJsonNull()) {
+        JsonArray jsonArrayto = jsonObj.getAsJsonArray("To");
+        if (jsonArrayto != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("To").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `To` to be an array in the JSON string but got `%s`", jsonObj.get("To").toString()));
+          }
+
+          // validate the optional field `To` (array)
+          for (int i = 0; i < jsonArrayto.size(); i++) {
+            MailerUser.validateJsonObject(jsonArrayto.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("sendErrors") != null && !jsonObj.get("sendErrors").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `sendErrors` to be an array in the JSON string but got `%s`", jsonObj.get("sendErrors").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!MailerMail.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'MailerMail' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<MailerMail> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(MailerMail.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<MailerMail>() {
+           @Override
+           public void write(JsonWriter out, MailerMail value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public MailerMail read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of MailerMail given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of MailerMail
+  * @throws IOException if the JSON string is invalid with respect to MailerMail
+  */
+  public static MailerMail fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, MailerMail.class);
+  }
+
+ /**
+  * Convert an instance of MailerMail to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

@@ -13,24 +13,16 @@
 
 package com.pydio.cells.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiCallback;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.ProgressRequestBody;
-import com.pydio.cells.openapi.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
-
 import com.pydio.cells.openapi.model.IdmWorkspace;
-import com.pydio.cells.openapi.model.InlineObject1;
+import com.pydio.cells.openapi.model.PutWorkspaceRequest;
 import com.pydio.cells.openapi.model.RestDeleteResponse;
-import com.pydio.cells.openapi.model.RestError;
 import com.pydio.cells.openapi.model.RestSearchWorkspaceRequest;
 import com.pydio.cells.openapi.model.RestWorkspaceCollection;
 
@@ -103,7 +95,6 @@ public class WorkspaceServiceApi {
      */
     public okhttp3.Call deleteWorkspaceCall(String slug, String UUID, String label, String description, String scope, Integer lastUpdated, String attributes, List<String> rootUUIDs, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -120,7 +111,7 @@ public class WorkspaceServiceApi {
 
         // create path and map variables
         String localVarPath = "/workspace/{Slug}"
-            .replaceAll("\\{" + "Slug" + "\\}", localVarApiClient.escapeString(slug.toString()));
+            .replace("{" + "Slug" + "}", localVarApiClient.escapeString(slug.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -169,7 +160,6 @@ public class WorkspaceServiceApi {
         }
 
         final String[] localVarContentTypes = {
-            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -182,15 +172,12 @@ public class WorkspaceServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call deleteWorkspaceValidateBeforeCall(String slug, String UUID, String label, String description, String scope, Integer lastUpdated, String attributes, List<String> rootUUIDs, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'slug' is set
         if (slug == null) {
             throw new ApiException("Missing the required parameter 'slug' when calling deleteWorkspace(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = deleteWorkspaceCall(slug, UUID, label, description, scope, lastUpdated, attributes, rootUUIDs, policiesContextEditable, _callback);
-        return localVarCall;
+        return deleteWorkspaceCall(slug, UUID, label, description, scope, lastUpdated, attributes, rootUUIDs, policiesContextEditable, _callback);
 
     }
 
@@ -302,9 +289,8 @@ public class WorkspaceServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putWorkspaceCall(String slug, InlineObject1 body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putWorkspaceCall(String slug, PutWorkspaceRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -321,7 +307,7 @@ public class WorkspaceServiceApi {
 
         // create path and map variables
         String localVarPath = "/workspace/{Slug}"
-            .replaceAll("\\{" + "Slug" + "\\}", localVarApiClient.escapeString(slug.toString()));
+            .replace("{" + "Slug" + "}", localVarApiClient.escapeString(slug.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -350,21 +336,18 @@ public class WorkspaceServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putWorkspaceValidateBeforeCall(String slug, InlineObject1 body, final ApiCallback _callback) throws ApiException {
-        
+    private okhttp3.Call putWorkspaceValidateBeforeCall(String slug, PutWorkspaceRequest body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'slug' is set
         if (slug == null) {
             throw new ApiException("Missing the required parameter 'slug' when calling putWorkspace(Async)");
         }
-        
+
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling putWorkspace(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = putWorkspaceCall(slug, body, _callback);
-        return localVarCall;
+        return putWorkspaceCall(slug, body, _callback);
 
     }
 
@@ -385,7 +368,7 @@ public class WorkspaceServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public IdmWorkspace putWorkspace(String slug, InlineObject1 body) throws ApiException {
+    public IdmWorkspace putWorkspace(String slug, PutWorkspaceRequest body) throws ApiException {
         ApiResponse<IdmWorkspace> localVarResp = putWorkspaceWithHttpInfo(slug, body);
         return localVarResp.getData();
     }
@@ -407,7 +390,7 @@ public class WorkspaceServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<IdmWorkspace> putWorkspaceWithHttpInfo(String slug, InlineObject1 body) throws ApiException {
+    public ApiResponse<IdmWorkspace> putWorkspaceWithHttpInfo(String slug, PutWorkspaceRequest body) throws ApiException {
         okhttp3.Call localVarCall = putWorkspaceValidateBeforeCall(slug, body, null);
         Type localVarReturnType = new TypeToken<IdmWorkspace>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -431,7 +414,7 @@ public class WorkspaceServiceApi {
         <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putWorkspaceAsync(String slug, InlineObject1 body, final ApiCallback<IdmWorkspace> _callback) throws ApiException {
+    public okhttp3.Call putWorkspaceAsync(String slug, PutWorkspaceRequest body, final ApiCallback<IdmWorkspace> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putWorkspaceValidateBeforeCall(slug, body, _callback);
         Type localVarReturnType = new TypeToken<IdmWorkspace>(){}.getType();
@@ -456,7 +439,6 @@ public class WorkspaceServiceApi {
      */
     public okhttp3.Call searchWorkspacesCall(RestSearchWorkspaceRequest body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
-
         // Operation Servers
         String[] localBasePaths = new String[] {  };
 
@@ -502,15 +484,12 @@ public class WorkspaceServiceApi {
 
     @SuppressWarnings("rawtypes")
     private okhttp3.Call searchWorkspacesValidateBeforeCall(RestSearchWorkspaceRequest body, final ApiCallback _callback) throws ApiException {
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling searchWorkspaces(Async)");
         }
-        
 
-        okhttp3.Call localVarCall = searchWorkspacesCall(body, _callback);
-        return localVarCall;
+        return searchWorkspacesCall(body, _callback);
 
     }
 

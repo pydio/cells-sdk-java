@@ -13,25 +13,33 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.ActivityObjectType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import org.threeten.bp.OffsetDateTime;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * ActivityObject
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class ActivityObject {
   public static final String SERIALIZED_NAME_AT_CONTEXT = "@context";
   @SerializedName(SERIALIZED_NAME_AT_CONTEXT)
@@ -281,7 +289,7 @@ public class ActivityObject {
   @SerializedName(SERIALIZED_NAME_WIDTH)
   private Integer width;
 
-  public ActivityObject() { 
+  public ActivityObject() {
   }
 
   public ActivityObject atContext(String atContext) {
@@ -959,7 +967,7 @@ public class ActivityObject {
 
   public ActivityObject addItemsItem(ActivityObject itemsItem) {
     if (this.items == null) {
-      this.items = new ArrayList<ActivityObject>();
+      this.items = new ArrayList<>();
     }
     this.items.add(itemsItem);
     return this;
@@ -1718,6 +1726,7 @@ public class ActivityObject {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -1877,5 +1886,329 @@ public class ActivityObject {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("@context");
+    openapiFields.add("accuracy");
+    openapiFields.add("actor");
+    openapiFields.add("altitude");
+    openapiFields.add("anyOf");
+    openapiFields.add("attachment");
+    openapiFields.add("attributedTo");
+    openapiFields.add("audience");
+    openapiFields.add("bcc");
+    openapiFields.add("bto");
+    openapiFields.add("cc");
+    openapiFields.add("closed");
+    openapiFields.add("content");
+    openapiFields.add("context");
+    openapiFields.add("current");
+    openapiFields.add("deleted");
+    openapiFields.add("duration");
+    openapiFields.add("endTime");
+    openapiFields.add("first");
+    openapiFields.add("formerType");
+    openapiFields.add("generator");
+    openapiFields.add("height");
+    openapiFields.add("href");
+    openapiFields.add("hreflang");
+    openapiFields.add("icon");
+    openapiFields.add("id");
+    openapiFields.add("image");
+    openapiFields.add("inReplyTo");
+    openapiFields.add("instrument");
+    openapiFields.add("items");
+    openapiFields.add("last");
+    openapiFields.add("latitude");
+    openapiFields.add("location");
+    openapiFields.add("longitude");
+    openapiFields.add("markdown");
+    openapiFields.add("mediaType");
+    openapiFields.add("name");
+    openapiFields.add("next");
+    openapiFields.add("object");
+    openapiFields.add("oneOf");
+    openapiFields.add("origin");
+    openapiFields.add("partOf");
+    openapiFields.add("prev");
+    openapiFields.add("preview");
+    openapiFields.add("published");
+    openapiFields.add("radius");
+    openapiFields.add("rel");
+    openapiFields.add("relationship");
+    openapiFields.add("replies");
+    openapiFields.add("result");
+    openapiFields.add("startTime");
+    openapiFields.add("subject");
+    openapiFields.add("summary");
+    openapiFields.add("tag");
+    openapiFields.add("target");
+    openapiFields.add("to");
+    openapiFields.add("totalItems");
+    openapiFields.add("type");
+    openapiFields.add("units");
+    openapiFields.add("updated");
+    openapiFields.add("url");
+    openapiFields.add("width");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to ActivityObject
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!ActivityObject.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ActivityObject is not found in the empty JSON string", ActivityObject.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!ActivityObject.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivityObject` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("@context") != null && !jsonObj.get("@context").isJsonNull()) && !jsonObj.get("@context").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `@context` to be a primitive type in the JSON string but got `%s`", jsonObj.get("@context").toString()));
+      }
+      // validate the optional field `actor`
+      if (jsonObj.get("actor") != null && !jsonObj.get("actor").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("actor"));
+      }
+      // validate the optional field `anyOf`
+      if (jsonObj.get("anyOf") != null && !jsonObj.get("anyOf").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("anyOf"));
+      }
+      // validate the optional field `attachment`
+      if (jsonObj.get("attachment") != null && !jsonObj.get("attachment").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("attachment"));
+      }
+      // validate the optional field `attributedTo`
+      if (jsonObj.get("attributedTo") != null && !jsonObj.get("attributedTo").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("attributedTo"));
+      }
+      // validate the optional field `audience`
+      if (jsonObj.get("audience") != null && !jsonObj.get("audience").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("audience"));
+      }
+      // validate the optional field `bcc`
+      if (jsonObj.get("bcc") != null && !jsonObj.get("bcc").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("bcc"));
+      }
+      // validate the optional field `bto`
+      if (jsonObj.get("bto") != null && !jsonObj.get("bto").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("bto"));
+      }
+      // validate the optional field `cc`
+      if (jsonObj.get("cc") != null && !jsonObj.get("cc").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("cc"));
+      }
+      // validate the optional field `content`
+      if (jsonObj.get("content") != null && !jsonObj.get("content").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("content"));
+      }
+      // validate the optional field `context`
+      if (jsonObj.get("context") != null && !jsonObj.get("context").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("context"));
+      }
+      // validate the optional field `current`
+      if (jsonObj.get("current") != null && !jsonObj.get("current").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("current"));
+      }
+      // validate the optional field `first`
+      if (jsonObj.get("first") != null && !jsonObj.get("first").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("first"));
+      }
+      // validate the optional field `generator`
+      if (jsonObj.get("generator") != null && !jsonObj.get("generator").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("generator"));
+      }
+      if ((jsonObj.get("href") != null && !jsonObj.get("href").isJsonNull()) && !jsonObj.get("href").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `href` to be a primitive type in the JSON string but got `%s`", jsonObj.get("href").toString()));
+      }
+      if ((jsonObj.get("hreflang") != null && !jsonObj.get("hreflang").isJsonNull()) && !jsonObj.get("hreflang").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `hreflang` to be a primitive type in the JSON string but got `%s`", jsonObj.get("hreflang").toString()));
+      }
+      // validate the optional field `icon`
+      if (jsonObj.get("icon") != null && !jsonObj.get("icon").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("icon"));
+      }
+      if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
+      }
+      // validate the optional field `image`
+      if (jsonObj.get("image") != null && !jsonObj.get("image").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("image"));
+      }
+      // validate the optional field `inReplyTo`
+      if (jsonObj.get("inReplyTo") != null && !jsonObj.get("inReplyTo").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("inReplyTo"));
+      }
+      // validate the optional field `instrument`
+      if (jsonObj.get("instrument") != null && !jsonObj.get("instrument").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("instrument"));
+      }
+      if (jsonObj.get("items") != null && !jsonObj.get("items").isJsonNull()) {
+        JsonArray jsonArrayitems = jsonObj.getAsJsonArray("items");
+        if (jsonArrayitems != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("items").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `items` to be an array in the JSON string but got `%s`", jsonObj.get("items").toString()));
+          }
+
+          // validate the optional field `items` (array)
+          for (int i = 0; i < jsonArrayitems.size(); i++) {
+            ActivityObject.validateJsonObject(jsonArrayitems.get(i).getAsJsonObject());
+          };
+        }
+      }
+      // validate the optional field `last`
+      if (jsonObj.get("last") != null && !jsonObj.get("last").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("last"));
+      }
+      // validate the optional field `location`
+      if (jsonObj.get("location") != null && !jsonObj.get("location").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("location"));
+      }
+      if ((jsonObj.get("markdown") != null && !jsonObj.get("markdown").isJsonNull()) && !jsonObj.get("markdown").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `markdown` to be a primitive type in the JSON string but got `%s`", jsonObj.get("markdown").toString()));
+      }
+      if ((jsonObj.get("mediaType") != null && !jsonObj.get("mediaType").isJsonNull()) && !jsonObj.get("mediaType").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `mediaType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("mediaType").toString()));
+      }
+      if ((jsonObj.get("name") != null && !jsonObj.get("name").isJsonNull()) && !jsonObj.get("name").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
+      }
+      // validate the optional field `next`
+      if (jsonObj.get("next") != null && !jsonObj.get("next").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("next"));
+      }
+      // validate the optional field `object`
+      if (jsonObj.get("object") != null && !jsonObj.get("object").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("object"));
+      }
+      // validate the optional field `oneOf`
+      if (jsonObj.get("oneOf") != null && !jsonObj.get("oneOf").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("oneOf"));
+      }
+      // validate the optional field `origin`
+      if (jsonObj.get("origin") != null && !jsonObj.get("origin").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("origin"));
+      }
+      // validate the optional field `partOf`
+      if (jsonObj.get("partOf") != null && !jsonObj.get("partOf").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("partOf"));
+      }
+      // validate the optional field `prev`
+      if (jsonObj.get("prev") != null && !jsonObj.get("prev").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("prev"));
+      }
+      // validate the optional field `preview`
+      if (jsonObj.get("preview") != null && !jsonObj.get("preview").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("preview"));
+      }
+      if ((jsonObj.get("rel") != null && !jsonObj.get("rel").isJsonNull()) && !jsonObj.get("rel").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `rel` to be a primitive type in the JSON string but got `%s`", jsonObj.get("rel").toString()));
+      }
+      // validate the optional field `relationship`
+      if (jsonObj.get("relationship") != null && !jsonObj.get("relationship").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("relationship"));
+      }
+      // validate the optional field `replies`
+      if (jsonObj.get("replies") != null && !jsonObj.get("replies").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("replies"));
+      }
+      // validate the optional field `result`
+      if (jsonObj.get("result") != null && !jsonObj.get("result").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("result"));
+      }
+      // validate the optional field `subject`
+      if (jsonObj.get("subject") != null && !jsonObj.get("subject").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("subject"));
+      }
+      if ((jsonObj.get("summary") != null && !jsonObj.get("summary").isJsonNull()) && !jsonObj.get("summary").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `summary` to be a primitive type in the JSON string but got `%s`", jsonObj.get("summary").toString()));
+      }
+      // validate the optional field `tag`
+      if (jsonObj.get("tag") != null && !jsonObj.get("tag").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("tag"));
+      }
+      // validate the optional field `target`
+      if (jsonObj.get("target") != null && !jsonObj.get("target").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("target"));
+      }
+      // validate the optional field `to`
+      if (jsonObj.get("to") != null && !jsonObj.get("to").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("to"));
+      }
+      if ((jsonObj.get("units") != null && !jsonObj.get("units").isJsonNull()) && !jsonObj.get("units").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `units` to be a primitive type in the JSON string but got `%s`", jsonObj.get("units").toString()));
+      }
+      // validate the optional field `url`
+      if (jsonObj.get("url") != null && !jsonObj.get("url").isJsonNull()) {
+        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("url"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!ActivityObject.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ActivityObject' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<ActivityObject> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ActivityObject.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<ActivityObject>() {
+           @Override
+           public void write(JsonWriter out, ActivityObject value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public ActivityObject read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of ActivityObject given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of ActivityObject
+  * @throws IOException if the JSON string is invalid with respect to ActivityObject
+  */
+  public static ActivityObject fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ActivityObject.class);
+  }
+
+ /**
+  * Convert an instance of ActivityObject to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

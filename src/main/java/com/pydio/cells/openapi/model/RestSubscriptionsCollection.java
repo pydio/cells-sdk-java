@@ -13,30 +13,38 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.ActivitySubscription;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * RestSubscriptionsCollection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class RestSubscriptionsCollection {
   public static final String SERIALIZED_NAME_SUBSCRIPTIONS = "subscriptions";
   @SerializedName(SERIALIZED_NAME_SUBSCRIPTIONS)
   private List<ActivitySubscription> subscriptions = null;
 
-  public RestSubscriptionsCollection() { 
+  public RestSubscriptionsCollection() {
   }
 
   public RestSubscriptionsCollection subscriptions(List<ActivitySubscription> subscriptions) {
@@ -47,7 +55,7 @@ public class RestSubscriptionsCollection {
 
   public RestSubscriptionsCollection addSubscriptionsItem(ActivitySubscription subscriptionsItem) {
     if (this.subscriptions == null) {
-      this.subscriptions = new ArrayList<ActivitySubscription>();
+      this.subscriptions = new ArrayList<>();
     }
     this.subscriptions.add(subscriptionsItem);
     return this;
@@ -68,6 +76,7 @@ public class RestSubscriptionsCollection {
   public void setSubscriptions(List<ActivitySubscription> subscriptions) {
     this.subscriptions = subscriptions;
   }
+
 
 
   @Override
@@ -107,5 +116,102 @@ public class RestSubscriptionsCollection {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("subscriptions");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to RestSubscriptionsCollection
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!RestSubscriptionsCollection.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in RestSubscriptionsCollection is not found in the empty JSON string", RestSubscriptionsCollection.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!RestSubscriptionsCollection.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSubscriptionsCollection` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("subscriptions") != null && !jsonObj.get("subscriptions").isJsonNull()) {
+        JsonArray jsonArraysubscriptions = jsonObj.getAsJsonArray("subscriptions");
+        if (jsonArraysubscriptions != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("subscriptions").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `subscriptions` to be an array in the JSON string but got `%s`", jsonObj.get("subscriptions").toString()));
+          }
+
+          // validate the optional field `subscriptions` (array)
+          for (int i = 0; i < jsonArraysubscriptions.size(); i++) {
+            ActivitySubscription.validateJsonObject(jsonArraysubscriptions.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!RestSubscriptionsCollection.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'RestSubscriptionsCollection' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<RestSubscriptionsCollection> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(RestSubscriptionsCollection.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<RestSubscriptionsCollection>() {
+           @Override
+           public void write(JsonWriter out, RestSubscriptionsCollection value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public RestSubscriptionsCollection read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of RestSubscriptionsCollection given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of RestSubscriptionsCollection
+  * @throws IOException if the JSON string is invalid with respect to RestSubscriptionsCollection
+  */
+  public static RestSubscriptionsCollection fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, RestSubscriptionsCollection.class);
+  }
+
+ /**
+  * Convert an instance of RestSubscriptionsCollection to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

@@ -13,22 +13,29 @@
 
 package com.pydio.cells.openapi.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.pydio.cells.openapi.model.IdmNodeType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.pydio.cells.openapi.JSON;
+
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IdmUserSingleQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-09T15:35:02.533763+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
 public class IdmUserSingleQuery {
   public static final String SERIALIZED_NAME_ATTRIBUTE_ANY_VALUE = "AttributeAnyValue";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTE_ANY_VALUE)
@@ -86,7 +93,7 @@ public class IdmUserSingleQuery {
   @SerializedName(SERIALIZED_NAME_NOT)
   private Boolean not;
 
-  public IdmUserSingleQuery() { 
+  public IdmUserSingleQuery() {
   }
 
   public IdmUserSingleQuery attributeAnyValue(Boolean attributeAnyValue) {
@@ -411,6 +418,7 @@ public class IdmUserSingleQuery {
   }
 
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -474,5 +482,131 @@ public class IdmUserSingleQuery {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("AttributeAnyValue");
+    openapiFields.add("AttributeName");
+    openapiFields.add("AttributeValue");
+    openapiFields.add("ConnectedSince");
+    openapiFields.add("FullPath");
+    openapiFields.add("GroupPath");
+    openapiFields.add("HasProfile");
+    openapiFields.add("HasRole");
+    openapiFields.add("Login");
+    openapiFields.add("NodeType");
+    openapiFields.add("Password");
+    openapiFields.add("Recursive");
+    openapiFields.add("Uuid");
+    openapiFields.add("not");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to IdmUserSingleQuery
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!IdmUserSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in IdmUserSingleQuery is not found in the empty JSON string", IdmUserSingleQuery.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!IdmUserSingleQuery.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmUserSingleQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("AttributeName") != null && !jsonObj.get("AttributeName").isJsonNull()) && !jsonObj.get("AttributeName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `AttributeName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AttributeName").toString()));
+      }
+      if ((jsonObj.get("AttributeValue") != null && !jsonObj.get("AttributeValue").isJsonNull()) && !jsonObj.get("AttributeValue").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `AttributeValue` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AttributeValue").toString()));
+      }
+      if ((jsonObj.get("ConnectedSince") != null && !jsonObj.get("ConnectedSince").isJsonNull()) && !jsonObj.get("ConnectedSince").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ConnectedSince` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ConnectedSince").toString()));
+      }
+      if ((jsonObj.get("FullPath") != null && !jsonObj.get("FullPath").isJsonNull()) && !jsonObj.get("FullPath").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `FullPath` to be a primitive type in the JSON string but got `%s`", jsonObj.get("FullPath").toString()));
+      }
+      if ((jsonObj.get("GroupPath") != null && !jsonObj.get("GroupPath").isJsonNull()) && !jsonObj.get("GroupPath").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `GroupPath` to be a primitive type in the JSON string but got `%s`", jsonObj.get("GroupPath").toString()));
+      }
+      if ((jsonObj.get("HasProfile") != null && !jsonObj.get("HasProfile").isJsonNull()) && !jsonObj.get("HasProfile").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `HasProfile` to be a primitive type in the JSON string but got `%s`", jsonObj.get("HasProfile").toString()));
+      }
+      if ((jsonObj.get("HasRole") != null && !jsonObj.get("HasRole").isJsonNull()) && !jsonObj.get("HasRole").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `HasRole` to be a primitive type in the JSON string but got `%s`", jsonObj.get("HasRole").toString()));
+      }
+      if ((jsonObj.get("Login") != null && !jsonObj.get("Login").isJsonNull()) && !jsonObj.get("Login").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Login").toString()));
+      }
+      if ((jsonObj.get("Password") != null && !jsonObj.get("Password").isJsonNull()) && !jsonObj.get("Password").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Password").toString()));
+      }
+      if ((jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonNull()) && !jsonObj.get("Uuid").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `Uuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Uuid").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!IdmUserSingleQuery.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'IdmUserSingleQuery' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<IdmUserSingleQuery> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(IdmUserSingleQuery.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<IdmUserSingleQuery>() {
+           @Override
+           public void write(JsonWriter out, IdmUserSingleQuery value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public IdmUserSingleQuery read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of IdmUserSingleQuery given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of IdmUserSingleQuery
+  * @throws IOException if the JSON string is invalid with respect to IdmUserSingleQuery
+  */
+  public static IdmUserSingleQuery fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, IdmUserSingleQuery.class);
+  }
+
+ /**
+  * Convert an instance of IdmUserSingleQuery to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 
