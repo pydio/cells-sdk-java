@@ -236,7 +236,9 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         Token t = credentialService.get(getId());
         if (t == null) {
             t = fromPassword();
-            credentialService.put(getId(), t);
+            if (t != null){
+                credentialService.put(getId(), t);
+            }
         }
         return t;
     }
