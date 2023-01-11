@@ -101,35 +101,6 @@ In Jan. 2023, we should also do the following to finalize SDK generation:
 - change packame name for generated classes, we should rather import `jakarta.ws...` than `javax.ws...` that is not updated anymore.
 - perform a "optimize import" on the `com.pydio.cells.openapi` client to remove unnecessary warnings.
 
-### Legacy (with swagger v2)
-
-```sh
-mkdir -p /tmp/forSwagger
-cd /tmp/forSwagger
-git clone https://bsinou@github.com/pydio/cells-sdk-java.git
-cd cells-sdk-java
-
-SWAGGER_VERSION=2.4.23
-wget https://oss.sonatype.org/content/repositories/releases/io/swagger/swagger-codegen-cli/${SWAGGER_VERSION}/swagger-codegen-cli-${SWAGGER_VERSION}.jar -O swagger-codegen-cli.jar
-
-# WARNING: Update
-SDK_DEFAULT_AGENT="PydioCells/v3.0.1/JavaSDK/v0.3.0"
-
-java -jar swagger-codegen-cli.jar generate -l java -i https://raw.githubusercontent.com/pydio/cells/stable/common/proto/rest/rest.swagger.json \
-    --invoker-package com.pydio.cells.openapi \
-    --api-package com.pydio.cells.openapi.api \
-    --model-package com.pydio.cells.openapi.model \
-    --http-user-agent ${SDK_DEFAULT_AGENT}
-
-cd $GITPATH/github.com/pydio/cells-android-client/sdk-java/src/main/java/com/pydio/cells/
-rm -rf ./openapi
-
-mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
-
-# For the record, more details about the possible options:
-java -jar swagger-codegen-cli.jar help generate
-```
-
 ## Developer Tips
 
 ### Testing OAuth with a Cells server
