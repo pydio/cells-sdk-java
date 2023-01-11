@@ -77,7 +77,7 @@ public class TestConfiguration {
         }
     }
 
-    public void loadOne(String id, InputStream inputStream) throws IOException{
+    public void loadOne(String id, InputStream inputStream) throws IOException {
         Properties p = new Properties();
         p.load(new InputStreamReader(inputStream));
         if ("true".equals(p.getProperty("skipServer"))) {

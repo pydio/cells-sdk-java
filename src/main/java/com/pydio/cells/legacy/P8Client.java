@@ -515,15 +515,6 @@ public class P8Client implements Client, SdkNames {
     public String downloadPath(String ws, String file) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.download(ws, file);
         return transport.pathFromRequest(builder.getRequest());
-
-//
-//        try {
-//            return session.getURL(builder.getRequest());
-//        } catch (ProtocolException | UnknownHostException e) {
-//            throw SDKException.malFormURI(e);
-//        } catch (UnsupportedEncodingException e) {
-//            throw SDKException.encoding(e);
-//        }
     }
 
     @Override

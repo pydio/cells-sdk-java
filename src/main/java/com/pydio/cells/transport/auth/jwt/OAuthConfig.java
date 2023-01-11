@@ -20,7 +20,7 @@ public class OAuthConfig {
     public final static String DEFAULT_REDIRECT_URI = "cellsauth://callback";
 
     public String authorizeEndpoint;
-//    public String clientID;
+    //    public String clientID;
 //    public String clientSecret;
     public String redirectURI;
 
@@ -38,7 +38,7 @@ public class OAuthConfig {
         try {
             JSONObject oidcJson = new JSONObject(oidcStr);
             return OAuthConfig.fromJSON(oidcJson);
-        } catch (Exception e ){
+        } catch (Exception e) {
             throw new SDKException(e);
         }
     }

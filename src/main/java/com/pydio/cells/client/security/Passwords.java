@@ -1,7 +1,8 @@
 package com.pydio.cells.client.security;
 
 @Deprecated
-public class Passwords {}
+public class Passwords {
+}
 //import com.pydio.cells.api.callbacks.PasswordLoader;
 //
 //public class Passwords {

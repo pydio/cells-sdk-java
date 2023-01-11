@@ -1,8 +1,8 @@
 package com.pydio.cells.client.model;
 
-import com.google.gson.Gson;
-
 import static com.pydio.cells.utils.CellsPath.nameFromFullPath;
+
+import com.google.gson.Gson;
 
 public class TreeNodeInfo {
 

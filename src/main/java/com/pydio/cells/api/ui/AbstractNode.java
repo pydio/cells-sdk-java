@@ -1,9 +1,7 @@
 package com.pydio.cells.api.ui;
 
 import com.pydio.cells.api.SdkNames;
-import com.pydio.cells.client.model.Action;
 
-import java.util.List;
 import java.util.Properties;
 
 public abstract class AbstractNode implements Node, Comparable<Node>, SdkNames {
@@ -45,7 +43,7 @@ public abstract class AbstractNode implements Node, Comparable<Node>, SdkNames {
      */
     @Override
     public int compareTo(Node node) {
-        if (node == null){
+        if (node == null) {
             return 1;
         }
         return getWeight(node) - getWeight(this);

@@ -1,13 +1,13 @@
 package com.pydio.cells.sync;
 
 import com.pydio.cells.api.Change;
-import com.pydio.cells.utils.Log;
 import com.pydio.cells.sync.changes.ChangeStore;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;
 import com.pydio.cells.sync.changes.ProcessChangeRequest;
 import com.pydio.cells.sync.changes.ProcessChangeResponse;
 import com.pydio.cells.sync.fs.Fs;
+import com.pydio.cells.utils.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,8 +1,7 @@
 package com.pydio.cells.client.model;
 
-import com.pydio.cells.api.ui.AbstractNode;
-
-public class ObjectNode {}
+public class ObjectNode {
+}
 
 //import com.pydio.cells.api.ui.AbstractNode;
 //import com.pydio.cells.api.ui.Node;

@@ -20,7 +20,7 @@ public class RegistrySaxHandler extends DefaultHandler {
     private boolean inside_repo = false;
     private boolean inside_preferences = false;
 
-    private boolean insideAjxpPlugin = false;
+    private final boolean insideAjxpPlugin = false;
     private boolean insidePluginConfigs = false;
 
     private Plugin currentPlugin;

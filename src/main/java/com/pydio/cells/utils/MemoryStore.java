@@ -30,7 +30,7 @@ public class MemoryStore<T> implements Store<T> {
     }
 
     @Override
-    public void clear(){
+    public void clear() {
         objects.clear();
     }
 }

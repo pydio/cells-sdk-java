@@ -12,20 +12,13 @@ import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.utils.Log;
 
 /**
- * Extend a server factory to manage client concepts.
+ * Extends a server factory to manage client concepts.
  */
 public abstract class ClientFactory extends ServerFactory {
 
     public ClientFactory(CredentialService credentialService, Store<Server> serverStore, Store<Transport> transportStore) {
         super(credentialService, serverStore, transportStore);
     }
-
-    /**
-     * Creates a factory with in memory stores for tokens, servers and transports
-     */
-//    public ClientFactory() {
-//        super();
-//    }
 
     /**
      * Implement this: it is the single entry point to inject the S3 client

@@ -5,7 +5,6 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.client.model.TreeNodeInfo;
-import com.pydio.cells.utils.CellsPath;
 import com.pydio.cells.sync.Error;
 import com.pydio.cells.sync.changes.GetChangeRequest;
 import com.pydio.cells.sync.changes.GetChangesResponse;
@@ -14,6 +13,7 @@ import com.pydio.cells.sync.changes.ProcessChangeResponse;
 import com.pydio.cells.sync.content.Content;
 import com.pydio.cells.sync.content.ContentLoader;
 import com.pydio.cells.sync.tree.StateManager;
+import com.pydio.cells.utils.CellsPath;
 
 import java.util.ArrayList;
 import java.util.Collection;

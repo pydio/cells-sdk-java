@@ -1,6 +1,7 @@
 package com.pydio.cells.client.security;
 
-public class Crypto {}
+public class Crypto {
+}
 
 //import com.pydio.cells.utils.Hex;
 //

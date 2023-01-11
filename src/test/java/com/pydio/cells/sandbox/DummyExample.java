@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DummyExample {
+
     @BeforeClass
     public static void setup() {
     }

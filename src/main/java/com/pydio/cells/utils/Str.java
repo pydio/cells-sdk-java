@@ -6,10 +6,10 @@ package com.pydio.cells.utils;
 public class Str {
 
     public static boolean empty(String value) {
-        return  value == null || "".equals(value);
+        return value == null || "".equals(value);
     }
 
     public static boolean notEmpty(String value) {
-        return  value != null && !"".equals(value);
+        return value != null && !"".equals(value);
     }
 }

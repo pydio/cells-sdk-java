@@ -34,7 +34,7 @@ public interface ServerURL {
      * Returns a new instance of the current Server URL object that points to a given path
      * and that is ready to use to connect to the distant server.
      * If any query was already present, it is conserved.
-     *
+     * <p>
      * Warning: if our server entry point is under a sub path of the domain (typically for P8),
      * the passed path is appended.
      */
@@ -42,7 +42,7 @@ public interface ServerURL {
 
     /**
      * Returns a new instance of the current Server URL object with the passed query.
-     *
+     * <p>
      * Note that the path is preserved (if any) but this overrides any query
      * that might have been previously set.
      */
@@ -51,7 +51,7 @@ public interface ServerURL {
     /**
      * Returns a new instance of the current Server URL object augmented with Path and Query
      * passed via the spec String.
-     *
+     * <p>
      * Warning: if our server entry point is under a sub path of the domain (typically for P8),
      * the passed path is appended.
      */

@@ -30,7 +30,7 @@ public class FileNodeUtils {
             return null;
         }
         String treeNodePath = treeNode.getPath();
-        if (treeNodePath == null){
+        if (treeNodePath == null) {
             Log.w(logTag, "Cannot create FileNode with no path");
             return null;
         }
@@ -39,7 +39,7 @@ public class FileNodeUtils {
         String name = nameFrom(treeNodePath);
 
         Map<String, String> meta = treeNode.getMetaStore();
-        if (meta == null){
+        if (meta == null) {
             meta = new HashMap<>();
         }
         // Retrieve the MetaData and store it as properties for later use

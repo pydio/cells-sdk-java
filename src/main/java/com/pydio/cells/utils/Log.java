@@ -102,7 +102,7 @@ public class Log {
     public static String paramString(Map<String, String> params) {
         StringBuilder builder = new StringBuilder();
         // API Level 24: params.forEach((k, v) -> builder.append(" " + k + "=" + v));
-        for (String k : params.keySet()){
+        for (String k : params.keySet()) {
             builder.append(" " + k + "=" + params.get(k));
         }
         if (builder.length() == 0) {

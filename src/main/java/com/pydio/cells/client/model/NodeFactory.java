@@ -2,7 +2,6 @@ package com.pydio.cells.client.model;
 
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Node;
-import com.pydio.cells.api.ui.WorkspaceNode;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
@@ -63,13 +62,9 @@ public class NodeFactory {
             case Node.TYPE_REMOTE_NODE:
                 return new FileNode();
             case Node.TYPE_WORKSPACE:
-                throw new RuntimeException("Do we really pass here? ");
-                // return new WorkspaceNode();
+                throw new RuntimeException("Trying to create a new Node of type Node.TYPE_WORKSPACE. Should not happen anymore.");
             case Node.TYPE_SERVER:
-                throw new RuntimeException("Broken after refactoring cannot create server node object without URL");
-                // return new ServerNodeImpl();
-//            case Node.TYPE_LOCAL_NODE:
-//                return new ObjectNode();
+                throw new RuntimeException("Trying to create a new Node of type Node.TYPE_SERVER. This should not happen anymore.");
             default:
                 return null;
         }

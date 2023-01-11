@@ -126,8 +126,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
     public String appendAuth(String path) throws SDKException {
         String suffix =
                 P8Names.REQ_PROP_TOKEN +
-                "=" +
-                utf8Encode(getSecureToken());
+                        "=" +
+                        utf8Encode(getSecureToken());
         return path + "&" + suffix;
     }
 

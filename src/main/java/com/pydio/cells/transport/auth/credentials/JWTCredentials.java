@@ -28,7 +28,7 @@ public class JWTCredentials implements Credentials {
         return token.toString();
     }
 
-    public Token getToken(){
+    public Token getToken() {
         return token;
     }
 }

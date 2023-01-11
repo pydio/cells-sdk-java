@@ -1,6 +1,5 @@
 package com.pydio.cells.api.ui;
 
-import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.utils.Str;
 
 import java.util.Properties;
@@ -30,7 +29,7 @@ public class FileNode extends AbstractNode {
     @Override
     public String getLabel() {
         String label = properties.getProperty(NODE_PROPERTY_TEXT);
-        if (Str.empty(label)){
+        if (Str.empty(label)) {
             return getName();
         } else {
             return label;
@@ -39,7 +38,7 @@ public class FileNode extends AbstractNode {
 
     @Override
     public String getPath() {
-        return  properties.getProperty(NODE_PROPERTY_PATH);
+        return properties.getProperty(NODE_PROPERTY_PATH);
     }
 
     /* File and folder specific methods */

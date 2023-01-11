@@ -46,7 +46,6 @@ public class ServerFactory implements IServerFactory {
 //        this(new CredentialService(new MemoryStore<>(), new MemoryStore<>()),
 //                new MemoryStore<>(), new MemoryStore<>());
 //    }
-
     protected void initAppData() {
         ClientData instance = ClientData.getInstance();
 

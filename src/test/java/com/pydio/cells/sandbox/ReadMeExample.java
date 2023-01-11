@@ -25,7 +25,6 @@ import java.net.MalformedURLException;
 
 public class ReadMeExample {
 
-
     @Ignore
     @Test
     public void forTheReadMe() throws SDKException, ApiException, MalformedURLException {

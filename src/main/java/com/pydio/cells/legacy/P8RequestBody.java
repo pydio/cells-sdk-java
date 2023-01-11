@@ -25,7 +25,7 @@ public class P8RequestBody {
     private InputStream mInStream;
 
     private int mChunkIndex = 0;
-    private int mChunkCount;
+    private final int mChunkCount;
 
     private long mChunkSize;
     private long mLastChunkSize;
