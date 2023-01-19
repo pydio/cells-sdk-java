@@ -9,6 +9,8 @@ import java.net.HttpURLConnection;
 public interface Transport {
 
     String ANONYMOUS_USERNAME = "anon";
+    String UNDEFINED_URL = "https://example.com";
+    String UNDEFINED_STATE_ID = "https%3A%2F%2Fexample.com";
 
     String getId();
 
