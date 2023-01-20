@@ -54,7 +54,7 @@ public class ServerFactory implements IServerFactory {
             instance.setName("CellsJavaTransport");
             instance.setLabel("Cells Java Transport");
             // TODO this should not be hard coded
-            instance.setVersion("0.4.0-dev");
+            instance.setVersion("0.4.3");
             instance.setPlatform("Java");
             ClientData.updateInstance(instance);
         }

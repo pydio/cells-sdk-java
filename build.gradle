@@ -15,7 +15,7 @@ repositories {
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
-def sdkVersion = '0.4.2'
+def sdkVersion = '0.4.3'
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
 }
@@ -92,10 +92,6 @@ jar {
 }
 
 dependencies {
-
-    // These dependencies are used internally and not exposed to consumers
-    // on their own compile classpath (otherwise, use "api").
-
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
