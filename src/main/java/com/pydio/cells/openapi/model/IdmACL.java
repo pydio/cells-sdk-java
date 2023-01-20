@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiModelProperty;
  * ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace.
  */
 @ApiModel(description = "ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class IdmACL {
   public static final String SERIALIZED_NAME_ACTION = "Action";
   @SerializedName(SERIALIZED_NAME_ACTION)

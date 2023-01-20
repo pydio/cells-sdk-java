@@ -70,7 +70,7 @@ public class AclServiceApi {
 
     /**
      * Build call for deleteAcl
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -143,7 +143,7 @@ public class AclServiceApi {
     /**
      * Delete one or more ACLs
      * 
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @return RestDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -164,7 +164,7 @@ public class AclServiceApi {
     /**
      * Delete one or more ACLs
      * 
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @return ApiResponse&lt;RestDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -186,7 +186,7 @@ public class AclServiceApi {
     /**
      * Delete one or more ACLs (asynchronously)
      * 
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -209,7 +209,7 @@ public class AclServiceApi {
     }
     /**
      * Build call for putAcl
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -282,7 +282,7 @@ public class AclServiceApi {
     /**
      * Store an ACL
      * 
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @return IdmACL
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -303,7 +303,7 @@ public class AclServiceApi {
     /**
      * Store an ACL
      * 
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @return ApiResponse&lt;IdmACL&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -325,7 +325,7 @@ public class AclServiceApi {
     /**
      * Store an ACL (asynchronously)
      * 
-     * @param body  (required)
+     * @param body ACL are the basic flags that can be put anywhere in the tree to provide some specific rights to a given role. The context of how they apply can be fine-tuned by workspace. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

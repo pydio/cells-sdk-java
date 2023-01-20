@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * JobsSchedule
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class JobsSchedule {
   public static final String SERIALIZED_NAME_ISO8601_MIN_DELTA = "Iso8601MinDelta";
   @SerializedName(SERIALIZED_NAME_ISO8601_MIN_DELTA)

@@ -820,25 +820,25 @@ public class ConfigServiceApi {
     /**
      * Build call for deleteDataSource
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -988,25 +988,25 @@ public class ConfigServiceApi {
      * Delete a datasource
      * 
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return RestDeleteDataSourceResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1028,25 +1028,25 @@ public class ConfigServiceApi {
      * Delete a datasource
      * 
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return ApiResponse&lt;RestDeleteDataSourceResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1069,25 +1069,25 @@ public class ConfigServiceApi {
      * Delete a datasource (asynchronously)
      * 
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1249,7 +1249,7 @@ public class ConfigServiceApi {
     }
     /**
      * Build call for endpointsDiscovery
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1320,7 +1320,7 @@ public class ConfigServiceApi {
     /**
      * Publish available endpoints
      * 
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @return RestDiscoveryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1341,7 +1341,7 @@ public class ConfigServiceApi {
     /**
      * Publish available endpoints
      * 
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @return ApiResponse&lt;RestDiscoveryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1363,7 +1363,7 @@ public class ConfigServiceApi {
     /**
      * Publish available endpoints (asynchronously)
      * 
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1526,7 +1526,7 @@ public class ConfigServiceApi {
     /**
      * Build call for getConfig
      * @param fullPath Full slash-separated path to the config key (required)
-     * @param data JSON-encoded data to store. (optional)
+     * @param data JSON-encoded data to store (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1604,7 +1604,7 @@ public class ConfigServiceApi {
      * Generic config Get using a full path in the config tree
      * 
      * @param fullPath Full slash-separated path to the config key (required)
-     * @param data JSON-encoded data to store. (optional)
+     * @param data JSON-encoded data to store (optional)
      * @return RestConfiguration
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1626,7 +1626,7 @@ public class ConfigServiceApi {
      * Generic config Get using a full path in the config tree
      * 
      * @param fullPath Full slash-separated path to the config key (required)
-     * @param data JSON-encoded data to store. (optional)
+     * @param data JSON-encoded data to store (optional)
      * @return ApiResponse&lt;RestConfiguration&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1649,7 +1649,7 @@ public class ConfigServiceApi {
      * Generic config Get using a full path in the config tree (asynchronously)
      * 
      * @param fullPath Full slash-separated path to the config key (required)
-     * @param data JSON-encoded data to store. (optional)
+     * @param data JSON-encoded data to store (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1673,25 +1673,25 @@ public class ConfigServiceApi {
     /**
      * Build call for getDataSource
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1841,25 +1841,25 @@ public class ConfigServiceApi {
      * Load datasource information
      * 
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return ObjectDataSource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1881,25 +1881,25 @@ public class ConfigServiceApi {
      * Load datasource information
      * 
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return ApiResponse&lt;ObjectDataSource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1922,25 +1922,25 @@ public class ConfigServiceApi {
      * Load datasource information (asynchronously)
      * 
      * @param name Name of the data source (max length 34) (required)
-     * @param disabled Whether this data source is disabled or running. (optional)
-     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS). (optional, default to LOCAL)
-     * @param objectsServiceName Corresponding objects service name (underlying s3 service). (optional)
-     * @param objectsHost Corresponding objects service host. (optional)
-     * @param objectsPort Corresponding objects service port. (optional)
-     * @param objectsSecure Corresponding objects service connection type. (optional)
-     * @param objectsBucket Corresponding objects service bucket. (optional)
-     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket. (optional)
-     * @param apiKey Corresponding objects service api key. (optional)
-     * @param apiSecret Corresponding objects service api secret. (optional)
-     * @param peerAddress Peer address of the data source. (optional)
-     * @param watch Not implemented, whether to watch for underlying changes on the FS. (optional)
-     * @param flatStorage Store data in flat format (object-storage like). (optional)
-     * @param skipSyncOnRestart Do not trigger resync at start. (optional)
-     * @param encryptionMode Type of encryption applied before sending data to storage. (optional, default to CLEAR)
-     * @param encryptionKey Encryption key used for encrypting data. (optional)
-     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue. (optional)
-     * @param creationDate Data Source creation date. (optional)
-     * @param lastSynchronizationDate Data Source last synchronization date. (optional)
+     * @param disabled Whether this data source is disabled or running (optional)
+     * @param storageType Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param objectsServiceName Corresponding objects service name (underlying s3 service) (optional)
+     * @param objectsHost Corresponding objects service host (optional)
+     * @param objectsPort Corresponding objects service port (optional)
+     * @param objectsSecure Corresponding objects service connection type (optional)
+     * @param objectsBucket Corresponding objects service bucket (optional)
+     * @param objectsBaseFolder Corresponding objects service base folder inside the bucket (optional)
+     * @param apiKey Corresponding objects service api key (optional)
+     * @param apiSecret Corresponding objects service api secret (optional)
+     * @param peerAddress Peer address of the data source (optional)
+     * @param watch Not implemented, whether to watch for underlying changes on the FS (optional)
+     * @param flatStorage Store data in flat format (object-storage like) (optional)
+     * @param skipSyncOnRestart Do not trigger resync at start (optional)
+     * @param encryptionMode Type of encryption applied before sending data to storage (optional, default to CLEAR)
+     * @param encryptionKey Encryption key used for encrypting data (optional)
+     * @param versioningPolicyName Versioning policy describes how files are kept in the versioning queue (optional)
+     * @param creationDate Data Source creation date (optional)
+     * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3129,7 +3129,7 @@ public class ConfigServiceApi {
     }
     /**
      * Build call for listServices
-     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING) (optional, default to ANY)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3200,7 +3200,7 @@ public class ConfigServiceApi {
     /**
      * List all services and their status
      * 
-     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING) (optional, default to ANY)
      * @return RestServiceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3221,7 +3221,7 @@ public class ConfigServiceApi {
     /**
      * List all services and their status
      * 
-     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING) (optional, default to ANY)
      * @return ApiResponse&lt;RestServiceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3243,7 +3243,7 @@ public class ConfigServiceApi {
     /**
      * List all services and their status (asynchronously)
      * 
-     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING). (optional, default to ANY)
+     * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING) (optional, default to ANY)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3802,7 +3802,7 @@ public class ConfigServiceApi {
     }
     /**
      * Build call for openApiDiscovery
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3873,7 +3873,7 @@ public class ConfigServiceApi {
     /**
      * Publish available REST APIs
      * 
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @return RestOpenApiResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3894,7 +3894,7 @@ public class ConfigServiceApi {
     /**
      * Publish available REST APIs
      * 
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @return ApiResponse&lt;RestOpenApiResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3916,7 +3916,7 @@ public class ConfigServiceApi {
     /**
      * Publish available REST APIs (asynchronously)
      * 
-     * @param endpointType Filter result to a specific endpoint type. (optional)
+     * @param endpointType Filter result to a specific endpoint type (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

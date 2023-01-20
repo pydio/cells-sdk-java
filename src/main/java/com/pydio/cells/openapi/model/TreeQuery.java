@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * TreeQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class TreeQuery {
   public static final String SERIALIZED_NAME_CONTENT = "Content";
   @SerializedName(SERIALIZED_NAME_CONTENT)
@@ -259,11 +259,11 @@ public class TreeQuery {
   }
 
    /**
-   * Get freeString
+   * Bleve-like search query to search for a specific metadata value. When querying nodes, this will redirect this query to the Search Engine. When filtering an input, this will load an in-memory bleve engine to evaluate the node.  Bleve query string format is a space separated list of &#x60;[+-]key:value&#x60;, where node meta keys must be prepended with \&quot;Meta.\&quot; For Example, for tags: &#x60;+Meta.usermeta-tags:myvalue&#x60;
    * @return freeString
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Bleve-like search query to search for a specific metadata value. When querying nodes, this will redirect this query to the Search Engine. When filtering an input, this will load an in-memory bleve engine to evaluate the node.  Bleve query string format is a space separated list of `[+-]key:value`, where node meta keys must be prepended with \"Meta.\" For Example, for tags: `+Meta.usermeta-tags:myvalue`")
 
   public String getFreeString() {
     return freeString;

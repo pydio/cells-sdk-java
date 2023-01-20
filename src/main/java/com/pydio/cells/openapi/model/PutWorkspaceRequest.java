@@ -42,7 +42,7 @@ import io.swagger.annotations.ApiModelProperty;
  * A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.
  */
 @ApiModel(description = "A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class PutWorkspaceRequest {
   public static final String SERIALIZED_NAME_ATTRIBUTES = "Attributes";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTES)

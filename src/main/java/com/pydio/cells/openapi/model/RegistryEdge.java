@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * RegistryEdge
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class RegistryEdge {
   public static final String SERIALIZED_NAME_VERTICES = "vertices";
   @SerializedName(SERIALIZED_NAME_VERTICES)

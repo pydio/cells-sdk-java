@@ -37,11 +37,15 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * RegistryOptions
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class RegistryOptions {
   public static final String SERIALIZED_NAME_ACTIONS = "actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
   private List<RegistryActionType> actions = null;
+
+  public static final String SERIALIZED_NAME_IDS = "ids";
+  @SerializedName(SERIALIZED_NAME_IDS)
+  private List<String> ids = null;
 
   public static final String SERIALIZED_NAME_META_NAME = "metaName";
   @SerializedName(SERIALIZED_NAME_META_NAME)
@@ -94,6 +98,37 @@ public class RegistryOptions {
 
   public void setActions(List<RegistryActionType> actions) {
     this.actions = actions;
+  }
+
+
+  public RegistryOptions ids(List<String> ids) {
+    
+    this.ids = ids;
+    return this;
+  }
+
+  public RegistryOptions addIdsItem(String idsItem) {
+    if (this.ids == null) {
+      this.ids = new ArrayList<>();
+    }
+    this.ids.add(idsItem);
+    return this;
+  }
+
+   /**
+   * Get ids
+   * @return ids
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<String> getIds() {
+    return ids;
+  }
+
+
+  public void setIds(List<String> ids) {
+    this.ids = ids;
   }
 
 
@@ -239,6 +274,7 @@ public class RegistryOptions {
     }
     RegistryOptions registryOptions = (RegistryOptions) o;
     return Objects.equals(this.actions, registryOptions.actions) &&
+        Objects.equals(this.ids, registryOptions.ids) &&
         Objects.equals(this.metaName, registryOptions.metaName) &&
         Objects.equals(this.metaValue, registryOptions.metaValue) &&
         Objects.equals(this.names, registryOptions.names) &&
@@ -248,7 +284,7 @@ public class RegistryOptions {
 
   @Override
   public int hashCode() {
-    return Objects.hash(actions, metaName, metaValue, names, ttl, types);
+    return Objects.hash(actions, ids, metaName, metaValue, names, ttl, types);
   }
 
   @Override
@@ -256,6 +292,7 @@ public class RegistryOptions {
     StringBuilder sb = new StringBuilder();
     sb.append("class RegistryOptions {\n");
     sb.append("    actions: ").append(toIndentedString(actions)).append("\n");
+    sb.append("    ids: ").append(toIndentedString(ids)).append("\n");
     sb.append("    metaName: ").append(toIndentedString(metaName)).append("\n");
     sb.append("    metaValue: ").append(toIndentedString(metaValue)).append("\n");
     sb.append("    names: ").append(toIndentedString(names)).append("\n");
@@ -284,6 +321,7 @@ public class RegistryOptions {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("actions");
+    openapiFields.add("ids");
     openapiFields.add("metaName");
     openapiFields.add("metaValue");
     openapiFields.add("names");
@@ -317,6 +355,10 @@ public class RegistryOptions {
       // ensure the optional json data is an array if present
       if (jsonObj.get("actions") != null && !jsonObj.get("actions").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `actions` to be an array in the JSON string but got `%s`", jsonObj.get("actions").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("ids") != null && !jsonObj.get("ids").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ids` to be an array in the JSON string but got `%s`", jsonObj.get("ids").toString()));
       }
       if ((jsonObj.get("metaName") != null && !jsonObj.get("metaName").isJsonNull()) && !jsonObj.get("metaName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `metaName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("metaName").toString()));

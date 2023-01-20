@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * RestSettingsSection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class RestSettingsSection {
   public static final String SERIALIZED_NAME_C_H_I_L_D_R_E_N = "CHILDREN";
   @SerializedName(SERIALIZED_NAME_C_H_I_L_D_R_E_N)

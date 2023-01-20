@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * EncryptionAdminDeleteKeyRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class EncryptionAdminDeleteKeyRequest {
   public static final String SERIALIZED_NAME_KEY_I_D = "KeyID";
   @SerializedName(SERIALIZED_NAME_KEY_I_D)

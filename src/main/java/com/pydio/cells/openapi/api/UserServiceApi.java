@@ -72,13 +72,13 @@ public class UserServiceApi {
     /**
      * Build call for deleteUser
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -185,13 +185,13 @@ public class UserServiceApi {
      * Delete a user
      * 
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return RestDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -214,13 +214,13 @@ public class UserServiceApi {
      * Delete a user
      * 
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return ApiResponse&lt;RestDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -244,13 +244,13 @@ public class UserServiceApi {
      * Delete a user (asynchronously)
      * 
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -275,13 +275,13 @@ public class UserServiceApi {
     /**
      * Build call for getUser
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -388,13 +388,13 @@ public class UserServiceApi {
      * Get a user by login
      * 
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -417,13 +417,13 @@ public class UserServiceApi {
      * Get a user by login
      * 
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -447,13 +447,13 @@ public class UserServiceApi {
      * Get a user by login (asynchronously)
      * 
      * @param login User login is used to connect, field is empty for groups (required)
-     * @param uuid User unique identifier. (optional)
-     * @param groupPath Path to the parent group. (optional)
-     * @param password Password can be passed to be updated (but never read back), field is empty for groups. (optional)
-     * @param oldPassword OldPassword must be set when a user updates her own password. (optional)
-     * @param isGroup Whether this object is a group or a user. (optional)
-     * @param groupLabel Label of the group, field is empty for users. (optional)
-     * @param lastConnected Last successful connection timestamp. (optional)
+     * @param uuid User unique identifier (optional)
+     * @param groupPath Path to the parent group (optional)
+     * @param password Password can be passed to be updated (but never read back), field is empty for groups (optional)
+     * @param oldPassword OldPassword must be set when a user updates her own password (optional)
+     * @param isGroup Whether this object is a group or a user (optional)
+     * @param groupLabel Label of the group, field is empty for users (optional)
+     * @param lastConnected Last successful connection timestamp (optional)
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

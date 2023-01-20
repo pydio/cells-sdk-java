@@ -72,14 +72,14 @@ public class WorkspaceServiceApi {
     /**
      * Build call for deleteWorkspace
      * @param slug Slug is an url-compatible form of the workspace label, or can be freely modified (max length 500) (required)
-     * @param UUID Unique identifier of the workspace. (optional)
-     * @param label Label of the workspace (max length 500). (optional)
-     * @param description Description of the workspace (max length 1000). (optional)
-     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK. (optional, default to ANY)
-     * @param lastUpdated Last modification time. (optional)
-     * @param attributes JSON-encoded list of attributes. (optional)
-     * @param rootUUIDs Quick list of the RootNodes uuids. (optional)
-     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not. (optional)
+     * @param UUID Unique identifier of the workspace (optional)
+     * @param label Label of the workspace (max length 500) (optional)
+     * @param description Description of the workspace (max length 1000) (optional)
+     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK (optional, default to ANY)
+     * @param lastUpdated Last modification time (optional)
+     * @param attributes JSON-encoded list of attributes (optional)
+     * @param rootUUIDs Quick list of the RootNodes uuids (optional)
+     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -185,14 +185,14 @@ public class WorkspaceServiceApi {
      * Delete an existing workspace
      * 
      * @param slug Slug is an url-compatible form of the workspace label, or can be freely modified (max length 500) (required)
-     * @param UUID Unique identifier of the workspace. (optional)
-     * @param label Label of the workspace (max length 500). (optional)
-     * @param description Description of the workspace (max length 1000). (optional)
-     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK. (optional, default to ANY)
-     * @param lastUpdated Last modification time. (optional)
-     * @param attributes JSON-encoded list of attributes. (optional)
-     * @param rootUUIDs Quick list of the RootNodes uuids. (optional)
-     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not. (optional)
+     * @param UUID Unique identifier of the workspace (optional)
+     * @param label Label of the workspace (max length 500) (optional)
+     * @param description Description of the workspace (max length 1000) (optional)
+     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK (optional, default to ANY)
+     * @param lastUpdated Last modification time (optional)
+     * @param attributes JSON-encoded list of attributes (optional)
+     * @param rootUUIDs Quick list of the RootNodes uuids (optional)
+     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not (optional)
      * @return RestDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -214,14 +214,14 @@ public class WorkspaceServiceApi {
      * Delete an existing workspace
      * 
      * @param slug Slug is an url-compatible form of the workspace label, or can be freely modified (max length 500) (required)
-     * @param UUID Unique identifier of the workspace. (optional)
-     * @param label Label of the workspace (max length 500). (optional)
-     * @param description Description of the workspace (max length 1000). (optional)
-     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK. (optional, default to ANY)
-     * @param lastUpdated Last modification time. (optional)
-     * @param attributes JSON-encoded list of attributes. (optional)
-     * @param rootUUIDs Quick list of the RootNodes uuids. (optional)
-     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not. (optional)
+     * @param UUID Unique identifier of the workspace (optional)
+     * @param label Label of the workspace (max length 500) (optional)
+     * @param description Description of the workspace (max length 1000) (optional)
+     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK (optional, default to ANY)
+     * @param lastUpdated Last modification time (optional)
+     * @param attributes JSON-encoded list of attributes (optional)
+     * @param rootUUIDs Quick list of the RootNodes uuids (optional)
+     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not (optional)
      * @return ApiResponse&lt;RestDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -244,14 +244,14 @@ public class WorkspaceServiceApi {
      * Delete an existing workspace (asynchronously)
      * 
      * @param slug Slug is an url-compatible form of the workspace label, or can be freely modified (max length 500) (required)
-     * @param UUID Unique identifier of the workspace. (optional)
-     * @param label Label of the workspace (max length 500). (optional)
-     * @param description Description of the workspace (max length 1000). (optional)
-     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK. (optional, default to ANY)
-     * @param lastUpdated Last modification time. (optional)
-     * @param attributes JSON-encoded list of attributes. (optional)
-     * @param rootUUIDs Quick list of the RootNodes uuids. (optional)
-     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not. (optional)
+     * @param UUID Unique identifier of the workspace (optional)
+     * @param label Label of the workspace (max length 500) (optional)
+     * @param description Description of the workspace (max length 1000) (optional)
+     * @param scope Scope can be ADMIN, ROOM (&#x3D;CELL) or LINK (optional, default to ANY)
+     * @param lastUpdated Last modification time (optional)
+     * @param attributes JSON-encoded list of attributes (optional)
+     * @param rootUUIDs Quick list of the RootNodes uuids (optional)
+     * @param policiesContextEditable Context-resolved to quickly check if workspace is editable or not (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

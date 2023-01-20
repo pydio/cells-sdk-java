@@ -71,13 +71,13 @@ public class RoleServiceApi {
     /**
      * Build call for deleteRole
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -184,13 +184,13 @@ public class RoleServiceApi {
      * Delete a Role by ID
      * 
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -213,13 +213,13 @@ public class RoleServiceApi {
      * Delete a Role by ID
      * 
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -243,13 +243,13 @@ public class RoleServiceApi {
      * Delete a Role by ID (asynchronously)
      * 
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -274,13 +274,13 @@ public class RoleServiceApi {
     /**
      * Build call for getRole
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -387,13 +387,13 @@ public class RoleServiceApi {
      * Get a Role by ID
      * 
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -416,13 +416,13 @@ public class RoleServiceApi {
      * Get a Role by ID
      * 
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -446,13 +446,13 @@ public class RoleServiceApi {
      * Get a Role by ID (asynchronously)
      * 
      * @param uuid Unique identifier of this role (required)
-     * @param label Label of this role. (optional)
-     * @param isTeam Whether this role represents a user team or not. (optional)
-     * @param groupRole Whether this role is attached to a Group object. (optional)
-     * @param userRole Whether this role is attached to a User object. (optional)
-     * @param lastUpdated Last modification date of the role. (optional)
-     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied. (optional)
-     * @param policiesContextEditable Whether the policies resolve into an editable state. (optional)
+     * @param label Label of this role (optional)
+     * @param isTeam Whether this role represents a user team or not (optional)
+     * @param groupRole Whether this role is attached to a Group object (optional)
+     * @param userRole Whether this role is attached to a User object (optional)
+     * @param lastUpdated Last modification date of the role (optional)
+     * @param autoApplies List of profiles (standard, shared, admin) on which the role will be automatically applied (optional)
+     * @param policiesContextEditable Whether the policies resolve into an editable state (optional)
      * @param forceOverride Is used in a stack of roles, this one will always be applied last. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

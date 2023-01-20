@@ -76,7 +76,7 @@ public class JobsServiceApi {
 
     /**
      * Build call for listTasksLogs
-     * @param body  (required)
+     * @param body ListLogRequest launches a parameterised query in the log repository and streams the results. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -149,7 +149,7 @@ public class JobsServiceApi {
     /**
      * Technical Logs, in Json or CSV format
      * 
-     * @param body  (required)
+     * @param body ListLogRequest launches a parameterised query in the log repository and streams the results. (required)
      * @return RestLogMessageCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -170,7 +170,7 @@ public class JobsServiceApi {
     /**
      * Technical Logs, in Json or CSV format
      * 
-     * @param body  (required)
+     * @param body ListLogRequest launches a parameterised query in the log repository and streams the results. (required)
      * @return ApiResponse&lt;RestLogMessageCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -192,7 +192,7 @@ public class JobsServiceApi {
     /**
      * Technical Logs, in Json or CSV format (asynchronously)
      * 
-     * @param body  (required)
+     * @param body ListLogRequest launches a parameterised query in the log repository and streams the results. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

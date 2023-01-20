@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * IdmListPolicyGroupsResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-06T14:22:40.613083+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
 public class IdmListPolicyGroupsResponse {
   public static final String SERIALIZED_NAME_POLICY_GROUPS = "PolicyGroups";
   @SerializedName(SERIALIZED_NAME_POLICY_GROUPS)

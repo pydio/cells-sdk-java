@@ -150,7 +150,7 @@ public class ApiClient {
         json = new JSON();
 
         // Set default User-Agent.
-        setUserAgent("PydioCells/v4.0.6/JavaSDK/v0.4.2");
+        setUserAgent("PydioCells/v4.0.7/JavaSDK/v0.4.3");
 
         authentications = new HashMap<String, Authentication>();
     }
