@@ -24,7 +24,8 @@ wget https://oss.sonatype.org/content/repositories/releases/org/openapitools/ope
 
 (Temporary) _a la mano_
 - Retrieve default json swagger v2 spec file: https://raw.githubusercontent.com/pydio/cells/main/common/proto/rest/cellsapi-rest.swagger.json
-- Copy/paste specification file at: https://editor.swagger.io/
+- Copy/paste specification file at: https://editor-next.swagger.io/
+- use Edit / convert to YAML
 - use Edit / convert to v3
 - paste back the specs in the root java project typically in cellsapi-rest.swagger.yml
 
@@ -71,7 +72,7 @@ Then generate the SDK
 
 ```sh
 # WARNING: Update
-SDK_DEFAULT_AGENT="PydioCells/v4.0.6/JavaSDK/v0.4.2"
+SDK_DEFAULT_AGENT="PydioCells/v4.0.7/JavaSDK/v0.4.3"
 
 java -jar openapi-generator-cli.jar generate -g java \
     -i ./cellsapi-rest.swagger.yml \
@@ -87,8 +88,8 @@ rm -rf ./openapi
 mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
 
 # Also copy used sagger file for later references
-export CELLS_VERSION=4.0.6
-cp /tmp/forSwagger/cells-sdk-java/cellsapi-rest.swagger.yml $GITPATH/github.com/pydio/cells-android-app/sdk-java/src/main/java/com/pydio/cells/openapi/cellsapi-rest-${CELLS_VERSION}.swagger.yml
+export CELLS_VERSION=4.0.7
+cp /tmp/forSwagger/cells-sdk-java/cellsapi-rest.swagger.yml $GITPATH/github.com/pydio/cells-sdk-java/src/main/java/com/pydio/cells/openapi/cellsapi-rest-${CELLS_VERSION}.swagger.yml
 
 # For the record, more details about the possible options:
 java -jar swagger-codegen-cli.jar help generate
@@ -98,7 +99,7 @@ java -jar swagger-codegen-cli.jar help generate
 
 In Jan. 2023, we should also do the following to finalize SDK generation:
 
-- change packame name for generated classes, we should rather import `jakarta.ws...` than `javax.ws...` that is not updated anymore.
+- Change the `javax.ws` prefix in the package imports of all class in the openapi package, to import `jakarta.ws.rs.core.GenericType` rather than `javax.ws.rs.core.GenericType`: the later package is not maintained anymore.
 - perform a "optimize import" on the `com.pydio.cells.openapi` client to remove unnecessary warnings.
 
 ## Developer Tips
