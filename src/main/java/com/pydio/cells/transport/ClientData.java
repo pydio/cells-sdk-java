@@ -12,7 +12,7 @@ public class ClientData {
 
     private static final Integer lock = Integer.valueOf(0);
 
-    private Long buildTimestamp = 0L;
+    private Long lastUpdateTime = 0L;
     private String platform = "";
     private String version = "0.1";
     private String packageID = "";
@@ -53,12 +53,12 @@ public class ClientData {
         return userAgent;
     }
 
-    public Long getBuildTimestamp() {
-        return buildTimestamp;
+    public Long getLastUpdateTime() {
+        return lastUpdateTime;
     }
 
-    public void setBuildTimestamp(Long buildTimestamp) {
-        this.buildTimestamp = buildTimestamp;
+    public void setLastUpdateTime(Long lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 
     public String getPlatform() {
