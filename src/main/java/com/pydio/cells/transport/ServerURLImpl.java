@@ -31,6 +31,8 @@ import javax.net.ssl.X509TrustManager;
 
 public class ServerURLImpl implements ServerURL {
 
+    private final String logTag = ServerURLImpl.class.getSimpleName();
+
     private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
             new X509TrustManager() {
                 public X509Certificate[] getAcceptedIssuers() {
@@ -205,6 +207,11 @@ public class ServerURLImpl implements ServerURL {
         } catch (ProtocolException pe) {
             // This might typically be thrown by the underlying OKHttp library when a redirect cycle has been detected
             throw new SDKException("Could not reach " + url.getHost() + ": " + pe.getMessage(), pe);
+//        } catch (Exception e) {
+//            Log.e(logTag, "--- unexpected error while pinging server at " + url.getHost());
+//            e.printStackTrace();
+//            Log.e(logTag, "--- End of stack trace");
+//            throw e;
         }
     }
 
