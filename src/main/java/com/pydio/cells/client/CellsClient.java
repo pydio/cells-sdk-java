@@ -109,11 +109,12 @@ public class CellsClient implements Client, SdkNames {
                     false, null, -1, true);
             return true;
         } catch (SDKException e) {
-            Log.e(logTag, "SDK error while checking authentication for " + transport.getId());
+            Log.e(logTag, "SDK error #" + e.getCode()
+                    + " while checking auth state for " + StateID.fromId(transport.getId()));
             e.printStackTrace();
             return false;
         } catch (ApiException e) {
-            Log.e(logTag, "API error while checking authentication for " + transport.getId());
+            Log.e(logTag, "API error while checking auth state for " + StateID.fromId(transport.getId()));
             e.printStackTrace();
             if (e.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 return false;
