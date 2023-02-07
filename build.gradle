@@ -93,8 +93,8 @@ jar {
 
 dependencies {
 
-    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     implementation 'org.threeten:threetenbp:1.5.2'
 
@@ -104,7 +104,7 @@ dependencies {
 
     // Used to store info as gson blobs in SQLite
     // TODO what are the differences between the 2 libs, which one is better?
-    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'io.gsonfire:gson-fire:1.8.5'
     // Very old library that has been used to implement dirty shortcuts while manipulating JSON.
     // TODO clean the code (mainly the Client and Transport classes) and remove.
