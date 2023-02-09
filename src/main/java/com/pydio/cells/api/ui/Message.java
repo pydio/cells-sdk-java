@@ -12,6 +12,7 @@ import java.util.List;
 public class Message implements Serializable {
 
     public final static String SUCCESS = "SUCCESS";
+    public final static String CANCELLED = "CANCELLED";
     public final static String ERROR = "ERROR";
     public final static String EMPTY = "EMPTY";
 

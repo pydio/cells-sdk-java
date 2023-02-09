@@ -344,7 +344,12 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+    public void upload(
+            InputStream inputStream,
+            long length, String mime,
+            String ws, String path, String name,
+            boolean autoRename, ProgressListener progressListener
+    ) throws SDKException {
         stats(ws, path, false);
 
         long maxChunkSize = 2 * 1024 * 1204; // Default apache in most php init configs
@@ -358,25 +363,9 @@ public class P8Client implements Client, SdkNames {
         //     }
         //  }
 
-        P8RequestBody cb = new P8RequestBody(source, name, length, mime, maxChunkSize);
+        P8RequestBody cb = new P8RequestBody(inputStream, name, length, mime, maxChunkSize);
         if (progressListener != null) {
             cb.setTransferListener(progressListener);
-//            cb.setListener(new P8RequestBody.LocalProgressListener() {
-//                @Override
-//                public void transferred(long num) throws IOException {
-//                    if (progressListener.onProgress(num)) {
-//                        throw new IOException("");
-//                    }
-//                }
-//
-//                @Override
-//                public void partTransferred(int part, int total) throws IOException {
-//                    if (total == 0) total = 1;
-//                    if (progressListener.onProgress(part * 100 / total)) {
-//                        throw new IOException("");
-//                    }
-//                }
-//            });
         }
 
         P8RequestBuilder builder;
@@ -387,14 +376,19 @@ public class P8Client implements Client, SdkNames {
             throw SDKException.encoding(e);
         }
 
-        P8Request req = builder.getRequest();
-        P8Response rsp = transport.execute(req, this::refreshSecureToken, ErrorCodes.authentication_required);
+        P8Request uploadRequest = builder.getRequest();
+        P8Response rsp = transport.execute(uploadRequest, this::refreshSecureToken, ErrorCodes.authentication_required);
         try {
+            Log.e(logTag, "- After first request#" + rsp.code());
+
             if (rsp.code() != ErrorCodes.ok) {
+                Log.e(logTag, "- Upload request failed with error #" + rsp.code());
                 throw new SDKException(rsp.code());
             }
 
             while (rsp.code() == ErrorCodes.ok && !cb.allChunksWritten()) {
+                Log.e(logTag, "- In while ");
+
                 NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
                 if (diff.updated != null && diff.updated.size() > 0) {
                     name = diff.updated.get(0).getName();
@@ -407,8 +401,16 @@ public class P8Client implements Client, SdkNames {
                 rsp = transport.execute(builder.getRequest());
             }
 
+            Log.e(logTag, "- After Loop code #" + rsp.code());
+
+//            if (rsp.code() == ErrorCodes.cancelled) {
+//                return Message.create(Message.CANCELLED, "Cancelled by User");
+//            } else if (rsp.code() != ErrorCodes.ok) {
+//                return Message.create(Message.ERROR, rsp.asString());
+//            }
+
             if (rsp.code() != ErrorCodes.ok) {
-                return Message.create(Message.ERROR, rsp.asString());
+                throw new SDKException(ErrorCodes.unexpected_response, "Unthrown exception during upload: " + rsp.asString());
             }
 
             NodeDiff diff;
@@ -422,11 +424,11 @@ public class P8Client implements Client, SdkNames {
                         cb.setFilename(label);
                     }
 
-                    Message msg = Message.create(Message.SUCCESS, "");
-                    msg.added = diff.added;
-                    msg.updated = diff.updated;
-                    msg.deleted = diff.deleted;
-                    return msg;
+//                    Message msg = Message.create(Message.SUCCESS, "");
+//                    msg.added = diff.added;
+//                    msg.updated = diff.updated;
+//                    msg.deleted = diff.deleted;
+//                    return msg;
                 }
             }
 
@@ -437,25 +439,29 @@ public class P8Client implements Client, SdkNames {
                 msg.added = new ArrayList<>();
             }
             msg.added.add(info);
-            return msg;
+//             return msg;
         } catch (IOException ioe) {
             throw new SDKException(ioe);
         } finally {
-            rsp.close();
+            if (rsp != null) {
+                rsp.close();
+            }
         }
     }
 
     @Override
-    public Message upload(File source, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
-        Message msg = null;
+    public void upload(
+            File source, String mime, String ws, String path, String name,
+            boolean autoRename, ProgressListener progressListener
+    ) throws SDKException {
+
         try (FileInputStream in = new FileInputStream(source)) {
-            msg = upload(in, source.length(), mime, ws, path, name, autoRename, progressListener);
+            upload(in, source.length(), mime, ws, path, name, autoRename, progressListener);
         } catch (FileNotFoundException e) {
             throw SDKException.notFound(e);
         } catch (IOException e) {
             Log.w("IOException", "could not close reader on file at: " + source.getAbsolutePath());
         }
-        return msg;
     }
 
     @Override

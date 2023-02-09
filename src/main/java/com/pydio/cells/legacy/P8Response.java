@@ -54,7 +54,7 @@ public class P8Response implements Closeable {
 
     private final String logTag = P8Response.class.getSimpleName();
 
-    private final HttpURLConnection con;
+    private final HttpURLConnection urlConnection;
     private int code;
 
     private ByteArrayOutputStream buffered;
@@ -68,14 +68,14 @@ public class P8Response implements Closeable {
     }
 
     private P8Response() {
-        con = null;
+        urlConnection = null;
     }
 
-    public P8Response(HttpURLConnection con) {
-        this.con = con;
+    public P8Response(HttpURLConnection urlConnection) {
+        this.urlConnection = urlConnection;
         try {
-            code = ErrorCodes.fromHttpStatus(con.getResponseCode());
-            Log.d(logTag, "HTTP code: " + con.getResponseCode());
+            code = ErrorCodes.fromHttpStatus(urlConnection.getResponseCode());
+            Log.d(logTag, "HTTP code: " + urlConnection.getResponseCode());
             if (code != ErrorCodes.ok) {
                 return;
             }
@@ -93,11 +93,11 @@ public class P8Response implements Closeable {
     }
 
     public List<String> getHeaders(String key) {
-        return con.getHeaderFields().get(key);
+        return urlConnection.getHeaderFields().get(key);
     }
 
     public Map<String, List<String>> getAllHeaders() {
-        return con.getHeaderFields();
+        return urlConnection.getHeaderFields();
     }
 
     public InputStream getInputStream() {
@@ -108,8 +108,8 @@ public class P8Response implements Closeable {
 
                 @Override
                 public int read() throws IOException {
-                    if (netStream == null && P8Response.this.con != null) {
-                        netStream = P8Response.this.con.getInputStream();
+                    if (netStream == null && P8Response.this.urlConnection != null) {
+                        netStream = P8Response.this.urlConnection.getInputStream();
                     }
                     int read = buffered.read();
                     if (read == -1) {
@@ -129,7 +129,7 @@ public class P8Response implements Closeable {
     private void parseFirstBytes() throws IOException {
 
         buffered = new ByteArrayOutputStream();
-        netStream = con.getInputStream();
+        netStream = urlConnection.getInputStream();
         int left = 512, read;
         byte[] buffer = new byte[left];
 
@@ -242,7 +242,7 @@ public class P8Response implements Closeable {
         return IoHelpers.pipeRead(getInputStream(), out);
     }
 
-    public long write(OutputStream out, ProgressListener progressListener) throws IOException, SDKException  {
+    public long write(OutputStream out, ProgressListener progressListener) throws IOException, SDKException {
         return IoHelpers.pipeReadWithProgress(getInputStream(), out, progressListener);
     }
 
@@ -276,10 +276,14 @@ public class P8Response implements Closeable {
         if (concatStream != null) {
             IoHelpers.closeQuietly(concatStream);
         }
-        try {
-            con.disconnect();
-        } catch (Exception ignore) {
-            Log.w("Warning", "Could not correctly disconnect connection for P8Response");
+
+        if (urlConnection != null) {
+            try {
+                urlConnection.disconnect();
+            } catch (Exception ignore) {
+                Log.e(logTag, "- Could not correctly disconnect connection for P8Response");
+                ignore.printStackTrace();
+            }
         }
     }
 

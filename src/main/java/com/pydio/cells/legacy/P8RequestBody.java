@@ -5,12 +5,9 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.utils.Str;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.RandomAccessFile;
 import java.net.URLConnection;
 
 public class P8RequestBody {
@@ -22,7 +19,7 @@ public class P8RequestBody {
 
     private final long mLength;
     private long mCursor;
-    private File mFile;
+    // private File mFile;
     private InputStream mInStream;
 
     private int mChunkIndex = 0;
@@ -57,22 +54,11 @@ public class P8RequestBody {
         }
     }
 
-//    public P8RequestBody(File file, String filename, long maxPartSize) {
-//        this(filename, file.length(), maxPartSize);
-//        mFile = file;
-//    }
-
     public P8RequestBody(InputStream in, String filename, long length, String mimeType, long maxPartSize) {
         this(filename, length, maxPartSize);
         mInStream = in;
         this.mimeType = mimeType;
     }
-
-//    public P8RequestBody(InputStream in, long length) {
-//        mLength = length;
-//        mInStream = in;
-//        mMaxChunkSize = mLength;
-//    }
 
     public String getFilename() {
         return mFilename;
@@ -114,62 +100,60 @@ public class P8RequestBody {
         long start = mChunkIndex * mChunkSize;
         long totalRead = start;
 
-        // Log.d(logTag, "... About to write: ");
-        // Log.d(logTag, "limit: " + limit);
-        // Log.d(logTag, "bufferSize: " + bufferSize);
-        // Log.d(logTag, "start: " + start);
-
         if (mChunkCount > 1) {
 
-            if (mFile != null) {
-                byte[] buffer = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
+            // Write the content of a file to the output stream
+//            if (mFile != null) {
+//                byte[] buffer = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
+//
+//                if (mChunkIndex == (mChunkCount - 1)) {
+//                    limit = mLastChunkSize;
+//                }
+//
+//                RandomAccessFile raf = new RandomAccessFile(mFile, "r");
+//                raf.seek(start);
+//                int read, maximumToRead = (int) Math.min(bufferSize, limit);
+//
+//                while (limit > 0) {
+//                    read = raf.read(buffer, 0, maximumToRead);
+//                    out.write(buffer, 0, read);
+//                    totalRead += read;
+//                    if (localProgressListener != null) {
+//                        localProgressListener.transferred(start + totalRead);
+//                    }
+//                    limit -= read;
+//                    maximumToRead = (int) Math.min(bufferSize, limit);
+//                }
+//                raf.close();
+//
+//            } else {
 
-                if (mChunkIndex == (mChunkCount - 1)) {
-                    limit = mLastChunkSize;
-                }
-
-                RandomAccessFile raf = new RandomAccessFile(mFile, "r");
-                raf.seek(start);
-                int read, maximumToRead = (int) Math.min(bufferSize, limit);
-
-                while (limit > 0) {
-                    read = raf.read(buffer, 0, maximumToRead);
-                    out.write(buffer, 0, read);
-                    totalRead += read;
-                    if (localProgressListener != null) {
-                        localProgressListener.transferred(start + totalRead);
-                    }
-                    limit -= read;
-                    maximumToRead = (int) Math.min(bufferSize, limit);
-                }
-                raf.close();
-
-            } else {
-
-                byte[] buffer = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
-                if (mChunkIndex == (mChunkCount - 1)) {
-                    limit = mLastChunkSize;
-                }
-                int maximumToRead = (int) Math.min(bufferSize, limit), read;
-                while (limit > 0) {
-                    read = mInStream.read(buffer, 0, maximumToRead);
-                    out.write(buffer, 0, read);
-                    totalRead += read;
-                    if (localProgressListener != null) {
-                        localProgressListener.transferred(start + totalRead);
-                    }
-                    limit -= read;
-                    maximumToRead = (int) Math.min(bufferSize, limit);
-                }
+            byte[] buffer = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize)];
+            if (mChunkIndex == (mChunkCount - 1)) {
+                limit = mLastChunkSize;
             }
+            int maximumToRead = (int) Math.min(bufferSize, limit);
+            int read;
+            while (limit > 0) {
+                read = mInStream.read(buffer, 0, maximumToRead);
+                out.write(buffer, 0, read);
+                totalRead += read;
+                if (localProgressListener != null) {
+                    // localProgressListener.transferred(start + totalRead);
+                    localProgressListener.transferred(read);
+                }
+                limit -= read;
+                maximumToRead = (int) Math.min(bufferSize, limit);
+            }
+//            }
 
             mChunkIndex++;
 
         } else {
 
-            if (mFile != null) {
-                mInStream = new FileInputStream(mFile);
-            }
+//            if (mFile != null) {
+//                mInStream = new FileInputStream(mFile);
+//            }
 
             byte[] buf = new byte[(int) Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mLength)];
             int len;
@@ -177,45 +161,48 @@ public class P8RequestBody {
                 out.write(buf, 0, len);
                 totalRead += len;
                 if (localProgressListener != null) {
-                    localProgressListener.transferred(totalRead);
+                    localProgressListener.transferred(len);
                 }
             }
             mInStream.close();
             mChunkIndex++;
         }
-        if (localProgressListener != null) {
+        if (localProgressListener != null && mChunkCount > 1) {
             localProgressListener.partTransferred(mChunkIndex, mChunkCount);
         }
     }
 
-    public int writeTo(OutputStream out, long len) throws IOException, SDKException {
+    public void writeTo(OutputStream out, long len) throws IOException, SDKException {
         long writtenCount = 0;
-        int bufsize = (int) Math.min(Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, len), available());
-        byte[] buffer = new byte[bufsize];
+        int bufferSize = (int) Math.min(Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, len), available());
+        byte[] buffer = new byte[bufferSize];
 
         int read, maximumToRead = (int) Math.min(len, available());
 
-        if (mFile != null) {
-            RandomAccessFile raf = new RandomAccessFile(mFile, "r");
-            raf.seek(mCursor);
+//        if (mFile != null) {
+//            RandomAccessFile raf = new RandomAccessFile(mFile, "r");
+//            raf.seek(mCursor);
+//
+//            while (writtenCount < maximumToRead) {
+//                read = raf.read(buffer, 0, Math.min(bufsize, (int) (maximumToRead - writtenCount)));
+//                out.write(buffer, 0, read);
+//                writtenCount += read;
+//                if (localProgressListener != null) {
+//                    localProgressListener.transferred(mCursor + writtenCount);
+//                }
+//            }
+//            raf.close();
+//        } else
+//
+        if (mInStream != null) {
 
             while (writtenCount < maximumToRead) {
-                read = raf.read(buffer, 0, Math.min(bufsize, (int) (maximumToRead - writtenCount)));
+                read = mInStream.read(buffer, 0, Math.min(bufferSize, (int) (maximumToRead - writtenCount)));
                 out.write(buffer, 0, read);
                 writtenCount += read;
                 if (localProgressListener != null) {
-                    localProgressListener.transferred(mCursor + writtenCount);
-                }
-            }
-            raf.close();
-        } else if (mInStream != null) {
-
-            while (writtenCount < maximumToRead) {
-                read = mInStream.read(buffer, 0, Math.min(bufsize, (int) (maximumToRead - writtenCount)));
-                out.write(buffer, 0, read);
-                writtenCount += read;
-                if (localProgressListener != null) {
-                    localProgressListener.transferred(mCursor + writtenCount);
+                    // localProgressListener.transferred(mCursor + writtenCount);
+                    localProgressListener.transferred(read);
                 }
             }
         } else {
@@ -223,7 +210,7 @@ public class P8RequestBody {
         }
 
         mCursor += writtenCount;
-        return maximumToRead;
+        // return maximumToRead;
     }
 
     public boolean isChunked() {
@@ -256,13 +243,6 @@ public class P8RequestBody {
             @Override
             public void transferred(long progress) throws SDKException {
 
-//                //Log.d("LocalProgressListener", "transferred: " + progress);
-//                boolean stopRequested = listener.onProgress(progress);
-//                // Log.d("LocalProgressListener", "result: " + result);
-//                if (stopRequested) {
-//                    throw new IOException("canceled by caller");
-//                }
-
                 String cancellationMsg = listener.onProgress(progress);
                 if (Str.notEmpty(cancellationMsg)) {
                     throw SDKException.cancel(cancellationMsg);
@@ -284,7 +264,7 @@ public class P8RequestBody {
         };
     }
 
-    public interface LocalProgressListener {
+    private interface LocalProgressListener {
 
         void transferred(long num) throws SDKException;
 

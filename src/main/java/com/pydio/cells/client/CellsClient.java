@@ -471,7 +471,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+    public void upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
         URL preSignedURL = s3Client.getUploadPreSignedURL(ws, path, name);
         ServerURL serverUrl;
         try {
@@ -501,12 +501,12 @@ public class CellsClient implements Client, SdkNames {
         } catch (IOException e) {
             throw SDKException.conWriteFailed("Cannot write to server", e);
         }
-        return Message.create(Message.SUCCESS, "SUCCESS");
+        // return Message.create(Message.SUCCESS, "SUCCESS");
     }
 
     @Override
-    public Message upload(File source, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
-        return upload(source, mime, ws, path, name, progressListener);
+    public void upload(File source, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException {
+        upload(source, mime, ws, path, name, progressListener);
     }
 
     @Deprecated
@@ -1152,9 +1152,9 @@ public class CellsClient implements Client, SdkNames {
         return url.toString().replace(" ", "%20");
     }
 
-    private Message upload(File f, String mime, String ws, String path, String name, ProgressListener tpl) throws SDKException {
+    private void upload(File f, String mime, String ws, String path, String name, ProgressListener tpl) throws SDKException {
         try (InputStream in = new FileInputStream(f)) {
-            return upload(in, f.length(), mime, ws, path, name, true, tpl);
+            upload(in, f.length(), mime, ws, path, name, true, tpl);
         } catch (FileNotFoundException e) {
             throw SDKException.notFound(e);
         } catch (IOException e) {

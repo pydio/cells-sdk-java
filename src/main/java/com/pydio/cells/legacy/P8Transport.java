@@ -13,6 +13,7 @@ import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.StateID;
 import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
+import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
@@ -133,10 +134,15 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     /* Directly get a streamed image that contains the Captcha from the server. */
     @Override
-    public InputStream getCaptcha() {
+    public InputStream getCaptcha() throws SDKException {
         P8Request request = new P8RequestBuilder().setAction(P8Names.getCaptcha).getRequest();
-        try (P8Response captchaResponse = execute(request)) {
+        P8Response captchaResponse = null;
+        try {
+            captchaResponse = execute(request);
             return captchaResponse.getInputStream();
+        } catch (Exception e) {
+            Log.e(logTag, "Unexpected error while getting Captcha");
+            throw new SDKException(ErrorCodes.unexpected_response, e);
         }
     }
 
@@ -405,8 +411,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 //        return null;
 //    }
 
-    public P8Response execute(P8Request request) {
-
+    public P8Response execute(P8Request request) throws SDKException {
         try {
             switch (request.getMethod()) {
                 case "GET":
@@ -419,9 +424,8 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                     throw new RuntimeException("Unsupported method type: " + request.getMethod());
             }
         } catch (SDKException se) {
-            // FIXME should also be temporary
-            if (se.getCode() == ErrorCodes.cancelled) {
-                return P8Response.error(ErrorCodes.cancelled);
+            if (se.getCode() == ErrorCodes.cancelled) { // Expected, cancellation, we forward the error
+                throw se;
             } else { // TODO should never happen, swallowing the error for now
                 Log.e(logTag, "Unexpected SDKException: " + se.getCode() + " - " + se.getMessage());
                 se.printStackTrace();
@@ -437,10 +441,10 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     }
 
-    public P8Response execute(P8Request request, RetryCallback retry, int code) {
+    public P8Response execute(P8Request request, RetryCallback retry, int retryResponseCode) throws SDKException {
         P8Response response = execute(request);
-        final int c = response.code();
-        if (c == code) {
+        if (retryResponseCode == response.code()) { // Usually when credentials ae expired
+            // close current response, update the query and tries a second time
             response.close();
             P8Request retryRequest = retry.update(request);
             if (retryRequest != null) {
@@ -571,8 +575,19 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         withUserAgent(con);
 
         // Handle the response
-        OutputStream out = con.getOutputStream();
-        request.getBody().writeTo(out);
+        OutputStream out = null;
+        try {
+            out = con.getOutputStream();
+            request.getBody().writeTo(out);
+        } catch (SDKException se) {
+            if (se.getCode() == ErrorCodes.cancelled) {
+                Log.e(logTag, "----- Been cancelled");
+            }
+            throw se;
+        } finally {
+            IoHelpers.closeQuietly(out);
+        }
+
         return new P8Response(con);
     }
 
