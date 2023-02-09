@@ -487,7 +487,14 @@ public class CellsClient implements Client, SdkNames {
             con.setRequestProperty("Content-Type", "application/octet-stream");
             con.setFixedLengthStreamingMode(length);
             try (OutputStream out = con.getOutputStream()) {
-                IoHelpers.pipeReadWithProgress(source, out, progressListener);
+                try {
+                    IoHelpers.pipeReadWithIncrementalProgress(source, out, progressListener);
+                } catch (SDKException se) {
+                    if (SDKException.isCancellation(se)) {
+                        IoHelpers.closeQuietly(out);
+                    }
+                    throw se;
+                }
             }
             // TODO implement multi part upload
             Log.d(logTag, "PUT request done with status " + con.getResponseCode());

@@ -1,5 +1,6 @@
 package com.pydio.cells.legacy;
 
+import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.utils.Str;
@@ -106,7 +107,7 @@ public class P8RequestBody {
         return mInStream;
     }
 
-    public void writeTo(OutputStream out) throws IOException {
+    public void writeTo(OutputStream out) throws IOException, SDKException {
 
         long limit = mChunkSize;
         long bufferSize = Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, mChunkSize);
@@ -187,7 +188,7 @@ public class P8RequestBody {
         }
     }
 
-    public int writeTo(OutputStream out, long len) throws IOException {
+    public int writeTo(OutputStream out, long len) throws IOException, SDKException {
         long writtenCount = 0;
         int bufsize = (int) Math.min(Math.min(SdkNames.LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE, len), available());
         byte[] buffer = new byte[bufsize];
@@ -253,25 +254,31 @@ public class P8RequestBody {
     public void setTransferListener(final ProgressListener listener) {
         this.localProgressListener = new LocalProgressListener() {
             @Override
-            public void transferred(long progress) throws IOException {
+            public void transferred(long progress) throws SDKException {
 
-                //Log.d("LocalProgressListener", "transferred: " + progress);
-                boolean stopRequested = listener.onProgress(progress);
-                // Log.d("LocalProgressListener", "result: " + result);
-                if (stopRequested) {
-                    throw new IOException("canceled by caller");
+//                //Log.d("LocalProgressListener", "transferred: " + progress);
+//                boolean stopRequested = listener.onProgress(progress);
+//                // Log.d("LocalProgressListener", "result: " + result);
+//                if (stopRequested) {
+//                    throw new IOException("canceled by caller");
+//                }
+
+                String cancellationMsg = listener.onProgress(progress);
+                if (Str.notEmpty(cancellationMsg)) {
+                    throw SDKException.cancel(cancellationMsg);
                 }
             }
 
             @Override
-            public void partTransferred(int part, int total) throws IOException {
+            public void partTransferred(int part, int total) throws SDKException {
                 if (total == 0) {
                     return;
                 }
 
                 long progress = (long) ((float) part / (float) total);
-                if (listener.onProgress(progress)) {
-                    throw new IOException("canceled by caller");
+                String cancellationMsg = listener.onProgress(progress);
+                if (Str.notEmpty(cancellationMsg)) {
+                    throw SDKException.cancel(cancellationMsg);
                 }
             }
         };
@@ -279,8 +286,8 @@ public class P8RequestBody {
 
     public interface LocalProgressListener {
 
-        void transferred(long num) throws IOException;
+        void transferred(long num) throws SDKException;
 
-        void partTransferred(int part, int total) throws IOException;
+        void partTransferred(int part, int total) throws SDKException;
     }
 }

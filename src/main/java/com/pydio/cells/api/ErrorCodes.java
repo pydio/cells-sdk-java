@@ -4,6 +4,7 @@ public interface ErrorCodes {
 
     int ok = 0;
     int resource_found = 1;
+    int cancelled = 2;
 
     int no_internet = 10;
 //    int no_un_metered_connection = 11;

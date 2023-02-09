@@ -7,7 +7,7 @@ public interface ProgressListener {
 
     /**
      * @param processed is the amount of data that has already been processed (usually a number of bytes).
-     * @return true if the client want to force stop the long running task.
+     * @return a message indicating the cause if the client want to force stop the long running task.
      */
-    boolean onProgress(long processed);
+    String onProgress(long processed);
 }

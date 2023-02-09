@@ -126,6 +126,13 @@ public class SDKException extends Exception {
     }
 
     /* Boiler plate shortcuts */
+    public static SDKException cancel(String message) {
+        return new SDKException(ErrorCodes.cancelled, message);
+    }
+
+    public static boolean isCancellation(SDKException e) {
+        return ErrorCodes.cancelled == e.getCode();
+    }
 
     public static SDKException malFormURI(Exception e) {
         return new SDKException(ErrorCodes.bad_uri, e);
@@ -134,7 +141,6 @@ public class SDKException extends Exception {
     public static SDKException encoding(Exception e) {
         return new SDKException(ErrorCodes.encoding_failed, e);
     }
-
 
     public static SDKException noSpaceLeft(IOException e) {
         return new SDKException(ErrorCodes.write_failed_no_space, e);

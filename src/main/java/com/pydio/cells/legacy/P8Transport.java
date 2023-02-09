@@ -236,7 +236,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         Token t = credentialService.get(getId());
         if (t == null) {
             t = fromPassword();
-            if (t != null){
+            if (t != null) {
                 credentialService.put(getId(), t);
             }
         }
@@ -418,9 +418,18 @@ public class P8Transport implements ILegacyTransport, SdkNames {
                 default:
                     throw new RuntimeException("Unsupported method type: " + request.getMethod());
             }
+        } catch (SDKException se) {
+            // FIXME should also be temporary
+            if (se.getCode() == ErrorCodes.cancelled) {
+                return P8Response.error(ErrorCodes.cancelled);
+            } else { // TODO should never happen, swallowing the error for now
+                Log.e(logTag, "Unexpected SDKException: " + se.getCode() + " - " + se.getMessage());
+                se.printStackTrace();
+                return P8Response.error(ErrorCodes.con_failed);
+            }
         } catch (IOException ioe) {
             // FIXME temporary
-            System.out.println("#######   Could not execute " + ioe.getMessage());
+            Log.e(logTag, "IOException while processing request: " + ioe.getMessage());
             ioe.printStackTrace();
             // TODO finer management needed here
             return P8Response.error(ErrorCodes.con_failed);
@@ -492,7 +501,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return new P8Response(con);
     }
 
-    private P8Response doPost(P8Request request) throws IOException {
+    private P8Response doPost(P8Request request) throws IOException, SDKException {
 
         // Prepare query
         StringBuilder builder = new StringBuilder(P8Server.API_PREFIX);
@@ -539,7 +548,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return new P8Response(con);
     }
 
-    private P8Response doPut(P8Request request) throws IOException {
+    private P8Response doPut(P8Request request) throws IOException, SDKException {
 
         // Build effective URL request
         String queryStr = pathFromRequest(request);
@@ -590,7 +599,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
         return builder.toString();
     }
 
-    private void populatePostBody(P8Request request, HttpURLConnection con) throws IOException {
+    private void populatePostBody(P8Request request, HttpURLConnection con) throws IOException, SDKException {
 
         String boundary = "----" + System.currentTimeMillis();
         con.setRequestProperty(P8Names.REQ_PROP_CONTENT_TYPE, "multipart/form-data; boundary=" + boundary);

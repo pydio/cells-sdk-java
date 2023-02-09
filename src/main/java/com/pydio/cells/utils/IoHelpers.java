@@ -1,5 +1,6 @@
 package com.pydio.cells.utils;
 
+import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.callbacks.ProgressListener;
 
 import org.jetbrains.annotations.Nullable;
@@ -81,7 +82,7 @@ public class IoHelpers {
     }
 
     public static long pipeReadWithIncrementalProgress(InputStream in, OutputStream out, @Nullable ProgressListener listener)
-            throws IOException {
+            throws IOException, SDKException {
 
         if (listener == null) {
             return pipeRead(in, out);
@@ -92,16 +93,16 @@ public class IoHelpers {
         for (int read = 0; read > -1; read = in.read(buffer)) {
             total_read += read;
             out.write(buffer, 0, read);
-            boolean cancelRequested = listener.onProgress(read);
-            if (cancelRequested) {
-                break;
+            String cancelMsg = listener.onProgress(read);
+            if (Str.notEmpty(cancelMsg)) {
+                throw SDKException.cancel(cancelMsg);
             }
         }
         return total_read;
     }
 
     public static long pipeReadWithProgress(InputStream in, OutputStream out, @Nullable ProgressListener listener)
-            throws IOException {
+            throws IOException, SDKException {
 
         if (listener == null) {
             return pipeRead(in, out);
@@ -112,9 +113,9 @@ public class IoHelpers {
         for (int read = 0; read > -1; read = in.read(buffer)) {
             total_read += read;
             out.write(buffer, 0, read);
-            boolean cancelRequested = listener.onProgress(total_read);
-            if (cancelRequested) {
-                break;
+            String cancelMsg = listener.onProgress(read);
+            if (Str.notEmpty(cancelMsg)) {
+                throw SDKException.cancel(cancelMsg);
             }
         }
         return total_read;

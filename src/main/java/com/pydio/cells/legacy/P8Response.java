@@ -1,6 +1,7 @@
 package com.pydio.cells.legacy;
 
 import com.pydio.cells.api.ErrorCodes;
+import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.callbacks.StringHandler;
 import com.pydio.cells.utils.IoHelpers;
@@ -241,11 +242,11 @@ public class P8Response implements Closeable {
         return IoHelpers.pipeRead(getInputStream(), out);
     }
 
-    public long write(OutputStream out, ProgressListener progressListener) throws IOException {
+    public long write(OutputStream out, ProgressListener progressListener) throws IOException, SDKException  {
         return IoHelpers.pipeReadWithProgress(getInputStream(), out, progressListener);
     }
 
-    public long incrementalWrite(OutputStream out, ProgressListener progressListener) throws IOException {
+    public long incrementalWrite(OutputStream out, ProgressListener progressListener) throws IOException, SDKException {
         return IoHelpers.pipeReadWithIncrementalProgress(getInputStream(), out, progressListener);
     }
 
