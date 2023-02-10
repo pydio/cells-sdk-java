@@ -350,6 +350,7 @@ public class P8Client implements Client, SdkNames {
             String ws, String path, String name,
             boolean autoRename, ProgressListener progressListener
     ) throws SDKException {
+
         stats(ws, path, false);
 
         long maxChunkSize = 2 * 1024 * 1204; // Default apache in most php init configs

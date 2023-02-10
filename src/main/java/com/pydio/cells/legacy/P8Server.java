@@ -7,6 +7,7 @@ import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.utils.IoHelpers;
+import com.pydio.cells.utils.Log;
 
 import org.json.JSONObject;
 
@@ -16,6 +17,8 @@ import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 
 public class P8Server implements Server {
+
+    private final String logTag = P8Server.class.getSimpleName();
 
     public final static String API_PREFIX = "/index.php?";
     public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + P8Names.GET_BOOT_CONF;
@@ -119,6 +122,7 @@ public class P8Server implements Server {
     }
 
     private void refreshBootConf() throws SDKException {
+        Log.e(logTag, "Starting boot conf refresh process");
         HttpURLConnection con = null;
         InputStream in = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -126,7 +130,11 @@ public class P8Server implements Server {
         try {
             con = serverURL.withSpec(BOOTCONF_PATH).openConnection();
             in = con.getInputStream();
-            IoHelpers.pipeRead(in, out);
+            long read = IoHelpers.pipeRead(in, out);
+
+            if (read < 1) {
+                throw new SDKException(ErrorCodes.api_error, "Could not get boot configuration at " + serverURL);
+            }
 
             JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
             version = bootConf.getString("ajxpVersion");
@@ -141,8 +149,9 @@ public class P8Server implements Server {
                     welcomeMessage = customWordings.getString("welcomeMessage");
                 }
             }
-
+            Log.e(logTag, "Got a boot conf");
         } catch (Exception e) {
+            Log.e(logTag, "Could not get boot configuration at " + getId());
             throw new SDKException(ErrorCodes.api_error, "Could not get boot configuration at " + getId(), e);
         } finally {
             IoHelpers.closeQuietly(con);
