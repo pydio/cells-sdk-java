@@ -18,6 +18,11 @@ public class StateIDTest {
 
         StateID decodedStateID = StateID.fromId(encodedID);
 
+        StateID stateID2 = new StateID("doe@example.com", "https://example.com");
+        StateID stateID3 = new StateID("joe@example.com", "https://example.com");
+        Assert.assertEquals(stateID, stateID2);
+        Assert.assertNotEquals(stateID, stateID3);
+
         Assert.assertEquals(stateID.getUsername(), decodedStateID.getUsername());
         Assert.assertEquals(stateID.getServerUrl(), decodedStateID.getServerUrl());
     }
@@ -36,7 +41,6 @@ public class StateIDTest {
         Assert.assertEquals("/Documents/Subfolder", decodedStateID.getFile());
         Assert.assertEquals("Subfolder", decodedStateID.getFileName());
         Assert.assertEquals("/Documents", decodedStateID.getParentFile());
-
 
         Assert.assertEquals(stateID.getUsername(), decodedStateID.getUsername());
         Assert.assertEquals(stateID.getServerUrl(), decodedStateID.getServerUrl());

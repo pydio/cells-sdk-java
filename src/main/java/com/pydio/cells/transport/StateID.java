@@ -258,6 +258,12 @@ public class StateID {
         return builder.toString();
     }
 
+    public boolean equals(Object other) {
+        if (!(other instanceof StateID) || getId() == null)
+            return false;
+        return getId().equals(((StateID) other).getId());
+    }
+
     // TODO find a elegant way to rather inject the CustomEncoder.
     //   Not perfect: Might have side effects when switching from plain Java to Android
     private static String utf8Encode(String value) {

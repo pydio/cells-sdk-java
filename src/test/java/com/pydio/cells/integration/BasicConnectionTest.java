@@ -5,7 +5,6 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.NodeHandler;
-import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.transport.ServerURLImpl;
 import com.pydio.cells.transport.StateID;
@@ -101,13 +100,11 @@ public class BasicConnectionTest {
         // Upload
         byte[] content = message.getBytes();
         ByteArrayInputStream source = new ByteArrayInputStream(content);
-        Message msg = client.upload(source, content.length, "text/plain",
+        client.upload(source, content.length, "text/plain",
                 conf.defaultWS, baseDir, name, true, (progress) -> {
                     System.out.printf("\r%d bytes written\n", progress);
-                    return false;
+                    return "";
                 });
-        Assert.assertNotNull(msg);
-        Assert.assertEquals("SUCCESS", msg.type());
 
         // Read
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -124,13 +121,11 @@ public class BasicConnectionTest {
             message += " -- Add with some additional content";
             content = message.getBytes();
             source = new ByteArrayInputStream(content);
-            msg = client.upload(source, content.length, "text/plain",
+            client.upload(source, content.length, "text/plain",
                     conf.defaultWS, baseDir, name, true, (progress) -> {
                         System.out.printf("\r%d bytes written\n", progress);
-                        return false;
+                        return "";
                     });
-            Assert.assertNotNull(msg);
-            Assert.assertEquals("SUCCESS", msg.type());
 
             // Read updated
             String retrievedMsg = "";
@@ -153,13 +148,11 @@ public class BasicConnectionTest {
                     e.printStackTrace();
                 }
             }
-
             Assert.assertEquals(message, retrievedMsg);
-
         }
 
         // Delete
-        msg = client.delete(conf.defaultWS, new String[]{"/" + name});
+        client.delete(conf.defaultWS, new String[]{"/" + name});
         // Assert.assertNotNull(msg);
         // Assert.assertEquals("EMPTY", msg.type());
 
