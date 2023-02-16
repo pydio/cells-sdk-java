@@ -1069,6 +1069,8 @@ public class CellsClient implements Client, SdkNames {
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
+        } catch (Exception e) {
+            throw new SDKException(ErrorCodes.internal_error, "unexpected error when doing stat node for " + fullPath, e);
         }
         // return toFileNode(response.getNode());
     }
