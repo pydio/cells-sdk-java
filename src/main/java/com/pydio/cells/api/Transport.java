@@ -1,6 +1,5 @@
 package com.pydio.cells.api;
 
-import com.pydio.cells.transport.StateID;
 import com.pydio.cells.transport.auth.Token;
 
 import java.io.IOException;
@@ -11,8 +10,8 @@ public interface Transport {
 
     String ANONYMOUS_USERNAME = "anon";
     String UNDEFINED_URL = "https://example.com";
+    @Deprecated
     String UNDEFINED_STATE = "https%3A%2F%2Fexample.com";
-    StateID UNDEFINED_STATE_ID = StateID.fromId(UNDEFINED_STATE);
 
     String getId();
 

@@ -1,5 +1,6 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.api.Transport;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.PathUtils;
 
@@ -18,6 +19,7 @@ import java.net.URLEncoder;
  */
 public class StateID {
 
+    public static final StateID NONE = new StateID(Transport.UNDEFINED_URL);
     private final String tag = StateID.class.getSimpleName();
 
     private final String username;
@@ -45,7 +47,7 @@ public class StateID {
     /**
      * Simply creates a StateID object from its *encoded* string representation.
      * <p>
-     * Supported combination are
+     * Supported combinations are:
      * - ServerURL only
      * - Username@ServerURL
      * - Username@ServerURL@Path
@@ -205,8 +207,8 @@ public class StateID {
         return new StateID(username, serverUrl, getParentPath());
     }
 
-    @Deprecated
     /** Rather use parent() to handle nicely corner cases */
+    @Deprecated
     public StateID parentFolder() {
         if (getParentFile() == null) {
             // Corner case: parent of a workspace or a cell is the corresponding account
