@@ -5,7 +5,6 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
-import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
@@ -15,7 +14,6 @@ import com.pydio.cells.utils.tests.TestCredentialService;
 import com.pydio.cells.utils.tests.TestUtils;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,7 +39,7 @@ public class CellsClientTest {
         // do nothing
     }
 
-    @Ignore
+    @Ignore("Must be fixed")
     @Test
     public void testBookmark() throws Exception {
 
@@ -81,7 +79,7 @@ public class CellsClientTest {
         System.out.println("Path: " + nodePath);
 
         // Bookmark file
-        Message bookmarkMessage = client.bookmark(cellsConf.defaultWS, uuid);
+        Message bookmarkMessage = client.bookmark(cellsConf.defaultWS, uuid, true);
         System.out.println(bookmarkMessage);
     }
 
