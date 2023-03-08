@@ -6,6 +6,7 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.security.CertificateTrust;
 import com.pydio.cells.client.security.CertificateTrustManager;
+import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ import javax.net.ssl.X509TrustManager;
 
 public class ServerURLImpl implements ServerURL {
 
-    // private final String logTag = "ServerURLImpl";
+    private final static String logTag = "ServerURLImpl";
 
     private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
             new X509TrustManager() {
@@ -179,6 +180,10 @@ public class ServerURLImpl implements ServerURL {
             return ServerURLImpl.fromAddress(props.get("url").toString(), Boolean.parseBoolean(props.get("skipVerify").toString()));
         } catch (MalformedURLException e) {
             throw new RuntimeException("Unable to decode JSON string: " + jsonString, e);
+        } catch (Exception e) {
+            Log.e(logTag, "Crashing due to proguard with gson..... " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Unable to create JSON object: " + jsonString, e);
         }
     }
 
