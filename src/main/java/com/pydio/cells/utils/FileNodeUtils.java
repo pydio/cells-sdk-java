@@ -19,7 +19,7 @@ import java.util.TreeMap;
  */
 public class FileNodeUtils {
 
-    private final static String logTag = FileNodeUtils.class.getSimpleName();
+    private final static String logTag = "FileNodeUtils";
 
     public static FileNode toFileNode(TreeNode treeNode) {
         FileNode fileNode = new FileNode();
@@ -164,10 +164,9 @@ public class FileNodeUtils {
         return jsonStr;
     }
 
-    // TODO double check. Smelling code.
     public static String getNameFromPath(String path) {
         int index = path.lastIndexOf("/");
-        if (index <= 0) {
+        if (index < 0) {
             return path;
         }
         return path.substring(index + 1);

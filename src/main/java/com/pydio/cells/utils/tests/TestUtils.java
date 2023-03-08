@@ -73,7 +73,7 @@ public class TestUtils {
 //
 //            String eTag = node.getMd5();
 //            String path = node.getPath();
-//            // FIXME: we do not store this info in the change
+//            // we do not store this info in the change -> was a fix me
 //            boolean isLeaf = path.lastIndexOf(".") > path.lastIndexOf("/");
 //            long size = node.getSize();
 //            long lastEdit = node.getmTime();

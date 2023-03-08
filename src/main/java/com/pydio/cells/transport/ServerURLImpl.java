@@ -31,7 +31,7 @@ import javax.net.ssl.X509TrustManager;
 
 public class ServerURLImpl implements ServerURL {
 
-    private final String logTag = ServerURLImpl.class.getSimpleName();
+    // private final String logTag = "ServerURLImpl";
 
     private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
             new X509TrustManager() {
@@ -89,13 +89,13 @@ public class ServerURLImpl implements ServerURL {
         return new ServerURLImpl(url, skipVerify);
     }
 
-    public static ServerURL withSkipVerify(ServerURL serverURL) {
-        try {
-            return new ServerURLImpl(new URL(serverURL.getId()), true);
-        } catch (MalformedURLException ignore) {
-        } // OK at this point
-        return null;
-    }
+//    public static ServerURL withSkipVerify(ServerURL serverURL) {
+//        try {
+//            return new ServerURLImpl(new URL(serverURL.getId()), true);
+//        } catch (MalformedURLException ignore) {
+//        } // OK at this point
+//        return null;
+//    }
 
     public static ServerURL fromAddress(String urlString) throws MalformedURLException {
         return fromAddress(urlString, false);

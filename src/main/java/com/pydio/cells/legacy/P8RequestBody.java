@@ -12,7 +12,7 @@ import java.net.URLConnection;
 
 public class P8RequestBody {
 
-    // private final String logTag = P8RequestBody.class.getSimpleName();
+    // private final String logTag = "P8RequestBody";
 
     private String mFilename;
     private String mimeType;

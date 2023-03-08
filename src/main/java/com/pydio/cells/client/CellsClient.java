@@ -33,7 +33,6 @@ import com.pydio.cells.openapi.api.UserMetaServiceApi;
 import com.pydio.cells.openapi.api.UserServiceApi;
 import com.pydio.cells.openapi.model.IdmSearchUserMetaRequest;
 import com.pydio.cells.openapi.model.IdmUpdateUserMetaRequest;
-import com.pydio.cells.openapi.model.IdmUser;
 import com.pydio.cells.openapi.model.IdmUserMeta;
 import com.pydio.cells.openapi.model.RestBulkMetaResponse;
 import com.pydio.cells.openapi.model.RestCreateNodesRequest;
@@ -64,6 +63,7 @@ import com.pydio.cells.transport.StateID;
 import com.pydio.cells.utils.FileNodeUtils;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
+import com.pydio.cells.utils.PathUtils;
 import com.pydio.cells.utils.Str;
 
 import org.json.JSONArray;
@@ -91,7 +91,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class CellsClient implements Client, SdkNames {
 
-    private final static String logTag = CellsClient.class.getSimpleName();
+    private final static String logTag = "CellsClient";
 
     private final CellsTransport transport;
     private final S3Client s3Client;
@@ -105,7 +105,8 @@ public class CellsClient implements Client, SdkNames {
     public boolean stillAuthenticated() throws SDKException {
         try {
             UserServiceApi api = new UserServiceApi(authenticatedClient());
-            IdmUser user = api.getUser(transport.getUsername(), null, null, null, null,
+//            IdmUser user =
+            api.getUser(transport.getUsername(), null, null, null, null,
                     false, null, -1, true);
             return true;
         } catch (SDKException e) {
@@ -193,15 +194,23 @@ public class CellsClient implements Client, SdkNames {
             response = api.bulkStatNodes(request);
             RestPagination pagination = response.getPagination();
             if (pagination != null) {
-                nextPageOptions.setLimit(pagination.getLimit());
+                if (pagination.getLimit() != null) {
+                    nextPageOptions.setLimit(pagination.getLimit());
+                }
                 if (pagination.getNextOffset() != null) {
                     nextPageOptions.setOffset(pagination.getNextOffset());
                 } else {
                     nextPageOptions.setOffset(-1);
                 }
-                nextPageOptions.setTotal(pagination.getTotal());
-                nextPageOptions.setCurrentPage(pagination.getCurrentPage());
-                nextPageOptions.setTotalPages(pagination.getTotalPages());
+                if (pagination.getTotal() != null) {
+                    nextPageOptions.setTotal(pagination.getTotal());
+                }
+                if (pagination.getCurrentPage() != null) {
+                    nextPageOptions.setCurrentPage(pagination.getCurrentPage());
+                }
+                if (pagination.getTotalPages() != null) {
+                    nextPageOptions.setTotalPages(pagination.getTotalPages());
+                }
             } else {
                 List<TreeNode> nodes = response.getNodes();
                 if (nodes != null) {
@@ -261,12 +270,14 @@ public class CellsClient implements Client, SdkNames {
             throw SDKException.fromApiException(e);
         }
 
-        Message msg = new Message();
-        List<TreeNode> nodes = response.getChildren();
-        node = nodes.get(0);
-        FileNode fileNode = toFileNode(node);
-        msg.added.add(fileNode);
-        return msg;
+//        List<TreeNode> nodes = response.getChildren();
+//        if (nodes != null && !nodes.isEmpty() ){
+//            node = nodes.get(0);
+//            FileNode fileNode = toFileNode(node);
+//        }
+
+        // TODO this is not used anymore, remove
+        return new Message();
     }
 
     @Override
@@ -290,9 +301,15 @@ public class CellsClient implements Client, SdkNames {
         OutputStream out = null;
         try {
             if (!parentFolder.exists()) {
-                parentFolder.mkdirs();
+                if (!parentFolder.mkdirs()) {
+                    throw new SDKException(
+                            ErrorCodes.internal_error,
+                            "could not create folder for thumbs at " + parentFolder.getAbsolutePath()
+                    );
+                }
             }
             File targetFile = new File(parentFolder.getAbsolutePath() + File.separator + filename);
+            //noinspection IOStreamConstructor
             out = new FileOutputStream(targetFile);
             // Download API expect a full path starting with a slash (a.k.a a file, not a filename)
             String file = "/" + filename;
@@ -365,13 +382,11 @@ public class CellsClient implements Client, SdkNames {
             throw SDKException.fromApiException(e);
         }
 
-        try {
-            return toFileNode(response.getNodes().get(0));
-        } catch (NullPointerException ignored) {
-            // TODO finalise error handling
-            ignored.printStackTrace();
+        if (response.getNodes() == null || response.getNodes().isEmpty()) {
+            Log.w(logTag, "No node found for " + PathUtils.getPath(ws, file));
             return null;
         }
+        return toFileNode(response.getNodes().get(0));
     }
 
     @Override
@@ -511,7 +526,7 @@ public class CellsClient implements Client, SdkNames {
 
     @Deprecated
     @Override
-    public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
+    public String uploadURL(String ws, String folder, String name, boolean autoRename) {
         throw new RuntimeException("Unsupported method for cells client");
     }
 
@@ -824,9 +839,6 @@ public class CellsClient implements Client, SdkNames {
         try {
             api.updateUserMeta(request);
             return null;
-            // TODO Message Api must be re-implemented...
-//            IdmUpdateUserMetaResponse response =
-//             return  response.;
         } catch (ApiException e) {
             e.printStackTrace();
             throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: " + e.getMessage(), e);

@@ -42,7 +42,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class CellsTransport implements ICellsTransport, SdkNames {
 
-    private final static String logTag = CellsTransport.class.getSimpleName();
+    private final static String logTag = "CellsTransport";
     private final CustomEncoder encoder;
 
     private final CredentialService credentialService;
@@ -132,10 +132,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 //        long expiresIn = token.expirationTime - currentTimeInSeconds();
 //        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
         return token;
-    }
-
-    private long currentTimeInSeconds() {
-        return System.currentTimeMillis() / 1000;
     }
 
     @Override
@@ -271,7 +267,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             Token t = new Token();
             t.subject = ServerFactory.accountID(credentials.getUsername(), server);
             t.value = response.getJWT();
-            t.setExpiry((long) response.getExpireTime());
+            Integer expireTime = response.getExpireTime();
+            if (expireTime != null) {
+                t.setExpiry(expireTime.longValue());
+            }
             return t;
         } catch (ApiException e) {
             throw new SDKException(ErrorCodes.no_token_available, new IOException("login or password incorrect"));

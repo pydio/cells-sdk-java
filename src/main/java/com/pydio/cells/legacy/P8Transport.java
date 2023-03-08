@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class P8Transport implements ILegacyTransport, SdkNames {
 
-    private final String logTag = P8Transport.class.getSimpleName();
+    private final String logTag = "P8Transport";
 
     private final CustomEncoder encoder;
 

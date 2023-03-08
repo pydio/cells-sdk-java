@@ -51,7 +51,7 @@ import java.util.UUID;
 
 public class P8Client implements Client, SdkNames {
 
-    private final String logTag = P8Client.class.getSimpleName();
+    private final String logTag = "P8Client";
 
     private final P8Transport transport;
 

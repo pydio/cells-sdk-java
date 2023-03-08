@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 
 public class P8Server implements Server {
 
-    private final String logTag = P8Server.class.getSimpleName();
+    private final String logTag = "P8Server";
 
     public final static String API_PREFIX = "/index.php?";
     public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + P8Names.GET_BOOT_CONF;

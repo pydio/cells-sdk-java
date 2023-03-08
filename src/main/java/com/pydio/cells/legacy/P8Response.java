@@ -52,7 +52,7 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class P8Response implements Closeable {
 
-    private final String logTag = P8Response.class.getSimpleName();
+    private final String logTag = "P8Response";
 
     private final HttpURLConnection urlConnection;
     private int code;

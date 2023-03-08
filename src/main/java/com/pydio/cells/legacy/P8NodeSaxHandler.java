@@ -18,7 +18,7 @@ import java.util.TreeMap;
 
 public class P8NodeSaxHandler extends DefaultHandler {
 
-    // private final String logTag = P8NodeSaxHandler.class.getSimpleName();
+    // private final String logTag = "P8NodeSaxHandler";
 
     // Legacy P8 property names: centralised here to avoid over-loading
     // the main SdkNames reference file.
