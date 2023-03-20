@@ -147,7 +147,7 @@ public class P8Response implements Closeable {
 
             buffer = buffered.toByteArray();
             String xmlString = new String(Arrays.copyOfRange(buffer, 0, buffer.length), StandardCharsets.UTF_8);
-            Log.d(logTag, "... After parsing the first bytes, we have:\n" + xmlString);
+            //Log.d(logTag, "... After parsing the first bytes, we have:\n" + xmlString);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
 
