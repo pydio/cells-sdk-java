@@ -11,8 +11,6 @@ import java.util.List;
  * Warning: for comparison and equality, we assume that the workspaces are **in the same** server:
  * the workspaces don't hold a reference to their hosting server.
  */
-
-
 public class WorkspaceNode extends AbstractNode {
 
 //     private final String logTag = "WorkspaceNode";
