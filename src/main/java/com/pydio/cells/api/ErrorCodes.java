@@ -45,6 +45,8 @@ public interface ErrorCodes {
     int api_error = 50;
     int unsupported = 51;
 
+    int no_local_file = 60;
+
     int panic = 100;
     int internal_error = 101;
     int init_failed = 102;
@@ -125,6 +127,9 @@ public interface ErrorCodes {
             case unexpected_response:
                 return "Unexpected response";
 
+            case no_local_file:
+                return "File is not yet in local cache";
+                
             case api_error:
                 return "API error";
 
