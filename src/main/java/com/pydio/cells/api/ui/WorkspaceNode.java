@@ -12,7 +12,10 @@ import java.util.List;
  * the workspaces don't hold a reference to their hosting server.
  */
 
+
 public class WorkspaceNode extends AbstractNode {
+
+//     private final String logTag = "WorkspaceNode";
 
     private List<Plugin> plugins;
     private List<Action> availableActions;
@@ -35,7 +38,6 @@ public class WorkspaceNode extends AbstractNode {
     public String getPath() {
         return "/";
     }
-
 
     /* WORKSPACES SPECIFIC PROPERTIES */
 
@@ -168,7 +170,22 @@ public class WorkspaceNode extends AbstractNode {
         if (res != 0) return res;
 
         WorkspaceNode other = (WorkspaceNode) node;
-        return getSlug().compareTo(other.getSlug());
-    }
 
+        // TODO clean and/or add a unit test - we add a NPE while developing v3.1
+        String slug = getSlug();
+        String oSlug = other.getSlug();
+        if (slug == null) {
+            if (oSlug == null) {
+                return 0;
+            } else {
+                return -1;
+            }
+        } else {
+            if (oSlug == null) {
+                return 1;
+            } else {
+                return getSlug().compareTo(other.getSlug());
+            }
+        }
+    }
 }
