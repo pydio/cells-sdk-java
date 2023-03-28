@@ -20,7 +20,7 @@ import java.net.URLEncoder;
 public class StateID {
 
     public static final StateID NONE = new StateID(Transport.UNDEFINED_URL);
-    private final String tag = StateID.class.getSimpleName();
+    private final static String logTag = "StateID";
 
     private final String username;
     private final String serverUrl;
@@ -62,26 +62,32 @@ public class StateID {
         String host;
         String path = null;
 
-        String[] parts = stateId.split("@");
-        switch (parts.length) {
-            case 1:
-                host = utf8Decode(parts[0]);
-                break;
-            case 2:
-                username = utf8Decode(parts[0]);
-                host = utf8Decode(parts[1]);
-                break;
-            case 3:
-                username = utf8Decode(parts[0]);
-                host = utf8Decode(parts[1]);
-                path = utf8Decode(parts[2]);
-                break;
-            default:
-                Log.e("PARSE", "Could not create State from ID: " + stateId);
-                return null;
-        }
+        try {
+            String[] parts = stateId.split("@");
+            switch (parts.length) {
+                case 1:
+                    host = utf8Decode(parts[0]);
+                    break;
+                case 2:
+                    username = utf8Decode(parts[0]);
+                    host = utf8Decode(parts[1]);
+                    break;
+                case 3:
+                    username = utf8Decode(parts[0]);
+                    host = utf8Decode(parts[1]);
+                    path = utf8Decode(parts[2]);
+                    break;
+                default:
+                    Log.e(logTag, "Could not create State from ID: " + stateId);
+                    return null;
+            }
 
-        return new StateID(username, host, path);
+            return new StateID(username, host, path);
+        } catch (IllegalArgumentException iae) {
+            Log.e(logTag, "Could not decode [" + stateId + "] - cause:" + iae);
+            iae.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -188,7 +194,7 @@ public class StateID {
 
         String newPath;
         if (getPath() == null) {
-            Log.w(tag, "Getting " + fileName + " child for " + this + ", path is null");
+            Log.w(logTag, "Getting " + fileName + " child for " + this + ", path is null");
             newPath = "/" + fileName;
         } else if (getPath().endsWith("/")) {
             newPath = getPath() + fileName;
@@ -207,7 +213,9 @@ public class StateID {
         return new StateID(username, serverUrl, getParentPath());
     }
 
-    /** Rather use parent() to handle nicely corner cases */
+    /**
+     * Rather use parent() to handle nicely corner cases
+     */
     @Deprecated
     public StateID parentFolder() {
         if (getParentFile() == null) {
