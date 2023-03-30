@@ -4,7 +4,6 @@ import com.pydio.cells.api.Client;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.ui.FileNode;
-import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.MemoryStore;
 import com.pydio.cells.utils.tests.RemoteServerConfig;
@@ -79,8 +78,7 @@ public class CellsClientTest {
         System.out.println("Path: " + nodePath);
 
         // Bookmark file
-        Message bookmarkMessage = client.bookmark(cellsConf.defaultWS, uuid, true);
-        System.out.println(bookmarkMessage);
+        client.bookmark(cellsConf.defaultWS, uuid, true);
     }
 
 }
