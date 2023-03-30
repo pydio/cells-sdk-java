@@ -17,7 +17,6 @@ import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.ui.FileNode;
-import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
@@ -251,7 +250,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message mkdir(String ws, String parent, String name) throws SDKException {
+    public void mkdir(String ws, String parent, String name) throws SDKException {
         TreeNode node = new TreeNode();
         node.setPath((ws + parent + "/" + name).replace("//", "/"));
         node.setType(TreeNodeType.COLLECTION);
@@ -276,8 +275,6 @@ public class CellsClient implements Client, SdkNames {
 //            FileNode fileNode = toFileNode(node);
 //        }
 
-        // TODO this is not used anymore, remove
-        return new Message();
     }
 
     @Override
@@ -602,7 +599,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message copy(String ws, String[] files, String folder) throws SDKException {
+    public void copy(String ws, String[] files, String folder) throws SDKException {
         JSONArray nodes = new JSONArray();
         for (String file : files) {
             // String path = "/" + ws + file;
@@ -627,11 +624,11 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-        return null;
+
     }
 
     @Override
-    public Message move(String ws, String[] files, String dstFolder) throws SDKException {
+    public void move(String ws, String[] files, String dstFolder) throws SDKException {
 
         JSONArray nodes = new JSONArray();
         for (String file : files) {
@@ -657,11 +654,10 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-        return null;
     }
 
     @Override
-    public Message rename(String ws, String srcFile, String newName) throws SDKException {
+    public void rename(String ws, String srcFile, String newName) throws SDKException {
         JSONArray nodes = new JSONArray();
         // In Cells, paths directly start with the WS slug (**NO** leading slash)
         // String path = "/" + ws + srcFile;
@@ -694,11 +690,10 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-        return null;
     }
 
     @Override
-    public Message delete(String ws, String[] files) throws SDKException {
+    public void delete(String ws, String[] files) throws SDKException {
         List<TreeNode> nodes = new ArrayList<>();
         for (String file : files) {
             TreeNode node = new TreeNode();
@@ -717,11 +712,10 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-        return null;
     }
 
     @Override
-    public Message restore(String ws, FileNode[] files) throws SDKException {
+    public void restore(String ws, FileNode[] files) throws SDKException {
         List<TreeNode> nodes = new ArrayList<>();
         for (FileNode file : files) {
             TreeNode node = new TreeNode().uuid(file.getId()).path(file.getPath());
@@ -739,12 +733,11 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-        return null;
     }
 
     @Override
-    public Message emptyRecycleBin(String ws) throws SDKException {
-        return delete(ws, new String[]{"/recycle_bin"});
+    public void emptyRecycleBin(String ws) throws SDKException {
+        delete(ws, new String[]{"/recycle_bin"});
     }
 
     @Override
@@ -801,20 +794,20 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message bookmark(String slug, String file, boolean isBookmarked) throws SDKException {
+    public void bookmark(String slug, String file, boolean isBookmarked) throws SDKException {
         if (isBookmarked) {
-            return bookmark(slug, file);
+            bookmark(slug, file);
         } else {
-            return unbookmark(slug, file);
+            unbookmark(slug, file);
         }
     }
 
     @Override
-    public Message bookmark(String ws, String file) throws SDKException {
-        return bookmark(getNodeUuid(ws, file));
+    public void bookmark(String ws, String file) throws SDKException {
+        bookmark(getNodeUuid(ws, file));
     }
 
-    public Message bookmark(String uuid) throws SDKException {
+    public void bookmark(String uuid) throws SDKException {
 
         IdmUserMeta userMeta = new IdmUserMeta();
         userMeta.setNodeUuid(uuid);
@@ -838,7 +831,6 @@ public class CellsClient implements Client, SdkNames {
         UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
         try {
             api.updateUserMeta(request);
-            return null;
         } catch (ApiException e) {
             e.printStackTrace();
             throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: " + e.getMessage(), e);
@@ -846,7 +838,7 @@ public class CellsClient implements Client, SdkNames {
     }
 
     @Override
-    public Message unbookmark(String ws, String file) throws SDKException {
+    public void unbookmark(String ws, String file) throws SDKException {
 
         try {
             UserMetaServiceApi api = new UserMetaServiceApi(authenticatedClient());
@@ -862,9 +854,6 @@ public class CellsClient implements Client, SdkNames {
             request.setOperation(UpdateUserMetaRequestUserMetaOp.DELETE);
             request.setMetaDatas(result.getMetadatas());
             api.updateUserMeta(request);
-
-            // IdmUpdateUserMetaResponse response = api.updateUserMeta(request);
-            return null;
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
         }
@@ -1115,7 +1104,7 @@ public class CellsClient implements Client, SdkNames {
         }
     }
 
-    public Message mkfile(String ws, String name, String folder) throws SDKException {
+    public void mkfile(String ws, String name, String folder) throws SDKException {
 
         TreeNode node = new TreeNode();
         node.setPath("/" + ws + folder + "/" + name);
@@ -1134,16 +1123,6 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-
-        Message msg = new Message();
-        msg.added = new ArrayList<>();
-
-        List<TreeNode> nodes = response.getChildren();
-        node = nodes.get(0);
-
-        FileNode fileNode = toFileNode(node);
-        msg.added.add(fileNode);
-        return msg;
     }
 
     private ServiceResourcePolicy newPolicy(String nodeId, ServiceResourcePolicyAction action) {

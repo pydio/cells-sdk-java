@@ -4,7 +4,6 @@ import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.ProgressListener;
 import com.pydio.cells.api.ui.FileNode;
-import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.PageOptions;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.transport.StateID;
@@ -26,7 +25,7 @@ public interface Client {
 
     void workspaceList(NodeHandler handler) throws SDKException;
 
-    Message mkdir(String ws, String parent, String name) throws SDKException;
+    void mkdir(String ws, String parent, String name) throws SDKException;
 
     PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException;
 
@@ -56,17 +55,17 @@ public interface Client {
     @Deprecated
     void search(String ws, String dir, String searched, NodeHandler h) throws SDKException;
 
-    Message copy(String ws, String[] files, String folder) throws SDKException;
+    void copy(String ws, String[] files, String folder) throws SDKException;
 
-    Message move(String ws, String[] files, String dstFolder) throws SDKException;
+    void move(String ws, String[] files, String dstFolder) throws SDKException;
 
-    Message rename(String ws, String srcFile, String newName) throws SDKException;
+    void rename(String ws, String srcFile, String newName) throws SDKException;
 
-    Message delete(String ws, String[] files) throws SDKException;
+    void delete(String ws, String[] files) throws SDKException;
 
-    Message restore(String ws, FileNode[] files) throws SDKException;
+    void restore(String ws, FileNode[] files) throws SDKException;
 
-    Message emptyRecycleBin(String ws) throws SDKException;
+    void emptyRecycleBin(String ws) throws SDKException;
 
     void upload(InputStream source, long length, String mime, String ws, String path, String name, boolean autoRename, ProgressListener progressListener) throws SDKException;
 
@@ -86,15 +85,15 @@ public interface Client {
 
     void getBookmarks(NodeHandler h) throws SDKException;
 
-    Message bookmark(String workspace, String file, boolean isBookmarked) throws SDKException;
+    void bookmark(String workspace, String file, boolean isBookmarked) throws SDKException;
 
     // Rather use bookmark(slug, path, isBookmarked)
     @Deprecated
-    Message bookmark(String ws, String file) throws SDKException;
+    void bookmark(String ws, String file) throws SDKException;
 
     // Rather use bookmark(slug, path, isBookmarked)
     @Deprecated
-    Message unbookmark(String ws, String file) throws SDKException;
+    void unbookmark(String ws, String file) throws SDKException;
 
     String share(String workspace, String file, String link_label,
                  String link_description, String password,
