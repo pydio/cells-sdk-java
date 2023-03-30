@@ -55,6 +55,8 @@ public interface Server {
 
     boolean hasLicenseFeatures();
 
+    String getCustomPrimaryColor();
+
     @Deprecated
     boolean supportsOauth();
 

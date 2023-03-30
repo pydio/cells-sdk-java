@@ -30,7 +30,7 @@ public interface Node extends Serializable {
 
     void setProperty(String key, String value);
 
-    void deleteProperty(String key);
+//    void deleteProperty(String key);
 
     int getType();
 

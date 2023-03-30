@@ -39,16 +39,8 @@ public class ServerFactory implements IServerFactory {
         initAppData();
     }
 
-    /**
-     * Convenience method to create a server factory that only relies on memory stores for quick testing
-     */
-//    public ServerFactory() {
-//        this(new CredentialService(new MemoryStore<>(), new MemoryStore<>()),
-//                new MemoryStore<>(), new MemoryStore<>());
-//    }
     protected void initAppData() {
         ClientData instance = ClientData.getInstance();
-
         if (ClientData.DEFAULT_APP_NAME.equals(instance.getName())) {
             instance.setPackageID(this.getClass().getPackage().getName());
             instance.setName("CellsJavaTransport");
@@ -216,10 +208,6 @@ public class ServerFactory implements IServerFactory {
         // to be able to re-log. // TODO("rather rely on a dynamic cache for the server store")
     }
 
-    public void unregisterAccount(ServerURL serverURL, String login) throws SDKException {
-        unregisterAccount(accountID(login, serverURL));
-    }
-
     @Override
     public Transport getTransport(String accountID) {
         return transportStore.get(accountID);
@@ -254,4 +242,17 @@ public class ServerFactory implements IServerFactory {
     public static String accountID(String username, Server server) {
         return accountID(username, server.getServerURL());
     }
+
+    /**
+     * Convenience method to create a server factory that only relies on memory stores for quick testing
+     */
+//    public ServerFactory() {
+//        this(new CredentialService(new MemoryStore<>(), new MemoryStore<>()),
+//                new MemoryStore<>(), new MemoryStore<>());
+//    }
+
+//    public void unregisterAccount(ServerURL serverURL, String login) throws SDKException {
+//        unregisterAccount(accountID(login, serverURL));
+//    }
+
 }

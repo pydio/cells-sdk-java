@@ -67,6 +67,11 @@ public class P8Server implements Server {
         return false;
     }
 
+    @Override
+    public String getCustomPrimaryColor() {
+        // TODO implement this for P8 also ?
+        return null;
+    }
 
     public boolean hasLicenseFeatures() {
         return false;

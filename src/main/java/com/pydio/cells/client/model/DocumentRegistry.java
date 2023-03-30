@@ -28,6 +28,8 @@ import javax.xml.xpath.XPathFactory;
 
 public class DocumentRegistry implements Registry {
 
+    private final static String logTag = "DocumentRegistry";
+
     private final static String P8_PREFIX = "ajxp_registry";
     private final static String CELLS_PREFIX = "pydio_registry";
     private final static String USER_NODE_NAME = "user";
@@ -57,6 +59,10 @@ public class DocumentRegistry implements Registry {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         xmlDocument = builder.parse(in);
+        // NodeList children = xmlDocument.getChildNodes();
+        // for (int i = 0; i < children.getLength(); i++) {
+        //     Log.i(logTag, i + ": " + children.item(i).toString());
+        // }
         handleRoot();
     }
 

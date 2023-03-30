@@ -280,9 +280,9 @@ public class P8Response implements Closeable {
         if (urlConnection != null) {
             try {
                 urlConnection.disconnect();
-            } catch (Exception ignore) {
+            } catch (Exception e) {
                 Log.e(logTag, "- Could not correctly disconnect connection for P8Response");
-                ignore.printStackTrace();
+                e.printStackTrace();
             }
         }
     }

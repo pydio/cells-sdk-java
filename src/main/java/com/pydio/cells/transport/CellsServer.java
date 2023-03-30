@@ -1,5 +1,6 @@
 package com.pydio.cells.transport;
 
+import com.google.gson.Gson;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
@@ -8,8 +9,7 @@ import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
-
-import org.json.JSONObject;
+import com.pydio.cells.utils.Str;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -18,10 +18,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class CellsServer implements Server {
 
-    public final static String LOG_TAG = CellsServer.class.getSimpleName();
+    public final static String logTag = CellsServer.class.getSimpleName();
 
     public final static String API_PREFIX = "/a";
     public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
@@ -33,9 +34,11 @@ public class CellsServer implements Server {
     private String welcomeMessage;
     private String iconPath;
     private String version = null;
+    private boolean hasLicenceFeatures = false;
+    private String customPrimaryColor = null;
 
     // Legacy objects TODO remove
-    private JSONObject bootConf;
+//     private JSONObject bootConf;
 
     public CellsServer(ServerURL serverURL) {
         this.serverURL = serverURL;
@@ -111,7 +114,12 @@ public class CellsServer implements Server {
     }
 
     public boolean hasLicenseFeatures() {
-        return bootConf != null && bootConf.has("license_features");
+        return hasLicenceFeatures;
+    }
+
+    @Override
+    public String getCustomPrimaryColor() {
+        return customPrimaryColor;
     }
 
     public HttpURLConnection openAnonConnection(String path) throws IOException {
@@ -136,18 +144,49 @@ public class CellsServer implements Server {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             con = openAnonConnection(BOOTCONF_PATH);
-            //con.setRequestMethod("GET");
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
 
-            bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-            version = bootConf.getString("ajxpVersion");
-            if (bootConf.has("customWording")) {
-                JSONObject customWordings = bootConf.getJSONObject("customWording");
-                title = customWordings.getString("title");
-                iconPath = customWordings.getString("icon");
-                if (customWordings.has("welcomeMessage")) {
-                    welcomeMessage = customWordings.getString("welcomeMessage");
+            String jsonString = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            Gson gson = new Gson();
+            @SuppressWarnings("unchecked") Map<String, Object> map = gson.fromJson(jsonString, Map.class);
+
+            if (map.containsKey("customWording")) {
+                @SuppressWarnings("unchecked") Map<String, Object> customWordings = (Map<String, Object>) map.get("customWording");
+                title = (String) customWordings.get("title");
+                iconPath = (String) customWordings.get("icon");
+                if (customWordings.containsKey("welcomeMessage")) {
+                    welcomeMessage = (String) customWordings.get("welcomeMessage");
+                }
+            }
+
+            // FIXME this is broken. Find where it is used and fix if necessary.
+            hasLicenceFeatures = map.containsKey("license_features");
+
+            // TODO factorize this and then remove the JSON old library
+            if (map.containsKey("other")) {
+                Object oo = map.get("other");
+                if (oo instanceof Map) {
+                    @SuppressWarnings("unchecked") Map<String, Object> other = (Map<String, Object>) oo;
+                    if (other.containsKey("vanity")) {
+                        oo = other.get("vanity");
+                        if (oo instanceof Map) {
+                            @SuppressWarnings("unchecked") Map<String, Object> vanity = (Map<String, Object>) oo;
+                            if (vanity.containsKey("palette")) {
+                                oo = vanity.get("palette");
+                                if (oo instanceof Map) {
+                                    @SuppressWarnings("unchecked") Map<String, Object> palette = (Map<String, Object>) oo;
+                                    if (palette.containsKey("primary1Color")) {
+                                        oo = palette.get("primary1Color");
+                                        if (oo instanceof String && Str.notEmpty((String) oo)) {
+                                            Log.d(logTag, "Found a color: " + oo);
+                                            customPrimaryColor = (String) oo;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
@@ -173,12 +212,12 @@ public class CellsServer implements Server {
             // Log.d(LOG_TAG, "Retrieved OIDC string: " + oidcStr);
             authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
         } catch (FileNotFoundException e) {
-            Log.e(LOG_TAG, "Cannot retrieve OIDC configuration at " + e.getMessage());
+            Log.e(logTag, "Cannot retrieve OIDC configuration at " + e.getMessage());
             e.printStackTrace();
             throw new SDKException(ErrorCodes.server_configuration_issue,
                     "Cannot retrieve OIDC well known file for " + getServerURL().getURL().toString() + ", please check your server config", e);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Unexpected error while retrieving OIDC configuration"
+            Log.e(logTag, "Unexpected error while retrieving OIDC configuration"
                     + ", cause: " + e.getMessage());
             e.printStackTrace();
             throw SDKException.unexpectedContent(e);

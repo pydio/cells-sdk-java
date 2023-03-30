@@ -23,7 +23,7 @@ public interface SdkNames {
     String RECYCLE_BIN_NAME = "recycle_bin";
 
     // Auth Management
-    String TOKEN_TYPE_BEARER = "bearer";
+//    String TOKEN_TYPE_BEARER = "bearer";
     String TOKEN_TYPE_P8 = "pydio8";
 
     String DEFAULT_CLIENT_ID = "cells-client";
@@ -44,7 +44,7 @@ public interface SdkNames {
     String NODE_PROPERTY_HAS_THUMB = "has_thumb";
     String NODE_PROPERTY_IS_PRE_VIEWABLE = "is_pre_viewable";
 
-    String NODE_PROPERTY_REMOTE_THUMBS = "remote_thumbs";
+    //    String NODE_PROPERTY_REMOTE_THUMBS = "remote_thumbs";
     String NODE_PROPERTY_IMG_EXIF_ORIENTATION = "image_exif_orientation";
 
     String NODE_PROPERTY_FILE_PERMS = "file_perms";
@@ -57,15 +57,17 @@ public interface SdkNames {
 
     String NODE_PROPERTY_BOOKMARK = "bookmark";
     String NODE_PROPERTY_SHARED = "shared";
-    String NODE_PROPERTY_SHARE_INFO = "share_json_info";
+    String NODE_PROPERTY_SHARE_LINK = "share_link";
+    String META_KEY_WS_SHARES = "workspaces_shares";
 
-    String NODE_PROPERTY_META_ENCODED = "meta_encoded";
     String NODE_PROPERTY_META_HASH = "meta_hash";
 
     String META_KEY_IMG_THUMBS = "ImageThumbnails";
-    String META_KEY_THUMB_PROCESSING = "Processing";
-    String META_KEY_THUMB_DATA = "thumbnails";
-    String META_KEY_WS_SHARES = "workspaces_shares";
+
+//    String META_KEY_THUMB_PROCESSING = "Processing";
+//    String META_KEY_THUMB_DATA = "thumbnails";
+//    String NODE_PROPERTY_SHARE_INFO = "share_json_info";
+//    String NODE_PROPERTY_META_ENCODED = "meta_encoded";
 
 
     // TODO Clean legacy properties below
@@ -75,34 +77,33 @@ public interface SdkNames {
     //    String NODE_PROPERTY_UUID = "uuid";
     //    String NODE_PROPERTY_SHARE_UUID = "share_uuid";
 
-    String NODE_PROPERTY_ENCODED = "encoded";
-    String NODE_PROPERTY_ENCODING = "encoding";
-
-    String NODE_PROPERTY_ENCODED_HASH = "encoded_hash";
-    String NODE_PROPERTY_TYPE = "Type";
-
-    String NODE_PROPERTY_ID = "id";
-    String NODE_PROPERTY_AJXP_MIME = "ajxp_mime";
-    String NODE_PROPERTY_AJXP_BOOKMARKED = "ajxp_bookmarked";
-    String NODE_PROPERTY_JSON_ENCODED = "encoded";
-    String NODE_PROPERTY_FILE_GROUP = "file_group";
-    String NODE_PROPERTY_FILE_OWNER = "file_owner";
-    String NODE_PROPERTY_FILE_SIZE = "filesize";
-    String NODE_PROPERTY_WORKSPACE_ID = "workspace_id";
-    String NODE_PROPERTY_SHARE_LINK = "share_link";
-    String NODE_PROPERTY_ORIGINAL_PATH = "original_path";
-    String NODE_PROPERTY_ICON = "icon";
-    String NODE_PROPERTY_SHARE_LINK_DESCRIPTION = "share_link_description";
-    String NODE_PROPERTY_SHARE_LINK_EXPIRED = "share_link_expired";
-    String NODE_PROPERTY_META_FIELDS = "meta_fields";
-    String NODE_PROPERTY_META_LABELS = "meta_labels";
-    String NODE_PROPERTY_META_TYPES = "meta_types";
-    String NODE_PROPERTY_MIMESTRING = "mimestring";
-    String NODE_PROPERTY_MIMESTRING_ID = "mimestring_id";
-    String NODE_PROPERTY_READABLE_DIMENSION = "readable_dimension";
-    String NODE_PROPERTY_OPEN_ICON = "openicon";
-    String NODE_PROPERTY_REPO_HAS_RECYCLE_BIN = "repo_has_recycle";
-    String NODE_PROPERTY_WORKSPACE_UUID = "workspace_id";
+//    String NODE_PROPERTY_ENCODED = "encoded";
+//    String NODE_PROPERTY_ENCODING = "encoding";
+//
+//    String NODE_PROPERTY_ENCODED_HASH = "encoded_hash";
+//    String NODE_PROPERTY_TYPE = "Type";
+//
+//    String NODE_PROPERTY_ID = "id";
+//    String NODE_PROPERTY_AJXP_MIME = "ajxp_mime";
+//    String NODE_PROPERTY_AJXP_BOOKMARKED = "ajxp_bookmarked";
+//    String NODE_PROPERTY_JSON_ENCODED = "encoded";
+//    String NODE_PROPERTY_FILE_GROUP = "file_group";
+//    String NODE_PROPERTY_FILE_OWNER = "file_owner";
+//    String NODE_PROPERTY_FILE_SIZE = "filesize";
+//    String NODE_PROPERTY_WORKSPACE_ID = "workspace_id";
+//    String NODE_PROPERTY_ORIGINAL_PATH = "original_path";
+//    String NODE_PROPERTY_ICON = "icon";
+//    String NODE_PROPERTY_SHARE_LINK_DESCRIPTION = "share_link_description";
+//    String NODE_PROPERTY_SHARE_LINK_EXPIRED = "share_link_expired";
+//    String NODE_PROPERTY_META_FIELDS = "meta_fields";
+//    String NODE_PROPERTY_META_LABELS = "meta_labels";
+//    String NODE_PROPERTY_META_TYPES = "meta_types";
+//    String NODE_PROPERTY_MIMESTRING = "mimestring";
+//    String NODE_PROPERTY_MIMESTRING_ID = "mimestring_id";
+//    String NODE_PROPERTY_READABLE_DIMENSION = "readable_dimension";
+//    String NODE_PROPERTY_OPEN_ICON = "openicon";
+//    String NODE_PROPERTY_REPO_HAS_RECYCLE_BIN = "repo_has_recycle";
+//    String NODE_PROPERTY_WORKSPACE_UUID = "workspace_id";
 
 
     String WORKSPACE_PROPERTY_ID = "id";
@@ -127,15 +128,15 @@ public interface SdkNames {
     String WORKSPACE_ACCESS_TYPE_HOME = "ajxp_home";
     String WORKSPACE_ACCESS_TYPE_HOMEPAGE = "homepage";
     String WORKSPACE_ACCESS_TYPE_ADMIN = "ajxp_admin";
-    String WORKSPACE_ACCESS_TYPE_FS = "fs";
-    String WORKSPACE_ACCESS_TYPE_GATEWAY = "gateway";
+    //    String WORKSPACE_ACCESS_TYPE_FS = "fs";
+//    String WORKSPACE_ACCESS_TYPE_GATEWAY = "gateway";
     String WORKSPACE_ACCESS_TYPE_SETTINGS = "settings";
     String WORKSPACE_ACCESS_TYPE_INBOX = "inbox";
 
     String NODE_DIFF_ADD = "add";
     String NODE_DIFF_UPDATE = "update";
     String NODE_DIFF_REMOVE = "remove";
-    String NODE_WORKSPACE = "workspace";
+//    String NODE_WORKSPACE = "workspace";
 
     String XML_MESSAGE = "message";
     String XML_NODES_DIFF = "nodes_diff";
@@ -144,35 +145,36 @@ public interface SdkNames {
 
     int LOCAL_CONFIG_BUFFER_SIZE_DEFAULT_VALUE = 2048;
 
-    String REMOTE_CONFIG_UPLOAD_SIZE = "UPLOAD_MAX_SIZE";
-    String LOCAL_CONFIG_BUFFER_SIZE = "buffer_size";
-
-    String SESSION_ID = "session_id";
     String ADDRESS = "address";
-    String LOGIN = "user";
-    String DISPLAYED_NAME = "user_display_name";
-    String LOGO = "logo";
-    String SESSION_NAME = "session_name";
-    String COOKIES_USER = "user";
-    String COOKIES_PASSWORD = "password";
-    String WORKSPACE_ID = "workspace_id";
-    String NODE_PATH = "path";
-    String FILE_PATH = "file_path";
-    String OFFLINE_NODE_HASH = "hash";
-    String OFFLINE_NODE_SIZE = "size";
-    String OFFLINE_NODE_ENCRYPTED = "encrypted";
-    String BOOKMARKS_PATH = "path";
-    String PROPERTIES_NAME = "name";
-    String PROPERTIES_VALUE = "value";
     String ALIAS = "alias";
-    String CERTIFICATE = "certificate";
     String SERVER = "server";
-    String TASK_ID = "task_id";
-    String FOLDER_NAME = "folder_name";
-    String NODE_DATA = "node";
-    String SERVER_ID = "server_id";
-    String REMEMBER_PASSWORD = "remember_password";
-    String CHANGE_LOCATION = "location";
+
+//    String REMOTE_CONFIG_UPLOAD_SIZE = "UPLOAD_MAX_SIZE";
+//    String LOCAL_CONFIG_BUFFER_SIZE = "buffer_size";
+//
+//    String SESSION_ID = "session_id";
+//    String LOGIN = "user";
+//    String DISPLAYED_NAME = "user_display_name";
+//    String LOGO = "logo";
+//    String SESSION_NAME = "session_name";
+//    String COOKIES_USER = "user";
+//    String COOKIES_PASSWORD = "password";
+//    String WORKSPACE_ID = "workspace_id";
+//    String NODE_PATH = "path";
+//    String FILE_PATH = "file_path";
+//    String OFFLINE_NODE_HASH = "hash";
+//    String OFFLINE_NODE_SIZE = "size";
+//    String OFFLINE_NODE_ENCRYPTED = "encrypted";
+//    String BOOKMARKS_PATH = "path";
+//    String PROPERTIES_NAME = "name";
+//    String PROPERTIES_VALUE = "value";
+//    String CERTIFICATE = "certificate";
+//    String TASK_ID = "task_id";
+//    String FOLDER_NAME = "folder_name";
+//    String NODE_DATA = "node";
+//    String SERVER_ID = "server_id";
+//    String REMEMBER_PASSWORD = "remember_password";
+//    String CHANGE_LOCATION = "location";
 
     String CHANGE_NODE_ID = "node_id";
     String CHANGE_SEQ = "seq";
@@ -186,16 +188,16 @@ public interface SdkNames {
     String CHANGE_NODE_WORKSPACE = "repository_identifier";
     String CHANGE_NODE = "node";
 
-    int CHANGE_INDEX_SEQ = 0;
-    int CHANGE_INDEX_NODE_ID = 1;
-    int CHANGE_INDEX_TYPE = 2;
-    int CHANGE_INDEX_SOURCE = 3;
-    int CHANGE_INDEX_TARGET = 4;
-    int CHANGE_INDEX_NODE_BYTESIZE = 5;
-    int CHANGE_INDEX_NODE_MD5 = 6;
-    int CHANGE_INDEX_NODE_MTIME = 7;
-    int CHANGE_INDEX_NODE_PATH = 8;
-    int CHANGE_INDEX_NODE_WORKSPACE = 9;
+//    int CHANGE_INDEX_SEQ = 0;
+//    int CHANGE_INDEX_NODE_ID = 1;
+//    int CHANGE_INDEX_TYPE = 2;
+//    int CHANGE_INDEX_SOURCE = 3;
+//    int CHANGE_INDEX_TARGET = 4;
+//    int CHANGE_INDEX_NODE_BYTESIZE = 5;
+//    int CHANGE_INDEX_NODE_MD5 = 6;
+//    int CHANGE_INDEX_NODE_MTIME = 7;
+//    int CHANGE_INDEX_NODE_PATH = 8;
+//    int CHANGE_INDEX_NODE_WORKSPACE = 9;
 
     String[] defaultExcludedWorkspaces = {
             WORKSPACE_ACCESS_TYPE_CONF,
