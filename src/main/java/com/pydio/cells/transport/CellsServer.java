@@ -61,7 +61,7 @@ public class CellsServer implements Server {
     public ServerURL getServerURL() {
         return serverURL;
     }
-    
+
     @Override
     public String getRemoteType() {
         return SdkNames.TYPE_CELLS;
@@ -150,6 +150,10 @@ public class CellsServer implements Server {
                 }
             }
 
+            if (map.containsKey("ajxpVersion")) {
+                version = (String) map.get("ajxpVersion");
+            }
+
             // FIXME this is broken. Find where it is used and fix if necessary.
             hasLicenceFeatures = map.containsKey("license_features");
 
@@ -199,7 +203,6 @@ public class CellsServer implements Server {
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
             String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            // Log.d(LOG_TAG, "Retrieved OIDC string: " + oidcStr);
             authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
         } catch (FileNotFoundException e) {
             Log.e(logTag, "Cannot retrieve OIDC configuration at " + e.getMessage());
