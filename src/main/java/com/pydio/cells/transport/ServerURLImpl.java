@@ -2,6 +2,7 @@ package com.pydio.cells.transport;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.security.CertificateTrust;
@@ -14,6 +15,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.MessageDigest;
@@ -209,6 +211,8 @@ public class ServerURLImpl implements ServerURL {
             if (code != 200) {
                 throw new SDKException(code, "Could not reach " + url.getHost() + ": " + connection.getResponseMessage());
             }
+        } catch (SocketTimeoutException ste) {
+            throw new SDKException(ErrorCodes.con_failed, url.getHost() + " - server unreachable, timeout: " + ste.getMessage(), ste);
         } catch (ProtocolException pe) {
             // This might typically be thrown by the underlying OKHttp library when a redirect cycle has been detected
             throw new SDKException("Could not reach " + url.getHost() + ": " + pe.getMessage(), pe);
