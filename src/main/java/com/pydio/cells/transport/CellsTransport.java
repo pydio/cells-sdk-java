@@ -9,6 +9,7 @@ import com.pydio.cells.api.PasswordCredentials;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
+import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.api.callbacks.RegistryItemHandler;
 import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.openapi.ApiClient;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -185,7 +187,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         if (getServer().isSSLUnverified()) {
             apiClient = apiClient.setVerifyingSsl(false);
         }
-        apiClient.setBasePath(getServer().getApiURL());
+        apiClient.setBasePath(getApiURL(getServer().getServerURL()));
         apiClient.setUserAgent(getUserAgent());
         return apiClient;
     }
@@ -391,6 +393,15 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             IoHelpers.closeQuietly(postOut);
         }
     }
+
+    private String getApiURL(ServerURL serverURL) {
+        try {
+            return serverURL.withPath(API_PREFIX).getURL().toString();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Getting API URL for " + serverURL.getId(), e);
+        }
+    }
+
 
     @SuppressWarnings("unused")
     private void debugConnection(HttpURLConnection con) {

@@ -63,6 +63,4 @@ public interface Server {
     @Deprecated
     String getIconURL();
 
-    @Deprecated
-    String getApiURL();
 }

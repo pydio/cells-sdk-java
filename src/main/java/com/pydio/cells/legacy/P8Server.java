@@ -97,18 +97,6 @@ public class P8Server implements Server {
         return this.welcomeMessage;
     }
 
-    @Override
-    public String getApiURL() {
-        // FIXME should not be used for P8
-        return url();
-        // try {
-        //     return serverURL.withPath(API_PREFIX).getURL().toString();
-        // } catch (MalformedURLException e) {
-        //     throw new RuntimeException("Getting API URL for " + getId(), e);
-        // }
-    }
-
-
     public String version() {
         if (version == null) {
             throw new RuntimeException("Trying to retrieve AJXP Version param before the server has been instantiated");

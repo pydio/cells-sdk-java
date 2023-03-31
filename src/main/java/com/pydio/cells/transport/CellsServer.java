@@ -16,7 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -62,16 +61,7 @@ public class CellsServer implements Server {
     public ServerURL getServerURL() {
         return serverURL;
     }
-
-    @Override
-    public String getApiURL() {
-        try {
-            return serverURL.withPath(API_PREFIX).getURL().toString();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Getting API URL for " + url(), e);
-        }
-    }
-
+    
     @Override
     public String getRemoteType() {
         return SdkNames.TYPE_CELLS;
