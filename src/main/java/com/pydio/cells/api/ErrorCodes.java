@@ -32,6 +32,7 @@ public interface ErrorCodes {
     int no_token_available = 35;
     int refresh_token_expired = 36;
     int cannot_refresh_token = 37;
+    int refresh_token_not_valid = 38;
 
     int con_failed = 40;
     int con_closed = 41;
@@ -129,7 +130,7 @@ public interface ErrorCodes {
 
             case no_local_file:
                 return "File is not yet in local cache";
-                
+
             case api_error:
                 return "API error";
 

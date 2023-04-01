@@ -359,7 +359,8 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
-                throw new SDKException(ErrorCodes.refresh_token_expired, e);
+                throw new SDKException(ErrorCodes.refresh_token_not_valid,
+                        "FNFE while trying to refresh usually means the refresh token has already been consumed", e);
             } else {
                 throw new SDKException.RemoteIOException("Token request failed: " + e.getLocalizedMessage());
 //                Log.w(logTag, "Token request failed: " + e.getLocalizedMessage());
