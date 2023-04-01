@@ -17,6 +17,7 @@ import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
 import com.pydio.cells.transport.auth.credentials.JWTCredentials;
 import com.pydio.cells.utils.JavaCustomEncoder;
+import com.pydio.cells.utils.Log;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,6 +28,8 @@ import javax.net.ssl.SSLException;
  * Optimistic implementation of a IServerFactory that relies on provided stores to persist objects.
  */
 public class ServerFactory implements IServerFactory {
+
+    private final static String logTag = "ServerFactory";
 
     private final CredentialService credentialService;
     private final Store<Server> serverStore;
@@ -184,7 +187,8 @@ public class ServerFactory implements IServerFactory {
         Token token = credentialService.get(accountID);
         String pwd = credentialService.getPassword(accountID);
         if (token == null && pwd == null) {
-            throw new SDKException(ErrorCodes.no_token_available, "Could not restore account " + accountID + ", no valid credential has been found in local store");
+            Log.w(logTag, "## Restoring account " + accountID + " with no valid credentials");
+            //            throw new SDKException(ErrorCodes.no_token_available, "Could not restore account " + accountID + ", no valid credential has been found in local store");
         }
 
         Transport transport;

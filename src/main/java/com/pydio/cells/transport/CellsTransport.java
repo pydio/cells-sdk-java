@@ -67,7 +67,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     public String getId() {
-        return new StateID(getUsername(), getServer().getServerURL().getId()).getId();
+        return getStateID().getId();
+    }
+
+    public StateID getStateID() {
+        return new StateID(getUsername(), getServer().getServerURL().getId());
     }
 
     @Override
@@ -123,13 +127,16 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
         } else if (token.isExpired()) {
 
+            // Pydio8
             if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
                 credentialService.put(getId(), token);
                 return token;
             }
 
-            token = credentialService.refreshToken(getId(), this);
+            // Cells: we only require a refresh but do not get the refreshed token explicitly
+            credentialService.refreshToken(getStateID(), this);
+            return null;
         }
 //        long expiresIn = token.expirationTime - currentTimeInSeconds();
 //        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
