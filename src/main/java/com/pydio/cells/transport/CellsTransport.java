@@ -35,6 +35,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
     private final static String logTag = "CellsTransport";
     private final CustomEncoder encoder;
+    private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
 
     private final CredentialService credentialService;
 
@@ -127,8 +130,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 
         } else if (token.isExpired()) {
 
-            // Pydio8
+            // Pydio8 -> Should never happen here
             if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
+                Log.e(logTag, "Found a password for " + getStateID() + "\n, calling stack:");
+                Thread.dumpStack();
                 token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
                 credentialService.put(getId(), token);
                 return token;
@@ -142,6 +147,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
 //        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
         return token;
     }
+
+    public void requestTokenRefresh() throws SDKException {
+        credentialService.refreshToken(getStateID(), this);
+    }
+
 
     @Override
     public InputStream getUserData(String binary) {
@@ -332,9 +342,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
-            Log.i(logTag, String.format("Launching refresh token flow for %s@%s",
-                    username, getServer().url()));
-
+            Log.d(logTag, String.format("Launching refresh token flow for %s@%s", username, getServer().url()));
             OAuthConfig cfg = server.getOAuthConfig();
             URI endpointURI = URI.create(cfg.tokenEndpoint);
             HttpURLConnection con = openAnonConnection(endpointURI.getPath());
@@ -353,6 +361,9 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
             String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            Token newToken = Token.decodeOAuthJWT(jwtStr);
+            Log.i(logTag, String.format("Retrieved a refreshed token for %s@%s. New expiration time %s",
+                    username, getServer().url(), timeFormatter.format(new Date(newToken.expirationTime * 1000L))));
             return Token.decodeOAuthJWT(jwtStr);
         } catch (ParseException e) {
             Log.e(logTag, "Could not parse refreshed token. " + e.getLocalizedMessage());
@@ -409,7 +420,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             throw new RuntimeException("Getting API URL for " + serverURL.getId(), e);
         }
     }
-
 
     @SuppressWarnings("unused")
     private void debugConnection(HttpURLConnection con) {
