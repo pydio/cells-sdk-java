@@ -11,6 +11,8 @@ import com.pydio.cells.transport.ServerFactory;
 import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.utils.Log;
 
+import javax.annotation.Nonnull;
+
 /**
  * Extends a server factory to manage client concepts.
  */
@@ -24,7 +26,7 @@ public abstract class ClientFactory extends ServerFactory {
      * Implement this: it is the single entry point to inject the S3 client
      * that is platform specific
      */
-    protected abstract CellsClient getCellsClient(CellsTransport transport);
+    protected abstract CellsClient getCellsClient(@Nonnull CellsTransport transport);
 
     public Client getClient(Transport transport) {
         if (transport.getServer().isLegacy()) {

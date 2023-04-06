@@ -85,7 +85,7 @@ dependencies {
     // JUnit test framework
     testImplementation 'junit:junit:4.13.2'
 
-    // When running with android these are provided by the platform
-    testImplementation 'com.amazonaws:aws-java-sdk-core:1.11.1030'
-    testImplementation 'com.amazonaws:aws-java-sdk-s3:1.11.1030'
+//    // When running with android these are provided by the platform
+//    testImplementation 'com.amazonaws:aws-java-sdk-core:1.11.1030'
+//    testImplementation 'com.amazonaws:aws-java-sdk-s3:1.11.1030'
 }
