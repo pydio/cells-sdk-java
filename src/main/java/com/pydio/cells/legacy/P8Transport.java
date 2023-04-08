@@ -38,9 +38,7 @@ import java.util.Map;
 public class P8Transport implements ILegacyTransport, SdkNames {
 
     private final String logTag = "P8Transport";
-
     private final CustomEncoder encoder;
-
     private final Server server;
     private final String username;
 
@@ -64,7 +62,12 @@ public class P8Transport implements ILegacyTransport, SdkNames {
 
     @Override
     public String getId() {
-        return new StateID(getUsername(), getServer().getServerURL().getId()).getId();
+        return getStateID().getId();
+    }
+
+    @Override
+    public StateID getStateID() {
+        return new StateID(getUsername(), getServer().getServerURL().getId());
     }
 
     @Override

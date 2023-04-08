@@ -2,7 +2,6 @@ package com.pydio.cells.transport.auth;
 
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Store;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.transport.StateID;
 
 import java.util.Map;
@@ -37,12 +36,18 @@ public abstract class CredentialService implements Store<Token> {
         passwordStore.clear();
     }
 
-    /**
-     * Provide an entry point to cleanly handle refresh token process,
+//    /**
+//     * Provide an entry point to cleanly handle refresh token process,
+//     * typically avoiding launching 2 parallel process (or more) at the same time
+//     * that will lead to loosing the credentials
+//     */
+//    public abstract void refreshToken(StateID stateID, Transport transport) throws SDKException;
+
+    /* Provides an entry point to cleanly handle refresh token process,
      * typically avoiding launching 2 parallel process (or more) at the same time
      * that will lead to loosing the credentials
      */
-    public abstract void refreshToken(StateID stateID, Transport transport) throws SDKException;
+    public abstract void requestRefreshToken(StateID stateID) throws SDKException;
 
     /* Simply wraps passed tokenStore methods */
 

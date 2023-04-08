@@ -2,7 +2,6 @@ package com.pydio.cells.utils.tests;
 
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.Store;
-import com.pydio.cells.api.Transport;
 import com.pydio.cells.transport.StateID;
 import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
@@ -14,7 +13,7 @@ public class TestCredentialService extends CredentialService {
     }
 
     @Override
-    public void refreshToken(StateID stateID, Transport transport) throws SDKException {
+    public void requestRefreshToken(StateID stateID) throws SDKException {
 
 //        Token oldToken = get(id);
 //        if (oldToken == null) {

@@ -49,13 +49,11 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     private final static String logTag = "CellsTransport";
     private final CustomEncoder encoder;
     private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
-
     private final CredentialService credentialService;
 
     // TODO rather rely on a state ID
     private final String username;
     private final Server server;
-
     private String userAgent;
 
     public CellsTransport(CredentialService credentialService, String username, Server server, CustomEncoder encoder) {
@@ -105,53 +103,20 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     public String getAccessToken() throws SDKException {
-        Token token = getToken();
+        Token token = getCheckedToken();
         if (token == null) {
             return null;
         }
         return token.value;
     }
 
-    private Token getToken() throws SDKException {
-
-        Token token = credentialService.get(getId());
-        String password;
-
-        // We check token validity and try to refresh / get it if necessary
-        if (token == null) {
-            // Check if we have a password for this transport
-            password = credentialService.getPassword(getId());
-            if (Str.empty(password)) {
-                return null;
-            }
-            token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
-            credentialService.put(getId(), token);
-            return token;
-
-        } else if (token.isExpired()) {
-
-            // Pydio8 -> Should never happen here
-            if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
-                Log.e(logTag, "Found a password for " + getStateID() + "\n, calling stack:");
-                Thread.dumpStack();
-                token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
-                credentialService.put(getId(), token);
-                return token;
-            }
-
-            // Cells: we only require a refresh but do not get the refreshed token explicitly
-            credentialService.refreshToken(getStateID(), this);
-            return null;
-        }
-//        long expiresIn = token.expirationTime - currentTimeInSeconds();
-//        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
-        return token;
+    public Token getToken() throws SDKException {
+        return credentialService.get(getId());
     }
 
     public void requestTokenRefresh() throws SDKException {
-        credentialService.refreshToken(getStateID(), this);
+        credentialService.requestRefreshToken(getStateID());
     }
-
 
     @Override
     public InputStream getUserData(String binary) {
@@ -364,7 +329,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             Token newToken = Token.decodeOAuthJWT(jwtStr);
             Log.i(logTag, String.format("Retrieved a refreshed token for %s@%s. New expiration time %s",
                     username, getServer().url(), timeFormatter.format(new Date(newToken.expirationTime * 1000L))));
-            return Token.decodeOAuthJWT(jwtStr);
+            return newToken;
         } catch (ParseException e) {
             Log.e(logTag, "Could not parse refreshed token. " + e.getLocalizedMessage());
             throw new SDKException(ErrorCodes.no_token_available, new IOException("could not decode server response"));
@@ -382,6 +347,44 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(out);
         }
+    }
+
+    private Token getCheckedToken() throws SDKException {
+
+        Token token = credentialService.get(getId());
+        String password;
+
+        // We check token validity and try to refresh / get it if necessary
+        if (token == null) {
+            // With cells we never have a password
+            return null;
+//            // Check if we have a password for this transport
+//            password = credentialService.getPassword(getId());
+//            if (Str.empty(password)) {
+//                return null;
+//            }
+//            token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
+//            credentialService.put(getId(), token);
+//            return token;
+
+        } else if (token.isExpired()) {
+
+            // Pydio8 -> Should never happen here
+            if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
+                Log.e(logTag, "Found a password for " + getStateID() + "\n, calling stack:");
+                Thread.dumpStack();
+                token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
+                credentialService.put(getId(), token);
+                return token;
+            }
+
+            // Cells: we only require a refresh but do not get the refreshed token explicitly
+            credentialService.requestRefreshToken(getStateID());
+            return null;
+        }
+//        long expiresIn = token.expirationTime - currentTimeInSeconds();
+//        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
+        return token;
     }
 
     /* Sets body parameters as URL encoded form */
