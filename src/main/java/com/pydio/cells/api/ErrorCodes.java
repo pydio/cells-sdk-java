@@ -1,5 +1,10 @@
 package com.pydio.cells.api;
 
+/**
+ * Custom Error Codes for the Cells SDK.
+ * Error codes between 100 and 600 are the standard HTTP status code that are returned
+ * by the underlying generated openAPI SDK.
+ */
 public interface ErrorCodes {
 
     int ok = 0;
@@ -48,12 +53,12 @@ public interface ErrorCodes {
 
     int no_local_file = 60;
 
-    int panic = 100;
-    int internal_error = 101;
-    int init_failed = 102;
-    int configuration_error = 103;
-    int bad_config = 103;
-    int encoding_failed = 104;
+    int panic = 80;
+    int internal_error = 81;
+    int init_failed = 82;
+    int configuration_error = 83;
+    int bad_config = 84;
+    int encoding_failed = 85;
 
     /**
      * Returns a message given its code

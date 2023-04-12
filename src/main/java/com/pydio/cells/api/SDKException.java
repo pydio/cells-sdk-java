@@ -16,7 +16,7 @@ import java.util.Map;
  * Generic exception for the java SDK that is server type agnostic and supports both Pydio Cells and the legacy Pydio 8 server.
  * It cannot yet extend the swagger generated API exception that is specific to Cells.
  * <p>
- * This can be changed when we stop supporting Pydio 8 in a near future.
+ * This can be changed when we stop supporting Pydio 8.
  * <p>
  * // TODO smelly code, refactor with a clean generic error handling strategy.
  */
@@ -25,8 +25,8 @@ public class SDKException extends Exception {
     private final static String logTag = "SDKException";
 
     private int code;
-    private String message;
-    private Throwable cause;
+//    private String message;
+//    private Throwable cause;
 
     public SDKException(String message) {
         super(message);
@@ -44,7 +44,6 @@ public class SDKException extends Exception {
         String body = cause.getResponseBody();
         Map<String, List<String>> headers = cause.getResponseHeaders();
         if (Str.notEmpty(body)) {
-//             Log.e("SDKException", "Exception body [" + body + "]");
             if (headers.containsKey("content-type") && headers.get("content-type").get(0).startsWith("application/json")) {
                 Gson gson = new Gson();
                 // Best effort to gather more info about the error
@@ -69,34 +68,42 @@ public class SDKException extends Exception {
         }
     }
 
-    public boolean isConnectionFailedError() {
+    /**
+     * Returns true if the current exception code is one of the well-known code for authorization issue
+     */
+    public boolean isAuthorizationError() {
         return code == ErrorCodes.no_token_available
                 || code == ErrorCodes.authentication_required
                 || code == ErrorCodes.refresh_token_expired
                 || code == ErrorCodes.token_expired
                 || code == ErrorCodes.authentication_with_captcha_required
+//                || code == ErrorCodes.con_failed
+                || code == HttpStatus.UNAUTHORIZED.getValue();
+    }
+
+    public boolean isNetworkError() {
+        return code == ErrorCodes.unreachable_host
+                || code == ErrorCodes.no_internet
                 || code == ErrorCodes.con_failed
-                || code == 401; // HTTP unauthorized. TODO use constant
+                || code == ErrorCodes.con_closed
+                || code == ErrorCodes.con_read_failed
+                || code == ErrorCodes.con_write_failed;
     }
 
     // Legacy inherited SDK specific constructors => ease implementation of the Android app.
 
     public SDKException(int code, String message, Throwable cause) {
-        this(ErrorCodes.toMessage(code) + ": " + message, cause);
+        this(message, cause);
         this.code = code;
-        this.message = message;
-        this.cause = cause;
     }
 
     public SDKException(int code, String message) {
         this(message);
         this.code = code;
-        this.message = message;
     }
 
     public SDKException(int code, Exception cause) {
         this(ErrorCodes.toMessage(code), cause);
-        this.cause = cause;
         this.code = code;
     }
 
@@ -109,21 +116,21 @@ public class SDKException extends Exception {
         return code;
     }
 
-    @Override
-    public String getMessage() {
-        if (message == null) {
-            return super.getMessage();
-        }
-        return message;
-    }
-
-    @Override
-    public Throwable getCause() {
-        if (cause == null) {
-            return super.getCause();
-        }
-        return cause;
-    }
+//    @Override
+//    public String getMessage() {
+//        if (message == null) {
+//            return super.getMessage();
+//        }
+//        return message;
+//    }
+//
+//    @Override
+//    public Throwable getCause() {
+//        if (cause == null) {
+//            return super.getCause();
+//        }
+//        return cause;
+//    }
 
     /* Boiler plate shortcuts */
     public static SDKException cancel(String message) {

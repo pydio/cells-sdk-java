@@ -1065,15 +1065,12 @@ public class CellsClient implements Client, SdkNames {
     private TreeNode internalStatNode(String fullPath) throws SDKException {
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
         try {
-            // RestHeadNodeResponse response = api.headNode(fullPath);
-            // return response.getNode();
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
         } catch (Exception e) {
             throw new SDKException(ErrorCodes.internal_error, "unexpected error when doing stat node for " + fullPath, e);
         }
-        // return toFileNode(response.getNode());
     }
 
     /**
