@@ -36,7 +36,7 @@ public class ServerURLImpl implements ServerURL {
 
     private final static String logTag = "ServerURLImpl";
 
-    private static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
+    public static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
             new X509TrustManager() {
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
