@@ -111,7 +111,6 @@ public class CellsClient implements Client, SdkNames {
         } catch (SDKException e) {
             Log.e(logTag, "SDK error #" + e.getCode()
                     + " while checking auth state for " + StateID.fromId(transport.getId()));
-            e.printStackTrace();
             return false;
         } catch (ApiException e) {
             Log.e(logTag, "API error while checking auth state for " + StateID.fromId(transport.getId()));
@@ -153,8 +152,8 @@ public class CellsClient implements Client, SdkNames {
             registry = new DocumentRegistry(in);
 
             if (!registry.isLoggedIn()) {
-                // Double check if we are correctly connected
-                throw new SDKException(ErrorCodes.no_token_available, "not logged in " + transport.getId() + ", you cannot list workspaces.");
+                // TODO Double check if we are correctly connected
+                throw new SDKException(ErrorCodes.authentication_required, "not logged in " + transport.getId() + ", you cannot list workspaces.");
             }
 
             for (WorkspaceNode node : registry.getWorkspaces()) {

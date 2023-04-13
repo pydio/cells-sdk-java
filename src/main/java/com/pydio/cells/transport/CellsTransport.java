@@ -19,7 +19,6 @@ import com.pydio.cells.openapi.model.RestFrontSessionRequest;
 import com.pydio.cells.openapi.model.RestFrontSessionResponse;
 import com.pydio.cells.transport.auth.CredentialService;
 import com.pydio.cells.transport.auth.Token;
-import com.pydio.cells.transport.auth.credentials.LegacyPasswordCredentials;
 import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
@@ -350,37 +349,14 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     private Token getCheckedToken() throws SDKException {
-
         Token token = credentialService.get(getId());
-        String password;
-
         // We check token validity and try to refresh / get it if necessary
         if (token == null) {
-            // With cells we never have a password
             return null;
-//            // Check if we have a password for this transport
-//            password = credentialService.getPassword(getId());
-//            if (Str.empty(password)) {
-//                return null;
-//            }
-//            token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
-//            credentialService.put(getId(), token);
-//            return token;
-
         } else if (token.isExpired()) {
-
-            // Pydio8 -> Should never happen here
-            if (Str.notEmpty((password = credentialService.getPassword(getId())))) {
-                Log.e(logTag, "Found a password for " + getStateID() + "\n, calling stack:");
-                Thread.dumpStack();
-                token = getTokenFromLegacyCredentials(new LegacyPasswordCredentials(getUsername(), password));
-                credentialService.put(getId(), token);
-                return token;
-            }
-
             // Cells: we only require a refresh but do not get the refreshed token explicitly
             credentialService.requestRefreshToken(getStateID());
-            return null;
+            throw new SDKException(ErrorCodes.token_expired, "Token expired for " + getStateID() + " refresh token process has been requested in background");
         }
 //        long expiresIn = token.expirationTime - currentTimeInSeconds();
 //        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
