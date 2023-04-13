@@ -2,6 +2,7 @@ package com.pydio.cells.transport;
 
 import static com.pydio.cells.transport.CellsServer.API_PREFIX;
 
+import com.google.gson.Gson;
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ICellsTransport;
@@ -10,8 +11,6 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.Server;
 import com.pydio.cells.api.ServerURL;
-import com.pydio.cells.api.callbacks.RegistryItemHandler;
-import com.pydio.cells.client.model.parser.ServerGeneralRegistrySaxHandler;
 import com.pydio.cells.openapi.ApiClient;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.api.FrontendServiceApi;
@@ -40,12 +39,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 public class CellsTransport implements ICellsTransport, SdkNames {
 
     private final static String logTag = "CellsTransport";
+    private final static String registryPath = "/frontend/state";
     private final CustomEncoder encoder;
     private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
     private final CredentialService credentialService;
@@ -149,7 +146,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return withAuth(withUserAgent(server.newURL(API_PREFIX + path).openConnection()));
     }
 
-    public HttpURLConnection openAnonApiConnection(String path) throws IOException {
+    public HttpURLConnection openAnonymousApiConnection(String path) throws IOException {
         return withUserAgent(server.newURL(API_PREFIX + path).openConnection());
     }
 
@@ -173,29 +170,53 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return apiClient;
     }
 
-    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
+//    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
+//        HttpURLConnection con = null;
+//        InputStream in = null;
+//        SAXParserFactory factory = SAXParserFactory.newInstance();
+//        try {
+//            con = openAnonymousApiConnection(registryPath);
+//            con.setRequestMethod("GET");
+//            in = con.getInputStream();
+//
+//            try {
+//                SAXParser parser = factory.newSAXParser();
+//                parser.parse(in, new ServerGeneralRegistrySaxHandler(itemHandler));
+//            } catch (Exception e) {
+//                Log.w(logTag, "could not parse registry request response");
+//                throw SDKException.unexpectedContent(e);
+//            }
+//        } catch (IOException e) {
+//            throw SDKException.conFailed("cannot retrieve registry", e);
+//        } finally {
+//            IoHelpers.closeQuietly(in);
+//            IoHelpers.closeQuietly(con);
+//        }
+//    }
+
+    public void tryDownloadingBootConf() throws Exception {
         HttpURLConnection con = null;
         InputStream in = null;
-        SAXParserFactory factory = SAXParserFactory.newInstance();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            con = openAnonApiConnection("/frontend/state");
-            con.setRequestMethod("GET");
+            con = openConnection(CellsServer.BOOTCONF_PATH);
             in = con.getInputStream();
+            IoHelpers.pipeRead(in, out);
 
-            try {
-                SAXParser parser = factory.newSAXParser();
-                parser.parse(in, new ServerGeneralRegistrySaxHandler(itemHandler));
-            } catch (Exception e) {
-                Log.w(logTag, "could not parse registry request response");
-                throw SDKException.unexpectedContent(e);
-            }
-        } catch (IOException e) {
-            throw SDKException.conFailed("cannot retrieve registry", e);
+            String jsonString = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            Gson gson = new Gson();
+            @SuppressWarnings("unchecked") Map<String, Object> map = gson.fromJson(jsonString, Map.class);
+            Log.e(logTag, "Got a boot conf for " + getStateID());
+            map.forEach((s, o) -> {
+                Log.e(logTag, "  - " + s + ": " + o);
+            });
         } finally {
-            IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(con);
+            IoHelpers.closeQuietly(in);
+            IoHelpers.closeQuietly(out);
         }
     }
+
 
     /**
      * Caller must close the returned stream.
@@ -203,7 +224,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     @Override
     public InputStream getServerRegistryAsNonAuthenticatedUser() throws SDKException {
         try {
-            HttpURLConnection con = openAnonApiConnection("/frontend/state");
+            HttpURLConnection con = openAnonymousApiConnection(registryPath);
             con.setRequestMethod("GET");
             return con.getInputStream();
         } catch (IOException e) {
@@ -214,7 +235,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     @Override
     public InputStream getServerRegistryAsAuthenticatedUser() throws SDKException {
         try {
-            HttpURLConnection con = openApiConnection("/frontend/state");
+            HttpURLConnection con = openApiConnection(registryPath);
             con.setRequestMethod("GET");
             return con.getInputStream();
         } catch (IOException e) {

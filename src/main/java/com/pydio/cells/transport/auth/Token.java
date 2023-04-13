@@ -9,6 +9,8 @@ import java.text.ParseException;
 
 public class Token {
 
+    private static String logTag = "Token";
+
     // Set by Cells layers to contain the corresponding encoded accountID
     public String subject;
     // value is the real useful token => access_token in OAuth2
@@ -38,7 +40,7 @@ public class Token {
         long elapsedTimeSinceExpiry = this.currentTimeInSeconds() - this.expirationTime;
         boolean expired = elapsedTimeSinceExpiry > 0;
         if (expired) {
-            Log.i("IdToken", String.format("Expired since %s seconds", elapsedTimeSinceExpiry));
+            Log.i(logTag, String.format("Token for %s is expired since %s seconds", subject, elapsedTimeSinceExpiry));
         }
         return expired;
     }
