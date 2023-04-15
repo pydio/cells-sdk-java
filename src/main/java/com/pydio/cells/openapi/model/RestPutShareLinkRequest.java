@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestPutShareLinkRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestPutShareLinkRequest {
   public static final String SERIALIZED_NAME_CREATE_PASSWORD = "CreatePassword";
   @SerializedName(SERIALIZED_NAME_CREATE_PASSWORD)
@@ -71,7 +69,6 @@ public class RestPutShareLinkRequest {
    * @return createPassword
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCreatePassword() {
     return createPassword;
@@ -94,7 +91,6 @@ public class RestPutShareLinkRequest {
    * @return passwordEnabled
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getPasswordEnabled() {
     return passwordEnabled;
@@ -117,7 +113,6 @@ public class RestPutShareLinkRequest {
    * @return shareLink
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RestShareLink getShareLink() {
     return shareLink;
@@ -140,7 +135,6 @@ public class RestPutShareLinkRequest {
    * @return updateCustomHash
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUpdateCustomHash() {
     return updateCustomHash;
@@ -163,7 +157,6 @@ public class RestPutShareLinkRequest {
    * @return updatePassword
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUpdatePassword() {
     return updatePassword;

@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeWorkspaceRelativePath
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeWorkspaceRelativePath {
   public static final String SERIALIZED_NAME_PATH = "Path";
   @SerializedName(SERIALIZED_NAME_PATH)
@@ -71,7 +69,6 @@ public class TreeWorkspaceRelativePath {
    * @return path
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPath() {
     return path;
@@ -94,7 +91,6 @@ public class TreeWorkspaceRelativePath {
    * @return wsLabel
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getWsLabel() {
     return wsLabel;
@@ -117,7 +113,6 @@ public class TreeWorkspaceRelativePath {
    * @return wsScope
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getWsScope() {
     return wsScope;
@@ -140,7 +135,6 @@ public class TreeWorkspaceRelativePath {
    * @return wsSlug
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getWsSlug() {
     return wsSlug;
@@ -163,7 +157,6 @@ public class TreeWorkspaceRelativePath {
    * @return wsUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getWsUuid() {
     return wsUuid;

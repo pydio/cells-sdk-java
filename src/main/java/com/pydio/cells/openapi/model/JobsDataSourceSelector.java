@@ -30,16 +30,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsDataSourceSelector
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsDataSourceSelector {
   public static final String SERIALIZED_NAME_ALL = "All";
   @SerializedName(SERIALIZED_NAME_ALL)
   private Boolean all;
+
+  public static final String SERIALIZED_NAME_CLEAR_INPUT = "ClearInput";
+  @SerializedName(SERIALIZED_NAME_CLEAR_INPUT)
+  private Boolean clearInput;
 
   public static final String SERIALIZED_NAME_COLLECT = "Collect";
   @SerializedName(SERIALIZED_NAME_COLLECT)
@@ -83,7 +85,6 @@ public class JobsDataSourceSelector {
    * @return all
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAll() {
     return all;
@@ -92,6 +93,28 @@ public class JobsDataSourceSelector {
 
   public void setAll(Boolean all) {
     this.all = all;
+  }
+
+
+  public JobsDataSourceSelector clearInput(Boolean clearInput) {
+    
+    this.clearInput = clearInput;
+    return this;
+  }
+
+   /**
+   * Get clearInput
+   * @return clearInput
+  **/
+  @javax.annotation.Nullable
+
+  public Boolean getClearInput() {
+    return clearInput;
+  }
+
+
+  public void setClearInput(Boolean clearInput) {
+    this.clearInput = clearInput;
   }
 
 
@@ -106,7 +129,6 @@ public class JobsDataSourceSelector {
    * @return collect
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCollect() {
     return collect;
@@ -129,7 +151,6 @@ public class JobsDataSourceSelector {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -152,7 +173,6 @@ public class JobsDataSourceSelector {
    * @return fanOutInput
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getFanOutInput() {
     return fanOutInput;
@@ -175,7 +195,6 @@ public class JobsDataSourceSelector {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -198,7 +217,6 @@ public class JobsDataSourceSelector {
    * @return query
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceQuery getQuery() {
     return query;
@@ -221,7 +239,6 @@ public class JobsDataSourceSelector {
    * @return timeout
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTimeout() {
     return timeout;
@@ -244,7 +261,6 @@ public class JobsDataSourceSelector {
    * @return type
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsDataSourceSelectorType getType() {
     return type;
@@ -267,6 +283,7 @@ public class JobsDataSourceSelector {
     }
     JobsDataSourceSelector jobsDataSourceSelector = (JobsDataSourceSelector) o;
     return Objects.equals(this.all, jobsDataSourceSelector.all) &&
+        Objects.equals(this.clearInput, jobsDataSourceSelector.clearInput) &&
         Objects.equals(this.collect, jobsDataSourceSelector.collect) &&
         Objects.equals(this.description, jobsDataSourceSelector.description) &&
         Objects.equals(this.fanOutInput, jobsDataSourceSelector.fanOutInput) &&
@@ -278,7 +295,7 @@ public class JobsDataSourceSelector {
 
   @Override
   public int hashCode() {
-    return Objects.hash(all, collect, description, fanOutInput, label, query, timeout, type);
+    return Objects.hash(all, clearInput, collect, description, fanOutInput, label, query, timeout, type);
   }
 
   @Override
@@ -286,6 +303,7 @@ public class JobsDataSourceSelector {
     StringBuilder sb = new StringBuilder();
     sb.append("class JobsDataSourceSelector {\n");
     sb.append("    all: ").append(toIndentedString(all)).append("\n");
+    sb.append("    clearInput: ").append(toIndentedString(clearInput)).append("\n");
     sb.append("    collect: ").append(toIndentedString(collect)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    fanOutInput: ").append(toIndentedString(fanOutInput)).append("\n");
@@ -316,6 +334,7 @@ public class JobsDataSourceSelector {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("All");
+    openapiFields.add("ClearInput");
     openapiFields.add("Collect");
     openapiFields.add("Description");
     openapiFields.add("FanOutInput");

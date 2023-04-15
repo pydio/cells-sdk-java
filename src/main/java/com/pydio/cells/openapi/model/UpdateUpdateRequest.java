@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * UpdateUpdateRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class UpdateUpdateRequest {
   public static final String SERIALIZED_NAME_CHANNEL = "Channel";
   @SerializedName(SERIALIZED_NAME_CHANNEL)
@@ -57,7 +55,7 @@ public class UpdateUpdateRequest {
 
   public static final String SERIALIZED_NAME_LICENSE_INFO = "LicenseInfo";
   @SerializedName(SERIALIZED_NAME_LICENSE_INFO)
-  private Map<String, String> licenseInfo = null;
+  private Map<String, String> licenseInfo = new HashMap<>();
 
   public static final String SERIALIZED_NAME_PACKAGE_NAME = "PackageName";
   @SerializedName(SERIALIZED_NAME_PACKAGE_NAME)
@@ -81,7 +79,6 @@ public class UpdateUpdateRequest {
    * @return channel
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getChannel() {
     return channel;
@@ -104,7 +101,6 @@ public class UpdateUpdateRequest {
    * @return currentVersion
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCurrentVersion() {
     return currentVersion;
@@ -127,7 +123,6 @@ public class UpdateUpdateRequest {
    * @return GOARCH
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getGOARCH() {
     return GOARCH;
@@ -150,7 +145,6 @@ public class UpdateUpdateRequest {
    * @return GOOS
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getGOOS() {
     return GOOS;
@@ -181,7 +175,6 @@ public class UpdateUpdateRequest {
    * @return licenseInfo
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getLicenseInfo() {
     return licenseInfo;
@@ -204,7 +197,6 @@ public class UpdateUpdateRequest {
    * @return packageName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPackageName() {
     return packageName;
@@ -227,7 +219,6 @@ public class UpdateUpdateRequest {
    * @return serviceName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getServiceName() {
     return serviceName;

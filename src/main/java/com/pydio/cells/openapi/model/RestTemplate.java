@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestTemplate
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestTemplate {
   public static final String SERIALIZED_NAME_EDITABLE = "Editable";
   @SerializedName(SERIALIZED_NAME_EDITABLE)
@@ -54,7 +52,7 @@ public class RestTemplate {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_U_U_I_D = "UUID";
   @SerializedName(SERIALIZED_NAME_U_U_I_D)
@@ -74,7 +72,6 @@ public class RestTemplate {
    * @return editable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getEditable() {
     return editable;
@@ -97,7 +94,6 @@ public class RestTemplate {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -120,7 +116,6 @@ public class RestTemplate {
    * @return node
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RestTemplateNode getNode() {
     return node;
@@ -151,7 +146,6 @@ public class RestTemplate {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -174,7 +168,6 @@ public class RestTemplate {
    * @return UUID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUUID() {
     return UUID;

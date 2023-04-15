@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSearchUserRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSearchUserRequest {
   public static final String SERIALIZED_NAME_COUNT_ONLY = "CountOnly";
   @SerializedName(SERIALIZED_NAME_COUNT_ONLY)
@@ -62,7 +60,7 @@ public class RestSearchUserRequest {
 
   public static final String SERIALIZED_NAME_QUERIES = "Queries";
   @SerializedName(SERIALIZED_NAME_QUERIES)
-  private List<IdmUserSingleQuery> queries = null;
+  private List<IdmUserSingleQuery> queries;
 
   public static final String SERIALIZED_NAME_RESOURCE_POLICY_QUERY = "ResourcePolicyQuery";
   @SerializedName(SERIALIZED_NAME_RESOURCE_POLICY_QUERY)
@@ -82,7 +80,6 @@ public class RestSearchUserRequest {
    * @return countOnly
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCountOnly() {
     return countOnly;
@@ -105,7 +102,6 @@ public class RestSearchUserRequest {
    * @return groupBy
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Group by ...")
 
   public Integer getGroupBy() {
     return groupBy;
@@ -128,7 +124,6 @@ public class RestSearchUserRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLimit() {
     return limit;
@@ -151,7 +146,6 @@ public class RestSearchUserRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOffset() {
     return offset;
@@ -174,7 +168,6 @@ public class RestSearchUserRequest {
    * @return operation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceOperationType getOperation() {
     return operation;
@@ -205,7 +198,6 @@ public class RestSearchUserRequest {
    * @return queries
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmUserSingleQuery> getQueries() {
     return queries;
@@ -228,7 +220,6 @@ public class RestSearchUserRequest {
    * @return resourcePolicyQuery
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RestResourcePolicyQuery getResourcePolicyQuery() {
     return resourcePolicyQuery;

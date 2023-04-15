@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * InstallProxyConfig
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class InstallProxyConfig {
   public static final String SERIALIZED_NAME_BINDS = "Binds";
   @SerializedName(SERIALIZED_NAME_BINDS)
-  private List<String> binds = null;
+  private List<String> binds;
 
   public static final String SERIALIZED_NAME_CERTIFICATE = "Certificate";
   @SerializedName(SERIALIZED_NAME_CERTIFICATE)
@@ -57,7 +55,7 @@ public class InstallProxyConfig {
 
   public static final String SERIALIZED_NAME_MAINTENANCE_CONDITIONS = "MaintenanceConditions";
   @SerializedName(SERIALIZED_NAME_MAINTENANCE_CONDITIONS)
-  private List<String> maintenanceConditions = null;
+  private List<String> maintenanceConditions;
 
   public static final String SERIALIZED_NAME_REVERSE_PROXY_U_R_L = "ReverseProxyURL";
   @SerializedName(SERIALIZED_NAME_REVERSE_PROXY_U_R_L)
@@ -93,7 +91,6 @@ public class InstallProxyConfig {
    * @return binds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getBinds() {
     return binds;
@@ -116,7 +113,6 @@ public class InstallProxyConfig {
    * @return certificate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public InstallTLSCertificate getCertificate() {
     return certificate;
@@ -139,7 +135,6 @@ public class InstallProxyConfig {
    * @return letsEncrypt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public InstallTLSLetsEncrypt getLetsEncrypt() {
     return letsEncrypt;
@@ -162,7 +157,6 @@ public class InstallProxyConfig {
    * @return maintenance
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getMaintenance() {
     return maintenance;
@@ -193,7 +187,6 @@ public class InstallProxyConfig {
    * @return maintenanceConditions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getMaintenanceConditions() {
     return maintenanceConditions;
@@ -216,7 +209,6 @@ public class InstallProxyConfig {
    * @return reverseProxyURL
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getReverseProxyURL() {
     return reverseProxyURL;
@@ -239,7 +231,6 @@ public class InstallProxyConfig {
    * @return ssLRedirect
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getSsLRedirect() {
     return ssLRedirect;
@@ -262,7 +253,6 @@ public class InstallProxyConfig {
    * @return selfSigned
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public InstallTLSSelfSigned getSelfSigned() {
     return selfSigned;

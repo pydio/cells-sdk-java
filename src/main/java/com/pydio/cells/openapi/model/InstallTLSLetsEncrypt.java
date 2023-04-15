@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * InstallTLSLetsEncrypt
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class InstallTLSLetsEncrypt {
   public static final String SERIALIZED_NAME_ACCEPT_E_U_L_A = "AcceptEULA";
   @SerializedName(SERIALIZED_NAME_ACCEPT_E_U_L_A)
@@ -63,7 +61,6 @@ public class InstallTLSLetsEncrypt {
    * @return acceptEULA
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAcceptEULA() {
     return acceptEULA;
@@ -86,7 +83,6 @@ public class InstallTLSLetsEncrypt {
    * @return email
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getEmail() {
     return email;
@@ -109,7 +105,6 @@ public class InstallTLSLetsEncrypt {
    * @return stagingCA
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getStagingCA() {
     return stagingCA;

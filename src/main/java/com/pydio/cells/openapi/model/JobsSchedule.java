@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsSchedule
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsSchedule {
   public static final String SERIALIZED_NAME_ISO8601_MIN_DELTA = "Iso8601MinDelta";
   @SerializedName(SERIALIZED_NAME_ISO8601_MIN_DELTA)
@@ -59,7 +57,6 @@ public class JobsSchedule {
    * @return iso8601MinDelta
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIso8601MinDelta() {
     return iso8601MinDelta;
@@ -82,7 +79,6 @@ public class JobsSchedule {
    * @return iso8601Schedule
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "ISO 8601 Description of the scheduling for instance \"R2/2015-06-04T19:25:16.828696-07:00/PT4S\" where first part is the number of repetitions (if 0, infinite repetition),  second part the starting date and last part, the duration between 2 occurrences.")
 
   public String getIso8601Schedule() {
     return iso8601Schedule;

@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestACLCollection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestACLCollection {
   public static final String SERIALIZED_NAME_AC_LS = "ACLs";
   @SerializedName(SERIALIZED_NAME_AC_LS)
-  private List<IdmACL> acLs = null;
+  private List<IdmACL> acLs;
 
   public static final String SERIALIZED_NAME_TOTAL = "Total";
   @SerializedName(SERIALIZED_NAME_TOTAL)
@@ -70,7 +68,6 @@ public class RestACLCollection {
    * @return acLs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmACL> getAcLs() {
     return acLs;
@@ -93,7 +90,6 @@ public class RestACLCollection {
    * @return total
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTotal() {
     return total;

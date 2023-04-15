@@ -33,28 +33,26 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmACLSingleQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmACLSingleQuery {
   public static final String SERIALIZED_NAME_ACTIONS = "Actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
-  private List<IdmACLAction> actions = null;
+  private List<IdmACLAction> actions;
 
   public static final String SERIALIZED_NAME_NODE_I_DS = "NodeIDs";
   @SerializedName(SERIALIZED_NAME_NODE_I_DS)
-  private List<String> nodeIDs = null;
+  private List<String> nodeIDs;
 
   public static final String SERIALIZED_NAME_ROLE_I_DS = "RoleIDs";
   @SerializedName(SERIALIZED_NAME_ROLE_I_DS)
-  private List<String> roleIDs = null;
+  private List<String> roleIDs;
 
   public static final String SERIALIZED_NAME_WORKSPACE_I_DS = "WorkspaceIDs";
   @SerializedName(SERIALIZED_NAME_WORKSPACE_I_DS)
-  private List<String> workspaceIDs = null;
+  private List<String> workspaceIDs;
 
   public static final String SERIALIZED_NAME_NOT = "not";
   @SerializedName(SERIALIZED_NAME_NOT)
@@ -82,7 +80,6 @@ public class IdmACLSingleQuery {
    * @return actions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmACLAction> getActions() {
     return actions;
@@ -113,7 +110,6 @@ public class IdmACLSingleQuery {
    * @return nodeIDs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getNodeIDs() {
     return nodeIDs;
@@ -144,7 +140,6 @@ public class IdmACLSingleQuery {
    * @return roleIDs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getRoleIDs() {
     return roleIDs;
@@ -175,7 +170,6 @@ public class IdmACLSingleQuery {
    * @return workspaceIDs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getWorkspaceIDs() {
     return workspaceIDs;
@@ -198,7 +192,6 @@ public class IdmACLSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getNot() {
     return not;

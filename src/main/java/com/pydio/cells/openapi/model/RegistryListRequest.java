@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RegistryListRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RegistryListRequest {
   public static final String SERIALIZED_NAME_ADJACENTS_OPTIONS = "adjacentsOptions";
   @SerializedName(SERIALIZED_NAME_ADJACENTS_OPTIONS)
@@ -59,7 +57,6 @@ public class RegistryListRequest {
    * @return adjacentsOptions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryOptions getAdjacentsOptions() {
     return adjacentsOptions;
@@ -82,7 +79,6 @@ public class RegistryListRequest {
    * @return options
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryOptions getOptions() {
     return options;

@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ServiceResourcePolicy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ServiceResourcePolicy {
   public static final String SERIALIZED_NAME_ACTION = "Action";
   @SerializedName(SERIALIZED_NAME_ACTION)
@@ -75,7 +73,6 @@ public class ServiceResourcePolicy {
    * @return action
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceResourcePolicyAction getAction() {
     return action;
@@ -98,7 +95,6 @@ public class ServiceResourcePolicy {
    * @return effect
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceResourcePolicyPolicyEffect getEffect() {
     return effect;
@@ -121,7 +117,6 @@ public class ServiceResourcePolicy {
    * @return jsonConditions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJsonConditions() {
     return jsonConditions;
@@ -144,7 +139,6 @@ public class ServiceResourcePolicy {
    * @return resource
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getResource() {
     return resource;
@@ -167,7 +161,6 @@ public class ServiceResourcePolicy {
    * @return subject
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSubject() {
     return subject;
@@ -190,7 +183,6 @@ public class ServiceResourcePolicy {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getId() {
     return id;

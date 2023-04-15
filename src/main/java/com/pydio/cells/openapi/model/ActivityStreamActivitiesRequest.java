@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ActivityStreamActivitiesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ActivityStreamActivitiesRequest {
   public static final String SERIALIZED_NAME_AS_DIGEST = "AsDigest";
   @SerializedName(SERIALIZED_NAME_AS_DIGEST)
@@ -91,7 +89,6 @@ public class ActivityStreamActivitiesRequest {
    * @return asDigest
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAsDigest() {
     return asDigest;
@@ -114,7 +111,6 @@ public class ActivityStreamActivitiesRequest {
    * @return boxName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBoxName() {
     return boxName;
@@ -137,7 +133,6 @@ public class ActivityStreamActivitiesRequest {
    * @return context
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityStreamContext getContext() {
     return context;
@@ -160,7 +155,6 @@ public class ActivityStreamActivitiesRequest {
    * @return contextData
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getContextData() {
     return contextData;
@@ -183,7 +177,6 @@ public class ActivityStreamActivitiesRequest {
    * @return language
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Provide language information for building the human-readable strings.")
 
   public String getLanguage() {
     return language;
@@ -206,7 +199,6 @@ public class ActivityStreamActivitiesRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLimit() {
     return limit;
@@ -229,7 +221,6 @@ public class ActivityStreamActivitiesRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOffset() {
     return offset;
@@ -252,7 +243,6 @@ public class ActivityStreamActivitiesRequest {
    * @return pointOfView
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivitySummaryPointOfView getPointOfView() {
     return pointOfView;
@@ -275,7 +265,6 @@ public class ActivityStreamActivitiesRequest {
    * @return streamFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getStreamFilter() {
     return streamFilter;
@@ -298,7 +287,6 @@ public class ActivityStreamActivitiesRequest {
    * @return unreadCountOnly
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getUnreadCountOnly() {
     return unreadCountOnly;

@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeReadNodeRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeReadNodeRequest {
   public static final String SERIALIZED_NAME_NODE = "Node";
   @SerializedName(SERIALIZED_NAME_NODE)
@@ -49,7 +47,7 @@ public class TreeReadNodeRequest {
 
   public static final String SERIALIZED_NAME_STAT_FLAGS = "StatFlags";
   @SerializedName(SERIALIZED_NAME_STAT_FLAGS)
-  private List<Long> statFlags = null;
+  private List<Long> statFlags;
 
   public static final String SERIALIZED_NAME_WITH_COMMITS = "WithCommits";
   @SerializedName(SERIALIZED_NAME_WITH_COMMITS)
@@ -73,7 +71,6 @@ public class TreeReadNodeRequest {
    * @return node
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNode getNode() {
     return node;
@@ -96,7 +93,6 @@ public class TreeReadNodeRequest {
    * @return objectStats
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getObjectStats() {
     return objectStats;
@@ -127,7 +123,6 @@ public class TreeReadNodeRequest {
    * @return statFlags
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<Long> getStatFlags() {
     return statFlags;
@@ -150,7 +145,6 @@ public class TreeReadNodeRequest {
    * @return withCommits
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getWithCommits() {
     return withCommits;
@@ -173,7 +167,6 @@ public class TreeReadNodeRequest {
    * @return withExtendedStats
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getWithExtendedStats() {
     return withExtendedStats;

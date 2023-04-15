@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ActivitySubscription
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ActivitySubscription {
   public static final String SERIALIZED_NAME_EVENTS = "Events";
   @SerializedName(SERIALIZED_NAME_EVENTS)
-  private List<String> events = null;
+  private List<String> events;
 
   public static final String SERIALIZED_NAME_OBJECT_ID = "ObjectId";
   @SerializedName(SERIALIZED_NAME_OBJECT_ID)
@@ -77,7 +75,6 @@ public class ActivitySubscription {
    * @return events
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getEvents() {
     return events;
@@ -100,7 +97,6 @@ public class ActivitySubscription {
    * @return objectId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getObjectId() {
     return objectId;
@@ -123,7 +119,6 @@ public class ActivitySubscription {
    * @return objectType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityOwnerType getObjectType() {
     return objectType;
@@ -146,7 +141,6 @@ public class ActivitySubscription {
    * @return userId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserId() {
     return userId;

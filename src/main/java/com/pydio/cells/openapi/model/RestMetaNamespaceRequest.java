@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestMetaNamespaceRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestMetaNamespaceRequest {
   public static final String SERIALIZED_NAME_NAMESPACE = "Namespace";
   @SerializedName(SERIALIZED_NAME_NAMESPACE)
-  private List<String> namespace = null;
+  private List<String> namespace;
 
   public RestMetaNamespaceRequest() {
   }
@@ -65,7 +63,6 @@ public class RestMetaNamespaceRequest {
    * @return namespace
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getNamespace() {
     return namespace;

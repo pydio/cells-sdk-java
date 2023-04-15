@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * InstallInstallConfig
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class InstallInstallConfig {
   public static final String SERIALIZED_NAME_CHECK_RESULTS = "CheckResults";
   @SerializedName(SERIALIZED_NAME_CHECK_RESULTS)
-  private List<InstallCheckResult> checkResults = null;
+  private List<InstallCheckResult> checkResults;
 
   public static final String SERIALIZED_NAME_DOCUMENTS_D_S_N = "DocumentsDSN";
   @SerializedName(SERIALIZED_NAME_DOCUMENTS_D_S_N)
@@ -218,7 +216,6 @@ public class InstallInstallConfig {
    * @return checkResults
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<InstallCheckResult> getCheckResults() {
     return checkResults;
@@ -241,7 +238,6 @@ public class InstallInstallConfig {
    * @return documentsDSN
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDocumentsDSN() {
     return documentsDSN;
@@ -264,7 +260,6 @@ public class InstallInstallConfig {
    * @return proxyConfig
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public InstallProxyConfig getProxyConfig() {
     return proxyConfig;
@@ -287,7 +282,6 @@ public class InstallInstallConfig {
    * @return useDocumentsDSN
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getUseDocumentsDSN() {
     return useDocumentsDSN;
@@ -310,7 +304,6 @@ public class InstallInstallConfig {
    * @return dbConnectionType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbConnectionType() {
     return dbConnectionType;
@@ -333,7 +326,6 @@ public class InstallInstallConfig {
    * @return dbManualDSN
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbManualDSN() {
     return dbManualDSN;
@@ -356,7 +348,6 @@ public class InstallInstallConfig {
    * @return dbSocketFile
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbSocketFile() {
     return dbSocketFile;
@@ -379,7 +370,6 @@ public class InstallInstallConfig {
    * @return dbSocketName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbSocketName() {
     return dbSocketName;
@@ -402,7 +392,6 @@ public class InstallInstallConfig {
    * @return dbSocketPassword
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbSocketPassword() {
     return dbSocketPassword;
@@ -425,7 +414,6 @@ public class InstallInstallConfig {
    * @return dbSocketUser
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbSocketUser() {
     return dbSocketUser;
@@ -448,7 +436,6 @@ public class InstallInstallConfig {
    * @return dbTCPHostname
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbTCPHostname() {
     return dbTCPHostname;
@@ -471,7 +458,6 @@ public class InstallInstallConfig {
    * @return dbTCPName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbTCPName() {
     return dbTCPName;
@@ -494,7 +480,6 @@ public class InstallInstallConfig {
    * @return dbTCPPassword
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbTCPPassword() {
     return dbTCPPassword;
@@ -517,7 +502,6 @@ public class InstallInstallConfig {
    * @return dbTCPPort
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbTCPPort() {
     return dbTCPPort;
@@ -540,7 +524,6 @@ public class InstallInstallConfig {
    * @return dbTCPUser
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDbTCPUser() {
     return dbTCPUser;
@@ -563,7 +546,6 @@ public class InstallInstallConfig {
    * @return dbUseDefaults
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getDbUseDefaults() {
     return dbUseDefaults;
@@ -586,7 +568,6 @@ public class InstallInstallConfig {
    * @return dsFolder
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsFolder() {
     return dsFolder;
@@ -609,7 +590,6 @@ public class InstallInstallConfig {
    * @return dsName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsName() {
     return dsName;
@@ -632,7 +612,6 @@ public class InstallInstallConfig {
    * @return dsPort
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsPort() {
     return dsPort;
@@ -655,7 +634,6 @@ public class InstallInstallConfig {
    * @return dsS3ApiKey
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3ApiKey() {
     return dsS3ApiKey;
@@ -678,7 +656,6 @@ public class InstallInstallConfig {
    * @return dsS3ApiSecret
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3ApiSecret() {
     return dsS3ApiSecret;
@@ -701,7 +678,6 @@ public class InstallInstallConfig {
    * @return dsS3BucketBinaries
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3BucketBinaries() {
     return dsS3BucketBinaries;
@@ -724,7 +700,6 @@ public class InstallInstallConfig {
    * @return dsS3BucketCells
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3BucketCells() {
     return dsS3BucketCells;
@@ -747,7 +722,6 @@ public class InstallInstallConfig {
    * @return dsS3BucketDefault
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3BucketDefault() {
     return dsS3BucketDefault;
@@ -770,7 +744,6 @@ public class InstallInstallConfig {
    * @return dsS3BucketPersonal
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3BucketPersonal() {
     return dsS3BucketPersonal;
@@ -793,7 +766,6 @@ public class InstallInstallConfig {
    * @return dsS3BucketThumbs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3BucketThumbs() {
     return dsS3BucketThumbs;
@@ -816,7 +788,6 @@ public class InstallInstallConfig {
    * @return dsS3BucketVersions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3BucketVersions() {
     return dsS3BucketVersions;
@@ -839,7 +810,6 @@ public class InstallInstallConfig {
    * @return dsS3Custom
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3Custom() {
     return dsS3Custom;
@@ -862,7 +832,6 @@ public class InstallInstallConfig {
    * @return dsS3CustomRegion
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsS3CustomRegion() {
     return dsS3CustomRegion;
@@ -885,7 +854,6 @@ public class InstallInstallConfig {
    * @return dsType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDsType() {
     return dsType;
@@ -908,7 +876,6 @@ public class InstallInstallConfig {
    * @return frontendApplicationTitle
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFrontendApplicationTitle() {
     return frontendApplicationTitle;
@@ -931,7 +898,6 @@ public class InstallInstallConfig {
    * @return frontendDefaultLanguage
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFrontendDefaultLanguage() {
     return frontendDefaultLanguage;
@@ -954,7 +920,6 @@ public class InstallInstallConfig {
    * @return frontendHosts
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFrontendHosts() {
     return frontendHosts;
@@ -977,7 +942,6 @@ public class InstallInstallConfig {
    * @return frontendLogin
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFrontendLogin() {
     return frontendLogin;
@@ -1000,7 +964,6 @@ public class InstallInstallConfig {
    * @return frontendPassword
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFrontendPassword() {
     return frontendPassword;
@@ -1023,7 +986,6 @@ public class InstallInstallConfig {
    * @return frontendRepeatPassword
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFrontendRepeatPassword() {
     return frontendRepeatPassword;
@@ -1046,7 +1008,6 @@ public class InstallInstallConfig {
    * @return internalUrl
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getInternalUrl() {
     return internalUrl;
@@ -1069,7 +1030,6 @@ public class InstallInstallConfig {
    * @return licenseRequired
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getLicenseRequired() {
     return licenseRequired;
@@ -1092,7 +1052,6 @@ public class InstallInstallConfig {
    * @return licenseString
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLicenseString() {
     return licenseString;

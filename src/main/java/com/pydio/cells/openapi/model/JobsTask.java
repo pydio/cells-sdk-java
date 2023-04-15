@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsTask
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsTask {
   public static final String SERIALIZED_NAME_ACTIONS_LOGS = "ActionsLogs";
   @SerializedName(SERIALIZED_NAME_ACTIONS_LOGS)
-  private List<JobsActionLog> actionsLogs = null;
+  private List<JobsActionLog> actionsLogs;
 
   public static final String SERIALIZED_NAME_CAN_PAUSE = "CanPause";
   @SerializedName(SERIALIZED_NAME_CAN_PAUSE)
@@ -110,7 +108,6 @@ public class JobsTask {
    * @return actionsLogs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsActionLog> getActionsLogs() {
     return actionsLogs;
@@ -133,7 +130,6 @@ public class JobsTask {
    * @return canPause
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCanPause() {
     return canPause;
@@ -156,7 +152,6 @@ public class JobsTask {
    * @return canStop
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCanStop() {
     return canStop;
@@ -179,7 +174,6 @@ public class JobsTask {
    * @return endTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getEndTime() {
     return endTime;
@@ -202,7 +196,6 @@ public class JobsTask {
    * @return hasProgress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getHasProgress() {
     return hasProgress;
@@ -225,7 +218,6 @@ public class JobsTask {
    * @return ID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getID() {
     return ID;
@@ -248,7 +240,6 @@ public class JobsTask {
    * @return jobID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJobID() {
     return jobID;
@@ -271,7 +262,6 @@ public class JobsTask {
    * @return progress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Float getProgress() {
     return progress;
@@ -294,7 +284,6 @@ public class JobsTask {
    * @return startTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getStartTime() {
     return startTime;
@@ -317,7 +306,6 @@ public class JobsTask {
    * @return status
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsTaskStatus getStatus() {
     return status;
@@ -340,7 +328,6 @@ public class JobsTask {
    * @return statusMessage
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getStatusMessage() {
     return statusMessage;
@@ -363,7 +350,6 @@ public class JobsTask {
    * @return triggerOwner
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTriggerOwner() {
     return triggerOwner;

@@ -35,20 +35,22 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsJob
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsJob {
   public static final String SERIALIZED_NAME_ACTIONS = "Actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
-  private List<JobsAction> actions = null;
+  private List<JobsAction> actions;
 
   public static final String SERIALIZED_NAME_AUTO_CLEAN = "AutoClean";
   @SerializedName(SERIALIZED_NAME_AUTO_CLEAN)
   private Boolean autoClean;
+
+  public static final String SERIALIZED_NAME_AUTO_RESTART = "AutoRestart";
+  @SerializedName(SERIALIZED_NAME_AUTO_RESTART)
+  private Boolean autoRestart;
 
   public static final String SERIALIZED_NAME_AUTO_START = "AutoStart";
   @SerializedName(SERIALIZED_NAME_AUTO_START)
@@ -72,11 +74,11 @@ public class JobsJob {
 
   public static final String SERIALIZED_NAME_EVENT_NAMES = "EventNames";
   @SerializedName(SERIALIZED_NAME_EVENT_NAMES)
-  private List<String> eventNames = null;
+  private List<String> eventNames;
 
   public static final String SERIALIZED_NAME_HOOKS = "Hooks";
   @SerializedName(SERIALIZED_NAME_HOOKS)
-  private List<JobsJobHook> hooks = null;
+  private List<JobsJobHook> hooks;
 
   public static final String SERIALIZED_NAME_I_D = "ID";
   @SerializedName(SERIALIZED_NAME_I_D)
@@ -96,7 +98,7 @@ public class JobsJob {
 
   public static final String SERIALIZED_NAME_LANGUAGES = "Languages";
   @SerializedName(SERIALIZED_NAME_LANGUAGES)
-  private List<String> languages = null;
+  private List<String> languages;
 
   public static final String SERIALIZED_NAME_MAX_CONCURRENCY = "MaxConcurrency";
   @SerializedName(SERIALIZED_NAME_MAX_CONCURRENCY)
@@ -120,11 +122,11 @@ public class JobsJob {
 
   public static final String SERIALIZED_NAME_PARAMETERS = "Parameters";
   @SerializedName(SERIALIZED_NAME_PARAMETERS)
-  private List<JobsJobParameter> parameters = null;
+  private List<JobsJobParameter> parameters;
 
   public static final String SERIALIZED_NAME_RESOURCES_DEPENDENCIES = "ResourcesDependencies";
   @SerializedName(SERIALIZED_NAME_RESOURCES_DEPENDENCIES)
-  private List<ProtobufAny> resourcesDependencies = null;
+  private List<ProtobufAny> resourcesDependencies;
 
   public static final String SERIALIZED_NAME_SCHEDULE = "Schedule";
   @SerializedName(SERIALIZED_NAME_SCHEDULE)
@@ -132,7 +134,7 @@ public class JobsJob {
 
   public static final String SERIALIZED_NAME_TASKS = "Tasks";
   @SerializedName(SERIALIZED_NAME_TASKS)
-  private List<JobsTask> tasks = null;
+  private List<JobsTask> tasks;
 
   public static final String SERIALIZED_NAME_TASKS_SILENT_UPDATE = "TasksSilentUpdate";
   @SerializedName(SERIALIZED_NAME_TASKS_SILENT_UPDATE)
@@ -148,7 +150,7 @@ public class JobsJob {
 
   public static final String SERIALIZED_NAME_VERSION_META = "VersionMeta";
   @SerializedName(SERIALIZED_NAME_VERSION_META)
-  private Map<String, String> versionMeta = null;
+  private Map<String, String> versionMeta = new HashMap<>();
 
   public JobsJob() {
   }
@@ -172,7 +174,6 @@ public class JobsJob {
    * @return actions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsAction> getActions() {
     return actions;
@@ -195,7 +196,6 @@ public class JobsJob {
    * @return autoClean
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAutoClean() {
     return autoClean;
@@ -204,6 +204,28 @@ public class JobsJob {
 
   public void setAutoClean(Boolean autoClean) {
     this.autoClean = autoClean;
+  }
+
+
+  public JobsJob autoRestart(Boolean autoRestart) {
+    
+    this.autoRestart = autoRestart;
+    return this;
+  }
+
+   /**
+   * Get autoRestart
+   * @return autoRestart
+  **/
+  @javax.annotation.Nullable
+
+  public Boolean getAutoRestart() {
+    return autoRestart;
+  }
+
+
+  public void setAutoRestart(Boolean autoRestart) {
+    this.autoRestart = autoRestart;
   }
 
 
@@ -218,7 +240,6 @@ public class JobsJob {
    * @return autoStart
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAutoStart() {
     return autoStart;
@@ -241,7 +262,6 @@ public class JobsJob {
    * @return contextMetaFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsContextMetaFilter getContextMetaFilter() {
     return contextMetaFilter;
@@ -264,7 +284,6 @@ public class JobsJob {
    * @return createdAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCreatedAt() {
     return createdAt;
@@ -287,7 +306,6 @@ public class JobsJob {
    * @return custom
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCustom() {
     return custom;
@@ -310,7 +328,6 @@ public class JobsJob {
    * @return dataSourceFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsDataSourceSelector getDataSourceFilter() {
     return dataSourceFilter;
@@ -341,7 +358,6 @@ public class JobsJob {
    * @return eventNames
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getEventNames() {
     return eventNames;
@@ -372,7 +388,6 @@ public class JobsJob {
    * @return hooks
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsJobHook> getHooks() {
     return hooks;
@@ -395,7 +410,6 @@ public class JobsJob {
    * @return ID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getID() {
     return ID;
@@ -418,7 +432,6 @@ public class JobsJob {
    * @return idmFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsIdmSelector getIdmFilter() {
     return idmFilter;
@@ -441,7 +454,6 @@ public class JobsJob {
    * @return inactive
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getInactive() {
     return inactive;
@@ -464,7 +476,6 @@ public class JobsJob {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -495,7 +506,6 @@ public class JobsJob {
    * @return languages
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getLanguages() {
     return languages;
@@ -518,7 +528,6 @@ public class JobsJob {
    * @return maxConcurrency
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getMaxConcurrency() {
     return maxConcurrency;
@@ -541,7 +550,6 @@ public class JobsJob {
    * @return mergeAction
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsAction getMergeAction() {
     return mergeAction;
@@ -564,7 +572,6 @@ public class JobsJob {
    * @return modifiedAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getModifiedAt() {
     return modifiedAt;
@@ -587,7 +594,6 @@ public class JobsJob {
    * @return nodeEventFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsNodesSelector getNodeEventFilter() {
     return nodeEventFilter;
@@ -610,7 +616,6 @@ public class JobsJob {
    * @return owner
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOwner() {
     return owner;
@@ -641,7 +646,6 @@ public class JobsJob {
    * @return parameters
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsJobParameter> getParameters() {
     return parameters;
@@ -672,7 +676,6 @@ public class JobsJob {
    * @return resourcesDependencies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ProtobufAny> getResourcesDependencies() {
     return resourcesDependencies;
@@ -695,7 +698,6 @@ public class JobsJob {
    * @return schedule
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsSchedule getSchedule() {
     return schedule;
@@ -726,7 +728,6 @@ public class JobsJob {
    * @return tasks
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsTask> getTasks() {
     return tasks;
@@ -749,7 +750,6 @@ public class JobsJob {
    * @return tasksSilentUpdate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getTasksSilentUpdate() {
     return tasksSilentUpdate;
@@ -772,7 +772,6 @@ public class JobsJob {
    * @return timeout
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTimeout() {
     return timeout;
@@ -795,7 +794,6 @@ public class JobsJob {
    * @return userEventFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsUsersSelector getUserEventFilter() {
     return userEventFilter;
@@ -826,7 +824,6 @@ public class JobsJob {
    * @return versionMeta
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getVersionMeta() {
     return versionMeta;
@@ -850,6 +847,7 @@ public class JobsJob {
     JobsJob jobsJob = (JobsJob) o;
     return Objects.equals(this.actions, jobsJob.actions) &&
         Objects.equals(this.autoClean, jobsJob.autoClean) &&
+        Objects.equals(this.autoRestart, jobsJob.autoRestart) &&
         Objects.equals(this.autoStart, jobsJob.autoStart) &&
         Objects.equals(this.contextMetaFilter, jobsJob.contextMetaFilter) &&
         Objects.equals(this.createdAt, jobsJob.createdAt) &&
@@ -879,7 +877,7 @@ public class JobsJob {
 
   @Override
   public int hashCode() {
-    return Objects.hash(actions, autoClean, autoStart, contextMetaFilter, createdAt, custom, dataSourceFilter, eventNames, hooks, ID, idmFilter, inactive, label, languages, maxConcurrency, mergeAction, modifiedAt, nodeEventFilter, owner, parameters, resourcesDependencies, schedule, tasks, tasksSilentUpdate, timeout, userEventFilter, versionMeta);
+    return Objects.hash(actions, autoClean, autoRestart, autoStart, contextMetaFilter, createdAt, custom, dataSourceFilter, eventNames, hooks, ID, idmFilter, inactive, label, languages, maxConcurrency, mergeAction, modifiedAt, nodeEventFilter, owner, parameters, resourcesDependencies, schedule, tasks, tasksSilentUpdate, timeout, userEventFilter, versionMeta);
   }
 
   @Override
@@ -888,6 +886,7 @@ public class JobsJob {
     sb.append("class JobsJob {\n");
     sb.append("    actions: ").append(toIndentedString(actions)).append("\n");
     sb.append("    autoClean: ").append(toIndentedString(autoClean)).append("\n");
+    sb.append("    autoRestart: ").append(toIndentedString(autoRestart)).append("\n");
     sb.append("    autoStart: ").append(toIndentedString(autoStart)).append("\n");
     sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
@@ -937,6 +936,7 @@ public class JobsJob {
     openapiFields = new HashSet<String>();
     openapiFields.add("Actions");
     openapiFields.add("AutoClean");
+    openapiFields.add("AutoRestart");
     openapiFields.add("AutoStart");
     openapiFields.add("ContextMetaFilter");
     openapiFields.add("CreatedAt");

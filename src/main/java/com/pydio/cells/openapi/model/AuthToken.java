@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * AuthToken
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class AuthToken {
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "AccessToken";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
@@ -67,7 +65,6 @@ public class AuthToken {
    * @return accessToken
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAccessToken() {
     return accessToken;
@@ -90,7 +87,6 @@ public class AuthToken {
    * @return expiresAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getExpiresAt() {
     return expiresAt;
@@ -113,7 +109,6 @@ public class AuthToken {
    * @return idToken
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIdToken() {
     return idToken;
@@ -136,7 +131,6 @@ public class AuthToken {
    * @return refreshToken
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getRefreshToken() {
     return refreshToken;

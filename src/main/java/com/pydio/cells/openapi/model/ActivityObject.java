@@ -34,12 +34,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ActivityObject
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ActivityObject {
   public static final String SERIALIZED_NAME_AT_CONTEXT = "@context";
   @SerializedName(SERIALIZED_NAME_AT_CONTEXT)
@@ -159,7 +157,7 @@ public class ActivityObject {
 
   public static final String SERIALIZED_NAME_ITEMS = "items";
   @SerializedName(SERIALIZED_NAME_ITEMS)
-  private List<ActivityObject> items = null;
+  private List<ActivityObject> items;
 
   public static final String SERIALIZED_NAME_LAST = "last";
   @SerializedName(SERIALIZED_NAME_LAST)
@@ -303,7 +301,6 @@ public class ActivityObject {
    * @return atContext
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAtContext() {
     return atContext;
@@ -326,7 +323,6 @@ public class ActivityObject {
    * @return accuracy
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Float getAccuracy() {
     return accuracy;
@@ -349,7 +345,6 @@ public class ActivityObject {
    * @return actor
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getActor() {
     return actor;
@@ -372,7 +367,6 @@ public class ActivityObject {
    * @return altitude
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Float getAltitude() {
     return altitude;
@@ -395,7 +389,6 @@ public class ActivityObject {
    * @return anyOf
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getAnyOf() {
     return anyOf;
@@ -418,7 +411,6 @@ public class ActivityObject {
    * @return attachment
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getAttachment() {
     return attachment;
@@ -441,7 +433,6 @@ public class ActivityObject {
    * @return attributedTo
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getAttributedTo() {
     return attributedTo;
@@ -464,7 +455,6 @@ public class ActivityObject {
    * @return audience
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getAudience() {
     return audience;
@@ -487,7 +477,6 @@ public class ActivityObject {
    * @return bcc
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getBcc() {
     return bcc;
@@ -510,7 +499,6 @@ public class ActivityObject {
    * @return bto
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getBto() {
     return bto;
@@ -533,7 +521,6 @@ public class ActivityObject {
    * @return cc
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getCc() {
     return cc;
@@ -556,7 +543,6 @@ public class ActivityObject {
    * @return closed
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getClosed() {
     return closed;
@@ -579,7 +565,6 @@ public class ActivityObject {
    * @return content
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getContent() {
     return content;
@@ -602,7 +587,6 @@ public class ActivityObject {
    * @return context
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getContext() {
     return context;
@@ -625,7 +609,6 @@ public class ActivityObject {
    * @return current
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getCurrent() {
     return current;
@@ -648,7 +631,6 @@ public class ActivityObject {
    * @return deleted
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getDeleted() {
     return deleted;
@@ -671,7 +653,6 @@ public class ActivityObject {
    * @return duration
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getDuration() {
     return duration;
@@ -694,7 +675,6 @@ public class ActivityObject {
    * @return endTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getEndTime() {
     return endTime;
@@ -717,7 +697,6 @@ public class ActivityObject {
    * @return first
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getFirst() {
     return first;
@@ -740,7 +719,6 @@ public class ActivityObject {
    * @return formerType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObjectType getFormerType() {
     return formerType;
@@ -763,7 +741,6 @@ public class ActivityObject {
    * @return generator
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getGenerator() {
     return generator;
@@ -786,7 +763,6 @@ public class ActivityObject {
    * @return height
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getHeight() {
     return height;
@@ -809,7 +785,6 @@ public class ActivityObject {
    * @return href
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getHref() {
     return href;
@@ -832,7 +807,6 @@ public class ActivityObject {
    * @return hreflang
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getHreflang() {
     return hreflang;
@@ -855,7 +829,6 @@ public class ActivityObject {
    * @return icon
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getIcon() {
     return icon;
@@ -878,7 +851,6 @@ public class ActivityObject {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getId() {
     return id;
@@ -901,7 +873,6 @@ public class ActivityObject {
    * @return image
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getImage() {
     return image;
@@ -924,7 +895,6 @@ public class ActivityObject {
    * @return inReplyTo
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getInReplyTo() {
     return inReplyTo;
@@ -947,7 +917,6 @@ public class ActivityObject {
    * @return instrument
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getInstrument() {
     return instrument;
@@ -978,7 +947,6 @@ public class ActivityObject {
    * @return items
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ActivityObject> getItems() {
     return items;
@@ -1001,7 +969,6 @@ public class ActivityObject {
    * @return last
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getLast() {
     return last;
@@ -1024,7 +991,6 @@ public class ActivityObject {
    * @return latitude
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Float getLatitude() {
     return latitude;
@@ -1047,7 +1013,6 @@ public class ActivityObject {
    * @return location
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getLocation() {
     return location;
@@ -1070,7 +1035,6 @@ public class ActivityObject {
    * @return longitude
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Float getLongitude() {
     return longitude;
@@ -1093,7 +1057,6 @@ public class ActivityObject {
    * @return markdown
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMarkdown() {
     return markdown;
@@ -1116,7 +1079,6 @@ public class ActivityObject {
    * @return mediaType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMediaType() {
     return mediaType;
@@ -1139,7 +1101,6 @@ public class ActivityObject {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -1162,7 +1123,6 @@ public class ActivityObject {
    * @return next
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getNext() {
     return next;
@@ -1185,7 +1145,6 @@ public class ActivityObject {
    * @return _object
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getObject() {
     return _object;
@@ -1208,7 +1167,6 @@ public class ActivityObject {
    * @return oneOf
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getOneOf() {
     return oneOf;
@@ -1231,7 +1189,6 @@ public class ActivityObject {
    * @return origin
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getOrigin() {
     return origin;
@@ -1254,7 +1211,6 @@ public class ActivityObject {
    * @return partOf
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getPartOf() {
     return partOf;
@@ -1277,7 +1233,6 @@ public class ActivityObject {
    * @return prev
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getPrev() {
     return prev;
@@ -1300,7 +1255,6 @@ public class ActivityObject {
    * @return preview
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getPreview() {
     return preview;
@@ -1323,7 +1277,6 @@ public class ActivityObject {
    * @return published
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getPublished() {
     return published;
@@ -1346,7 +1299,6 @@ public class ActivityObject {
    * @return radius
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Float getRadius() {
     return radius;
@@ -1369,7 +1321,6 @@ public class ActivityObject {
    * @return rel
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getRel() {
     return rel;
@@ -1392,7 +1343,6 @@ public class ActivityObject {
    * @return relationship
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getRelationship() {
     return relationship;
@@ -1415,7 +1365,6 @@ public class ActivityObject {
    * @return replies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getReplies() {
     return replies;
@@ -1438,7 +1387,6 @@ public class ActivityObject {
    * @return result
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getResult() {
     return result;
@@ -1461,7 +1409,6 @@ public class ActivityObject {
    * @return startTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getStartTime() {
     return startTime;
@@ -1484,7 +1431,6 @@ public class ActivityObject {
    * @return subject
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getSubject() {
     return subject;
@@ -1507,7 +1453,6 @@ public class ActivityObject {
    * @return summary
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSummary() {
     return summary;
@@ -1530,7 +1475,6 @@ public class ActivityObject {
    * @return tag
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getTag() {
     return tag;
@@ -1553,7 +1497,6 @@ public class ActivityObject {
    * @return target
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getTarget() {
     return target;
@@ -1576,7 +1519,6 @@ public class ActivityObject {
    * @return to
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getTo() {
     return to;
@@ -1599,7 +1541,6 @@ public class ActivityObject {
    * @return totalItems
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTotalItems() {
     return totalItems;
@@ -1622,7 +1563,6 @@ public class ActivityObject {
    * @return type
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObjectType getType() {
     return type;
@@ -1645,7 +1585,6 @@ public class ActivityObject {
    * @return units
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUnits() {
     return units;
@@ -1668,7 +1607,6 @@ public class ActivityObject {
    * @return updated
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getUpdated() {
     return updated;
@@ -1691,7 +1629,6 @@ public class ActivityObject {
    * @return url
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ActivityObject getUrl() {
     return url;
@@ -1714,7 +1651,6 @@ public class ActivityObject {
    * @return width
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getWidth() {
     return width;

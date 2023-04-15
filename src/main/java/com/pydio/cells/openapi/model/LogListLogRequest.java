@@ -30,14 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ListLogRequest launches a parameterised query in the log repository and streams the results.
  */
-@ApiModel(description = "ListLogRequest launches a parameterised query in the log repository and streams the results.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class LogListLogRequest {
   public static final String SERIALIZED_NAME_FORMAT = "Format";
   @SerializedName(SERIALIZED_NAME_FORMAT)
@@ -69,7 +65,6 @@ public class LogListLogRequest {
    * @return format
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ListLogRequestLogFormat getFormat() {
     return format;
@@ -92,7 +87,6 @@ public class LogListLogRequest {
    * @return page
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getPage() {
     return page;
@@ -115,7 +109,6 @@ public class LogListLogRequest {
    * @return query
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getQuery() {
     return query;
@@ -138,7 +131,6 @@ public class LogListLogRequest {
    * @return size
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getSize() {
     return size;

@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * UpdatePackage
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class UpdatePackage {
   public static final String SERIALIZED_NAME_BINARY_ARCH = "BinaryArch";
   @SerializedName(SERIALIZED_NAME_BINARY_ARCH)
@@ -123,7 +121,6 @@ public class UpdatePackage {
    * @return binaryArch
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBinaryArch() {
     return binaryArch;
@@ -146,7 +143,6 @@ public class UpdatePackage {
    * @return binaryChecksum
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBinaryChecksum() {
     return binaryChecksum;
@@ -169,7 +165,6 @@ public class UpdatePackage {
    * @return binaryHashType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBinaryHashType() {
     return binaryHashType;
@@ -192,7 +187,6 @@ public class UpdatePackage {
    * @return binaryOS
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBinaryOS() {
     return binaryOS;
@@ -215,7 +209,6 @@ public class UpdatePackage {
    * @return binarySignature
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBinarySignature() {
     return binarySignature;
@@ -238,7 +231,6 @@ public class UpdatePackage {
    * @return binarySize
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBinarySize() {
     return binarySize;
@@ -261,7 +253,6 @@ public class UpdatePackage {
    * @return binaryURL
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBinaryURL() {
     return binaryURL;
@@ -284,7 +275,6 @@ public class UpdatePackage {
    * @return changeLog
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getChangeLog() {
     return changeLog;
@@ -307,7 +297,6 @@ public class UpdatePackage {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -330,7 +319,6 @@ public class UpdatePackage {
    * @return isPatch
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIsPatch() {
     return isPatch;
@@ -353,7 +341,6 @@ public class UpdatePackage {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -376,7 +363,6 @@ public class UpdatePackage {
    * @return license
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLicense() {
     return license;
@@ -399,7 +385,6 @@ public class UpdatePackage {
    * @return packageName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPackageName() {
     return packageName;
@@ -422,7 +407,6 @@ public class UpdatePackage {
    * @return patchAlgorithm
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPatchAlgorithm() {
     return patchAlgorithm;
@@ -445,7 +429,6 @@ public class UpdatePackage {
    * @return releaseDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getReleaseDate() {
     return releaseDate;
@@ -468,7 +451,6 @@ public class UpdatePackage {
    * @return serviceName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getServiceName() {
     return serviceName;
@@ -491,7 +473,6 @@ public class UpdatePackage {
    * @return status
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public PackagePackageStatus getStatus() {
     return status;
@@ -514,7 +495,6 @@ public class UpdatePackage {
    * @return version
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getVersion() {
     return version;

@@ -32,16 +32,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsNodesSelector
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsNodesSelector {
   public static final String SERIALIZED_NAME_ALL = "All";
   @SerializedName(SERIALIZED_NAME_ALL)
   private Boolean all;
+
+  public static final String SERIALIZED_NAME_CLEAR_INPUT = "ClearInput";
+  @SerializedName(SERIALIZED_NAME_CLEAR_INPUT)
+  private Boolean clearInput;
 
   public static final String SERIALIZED_NAME_COLLECT = "Collect";
   @SerializedName(SERIALIZED_NAME_COLLECT)
@@ -61,7 +63,7 @@ public class JobsNodesSelector {
 
   public static final String SERIALIZED_NAME_PATHES = "Pathes";
   @SerializedName(SERIALIZED_NAME_PATHES)
-  private List<String> pathes = null;
+  private List<String> pathes;
 
   public static final String SERIALIZED_NAME_QUERY = "Query";
   @SerializedName(SERIALIZED_NAME_QUERY)
@@ -85,7 +87,6 @@ public class JobsNodesSelector {
    * @return all
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAll() {
     return all;
@@ -94,6 +95,28 @@ public class JobsNodesSelector {
 
   public void setAll(Boolean all) {
     this.all = all;
+  }
+
+
+  public JobsNodesSelector clearInput(Boolean clearInput) {
+    
+    this.clearInput = clearInput;
+    return this;
+  }
+
+   /**
+   * Get clearInput
+   * @return clearInput
+  **/
+  @javax.annotation.Nullable
+
+  public Boolean getClearInput() {
+    return clearInput;
+  }
+
+
+  public void setClearInput(Boolean clearInput) {
+    this.clearInput = clearInput;
   }
 
 
@@ -108,7 +131,6 @@ public class JobsNodesSelector {
    * @return collect
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCollect() {
     return collect;
@@ -131,7 +153,6 @@ public class JobsNodesSelector {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -154,7 +175,6 @@ public class JobsNodesSelector {
    * @return fanOutInput
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getFanOutInput() {
     return fanOutInput;
@@ -177,7 +197,6 @@ public class JobsNodesSelector {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -208,7 +227,6 @@ public class JobsNodesSelector {
    * @return pathes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getPathes() {
     return pathes;
@@ -231,7 +249,6 @@ public class JobsNodesSelector {
    * @return query
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceQuery getQuery() {
     return query;
@@ -254,7 +271,6 @@ public class JobsNodesSelector {
    * @return timeout
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTimeout() {
     return timeout;
@@ -277,6 +293,7 @@ public class JobsNodesSelector {
     }
     JobsNodesSelector jobsNodesSelector = (JobsNodesSelector) o;
     return Objects.equals(this.all, jobsNodesSelector.all) &&
+        Objects.equals(this.clearInput, jobsNodesSelector.clearInput) &&
         Objects.equals(this.collect, jobsNodesSelector.collect) &&
         Objects.equals(this.description, jobsNodesSelector.description) &&
         Objects.equals(this.fanOutInput, jobsNodesSelector.fanOutInput) &&
@@ -288,7 +305,7 @@ public class JobsNodesSelector {
 
   @Override
   public int hashCode() {
-    return Objects.hash(all, collect, description, fanOutInput, label, pathes, query, timeout);
+    return Objects.hash(all, clearInput, collect, description, fanOutInput, label, pathes, query, timeout);
   }
 
   @Override
@@ -296,6 +313,7 @@ public class JobsNodesSelector {
     StringBuilder sb = new StringBuilder();
     sb.append("class JobsNodesSelector {\n");
     sb.append("    all: ").append(toIndentedString(all)).append("\n");
+    sb.append("    clearInput: ").append(toIndentedString(clearInput)).append("\n");
     sb.append("    collect: ").append(toIndentedString(collect)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    fanOutInput: ").append(toIndentedString(fanOutInput)).append("\n");
@@ -326,6 +344,7 @@ public class JobsNodesSelector {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("All");
+    openapiFields.add("ClearInput");
     openapiFields.add("Collect");
     openapiFields.add("Description");
     openapiFields.add("FanOutInput");

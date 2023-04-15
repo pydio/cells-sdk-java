@@ -32,14 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RoleSingleQuery is the basic unit for building queries to Roles.
  */
-@ApiModel(description = "RoleSingleQuery is the basic unit for building queries to Roles.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmRoleSingleQuery {
   public static final String SERIALIZED_NAME_HAS_AUTO_APPLY = "HasAutoApply";
   @SerializedName(SERIALIZED_NAME_HAS_AUTO_APPLY)
@@ -63,7 +59,7 @@ public class IdmRoleSingleQuery {
 
   public static final String SERIALIZED_NAME_UUID = "Uuid";
   @SerializedName(SERIALIZED_NAME_UUID)
-  private List<String> uuid = null;
+  private List<String> uuid;
 
   public static final String SERIALIZED_NAME_NOT = "not";
   @SerializedName(SERIALIZED_NAME_NOT)
@@ -83,7 +79,6 @@ public class IdmRoleSingleQuery {
    * @return hasAutoApply
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getHasAutoApply() {
     return hasAutoApply;
@@ -106,7 +101,6 @@ public class IdmRoleSingleQuery {
    * @return isGroupRole
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIsGroupRole() {
     return isGroupRole;
@@ -129,7 +123,6 @@ public class IdmRoleSingleQuery {
    * @return isTeam
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIsTeam() {
     return isTeam;
@@ -152,7 +145,6 @@ public class IdmRoleSingleQuery {
    * @return isUserRole
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIsUserRole() {
     return isUserRole;
@@ -175,7 +167,6 @@ public class IdmRoleSingleQuery {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -206,7 +197,6 @@ public class IdmRoleSingleQuery {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getUuid() {
     return uuid;
@@ -229,7 +219,6 @@ public class IdmRoleSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getNot() {
     return not;

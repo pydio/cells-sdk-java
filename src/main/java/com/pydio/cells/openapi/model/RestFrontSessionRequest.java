@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestFrontSessionRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestFrontSessionRequest {
   public static final String SERIALIZED_NAME_AUTH_INFO = "AuthInfo";
   @SerializedName(SERIALIZED_NAME_AUTH_INFO)
-  private Map<String, String> authInfo = null;
+  private Map<String, String> authInfo = new HashMap<>();
 
   public static final String SERIALIZED_NAME_CLIENT_TIME = "ClientTime";
   @SerializedName(SERIALIZED_NAME_CLIENT_TIME)
@@ -73,7 +71,6 @@ public class RestFrontSessionRequest {
    * @return authInfo
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getAuthInfo() {
     return authInfo;
@@ -96,7 +93,6 @@ public class RestFrontSessionRequest {
    * @return clientTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getClientTime() {
     return clientTime;
@@ -119,7 +115,6 @@ public class RestFrontSessionRequest {
    * @return logout
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getLogout() {
     return logout;

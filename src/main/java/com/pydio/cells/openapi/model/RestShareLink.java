@@ -35,12 +35,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestShareLink
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestShareLink {
   public static final String SERIALIZED_NAME_ACCESS_END = "AccessEnd";
   @SerializedName(SERIALIZED_NAME_ACCESS_END)
@@ -80,11 +78,11 @@ public class RestShareLink {
 
   public static final String SERIALIZED_NAME_PERMISSIONS = "Permissions";
   @SerializedName(SERIALIZED_NAME_PERMISSIONS)
-  private List<RestShareLinkAccessType> permissions = null;
+  private List<RestShareLinkAccessType> permissions;
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE = "PoliciesContextEditable";
   @SerializedName(SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE)
@@ -96,11 +94,11 @@ public class RestShareLink {
 
   public static final String SERIALIZED_NAME_ROOT_NODES = "RootNodes";
   @SerializedName(SERIALIZED_NAME_ROOT_NODES)
-  private List<TreeNode> rootNodes = null;
+  private List<TreeNode> rootNodes;
 
   public static final String SERIALIZED_NAME_TARGET_USERS = "TargetUsers";
   @SerializedName(SERIALIZED_NAME_TARGET_USERS)
-  private Map<String, RestShareLinkTargetUser> targetUsers = null;
+  private Map<String, RestShareLinkTargetUser> targetUsers = new HashMap<>();
 
   public static final String SERIALIZED_NAME_USER_LOGIN = "UserLogin";
   @SerializedName(SERIALIZED_NAME_USER_LOGIN)
@@ -132,7 +130,6 @@ public class RestShareLink {
    * @return accessEnd
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAccessEnd() {
     return accessEnd;
@@ -155,7 +152,6 @@ public class RestShareLink {
    * @return accessStart
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAccessStart() {
     return accessStart;
@@ -178,7 +174,6 @@ public class RestShareLink {
    * @return currentDownloads
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCurrentDownloads() {
     return currentDownloads;
@@ -201,7 +196,6 @@ public class RestShareLink {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -224,7 +218,6 @@ public class RestShareLink {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -247,7 +240,6 @@ public class RestShareLink {
    * @return linkHash
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLinkHash() {
     return linkHash;
@@ -270,7 +262,6 @@ public class RestShareLink {
    * @return linkUrl
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLinkUrl() {
     return linkUrl;
@@ -293,7 +284,6 @@ public class RestShareLink {
    * @return maxDownloads
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMaxDownloads() {
     return maxDownloads;
@@ -316,7 +306,6 @@ public class RestShareLink {
    * @return passwordRequired
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getPasswordRequired() {
     return passwordRequired;
@@ -347,7 +336,6 @@ public class RestShareLink {
    * @return permissions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RestShareLinkAccessType> getPermissions() {
     return permissions;
@@ -378,7 +366,6 @@ public class RestShareLink {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -401,7 +388,6 @@ public class RestShareLink {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
@@ -424,7 +410,6 @@ public class RestShareLink {
    * @return restrictToTargetUsers
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getRestrictToTargetUsers() {
     return restrictToTargetUsers;
@@ -455,7 +440,6 @@ public class RestShareLink {
    * @return rootNodes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeNode> getRootNodes() {
     return rootNodes;
@@ -486,7 +470,6 @@ public class RestShareLink {
    * @return targetUsers
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, RestShareLinkTargetUser> getTargetUsers() {
     return targetUsers;
@@ -509,7 +492,6 @@ public class RestShareLink {
    * @return userLogin
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserLogin() {
     return userLogin;
@@ -532,7 +514,6 @@ public class RestShareLink {
    * @return userUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserUuid() {
     return userUuid;
@@ -555,7 +536,6 @@ public class RestShareLink {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;
@@ -578,7 +558,6 @@ public class RestShareLink {
    * @return viewTemplateName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getViewTemplateName() {
     return viewTemplateName;

@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestListSharedResourcesResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestListSharedResourcesResponse {
   public static final String SERIALIZED_NAME_LIMIT = "Limit";
   @SerializedName(SERIALIZED_NAME_LIMIT)
@@ -50,7 +48,7 @@ public class RestListSharedResourcesResponse {
 
   public static final String SERIALIZED_NAME_RESOURCES = "Resources";
   @SerializedName(SERIALIZED_NAME_RESOURCES)
-  private List<ListSharedResourcesResponseSharedResource> resources = null;
+  private List<ListSharedResourcesResponseSharedResource> resources;
 
   public static final String SERIALIZED_NAME_TOTAL = "Total";
   @SerializedName(SERIALIZED_NAME_TOTAL)
@@ -70,7 +68,6 @@ public class RestListSharedResourcesResponse {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLimit() {
     return limit;
@@ -93,7 +90,6 @@ public class RestListSharedResourcesResponse {
    * @return offset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getOffset() {
     return offset;
@@ -124,7 +120,6 @@ public class RestListSharedResourcesResponse {
    * @return resources
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ListSharedResourcesResponseSharedResource> getResources() {
     return resources;
@@ -147,7 +142,6 @@ public class RestListSharedResourcesResponse {
    * @return total
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTotal() {
     return total;

@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ObjectDataSource
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ObjectDataSource {
   public static final String SERIALIZED_NAME_API_KEY = "ApiKey";
   @SerializedName(SERIALIZED_NAME_API_KEY)
@@ -109,7 +107,7 @@ public class ObjectDataSource {
 
   public static final String SERIALIZED_NAME_STORAGE_CONFIGURATION = "StorageConfiguration";
   @SerializedName(SERIALIZED_NAME_STORAGE_CONFIGURATION)
-  private Map<String, String> storageConfiguration = null;
+  private Map<String, String> storageConfiguration = new HashMap<>();
 
   public static final String SERIALIZED_NAME_STORAGE_TYPE = "StorageType";
   @SerializedName(SERIALIZED_NAME_STORAGE_TYPE)
@@ -137,7 +135,6 @@ public class ObjectDataSource {
    * @return apiKey
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getApiKey() {
     return apiKey;
@@ -160,7 +157,6 @@ public class ObjectDataSource {
    * @return apiSecret
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getApiSecret() {
     return apiSecret;
@@ -183,7 +179,6 @@ public class ObjectDataSource {
    * @return creationDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCreationDate() {
     return creationDate;
@@ -206,7 +201,6 @@ public class ObjectDataSource {
    * @return disabled
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getDisabled() {
     return disabled;
@@ -229,7 +223,6 @@ public class ObjectDataSource {
    * @return encryptionKey
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getEncryptionKey() {
     return encryptionKey;
@@ -252,7 +245,6 @@ public class ObjectDataSource {
    * @return encryptionMode
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ObjectEncryptionMode getEncryptionMode() {
     return encryptionMode;
@@ -275,7 +267,6 @@ public class ObjectDataSource {
    * @return flatStorage
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getFlatStorage() {
     return flatStorage;
@@ -298,7 +289,6 @@ public class ObjectDataSource {
    * @return lastSynchronizationDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLastSynchronizationDate() {
     return lastSynchronizationDate;
@@ -321,7 +311,6 @@ public class ObjectDataSource {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -344,7 +333,6 @@ public class ObjectDataSource {
    * @return objectsBaseFolder
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getObjectsBaseFolder() {
     return objectsBaseFolder;
@@ -367,7 +355,6 @@ public class ObjectDataSource {
    * @return objectsBucket
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getObjectsBucket() {
     return objectsBucket;
@@ -390,7 +377,6 @@ public class ObjectDataSource {
    * @return objectsHost
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getObjectsHost() {
     return objectsHost;
@@ -413,7 +399,6 @@ public class ObjectDataSource {
    * @return objectsPort
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getObjectsPort() {
     return objectsPort;
@@ -436,7 +421,6 @@ public class ObjectDataSource {
    * @return objectsSecure
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getObjectsSecure() {
     return objectsSecure;
@@ -459,7 +443,6 @@ public class ObjectDataSource {
    * @return objectsServiceName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getObjectsServiceName() {
     return objectsServiceName;
@@ -482,7 +465,6 @@ public class ObjectDataSource {
    * @return peerAddress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPeerAddress() {
     return peerAddress;
@@ -505,7 +487,6 @@ public class ObjectDataSource {
    * @return skipSyncOnRestart
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getSkipSyncOnRestart() {
     return skipSyncOnRestart;
@@ -536,7 +517,6 @@ public class ObjectDataSource {
    * @return storageConfiguration
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getStorageConfiguration() {
     return storageConfiguration;
@@ -559,7 +539,6 @@ public class ObjectDataSource {
    * @return storageType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ObjectStorageType getStorageType() {
     return storageType;
@@ -582,7 +561,6 @@ public class ObjectDataSource {
    * @return versioningPolicyName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getVersioningPolicyName() {
     return versioningPolicyName;
@@ -605,7 +583,6 @@ public class ObjectDataSource {
    * @return watch
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getWatch() {
     return watch;

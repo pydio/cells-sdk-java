@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmUserMetaNamespace
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmUserMetaNamespace {
   public static final String SERIALIZED_NAME_INDEXABLE = "Indexable";
   @SerializedName(SERIALIZED_NAME_INDEXABLE)
@@ -62,7 +60,7 @@ public class IdmUserMetaNamespace {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE = "PoliciesContextEditable";
   @SerializedName(SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE)
@@ -82,7 +80,6 @@ public class IdmUserMetaNamespace {
    * @return indexable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIndexable() {
     return indexable;
@@ -105,7 +102,6 @@ public class IdmUserMetaNamespace {
    * @return jsonDefinition
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJsonDefinition() {
     return jsonDefinition;
@@ -128,7 +124,6 @@ public class IdmUserMetaNamespace {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -151,7 +146,6 @@ public class IdmUserMetaNamespace {
    * @return namespace
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getNamespace() {
     return namespace;
@@ -174,7 +168,6 @@ public class IdmUserMetaNamespace {
    * @return order
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getOrder() {
     return order;
@@ -205,7 +198,6 @@ public class IdmUserMetaNamespace {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -228,7 +220,6 @@ public class IdmUserMetaNamespace {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;

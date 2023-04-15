@@ -32,14 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * LogMessage is the format used to transmit log messages to clients via the REST API.
  */
-@ApiModel(description = "LogMessage is the format used to transmit log messages to clients via the REST API.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class LogLogMessage {
   public static final String SERIALIZED_NAME_GROUP_PATH = "GroupPath";
   @SerializedName(SERIALIZED_NAME_GROUP_PATH)
@@ -95,7 +91,7 @@ public class LogLogMessage {
 
   public static final String SERIALIZED_NAME_ROLE_UUIDS = "RoleUuids";
   @SerializedName(SERIALIZED_NAME_ROLE_UUIDS)
-  private List<String> roleUuids = null;
+  private List<String> roleUuids;
 
   public static final String SERIALIZED_NAME_SCHEDULER_JOB_UUID = "SchedulerJobUuid";
   @SerializedName(SERIALIZED_NAME_SCHEDULER_JOB_UUID)
@@ -159,7 +155,6 @@ public class LogLogMessage {
    * @return groupPath
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getGroupPath() {
     return groupPath;
@@ -182,7 +177,6 @@ public class LogLogMessage {
    * @return httpProtocol
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getHttpProtocol() {
     return httpProtocol;
@@ -205,7 +199,6 @@ public class LogLogMessage {
    * @return jsonZaps
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJsonZaps() {
     return jsonZaps;
@@ -228,7 +221,6 @@ public class LogLogMessage {
    * @return level
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLevel() {
     return level;
@@ -251,7 +243,6 @@ public class LogLogMessage {
    * @return logger
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLogger() {
     return logger;
@@ -274,7 +265,6 @@ public class LogLogMessage {
    * @return msg
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMsg() {
     return msg;
@@ -297,7 +287,6 @@ public class LogLogMessage {
    * @return msgId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMsgId() {
     return msgId;
@@ -320,7 +309,6 @@ public class LogLogMessage {
    * @return nodePath
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getNodePath() {
     return nodePath;
@@ -343,7 +331,6 @@ public class LogLogMessage {
    * @return nodeUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getNodeUuid() {
     return nodeUuid;
@@ -366,7 +353,6 @@ public class LogLogMessage {
    * @return operationLabel
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOperationLabel() {
     return operationLabel;
@@ -389,7 +375,6 @@ public class LogLogMessage {
    * @return operationUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOperationUuid() {
     return operationUuid;
@@ -412,7 +397,6 @@ public class LogLogMessage {
    * @return profile
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getProfile() {
     return profile;
@@ -435,7 +419,6 @@ public class LogLogMessage {
    * @return remoteAddress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getRemoteAddress() {
     return remoteAddress;
@@ -466,7 +449,6 @@ public class LogLogMessage {
    * @return roleUuids
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getRoleUuids() {
     return roleUuids;
@@ -489,7 +471,6 @@ public class LogLogMessage {
    * @return schedulerJobUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSchedulerJobUuid() {
     return schedulerJobUuid;
@@ -512,7 +493,6 @@ public class LogLogMessage {
    * @return schedulerTaskActionPath
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSchedulerTaskActionPath() {
     return schedulerTaskActionPath;
@@ -535,7 +515,6 @@ public class LogLogMessage {
    * @return schedulerTaskUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSchedulerTaskUuid() {
     return schedulerTaskUuid;
@@ -558,7 +537,6 @@ public class LogLogMessage {
    * @return spanParentUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSpanParentUuid() {
     return spanParentUuid;
@@ -581,7 +559,6 @@ public class LogLogMessage {
    * @return spanRootUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSpanRootUuid() {
     return spanRootUuid;
@@ -604,7 +581,6 @@ public class LogLogMessage {
    * @return spanUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSpanUuid() {
     return spanUuid;
@@ -627,7 +603,6 @@ public class LogLogMessage {
    * @return ts
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTs() {
     return ts;
@@ -650,7 +625,6 @@ public class LogLogMessage {
    * @return userAgent
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserAgent() {
     return userAgent;
@@ -673,7 +647,6 @@ public class LogLogMessage {
    * @return userName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserName() {
     return userName;
@@ -696,7 +669,6 @@ public class LogLogMessage {
    * @return userUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserUuid() {
     return userUuid;
@@ -719,7 +691,6 @@ public class LogLogMessage {
    * @return wsScope
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getWsScope() {
     return wsScope;
@@ -742,7 +713,6 @@ public class LogLogMessage {
    * @return wsUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getWsUuid() {
     return wsUuid;

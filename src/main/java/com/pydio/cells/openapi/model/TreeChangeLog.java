@@ -31,12 +31,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeChangeLog
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeChangeLog {
   public static final String SERIALIZED_NAME_DATA = "Data";
   @SerializedName(SERIALIZED_NAME_DATA)
@@ -84,7 +82,6 @@ public class TreeChangeLog {
    * @return data
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public byte[] getData() {
     return data;
@@ -107,7 +104,6 @@ public class TreeChangeLog {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -130,7 +126,6 @@ public class TreeChangeLog {
    * @return event
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNodeChangeEvent getEvent() {
     return event;
@@ -153,7 +148,6 @@ public class TreeChangeLog {
    * @return location
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNode getLocation() {
     return location;
@@ -176,7 +170,6 @@ public class TreeChangeLog {
    * @return mtime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMtime() {
     return mtime;
@@ -199,7 +192,6 @@ public class TreeChangeLog {
    * @return ownerUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOwnerUuid() {
     return ownerUuid;
@@ -222,7 +214,6 @@ public class TreeChangeLog {
    * @return size
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSize() {
     return size;
@@ -245,7 +236,6 @@ public class TreeChangeLog {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;

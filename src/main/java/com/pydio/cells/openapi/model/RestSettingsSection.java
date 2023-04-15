@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSettingsSection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSettingsSection {
   public static final String SERIALIZED_NAME_C_H_I_L_D_R_E_N = "CHILDREN";
   @SerializedName(SERIALIZED_NAME_C_H_I_L_D_R_E_N)
-  private List<RestSettingsEntry> CHILDREN = null;
+  private List<RestSettingsEntry> CHILDREN;
 
   public static final String SERIALIZED_NAME_D_E_S_C_R_I_P_T_I_O_N = "DESCRIPTION";
   @SerializedName(SERIALIZED_NAME_D_E_S_C_R_I_P_T_I_O_N)
@@ -78,7 +76,6 @@ public class RestSettingsSection {
    * @return CHILDREN
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RestSettingsEntry> getCHILDREN() {
     return CHILDREN;
@@ -101,7 +98,6 @@ public class RestSettingsSection {
    * @return DESCRIPTION
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDESCRIPTION() {
     return DESCRIPTION;
@@ -124,7 +120,6 @@ public class RestSettingsSection {
    * @return key
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getKey() {
     return key;
@@ -147,7 +142,6 @@ public class RestSettingsSection {
    * @return LABEL
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLABEL() {
     return LABEL;

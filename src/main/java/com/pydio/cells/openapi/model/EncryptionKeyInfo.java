@@ -33,20 +33,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * EncryptionKeyInfo
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class EncryptionKeyInfo {
   public static final String SERIALIZED_NAME_EXPORTS = "Exports";
   @SerializedName(SERIALIZED_NAME_EXPORTS)
-  private List<EncryptionExport> exports = null;
+  private List<EncryptionExport> exports;
 
   public static final String SERIALIZED_NAME_IMPORTS = "Imports";
   @SerializedName(SERIALIZED_NAME_IMPORTS)
-  private List<EncryptionImport> imports = null;
+  private List<EncryptionImport> imports;
 
   public EncryptionKeyInfo() {
   }
@@ -70,7 +68,6 @@ public class EncryptionKeyInfo {
    * @return exports
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<EncryptionExport> getExports() {
     return exports;
@@ -101,7 +98,6 @@ public class EncryptionKeyInfo {
    * @return imports
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<EncryptionImport> getImports() {
     return imports;

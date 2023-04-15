@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RegistryNode
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RegistryNode {
   public static final String SERIALIZED_NAME_ADVERTISE_IP = "advertiseIp";
   @SerializedName(SERIALIZED_NAME_ADVERTISE_IP)
@@ -49,7 +47,7 @@ public class RegistryNode {
 
   public static final String SERIALIZED_NAME_IPS = "ips";
   @SerializedName(SERIALIZED_NAME_IPS)
-  private List<String> ips = null;
+  private List<String> ips;
 
   public static final String SERIALIZED_NAME_MACHINE = "machine";
   @SerializedName(SERIALIZED_NAME_MACHINE)
@@ -69,7 +67,6 @@ public class RegistryNode {
    * @return advertiseIp
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAdvertiseIp() {
     return advertiseIp;
@@ -92,7 +89,6 @@ public class RegistryNode {
    * @return hostname
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getHostname() {
     return hostname;
@@ -123,7 +119,6 @@ public class RegistryNode {
    * @return ips
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getIps() {
     return ips;
@@ -146,7 +141,6 @@ public class RegistryNode {
    * @return machine
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMachine() {
     return machine;

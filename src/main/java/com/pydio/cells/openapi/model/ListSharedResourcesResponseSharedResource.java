@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ListSharedResourcesResponseSharedResource
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ListSharedResourcesResponseSharedResource {
   public static final String SERIALIZED_NAME_CELLS = "Cells";
   @SerializedName(SERIALIZED_NAME_CELLS)
-  private List<RestCell> cells = null;
+  private List<RestCell> cells;
 
   public static final String SERIALIZED_NAME_LINK = "Link";
   @SerializedName(SERIALIZED_NAME_LINK)
@@ -74,7 +72,6 @@ public class ListSharedResourcesResponseSharedResource {
    * @return cells
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RestCell> getCells() {
     return cells;
@@ -97,7 +94,6 @@ public class ListSharedResourcesResponseSharedResource {
    * @return link
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RestShareLink getLink() {
     return link;
@@ -120,7 +116,6 @@ public class ListSharedResourcesResponseSharedResource {
    * @return node
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNode getNode() {
     return node;

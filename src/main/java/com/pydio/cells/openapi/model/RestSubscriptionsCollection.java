@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSubscriptionsCollection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSubscriptionsCollection {
   public static final String SERIALIZED_NAME_SUBSCRIPTIONS = "subscriptions";
   @SerializedName(SERIALIZED_NAME_SUBSCRIPTIONS)
-  private List<ActivitySubscription> subscriptions = null;
+  private List<ActivitySubscription> subscriptions;
 
   public RestSubscriptionsCollection() {
   }
@@ -66,7 +64,6 @@ public class RestSubscriptionsCollection {
    * @return subscriptions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ActivitySubscription> getSubscriptions() {
     return subscriptions;

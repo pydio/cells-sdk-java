@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * EncryptionAdminCreateKeyRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class EncryptionAdminCreateKeyRequest {
   public static final String SERIALIZED_NAME_KEY_I_D = "KeyID";
   @SerializedName(SERIALIZED_NAME_KEY_I_D)
@@ -59,7 +57,6 @@ public class EncryptionAdminCreateKeyRequest {
    * @return keyID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getKeyID() {
     return keyID;
@@ -82,7 +79,6 @@ public class EncryptionAdminCreateKeyRequest {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;

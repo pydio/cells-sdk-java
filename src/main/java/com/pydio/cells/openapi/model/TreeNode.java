@@ -35,20 +35,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeNode
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeNode {
   public static final String SERIALIZED_NAME_APPEARS_IN = "AppearsIn";
   @SerializedName(SERIALIZED_NAME_APPEARS_IN)
-  private List<TreeWorkspaceRelativePath> appearsIn = null;
+  private List<TreeWorkspaceRelativePath> appearsIn;
 
   public static final String SERIALIZED_NAME_COMMITS = "Commits";
   @SerializedName(SERIALIZED_NAME_COMMITS)
-  private List<TreeChangeLog> commits = null;
+  private List<TreeChangeLog> commits;
 
   public static final String SERIALIZED_NAME_ETAG = "Etag";
   @SerializedName(SERIALIZED_NAME_ETAG)
@@ -60,7 +58,7 @@ public class TreeNode {
 
   public static final String SERIALIZED_NAME_META_STORE = "MetaStore";
   @SerializedName(SERIALIZED_NAME_META_STORE)
-  private Map<String, String> metaStore = null;
+  private Map<String, String> metaStore = new HashMap<>();
 
   public static final String SERIALIZED_NAME_MODE = "Mode";
   @SerializedName(SERIALIZED_NAME_MODE)
@@ -104,7 +102,6 @@ public class TreeNode {
    * @return appearsIn
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeWorkspaceRelativePath> getAppearsIn() {
     return appearsIn;
@@ -135,7 +132,6 @@ public class TreeNode {
    * @return commits
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeChangeLog> getCommits() {
     return commits;
@@ -158,7 +154,6 @@ public class TreeNode {
    * @return etag
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getEtag() {
     return etag;
@@ -181,7 +176,6 @@ public class TreeNode {
    * @return mtime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMtime() {
     return mtime;
@@ -212,7 +206,6 @@ public class TreeNode {
    * @return metaStore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getMetaStore() {
     return metaStore;
@@ -235,7 +228,6 @@ public class TreeNode {
    * @return mode
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getMode() {
     return mode;
@@ -258,7 +250,6 @@ public class TreeNode {
    * @return path
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPath() {
     return path;
@@ -281,7 +272,6 @@ public class TreeNode {
    * @return size
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSize() {
     return size;
@@ -304,7 +294,6 @@ public class TreeNode {
    * @return type
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNodeType getType() {
     return type;
@@ -327,7 +316,6 @@ public class TreeNode {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;

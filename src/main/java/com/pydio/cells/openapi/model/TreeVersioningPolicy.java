@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeVersioningPolicy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeVersioningPolicy {
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -50,7 +48,7 @@ public class TreeVersioningPolicy {
 
   public static final String SERIALIZED_NAME_KEEP_PERIODS = "KeepPeriods";
   @SerializedName(SERIALIZED_NAME_KEEP_PERIODS)
-  private List<TreeVersioningKeepPeriod> keepPeriods = null;
+  private List<TreeVersioningKeepPeriod> keepPeriods;
 
   public static final String SERIALIZED_NAME_MAX_SIZE_PER_FILE = "MaxSizePerFile";
   @SerializedName(SERIALIZED_NAME_MAX_SIZE_PER_FILE)
@@ -94,7 +92,6 @@ public class TreeVersioningPolicy {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -117,7 +114,6 @@ public class TreeVersioningPolicy {
    * @return ignoreFilesGreaterThan
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIgnoreFilesGreaterThan() {
     return ignoreFilesGreaterThan;
@@ -148,7 +144,6 @@ public class TreeVersioningPolicy {
    * @return keepPeriods
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeVersioningKeepPeriod> getKeepPeriods() {
     return keepPeriods;
@@ -171,7 +166,6 @@ public class TreeVersioningPolicy {
    * @return maxSizePerFile
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMaxSizePerFile() {
     return maxSizePerFile;
@@ -194,7 +188,6 @@ public class TreeVersioningPolicy {
    * @return maxTotalSize
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMaxTotalSize() {
     return maxTotalSize;
@@ -217,7 +210,6 @@ public class TreeVersioningPolicy {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -240,7 +232,6 @@ public class TreeVersioningPolicy {
    * @return nodeDeletedStrategy
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeVersioningNodeDeletedStrategy getNodeDeletedStrategy() {
     return nodeDeletedStrategy;
@@ -263,7 +254,6 @@ public class TreeVersioningPolicy {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;
@@ -286,7 +276,6 @@ public class TreeVersioningPolicy {
    * @return versionsDataSourceBucket
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getVersionsDataSourceBucket() {
     return versionsDataSourceBucket;
@@ -309,7 +298,6 @@ public class TreeVersioningPolicy {
    * @return versionsDataSourceName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getVersionsDataSourceName() {
     return versionsDataSourceName;

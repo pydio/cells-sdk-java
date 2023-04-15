@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSchedulerActionsResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSchedulerActionsResponse {
   public static final String SERIALIZED_NAME_ACTIONS = "Actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
-  private Map<String, RestActionDescription> actions = null;
+  private Map<String, RestActionDescription> actions = new HashMap<>();
 
   public RestSchedulerActionsResponse() {
   }
@@ -65,7 +63,6 @@ public class RestSchedulerActionsResponse {
    * @return actions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, RestActionDescription> getActions() {
     return actions;

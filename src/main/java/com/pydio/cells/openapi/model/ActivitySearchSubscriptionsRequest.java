@@ -32,24 +32,22 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ActivitySearchSubscriptionsRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ActivitySearchSubscriptionsRequest {
   public static final String SERIALIZED_NAME_OBJECT_IDS = "ObjectIds";
   @SerializedName(SERIALIZED_NAME_OBJECT_IDS)
-  private List<String> objectIds = null;
+  private List<String> objectIds;
 
   public static final String SERIALIZED_NAME_OBJECT_TYPES = "ObjectTypes";
   @SerializedName(SERIALIZED_NAME_OBJECT_TYPES)
-  private List<ActivityOwnerType> objectTypes = null;
+  private List<ActivityOwnerType> objectTypes;
 
   public static final String SERIALIZED_NAME_USER_IDS = "UserIds";
   @SerializedName(SERIALIZED_NAME_USER_IDS)
-  private List<String> userIds = null;
+  private List<String> userIds;
 
   public ActivitySearchSubscriptionsRequest() {
   }
@@ -73,7 +71,6 @@ public class ActivitySearchSubscriptionsRequest {
    * @return objectIds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getObjectIds() {
     return objectIds;
@@ -104,7 +101,6 @@ public class ActivitySearchSubscriptionsRequest {
    * @return objectTypes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ActivityOwnerType> getObjectTypes() {
     return objectTypes;
@@ -135,7 +131,6 @@ public class ActivitySearchSubscriptionsRequest {
    * @return userIds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getUserIds() {
     return userIds;

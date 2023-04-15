@@ -35,12 +35,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsJobHook
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsJobHook {
   public static final String SERIALIZED_NAME_ALLOW_OVERRIDE_PRESETS = "AllowOverridePresets";
   @SerializedName(SERIALIZED_NAME_ALLOW_OVERRIDE_PRESETS)
@@ -52,15 +50,15 @@ public class JobsJobHook {
 
   public static final String SERIALIZED_NAME_METADATA = "Metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
-  private Map<String, String> metadata = null;
+  private Map<String, String> metadata = new HashMap<>();
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_PRESET_PARAMETERS = "PresetParameters";
   @SerializedName(SERIALIZED_NAME_PRESET_PARAMETERS)
-  private Map<String, String> presetParameters = null;
+  private Map<String, String> presetParameters = new HashMap<>();
 
   public JobsJobHook() {
   }
@@ -76,7 +74,6 @@ public class JobsJobHook {
    * @return allowOverridePresets
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAllowOverridePresets() {
     return allowOverridePresets;
@@ -99,7 +96,6 @@ public class JobsJobHook {
    * @return apiSlug
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getApiSlug() {
     return apiSlug;
@@ -130,7 +126,6 @@ public class JobsJobHook {
    * @return metadata
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getMetadata() {
     return metadata;
@@ -161,7 +156,6 @@ public class JobsJobHook {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -192,7 +186,6 @@ public class JobsJobHook {
    * @return presetParameters
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getPresetParameters() {
     return presetParameters;

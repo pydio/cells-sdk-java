@@ -35,16 +35,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RegistryItem
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RegistryItem {
   public static final String SERIALIZED_NAME_ADJACENTS = "adjacents";
   @SerializedName(SERIALIZED_NAME_ADJACENTS)
-  private List<RegistryItem> adjacents = null;
+  private List<RegistryItem> adjacents;
 
   public static final String SERIALIZED_NAME_DAO = "dao";
   @SerializedName(SERIALIZED_NAME_DAO)
@@ -64,7 +62,7 @@ public class RegistryItem {
 
   public static final String SERIALIZED_NAME_METADATA = "metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
-  private Map<String, String> metadata = null;
+  private Map<String, String> metadata = new HashMap<>();
 
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -104,7 +102,6 @@ public class RegistryItem {
    * @return adjacents
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RegistryItem> getAdjacents() {
     return adjacents;
@@ -127,7 +124,6 @@ public class RegistryItem {
    * @return dao
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryDao getDao() {
     return dao;
@@ -150,7 +146,6 @@ public class RegistryItem {
    * @return edge
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryEdge getEdge() {
     return edge;
@@ -173,7 +168,6 @@ public class RegistryItem {
    * @return generic
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryGeneric getGeneric() {
     return generic;
@@ -196,7 +190,6 @@ public class RegistryItem {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getId() {
     return id;
@@ -227,7 +220,6 @@ public class RegistryItem {
    * @return metadata
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getMetadata() {
     return metadata;
@@ -250,7 +242,6 @@ public class RegistryItem {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -273,7 +264,6 @@ public class RegistryItem {
    * @return node
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryNode getNode() {
     return node;
@@ -296,7 +286,6 @@ public class RegistryItem {
    * @return server
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryServer getServer() {
     return server;
@@ -319,7 +308,6 @@ public class RegistryItem {
    * @return service
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RegistryService getService() {
     return service;

@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestUsersCollection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestUsersCollection {
   public static final String SERIALIZED_NAME_GROUPS = "Groups";
   @SerializedName(SERIALIZED_NAME_GROUPS)
-  private List<IdmUser> groups = null;
+  private List<IdmUser> groups;
 
   public static final String SERIALIZED_NAME_TOTAL = "Total";
   @SerializedName(SERIALIZED_NAME_TOTAL)
@@ -50,7 +48,7 @@ public class RestUsersCollection {
 
   public static final String SERIALIZED_NAME_USERS = "Users";
   @SerializedName(SERIALIZED_NAME_USERS)
-  private List<IdmUser> users = null;
+  private List<IdmUser> users;
 
   public RestUsersCollection() {
   }
@@ -74,7 +72,6 @@ public class RestUsersCollection {
    * @return groups
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmUser> getGroups() {
     return groups;
@@ -97,7 +94,6 @@ public class RestUsersCollection {
    * @return total
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTotal() {
     return total;
@@ -128,7 +124,6 @@ public class RestUsersCollection {
    * @return users
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmUser> getUsers() {
     return users;

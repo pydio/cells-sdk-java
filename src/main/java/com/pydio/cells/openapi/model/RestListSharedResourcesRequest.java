@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestListSharedResourcesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestListSharedResourcesRequest {
   public static final String SERIALIZED_NAME_LIMIT = "Limit";
   @SerializedName(SERIALIZED_NAME_LIMIT)
@@ -71,7 +69,6 @@ public class RestListSharedResourcesRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLimit() {
     return limit;
@@ -94,7 +91,6 @@ public class RestListSharedResourcesRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getOffset() {
     return offset;
@@ -117,7 +113,6 @@ public class RestListSharedResourcesRequest {
    * @return ownedBySubject
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getOwnedBySubject() {
     return ownedBySubject;
@@ -140,7 +135,6 @@ public class RestListSharedResourcesRequest {
    * @return shareType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ListSharedResourcesRequestListShareType getShareType() {
     return shareType;
@@ -163,7 +157,6 @@ public class RestListSharedResourcesRequest {
    * @return subject
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSubject() {
     return subject;

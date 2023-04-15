@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestProcess
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestProcess {
   public static final String SERIALIZED_NAME_I_D = "ID";
   @SerializedName(SERIALIZED_NAME_I_D)
@@ -61,7 +59,7 @@ public class RestProcess {
 
   public static final String SERIALIZED_NAME_SERVICES = "Services";
   @SerializedName(SERIALIZED_NAME_SERVICES)
-  private List<String> services = null;
+  private List<String> services;
 
   public static final String SERIALIZED_NAME_START_TAG = "StartTag";
   @SerializedName(SERIALIZED_NAME_START_TAG)
@@ -81,7 +79,6 @@ public class RestProcess {
    * @return ID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getID() {
     return ID;
@@ -104,7 +101,6 @@ public class RestProcess {
    * @return metricsPort
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getMetricsPort() {
     return metricsPort;
@@ -127,7 +123,6 @@ public class RestProcess {
    * @return parentID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getParentID() {
     return parentID;
@@ -150,7 +145,6 @@ public class RestProcess {
    * @return peerAddress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPeerAddress() {
     return peerAddress;
@@ -173,7 +167,6 @@ public class RestProcess {
    * @return peerId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPeerId() {
     return peerId;
@@ -204,7 +197,6 @@ public class RestProcess {
    * @return services
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getServices() {
     return services;
@@ -227,7 +219,6 @@ public class RestProcess {
    * @return startTag
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getStartTag() {
     return startTag;

@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmUserSingleQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmUserSingleQuery {
   public static final String SERIALIZED_NAME_ATTRIBUTE_ANY_VALUE = "AttributeAnyValue";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTE_ANY_VALUE)
@@ -107,7 +105,6 @@ public class IdmUserSingleQuery {
    * @return attributeAnyValue
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAttributeAnyValue() {
     return attributeAnyValue;
@@ -130,7 +127,6 @@ public class IdmUserSingleQuery {
    * @return attributeName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAttributeName() {
     return attributeName;
@@ -153,7 +149,6 @@ public class IdmUserSingleQuery {
    * @return attributeValue
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAttributeValue() {
     return attributeValue;
@@ -176,7 +171,6 @@ public class IdmUserSingleQuery {
    * @return connectedSince
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getConnectedSince() {
     return connectedSince;
@@ -199,7 +193,6 @@ public class IdmUserSingleQuery {
    * @return fullPath
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFullPath() {
     return fullPath;
@@ -222,7 +215,6 @@ public class IdmUserSingleQuery {
    * @return groupPath
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getGroupPath() {
     return groupPath;
@@ -245,7 +237,6 @@ public class IdmUserSingleQuery {
    * @return hasProfile
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getHasProfile() {
     return hasProfile;
@@ -268,7 +259,6 @@ public class IdmUserSingleQuery {
    * @return hasRole
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getHasRole() {
     return hasRole;
@@ -291,7 +281,6 @@ public class IdmUserSingleQuery {
    * @return login
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLogin() {
     return login;
@@ -314,7 +303,6 @@ public class IdmUserSingleQuery {
    * @return nodeType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmNodeType getNodeType() {
     return nodeType;
@@ -337,7 +325,6 @@ public class IdmUserSingleQuery {
    * @return password
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPassword() {
     return password;
@@ -360,7 +347,6 @@ public class IdmUserSingleQuery {
    * @return recursive
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getRecursive() {
     return recursive;
@@ -383,7 +369,6 @@ public class IdmUserSingleQuery {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;
@@ -406,7 +391,6 @@ public class IdmUserSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getNot() {
     return not;

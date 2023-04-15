@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeListNodesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeListNodesRequest {
   public static final String SERIALIZED_NAME_ANCESTORS = "Ancestors";
   @SerializedName(SERIALIZED_NAME_ANCESTORS)
@@ -63,9 +61,17 @@ public class TreeListNodesRequest {
   @SerializedName(SERIALIZED_NAME_RECURSIVE)
   private Boolean recursive;
 
+  public static final String SERIALIZED_NAME_SORT_DIR_DESC = "SortDirDesc";
+  @SerializedName(SERIALIZED_NAME_SORT_DIR_DESC)
+  private Boolean sortDirDesc;
+
+  public static final String SERIALIZED_NAME_SORT_FIELD = "SortField";
+  @SerializedName(SERIALIZED_NAME_SORT_FIELD)
+  private String sortField;
+
   public static final String SERIALIZED_NAME_STAT_FLAGS = "StatFlags";
   @SerializedName(SERIALIZED_NAME_STAT_FLAGS)
-  private List<Long> statFlags = null;
+  private List<Long> statFlags;
 
   public static final String SERIALIZED_NAME_WITH_COMMITS = "WithCommits";
   @SerializedName(SERIALIZED_NAME_WITH_COMMITS)
@@ -89,7 +95,6 @@ public class TreeListNodesRequest {
    * @return ancestors
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAncestors() {
     return ancestors;
@@ -112,7 +117,6 @@ public class TreeListNodesRequest {
    * @return filterType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNodeType getFilterType() {
     return filterType;
@@ -135,7 +139,6 @@ public class TreeListNodesRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLimit() {
     return limit;
@@ -158,7 +161,6 @@ public class TreeListNodesRequest {
    * @return node
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNode getNode() {
     return node;
@@ -181,7 +183,6 @@ public class TreeListNodesRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOffset() {
     return offset;
@@ -204,7 +205,6 @@ public class TreeListNodesRequest {
    * @return recursive
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getRecursive() {
     return recursive;
@@ -213,6 +213,50 @@ public class TreeListNodesRequest {
 
   public void setRecursive(Boolean recursive) {
     this.recursive = recursive;
+  }
+
+
+  public TreeListNodesRequest sortDirDesc(Boolean sortDirDesc) {
+    
+    this.sortDirDesc = sortDirDesc;
+    return this;
+  }
+
+   /**
+   * Get sortDirDesc
+   * @return sortDirDesc
+  **/
+  @javax.annotation.Nullable
+
+  public Boolean getSortDirDesc() {
+    return sortDirDesc;
+  }
+
+
+  public void setSortDirDesc(Boolean sortDirDesc) {
+    this.sortDirDesc = sortDirDesc;
+  }
+
+
+  public TreeListNodesRequest sortField(String sortField) {
+    
+    this.sortField = sortField;
+    return this;
+  }
+
+   /**
+   * Get sortField
+   * @return sortField
+  **/
+  @javax.annotation.Nullable
+
+  public String getSortField() {
+    return sortField;
+  }
+
+
+  public void setSortField(String sortField) {
+    this.sortField = sortField;
   }
 
 
@@ -235,7 +279,6 @@ public class TreeListNodesRequest {
    * @return statFlags
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<Long> getStatFlags() {
     return statFlags;
@@ -258,7 +301,6 @@ public class TreeListNodesRequest {
    * @return withCommits
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getWithCommits() {
     return withCommits;
@@ -281,7 +323,6 @@ public class TreeListNodesRequest {
    * @return withVersions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getWithVersions() {
     return withVersions;
@@ -309,6 +350,8 @@ public class TreeListNodesRequest {
         Objects.equals(this.node, treeListNodesRequest.node) &&
         Objects.equals(this.offset, treeListNodesRequest.offset) &&
         Objects.equals(this.recursive, treeListNodesRequest.recursive) &&
+        Objects.equals(this.sortDirDesc, treeListNodesRequest.sortDirDesc) &&
+        Objects.equals(this.sortField, treeListNodesRequest.sortField) &&
         Objects.equals(this.statFlags, treeListNodesRequest.statFlags) &&
         Objects.equals(this.withCommits, treeListNodesRequest.withCommits) &&
         Objects.equals(this.withVersions, treeListNodesRequest.withVersions);
@@ -316,7 +359,7 @@ public class TreeListNodesRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(ancestors, filterType, limit, node, offset, recursive, statFlags, withCommits, withVersions);
+    return Objects.hash(ancestors, filterType, limit, node, offset, recursive, sortDirDesc, sortField, statFlags, withCommits, withVersions);
   }
 
   @Override
@@ -329,6 +372,8 @@ public class TreeListNodesRequest {
     sb.append("    node: ").append(toIndentedString(node)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
     sb.append("    recursive: ").append(toIndentedString(recursive)).append("\n");
+    sb.append("    sortDirDesc: ").append(toIndentedString(sortDirDesc)).append("\n");
+    sb.append("    sortField: ").append(toIndentedString(sortField)).append("\n");
     sb.append("    statFlags: ").append(toIndentedString(statFlags)).append("\n");
     sb.append("    withCommits: ").append(toIndentedString(withCommits)).append("\n");
     sb.append("    withVersions: ").append(toIndentedString(withVersions)).append("\n");
@@ -360,6 +405,8 @@ public class TreeListNodesRequest {
     openapiFields.add("Node");
     openapiFields.add("Offset");
     openapiFields.add("Recursive");
+    openapiFields.add("SortDirDesc");
+    openapiFields.add("SortField");
     openapiFields.add("StatFlags");
     openapiFields.add("WithCommits");
     openapiFields.add("WithVersions");
@@ -397,6 +444,9 @@ public class TreeListNodesRequest {
       }
       if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
+      }
+      if ((jsonObj.get("SortField") != null && !jsonObj.get("SortField").isJsonNull()) && !jsonObj.get("SortField").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SortField` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SortField").toString()));
       }
       // ensure the optional json data is an array if present
       if (jsonObj.get("StatFlags") != null && !jsonObj.get("StatFlags").isJsonArray()) {

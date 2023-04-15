@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestActionDescription
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestActionDescription {
   public static final String SERIALIZED_NAME_CATEGORY = "Category";
   @SerializedName(SERIALIZED_NAME_CATEGORY)
@@ -103,7 +101,6 @@ public class RestActionDescription {
    * @return category
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCategory() {
     return category;
@@ -126,7 +123,6 @@ public class RestActionDescription {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -149,7 +145,6 @@ public class RestActionDescription {
    * @return formModule
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFormModule() {
     return formModule;
@@ -172,7 +167,6 @@ public class RestActionDescription {
    * @return formModuleProps
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFormModuleProps() {
     return formModuleProps;
@@ -195,7 +189,6 @@ public class RestActionDescription {
    * @return hasForm
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getHasForm() {
     return hasForm;
@@ -218,7 +211,6 @@ public class RestActionDescription {
    * @return icon
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIcon() {
     return icon;
@@ -241,7 +233,6 @@ public class RestActionDescription {
    * @return inputDescription
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getInputDescription() {
     return inputDescription;
@@ -264,7 +255,6 @@ public class RestActionDescription {
    * @return isInternal
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "If action is declared internal, it is hidden to avoid polluting the list.")
 
   public Boolean getIsInternal() {
     return isInternal;
@@ -287,7 +277,6 @@ public class RestActionDescription {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -310,7 +299,6 @@ public class RestActionDescription {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -333,7 +321,6 @@ public class RestActionDescription {
    * @return outputDescription
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOutputDescription() {
     return outputDescription;
@@ -356,7 +343,6 @@ public class RestActionDescription {
    * @return summaryTemplate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSummaryTemplate() {
     return summaryTemplate;
@@ -379,7 +365,6 @@ public class RestActionDescription {
    * @return tint
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTint() {
     return tint;

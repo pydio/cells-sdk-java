@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RegistryListResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RegistryListResponse {
   public static final String SERIALIZED_NAME_ITEMS = "items";
   @SerializedName(SERIALIZED_NAME_ITEMS)
-  private List<RegistryItem> items = null;
+  private List<RegistryItem> items;
 
   public RegistryListResponse() {
   }
@@ -66,7 +64,6 @@ public class RegistryListResponse {
    * @return items
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RegistryItem> getItems() {
     return items;

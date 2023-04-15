@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * InstallCheckResult
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class InstallCheckResult {
   public static final String SERIALIZED_NAME_JSON_RESULT = "JsonResult";
   @SerializedName(SERIALIZED_NAME_JSON_RESULT)
@@ -63,7 +61,6 @@ public class InstallCheckResult {
    * @return jsonResult
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJsonResult() {
     return jsonResult;
@@ -86,7 +83,6 @@ public class InstallCheckResult {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -109,7 +105,6 @@ public class InstallCheckResult {
    * @return success
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getSuccess() {
     return success;

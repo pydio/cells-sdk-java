@@ -33,16 +33,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsUsersSelector
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsUsersSelector {
   public static final String SERIALIZED_NAME_ALL = "All";
   @SerializedName(SERIALIZED_NAME_ALL)
   private Boolean all;
+
+  public static final String SERIALIZED_NAME_CLEAR_INPUT = "ClearInput";
+  @SerializedName(SERIALIZED_NAME_CLEAR_INPUT)
+  private Boolean clearInput;
 
   public static final String SERIALIZED_NAME_COLLECT = "Collect";
   @SerializedName(SERIALIZED_NAME_COLLECT)
@@ -66,7 +68,7 @@ public class JobsUsersSelector {
 
   public static final String SERIALIZED_NAME_USERS = "Users";
   @SerializedName(SERIALIZED_NAME_USERS)
-  private List<IdmUser> users = null;
+  private List<IdmUser> users;
 
   public JobsUsersSelector() {
   }
@@ -82,7 +84,6 @@ public class JobsUsersSelector {
    * @return all
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAll() {
     return all;
@@ -91,6 +92,28 @@ public class JobsUsersSelector {
 
   public void setAll(Boolean all) {
     this.all = all;
+  }
+
+
+  public JobsUsersSelector clearInput(Boolean clearInput) {
+    
+    this.clearInput = clearInput;
+    return this;
+  }
+
+   /**
+   * Get clearInput
+   * @return clearInput
+  **/
+  @javax.annotation.Nullable
+
+  public Boolean getClearInput() {
+    return clearInput;
+  }
+
+
+  public void setClearInput(Boolean clearInput) {
+    this.clearInput = clearInput;
   }
 
 
@@ -105,7 +128,6 @@ public class JobsUsersSelector {
    * @return collect
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCollect() {
     return collect;
@@ -128,7 +150,6 @@ public class JobsUsersSelector {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -151,7 +172,6 @@ public class JobsUsersSelector {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -174,7 +194,6 @@ public class JobsUsersSelector {
    * @return query
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceQuery getQuery() {
     return query;
@@ -197,7 +216,6 @@ public class JobsUsersSelector {
    * @return timeout
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTimeout() {
     return timeout;
@@ -228,7 +246,6 @@ public class JobsUsersSelector {
    * @return users
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmUser> getUsers() {
     return users;
@@ -251,6 +268,7 @@ public class JobsUsersSelector {
     }
     JobsUsersSelector jobsUsersSelector = (JobsUsersSelector) o;
     return Objects.equals(this.all, jobsUsersSelector.all) &&
+        Objects.equals(this.clearInput, jobsUsersSelector.clearInput) &&
         Objects.equals(this.collect, jobsUsersSelector.collect) &&
         Objects.equals(this.description, jobsUsersSelector.description) &&
         Objects.equals(this.label, jobsUsersSelector.label) &&
@@ -261,7 +279,7 @@ public class JobsUsersSelector {
 
   @Override
   public int hashCode() {
-    return Objects.hash(all, collect, description, label, query, timeout, users);
+    return Objects.hash(all, clearInput, collect, description, label, query, timeout, users);
   }
 
   @Override
@@ -269,6 +287,7 @@ public class JobsUsersSelector {
     StringBuilder sb = new StringBuilder();
     sb.append("class JobsUsersSelector {\n");
     sb.append("    all: ").append(toIndentedString(all)).append("\n");
+    sb.append("    clearInput: ").append(toIndentedString(clearInput)).append("\n");
     sb.append("    collect: ").append(toIndentedString(collect)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
@@ -298,6 +317,7 @@ public class JobsUsersSelector {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("All");
+    openapiFields.add("ClearInput");
     openapiFields.add("Collect");
     openapiFields.add("Description");
     openapiFields.add("Label");

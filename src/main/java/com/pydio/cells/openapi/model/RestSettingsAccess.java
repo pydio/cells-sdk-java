@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSettingsAccess
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSettingsAccess {
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -50,7 +48,7 @@ public class RestSettingsAccess {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<RestSettingsAccessRestPolicy> policies = null;
+  private List<RestSettingsAccessRestPolicy> policies;
 
   public RestSettingsAccess() {
   }
@@ -66,7 +64,6 @@ public class RestSettingsAccess {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -89,7 +86,6 @@ public class RestSettingsAccess {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -120,7 +116,6 @@ public class RestSettingsAccess {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RestSettingsAccessRestPolicy> getPolicies() {
     return policies;

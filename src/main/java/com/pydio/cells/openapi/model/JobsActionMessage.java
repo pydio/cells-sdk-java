@@ -33,24 +33,22 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsActionMessage
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsActionMessage {
   public static final String SERIALIZED_NAME_ACLS = "Acls";
   @SerializedName(SERIALIZED_NAME_ACLS)
-  private List<IdmACL> acls = null;
+  private List<IdmACL> acls;
 
   public static final String SERIALIZED_NAME_ACTIVITIES = "Activities";
   @SerializedName(SERIALIZED_NAME_ACTIVITIES)
-  private List<ActivityObject> activities = null;
+  private List<ActivityObject> activities;
 
   public static final String SERIALIZED_NAME_DATA_SOURCES = "DataSources";
   @SerializedName(SERIALIZED_NAME_DATA_SOURCES)
-  private List<ObjectDataSource> dataSources = null;
+  private List<ObjectDataSource> dataSources;
 
   public static final String SERIALIZED_NAME_EVENT = "Event";
   @SerializedName(SERIALIZED_NAME_EVENT)
@@ -58,23 +56,23 @@ public class JobsActionMessage {
 
   public static final String SERIALIZED_NAME_NODES = "Nodes";
   @SerializedName(SERIALIZED_NAME_NODES)
-  private List<TreeNode> nodes = null;
+  private List<TreeNode> nodes;
 
   public static final String SERIALIZED_NAME_OUTPUT_CHAIN = "OutputChain";
   @SerializedName(SERIALIZED_NAME_OUTPUT_CHAIN)
-  private List<JobsActionOutput> outputChain = null;
+  private List<JobsActionOutput> outputChain;
 
   public static final String SERIALIZED_NAME_ROLES = "Roles";
   @SerializedName(SERIALIZED_NAME_ROLES)
-  private List<IdmRole> roles = null;
+  private List<IdmRole> roles;
 
   public static final String SERIALIZED_NAME_USERS = "Users";
   @SerializedName(SERIALIZED_NAME_USERS)
-  private List<IdmUser> users = null;
+  private List<IdmUser> users;
 
   public static final String SERIALIZED_NAME_WORKSPACES = "Workspaces";
   @SerializedName(SERIALIZED_NAME_WORKSPACES)
-  private List<IdmWorkspace> workspaces = null;
+  private List<IdmWorkspace> workspaces;
 
   public JobsActionMessage() {
   }
@@ -98,7 +96,6 @@ public class JobsActionMessage {
    * @return acls
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmACL> getAcls() {
     return acls;
@@ -129,7 +126,6 @@ public class JobsActionMessage {
    * @return activities
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ActivityObject> getActivities() {
     return activities;
@@ -160,7 +156,6 @@ public class JobsActionMessage {
    * @return dataSources
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ObjectDataSource> getDataSources() {
     return dataSources;
@@ -183,7 +178,6 @@ public class JobsActionMessage {
    * @return event
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ProtobufAny getEvent() {
     return event;
@@ -214,7 +208,6 @@ public class JobsActionMessage {
    * @return nodes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeNode> getNodes() {
     return nodes;
@@ -245,7 +238,6 @@ public class JobsActionMessage {
    * @return outputChain
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsActionOutput> getOutputChain() {
     return outputChain;
@@ -276,7 +268,6 @@ public class JobsActionMessage {
    * @return roles
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmRole> getRoles() {
     return roles;
@@ -307,7 +298,6 @@ public class JobsActionMessage {
    * @return users
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmUser> getUsers() {
     return users;
@@ -338,7 +328,6 @@ public class JobsActionMessage {
    * @return workspaces
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmWorkspace> getWorkspaces() {
     return workspaces;

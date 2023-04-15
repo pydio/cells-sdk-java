@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * InstallTLSCertificate
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class InstallTLSCertificate {
   public static final String SERIALIZED_NAME_CELLS_ROOT_C_A = "CellsRootCA";
   @SerializedName(SERIALIZED_NAME_CELLS_ROOT_C_A)
@@ -63,7 +61,6 @@ public class InstallTLSCertificate {
    * @return cellsRootCA
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCellsRootCA() {
     return cellsRootCA;
@@ -86,7 +83,6 @@ public class InstallTLSCertificate {
    * @return certFile
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCertFile() {
     return certFile;
@@ -109,7 +105,6 @@ public class InstallTLSCertificate {
    * @return keyFile
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getKeyFile() {
     return keyFile;

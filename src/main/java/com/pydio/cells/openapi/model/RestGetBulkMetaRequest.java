@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestGetBulkMetaRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestGetBulkMetaRequest {
   public static final String SERIALIZED_NAME_ALL_META_PROVIDERS = "AllMetaProviders";
   @SerializedName(SERIALIZED_NAME_ALL_META_PROVIDERS)
@@ -49,11 +47,19 @@ public class RestGetBulkMetaRequest {
 
   public static final String SERIALIZED_NAME_NODE_PATHS = "NodePaths";
   @SerializedName(SERIALIZED_NAME_NODE_PATHS)
-  private List<String> nodePaths = null;
+  private List<String> nodePaths;
 
   public static final String SERIALIZED_NAME_OFFSET = "Offset";
   @SerializedName(SERIALIZED_NAME_OFFSET)
   private Integer offset;
+
+  public static final String SERIALIZED_NAME_SORT_DIR_DESC = "SortDirDesc";
+  @SerializedName(SERIALIZED_NAME_SORT_DIR_DESC)
+  private Boolean sortDirDesc;
+
+  public static final String SERIALIZED_NAME_SORT_FIELD = "SortField";
+  @SerializedName(SERIALIZED_NAME_SORT_FIELD)
+  private String sortField;
 
   public static final String SERIALIZED_NAME_VERSIONS = "Versions";
   @SerializedName(SERIALIZED_NAME_VERSIONS)
@@ -73,7 +79,6 @@ public class RestGetBulkMetaRequest {
    * @return allMetaProviders
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAllMetaProviders() {
     return allMetaProviders;
@@ -96,7 +101,6 @@ public class RestGetBulkMetaRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLimit() {
     return limit;
@@ -127,7 +131,6 @@ public class RestGetBulkMetaRequest {
    * @return nodePaths
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getNodePaths() {
     return nodePaths;
@@ -150,7 +153,6 @@ public class RestGetBulkMetaRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getOffset() {
     return offset;
@@ -159,6 +161,50 @@ public class RestGetBulkMetaRequest {
 
   public void setOffset(Integer offset) {
     this.offset = offset;
+  }
+
+
+  public RestGetBulkMetaRequest sortDirDesc(Boolean sortDirDesc) {
+    
+    this.sortDirDesc = sortDirDesc;
+    return this;
+  }
+
+   /**
+   * Get sortDirDesc
+   * @return sortDirDesc
+  **/
+  @javax.annotation.Nullable
+
+  public Boolean getSortDirDesc() {
+    return sortDirDesc;
+  }
+
+
+  public void setSortDirDesc(Boolean sortDirDesc) {
+    this.sortDirDesc = sortDirDesc;
+  }
+
+
+  public RestGetBulkMetaRequest sortField(String sortField) {
+    
+    this.sortField = sortField;
+    return this;
+  }
+
+   /**
+   * Get sortField
+   * @return sortField
+  **/
+  @javax.annotation.Nullable
+
+  public String getSortField() {
+    return sortField;
+  }
+
+
+  public void setSortField(String sortField) {
+    this.sortField = sortField;
   }
 
 
@@ -173,7 +219,6 @@ public class RestGetBulkMetaRequest {
    * @return versions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getVersions() {
     return versions;
@@ -199,12 +244,14 @@ public class RestGetBulkMetaRequest {
         Objects.equals(this.limit, restGetBulkMetaRequest.limit) &&
         Objects.equals(this.nodePaths, restGetBulkMetaRequest.nodePaths) &&
         Objects.equals(this.offset, restGetBulkMetaRequest.offset) &&
+        Objects.equals(this.sortDirDesc, restGetBulkMetaRequest.sortDirDesc) &&
+        Objects.equals(this.sortField, restGetBulkMetaRequest.sortField) &&
         Objects.equals(this.versions, restGetBulkMetaRequest.versions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(allMetaProviders, limit, nodePaths, offset, versions);
+    return Objects.hash(allMetaProviders, limit, nodePaths, offset, sortDirDesc, sortField, versions);
   }
 
   @Override
@@ -215,6 +262,8 @@ public class RestGetBulkMetaRequest {
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("    nodePaths: ").append(toIndentedString(nodePaths)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
+    sb.append("    sortDirDesc: ").append(toIndentedString(sortDirDesc)).append("\n");
+    sb.append("    sortField: ").append(toIndentedString(sortField)).append("\n");
     sb.append("    versions: ").append(toIndentedString(versions)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -242,6 +291,8 @@ public class RestGetBulkMetaRequest {
     openapiFields.add("Limit");
     openapiFields.add("NodePaths");
     openapiFields.add("Offset");
+    openapiFields.add("SortDirDesc");
+    openapiFields.add("SortField");
     openapiFields.add("Versions");
 
     // a set of required properties/fields (JSON key names)
@@ -271,6 +322,9 @@ public class RestGetBulkMetaRequest {
       // ensure the optional json data is an array if present
       if (jsonObj.get("NodePaths") != null && !jsonObj.get("NodePaths").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `NodePaths` to be an array in the JSON string but got `%s`", jsonObj.get("NodePaths").toString()));
+      }
+      if ((jsonObj.get("SortField") != null && !jsonObj.get("SortField").isJsonNull()) && !jsonObj.get("SortField").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SortField` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SortField").toString()));
       }
   }
 

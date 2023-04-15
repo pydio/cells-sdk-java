@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ServiceResourcePolicyQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ServiceResourcePolicyQuery {
   public static final String SERIALIZED_NAME_ANY = "Any";
   @SerializedName(SERIALIZED_NAME_ANY)
@@ -49,7 +47,7 @@ public class ServiceResourcePolicyQuery {
 
   public static final String SERIALIZED_NAME_SUBJECTS = "Subjects";
   @SerializedName(SERIALIZED_NAME_SUBJECTS)
-  private List<String> subjects = null;
+  private List<String> subjects;
 
   public ServiceResourcePolicyQuery() {
   }
@@ -65,7 +63,6 @@ public class ServiceResourcePolicyQuery {
    * @return any
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAny() {
     return any;
@@ -88,7 +85,6 @@ public class ServiceResourcePolicyQuery {
    * @return empty
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getEmpty() {
     return empty;
@@ -119,7 +115,6 @@ public class ServiceResourcePolicyQuery {
    * @return subjects
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getSubjects() {
     return subjects;

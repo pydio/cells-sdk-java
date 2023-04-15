@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeGeoQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeGeoQuery {
   public static final String SERIALIZED_NAME_BOTTOM_RIGHT = "BottomRight";
   @SerializedName(SERIALIZED_NAME_BOTTOM_RIGHT)
@@ -67,7 +65,6 @@ public class TreeGeoQuery {
    * @return bottomRight
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeGeoPoint getBottomRight() {
     return bottomRight;
@@ -90,7 +87,6 @@ public class TreeGeoQuery {
    * @return center
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeGeoPoint getCenter() {
     return center;
@@ -113,7 +109,6 @@ public class TreeGeoQuery {
    * @return distance
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Example formats supported: \"5in\" \"5inch\" \"7yd\" \"7yards\" \"9ft\" \"9feet\" \"11km\" \"11kilometers\" \"3nm\" \"3nauticalmiles\" \"13mm\" \"13millimeters\" \"15cm\" \"15centimeters\" \"17mi\" \"17miles\" \"19m\" \"19meters\" If the unit cannot be determined, the entire string is parsed and the unit of meters is assumed.")
 
   public String getDistance() {
     return distance;
@@ -136,7 +131,6 @@ public class TreeGeoQuery {
    * @return topLeft
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeGeoPoint getTopLeft() {
     return topLeft;

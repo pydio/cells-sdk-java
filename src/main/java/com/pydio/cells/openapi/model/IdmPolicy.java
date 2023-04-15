@@ -34,20 +34,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmPolicy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmPolicy {
   public static final String SERIALIZED_NAME_ACTIONS = "actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
-  private List<String> actions = null;
+  private List<String> actions;
 
   public static final String SERIALIZED_NAME_CONDITIONS = "conditions";
   @SerializedName(SERIALIZED_NAME_CONDITIONS)
-  private Map<String, IdmPolicyCondition> conditions = null;
+  private Map<String, IdmPolicyCondition> conditions = new HashMap<>();
 
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -63,11 +61,11 @@ public class IdmPolicy {
 
   public static final String SERIALIZED_NAME_RESOURCES = "resources";
   @SerializedName(SERIALIZED_NAME_RESOURCES)
-  private List<String> resources = null;
+  private List<String> resources;
 
   public static final String SERIALIZED_NAME_SUBJECTS = "subjects";
   @SerializedName(SERIALIZED_NAME_SUBJECTS)
-  private List<String> subjects = null;
+  private List<String> subjects;
 
   public IdmPolicy() {
   }
@@ -91,7 +89,6 @@ public class IdmPolicy {
    * @return actions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getActions() {
     return actions;
@@ -122,7 +119,6 @@ public class IdmPolicy {
    * @return conditions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, IdmPolicyCondition> getConditions() {
     return conditions;
@@ -145,7 +141,6 @@ public class IdmPolicy {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -168,7 +163,6 @@ public class IdmPolicy {
    * @return effect
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmPolicyEffect getEffect() {
     return effect;
@@ -191,7 +185,6 @@ public class IdmPolicy {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getId() {
     return id;
@@ -222,7 +215,6 @@ public class IdmPolicy {
    * @return resources
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getResources() {
     return resources;
@@ -253,7 +245,6 @@ public class IdmPolicy {
    * @return subjects
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getSubjects() {
     return subjects;

@@ -35,12 +35,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsAction
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsAction {
   public static final String SERIALIZED_NAME_ACTION_OUTPUT_FILTER = "ActionOutputFilter";
   @SerializedName(SERIALIZED_NAME_ACTION_OUTPUT_FILTER)
@@ -56,7 +54,7 @@ public class JobsAction {
 
   public static final String SERIALIZED_NAME_CHAINED_ACTIONS = "ChainedActions";
   @SerializedName(SERIALIZED_NAME_CHAINED_ACTIONS)
-  private List<JobsAction> chainedActions = null;
+  private List<JobsAction> chainedActions;
 
   public static final String SERIALIZED_NAME_CONTEXT_META_FILTER = "ContextMetaFilter";
   @SerializedName(SERIALIZED_NAME_CONTEXT_META_FILTER)
@@ -76,7 +74,7 @@ public class JobsAction {
 
   public static final String SERIALIZED_NAME_FAILED_FILTER_ACTIONS = "FailedFilterActions";
   @SerializedName(SERIALIZED_NAME_FAILED_FILTER_ACTIONS)
-  private List<JobsAction> failedFilterActions = null;
+  private List<JobsAction> failedFilterActions;
 
   public static final String SERIALIZED_NAME_I_D = "ID";
   @SerializedName(SERIALIZED_NAME_I_D)
@@ -108,7 +106,7 @@ public class JobsAction {
 
   public static final String SERIALIZED_NAME_PARAMETERS = "Parameters";
   @SerializedName(SERIALIZED_NAME_PARAMETERS)
-  private Map<String, String> parameters = null;
+  private Map<String, String> parameters = new HashMap<>();
 
   public static final String SERIALIZED_NAME_TIMEOUT = "Timeout";
   @SerializedName(SERIALIZED_NAME_TIMEOUT)
@@ -140,7 +138,6 @@ public class JobsAction {
    * @return actionOutputFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsActionOutputFilter getActionOutputFilter() {
     return actionOutputFilter;
@@ -163,7 +160,6 @@ public class JobsAction {
    * @return breakAfter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getBreakAfter() {
     return breakAfter;
@@ -186,7 +182,6 @@ public class JobsAction {
    * @return bypass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getBypass() {
     return bypass;
@@ -217,7 +212,6 @@ public class JobsAction {
    * @return chainedActions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsAction> getChainedActions() {
     return chainedActions;
@@ -240,7 +234,6 @@ public class JobsAction {
    * @return contextMetaFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsContextMetaFilter getContextMetaFilter() {
     return contextMetaFilter;
@@ -263,7 +256,6 @@ public class JobsAction {
    * @return dataSourceFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsDataSourceSelector getDataSourceFilter() {
     return dataSourceFilter;
@@ -286,7 +278,6 @@ public class JobsAction {
    * @return dataSourceSelector
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsDataSourceSelector getDataSourceSelector() {
     return dataSourceSelector;
@@ -309,7 +300,6 @@ public class JobsAction {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -340,7 +330,6 @@ public class JobsAction {
    * @return failedFilterActions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsAction> getFailedFilterActions() {
     return failedFilterActions;
@@ -363,7 +352,6 @@ public class JobsAction {
    * @return ID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getID() {
     return ID;
@@ -386,7 +374,6 @@ public class JobsAction {
    * @return idmFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsIdmSelector getIdmFilter() {
     return idmFilter;
@@ -409,7 +396,6 @@ public class JobsAction {
    * @return idmSelector
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsIdmSelector getIdmSelector() {
     return idmSelector;
@@ -432,7 +418,6 @@ public class JobsAction {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -455,7 +440,6 @@ public class JobsAction {
    * @return mergeAction
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsAction getMergeAction() {
     return mergeAction;
@@ -478,7 +462,6 @@ public class JobsAction {
    * @return nodesFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsNodesSelector getNodesFilter() {
     return nodesFilter;
@@ -501,7 +484,6 @@ public class JobsAction {
    * @return nodesSelector
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsNodesSelector getNodesSelector() {
     return nodesSelector;
@@ -532,7 +514,6 @@ public class JobsAction {
    * @return parameters
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getParameters() {
     return parameters;
@@ -555,7 +536,6 @@ public class JobsAction {
    * @return timeout
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTimeout() {
     return timeout;
@@ -578,7 +558,6 @@ public class JobsAction {
    * @return triggerFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsTriggerFilter getTriggerFilter() {
     return triggerFilter;
@@ -601,7 +580,6 @@ public class JobsAction {
    * @return usersFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsUsersSelector getUsersFilter() {
     return usersFilter;
@@ -624,7 +602,6 @@ public class JobsAction {
    * @return usersSelector
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsUsersSelector getUsersSelector() {
     return usersSelector;

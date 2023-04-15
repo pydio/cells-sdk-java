@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestDiscoveryResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestDiscoveryResponse {
   public static final String SERIALIZED_NAME_BUILD_REVISION = "BuildRevision";
   @SerializedName(SERIALIZED_NAME_BUILD_REVISION)
@@ -49,7 +47,7 @@ public class RestDiscoveryResponse {
 
   public static final String SERIALIZED_NAME_ENDPOINTS = "Endpoints";
   @SerializedName(SERIALIZED_NAME_ENDPOINTS)
-  private Map<String, String> endpoints = null;
+  private Map<String, String> endpoints = new HashMap<>();
 
   public static final String SERIALIZED_NAME_PACKAGE_LABEL = "PackageLabel";
   @SerializedName(SERIALIZED_NAME_PACKAGE_LABEL)
@@ -77,7 +75,6 @@ public class RestDiscoveryResponse {
    * @return buildRevision
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getBuildRevision() {
     return buildRevision;
@@ -100,7 +97,6 @@ public class RestDiscoveryResponse {
    * @return buildStamp
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getBuildStamp() {
     return buildStamp;
@@ -131,7 +127,6 @@ public class RestDiscoveryResponse {
    * @return endpoints
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getEndpoints() {
     return endpoints;
@@ -154,7 +149,6 @@ public class RestDiscoveryResponse {
    * @return packageLabel
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPackageLabel() {
     return packageLabel;
@@ -177,7 +171,6 @@ public class RestDiscoveryResponse {
    * @return packageType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPackageType() {
     return packageType;
@@ -200,7 +193,6 @@ public class RestDiscoveryResponse {
    * @return version
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getVersion() {
     return version;

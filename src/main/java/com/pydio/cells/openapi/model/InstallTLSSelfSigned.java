@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * InstallTLSSelfSigned
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class InstallTLSSelfSigned {
   public static final String SERIALIZED_NAME_HOSTNAMES = "Hostnames";
   @SerializedName(SERIALIZED_NAME_HOSTNAMES)
-  private List<String> hostnames = null;
+  private List<String> hostnames;
 
   public InstallTLSSelfSigned() {
   }
@@ -65,7 +63,6 @@ public class InstallTLSSelfSigned {
    * @return hostnames
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getHostnames() {
     return hostnames;

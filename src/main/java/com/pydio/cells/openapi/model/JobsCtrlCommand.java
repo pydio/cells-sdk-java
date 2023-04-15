@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsCtrlCommand
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsCtrlCommand {
   public static final String SERIALIZED_NAME_CMD = "Cmd";
   @SerializedName(SERIALIZED_NAME_CMD)
@@ -53,7 +51,7 @@ public class JobsCtrlCommand {
 
   public static final String SERIALIZED_NAME_RUN_PARAMETERS = "RunParameters";
   @SerializedName(SERIALIZED_NAME_RUN_PARAMETERS)
-  private Map<String, String> runParameters = null;
+  private Map<String, String> runParameters = new HashMap<>();
 
   public static final String SERIALIZED_NAME_TASK_ID = "TaskId";
   @SerializedName(SERIALIZED_NAME_TASK_ID)
@@ -73,7 +71,6 @@ public class JobsCtrlCommand {
    * @return cmd
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsCommand getCmd() {
     return cmd;
@@ -96,7 +93,6 @@ public class JobsCtrlCommand {
    * @return jobId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJobId() {
     return jobId;
@@ -119,7 +115,6 @@ public class JobsCtrlCommand {
    * @return ownerId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOwnerId() {
     return ownerId;
@@ -150,7 +145,6 @@ public class JobsCtrlCommand {
    * @return runParameters
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getRunParameters() {
     return runParameters;
@@ -173,7 +167,6 @@ public class JobsCtrlCommand {
    * @return taskId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTaskId() {
     return taskId;

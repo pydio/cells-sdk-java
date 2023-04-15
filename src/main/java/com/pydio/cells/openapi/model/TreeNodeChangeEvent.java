@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeNodeChangeEvent
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeNodeChangeEvent {
   public static final String SERIALIZED_NAME_METADATA = "Metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
-  private Map<String, String> metadata = null;
+  private Map<String, String> metadata = new HashMap<>();
 
   public static final String SERIALIZED_NAME_OPTIMISTIC = "Optimistic";
   @SerializedName(SERIALIZED_NAME_OPTIMISTIC)
@@ -85,7 +83,6 @@ public class TreeNodeChangeEvent {
    * @return metadata
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getMetadata() {
     return metadata;
@@ -108,7 +105,6 @@ public class TreeNodeChangeEvent {
    * @return optimistic
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getOptimistic() {
     return optimistic;
@@ -131,7 +127,6 @@ public class TreeNodeChangeEvent {
    * @return silent
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getSilent() {
     return silent;
@@ -154,7 +149,6 @@ public class TreeNodeChangeEvent {
    * @return source
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNode getSource() {
     return source;
@@ -177,7 +171,6 @@ public class TreeNodeChangeEvent {
    * @return target
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNode getTarget() {
     return target;
@@ -200,7 +193,6 @@ public class TreeNodeChangeEvent {
    * @return type
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNodeChangeEventEventType getType() {
     return type;

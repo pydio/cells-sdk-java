@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeQuery {
   public static final String SERIALIZED_NAME_CONTENT = "Content";
   @SerializedName(SERIALIZED_NAME_CONTENT)
@@ -97,11 +95,11 @@ public class TreeQuery {
 
   public static final String SERIALIZED_NAME_PATH_PREFIX = "PathPrefix";
   @SerializedName(SERIALIZED_NAME_PATH_PREFIX)
-  private List<String> pathPrefix = null;
+  private List<String> pathPrefix;
 
   public static final String SERIALIZED_NAME_PATHS = "Paths";
   @SerializedName(SERIALIZED_NAME_PATHS)
-  private List<String> paths = null;
+  private List<String> paths;
 
   public static final String SERIALIZED_NAME_TYPE = "Type";
   @SerializedName(SERIALIZED_NAME_TYPE)
@@ -109,7 +107,7 @@ public class TreeQuery {
 
   public static final String SERIALIZED_NAME_UU_I_DS = "UUIDs";
   @SerializedName(SERIALIZED_NAME_UU_I_DS)
-  private List<String> uuIDs = null;
+  private List<String> uuIDs;
 
   public TreeQuery() {
   }
@@ -125,7 +123,6 @@ public class TreeQuery {
    * @return content
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getContent() {
     return content;
@@ -148,7 +145,6 @@ public class TreeQuery {
    * @return durationDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDurationDate() {
     return durationDate;
@@ -171,7 +167,6 @@ public class TreeQuery {
    * @return etag
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getEtag() {
     return etag;
@@ -194,7 +189,6 @@ public class TreeQuery {
    * @return extension
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getExtension() {
     return extension;
@@ -217,7 +211,6 @@ public class TreeQuery {
    * @return fileName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFileName() {
     return fileName;
@@ -240,7 +233,6 @@ public class TreeQuery {
    * @return fileNameOrContent
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFileNameOrContent() {
     return fileNameOrContent;
@@ -263,7 +255,6 @@ public class TreeQuery {
    * @return freeString
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Bleve-like search query to search for a specific metadata value. When querying nodes, this will redirect this query to the Search Engine. When filtering an input, this will load an in-memory bleve engine to evaluate the node.  Bleve query string format is a space separated list of `[+-]key:value`, where node meta keys must be prepended with \"Meta.\" For Example, for tags: `+Meta.usermeta-tags:myvalue`")
 
   public String getFreeString() {
     return freeString;
@@ -286,7 +277,6 @@ public class TreeQuery {
    * @return geoQuery
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeGeoQuery getGeoQuery() {
     return geoQuery;
@@ -309,7 +299,6 @@ public class TreeQuery {
    * @return maxDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMaxDate() {
     return maxDate;
@@ -332,7 +321,6 @@ public class TreeQuery {
    * @return maxSize
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMaxSize() {
     return maxSize;
@@ -355,7 +343,6 @@ public class TreeQuery {
    * @return minDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMinDate() {
     return minDate;
@@ -378,7 +365,6 @@ public class TreeQuery {
    * @return minSize
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMinSize() {
     return minSize;
@@ -401,7 +387,6 @@ public class TreeQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getNot() {
     return not;
@@ -424,7 +409,6 @@ public class TreeQuery {
    * @return pathDepth
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getPathDepth() {
     return pathDepth;
@@ -455,7 +439,6 @@ public class TreeQuery {
    * @return pathPrefix
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getPathPrefix() {
     return pathPrefix;
@@ -486,7 +469,6 @@ public class TreeQuery {
    * @return paths
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getPaths() {
     return paths;
@@ -509,7 +491,6 @@ public class TreeQuery {
    * @return type
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNodeType getType() {
     return type;
@@ -540,7 +521,6 @@ public class TreeQuery {
    * @return uuIDs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getUuIDs() {
     return uuIDs;

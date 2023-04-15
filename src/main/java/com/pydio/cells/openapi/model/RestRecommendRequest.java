@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestRecommendRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestRecommendRequest {
   public static final String SERIALIZED_NAME_CATEGORY = "Category";
   @SerializedName(SERIALIZED_NAME_CATEGORY)
@@ -67,7 +65,6 @@ public class RestRecommendRequest {
    * @return category
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCategory() {
     return category;
@@ -90,7 +87,6 @@ public class RestRecommendRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLimit() {
     return limit;
@@ -113,7 +109,6 @@ public class RestRecommendRequest {
    * @return neighbor
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getNeighbor() {
     return neighbor;
@@ -136,7 +131,6 @@ public class RestRecommendRequest {
    * @return segment
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSegment() {
     return segment;

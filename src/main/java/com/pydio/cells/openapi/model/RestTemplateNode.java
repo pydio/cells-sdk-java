@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestTemplateNode
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestTemplateNode {
   public static final String SERIALIZED_NAME_CHILDREN = "Children";
   @SerializedName(SERIALIZED_NAME_CHILDREN)
-  private Map<String, TreeNode> children = null;
+  private Map<String, TreeNode> children = new HashMap<>();
 
   public static final String SERIALIZED_NAME_NODE = "Node";
   @SerializedName(SERIALIZED_NAME_NODE)
@@ -69,7 +67,6 @@ public class RestTemplateNode {
    * @return children
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, TreeNode> getChildren() {
     return children;
@@ -92,7 +89,6 @@ public class RestTemplateNode {
    * @return node
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeNode getNode() {
     return node;

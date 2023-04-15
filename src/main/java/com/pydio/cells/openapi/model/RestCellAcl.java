@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestCellAcl
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestCellAcl {
   public static final String SERIALIZED_NAME_ACTIONS = "Actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
-  private List<IdmACLAction> actions = null;
+  private List<IdmACLAction> actions;
 
   public static final String SERIALIZED_NAME_GROUP = "Group";
   @SerializedName(SERIALIZED_NAME_GROUP)
@@ -86,7 +84,6 @@ public class RestCellAcl {
    * @return actions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmACLAction> getActions() {
     return actions;
@@ -109,7 +106,6 @@ public class RestCellAcl {
    * @return group
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmUser getGroup() {
     return group;
@@ -132,7 +128,6 @@ public class RestCellAcl {
    * @return isUserRole
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIsUserRole() {
     return isUserRole;
@@ -155,7 +150,6 @@ public class RestCellAcl {
    * @return role
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmRole getRole() {
     return role;
@@ -178,7 +172,6 @@ public class RestCellAcl {
    * @return roleId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getRoleId() {
     return roleId;
@@ -201,7 +194,6 @@ public class RestCellAcl {
    * @return user
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmUser getUser() {
     return user;

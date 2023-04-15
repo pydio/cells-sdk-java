@@ -33,18 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * Role represents a generic set of permissions that can be applied to any users or groups.
  */
-@ApiModel(description = "Role represents a generic set of permissions that can be applied to any users or groups.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class SetRoleRequest {
   public static final String SERIALIZED_NAME_AUTO_APPLIES = "AutoApplies";
   @SerializedName(SERIALIZED_NAME_AUTO_APPLIES)
-  private List<String> autoApplies = null;
+  private List<String> autoApplies;
 
   public static final String SERIALIZED_NAME_FORCE_OVERRIDE = "ForceOverride";
   @SerializedName(SERIALIZED_NAME_FORCE_OVERRIDE)
@@ -68,7 +64,7 @@ public class SetRoleRequest {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE = "PoliciesContextEditable";
   @SerializedName(SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE)
@@ -100,7 +96,6 @@ public class SetRoleRequest {
    * @return autoApplies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getAutoApplies() {
     return autoApplies;
@@ -123,7 +118,6 @@ public class SetRoleRequest {
    * @return forceOverride
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Is used in a stack of roles, this one will always be applied last.")
 
   public Boolean getForceOverride() {
     return forceOverride;
@@ -146,7 +140,6 @@ public class SetRoleRequest {
    * @return groupRole
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getGroupRole() {
     return groupRole;
@@ -169,7 +162,6 @@ public class SetRoleRequest {
    * @return isTeam
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIsTeam() {
     return isTeam;
@@ -192,7 +184,6 @@ public class SetRoleRequest {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -215,7 +206,6 @@ public class SetRoleRequest {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLastUpdated() {
     return lastUpdated;
@@ -246,7 +236,6 @@ public class SetRoleRequest {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -269,7 +258,6 @@ public class SetRoleRequest {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
@@ -292,7 +280,6 @@ public class SetRoleRequest {
    * @return userRole
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getUserRole() {
     return userRole;

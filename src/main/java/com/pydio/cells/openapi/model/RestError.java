@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestError
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestError {
   public static final String SERIALIZED_NAME_CODE = "Code";
   @SerializedName(SERIALIZED_NAME_CODE)
@@ -49,7 +47,7 @@ public class RestError {
 
   public static final String SERIALIZED_NAME_META = "Meta";
   @SerializedName(SERIALIZED_NAME_META)
-  private Map<String, String> meta = null;
+  private Map<String, String> meta = new HashMap<>();
 
   public static final String SERIALIZED_NAME_SOURCE = "Source";
   @SerializedName(SERIALIZED_NAME_SOURCE)
@@ -73,7 +71,6 @@ public class RestError {
    * @return code
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getCode() {
     return code;
@@ -96,7 +93,6 @@ public class RestError {
    * @return detail
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDetail() {
     return detail;
@@ -127,7 +123,6 @@ public class RestError {
    * @return meta
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getMeta() {
     return meta;
@@ -150,7 +145,6 @@ public class RestError {
    * @return source
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSource() {
     return source;
@@ -173,7 +167,6 @@ public class RestError {
    * @return title
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTitle() {
     return title;

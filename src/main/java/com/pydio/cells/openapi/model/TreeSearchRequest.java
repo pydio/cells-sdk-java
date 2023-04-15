@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeSearchRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeSearchRequest {
   public static final String SERIALIZED_NAME_DETAILS = "Details";
   @SerializedName(SERIALIZED_NAME_DETAILS)
@@ -57,7 +55,7 @@ public class TreeSearchRequest {
 
   public static final String SERIALIZED_NAME_STAT_FLAGS = "StatFlags";
   @SerializedName(SERIALIZED_NAME_STAT_FLAGS)
-  private List<Long> statFlags = null;
+  private List<Long> statFlags;
 
   public TreeSearchRequest() {
   }
@@ -73,7 +71,6 @@ public class TreeSearchRequest {
    * @return details
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getDetails() {
     return details;
@@ -96,7 +93,6 @@ public class TreeSearchRequest {
    * @return from
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getFrom() {
     return from;
@@ -119,7 +115,6 @@ public class TreeSearchRequest {
    * @return query
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public TreeQuery getQuery() {
     return query;
@@ -142,7 +137,6 @@ public class TreeSearchRequest {
    * @return size
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getSize() {
     return size;
@@ -173,7 +167,6 @@ public class TreeSearchRequest {
    * @return statFlags
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<Long> getStatFlags() {
     return statFlags;

@@ -35,14 +35,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.
  */
-@ApiModel(description = "A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmWorkspace {
   public static final String SERIALIZED_NAME_ATTRIBUTES = "Attributes";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTES)
@@ -62,7 +58,7 @@ public class IdmWorkspace {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE = "PoliciesContextEditable";
   @SerializedName(SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE)
@@ -70,11 +66,11 @@ public class IdmWorkspace {
 
   public static final String SERIALIZED_NAME_ROOT_NODES = "RootNodes";
   @SerializedName(SERIALIZED_NAME_ROOT_NODES)
-  private Map<String, TreeNode> rootNodes = null;
+  private Map<String, TreeNode> rootNodes = new HashMap<>();
 
   public static final String SERIALIZED_NAME_ROOT_U_U_I_DS = "RootUUIDs";
   @SerializedName(SERIALIZED_NAME_ROOT_U_U_I_DS)
-  private List<String> rootUUIDs = null;
+  private List<String> rootUUIDs;
 
   public static final String SERIALIZED_NAME_SCOPE = "Scope";
   @SerializedName(SERIALIZED_NAME_SCOPE)
@@ -102,7 +98,6 @@ public class IdmWorkspace {
    * @return attributes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAttributes() {
     return attributes;
@@ -125,7 +120,6 @@ public class IdmWorkspace {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -148,7 +142,6 @@ public class IdmWorkspace {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -171,7 +164,6 @@ public class IdmWorkspace {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLastUpdated() {
     return lastUpdated;
@@ -202,7 +194,6 @@ public class IdmWorkspace {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -225,7 +216,6 @@ public class IdmWorkspace {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
@@ -256,7 +246,6 @@ public class IdmWorkspace {
    * @return rootNodes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, TreeNode> getRootNodes() {
     return rootNodes;
@@ -287,7 +276,6 @@ public class IdmWorkspace {
    * @return rootUUIDs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getRootUUIDs() {
     return rootUUIDs;
@@ -310,7 +298,6 @@ public class IdmWorkspace {
    * @return scope
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmWorkspaceScope getScope() {
     return scope;
@@ -333,7 +320,6 @@ public class IdmWorkspace {
    * @return slug
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSlug() {
     return slug;
@@ -356,7 +342,6 @@ public class IdmWorkspace {
    * @return UUID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUUID() {
     return UUID;

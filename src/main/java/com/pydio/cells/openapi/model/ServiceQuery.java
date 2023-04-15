@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * ServiceQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class ServiceQuery {
   public static final String SERIALIZED_NAME_LIMIT = "Limit";
   @SerializedName(SERIALIZED_NAME_LIMIT)
@@ -57,7 +55,7 @@ public class ServiceQuery {
 
   public static final String SERIALIZED_NAME_SUB_QUERIES = "SubQueries";
   @SerializedName(SERIALIZED_NAME_SUB_QUERIES)
-  private List<ProtobufAny> subQueries = null;
+  private List<ProtobufAny> subQueries;
 
   public static final String SERIALIZED_NAME_GROUP_BY = "groupBy";
   @SerializedName(SERIALIZED_NAME_GROUP_BY)
@@ -77,7 +75,6 @@ public class ServiceQuery {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLimit() {
     return limit;
@@ -100,7 +97,6 @@ public class ServiceQuery {
    * @return offset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOffset() {
     return offset;
@@ -123,7 +119,6 @@ public class ServiceQuery {
    * @return operation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceOperationType getOperation() {
     return operation;
@@ -146,7 +141,6 @@ public class ServiceQuery {
    * @return resourcePolicyQuery
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceResourcePolicyQuery getResourcePolicyQuery() {
     return resourcePolicyQuery;
@@ -177,7 +171,6 @@ public class ServiceQuery {
    * @return subQueries
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ProtobufAny> getSubQueries() {
     return subQueries;
@@ -200,7 +193,6 @@ public class ServiceQuery {
    * @return groupBy
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getGroupBy() {
     return groupBy;

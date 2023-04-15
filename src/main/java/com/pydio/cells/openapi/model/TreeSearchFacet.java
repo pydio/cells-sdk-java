@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * TreeSearchFacet
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class TreeSearchFacet {
   public static final String SERIALIZED_NAME_COUNT = "Count";
   @SerializedName(SERIALIZED_NAME_COUNT)
@@ -83,7 +81,6 @@ public class TreeSearchFacet {
    * @return count
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCount() {
     return count;
@@ -106,7 +103,6 @@ public class TreeSearchFacet {
    * @return end
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getEnd() {
     return end;
@@ -129,7 +125,6 @@ public class TreeSearchFacet {
    * @return fieldName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFieldName() {
     return fieldName;
@@ -152,7 +147,6 @@ public class TreeSearchFacet {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -175,7 +169,6 @@ public class TreeSearchFacet {
    * @return max
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMax() {
     return max;
@@ -198,7 +191,6 @@ public class TreeSearchFacet {
    * @return min
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMin() {
     return min;
@@ -221,7 +213,6 @@ public class TreeSearchFacet {
    * @return start
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getStart() {
     return start;
@@ -244,7 +235,6 @@ public class TreeSearchFacet {
    * @return term
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTerm() {
     return term;

@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsActionOutput
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsActionOutput {
   public static final String SERIALIZED_NAME_ERROR_STRING = "ErrorString";
   @SerializedName(SERIALIZED_NAME_ERROR_STRING)
@@ -70,7 +68,7 @@ public class JobsActionOutput {
 
   public static final String SERIALIZED_NAME_VARS = "Vars";
   @SerializedName(SERIALIZED_NAME_VARS)
-  private Map<String, String> vars = null;
+  private Map<String, String> vars = new HashMap<>();
 
   public JobsActionOutput() {
   }
@@ -86,7 +84,6 @@ public class JobsActionOutput {
    * @return errorString
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getErrorString() {
     return errorString;
@@ -109,7 +106,6 @@ public class JobsActionOutput {
    * @return ignored
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIgnored() {
     return ignored;
@@ -132,7 +128,6 @@ public class JobsActionOutput {
    * @return jsonBody
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public byte[] getJsonBody() {
     return jsonBody;
@@ -155,7 +150,6 @@ public class JobsActionOutput {
    * @return rawBody
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public byte[] getRawBody() {
     return rawBody;
@@ -178,7 +172,6 @@ public class JobsActionOutput {
    * @return stringBody
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getStringBody() {
     return stringBody;
@@ -201,7 +194,6 @@ public class JobsActionOutput {
    * @return success
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getSuccess() {
     return success;
@@ -224,7 +216,6 @@ public class JobsActionOutput {
    * @return time
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTime() {
     return time;
@@ -255,7 +246,6 @@ public class JobsActionOutput {
    * @return vars
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Vars container, values are json-encoded.")
 
   public Map<String, String> getVars() {
     return vars;

@@ -96,7 +96,7 @@ rm -rf ./openapi
 mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
 
 # Also copy used sagger file for later references
-export CELLS_VERSION=4.0.7
+export CELLS_VERSION=4.2.0
 cp /tmp/forSwagger/cells-sdk-java/cellsapi-rest.swagger.yml $GITPATH/github.com/pydio/cells-sdk-java/src/main/java/com/pydio/cells/openapi/cellsapi-rest-${CELLS_VERSION}.swagger.yml
 
 # For the record, more details about the possible options:
@@ -107,6 +107,7 @@ java -jar swagger-codegen-cli.jar help generate
 
 In Jan. 2023, we should also do the following to finalize SDK generation:
 
+- Import the project in Android Studio to insure we did not miss any issue
 - Change the `javax.ws` prefix in the package imports of all class in the openapi package, to
   import `jakarta.ws.rs.core.GenericType` rather than `javax.ws.rs.core.GenericType`: the later
   package is not maintained anymore.

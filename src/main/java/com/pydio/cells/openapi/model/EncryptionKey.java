@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * EncryptionKey
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class EncryptionKey {
   public static final String SERIALIZED_NAME_CONTENT = "Content";
   @SerializedName(SERIALIZED_NAME_CONTENT)
@@ -75,7 +73,6 @@ public class EncryptionKey {
    * @return content
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getContent() {
     return content;
@@ -98,7 +95,6 @@ public class EncryptionKey {
    * @return creationDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCreationDate() {
     return creationDate;
@@ -121,7 +117,6 @@ public class EncryptionKey {
    * @return ID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getID() {
     return ID;
@@ -144,7 +139,6 @@ public class EncryptionKey {
    * @return info
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public EncryptionKeyInfo getInfo() {
     return info;
@@ -167,7 +161,6 @@ public class EncryptionKey {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -190,7 +183,6 @@ public class EncryptionKey {
    * @return owner
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOwner() {
     return owner;

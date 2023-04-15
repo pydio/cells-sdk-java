@@ -33,12 +33,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmPolicyGroup
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmPolicyGroup {
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -58,7 +56,7 @@ public class IdmPolicyGroup {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<IdmPolicy> policies = null;
+  private List<IdmPolicy> policies;
 
   public static final String SERIALIZED_NAME_RESOURCE_GROUP = "ResourceGroup";
   @SerializedName(SERIALIZED_NAME_RESOURCE_GROUP)
@@ -82,7 +80,6 @@ public class IdmPolicyGroup {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -105,7 +102,6 @@ public class IdmPolicyGroup {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLastUpdated() {
     return lastUpdated;
@@ -128,7 +124,6 @@ public class IdmPolicyGroup {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -151,7 +146,6 @@ public class IdmPolicyGroup {
    * @return ownerUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOwnerUuid() {
     return ownerUuid;
@@ -182,7 +176,6 @@ public class IdmPolicyGroup {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmPolicy> getPolicies() {
     return policies;
@@ -205,7 +198,6 @@ public class IdmPolicyGroup {
    * @return resourceGroup
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmPolicyResourceGroup getResourceGroup() {
     return resourceGroup;
@@ -228,7 +220,6 @@ public class IdmPolicyGroup {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;

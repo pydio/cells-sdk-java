@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsActionLog
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsActionLog {
   public static final String SERIALIZED_NAME_ACTION = "Action";
   @SerializedName(SERIALIZED_NAME_ACTION)
@@ -63,7 +61,6 @@ public class JobsActionLog {
    * @return action
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsAction getAction() {
     return action;
@@ -86,7 +83,6 @@ public class JobsActionLog {
    * @return inputMessage
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsActionMessage getInputMessage() {
     return inputMessage;
@@ -109,7 +105,6 @@ public class JobsActionLog {
    * @return outputMessage
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsActionMessage getOutputMessage() {
     return outputMessage;

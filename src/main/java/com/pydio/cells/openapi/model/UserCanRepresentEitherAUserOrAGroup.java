@@ -35,16 +35,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * UserCanRepresentEitherAUserOrAGroup
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class UserCanRepresentEitherAUserOrAGroup {
   public static final String SERIALIZED_NAME_ATTRIBUTES = "Attributes";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTES)
-  private Map<String, String> attributes = null;
+  private Map<String, String> attributes = new HashMap<>();
 
   public static final String SERIALIZED_NAME_GROUP_LABEL = "GroupLabel";
   @SerializedName(SERIALIZED_NAME_GROUP_LABEL)
@@ -72,7 +70,7 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE = "PoliciesContextEditable";
   @SerializedName(SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE)
@@ -80,7 +78,7 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
   public static final String SERIALIZED_NAME_ROLES = "Roles";
   @SerializedName(SERIALIZED_NAME_ROLES)
-  private List<IdmRole> roles = null;
+  private List<IdmRole> roles;
 
   public static final String SERIALIZED_NAME_UUID = "Uuid";
   @SerializedName(SERIALIZED_NAME_UUID)
@@ -108,7 +106,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return attributes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getAttributes() {
     return attributes;
@@ -131,7 +128,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return groupLabel
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getGroupLabel() {
     return groupLabel;
@@ -154,7 +150,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return groupPath
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getGroupPath() {
     return groupPath;
@@ -177,7 +172,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return isGroup
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getIsGroup() {
     return isGroup;
@@ -200,7 +194,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return lastConnected
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLastConnected() {
     return lastConnected;
@@ -223,7 +216,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return oldPassword
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOldPassword() {
     return oldPassword;
@@ -246,7 +238,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return password
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPassword() {
     return password;
@@ -277,7 +268,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -300,7 +290,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Context-resolved to quickly check if user is editable or not.")
 
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
@@ -331,7 +320,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return roles
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmRole> getRoles() {
     return roles;
@@ -354,7 +342,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;

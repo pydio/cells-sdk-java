@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsDeleteTasksRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsDeleteTasksRequest {
   public static final String SERIALIZED_NAME_JOB_ID = "JobId";
   @SerializedName(SERIALIZED_NAME_JOB_ID)
@@ -49,11 +47,11 @@ public class JobsDeleteTasksRequest {
 
   public static final String SERIALIZED_NAME_STATUS = "Status";
   @SerializedName(SERIALIZED_NAME_STATUS)
-  private List<JobsTaskStatus> status = null;
+  private List<JobsTaskStatus> status;
 
   public static final String SERIALIZED_NAME_TASK_I_D = "TaskID";
   @SerializedName(SERIALIZED_NAME_TASK_I_D)
-  private List<String> taskID = null;
+  private List<String> taskID;
 
   public JobsDeleteTasksRequest() {
   }
@@ -69,7 +67,6 @@ public class JobsDeleteTasksRequest {
    * @return jobId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJobId() {
     return jobId;
@@ -92,7 +89,6 @@ public class JobsDeleteTasksRequest {
    * @return pruneLimit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getPruneLimit() {
     return pruneLimit;
@@ -123,7 +119,6 @@ public class JobsDeleteTasksRequest {
    * @return status
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<JobsTaskStatus> getStatus() {
     return status;
@@ -154,7 +149,6 @@ public class JobsDeleteTasksRequest {
    * @return taskID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getTaskID() {
     return taskID;

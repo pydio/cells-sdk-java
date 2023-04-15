@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestCreateNodesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestCreateNodesRequest {
   public static final String SERIALIZED_NAME_NODES = "Nodes";
   @SerializedName(SERIALIZED_NAME_NODES)
-  private List<TreeNode> nodes = null;
+  private List<TreeNode> nodes;
 
   public static final String SERIALIZED_NAME_RECURSIVE = "Recursive";
   @SerializedName(SERIALIZED_NAME_RECURSIVE)
@@ -74,7 +72,6 @@ public class RestCreateNodesRequest {
    * @return nodes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeNode> getNodes() {
     return nodes;
@@ -97,7 +94,6 @@ public class RestCreateNodesRequest {
    * @return recursive
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getRecursive() {
     return recursive;
@@ -120,7 +116,6 @@ public class RestCreateNodesRequest {
    * @return templateUUID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTemplateUUID() {
     return templateUUID;

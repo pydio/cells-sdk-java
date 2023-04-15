@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * JobsListJobsRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class JobsListJobsRequest {
   public static final String SERIALIZED_NAME_EVENTS_ONLY = "EventsOnly";
   @SerializedName(SERIALIZED_NAME_EVENTS_ONLY)
@@ -45,7 +43,7 @@ public class JobsListJobsRequest {
 
   public static final String SERIALIZED_NAME_JOB_I_DS = "JobIDs";
   @SerializedName(SERIALIZED_NAME_JOB_I_DS)
-  private List<String> jobIDs = null;
+  private List<String> jobIDs;
 
   public static final String SERIALIZED_NAME_LOAD_TASKS = "LoadTasks";
   @SerializedName(SERIALIZED_NAME_LOAD_TASKS)
@@ -81,7 +79,6 @@ public class JobsListJobsRequest {
    * @return eventsOnly
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getEventsOnly() {
     return eventsOnly;
@@ -112,7 +109,6 @@ public class JobsListJobsRequest {
    * @return jobIDs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getJobIDs() {
     return jobIDs;
@@ -135,7 +131,6 @@ public class JobsListJobsRequest {
    * @return loadTasks
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobsTaskStatus getLoadTasks() {
     return loadTasks;
@@ -158,7 +153,6 @@ public class JobsListJobsRequest {
    * @return owner
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getOwner() {
     return owner;
@@ -181,7 +175,6 @@ public class JobsListJobsRequest {
    * @return tasksLimit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTasksLimit() {
     return tasksLimit;
@@ -204,7 +197,6 @@ public class JobsListJobsRequest {
    * @return tasksOffset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTasksOffset() {
     return tasksOffset;
@@ -227,7 +219,6 @@ public class JobsListJobsRequest {
    * @return timersOnly
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getTimersOnly() {
     return timersOnly;

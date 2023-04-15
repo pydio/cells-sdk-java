@@ -35,20 +35,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * MailerMail
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class MailerMail {
   public static final String SERIALIZED_NAME_ATTACHMENTS = "Attachments";
   @SerializedName(SERIALIZED_NAME_ATTACHMENTS)
-  private List<String> attachments = null;
+  private List<String> attachments;
 
   public static final String SERIALIZED_NAME_CC = "Cc";
   @SerializedName(SERIALIZED_NAME_CC)
-  private List<MailerUser> cc = null;
+  private List<MailerUser> cc;
 
   public static final String SERIALIZED_NAME_CONTENT_HTML = "ContentHtml";
   @SerializedName(SERIALIZED_NAME_CONTENT_HTML)
@@ -84,7 +82,7 @@ public class MailerMail {
 
   public static final String SERIALIZED_NAME_TEMPLATE_DATA = "TemplateData";
   @SerializedName(SERIALIZED_NAME_TEMPLATE_DATA)
-  private Map<String, String> templateData = null;
+  private Map<String, String> templateData = new HashMap<>();
 
   public static final String SERIALIZED_NAME_TEMPLATE_ID = "TemplateId";
   @SerializedName(SERIALIZED_NAME_TEMPLATE_ID)
@@ -100,11 +98,11 @@ public class MailerMail {
 
   public static final String SERIALIZED_NAME_TO = "To";
   @SerializedName(SERIALIZED_NAME_TO)
-  private List<MailerUser> to = null;
+  private List<MailerUser> to;
 
   public static final String SERIALIZED_NAME_SEND_ERRORS = "sendErrors";
   @SerializedName(SERIALIZED_NAME_SEND_ERRORS)
-  private List<String> sendErrors = null;
+  private List<String> sendErrors;
 
   public MailerMail() {
   }
@@ -128,7 +126,6 @@ public class MailerMail {
    * @return attachments
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getAttachments() {
     return attachments;
@@ -159,7 +156,6 @@ public class MailerMail {
    * @return cc
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<MailerUser> getCc() {
     return cc;
@@ -182,7 +178,6 @@ public class MailerMail {
    * @return contentHtml
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getContentHtml() {
     return contentHtml;
@@ -205,7 +200,6 @@ public class MailerMail {
    * @return contentMarkdown
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getContentMarkdown() {
     return contentMarkdown;
@@ -228,7 +222,6 @@ public class MailerMail {
    * @return contentPlain
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getContentPlain() {
     return contentPlain;
@@ -251,7 +244,6 @@ public class MailerMail {
    * @return dateSent
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDateSent() {
     return dateSent;
@@ -274,7 +266,6 @@ public class MailerMail {
    * @return from
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public MailerUser getFrom() {
     return from;
@@ -297,7 +288,6 @@ public class MailerMail {
    * @return retries
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getRetries() {
     return retries;
@@ -320,7 +310,6 @@ public class MailerMail {
    * @return sender
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public MailerUser getSender() {
     return sender;
@@ -343,7 +332,6 @@ public class MailerMail {
    * @return subject
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSubject() {
     return subject;
@@ -374,7 +362,6 @@ public class MailerMail {
    * @return templateData
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getTemplateData() {
     return templateData;
@@ -397,7 +384,6 @@ public class MailerMail {
    * @return templateId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTemplateId() {
     return templateId;
@@ -420,7 +406,6 @@ public class MailerMail {
    * @return threadIndex
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getThreadIndex() {
     return threadIndex;
@@ -443,7 +428,6 @@ public class MailerMail {
    * @return threadUuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getThreadUuid() {
     return threadUuid;
@@ -474,7 +458,6 @@ public class MailerMail {
    * @return to
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<MailerUser> getTo() {
     return to;
@@ -505,7 +488,6 @@ public class MailerMail {
    * @return sendErrors
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getSendErrors() {
     return sendErrors;

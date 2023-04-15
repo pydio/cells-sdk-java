@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmSearchUserMetaRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmSearchUserMetaRequest {
   public static final String SERIALIZED_NAME_META_UUIDS = "MetaUuids";
   @SerializedName(SERIALIZED_NAME_META_UUIDS)
-  private List<String> metaUuids = null;
+  private List<String> metaUuids;
 
   public static final String SERIALIZED_NAME_NAMESPACE = "Namespace";
   @SerializedName(SERIALIZED_NAME_NAMESPACE)
@@ -49,7 +47,7 @@ public class IdmSearchUserMetaRequest {
 
   public static final String SERIALIZED_NAME_NODE_UUIDS = "NodeUuids";
   @SerializedName(SERIALIZED_NAME_NODE_UUIDS)
-  private List<String> nodeUuids = null;
+  private List<String> nodeUuids;
 
   public static final String SERIALIZED_NAME_RESOURCE_QUERY = "ResourceQuery";
   @SerializedName(SERIALIZED_NAME_RESOURCE_QUERY)
@@ -81,7 +79,6 @@ public class IdmSearchUserMetaRequest {
    * @return metaUuids
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getMetaUuids() {
     return metaUuids;
@@ -104,7 +101,6 @@ public class IdmSearchUserMetaRequest {
    * @return namespace
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getNamespace() {
     return namespace;
@@ -135,7 +131,6 @@ public class IdmSearchUserMetaRequest {
    * @return nodeUuids
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getNodeUuids() {
     return nodeUuids;
@@ -158,7 +153,6 @@ public class IdmSearchUserMetaRequest {
    * @return resourceQuery
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ServiceResourcePolicyQuery getResourceQuery() {
     return resourceQuery;
@@ -181,7 +175,6 @@ public class IdmSearchUserMetaRequest {
    * @return resourceSubjectOwner
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getResourceSubjectOwner() {
     return resourceSubjectOwner;

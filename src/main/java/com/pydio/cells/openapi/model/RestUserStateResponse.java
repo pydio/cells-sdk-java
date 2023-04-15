@@ -35,20 +35,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestUserStateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestUserStateResponse {
   public static final String SERIALIZED_NAME_WORKSPACES = "Workspaces";
   @SerializedName(SERIALIZED_NAME_WORKSPACES)
-  private List<IdmWorkspace> workspaces = null;
+  private List<IdmWorkspace> workspaces;
 
   public static final String SERIALIZED_NAME_WORKSPACES_ACCESSES = "WorkspacesAccesses";
   @SerializedName(SERIALIZED_NAME_WORKSPACES_ACCESSES)
-  private Map<String, String> workspacesAccesses = null;
+  private Map<String, String> workspacesAccesses = new HashMap<>();
 
   public RestUserStateResponse() {
   }
@@ -72,7 +70,6 @@ public class RestUserStateResponse {
    * @return workspaces
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmWorkspace> getWorkspaces() {
     return workspaces;
@@ -103,7 +100,6 @@ public class RestUserStateResponse {
    * @return workspacesAccesses
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getWorkspacesAccesses() {
     return workspacesAccesses;

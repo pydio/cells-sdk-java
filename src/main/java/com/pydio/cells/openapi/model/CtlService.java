@@ -35,12 +35,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * CtlService
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class CtlService {
   public static final String SERIALIZED_NAME_CONTROLLABLE = "Controllable";
   @SerializedName(SERIALIZED_NAME_CONTROLLABLE)
@@ -52,7 +50,7 @@ public class CtlService {
 
   public static final String SERIALIZED_NAME_METADATA = "Metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
-  private Map<String, String> metadata = null;
+  private Map<String, String> metadata = new HashMap<>();
 
   public static final String SERIALIZED_NAME_NAME = "Name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -60,7 +58,7 @@ public class CtlService {
 
   public static final String SERIALIZED_NAME_RUNNING_PEERS = "RunningPeers";
   @SerializedName(SERIALIZED_NAME_RUNNING_PEERS)
-  private List<CtlPeer> runningPeers = null;
+  private List<CtlPeer> runningPeers;
 
   public static final String SERIALIZED_NAME_STATUS = "Status";
   @SerializedName(SERIALIZED_NAME_STATUS)
@@ -88,7 +86,6 @@ public class CtlService {
    * @return controllable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getControllable() {
     return controllable;
@@ -111,7 +108,6 @@ public class CtlService {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -142,7 +138,6 @@ public class CtlService {
    * @return metadata
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getMetadata() {
     return metadata;
@@ -165,7 +160,6 @@ public class CtlService {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -196,7 +190,6 @@ public class CtlService {
    * @return runningPeers
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<CtlPeer> getRunningPeers() {
     return runningPeers;
@@ -219,7 +212,6 @@ public class CtlService {
    * @return status
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CtlServiceStatus getStatus() {
     return status;
@@ -242,7 +234,6 @@ public class CtlService {
    * @return tag
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTag() {
     return tag;
@@ -265,7 +256,6 @@ public class CtlService {
    * @return version
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getVersion() {
     return version;

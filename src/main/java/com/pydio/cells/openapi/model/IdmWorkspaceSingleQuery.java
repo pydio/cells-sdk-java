@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmWorkspaceSingleQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmWorkspaceSingleQuery {
   public static final String SERIALIZED_NAME_ATTRIBUTE_NAME = "AttributeName";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTE_NAME)
@@ -91,7 +89,6 @@ public class IdmWorkspaceSingleQuery {
    * @return attributeName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAttributeName() {
     return attributeName;
@@ -114,7 +111,6 @@ public class IdmWorkspaceSingleQuery {
    * @return attributeValue
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getAttributeValue() {
     return attributeValue;
@@ -137,7 +133,6 @@ public class IdmWorkspaceSingleQuery {
    * @return hasAttribute
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getHasAttribute() {
     return hasAttribute;
@@ -160,7 +155,6 @@ public class IdmWorkspaceSingleQuery {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLastUpdated() {
     return lastUpdated;
@@ -183,7 +177,6 @@ public class IdmWorkspaceSingleQuery {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -206,7 +199,6 @@ public class IdmWorkspaceSingleQuery {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -229,7 +221,6 @@ public class IdmWorkspaceSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getNot() {
     return not;
@@ -252,7 +243,6 @@ public class IdmWorkspaceSingleQuery {
    * @return scope
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public IdmWorkspaceScope getScope() {
     return scope;
@@ -275,7 +265,6 @@ public class IdmWorkspaceSingleQuery {
    * @return slug
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSlug() {
     return slug;
@@ -298,7 +287,6 @@ public class IdmWorkspaceSingleQuery {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;

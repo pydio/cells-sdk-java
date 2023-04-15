@@ -33,16 +33,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * IdmUpdateUserMetaNamespaceRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class IdmUpdateUserMetaNamespaceRequest {
   public static final String SERIALIZED_NAME_NAMESPACES = "Namespaces";
   @SerializedName(SERIALIZED_NAME_NAMESPACES)
-  private List<IdmUserMetaNamespace> namespaces = null;
+  private List<IdmUserMetaNamespace> namespaces;
 
   public static final String SERIALIZED_NAME_OPERATION = "Operation";
   @SerializedName(SERIALIZED_NAME_OPERATION)
@@ -70,7 +68,6 @@ public class IdmUpdateUserMetaNamespaceRequest {
    * @return namespaces
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmUserMetaNamespace> getNamespaces() {
     return namespaces;
@@ -93,7 +90,6 @@ public class IdmUpdateUserMetaNamespaceRequest {
    * @return operation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public UpdateUserMetaNamespaceRequestUserMetaNsOp getOperation() {
     return operation;

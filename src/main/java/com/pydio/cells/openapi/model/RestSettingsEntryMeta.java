@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSettingsEntryMeta
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSettingsEntryMeta {
   public static final String SERIALIZED_NAME_ADVANCED = "advanced";
   @SerializedName(SERIALIZED_NAME_ADVANCED)
@@ -53,7 +51,7 @@ public class RestSettingsEntryMeta {
 
   public static final String SERIALIZED_NAME_INDEXED = "indexed";
   @SerializedName(SERIALIZED_NAME_INDEXED)
-  private List<String> indexed = null;
+  private List<String> indexed;
 
   public static final String SERIALIZED_NAME_PROPS = "props";
   @SerializedName(SERIALIZED_NAME_PROPS)
@@ -73,7 +71,6 @@ public class RestSettingsEntryMeta {
    * @return advanced
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getAdvanced() {
     return advanced;
@@ -96,7 +93,6 @@ public class RestSettingsEntryMeta {
    * @return component
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getComponent() {
     return component;
@@ -119,7 +115,6 @@ public class RestSettingsEntryMeta {
    * @return iconClass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIconClass() {
     return iconClass;
@@ -150,7 +145,6 @@ public class RestSettingsEntryMeta {
    * @return indexed
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getIndexed() {
     return indexed;
@@ -173,7 +167,6 @@ public class RestSettingsEntryMeta {
    * @return props
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getProps() {
     return props;

@@ -32,16 +32,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestFrontMessagesResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestFrontMessagesResponse {
   public static final String SERIALIZED_NAME_MESSAGES = "Messages";
   @SerializedName(SERIALIZED_NAME_MESSAGES)
-  private Map<String, String> messages = null;
+  private Map<String, String> messages = new HashMap<>();
 
   public RestFrontMessagesResponse() {
   }
@@ -65,7 +63,6 @@ public class RestFrontMessagesResponse {
    * @return messages
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getMessages() {
     return messages;

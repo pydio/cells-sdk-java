@@ -35,16 +35,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestCell
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestCell {
   public static final String SERIALIZED_NAME_AC_LS = "ACLs";
   @SerializedName(SERIALIZED_NAME_AC_LS)
-  private Map<String, RestCellAcl> acLs = null;
+  private Map<String, RestCellAcl> acLs = new HashMap<>();
+
+  public static final String SERIALIZED_NAME_ACCESS_END = "AccessEnd";
+  @SerializedName(SERIALIZED_NAME_ACCESS_END)
+  private String accessEnd;
 
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -56,7 +58,7 @@ public class RestCell {
 
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<ServiceResourcePolicy> policies = null;
+  private List<ServiceResourcePolicy> policies;
 
   public static final String SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE = "PoliciesContextEditable";
   @SerializedName(SERIALIZED_NAME_POLICIES_CONTEXT_EDITABLE)
@@ -64,7 +66,7 @@ public class RestCell {
 
   public static final String SERIALIZED_NAME_ROOT_NODES = "RootNodes";
   @SerializedName(SERIALIZED_NAME_ROOT_NODES)
-  private List<TreeNode> rootNodes = null;
+  private List<TreeNode> rootNodes;
 
   public static final String SERIALIZED_NAME_UUID = "Uuid";
   @SerializedName(SERIALIZED_NAME_UUID)
@@ -92,7 +94,6 @@ public class RestCell {
    * @return acLs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, RestCellAcl> getAcLs() {
     return acLs;
@@ -101,6 +102,28 @@ public class RestCell {
 
   public void setAcLs(Map<String, RestCellAcl> acLs) {
     this.acLs = acLs;
+  }
+
+
+  public RestCell accessEnd(String accessEnd) {
+    
+    this.accessEnd = accessEnd;
+    return this;
+  }
+
+   /**
+   * Get accessEnd
+   * @return accessEnd
+  **/
+  @javax.annotation.Nullable
+
+  public String getAccessEnd() {
+    return accessEnd;
+  }
+
+
+  public void setAccessEnd(String accessEnd) {
+    this.accessEnd = accessEnd;
   }
 
 
@@ -115,7 +138,6 @@ public class RestCell {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -138,7 +160,6 @@ public class RestCell {
    * @return label
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLabel() {
     return label;
@@ -169,7 +190,6 @@ public class RestCell {
    * @return policies
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
@@ -192,7 +212,6 @@ public class RestCell {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
@@ -223,7 +242,6 @@ public class RestCell {
    * @return rootNodes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeNode> getRootNodes() {
     return rootNodes;
@@ -246,7 +264,6 @@ public class RestCell {
    * @return uuid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUuid() {
     return uuid;
@@ -269,6 +286,7 @@ public class RestCell {
     }
     RestCell restCell = (RestCell) o;
     return Objects.equals(this.acLs, restCell.acLs) &&
+        Objects.equals(this.accessEnd, restCell.accessEnd) &&
         Objects.equals(this.description, restCell.description) &&
         Objects.equals(this.label, restCell.label) &&
         Objects.equals(this.policies, restCell.policies) &&
@@ -279,7 +297,7 @@ public class RestCell {
 
   @Override
   public int hashCode() {
-    return Objects.hash(acLs, description, label, policies, policiesContextEditable, rootNodes, uuid);
+    return Objects.hash(acLs, accessEnd, description, label, policies, policiesContextEditable, rootNodes, uuid);
   }
 
   @Override
@@ -287,6 +305,7 @@ public class RestCell {
     StringBuilder sb = new StringBuilder();
     sb.append("class RestCell {\n");
     sb.append("    acLs: ").append(toIndentedString(acLs)).append("\n");
+    sb.append("    accessEnd: ").append(toIndentedString(accessEnd)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
@@ -316,6 +335,7 @@ public class RestCell {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("ACLs");
+    openapiFields.add("AccessEnd");
     openapiFields.add("Description");
     openapiFields.add("Label");
     openapiFields.add("Policies");
@@ -346,6 +366,9 @@ public class RestCell {
         if (!RestCell.openapiFields.contains(entry.getKey())) {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestCell` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
+      }
+      if ((jsonObj.get("AccessEnd") != null && !jsonObj.get("AccessEnd").isJsonNull()) && !jsonObj.get("AccessEnd").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `AccessEnd` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AccessEnd").toString()));
       }
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));

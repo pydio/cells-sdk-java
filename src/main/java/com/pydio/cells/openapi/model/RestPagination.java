@@ -30,12 +30,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestPagination
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestPagination {
   public static final String SERIALIZED_NAME_CURRENT_OFFSET = "CurrentOffset";
   @SerializedName(SERIALIZED_NAME_CURRENT_OFFSET)
@@ -79,7 +77,6 @@ public class RestPagination {
    * @return currentOffset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCurrentOffset() {
     return currentOffset;
@@ -102,7 +99,6 @@ public class RestPagination {
    * @return currentPage
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCurrentPage() {
     return currentPage;
@@ -125,7 +121,6 @@ public class RestPagination {
    * @return limit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getLimit() {
     return limit;
@@ -148,7 +143,6 @@ public class RestPagination {
    * @return nextOffset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getNextOffset() {
     return nextOffset;
@@ -171,7 +165,6 @@ public class RestPagination {
    * @return prevOffset
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getPrevOffset() {
     return prevOffset;
@@ -194,7 +187,6 @@ public class RestPagination {
    * @return total
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTotal() {
     return total;
@@ -217,7 +209,6 @@ public class RestPagination {
    * @return totalPages
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTotalPages() {
     return totalPages;

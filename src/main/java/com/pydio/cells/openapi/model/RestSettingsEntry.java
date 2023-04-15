@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSettingsEntry
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSettingsEntry {
   public static final String SERIALIZED_NAME_A_L_I_A_S = "ALIAS";
   @SerializedName(SERIALIZED_NAME_A_L_I_A_S)
@@ -45,7 +43,7 @@ public class RestSettingsEntry {
 
   public static final String SERIALIZED_NAME_ACCESSES = "Accesses";
   @SerializedName(SERIALIZED_NAME_ACCESSES)
-  private Map<String, RestSettingsAccess> accesses = null;
+  private Map<String, RestSettingsAccess> accesses = new HashMap<>();
 
   public static final String SERIALIZED_NAME_D_E_S_C_R_I_P_T_I_O_N = "DESCRIPTION";
   @SerializedName(SERIALIZED_NAME_D_E_S_C_R_I_P_T_I_O_N)
@@ -85,7 +83,6 @@ public class RestSettingsEntry {
    * @return ALIAS
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getALIAS() {
     return ALIAS;
@@ -116,7 +113,6 @@ public class RestSettingsEntry {
    * @return accesses
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, RestSettingsAccess> getAccesses() {
     return accesses;
@@ -139,7 +135,6 @@ public class RestSettingsEntry {
    * @return DESCRIPTION
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDESCRIPTION() {
     return DESCRIPTION;
@@ -162,7 +157,6 @@ public class RestSettingsEntry {
    * @return feature
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getFeature() {
     return feature;
@@ -185,7 +179,6 @@ public class RestSettingsEntry {
    * @return key
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getKey() {
     return key;
@@ -208,7 +201,6 @@ public class RestSettingsEntry {
    * @return LABEL
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getLABEL() {
     return LABEL;
@@ -231,7 +223,6 @@ public class RestSettingsEntry {
    * @return MANAGER
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMANAGER() {
     return MANAGER;
@@ -254,7 +245,6 @@ public class RestSettingsEntry {
    * @return METADATA
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public RestSettingsEntryMeta getMETADATA() {
     return METADATA;

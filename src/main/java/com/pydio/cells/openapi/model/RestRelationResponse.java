@@ -33,20 +33,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestRelationResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestRelationResponse {
   public static final String SERIALIZED_NAME_BELONGS_TO_TEAMS = "BelongsToTeams";
   @SerializedName(SERIALIZED_NAME_BELONGS_TO_TEAMS)
-  private List<IdmRole> belongsToTeams = null;
+  private List<IdmRole> belongsToTeams;
 
   public static final String SERIALIZED_NAME_SHARED_CELLS = "SharedCells";
   @SerializedName(SERIALIZED_NAME_SHARED_CELLS)
-  private List<IdmWorkspace> sharedCells = null;
+  private List<IdmWorkspace> sharedCells;
 
   public RestRelationResponse() {
   }
@@ -70,7 +68,6 @@ public class RestRelationResponse {
    * @return belongsToTeams
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmRole> getBelongsToTeams() {
     return belongsToTeams;
@@ -101,7 +98,6 @@ public class RestRelationResponse {
    * @return sharedCells
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<IdmWorkspace> getSharedCells() {
     return sharedCells;

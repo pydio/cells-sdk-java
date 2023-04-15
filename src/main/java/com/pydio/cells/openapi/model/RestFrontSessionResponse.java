@@ -32,12 +32,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestFrontSessionResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestFrontSessionResponse {
   public static final String SERIALIZED_NAME_ERROR = "Error";
   @SerializedName(SERIALIZED_NAME_ERROR)
@@ -65,7 +63,7 @@ public class RestFrontSessionResponse {
 
   public static final String SERIALIZED_NAME_TRIGGER_INFO = "TriggerInfo";
   @SerializedName(SERIALIZED_NAME_TRIGGER_INFO)
-  private Map<String, String> triggerInfo = null;
+  private Map<String, String> triggerInfo = new HashMap<>();
 
   public RestFrontSessionResponse() {
   }
@@ -81,7 +79,6 @@ public class RestFrontSessionResponse {
    * @return error
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getError() {
     return error;
@@ -104,7 +101,6 @@ public class RestFrontSessionResponse {
    * @return expireTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getExpireTime() {
     return expireTime;
@@ -127,7 +123,6 @@ public class RestFrontSessionResponse {
    * @return JWT
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getJWT() {
     return JWT;
@@ -150,7 +145,6 @@ public class RestFrontSessionResponse {
    * @return redirectTo
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getRedirectTo() {
     return redirectTo;
@@ -173,7 +167,6 @@ public class RestFrontSessionResponse {
    * @return token
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public AuthToken getToken() {
     return token;
@@ -196,7 +189,6 @@ public class RestFrontSessionResponse {
    * @return trigger
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTrigger() {
     return trigger;
@@ -227,7 +219,6 @@ public class RestFrontSessionResponse {
    * @return triggerInfo
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Map<String, String> getTriggerInfo() {
     return triggerInfo;

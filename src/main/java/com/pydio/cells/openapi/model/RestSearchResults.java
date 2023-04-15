@@ -33,20 +33,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RestSearchResults
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RestSearchResults {
   public static final String SERIALIZED_NAME_FACETS = "Facets";
   @SerializedName(SERIALIZED_NAME_FACETS)
-  private List<TreeSearchFacet> facets = null;
+  private List<TreeSearchFacet> facets;
 
   public static final String SERIALIZED_NAME_RESULTS = "Results";
   @SerializedName(SERIALIZED_NAME_RESULTS)
-  private List<TreeNode> results = null;
+  private List<TreeNode> results;
 
   public static final String SERIALIZED_NAME_TOTAL = "Total";
   @SerializedName(SERIALIZED_NAME_TOTAL)
@@ -74,7 +72,6 @@ public class RestSearchResults {
    * @return facets
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeSearchFacet> getFacets() {
     return facets;
@@ -105,7 +102,6 @@ public class RestSearchResults {
    * @return results
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<TreeNode> getResults() {
     return results;
@@ -128,7 +124,6 @@ public class RestSearchResults {
    * @return total
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getTotal() {
     return total;

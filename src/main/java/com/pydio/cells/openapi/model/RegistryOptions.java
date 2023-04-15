@@ -32,20 +32,18 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * RegistryOptions
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-20T11:40:14.306426+01:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
 public class RegistryOptions {
   public static final String SERIALIZED_NAME_ACTIONS = "actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
-  private List<RegistryActionType> actions = null;
+  private List<RegistryActionType> actions;
 
   public static final String SERIALIZED_NAME_IDS = "ids";
   @SerializedName(SERIALIZED_NAME_IDS)
-  private List<String> ids = null;
+  private List<String> ids;
 
   public static final String SERIALIZED_NAME_META_NAME = "metaName";
   @SerializedName(SERIALIZED_NAME_META_NAME)
@@ -57,7 +55,7 @@ public class RegistryOptions {
 
   public static final String SERIALIZED_NAME_NAMES = "names";
   @SerializedName(SERIALIZED_NAME_NAMES)
-  private List<String> names = null;
+  private List<String> names;
 
   public static final String SERIALIZED_NAME_TTL = "ttl";
   @SerializedName(SERIALIZED_NAME_TTL)
@@ -65,7 +63,7 @@ public class RegistryOptions {
 
   public static final String SERIALIZED_NAME_TYPES = "types";
   @SerializedName(SERIALIZED_NAME_TYPES)
-  private List<RegistryItemType> types = null;
+  private List<RegistryItemType> types;
 
   public RegistryOptions() {
   }
@@ -89,7 +87,6 @@ public class RegistryOptions {
    * @return actions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RegistryActionType> getActions() {
     return actions;
@@ -120,7 +117,6 @@ public class RegistryOptions {
    * @return ids
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getIds() {
     return ids;
@@ -143,7 +139,6 @@ public class RegistryOptions {
    * @return metaName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMetaName() {
     return metaName;
@@ -166,7 +161,6 @@ public class RegistryOptions {
    * @return metaValue
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMetaValue() {
     return metaValue;
@@ -197,7 +191,6 @@ public class RegistryOptions {
    * @return names
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getNames() {
     return names;
@@ -220,7 +213,6 @@ public class RegistryOptions {
    * @return ttl
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTtl() {
     return ttl;
@@ -251,7 +243,6 @@ public class RegistryOptions {
    * @return types
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<RegistryItemType> getTypes() {
     return types;
