@@ -12,10 +12,10 @@ repositories {
 }
 
 // Useful for Java only development
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
 
-def sdkVersion = '0.4.3'
+def sdkVersion = '0.4.4'
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
 }

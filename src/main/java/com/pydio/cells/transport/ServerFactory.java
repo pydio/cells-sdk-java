@@ -49,7 +49,7 @@ public class ServerFactory implements IServerFactory {
             instance.setName("CellsJavaTransport");
             instance.setLabel("Cells Java Transport");
             // TODO this should not be hard coded
-            instance.setVersion("0.4.3");
+            instance.setVersion("0.4.4");
             instance.setPlatform("Java");
             ClientData.updateInstance(instance);
         }

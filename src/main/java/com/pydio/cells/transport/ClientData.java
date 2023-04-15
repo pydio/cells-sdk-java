@@ -10,7 +10,7 @@ public class ClientData {
     public final static String DEFAULT_APP_LABEL = "Cells Java SDK";
     public final static String DEFAULT_APP_NAME = "CellsJavaSDK";
 
-    private static final Integer lock = Integer.valueOf(0);
+    private static final String lock = "lock";
 
     private Long lastUpdateTime = 0L;
     private String platform = "";

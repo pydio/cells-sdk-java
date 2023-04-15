@@ -7,13 +7,13 @@ plugins {
     id 'maven-publish'
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
 
 def vendorName = "Abstrium SAS"
 def sdkJavaRepoURL = 'https://github.com/pydio/cells-sdk-java.git'
 def artifactID = 'cells-sdk-java'
-def sdkJavaSpecVersion = '0.4.3'
+def sdkJavaSpecVersion = '0.4.4'
 def sdkJavaVersion = ownVersions['java.sdk']
 
 // Also publish sources and Javadoc
