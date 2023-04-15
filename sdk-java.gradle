@@ -18,7 +18,8 @@ def sdkJavaVersion = ownVersions['java.sdk']
 
 // Also publish sources and Javadoc
 java {
-    withJavadocJar()
+    // Temporary disable javadoc, they are broken after updating to java 17 and gradle 8.1
+    // withJavadocJar()
     withSourcesJar()
 }
 
