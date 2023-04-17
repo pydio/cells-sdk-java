@@ -1,7 +1,6 @@
 package com.pydio.cells.transport;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
@@ -11,7 +10,6 @@ import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -22,6 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -176,9 +175,11 @@ public class ServerURLImpl implements ServerURL {
         try {
             // TODO Dirty tweak until we finalize implementation of self-signed certificates
             // We Assume the passed json is correctly formatted
-            Type type = new TypeToken<Map<String, Object>>() {
-            }.getType();
-            Map<String, Object> props = new Gson().fromJson(jsonString, type);
+            // Type type = new TypeToken<Map<String, Object>>() {
+            // }.getType();
+            // Map<String, Object> props = new Gson().fromJson(jsonString, type);           
+            Map<String, Object> propType = new HashMap<>();
+            Map<String, Object> props = new Gson().fromJson(jsonString, propType.getClass());
             return ServerURLImpl.fromAddress(props.get("url").toString(), Boolean.parseBoolean(props.get("skipVerify").toString()));
         } catch (MalformedURLException e) {
             throw new RuntimeException("Unable to decode JSON string: " + jsonString, e);
