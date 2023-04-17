@@ -1068,6 +1068,8 @@ public class CellsClient implements Client, SdkNames {
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
         } catch (Exception e) {
+            Log.e(logTag, "unexpected error when doing stat node for " + fullPath);
+            e.printStackTrace();
             throw new SDKException(ErrorCodes.internal_error, "unexpected error when doing stat node for " + fullPath, e);
         }
     }
