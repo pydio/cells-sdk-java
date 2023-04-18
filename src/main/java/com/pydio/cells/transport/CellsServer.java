@@ -173,7 +173,7 @@ public class CellsServer implements Server {
                                     if (palette.containsKey("primary1Color")) {
                                         oo = palette.get("primary1Color");
                                         if (oo instanceof String && Str.notEmpty((String) oo)) {
-                                            Log.d(logTag, "Found a color: " + oo);
+                                            // Log.d(logTag, "Found a color: " + oo);
                                             customPrimaryColor = (String) oo;
                                         }
                                     }

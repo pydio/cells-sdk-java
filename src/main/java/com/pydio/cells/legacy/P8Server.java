@@ -115,7 +115,7 @@ public class P8Server implements Server {
     }
 
     private void refreshBootConf() throws SDKException {
-        Log.e(logTag, "Starting boot conf refresh process");
+        // Log.e(logTag, "Starting boot conf refresh process");
         HttpURLConnection con = null;
         InputStream in = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -142,7 +142,7 @@ public class P8Server implements Server {
                     welcomeMessage = customWordings.getString("welcomeMessage");
                 }
             }
-            Log.e(logTag, "Got a boot conf");
+            // Log.e(logTag, "Got a boot conf");
         } catch (Exception e) {
             Log.e(logTag, "Could not get boot configuration at " + getId());
             throw new SDKException(ErrorCodes.api_error, "Could not get boot configuration at " + getId(), e);

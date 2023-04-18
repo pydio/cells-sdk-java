@@ -57,10 +57,9 @@ public interface Server {
 
     String getCustomPrimaryColor();
 
-    @Deprecated
-    boolean supportsOauth();
+    String getIconURL();
 
     @Deprecated
-    String getIconURL();
+    boolean supportsOauth();
 
 }
