@@ -1040,7 +1040,6 @@ public class CellsClient implements Client, SdkNames {
         throw new RuntimeException("This must be reimplemented after API update");
     }
 
-
     /**
      * Same as statNode() but rather return null than an {@link SDKException}
      * in case the node is not found

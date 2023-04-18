@@ -75,8 +75,8 @@ public class P8Response implements Closeable {
         this.urlConnection = urlConnection;
         try {
             code = ErrorCodes.fromHttpStatus(urlConnection.getResponseCode());
-            Log.d(logTag, "HTTP code: " + urlConnection.getResponseCode());
             if (code != ErrorCodes.ok) {
+                Log.d(logTag, "HTTP code: " + urlConnection.getResponseCode());
                 return;
             }
             parseFirstBytes();
@@ -84,7 +84,9 @@ public class P8Response implements Closeable {
         } catch (IOException e) {
             Log.w("Unexpected runtime error", "Could not retrieve response code from connection: " + e.getMessage());
             e.printStackTrace();
-            code = -1;
+            // Was code = -1;
+            // Rather use a constant.
+            code = ErrorCodes.con_read_failed;
         }
     }
 
