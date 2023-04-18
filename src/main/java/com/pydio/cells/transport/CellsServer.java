@@ -36,9 +36,6 @@ public class CellsServer implements Server {
     private boolean hasLicenceFeatures = false;
     private String customPrimaryColor = null;
 
-    // Legacy objects TODO remove
-//     private JSONObject bootConf;
-
     public CellsServer(ServerURL serverURL) {
         this.serverURL = serverURL;
     }
