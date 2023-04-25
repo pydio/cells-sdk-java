@@ -119,6 +119,10 @@ public interface SdkNames {
     String WORKSPACE_PROPERTY_ACL = "acl";
     String WORKSPACE_IS_PUBLIC = "is_public";
 
+
+    // Cells
+    String WORKSPACE_ACCESS_TYPE_DIRECTORY = "directory";
+    //  Pydio 8 specific
     String WORKSPACE_ACCESS_TYPE_SHARED = "ajxp_shared";
     String WORKSPACE_ACCESS_TYPE_CONF = "ajxp_conf";
     String WORKSPACE_ACCESS_TYPE_MYSQL = "mysql";
@@ -149,33 +153,6 @@ public interface SdkNames {
     String ALIAS = "alias";
     String SERVER = "server";
 
-//    String REMOTE_CONFIG_UPLOAD_SIZE = "UPLOAD_MAX_SIZE";
-//    String LOCAL_CONFIG_BUFFER_SIZE = "buffer_size";
-//
-//    String SESSION_ID = "session_id";
-//    String LOGIN = "user";
-//    String DISPLAYED_NAME = "user_display_name";
-//    String LOGO = "logo";
-//    String SESSION_NAME = "session_name";
-//    String COOKIES_USER = "user";
-//    String COOKIES_PASSWORD = "password";
-//    String WORKSPACE_ID = "workspace_id";
-//    String NODE_PATH = "path";
-//    String FILE_PATH = "file_path";
-//    String OFFLINE_NODE_HASH = "hash";
-//    String OFFLINE_NODE_SIZE = "size";
-//    String OFFLINE_NODE_ENCRYPTED = "encrypted";
-//    String BOOKMARKS_PATH = "path";
-//    String PROPERTIES_NAME = "name";
-//    String PROPERTIES_VALUE = "value";
-//    String CERTIFICATE = "certificate";
-//    String TASK_ID = "task_id";
-//    String FOLDER_NAME = "folder_name";
-//    String NODE_DATA = "node";
-//    String SERVER_ID = "server_id";
-//    String REMEMBER_PASSWORD = "remember_password";
-//    String CHANGE_LOCATION = "location";
-
     String CHANGE_NODE_ID = "node_id";
     String CHANGE_SEQ = "seq";
     String CHANGE_TYPE = "type";
@@ -188,18 +165,8 @@ public interface SdkNames {
     String CHANGE_NODE_WORKSPACE = "repository_identifier";
     String CHANGE_NODE = "node";
 
-//    int CHANGE_INDEX_SEQ = 0;
-//    int CHANGE_INDEX_NODE_ID = 1;
-//    int CHANGE_INDEX_TYPE = 2;
-//    int CHANGE_INDEX_SOURCE = 3;
-//    int CHANGE_INDEX_TARGET = 4;
-//    int CHANGE_INDEX_NODE_BYTESIZE = 5;
-//    int CHANGE_INDEX_NODE_MD5 = 6;
-//    int CHANGE_INDEX_NODE_MTIME = 7;
-//    int CHANGE_INDEX_NODE_PATH = 8;
-//    int CHANGE_INDEX_NODE_WORKSPACE = 9;
-
     String[] defaultExcludedWorkspaces = {
+            WORKSPACE_ACCESS_TYPE_DIRECTORY,
             WORKSPACE_ACCESS_TYPE_CONF,
             WORKSPACE_ACCESS_TYPE_SHARED,
             WORKSPACE_ACCESS_TYPE_MYSQL,
