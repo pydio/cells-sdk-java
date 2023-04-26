@@ -2,7 +2,6 @@ package com.pydio.cells.transport;
 
 import static com.pydio.cells.transport.CellsServer.API_PREFIX;
 
-import com.google.gson.Gson;
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.ICellsTransport;
@@ -202,14 +201,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             con = openConnection(CellsServer.BOOTCONF_PATH);
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
-
-            String jsonString = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            Gson gson = new Gson();
-            @SuppressWarnings("unchecked") Map<String, Object> map = gson.fromJson(jsonString, Map.class);
-            Log.e(logTag, "Got a boot conf for " + getStateID());
-            map.forEach((s, o) -> {
-                Log.e(logTag, "  - " + s + ": " + o);
-            });
+//            String jsonString = new String(out.toByteArray(), StandardCharsets.UTF_8);
+//            Gson gson = new Gson();
+//            @SuppressWarnings("unchecked") Map<String, Object> map = gson.fromJson(jsonString, Map.class);
+//            Log.e(logTag, "Got a boot conf for " + getStateID());
+//            map.forEach((s, o) -> {
+//                Log.e(logTag, "  - " + s + ": " + o);
+//            });
         } finally {
             IoHelpers.closeQuietly(con);
             IoHelpers.closeQuietly(in);
