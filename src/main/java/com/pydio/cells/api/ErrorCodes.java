@@ -50,6 +50,7 @@ public interface ErrorCodes {
 
     int api_error = 50;
     int unsupported = 51;
+    int timeout = 52;
 
     int no_local_file = 60;
     int no_local_node = 61;
@@ -144,6 +145,8 @@ public interface ErrorCodes {
 
             case api_error:
                 return "API error";
+            case timeout:
+                return "Timeout reached";
 
             case panic:
                 return "Panic";
