@@ -373,12 +373,10 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         if (token == null) {
             return null;
         } else if (token.isExpired()) {
-            // Cells: we only require a refresh but do not get the refreshed token explicitly
+            // Initiate a refresh token request if non is already running, but do not retrieve a new valid token here.
             credentialService.requestRefreshToken(getStateID());
-            throw new SDKException(ErrorCodes.token_expired, "Token expired for " + getStateID() + " refresh token process has been requested in background");
+            throw new SDKException(ErrorCodes.token_expired, "Token expired for " + getStateID() + ", refresh has been requested");
         }
-//        long expiresIn = token.expirationTime - currentTimeInSeconds();
-//        Log.e(logTag, "Got a token, it expires in " + expiresIn + " seconds.");
         return token;
     }
 
