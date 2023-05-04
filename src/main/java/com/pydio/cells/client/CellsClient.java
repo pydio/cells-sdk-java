@@ -975,9 +975,23 @@ public class CellsClient implements Client, SdkNames {
         ShareServiceApi api = new ShareServiceApi(authenticatedClient());
         try {
             RestShareLink link = api.getShareLink(shareID);
-            return transport.getServer().url() + link.getLinkUrl();
+            return getFullLinkAddress(link.getLinkUrl(), transport.getServer().url());
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
+        }
+    }
+
+    private String getFullLinkAddress(String linkUrl, String defaultPrefix) throws SDKException {
+        try {
+            URL url = new URL(linkUrl);
+            // Passed URL is valid we directly use this
+            return url.toString();
+        } catch (MalformedURLException e) {
+            if (!linkUrl.startsWith("/")) {
+                // Log.e(logTag, "Could not parse link URL: [" + linkUrl + "]");
+                throw new SDKException(ErrorCodes.unexpected_response, "Public link [" + linkUrl + "] is not valid", e);
+            }
+            return defaultPrefix + linkUrl;
         }
     }
 
