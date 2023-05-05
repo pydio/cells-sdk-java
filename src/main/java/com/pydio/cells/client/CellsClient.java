@@ -766,19 +766,22 @@ public class CellsClient implements Client, SdkNames {
                     if (fileNode != null) {
                         List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
                         if (sources != null) {
-                            // TODO we only retrieve the first "source" node.
-                            //  When a node is declared 2 times we skip info about the second source.
-                            //  To reproduce, typically favorite a cell that is inside a WS.
-                            String path = sources.get(0).getPath();
-                            if (Str.empty(path)) {
-                                Log.i(logTag, "Got an empty path for: " + fileNode.getPath());
-                                path = "/";
-                            } else if (!path.startsWith("/")) {
-                                path = "/" + path;
+                            // A node can appear in various workspaces (typically when referenced in a cell)
+                            // Yet the server sends back only one node with the specific "appears in" property,
+                            // We then have to return a node for each bookmark to the local cache
+                            for (TreeWorkspaceRelativePath twrp : sources) {
+                                String path = twrp.getPath();
+                                if (Str.empty(path)) {
+                                    Log.i(logTag, "Got an empty path for: " + fileNode.getPath());
+                                    path = "/";
+                                } else if (!path.startsWith("/")) {
+                                    path = "/" + path;
+                                }
+                                fileNode.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, twrp.getWsSlug());
+                                fileNode.setProperty(NODE_PROPERTY_PATH, path);
+                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
+                                h.onNode(fileNode);
                             }
-                            fileNode.setProperty(NODE_PROPERTY_PATH, path);
-                            fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
-                            h.onNode(fileNode);
                         }
                     }
                 } catch (NullPointerException e) {
@@ -1076,6 +1079,7 @@ public class CellsClient implements Client, SdkNames {
 
     private TreeNode internalStatNode(String fullPath) throws SDKException {
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
+        // Log.e(logTag, "############# internal stat for [" + fullPath + "]");
         try {
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
