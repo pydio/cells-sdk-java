@@ -36,16 +36,10 @@ public abstract class CredentialService implements Store<Token> {
         passwordStore.clear();
     }
 
-//    /**
-//     * Provide an entry point to cleanly handle refresh token process,
-//     * typically avoiding launching 2 parallel process (or more) at the same time
-//     * that will lead to loosing the credentials
-//     */
-//    public abstract void refreshToken(StateID stateID, Transport transport) throws SDKException;
-
-    /* Provides an entry point to cleanly handle refresh token process,
-     * typically avoiding launching 2 parallel process (or more) at the same time
-     * that will lead to loosing the credentials
+    /**
+     * Provides an entry point to cleanly handle refresh token process,
+     * typically avoiding launching 2 parallel processes (or more) at the same time
+     * that would lead to loosing the credentials.
      */
     public abstract void requestRefreshToken(StateID stateID) throws SDKException;
 

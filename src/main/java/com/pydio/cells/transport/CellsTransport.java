@@ -169,30 +169,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         return apiClient;
     }
 
-//    public void downloadServerRegistry(RegistryItemHandler itemHandler) throws SDKException {
-//        HttpURLConnection con = null;
-//        InputStream in = null;
-//        SAXParserFactory factory = SAXParserFactory.newInstance();
-//        try {
-//            con = openAnonymousApiConnection(registryPath);
-//            con.setRequestMethod("GET");
-//            in = con.getInputStream();
-//
-//            try {
-//                SAXParser parser = factory.newSAXParser();
-//                parser.parse(in, new ServerGeneralRegistrySaxHandler(itemHandler));
-//            } catch (Exception e) {
-//                Log.w(logTag, "could not parse registry request response");
-//                throw SDKException.unexpectedContent(e);
-//            }
-//        } catch (IOException e) {
-//            throw SDKException.conFailed("cannot retrieve registry", e);
-//        } finally {
-//            IoHelpers.closeQuietly(in);
-//            IoHelpers.closeQuietly(con);
-//        }
-//    }
-
     public void tryDownloadingBootConf() throws Exception {
         HttpURLConnection con = null;
         InputStream in = null;
@@ -201,20 +177,12 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             con = openConnection(CellsServer.BOOTCONF_PATH);
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
-//            String jsonString = new String(out.toByteArray(), StandardCharsets.UTF_8);
-//            Gson gson = new Gson();
-//            @SuppressWarnings("unchecked") Map<String, Object> map = gson.fromJson(jsonString, Map.class);
-//            Log.e(logTag, "Got a boot conf for " + getStateID());
-//            map.forEach((s, o) -> {
-//                Log.e(logTag, "  - " + s + ": " + o);
-//            });
         } finally {
             IoHelpers.closeQuietly(con);
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(out);
         }
     }
-
 
     /**
      * Caller must close the returned stream.
@@ -354,12 +322,9 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
                 throw new SDKException(ErrorCodes.refresh_token_not_valid,
-                        "FNFE while trying to refresh usually means the refresh token has already been consumed", e);
+                        "FNFE while trying to refresh. It usually means that the refresh token has already been consumed", e);
             } else {
                 throw new SDKException.RemoteIOException("Token request failed: " + e.getLocalizedMessage());
-//                Log.w(logTag, "Token request failed: " + e.getLocalizedMessage());
-//                e.printStackTrace();
-//                throw new SDKException(ErrorCodes.con_failed, e);
             }
         } finally {
             IoHelpers.closeQuietly(in);
