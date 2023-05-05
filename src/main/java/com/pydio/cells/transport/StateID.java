@@ -106,6 +106,14 @@ public class StateID {
         return fromId(getAccountId());
     }
 
+    /* Simply retrieves the containing workspace of a state as a StateID object */
+    public StateID workspace() {
+        if (getWorkspace() == null) {
+            return null;
+        }
+        return withPath("/" + getWorkspace());
+    }
+
     public String getAccountId() {
         StringBuilder builder = new StringBuilder();
         if (username != null) {
