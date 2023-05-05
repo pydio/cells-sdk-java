@@ -651,7 +651,7 @@ public class P8Client implements Client, SdkNames {
     @Override
     public String getThumbnail(StateID stateID, FileNode node, File parentFolder, int dim) throws SDKException {
 
-        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.previewImage(stateID.getWorkspace(), stateID.getFile()));
+        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.previewImage(stateID.getSlug(), stateID.getFile()));
         P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required);
         String filename = UUID.randomUUID() + ".jpg";
 

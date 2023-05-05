@@ -108,10 +108,10 @@ public class StateID {
 
     /* Simply retrieves the containing workspace of a state as a StateID object */
     public StateID workspace() {
-        if (getWorkspace() == null) {
+        if (getSlug() == null) {
             return null;
         }
-        return withPath("/" + getWorkspace());
+        return withPath("/" + getSlug());
     }
 
     public String getAccountId() {
@@ -148,7 +148,7 @@ public class StateID {
         return path;
     }
 
-    public String getWorkspace() {
+    public String getSlug() {
         return PathUtils.getWorkspace(path);
     }
 
@@ -230,14 +230,14 @@ public class StateID {
             // Corner case: parent of a workspace or a cell is the corresponding account
             return new StateID(username, serverUrl);
         }
-        return new StateID(username, serverUrl, "/" + getWorkspace() + getParentFile());
+        return new StateID(username, serverUrl, "/" + getSlug() + getParentFile());
     }
 
     public Boolean isWorkspaceRoot() {
         if (getPath() == null) {
             return false;
         }
-        return getPath().equals("/" + getWorkspace());
+        return getPath().equals("/" + getSlug());
     }
 
     public String getParentPath() {

@@ -28,6 +28,24 @@ public class StateIDTest {
     }
 
     @Test
+    public void testDerivedStateID() {
+        StateID stateID = new StateID("doe@example.com", "http://example.com:6767", "/common-files/Documents/Subfolder");
+        StateID account = stateID.account();
+        Assert.assertEquals("http://example.com:6767", account.getServerUrl());
+        Assert.assertNull(account.getPath());
+        Assert.assertNull(account.getSlug());
+        Assert.assertNull(account.getFile());
+        Assert.assertNull(account.getFileName());
+
+        StateID ws = stateID.workspace();
+        Assert.assertEquals("http://example.com:6767", ws.getServerUrl());
+        Assert.assertEquals("/common-files", ws.getPath());
+        Assert.assertEquals("common-files", ws.getSlug());
+        Assert.assertEquals("/", ws.getFile());
+        Assert.assertNull(ws.getFileName());
+    }
+
+    @Test
     public void testIDWithPath() {
         StateID stateID = new StateID("doe@example.com", "http://example.com:6767", "/common-files/Documents/Subfolder");
         String encodedID = stateID.getId();
@@ -37,10 +55,11 @@ public class StateIDTest {
         Assert.assertEquals("doe@example.com", decodedStateID.getUsername());
         Assert.assertEquals("http://example.com:6767", decodedStateID.getServerUrl());
         Assert.assertEquals("/common-files/Documents/Subfolder", decodedStateID.getPath());
-        Assert.assertEquals("common-files", decodedStateID.getWorkspace());
+        Assert.assertEquals("common-files", decodedStateID.getSlug());
         Assert.assertEquals("/Documents/Subfolder", decodedStateID.getFile());
         Assert.assertEquals("Subfolder", decodedStateID.getFileName());
         Assert.assertEquals("/Documents", decodedStateID.getParentFile());
+
 
         Assert.assertEquals(stateID.getUsername(), decodedStateID.getUsername());
         Assert.assertEquals(stateID.getServerUrl(), decodedStateID.getServerUrl());
@@ -107,7 +126,7 @@ public class StateIDTest {
         Assert.assertEquals("doe@example.com", decodedStateID.getUsername());
         Assert.assertEquals("http://example.com:6767", decodedStateID.getServerUrl());
         Assert.assertEquals(breakingPath, decodedStateID.getPath());
-        Assert.assertEquals(slug, decodedStateID.getWorkspace());
+        Assert.assertEquals(slug, decodedStateID.getSlug());
         Assert.assertEquals(parPath + "/" + name, decodedStateID.getFile());
 
         Assert.assertEquals(stateID.getUsername(), decodedStateID.getUsername());
