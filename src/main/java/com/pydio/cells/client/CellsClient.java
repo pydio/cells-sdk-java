@@ -437,17 +437,18 @@ public class CellsClient implements Client, SdkNames {
 
         List<TreeNode> nodes = results.getResults();
         if (nodes != null) {
-            for (TreeNode node : nodes) {
-                FileNode fileNode;
-                try {
-                    fileNode = toFileNode(node);
-                } catch (NullPointerException ignored) {
-                    continue;
-                }
-
-                if (fileNode != null) {
-                    h.onNode(fileNode);
-                }
+            for (TreeNode treeNode : nodes) {
+                toMultipleNode(h, treeNode);
+//                FileNode fileNode;
+//                try {
+//                    fileNode = toFileNode(treeNode);
+//                } catch (NullPointerException ignored) {
+//                    continue;
+//                }
+//
+//                if (fileNode != null) {
+//                    h.onNode(fileNode);
+//                }
             }
         }
     }
@@ -470,10 +471,11 @@ public class CellsClient implements Client, SdkNames {
                 return fileNodes;
             }
             for (TreeNode node : treeNodes) {
-                FileNode fileNode = toFileNode(node);
-                if (fileNode != null) {
-                    fileNodes.add(fileNode);
-                }
+                toMultipleNode(fileNodes, node);
+//                FileNode fileNode = toFileNode(node);
+//                if (fileNode != null) {
+//                    fileNodes.add(fileNode);
+//                }
             }
             return fileNodes;
         } catch (ApiException e) {
@@ -761,37 +763,52 @@ public class CellsClient implements Client, SdkNames {
             }
 
             for (TreeNode node : response.getNodes()) {
-                try {
-                    FileNode fileNode = toFileNode(node);
-                    if (fileNode != null) {
-                        List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
-                        if (sources != null) {
-                            // A node can appear in various workspaces (typically when referenced in a cell)
-                            // Yet the server sends back only one node with the specific "appears in" property,
-                            // We then have to return a node for each bookmark to the local cache
-                            for (TreeWorkspaceRelativePath twrp : sources) {
-                                String path = twrp.getPath();
-                                if (Str.empty(path)) {
-                                    Log.i(logTag, "Got an empty path for: " + fileNode.getPath());
-                                    path = "/";
-                                } else if (!path.startsWith("/")) {
-                                    path = "/" + path;
-                                }
-                                fileNode.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, twrp.getWsSlug());
-                                fileNode.setProperty(NODE_PROPERTY_PATH, path);
-                                fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
-                                h.onNode(fileNode);
-                            }
-                        }
-                    }
-                } catch (NullPointerException e) {
-                    Log.e(logTag, "Could node create FileNode for " + node.getPath() + ", skipping");
-                    e.printStackTrace();
-                }
+                toMultipleNode(h, node);
             }
         } catch (ApiException e) {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
+        }
+    }
+
+    private void toMultipleNode(List<FileNode> nodes, TreeNode treeNode) {
+        toMultipleNode(node -> {
+            if (node instanceof FileNode) nodes.add((FileNode) node);
+            // TODO clean this.
+        }, treeNode);
+    }
+
+    private void toMultipleNode(NodeHandler h, TreeNode node) {
+        try {
+            FileNode fileNode = toFileNode(node);
+            if (fileNode != null) {
+                List<TreeWorkspaceRelativePath> sources = node.getAppearsIn();
+                if (sources != null) {
+                    // A node can appear in various workspaces (typically when referenced in a cell)
+                    // Yet the server sends back only one node with the specific "appears in" property,
+                    // We then have to return a node for each bookmark to the local cache
+                    for (TreeWorkspaceRelativePath twrp : sources) {
+                        String path = twrp.getPath();
+                        if (Str.empty(path)) {
+                            Log.i(logTag, "Got an empty path for: " + fileNode.getPath());
+                            path = "/";
+                        } else if (!path.startsWith("/")) {
+                            path = "/" + path;
+                        }
+                        fileNode.setProperty(NODE_PROPERTY_WORKSPACE_SLUG, twrp.getWsSlug());
+                        fileNode.setProperty(NODE_PROPERTY_PATH, path);
+                        fileNode.setProperty(NODE_PROPERTY_FILENAME, FileNodeUtils.getNameFromPath(path));
+                        h.onNode(fileNode);
+                    }
+                }
+            }
+        } catch (NullPointerException e) {
+            Log.e(logTag, "###############################################################");
+            Log.e(logTag, "###############################################################");
+            Log.e(logTag, "###############################################################");
+            Log.e(logTag, "###############################################################");
+            Log.e(logTag, "Could node create FileNode for " + node.getPath() + ", skipping");
+            e.printStackTrace();
         }
     }
 
