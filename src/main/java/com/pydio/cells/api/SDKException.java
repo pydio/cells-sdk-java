@@ -77,7 +77,6 @@ public class SDKException extends Exception {
                 || code == ErrorCodes.refresh_token_expired
                 || code == ErrorCodes.token_expired
                 || code == ErrorCodes.authentication_with_captcha_required
-//                || code == ErrorCodes.con_failed
                 || code == HttpStatus.UNAUTHORIZED.getValue();
     }
 
