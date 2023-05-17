@@ -69,7 +69,7 @@ public class FileNode extends AbstractNode {
         }
     }
 
-    // Keep track of all meta returned by tghe server
+    // Keep track of all meta returned by the server
     protected Properties meta;
 
     public void setMeta(Properties p) {
@@ -85,6 +85,11 @@ public class FileNode extends AbstractNode {
         if (Str.empty(hashStr)) {
             return 0;
         } else {
+            // System.out.println("Computing hash for " + getPath());
+            // System.out.println(hashStr);
+            // Integer hash = Integer.parseInt(hashStr);
+            // System.out.println(hash);
+            // return hash;
             return Integer.parseInt(hashStr);
         }
     }
