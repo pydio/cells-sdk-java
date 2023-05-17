@@ -25,8 +25,6 @@ public class SDKException extends Exception {
     private final static String logTag = "SDKException";
 
     private int code;
-//    private String message;
-//    private Throwable cause;
 
     public SDKException(String message) {
         super(message);
