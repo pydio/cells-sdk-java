@@ -84,7 +84,10 @@ public class SDKException extends Exception {
                 || code == ErrorCodes.con_failed
                 || code == ErrorCodes.con_closed
                 || code == ErrorCodes.con_read_failed
-                || code == ErrorCodes.con_write_failed;
+                || code == ErrorCodes.con_write_failed
+                || code == HttpStatus.BAD_GATEWAY.getValue()
+                || code == HttpStatus.SERVICE_UNAVAILABLE.getValue()
+                || code == HttpStatus.GATEWAY_TIMEOUT.getValue();
     }
 
     // Legacy inherited SDK specific constructors => ease implementation of the Android app.
