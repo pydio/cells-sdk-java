@@ -267,13 +267,6 @@ public class CellsClient implements Client, SdkNames {
             e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
-
-//        List<TreeNode> nodes = response.getChildren();
-//        if (nodes != null && !nodes.isEmpty() ){
-//            node = nodes.get(0);
-//            FileNode fileNode = toFileNode(node);
-//        }
-
     }
 
     @Override

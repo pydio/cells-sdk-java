@@ -188,7 +188,6 @@ public class ServerFactory implements IServerFactory {
         String pwd = credentialService.getPassword(accountID);
         if (token == null && pwd == null) {
             Log.w(logTag, "## Restoring account " + accountID + " with no valid credentials");
-            //            throw new SDKException(ErrorCodes.no_token_available, "Could not restore account " + accountID + ", no valid credential has been found in local store");
         }
 
         Transport transport;
