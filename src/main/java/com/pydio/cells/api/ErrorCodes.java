@@ -62,6 +62,7 @@ public interface ErrorCodes {
     int configuration_error = 83;
     int bad_config = 84;
     int encoding_failed = 85;
+    int illegal_argument = 86;
 
     /**
      * Returns a message given its code
@@ -158,6 +159,8 @@ public interface ErrorCodes {
                 return "Bad configuration";
             case encoding_failed:
                 return "Encoding failed";
+            case illegal_argument:
+                return "Illegal argument";
         }
         return "Unknown exception (code: " + code + ")";
     }
