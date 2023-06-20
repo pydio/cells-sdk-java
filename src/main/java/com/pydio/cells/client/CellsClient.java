@@ -1084,12 +1084,17 @@ public class CellsClient implements Client, SdkNames {
     }
 
     private TreeNode internalStatNode(String ws, String path) throws SDKException {
+// TODO it might be an idea to encode the "tokens" of the path to manage weird folder name (typically with %)
+//    check this when we have the new caddy lib on the server side
+//        return internalStatNode(FileNodeUtils.toEncodedTreeNodePath(ws, path));
         return internalStatNode(FileNodeUtils.toTreeNodePath(ws, path));
     }
 
     private TreeNode internalStatNode(String fullPath) throws SDKException {
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-        // Log.e(logTag, "############# internal stat for [" + fullPath + "]");
+        // Log.d(logTag, "############# ");
+        // Log.d(logTag, "############# internal stat for [" + fullPath + "]");
+        // Log.d(logTag, "############# ");
         try {
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {

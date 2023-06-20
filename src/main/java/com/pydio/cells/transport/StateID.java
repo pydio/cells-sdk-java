@@ -284,7 +284,8 @@ public class StateID {
 
     // TODO find a elegant way to rather inject the CustomEncoder.
     //   Not perfect: Might have side effects when switching from plain Java to Android
-    private static String utf8Encode(String value) {
+    // TODO this should also be private or protected
+    public static String utf8Encode(String value) {
         try {
             return URLEncoder.encode(value, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -292,7 +293,7 @@ public class StateID {
         }
     }
 
-    private static String utf8Decode(String value) {
+    public static String utf8Decode(String value) {
         try {
             return URLDecoder.decode(value, "UTF-8");
         } catch (UnsupportedEncodingException e) {

@@ -1,5 +1,7 @@
 package com.pydio.cells.transport;
 
+import com.pydio.cells.transport.StateID;
+
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.utils.JavaCustomEncoder;
 
@@ -16,7 +18,9 @@ public class StateIDTest {
         StateID stateID = new StateID("doe@example.com", "https://example.com");
         String encodedID = stateID.getId();
 
-        StateID decodedStateID = StateID.fromId(encodedID);
+        String doubleEncodedID = StateID.utf8Encode(encodedID);
+        String doubleDecoded = StateID.utf8Decode(doubleEncodedID);
+        StateID decodedStateID = StateID.fromId(doubleDecoded);
 
         StateID stateID2 = new StateID("doe@example.com", "https://example.com");
         StateID stateID3 = new StateID("joe@example.com", "https://example.com");

@@ -6,6 +6,7 @@ import com.pydio.cells.api.SdkNames;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.openapi.model.TreeNode;
 import com.pydio.cells.openapi.model.TreeNodeType;
+import com.pydio.cells.transport.StateID;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -206,5 +207,22 @@ public class FileNodeUtils {
 
     public static String toTreeNodePath(String ws, String path) {
         return ws + path;
+    }
+
+    public static String toEncodedTreeNodePath(String ws, String path) {
+        Log.d(logTag, "Sanitizing: [" + ws + path + "]");
+
+        int index = path.indexOf("/");
+        if (index == -1) {
+            return "/";
+        } else {
+            String[] parts = path.substring(index + 1).split("/");
+            StringBuilder pathBuilder = new StringBuilder();
+            for (String part : parts) {
+                pathBuilder.append("/").append(StateID.utf8Encode(part));
+            }
+            Log.d(logTag, "   now: [" + ws + pathBuilder + "]");
+            return ws + pathBuilder;
+        }
     }
 }
