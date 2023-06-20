@@ -9,7 +9,7 @@ import java.text.ParseException;
 
 public class Token {
 
-    private static String logTag = "Token";
+    private final static String logTag = "Token";
 
     // Set by Cells layers to contain the corresponding encoded accountID
     public String subject;

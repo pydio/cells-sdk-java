@@ -210,8 +210,7 @@ public class FileNodeUtils {
     }
 
     public static String toEncodedTreeNodePath(String ws, String path) {
-        Log.d(logTag, "Sanitizing: [" + ws + path + "]");
-
+        // Log.d(logTag, "Sanitizing: [" + ws + path + "]");
         int index = path.indexOf("/");
         if (index == -1) {
             return "/";
