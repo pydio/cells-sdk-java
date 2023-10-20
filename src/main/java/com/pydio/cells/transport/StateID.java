@@ -276,10 +276,18 @@ public class StateID {
         return builder.toString();
     }
 
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof StateID) || getId() == null)
             return false;
         return getId().equals(((StateID) other).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        if (getId() == null)
+            return "null".hashCode();
+        return getId().hashCode();
     }
 
     // TODO find a elegant way to rather inject the CustomEncoder.
