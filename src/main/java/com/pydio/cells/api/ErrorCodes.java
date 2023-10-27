@@ -55,6 +55,7 @@ public interface ErrorCodes {
     int no_local_file = 60;
     int no_local_node = 61;
     int local_io_error = 62;
+    int outdated_local_file = 63;
 
     int panic = 80;
     int internal_error = 81;
@@ -138,11 +139,13 @@ public interface ErrorCodes {
                 return "Unexpected response";
 
             case no_local_file:
-                return "File is not yet in local cache";
+                return "File cannot be found locally";
             case no_local_node:
                 return "Record could not be found in local index";
             case local_io_error:
                 return "Could not read/write in local application directory";
+            case outdated_local_file:
+                return "Local file is outdated";
 
             case api_error:
                 return "API error";
