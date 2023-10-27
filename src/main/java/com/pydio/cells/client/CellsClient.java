@@ -448,8 +448,9 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public List<FileNode> search(String parentPath, String searchedText, int size) throws SDKException {
-        Log.d(logTag, "search for [" + searchedText + "] at " + parentPath);
         try {
+            Log.d(logTag, " ... About to list nodes for [" + searchedText + "] at " + parentPath);
+
             TreeQuery query = new TreeQuery();
             query.setFileName(searchedText);
             query.addPathPrefixItem(parentPath);
@@ -461,15 +462,22 @@ public class CellsClient implements Client, SdkNames {
             List<TreeNode> treeNodes = results.getResults();
             List<FileNode> fileNodes = new ArrayList<>();
             if (treeNodes == null) {
+                Log.w(logTag, " .. Found no node for [" + searchedText + "] at " + parentPath);
                 return fileNodes;
             }
+            Log.d(logTag, " .. Found " + treeNodes.size()
+                    + " nodes for [" + searchedText + "] at " + parentPath);
+
             for (TreeNode node : treeNodes) {
-                toMultipleNode(fileNodes, node);
-//                FileNode fileNode = toFileNode(node);
-//                if (fileNode != null) {
-//                    fileNodes.add(fileNode);
-//                }
+                // FIXME this won't work, the workspace does not set the appearsIn variable in Search request results
+//                toMultipleNode(fileNodes, node);
+                FileNode fileNode = toFileNode(node);
+                if (fileNode != null) {
+                    fileNodes.add(fileNode);
+                }
             }
+            // Log.d(logTag, " .. After to multiple: " + fileNodes.size());
+
             return fileNodes;
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
