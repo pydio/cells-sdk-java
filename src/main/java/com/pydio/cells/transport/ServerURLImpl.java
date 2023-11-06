@@ -6,6 +6,7 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.security.CertificateTrust;
 import com.pydio.cells.client.security.CertificateTrustManager;
+import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
@@ -222,6 +223,14 @@ public class ServerURLImpl implements ServerURL {
 //            e.printStackTrace();
 //            Log.e(logTag, "--- End of stack trace");
 //            throw e;
+        } finally {
+            try {
+                IoHelpers.closeQuietly(connection.getInputStream());
+                connection.disconnect();
+            } catch (Exception e) {
+                Log.e(logTag, "Cannot disconnect connection after ping, swallowed error:");
+                e.printStackTrace();
+            }
         }
     }
 
