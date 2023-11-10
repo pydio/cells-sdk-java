@@ -6,7 +6,6 @@ import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.ServerURL;
 import com.pydio.cells.client.security.CertificateTrust;
 import com.pydio.cells.client.security.CertificateTrustManager;
-import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
@@ -16,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -213,6 +213,8 @@ public class ServerURLImpl implements ServerURL {
             if (code != 200) {
                 throw new SDKException(code, "Could not reach " + url.getHost() + ": " + connection.getResponseMessage());
             }
+        } catch (UnknownHostException uhe) {
+            throw new SDKException(ErrorCodes.con_failed, uhe.getMessage(), uhe);
         } catch (SocketTimeoutException ste) {
             throw new SDKException(ErrorCodes.con_failed, url.getHost() + " - server unreachable, timeout: " + ste.getMessage(), ste);
         } catch (ProtocolException pe) {
@@ -225,7 +227,6 @@ public class ServerURLImpl implements ServerURL {
 //            throw e;
         } finally {
             try {
-                IoHelpers.closeQuietly(connection.getInputStream());
                 connection.disconnect();
             } catch (Exception e) {
                 Log.e(logTag, "Cannot disconnect connection after ping, swallowed error:");
