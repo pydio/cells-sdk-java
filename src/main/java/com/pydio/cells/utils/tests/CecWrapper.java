@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
  */
 public class CecWrapper {
 
+    private String logTag = "CecWrapper";
+
     private String basePath;
     private String cecCmd;
 
@@ -27,11 +29,11 @@ public class CecWrapper {
         try {
             ProcessBuilder builder = new ProcessBuilder(prepareCmd, TestUtils.getOS(), workingDir, propsFile);
             builder.redirectErrorStream(true);
-            Log.i(Log.TAG_SDK, "... Launching prepare-cec script");
+            Log.i(logTag, "... Launching prepare-cec script");
             Process process = builder.start();
 
             int returnValue = process.waitFor();
-            Log.i(Log.TAG_SDK, "## After running prepare-cec script. Exit code: " + returnValue);
+            Log.i(logTag, "## After running prepare-cec script. Exit code: " + returnValue);
 
             displayOutput(process);
 

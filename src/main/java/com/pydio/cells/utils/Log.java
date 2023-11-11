@@ -3,21 +3,15 @@ package com.pydio.cells.utils;
 import java.io.File;
 import java.util.Map;
 
+// TODO legacy code. Must be improved.
 public class Log {
-
-    // Temporary tags
-    public static final String TAG_SDK = "CELLS/SDK";
-//    public static final String TAG_UI = "CELLS/UI";
-//    public static final String TAG_AUTH = "CELLS/AUTH";
-//    public static final String TAG_DB = "CELLS/DB";
-//    public static final String TAG_BACKEND = "CELLS/BE";
-//    public static final String TAG_SYNC = "CELLS/SYNC";
-
-    private static Logger logger;
 
     public static void setLogger(Logger l) {
         logger = l;
     }
+
+    private static Logger logger;
+
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -26,18 +20,6 @@ public class Log {
     public static final String ANSI_BCKGD_RED = "\u001B[41m";
     public static final String ANSI_BCKGD_YELLOW = "\u001B[43m";
     public static final String ANSI_BCKGD_WHITE = "\u001B[47m";
-//    public static final String ANSI_BLUE = "\u001B[34m";
-//    public static final String ANSI_RED = "\u001B[31m";
-//    public static final String ANSI_PURPLE = "\u001B[35m";
-//    public static final String ANSI_CYAN = "\u001B[36m";
-//    public static final String ANSI_WHITE = "\u001B[37m";
-//
-//    public static final String ANSI_BCKGD_BLACK = "\u001B[40m";
-//    public static final String ANSI_BCKGD_GREEN = "\u001B[42m";
-//    public static final String ANSI_BCKGD_BLUE = "\u001B[44m";
-//    public static final String ANSI_BCKGD_PURPLE = "\u001B[45m";
-//    public static final String ANSI_BCKGD_CYAN = "\u001B[46m";
-
 
     public static void e(String tag, String msg) {
         if (logger != null) {
@@ -45,7 +27,7 @@ public class Log {
             return;
         }
 
-        if (UNIXLike()) {
+        if (UnixLike()) {
             msg = ANSI_GREEN + tag + "\t" + msg + ANSI_RESET;
             System.out.println(ANSI_BCKGD_RED + msg + ANSI_RESET);
         } else {
@@ -58,7 +40,7 @@ public class Log {
             logger.i(tag, msg);
             return;
         }
-        if (UNIXLike()) {
+        if (UnixLike()) {
             msg = ANSI_BLACK + tag + "\t" + msg + ANSI_RESET;
             System.out.println(ANSI_BCKGD_WHITE + msg + ANSI_RESET);
         } else {
@@ -71,7 +53,7 @@ public class Log {
             logger.d(tag, msg);
             return;
         }
-        if (UNIXLike()) {
+        if (UnixLike()) {
             System.out.println(ANSI_YELLOW + msg + ANSI_RESET);
         } else {
             System.out.println(tag + "\t" + msg);
@@ -91,7 +73,7 @@ public class Log {
             logger.w(tag, msg);
             return;
         }
-        if (UNIXLike()) {
+        if (UnixLike()) {
             msg = ANSI_BLACK + tag + "\t" + msg + ANSI_RESET;
             System.out.println(ANSI_BCKGD_YELLOW + msg + ANSI_RESET);
         } else {
@@ -101,10 +83,7 @@ public class Log {
 
     public static String paramString(Map<String, String> params) {
         StringBuilder builder = new StringBuilder();
-        // API Level 24: params.forEach((k, v) -> builder.append(" " + k + "=" + v));
-        for (String k : params.keySet()) {
-            builder.append(" " + k + "=" + params.get(k));
-        }
+        params.forEach((k, v) -> builder.append(" ").append(k).append("=").append(v));
         if (builder.length() == 0) {
             return "";
         } else {
@@ -112,7 +91,7 @@ public class Log {
         }
     }
 
-    private static boolean UNIXLike() {
+    private static boolean UnixLike() {
         return File.separator.equals("/");
     }
 
