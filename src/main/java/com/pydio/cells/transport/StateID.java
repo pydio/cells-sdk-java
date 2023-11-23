@@ -91,6 +91,19 @@ public class StateID {
     }
 
     /**
+     * Retrieves the *encoded* representation of the *account* part of this StateID for serialization.
+     */
+    public String getAccountId() {
+        StringBuilder builder = new StringBuilder();
+        if (username != null) {
+            builder.append(utf8Encode(username)).append("@");
+        }
+        builder.append(utf8Encode(serverUrl));
+        return builder.toString();
+    }
+
+
+    /**
      * Retrieves the *encoded* representation of this StateID for serialization.
      */
     public String getId() {
@@ -112,15 +125,6 @@ public class StateID {
             return null;
         }
         return withPath("/" + getSlug());
-    }
-
-    public String getAccountId() {
-        StringBuilder builder = new StringBuilder();
-        if (username != null) {
-            builder.append(utf8Encode(username)).append("@");
-        }
-        builder.append(utf8Encode(serverUrl));
-        return builder.toString();
     }
 
     public String getUsername() {
