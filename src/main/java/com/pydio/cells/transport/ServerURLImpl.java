@@ -70,11 +70,9 @@ public class ServerURLImpl implements ServerURL {
         URL url = new URL(urlString);
 
         switch (url.getPath()) {
-            case "/":
-            case "":
-                url = new URL(url.getProtocol().concat("://").concat(url.getAuthority()));
-                break;
-            default:
+            case "/", "" ->
+                    url = new URL(url.getProtocol().concat("://").concat(url.getAuthority()));
+            default -> {
                 // This works for P8 only. We do not support Cells server on a sub-path of a domain.
                 String path = url.getPath().trim();
                 if (path.endsWith("/")) {
@@ -88,6 +86,7 @@ public class ServerURLImpl implements ServerURL {
                     throw new MalformedURLException("Cannot create a server URL without authority for " + urlString);
                 }
                 url = new URL(protocol.concat("://").concat(url.getAuthority()).concat(path));
+            }
         }
         return new ServerURLImpl(url, skipVerify);
     }
