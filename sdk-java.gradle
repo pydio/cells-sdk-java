@@ -23,6 +23,11 @@ java {
     withSourcesJar()
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true
+}
+
 // Skip integration tests by default
 test {
     if (System.properties['test.profile'] != 'integration') {
