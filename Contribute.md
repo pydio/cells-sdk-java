@@ -145,4 +145,3 @@ reference.
   packages in a future proof way. We will go trough a temporary phase where we put generated methods
   at 2 distinct locations while deprecating the legacy one. Some solution can be found
   in [this stackoverflow question](https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java)
-  .

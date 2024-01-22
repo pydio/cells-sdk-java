@@ -68,11 +68,10 @@ jar {
 
 dependencies {
 
-    // Set of carefully chosen third-party libraries
-    // Do not update if you do not *really* know what you are doing: 
-    // see build.gradle sibling file.
+    // Set of carefully chosen third-party libraries. See sibling "build.gradle" file.
+    // Do not update if you do not *really* know what you are doing.
 
-    implementation 'commons-codec:commons-codec:1.15'
+    implementation 'commons-codec:commons-codec:1.16.0'
     implementation 'org.threeten:threetenbp:1.5.2'
 
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
@@ -90,8 +89,4 @@ dependencies {
 
     // JUnit test framework
     testImplementation 'junit:junit:4.13.2'
-
-//    // When running with android these are provided by the platform
-//    testImplementation 'com.amazonaws:aws-java-sdk-core:1.11.1030'
-//    testImplementation 'com.amazonaws:aws-java-sdk-s3:1.11.1030'
 }
