@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * ListLogRequest launches a parameterised query in the log repository and streams the results.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class LogListLogRequest {
   public static final String SERIALIZED_NAME_FORMAT = "Format";
   @SerializedName(SERIALIZED_NAME_FORMAT)
@@ -55,7 +55,6 @@ public class LogListLogRequest {
   }
 
   public LogListLogRequest format(ListLogRequestLogFormat format) {
-    
     this.format = format;
     return this;
   }
@@ -65,11 +64,9 @@ public class LogListLogRequest {
    * @return format
   **/
   @javax.annotation.Nullable
-
   public ListLogRequestLogFormat getFormat() {
     return format;
   }
-
 
   public void setFormat(ListLogRequestLogFormat format) {
     this.format = format;
@@ -77,7 +74,6 @@ public class LogListLogRequest {
 
 
   public LogListLogRequest page(Integer page) {
-    
     this.page = page;
     return this;
   }
@@ -87,11 +83,9 @@ public class LogListLogRequest {
    * @return page
   **/
   @javax.annotation.Nullable
-
   public Integer getPage() {
     return page;
   }
-
 
   public void setPage(Integer page) {
     this.page = page;
@@ -99,7 +93,6 @@ public class LogListLogRequest {
 
 
   public LogListLogRequest query(String query) {
-    
     this.query = query;
     return this;
   }
@@ -109,11 +102,9 @@ public class LogListLogRequest {
    * @return query
   **/
   @javax.annotation.Nullable
-
   public String getQuery() {
     return query;
   }
-
 
   public void setQuery(String query) {
     this.query = query;
@@ -121,7 +112,6 @@ public class LogListLogRequest {
 
 
   public LogListLogRequest size(Integer size) {
-    
     this.size = size;
     return this;
   }
@@ -131,11 +121,9 @@ public class LogListLogRequest {
    * @return size
   **/
   @javax.annotation.Nullable
-
   public Integer getSize() {
     return size;
   }
-
 
   public void setSize(Integer size) {
     this.size = size;
@@ -203,24 +191,29 @@ public class LogListLogRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to LogListLogRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to LogListLogRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!LogListLogRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!LogListLogRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in LogListLogRequest is not found in the empty JSON string", LogListLogRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!LogListLogRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `LogListLogRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `LogListLogRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
+      }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
+      // validate the optional field `Format`
+      if (jsonObj.get("Format") != null && !jsonObj.get("Format").isJsonNull()) {
+        ListLogRequestLogFormat.validateJsonElement(jsonObj.get("Format"));
       }
       if ((jsonObj.get("Query") != null && !jsonObj.get("Query").isJsonNull()) && !jsonObj.get("Query").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Query` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Query").toString()));
@@ -247,9 +240,9 @@ public class LogListLogRequest {
 
            @Override
            public LogListLogRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

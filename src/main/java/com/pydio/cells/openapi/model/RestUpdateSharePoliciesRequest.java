@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestUpdateSharePoliciesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestUpdateSharePoliciesRequest {
   public static final String SERIALIZED_NAME_POLICIES = "Policies";
   @SerializedName(SERIALIZED_NAME_POLICIES)
@@ -50,7 +50,6 @@ public class RestUpdateSharePoliciesRequest {
   }
 
   public RestUpdateSharePoliciesRequest policies(List<ServiceResourcePolicy> policies) {
-    
     this.policies = policies;
     return this;
   }
@@ -68,11 +67,9 @@ public class RestUpdateSharePoliciesRequest {
    * @return policies
   **/
   @javax.annotation.Nullable
-
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
   }
-
 
   public void setPolicies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
@@ -80,7 +77,6 @@ public class RestUpdateSharePoliciesRequest {
 
 
   public RestUpdateSharePoliciesRequest uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -90,11 +86,9 @@ public class RestUpdateSharePoliciesRequest {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -156,25 +150,26 @@ public class RestUpdateSharePoliciesRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestUpdateSharePoliciesRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestUpdateSharePoliciesRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestUpdateSharePoliciesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestUpdateSharePoliciesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestUpdateSharePoliciesRequest is not found in the empty JSON string", RestUpdateSharePoliciesRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestUpdateSharePoliciesRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestUpdateSharePoliciesRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestUpdateSharePoliciesRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Policies") != null && !jsonObj.get("Policies").isJsonNull()) {
         JsonArray jsonArraypolicies = jsonObj.getAsJsonArray("Policies");
         if (jsonArraypolicies != null) {
@@ -185,7 +180,7 @@ public class RestUpdateSharePoliciesRequest {
 
           // validate the optional field `Policies` (array)
           for (int i = 0; i < jsonArraypolicies.size(); i++) {
-            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+            ServiceResourcePolicy.validateJsonElement(jsonArraypolicies.get(i));
           };
         }
       }
@@ -214,9 +209,9 @@ public class RestUpdateSharePoliciesRequest {
 
            @Override
            public RestUpdateSharePoliciesRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

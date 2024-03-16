@@ -13,12 +13,12 @@
 
 package com.pydio.cells.openapi;
 
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
-import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -27,12 +27,14 @@ import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 import io.gsonfire.GsonFireBuilder;
 import okio.ByteString;
@@ -51,6 +53,11 @@ public class JSON {
     private static OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
     private static LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
     private static ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
+
+    private static final StdDateFormat sdf = new StdDateFormat()
+        .withTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()))
+        .withColonInTimeZone(true);
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
     @SuppressWarnings("unchecked")
     public static GsonBuilder createGson() {
@@ -83,7 +90,7 @@ public class JSON {
         return clazz;
     }
 
-    {
+    static {
         GsonBuilder gsonBuilder = createGson();
         gsonBuilder.registerTypeAdapter(Date.class, dateTypeAdapter);
         gsonBuilder.registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter);
@@ -152,9 +159,11 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsActionMessage.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsActionOutput.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsActionOutputFilter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsChatEventFilter.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsContextMetaFilter.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsCtrlCommand.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsCtrlCommandResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsDataSelector.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsDataSourceSelector.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsDeleteTasksRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsDeleteTasksResponse.CustomTypeAdapterFactory());
@@ -165,6 +174,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsListJobsRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsNodesSelector.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsSchedule.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsSelectorRange.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsTask.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsTriggerFilter.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.pydio.cells.openapi.model.JobsUsersSelector.CustomTypeAdapterFactory());
@@ -548,7 +558,7 @@ public class JSON {
                         if (dateFormat != null) {
                             return new java.sql.Date(dateFormat.parse(date).getTime());
                         }
-                        return new java.sql.Date(ISO8601Utils.parse(date, new ParsePosition(0)).getTime());
+                        return new java.sql.Date(sdf.parse(date).getTime());
                     } catch (ParseException e) {
                         throw new JsonParseException(e);
                     }
@@ -558,7 +568,7 @@ public class JSON {
 
     /**
      * Gson TypeAdapter for java.util.Date type
-     * If the dateFormat is null, ISO8601Utils will be used.
+     * If the dateFormat is null, DateTimeFormatter will be used.
      */
     public static class DateTypeAdapter extends TypeAdapter<Date> {
 
@@ -583,7 +593,7 @@ public class JSON {
                 if (dateFormat != null) {
                     value = dateFormat.format(date);
                 } else {
-                    value = ISO8601Utils.format(date, true);
+                    value = date.toInstant().atOffset(ZoneOffset.UTC).format(dtf);
                 }
                 out.value(value);
             }
@@ -602,7 +612,7 @@ public class JSON {
                             if (dateFormat != null) {
                                 return dateFormat.parse(date);
                             }
-                            return ISO8601Utils.parse(date, new ParsePosition(0));
+                            return sdf.parse(date);
                         } catch (ParseException e) {
                             throw new JsonParseException(e);
                         }

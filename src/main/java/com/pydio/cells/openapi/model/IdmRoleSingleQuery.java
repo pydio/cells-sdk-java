@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RoleSingleQuery is the basic unit for building queries to Roles.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class IdmRoleSingleQuery {
   public static final String SERIALIZED_NAME_HAS_AUTO_APPLY = "HasAutoApply";
   @SerializedName(SERIALIZED_NAME_HAS_AUTO_APPLY)
@@ -69,7 +69,6 @@ public class IdmRoleSingleQuery {
   }
 
   public IdmRoleSingleQuery hasAutoApply(Boolean hasAutoApply) {
-    
     this.hasAutoApply = hasAutoApply;
     return this;
   }
@@ -79,11 +78,9 @@ public class IdmRoleSingleQuery {
    * @return hasAutoApply
   **/
   @javax.annotation.Nullable
-
   public Boolean getHasAutoApply() {
     return hasAutoApply;
   }
-
 
   public void setHasAutoApply(Boolean hasAutoApply) {
     this.hasAutoApply = hasAutoApply;
@@ -91,7 +88,6 @@ public class IdmRoleSingleQuery {
 
 
   public IdmRoleSingleQuery isGroupRole(Boolean isGroupRole) {
-    
     this.isGroupRole = isGroupRole;
     return this;
   }
@@ -101,11 +97,9 @@ public class IdmRoleSingleQuery {
    * @return isGroupRole
   **/
   @javax.annotation.Nullable
-
   public Boolean getIsGroupRole() {
     return isGroupRole;
   }
-
 
   public void setIsGroupRole(Boolean isGroupRole) {
     this.isGroupRole = isGroupRole;
@@ -113,7 +107,6 @@ public class IdmRoleSingleQuery {
 
 
   public IdmRoleSingleQuery isTeam(Boolean isTeam) {
-    
     this.isTeam = isTeam;
     return this;
   }
@@ -123,11 +116,9 @@ public class IdmRoleSingleQuery {
    * @return isTeam
   **/
   @javax.annotation.Nullable
-
   public Boolean getIsTeam() {
     return isTeam;
   }
-
 
   public void setIsTeam(Boolean isTeam) {
     this.isTeam = isTeam;
@@ -135,7 +126,6 @@ public class IdmRoleSingleQuery {
 
 
   public IdmRoleSingleQuery isUserRole(Boolean isUserRole) {
-    
     this.isUserRole = isUserRole;
     return this;
   }
@@ -145,11 +135,9 @@ public class IdmRoleSingleQuery {
    * @return isUserRole
   **/
   @javax.annotation.Nullable
-
   public Boolean getIsUserRole() {
     return isUserRole;
   }
-
 
   public void setIsUserRole(Boolean isUserRole) {
     this.isUserRole = isUserRole;
@@ -157,7 +145,6 @@ public class IdmRoleSingleQuery {
 
 
   public IdmRoleSingleQuery label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -167,11 +154,9 @@ public class IdmRoleSingleQuery {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -179,7 +164,6 @@ public class IdmRoleSingleQuery {
 
 
   public IdmRoleSingleQuery uuid(List<String> uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -197,11 +181,9 @@ public class IdmRoleSingleQuery {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public List<String> getUuid() {
     return uuid;
   }
-
 
   public void setUuid(List<String> uuid) {
     this.uuid = uuid;
@@ -209,7 +191,6 @@ public class IdmRoleSingleQuery {
 
 
   public IdmRoleSingleQuery not(Boolean not) {
-    
     this.not = not;
     return this;
   }
@@ -219,11 +200,9 @@ public class IdmRoleSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-
   public Boolean getNot() {
     return not;
   }
-
 
   public void setNot(Boolean not) {
     this.not = not;
@@ -300,30 +279,31 @@ public class IdmRoleSingleQuery {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to IdmRoleSingleQuery
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to IdmRoleSingleQuery
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!IdmRoleSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!IdmRoleSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in IdmRoleSingleQuery is not found in the empty JSON string", IdmRoleSingleQuery.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!IdmRoleSingleQuery.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmRoleSingleQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmRoleSingleQuery` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonArray()) {
+      if (jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonNull() && !jsonObj.get("Uuid").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Uuid` to be an array in the JSON string but got `%s`", jsonObj.get("Uuid").toString()));
       }
   }
@@ -348,9 +328,9 @@ public class IdmRoleSingleQuery {
 
            @Override
            public IdmRoleSingleQuery read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

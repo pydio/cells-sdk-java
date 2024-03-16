@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RegistryItem
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RegistryItem {
   public static final String SERIALIZED_NAME_ADJACENTS = "adjacents";
   @SerializedName(SERIALIZED_NAME_ADJACENTS)
@@ -84,7 +83,6 @@ public class RegistryItem {
   }
 
   public RegistryItem adjacents(List<RegistryItem> adjacents) {
-    
     this.adjacents = adjacents;
     return this;
   }
@@ -102,11 +100,9 @@ public class RegistryItem {
    * @return adjacents
   **/
   @javax.annotation.Nullable
-
   public List<RegistryItem> getAdjacents() {
     return adjacents;
   }
-
 
   public void setAdjacents(List<RegistryItem> adjacents) {
     this.adjacents = adjacents;
@@ -114,7 +110,6 @@ public class RegistryItem {
 
 
   public RegistryItem dao(RegistryDao dao) {
-    
     this.dao = dao;
     return this;
   }
@@ -124,11 +119,9 @@ public class RegistryItem {
    * @return dao
   **/
   @javax.annotation.Nullable
-
   public RegistryDao getDao() {
     return dao;
   }
-
 
   public void setDao(RegistryDao dao) {
     this.dao = dao;
@@ -136,7 +129,6 @@ public class RegistryItem {
 
 
   public RegistryItem edge(RegistryEdge edge) {
-    
     this.edge = edge;
     return this;
   }
@@ -146,11 +138,9 @@ public class RegistryItem {
    * @return edge
   **/
   @javax.annotation.Nullable
-
   public RegistryEdge getEdge() {
     return edge;
   }
-
 
   public void setEdge(RegistryEdge edge) {
     this.edge = edge;
@@ -158,7 +148,6 @@ public class RegistryItem {
 
 
   public RegistryItem generic(RegistryGeneric generic) {
-    
     this.generic = generic;
     return this;
   }
@@ -168,11 +157,9 @@ public class RegistryItem {
    * @return generic
   **/
   @javax.annotation.Nullable
-
   public RegistryGeneric getGeneric() {
     return generic;
   }
-
 
   public void setGeneric(RegistryGeneric generic) {
     this.generic = generic;
@@ -180,7 +167,6 @@ public class RegistryItem {
 
 
   public RegistryItem id(String id) {
-    
     this.id = id;
     return this;
   }
@@ -190,11 +176,9 @@ public class RegistryItem {
    * @return id
   **/
   @javax.annotation.Nullable
-
   public String getId() {
     return id;
   }
-
 
   public void setId(String id) {
     this.id = id;
@@ -202,7 +186,6 @@ public class RegistryItem {
 
 
   public RegistryItem metadata(Map<String, String> metadata) {
-    
     this.metadata = metadata;
     return this;
   }
@@ -220,11 +203,9 @@ public class RegistryItem {
    * @return metadata
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getMetadata() {
     return metadata;
   }
-
 
   public void setMetadata(Map<String, String> metadata) {
     this.metadata = metadata;
@@ -232,7 +213,6 @@ public class RegistryItem {
 
 
   public RegistryItem name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -242,11 +222,9 @@ public class RegistryItem {
    * @return name
   **/
   @javax.annotation.Nullable
-
   public String getName() {
     return name;
   }
-
 
   public void setName(String name) {
     this.name = name;
@@ -254,7 +232,6 @@ public class RegistryItem {
 
 
   public RegistryItem node(RegistryNode node) {
-    
     this.node = node;
     return this;
   }
@@ -264,11 +241,9 @@ public class RegistryItem {
    * @return node
   **/
   @javax.annotation.Nullable
-
   public RegistryNode getNode() {
     return node;
   }
-
 
   public void setNode(RegistryNode node) {
     this.node = node;
@@ -276,7 +251,6 @@ public class RegistryItem {
 
 
   public RegistryItem server(RegistryServer server) {
-    
     this.server = server;
     return this;
   }
@@ -286,11 +260,9 @@ public class RegistryItem {
    * @return server
   **/
   @javax.annotation.Nullable
-
   public RegistryServer getServer() {
     return server;
   }
-
 
   public void setServer(RegistryServer server) {
     this.server = server;
@@ -298,7 +270,6 @@ public class RegistryItem {
 
 
   public RegistryItem service(RegistryService service) {
-    
     this.service = service;
     return this;
   }
@@ -308,11 +279,9 @@ public class RegistryItem {
    * @return service
   **/
   @javax.annotation.Nullable
-
   public RegistryService getService() {
     return service;
   }
-
 
   public void setService(RegistryService service) {
     this.service = service;
@@ -398,25 +367,26 @@ public class RegistryItem {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RegistryItem
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RegistryItem
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RegistryItem.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RegistryItem.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RegistryItem is not found in the empty JSON string", RegistryItem.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RegistryItem.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryItem` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryItem` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("adjacents") != null && !jsonObj.get("adjacents").isJsonNull()) {
         JsonArray jsonArrayadjacents = jsonObj.getAsJsonArray("adjacents");
         if (jsonArrayadjacents != null) {
@@ -427,21 +397,21 @@ public class RegistryItem {
 
           // validate the optional field `adjacents` (array)
           for (int i = 0; i < jsonArrayadjacents.size(); i++) {
-            RegistryItem.validateJsonObject(jsonArrayadjacents.get(i).getAsJsonObject());
+            RegistryItem.validateJsonElement(jsonArrayadjacents.get(i));
           };
         }
       }
       // validate the optional field `dao`
       if (jsonObj.get("dao") != null && !jsonObj.get("dao").isJsonNull()) {
-        RegistryDao.validateJsonObject(jsonObj.getAsJsonObject("dao"));
+        RegistryDao.validateJsonElement(jsonObj.get("dao"));
       }
       // validate the optional field `edge`
       if (jsonObj.get("edge") != null && !jsonObj.get("edge").isJsonNull()) {
-        RegistryEdge.validateJsonObject(jsonObj.getAsJsonObject("edge"));
+        RegistryEdge.validateJsonElement(jsonObj.get("edge"));
       }
       // validate the optional field `generic`
       if (jsonObj.get("generic") != null && !jsonObj.get("generic").isJsonNull()) {
-        RegistryGeneric.validateJsonObject(jsonObj.getAsJsonObject("generic"));
+        RegistryGeneric.validateJsonElement(jsonObj.get("generic"));
       }
       if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
@@ -451,15 +421,15 @@ public class RegistryItem {
       }
       // validate the optional field `node`
       if (jsonObj.get("node") != null && !jsonObj.get("node").isJsonNull()) {
-        RegistryNode.validateJsonObject(jsonObj.getAsJsonObject("node"));
+        RegistryNode.validateJsonElement(jsonObj.get("node"));
       }
       // validate the optional field `server`
       if (jsonObj.get("server") != null && !jsonObj.get("server").isJsonNull()) {
-        RegistryServer.validateJsonObject(jsonObj.getAsJsonObject("server"));
+        RegistryServer.validateJsonElement(jsonObj.get("server"));
       }
       // validate the optional field `service`
       if (jsonObj.get("service") != null && !jsonObj.get("service").isJsonNull()) {
-        RegistryService.validateJsonObject(jsonObj.getAsJsonObject("service"));
+        RegistryService.validateJsonElement(jsonObj.get("service"));
       }
   }
 
@@ -483,9 +453,9 @@ public class RegistryItem {
 
            @Override
            public RegistryItem read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

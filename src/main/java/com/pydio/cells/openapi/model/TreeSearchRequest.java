@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * TreeSearchRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class TreeSearchRequest {
   public static final String SERIALIZED_NAME_DETAILS = "Details";
   @SerializedName(SERIALIZED_NAME_DETAILS)
@@ -53,6 +53,14 @@ public class TreeSearchRequest {
   @SerializedName(SERIALIZED_NAME_SIZE)
   private Integer size;
 
+  public static final String SERIALIZED_NAME_SORT_DIR_DESC = "SortDirDesc";
+  @SerializedName(SERIALIZED_NAME_SORT_DIR_DESC)
+  private Boolean sortDirDesc;
+
+  public static final String SERIALIZED_NAME_SORT_FIELD = "SortField";
+  @SerializedName(SERIALIZED_NAME_SORT_FIELD)
+  private String sortField;
+
   public static final String SERIALIZED_NAME_STAT_FLAGS = "StatFlags";
   @SerializedName(SERIALIZED_NAME_STAT_FLAGS)
   private List<Long> statFlags;
@@ -61,7 +69,6 @@ public class TreeSearchRequest {
   }
 
   public TreeSearchRequest details(Boolean details) {
-    
     this.details = details;
     return this;
   }
@@ -71,11 +78,9 @@ public class TreeSearchRequest {
    * @return details
   **/
   @javax.annotation.Nullable
-
   public Boolean getDetails() {
     return details;
   }
-
 
   public void setDetails(Boolean details) {
     this.details = details;
@@ -83,7 +88,6 @@ public class TreeSearchRequest {
 
 
   public TreeSearchRequest from(Integer from) {
-    
     this.from = from;
     return this;
   }
@@ -93,11 +97,9 @@ public class TreeSearchRequest {
    * @return from
   **/
   @javax.annotation.Nullable
-
   public Integer getFrom() {
     return from;
   }
-
 
   public void setFrom(Integer from) {
     this.from = from;
@@ -105,7 +107,6 @@ public class TreeSearchRequest {
 
 
   public TreeSearchRequest query(TreeQuery query) {
-    
     this.query = query;
     return this;
   }
@@ -115,11 +116,9 @@ public class TreeSearchRequest {
    * @return query
   **/
   @javax.annotation.Nullable
-
   public TreeQuery getQuery() {
     return query;
   }
-
 
   public void setQuery(TreeQuery query) {
     this.query = query;
@@ -127,7 +126,6 @@ public class TreeSearchRequest {
 
 
   public TreeSearchRequest size(Integer size) {
-    
     this.size = size;
     return this;
   }
@@ -137,19 +135,54 @@ public class TreeSearchRequest {
    * @return size
   **/
   @javax.annotation.Nullable
-
   public Integer getSize() {
     return size;
   }
-
 
   public void setSize(Integer size) {
     this.size = size;
   }
 
 
+  public TreeSearchRequest sortDirDesc(Boolean sortDirDesc) {
+    this.sortDirDesc = sortDirDesc;
+    return this;
+  }
+
+   /**
+   * Get sortDirDesc
+   * @return sortDirDesc
+  **/
+  @javax.annotation.Nullable
+  public Boolean getSortDirDesc() {
+    return sortDirDesc;
+  }
+
+  public void setSortDirDesc(Boolean sortDirDesc) {
+    this.sortDirDesc = sortDirDesc;
+  }
+
+
+  public TreeSearchRequest sortField(String sortField) {
+    this.sortField = sortField;
+    return this;
+  }
+
+   /**
+   * Get sortField
+   * @return sortField
+  **/
+  @javax.annotation.Nullable
+  public String getSortField() {
+    return sortField;
+  }
+
+  public void setSortField(String sortField) {
+    this.sortField = sortField;
+  }
+
+
   public TreeSearchRequest statFlags(List<Long> statFlags) {
-    
     this.statFlags = statFlags;
     return this;
   }
@@ -167,11 +200,9 @@ public class TreeSearchRequest {
    * @return statFlags
   **/
   @javax.annotation.Nullable
-
   public List<Long> getStatFlags() {
     return statFlags;
   }
-
 
   public void setStatFlags(List<Long> statFlags) {
     this.statFlags = statFlags;
@@ -192,12 +223,14 @@ public class TreeSearchRequest {
         Objects.equals(this.from, treeSearchRequest.from) &&
         Objects.equals(this.query, treeSearchRequest.query) &&
         Objects.equals(this.size, treeSearchRequest.size) &&
+        Objects.equals(this.sortDirDesc, treeSearchRequest.sortDirDesc) &&
+        Objects.equals(this.sortField, treeSearchRequest.sortField) &&
         Objects.equals(this.statFlags, treeSearchRequest.statFlags);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(details, from, query, size, statFlags);
+    return Objects.hash(details, from, query, size, sortDirDesc, sortField, statFlags);
   }
 
   @Override
@@ -208,6 +241,8 @@ public class TreeSearchRequest {
     sb.append("    from: ").append(toIndentedString(from)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
+    sb.append("    sortDirDesc: ").append(toIndentedString(sortDirDesc)).append("\n");
+    sb.append("    sortField: ").append(toIndentedString(sortField)).append("\n");
     sb.append("    statFlags: ").append(toIndentedString(statFlags)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -235,6 +270,8 @@ public class TreeSearchRequest {
     openapiFields.add("From");
     openapiFields.add("Query");
     openapiFields.add("Size");
+    openapiFields.add("SortDirDesc");
+    openapiFields.add("SortField");
     openapiFields.add("StatFlags");
 
     // a set of required properties/fields (JSON key names)
@@ -242,31 +279,35 @@ public class TreeSearchRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to TreeSearchRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to TreeSearchRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!TreeSearchRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!TreeSearchRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in TreeSearchRequest is not found in the empty JSON string", TreeSearchRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!TreeSearchRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeSearchRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeSearchRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `Query`
       if (jsonObj.get("Query") != null && !jsonObj.get("Query").isJsonNull()) {
-        TreeQuery.validateJsonObject(jsonObj.getAsJsonObject("Query"));
+        TreeQuery.validateJsonElement(jsonObj.get("Query"));
+      }
+      if ((jsonObj.get("SortField") != null && !jsonObj.get("SortField").isJsonNull()) && !jsonObj.get("SortField").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `SortField` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SortField").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("StatFlags") != null && !jsonObj.get("StatFlags").isJsonArray()) {
+      if (jsonObj.get("StatFlags") != null && !jsonObj.get("StatFlags").isJsonNull() && !jsonObj.get("StatFlags").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `StatFlags` to be an array in the JSON string but got `%s`", jsonObj.get("StatFlags").toString()));
       }
   }
@@ -291,9 +332,9 @@ public class TreeSearchRequest {
 
            @Override
            public TreeSearchRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

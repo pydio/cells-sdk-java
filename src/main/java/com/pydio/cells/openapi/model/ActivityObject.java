@@ -30,14 +30,14 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * ActivityObject
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class ActivityObject {
   public static final String SERIALIZED_NAME_AT_CONTEXT = "@context";
   @SerializedName(SERIALIZED_NAME_AT_CONTEXT)
@@ -291,7 +291,6 @@ public class ActivityObject {
   }
 
   public ActivityObject atContext(String atContext) {
-    
     this.atContext = atContext;
     return this;
   }
@@ -301,11 +300,9 @@ public class ActivityObject {
    * @return atContext
   **/
   @javax.annotation.Nullable
-
   public String getAtContext() {
     return atContext;
   }
-
 
   public void setAtContext(String atContext) {
     this.atContext = atContext;
@@ -313,7 +310,6 @@ public class ActivityObject {
 
 
   public ActivityObject accuracy(Float accuracy) {
-    
     this.accuracy = accuracy;
     return this;
   }
@@ -323,11 +319,9 @@ public class ActivityObject {
    * @return accuracy
   **/
   @javax.annotation.Nullable
-
   public Float getAccuracy() {
     return accuracy;
   }
-
 
   public void setAccuracy(Float accuracy) {
     this.accuracy = accuracy;
@@ -335,7 +329,6 @@ public class ActivityObject {
 
 
   public ActivityObject actor(ActivityObject actor) {
-    
     this.actor = actor;
     return this;
   }
@@ -345,11 +338,9 @@ public class ActivityObject {
    * @return actor
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getActor() {
     return actor;
   }
-
 
   public void setActor(ActivityObject actor) {
     this.actor = actor;
@@ -357,7 +348,6 @@ public class ActivityObject {
 
 
   public ActivityObject altitude(Float altitude) {
-    
     this.altitude = altitude;
     return this;
   }
@@ -367,11 +357,9 @@ public class ActivityObject {
    * @return altitude
   **/
   @javax.annotation.Nullable
-
   public Float getAltitude() {
     return altitude;
   }
-
 
   public void setAltitude(Float altitude) {
     this.altitude = altitude;
@@ -379,7 +367,6 @@ public class ActivityObject {
 
 
   public ActivityObject anyOf(ActivityObject anyOf) {
-    
     this.anyOf = anyOf;
     return this;
   }
@@ -389,11 +376,9 @@ public class ActivityObject {
    * @return anyOf
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getAnyOf() {
     return anyOf;
   }
-
 
   public void setAnyOf(ActivityObject anyOf) {
     this.anyOf = anyOf;
@@ -401,7 +386,6 @@ public class ActivityObject {
 
 
   public ActivityObject attachment(ActivityObject attachment) {
-    
     this.attachment = attachment;
     return this;
   }
@@ -411,11 +395,9 @@ public class ActivityObject {
    * @return attachment
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getAttachment() {
     return attachment;
   }
-
 
   public void setAttachment(ActivityObject attachment) {
     this.attachment = attachment;
@@ -423,7 +405,6 @@ public class ActivityObject {
 
 
   public ActivityObject attributedTo(ActivityObject attributedTo) {
-    
     this.attributedTo = attributedTo;
     return this;
   }
@@ -433,11 +414,9 @@ public class ActivityObject {
    * @return attributedTo
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getAttributedTo() {
     return attributedTo;
   }
-
 
   public void setAttributedTo(ActivityObject attributedTo) {
     this.attributedTo = attributedTo;
@@ -445,7 +424,6 @@ public class ActivityObject {
 
 
   public ActivityObject audience(ActivityObject audience) {
-    
     this.audience = audience;
     return this;
   }
@@ -455,11 +433,9 @@ public class ActivityObject {
    * @return audience
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getAudience() {
     return audience;
   }
-
 
   public void setAudience(ActivityObject audience) {
     this.audience = audience;
@@ -467,7 +443,6 @@ public class ActivityObject {
 
 
   public ActivityObject bcc(ActivityObject bcc) {
-    
     this.bcc = bcc;
     return this;
   }
@@ -477,11 +452,9 @@ public class ActivityObject {
    * @return bcc
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getBcc() {
     return bcc;
   }
-
 
   public void setBcc(ActivityObject bcc) {
     this.bcc = bcc;
@@ -489,7 +462,6 @@ public class ActivityObject {
 
 
   public ActivityObject bto(ActivityObject bto) {
-    
     this.bto = bto;
     return this;
   }
@@ -499,11 +471,9 @@ public class ActivityObject {
    * @return bto
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getBto() {
     return bto;
   }
-
 
   public void setBto(ActivityObject bto) {
     this.bto = bto;
@@ -511,7 +481,6 @@ public class ActivityObject {
 
 
   public ActivityObject cc(ActivityObject cc) {
-    
     this.cc = cc;
     return this;
   }
@@ -521,11 +490,9 @@ public class ActivityObject {
    * @return cc
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getCc() {
     return cc;
   }
-
 
   public void setCc(ActivityObject cc) {
     this.cc = cc;
@@ -533,7 +500,6 @@ public class ActivityObject {
 
 
   public ActivityObject closed(OffsetDateTime closed) {
-    
     this.closed = closed;
     return this;
   }
@@ -543,11 +509,9 @@ public class ActivityObject {
    * @return closed
   **/
   @javax.annotation.Nullable
-
   public OffsetDateTime getClosed() {
     return closed;
   }
-
 
   public void setClosed(OffsetDateTime closed) {
     this.closed = closed;
@@ -555,7 +519,6 @@ public class ActivityObject {
 
 
   public ActivityObject content(ActivityObject content) {
-    
     this.content = content;
     return this;
   }
@@ -565,11 +528,9 @@ public class ActivityObject {
    * @return content
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getContent() {
     return content;
   }
-
 
   public void setContent(ActivityObject content) {
     this.content = content;
@@ -577,7 +538,6 @@ public class ActivityObject {
 
 
   public ActivityObject context(ActivityObject context) {
-    
     this.context = context;
     return this;
   }
@@ -587,11 +547,9 @@ public class ActivityObject {
    * @return context
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getContext() {
     return context;
   }
-
 
   public void setContext(ActivityObject context) {
     this.context = context;
@@ -599,7 +557,6 @@ public class ActivityObject {
 
 
   public ActivityObject current(ActivityObject current) {
-    
     this.current = current;
     return this;
   }
@@ -609,11 +566,9 @@ public class ActivityObject {
    * @return current
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getCurrent() {
     return current;
   }
-
 
   public void setCurrent(ActivityObject current) {
     this.current = current;
@@ -621,7 +576,6 @@ public class ActivityObject {
 
 
   public ActivityObject deleted(OffsetDateTime deleted) {
-    
     this.deleted = deleted;
     return this;
   }
@@ -631,11 +585,9 @@ public class ActivityObject {
    * @return deleted
   **/
   @javax.annotation.Nullable
-
   public OffsetDateTime getDeleted() {
     return deleted;
   }
-
 
   public void setDeleted(OffsetDateTime deleted) {
     this.deleted = deleted;
@@ -643,7 +595,6 @@ public class ActivityObject {
 
 
   public ActivityObject duration(OffsetDateTime duration) {
-    
     this.duration = duration;
     return this;
   }
@@ -653,11 +604,9 @@ public class ActivityObject {
    * @return duration
   **/
   @javax.annotation.Nullable
-
   public OffsetDateTime getDuration() {
     return duration;
   }
-
 
   public void setDuration(OffsetDateTime duration) {
     this.duration = duration;
@@ -665,7 +614,6 @@ public class ActivityObject {
 
 
   public ActivityObject endTime(OffsetDateTime endTime) {
-    
     this.endTime = endTime;
     return this;
   }
@@ -675,11 +623,9 @@ public class ActivityObject {
    * @return endTime
   **/
   @javax.annotation.Nullable
-
   public OffsetDateTime getEndTime() {
     return endTime;
   }
-
 
   public void setEndTime(OffsetDateTime endTime) {
     this.endTime = endTime;
@@ -687,7 +633,6 @@ public class ActivityObject {
 
 
   public ActivityObject first(ActivityObject first) {
-    
     this.first = first;
     return this;
   }
@@ -697,11 +642,9 @@ public class ActivityObject {
    * @return first
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getFirst() {
     return first;
   }
-
 
   public void setFirst(ActivityObject first) {
     this.first = first;
@@ -709,7 +652,6 @@ public class ActivityObject {
 
 
   public ActivityObject formerType(ActivityObjectType formerType) {
-    
     this.formerType = formerType;
     return this;
   }
@@ -719,11 +661,9 @@ public class ActivityObject {
    * @return formerType
   **/
   @javax.annotation.Nullable
-
   public ActivityObjectType getFormerType() {
     return formerType;
   }
-
 
   public void setFormerType(ActivityObjectType formerType) {
     this.formerType = formerType;
@@ -731,7 +671,6 @@ public class ActivityObject {
 
 
   public ActivityObject generator(ActivityObject generator) {
-    
     this.generator = generator;
     return this;
   }
@@ -741,11 +680,9 @@ public class ActivityObject {
    * @return generator
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getGenerator() {
     return generator;
   }
-
 
   public void setGenerator(ActivityObject generator) {
     this.generator = generator;
@@ -753,7 +690,6 @@ public class ActivityObject {
 
 
   public ActivityObject height(Integer height) {
-    
     this.height = height;
     return this;
   }
@@ -763,11 +699,9 @@ public class ActivityObject {
    * @return height
   **/
   @javax.annotation.Nullable
-
   public Integer getHeight() {
     return height;
   }
-
 
   public void setHeight(Integer height) {
     this.height = height;
@@ -775,7 +709,6 @@ public class ActivityObject {
 
 
   public ActivityObject href(String href) {
-    
     this.href = href;
     return this;
   }
@@ -785,11 +718,9 @@ public class ActivityObject {
    * @return href
   **/
   @javax.annotation.Nullable
-
   public String getHref() {
     return href;
   }
-
 
   public void setHref(String href) {
     this.href = href;
@@ -797,7 +728,6 @@ public class ActivityObject {
 
 
   public ActivityObject hreflang(String hreflang) {
-    
     this.hreflang = hreflang;
     return this;
   }
@@ -807,11 +737,9 @@ public class ActivityObject {
    * @return hreflang
   **/
   @javax.annotation.Nullable
-
   public String getHreflang() {
     return hreflang;
   }
-
 
   public void setHreflang(String hreflang) {
     this.hreflang = hreflang;
@@ -819,7 +747,6 @@ public class ActivityObject {
 
 
   public ActivityObject icon(ActivityObject icon) {
-    
     this.icon = icon;
     return this;
   }
@@ -829,11 +756,9 @@ public class ActivityObject {
    * @return icon
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getIcon() {
     return icon;
   }
-
 
   public void setIcon(ActivityObject icon) {
     this.icon = icon;
@@ -841,7 +766,6 @@ public class ActivityObject {
 
 
   public ActivityObject id(String id) {
-    
     this.id = id;
     return this;
   }
@@ -851,11 +775,9 @@ public class ActivityObject {
    * @return id
   **/
   @javax.annotation.Nullable
-
   public String getId() {
     return id;
   }
-
 
   public void setId(String id) {
     this.id = id;
@@ -863,7 +785,6 @@ public class ActivityObject {
 
 
   public ActivityObject image(ActivityObject image) {
-    
     this.image = image;
     return this;
   }
@@ -873,11 +794,9 @@ public class ActivityObject {
    * @return image
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getImage() {
     return image;
   }
-
 
   public void setImage(ActivityObject image) {
     this.image = image;
@@ -885,7 +804,6 @@ public class ActivityObject {
 
 
   public ActivityObject inReplyTo(ActivityObject inReplyTo) {
-    
     this.inReplyTo = inReplyTo;
     return this;
   }
@@ -895,11 +813,9 @@ public class ActivityObject {
    * @return inReplyTo
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getInReplyTo() {
     return inReplyTo;
   }
-
 
   public void setInReplyTo(ActivityObject inReplyTo) {
     this.inReplyTo = inReplyTo;
@@ -907,7 +823,6 @@ public class ActivityObject {
 
 
   public ActivityObject instrument(ActivityObject instrument) {
-    
     this.instrument = instrument;
     return this;
   }
@@ -917,11 +832,9 @@ public class ActivityObject {
    * @return instrument
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getInstrument() {
     return instrument;
   }
-
 
   public void setInstrument(ActivityObject instrument) {
     this.instrument = instrument;
@@ -929,7 +842,6 @@ public class ActivityObject {
 
 
   public ActivityObject items(List<ActivityObject> items) {
-    
     this.items = items;
     return this;
   }
@@ -947,11 +859,9 @@ public class ActivityObject {
    * @return items
   **/
   @javax.annotation.Nullable
-
   public List<ActivityObject> getItems() {
     return items;
   }
-
 
   public void setItems(List<ActivityObject> items) {
     this.items = items;
@@ -959,7 +869,6 @@ public class ActivityObject {
 
 
   public ActivityObject last(ActivityObject last) {
-    
     this.last = last;
     return this;
   }
@@ -969,11 +878,9 @@ public class ActivityObject {
    * @return last
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getLast() {
     return last;
   }
-
 
   public void setLast(ActivityObject last) {
     this.last = last;
@@ -981,7 +888,6 @@ public class ActivityObject {
 
 
   public ActivityObject latitude(Float latitude) {
-    
     this.latitude = latitude;
     return this;
   }
@@ -991,11 +897,9 @@ public class ActivityObject {
    * @return latitude
   **/
   @javax.annotation.Nullable
-
   public Float getLatitude() {
     return latitude;
   }
-
 
   public void setLatitude(Float latitude) {
     this.latitude = latitude;
@@ -1003,7 +907,6 @@ public class ActivityObject {
 
 
   public ActivityObject location(ActivityObject location) {
-    
     this.location = location;
     return this;
   }
@@ -1013,11 +916,9 @@ public class ActivityObject {
    * @return location
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getLocation() {
     return location;
   }
-
 
   public void setLocation(ActivityObject location) {
     this.location = location;
@@ -1025,7 +926,6 @@ public class ActivityObject {
 
 
   public ActivityObject longitude(Float longitude) {
-    
     this.longitude = longitude;
     return this;
   }
@@ -1035,11 +935,9 @@ public class ActivityObject {
    * @return longitude
   **/
   @javax.annotation.Nullable
-
   public Float getLongitude() {
     return longitude;
   }
-
 
   public void setLongitude(Float longitude) {
     this.longitude = longitude;
@@ -1047,7 +945,6 @@ public class ActivityObject {
 
 
   public ActivityObject markdown(String markdown) {
-    
     this.markdown = markdown;
     return this;
   }
@@ -1057,11 +954,9 @@ public class ActivityObject {
    * @return markdown
   **/
   @javax.annotation.Nullable
-
   public String getMarkdown() {
     return markdown;
   }
-
 
   public void setMarkdown(String markdown) {
     this.markdown = markdown;
@@ -1069,7 +964,6 @@ public class ActivityObject {
 
 
   public ActivityObject mediaType(String mediaType) {
-    
     this.mediaType = mediaType;
     return this;
   }
@@ -1079,11 +973,9 @@ public class ActivityObject {
    * @return mediaType
   **/
   @javax.annotation.Nullable
-
   public String getMediaType() {
     return mediaType;
   }
-
 
   public void setMediaType(String mediaType) {
     this.mediaType = mediaType;
@@ -1091,7 +983,6 @@ public class ActivityObject {
 
 
   public ActivityObject name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -1101,11 +992,9 @@ public class ActivityObject {
    * @return name
   **/
   @javax.annotation.Nullable
-
   public String getName() {
     return name;
   }
-
 
   public void setName(String name) {
     this.name = name;
@@ -1113,7 +1002,6 @@ public class ActivityObject {
 
 
   public ActivityObject next(ActivityObject next) {
-    
     this.next = next;
     return this;
   }
@@ -1123,11 +1011,9 @@ public class ActivityObject {
    * @return next
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getNext() {
     return next;
   }
-
 
   public void setNext(ActivityObject next) {
     this.next = next;
@@ -1135,7 +1021,6 @@ public class ActivityObject {
 
 
   public ActivityObject _object(ActivityObject _object) {
-    
     this._object = _object;
     return this;
   }
@@ -1145,11 +1030,9 @@ public class ActivityObject {
    * @return _object
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getObject() {
     return _object;
   }
-
 
   public void setObject(ActivityObject _object) {
     this._object = _object;
@@ -1157,7 +1040,6 @@ public class ActivityObject {
 
 
   public ActivityObject oneOf(ActivityObject oneOf) {
-    
     this.oneOf = oneOf;
     return this;
   }
@@ -1167,11 +1049,9 @@ public class ActivityObject {
    * @return oneOf
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getOneOf() {
     return oneOf;
   }
-
 
   public void setOneOf(ActivityObject oneOf) {
     this.oneOf = oneOf;
@@ -1179,7 +1059,6 @@ public class ActivityObject {
 
 
   public ActivityObject origin(ActivityObject origin) {
-    
     this.origin = origin;
     return this;
   }
@@ -1189,11 +1068,9 @@ public class ActivityObject {
    * @return origin
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getOrigin() {
     return origin;
   }
-
 
   public void setOrigin(ActivityObject origin) {
     this.origin = origin;
@@ -1201,7 +1078,6 @@ public class ActivityObject {
 
 
   public ActivityObject partOf(ActivityObject partOf) {
-    
     this.partOf = partOf;
     return this;
   }
@@ -1211,11 +1087,9 @@ public class ActivityObject {
    * @return partOf
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getPartOf() {
     return partOf;
   }
-
 
   public void setPartOf(ActivityObject partOf) {
     this.partOf = partOf;
@@ -1223,7 +1097,6 @@ public class ActivityObject {
 
 
   public ActivityObject prev(ActivityObject prev) {
-    
     this.prev = prev;
     return this;
   }
@@ -1233,11 +1106,9 @@ public class ActivityObject {
    * @return prev
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getPrev() {
     return prev;
   }
-
 
   public void setPrev(ActivityObject prev) {
     this.prev = prev;
@@ -1245,7 +1116,6 @@ public class ActivityObject {
 
 
   public ActivityObject preview(ActivityObject preview) {
-    
     this.preview = preview;
     return this;
   }
@@ -1255,11 +1125,9 @@ public class ActivityObject {
    * @return preview
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getPreview() {
     return preview;
   }
-
 
   public void setPreview(ActivityObject preview) {
     this.preview = preview;
@@ -1267,7 +1135,6 @@ public class ActivityObject {
 
 
   public ActivityObject published(OffsetDateTime published) {
-    
     this.published = published;
     return this;
   }
@@ -1277,11 +1144,9 @@ public class ActivityObject {
    * @return published
   **/
   @javax.annotation.Nullable
-
   public OffsetDateTime getPublished() {
     return published;
   }
-
 
   public void setPublished(OffsetDateTime published) {
     this.published = published;
@@ -1289,7 +1154,6 @@ public class ActivityObject {
 
 
   public ActivityObject radius(Float radius) {
-    
     this.radius = radius;
     return this;
   }
@@ -1299,11 +1163,9 @@ public class ActivityObject {
    * @return radius
   **/
   @javax.annotation.Nullable
-
   public Float getRadius() {
     return radius;
   }
-
 
   public void setRadius(Float radius) {
     this.radius = radius;
@@ -1311,7 +1173,6 @@ public class ActivityObject {
 
 
   public ActivityObject rel(String rel) {
-    
     this.rel = rel;
     return this;
   }
@@ -1321,11 +1182,9 @@ public class ActivityObject {
    * @return rel
   **/
   @javax.annotation.Nullable
-
   public String getRel() {
     return rel;
   }
-
 
   public void setRel(String rel) {
     this.rel = rel;
@@ -1333,7 +1192,6 @@ public class ActivityObject {
 
 
   public ActivityObject relationship(ActivityObject relationship) {
-    
     this.relationship = relationship;
     return this;
   }
@@ -1343,11 +1201,9 @@ public class ActivityObject {
    * @return relationship
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getRelationship() {
     return relationship;
   }
-
 
   public void setRelationship(ActivityObject relationship) {
     this.relationship = relationship;
@@ -1355,7 +1211,6 @@ public class ActivityObject {
 
 
   public ActivityObject replies(ActivityObject replies) {
-    
     this.replies = replies;
     return this;
   }
@@ -1365,11 +1220,9 @@ public class ActivityObject {
    * @return replies
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getReplies() {
     return replies;
   }
-
 
   public void setReplies(ActivityObject replies) {
     this.replies = replies;
@@ -1377,7 +1230,6 @@ public class ActivityObject {
 
 
   public ActivityObject result(ActivityObject result) {
-    
     this.result = result;
     return this;
   }
@@ -1387,11 +1239,9 @@ public class ActivityObject {
    * @return result
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getResult() {
     return result;
   }
-
 
   public void setResult(ActivityObject result) {
     this.result = result;
@@ -1399,7 +1249,6 @@ public class ActivityObject {
 
 
   public ActivityObject startTime(OffsetDateTime startTime) {
-    
     this.startTime = startTime;
     return this;
   }
@@ -1409,11 +1258,9 @@ public class ActivityObject {
    * @return startTime
   **/
   @javax.annotation.Nullable
-
   public OffsetDateTime getStartTime() {
     return startTime;
   }
-
 
   public void setStartTime(OffsetDateTime startTime) {
     this.startTime = startTime;
@@ -1421,7 +1268,6 @@ public class ActivityObject {
 
 
   public ActivityObject subject(ActivityObject subject) {
-    
     this.subject = subject;
     return this;
   }
@@ -1431,11 +1277,9 @@ public class ActivityObject {
    * @return subject
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getSubject() {
     return subject;
   }
-
 
   public void setSubject(ActivityObject subject) {
     this.subject = subject;
@@ -1443,7 +1287,6 @@ public class ActivityObject {
 
 
   public ActivityObject summary(String summary) {
-    
     this.summary = summary;
     return this;
   }
@@ -1453,11 +1296,9 @@ public class ActivityObject {
    * @return summary
   **/
   @javax.annotation.Nullable
-
   public String getSummary() {
     return summary;
   }
-
 
   public void setSummary(String summary) {
     this.summary = summary;
@@ -1465,7 +1306,6 @@ public class ActivityObject {
 
 
   public ActivityObject tag(ActivityObject tag) {
-    
     this.tag = tag;
     return this;
   }
@@ -1475,11 +1315,9 @@ public class ActivityObject {
    * @return tag
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getTag() {
     return tag;
   }
-
 
   public void setTag(ActivityObject tag) {
     this.tag = tag;
@@ -1487,7 +1325,6 @@ public class ActivityObject {
 
 
   public ActivityObject target(ActivityObject target) {
-    
     this.target = target;
     return this;
   }
@@ -1497,11 +1334,9 @@ public class ActivityObject {
    * @return target
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getTarget() {
     return target;
   }
-
 
   public void setTarget(ActivityObject target) {
     this.target = target;
@@ -1509,7 +1344,6 @@ public class ActivityObject {
 
 
   public ActivityObject to(ActivityObject to) {
-    
     this.to = to;
     return this;
   }
@@ -1519,11 +1353,9 @@ public class ActivityObject {
    * @return to
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getTo() {
     return to;
   }
-
 
   public void setTo(ActivityObject to) {
     this.to = to;
@@ -1531,7 +1363,6 @@ public class ActivityObject {
 
 
   public ActivityObject totalItems(Integer totalItems) {
-    
     this.totalItems = totalItems;
     return this;
   }
@@ -1541,11 +1372,9 @@ public class ActivityObject {
    * @return totalItems
   **/
   @javax.annotation.Nullable
-
   public Integer getTotalItems() {
     return totalItems;
   }
-
 
   public void setTotalItems(Integer totalItems) {
     this.totalItems = totalItems;
@@ -1553,7 +1382,6 @@ public class ActivityObject {
 
 
   public ActivityObject type(ActivityObjectType type) {
-    
     this.type = type;
     return this;
   }
@@ -1563,11 +1391,9 @@ public class ActivityObject {
    * @return type
   **/
   @javax.annotation.Nullable
-
   public ActivityObjectType getType() {
     return type;
   }
-
 
   public void setType(ActivityObjectType type) {
     this.type = type;
@@ -1575,7 +1401,6 @@ public class ActivityObject {
 
 
   public ActivityObject units(String units) {
-    
     this.units = units;
     return this;
   }
@@ -1585,11 +1410,9 @@ public class ActivityObject {
    * @return units
   **/
   @javax.annotation.Nullable
-
   public String getUnits() {
     return units;
   }
-
 
   public void setUnits(String units) {
     this.units = units;
@@ -1597,7 +1420,6 @@ public class ActivityObject {
 
 
   public ActivityObject updated(OffsetDateTime updated) {
-    
     this.updated = updated;
     return this;
   }
@@ -1607,11 +1429,9 @@ public class ActivityObject {
    * @return updated
   **/
   @javax.annotation.Nullable
-
   public OffsetDateTime getUpdated() {
     return updated;
   }
-
 
   public void setUpdated(OffsetDateTime updated) {
     this.updated = updated;
@@ -1619,7 +1439,6 @@ public class ActivityObject {
 
 
   public ActivityObject url(ActivityObject url) {
-    
     this.url = url;
     return this;
   }
@@ -1629,11 +1448,9 @@ public class ActivityObject {
    * @return url
   **/
   @javax.annotation.Nullable
-
   public ActivityObject getUrl() {
     return url;
   }
-
 
   public void setUrl(ActivityObject url) {
     this.url = url;
@@ -1641,7 +1458,6 @@ public class ActivityObject {
 
 
   public ActivityObject width(Integer width) {
-    
     this.width = width;
     return this;
   }
@@ -1651,11 +1467,9 @@ public class ActivityObject {
    * @return width
   **/
   @javax.annotation.Nullable
-
   public Integer getWidth() {
     return width;
   }
-
 
   public void setWidth(Integer width) {
     this.width = width;
@@ -1897,79 +1711,84 @@ public class ActivityObject {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to ActivityObject
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to ActivityObject
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!ActivityObject.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!ActivityObject.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in ActivityObject is not found in the empty JSON string", ActivityObject.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!ActivityObject.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivityObject` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivityObject` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("@context") != null && !jsonObj.get("@context").isJsonNull()) && !jsonObj.get("@context").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `@context` to be a primitive type in the JSON string but got `%s`", jsonObj.get("@context").toString()));
       }
       // validate the optional field `actor`
       if (jsonObj.get("actor") != null && !jsonObj.get("actor").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("actor"));
+        ActivityObject.validateJsonElement(jsonObj.get("actor"));
       }
       // validate the optional field `anyOf`
       if (jsonObj.get("anyOf") != null && !jsonObj.get("anyOf").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("anyOf"));
+        ActivityObject.validateJsonElement(jsonObj.get("anyOf"));
       }
       // validate the optional field `attachment`
       if (jsonObj.get("attachment") != null && !jsonObj.get("attachment").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("attachment"));
+        ActivityObject.validateJsonElement(jsonObj.get("attachment"));
       }
       // validate the optional field `attributedTo`
       if (jsonObj.get("attributedTo") != null && !jsonObj.get("attributedTo").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("attributedTo"));
+        ActivityObject.validateJsonElement(jsonObj.get("attributedTo"));
       }
       // validate the optional field `audience`
       if (jsonObj.get("audience") != null && !jsonObj.get("audience").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("audience"));
+        ActivityObject.validateJsonElement(jsonObj.get("audience"));
       }
       // validate the optional field `bcc`
       if (jsonObj.get("bcc") != null && !jsonObj.get("bcc").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("bcc"));
+        ActivityObject.validateJsonElement(jsonObj.get("bcc"));
       }
       // validate the optional field `bto`
       if (jsonObj.get("bto") != null && !jsonObj.get("bto").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("bto"));
+        ActivityObject.validateJsonElement(jsonObj.get("bto"));
       }
       // validate the optional field `cc`
       if (jsonObj.get("cc") != null && !jsonObj.get("cc").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("cc"));
+        ActivityObject.validateJsonElement(jsonObj.get("cc"));
       }
       // validate the optional field `content`
       if (jsonObj.get("content") != null && !jsonObj.get("content").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("content"));
+        ActivityObject.validateJsonElement(jsonObj.get("content"));
       }
       // validate the optional field `context`
       if (jsonObj.get("context") != null && !jsonObj.get("context").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("context"));
+        ActivityObject.validateJsonElement(jsonObj.get("context"));
       }
       // validate the optional field `current`
       if (jsonObj.get("current") != null && !jsonObj.get("current").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("current"));
+        ActivityObject.validateJsonElement(jsonObj.get("current"));
       }
       // validate the optional field `first`
       if (jsonObj.get("first") != null && !jsonObj.get("first").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("first"));
+        ActivityObject.validateJsonElement(jsonObj.get("first"));
+      }
+      // validate the optional field `formerType`
+      if (jsonObj.get("formerType") != null && !jsonObj.get("formerType").isJsonNull()) {
+        ActivityObjectType.validateJsonElement(jsonObj.get("formerType"));
       }
       // validate the optional field `generator`
       if (jsonObj.get("generator") != null && !jsonObj.get("generator").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("generator"));
+        ActivityObject.validateJsonElement(jsonObj.get("generator"));
       }
       if ((jsonObj.get("href") != null && !jsonObj.get("href").isJsonNull()) && !jsonObj.get("href").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `href` to be a primitive type in the JSON string but got `%s`", jsonObj.get("href").toString()));
@@ -1979,22 +1798,22 @@ public class ActivityObject {
       }
       // validate the optional field `icon`
       if (jsonObj.get("icon") != null && !jsonObj.get("icon").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("icon"));
+        ActivityObject.validateJsonElement(jsonObj.get("icon"));
       }
       if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
       }
       // validate the optional field `image`
       if (jsonObj.get("image") != null && !jsonObj.get("image").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("image"));
+        ActivityObject.validateJsonElement(jsonObj.get("image"));
       }
       // validate the optional field `inReplyTo`
       if (jsonObj.get("inReplyTo") != null && !jsonObj.get("inReplyTo").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("inReplyTo"));
+        ActivityObject.validateJsonElement(jsonObj.get("inReplyTo"));
       }
       // validate the optional field `instrument`
       if (jsonObj.get("instrument") != null && !jsonObj.get("instrument").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("instrument"));
+        ActivityObject.validateJsonElement(jsonObj.get("instrument"));
       }
       if (jsonObj.get("items") != null && !jsonObj.get("items").isJsonNull()) {
         JsonArray jsonArrayitems = jsonObj.getAsJsonArray("items");
@@ -2006,17 +1825,17 @@ public class ActivityObject {
 
           // validate the optional field `items` (array)
           for (int i = 0; i < jsonArrayitems.size(); i++) {
-            ActivityObject.validateJsonObject(jsonArrayitems.get(i).getAsJsonObject());
+            ActivityObject.validateJsonElement(jsonArrayitems.get(i));
           };
         }
       }
       // validate the optional field `last`
       if (jsonObj.get("last") != null && !jsonObj.get("last").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("last"));
+        ActivityObject.validateJsonElement(jsonObj.get("last"));
       }
       // validate the optional field `location`
       if (jsonObj.get("location") != null && !jsonObj.get("location").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("location"));
+        ActivityObject.validateJsonElement(jsonObj.get("location"));
       }
       if ((jsonObj.get("markdown") != null && !jsonObj.get("markdown").isJsonNull()) && !jsonObj.get("markdown").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `markdown` to be a primitive type in the JSON string but got `%s`", jsonObj.get("markdown").toString()));
@@ -2029,72 +1848,76 @@ public class ActivityObject {
       }
       // validate the optional field `next`
       if (jsonObj.get("next") != null && !jsonObj.get("next").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("next"));
+        ActivityObject.validateJsonElement(jsonObj.get("next"));
       }
       // validate the optional field `object`
       if (jsonObj.get("object") != null && !jsonObj.get("object").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("object"));
+        ActivityObject.validateJsonElement(jsonObj.get("object"));
       }
       // validate the optional field `oneOf`
       if (jsonObj.get("oneOf") != null && !jsonObj.get("oneOf").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("oneOf"));
+        ActivityObject.validateJsonElement(jsonObj.get("oneOf"));
       }
       // validate the optional field `origin`
       if (jsonObj.get("origin") != null && !jsonObj.get("origin").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("origin"));
+        ActivityObject.validateJsonElement(jsonObj.get("origin"));
       }
       // validate the optional field `partOf`
       if (jsonObj.get("partOf") != null && !jsonObj.get("partOf").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("partOf"));
+        ActivityObject.validateJsonElement(jsonObj.get("partOf"));
       }
       // validate the optional field `prev`
       if (jsonObj.get("prev") != null && !jsonObj.get("prev").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("prev"));
+        ActivityObject.validateJsonElement(jsonObj.get("prev"));
       }
       // validate the optional field `preview`
       if (jsonObj.get("preview") != null && !jsonObj.get("preview").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("preview"));
+        ActivityObject.validateJsonElement(jsonObj.get("preview"));
       }
       if ((jsonObj.get("rel") != null && !jsonObj.get("rel").isJsonNull()) && !jsonObj.get("rel").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `rel` to be a primitive type in the JSON string but got `%s`", jsonObj.get("rel").toString()));
       }
       // validate the optional field `relationship`
       if (jsonObj.get("relationship") != null && !jsonObj.get("relationship").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("relationship"));
+        ActivityObject.validateJsonElement(jsonObj.get("relationship"));
       }
       // validate the optional field `replies`
       if (jsonObj.get("replies") != null && !jsonObj.get("replies").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("replies"));
+        ActivityObject.validateJsonElement(jsonObj.get("replies"));
       }
       // validate the optional field `result`
       if (jsonObj.get("result") != null && !jsonObj.get("result").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("result"));
+        ActivityObject.validateJsonElement(jsonObj.get("result"));
       }
       // validate the optional field `subject`
       if (jsonObj.get("subject") != null && !jsonObj.get("subject").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("subject"));
+        ActivityObject.validateJsonElement(jsonObj.get("subject"));
       }
       if ((jsonObj.get("summary") != null && !jsonObj.get("summary").isJsonNull()) && !jsonObj.get("summary").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `summary` to be a primitive type in the JSON string but got `%s`", jsonObj.get("summary").toString()));
       }
       // validate the optional field `tag`
       if (jsonObj.get("tag") != null && !jsonObj.get("tag").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("tag"));
+        ActivityObject.validateJsonElement(jsonObj.get("tag"));
       }
       // validate the optional field `target`
       if (jsonObj.get("target") != null && !jsonObj.get("target").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("target"));
+        ActivityObject.validateJsonElement(jsonObj.get("target"));
       }
       // validate the optional field `to`
       if (jsonObj.get("to") != null && !jsonObj.get("to").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("to"));
+        ActivityObject.validateJsonElement(jsonObj.get("to"));
+      }
+      // validate the optional field `type`
+      if (jsonObj.get("type") != null && !jsonObj.get("type").isJsonNull()) {
+        ActivityObjectType.validateJsonElement(jsonObj.get("type"));
       }
       if ((jsonObj.get("units") != null && !jsonObj.get("units").isJsonNull()) && !jsonObj.get("units").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `units` to be a primitive type in the JSON string but got `%s`", jsonObj.get("units").toString()));
       }
       // validate the optional field `url`
       if (jsonObj.get("url") != null && !jsonObj.get("url").isJsonNull()) {
-        ActivityObject.validateJsonObject(jsonObj.getAsJsonObject("url"));
+        ActivityObject.validateJsonElement(jsonObj.get("url"));
       }
   }
 
@@ -2118,9 +1941,9 @@ public class ActivityObject {
 
            @Override
            public ActivityObject read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * IdmPolicyGroup
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class IdmPolicyGroup {
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -70,7 +70,6 @@ public class IdmPolicyGroup {
   }
 
   public IdmPolicyGroup description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -80,11 +79,9 @@ public class IdmPolicyGroup {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -92,7 +89,6 @@ public class IdmPolicyGroup {
 
 
   public IdmPolicyGroup lastUpdated(Integer lastUpdated) {
-    
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -102,11 +98,9 @@ public class IdmPolicyGroup {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-
   public Integer getLastUpdated() {
     return lastUpdated;
   }
-
 
   public void setLastUpdated(Integer lastUpdated) {
     this.lastUpdated = lastUpdated;
@@ -114,7 +108,6 @@ public class IdmPolicyGroup {
 
 
   public IdmPolicyGroup name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -124,11 +117,9 @@ public class IdmPolicyGroup {
    * @return name
   **/
   @javax.annotation.Nullable
-
   public String getName() {
     return name;
   }
-
 
   public void setName(String name) {
     this.name = name;
@@ -136,7 +127,6 @@ public class IdmPolicyGroup {
 
 
   public IdmPolicyGroup ownerUuid(String ownerUuid) {
-    
     this.ownerUuid = ownerUuid;
     return this;
   }
@@ -146,11 +136,9 @@ public class IdmPolicyGroup {
    * @return ownerUuid
   **/
   @javax.annotation.Nullable
-
   public String getOwnerUuid() {
     return ownerUuid;
   }
-
 
   public void setOwnerUuid(String ownerUuid) {
     this.ownerUuid = ownerUuid;
@@ -158,7 +146,6 @@ public class IdmPolicyGroup {
 
 
   public IdmPolicyGroup policies(List<IdmPolicy> policies) {
-    
     this.policies = policies;
     return this;
   }
@@ -176,11 +163,9 @@ public class IdmPolicyGroup {
    * @return policies
   **/
   @javax.annotation.Nullable
-
   public List<IdmPolicy> getPolicies() {
     return policies;
   }
-
 
   public void setPolicies(List<IdmPolicy> policies) {
     this.policies = policies;
@@ -188,7 +173,6 @@ public class IdmPolicyGroup {
 
 
   public IdmPolicyGroup resourceGroup(IdmPolicyResourceGroup resourceGroup) {
-    
     this.resourceGroup = resourceGroup;
     return this;
   }
@@ -198,11 +182,9 @@ public class IdmPolicyGroup {
    * @return resourceGroup
   **/
   @javax.annotation.Nullable
-
   public IdmPolicyResourceGroup getResourceGroup() {
     return resourceGroup;
   }
-
 
   public void setResourceGroup(IdmPolicyResourceGroup resourceGroup) {
     this.resourceGroup = resourceGroup;
@@ -210,7 +192,6 @@ public class IdmPolicyGroup {
 
 
   public IdmPolicyGroup uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -220,11 +201,9 @@ public class IdmPolicyGroup {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -301,25 +280,26 @@ public class IdmPolicyGroup {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to IdmPolicyGroup
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to IdmPolicyGroup
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!IdmPolicyGroup.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!IdmPolicyGroup.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in IdmPolicyGroup is not found in the empty JSON string", IdmPolicyGroup.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!IdmPolicyGroup.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmPolicyGroup` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmPolicyGroup` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
       }
@@ -339,9 +319,13 @@ public class IdmPolicyGroup {
 
           // validate the optional field `Policies` (array)
           for (int i = 0; i < jsonArraypolicies.size(); i++) {
-            IdmPolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+            IdmPolicy.validateJsonElement(jsonArraypolicies.get(i));
           };
         }
+      }
+      // validate the optional field `ResourceGroup`
+      if (jsonObj.get("ResourceGroup") != null && !jsonObj.get("ResourceGroup").isJsonNull()) {
+        IdmPolicyResourceGroup.validateJsonElement(jsonObj.get("ResourceGroup"));
       }
       if ((jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonNull()) && !jsonObj.get("Uuid").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Uuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Uuid").toString()));
@@ -368,9 +352,9 @@ public class IdmPolicyGroup {
 
            @Override
            public IdmPolicyGroup read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

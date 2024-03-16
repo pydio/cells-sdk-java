@@ -1,5 +1,7 @@
 package com.pydio.cells.legacy;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.api.Change;
 import com.pydio.cells.api.Client;
 import com.pydio.cells.api.ErrorCodes;
@@ -29,7 +31,6 @@ import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.PathUtils;
 import com.pydio.cells.utils.Str;
 
-import org.json.JSONObject;
 import org.w3c.dom.Document;
 
 import java.io.File;
@@ -39,6 +40,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -740,18 +742,21 @@ public class P8Client implements Client, SdkNames {
 //                }
 //                JSONObject json = new JSONObject(contentStr);
 
-                JSONObject json = new JSONObject(rsp.asString());
 
-                if (!json.has("hash") && !json.has("mtime") && !json.has("size")) {
+                Gson gson = new Gson();
+                Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+                Map<String, Object> respMap = gson.fromJson(rsp.asString(), objType);
+
+                if (!respMap.containsKey("hash") && !respMap.containsKey("mtime") && !respMap.containsKey("size")) {
                     return null;
                 }
 
                 Stats stats = new Stats();
                 if (withHash) {
-                    stats.setHash(json.getString("hash"));
+                    stats.setHash((String) respMap.get("hash"));
                 }
-                stats.setmTime(json.getLong("mtime"));
-                stats.setSize(json.getLong("size"));
+                stats.setmTime((Long) respMap.get("mtime"));
+                stats.setSize((Long) respMap.get("size"));
                 return stats;
             } catch (Exception e) {
                 throw SDKException.unexpectedContent(e);
@@ -787,46 +792,88 @@ public class P8Client implements Client, SdkNames {
                     return;
                 }
 
-                JSONObject json;
-
-                try {
-                    json = new JSONObject(line);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-
-                lastSeq[0] = Math.max(lastSeq[0], json.getLong(CHANGE_SEQ));
+                Gson gson = new Gson();
+                Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+                Map<String, Object> respMap = gson.fromJson(line, objType);
+                lastSeq[0] = Math.max(lastSeq[0], (Long) respMap.get(CHANGE_SEQ));
                 Change change = new Change();
 
-                change.setSeq(json.getLong(CHANGE_SEQ));
-                change.setNodeId(json.getString(CHANGE_NODE_ID));
-                change.setType(json.getString(CHANGE_TYPE));
-                change.setSource(json.getString(CHANGE_SOURCE));
-                change.setTarget(json.getString(CHANGE_TARGET));
+                change.setSeq((Long) respMap.get(CHANGE_SEQ));
+                change.setNodeId((String) respMap.get(CHANGE_NODE_ID));
+                change.setType((String) respMap.get(CHANGE_TYPE));
+                change.setSource((String) respMap.get(CHANGE_SOURCE));
+                change.setTarget((String) respMap.get(CHANGE_TARGET));
 
                 ChangeNode node = new ChangeNode();
                 change.setNode(node);
+
+                Map<String, Object> changeMap = (Map<String, Object>) respMap.get(CHANGE_NODE);
+
                 try {
-                    node.setSize(json.getJSONObject(CHANGE_NODE).getLong(CHANGE_NODE_BYTESIZE));
+                    node.setSize((Long) changeMap.get(CHANGE_NODE_BYTESIZE));
                 } catch (Exception ignore) {
                 }
                 try {
-                    node.setMd5(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_MD5));
+                    node.setMd5((String) changeMap.get(CHANGE_NODE_MD5));
                 } catch (Exception ignore) {
                 }
                 try {
-                    node.setmTime(json.getJSONObject(CHANGE_NODE).getLong(CHANGE_NODE_MTIME));
+                    node.setmTime((Long) changeMap.get(CHANGE_NODE_MTIME));
                 } catch (Exception ignore) {
                 }
                 try {
-                    node.setPath(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_PATH));
+                    node.setPath((String) changeMap.get(CHANGE_NODE_PATH));
                 } catch (Exception ignore) {
                 }
-                node.setWorkspace(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_WORKSPACE));
+                node.setWorkspace((String) changeMap.get(CHANGE_NODE_WORKSPACE));
 
                 handler.onChange(change);
+
+
+
+//                stats.setmTime((Long) respMap.get("mtime"));
+//                stats.setSize((Long) respMap.get("size"));
+//
+//
+//                JSONObject json;
+//                try {
+//                    json = new JSONObject(line);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    return;
+//                }
+//
+//
+//                lastSeq[0] = Math.max(lastSeq[0], json.getLong(CHANGE_SEQ));
+//                Change change = new Change();
+//
+//                change.setSeq(json.getLong(CHANGE_SEQ));
+//                change.setNodeId(json.getString(CHANGE_NODE_ID));
+//                change.setType(json.getString(CHANGE_TYPE));
+//                change.setSource(json.getString(CHANGE_SOURCE));
+//                change.setTarget(json.getString(CHANGE_TARGET));
+//
+//                ChangeNode node = new ChangeNode();
+//                change.setNode(node);
+//                try {
+//                    node.setSize(json.getJSONObject(CHANGE_NODE).getLong(CHANGE_NODE_BYTESIZE));
+//                } catch (Exception ignore) {
+//                }
+//                try {
+//                    node.setMd5(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_MD5));
+//                } catch (Exception ignore) {
+//                }
+//                try {
+//                    node.setmTime(json.getJSONObject(CHANGE_NODE).getLong(CHANGE_NODE_MTIME));
+//                } catch (Exception ignore) {
+//                }
+//                try {
+//                    node.setPath(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_PATH));
+//                } catch (Exception ignore) {
+//                }
+//                node.setWorkspace(json.getJSONObject(CHANGE_NODE).getString(CHANGE_NODE_WORKSPACE));
+//
+//                handler.onChange(change);
             });
 
             if (lineCount == 0 && seq == 0) {
@@ -920,18 +967,34 @@ public class P8Client implements Client, SdkNames {
                 throw new SDKException(rsp.code());
             }
             try {
-                JSONObject json = rsp.toJSON();
-                if (json.has("LinkUrl")) {
-                    return json.getString("LinkUrl");
+
+                Gson gson = new Gson();
+                Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+                Map<String, Object> respMap = gson.fromJson(rsp.asString(), objType);
+                if (respMap.containsKey("LinkUrl")) {
+                    return (String) respMap.get("LinkUrl");
                 } else {
-                    JSONObject links = json.getJSONObject("links");
-                    Iterator<String> it = links.keys();
+                    Map<String, Object> linkMap = (Map<String, Object>) respMap.get("links");
+                    Iterator<Map.Entry<String, Object>> it = linkMap.entrySet().iterator();
                     while (it.hasNext()) {
-                        String key = it.next();
-                        JSONObject linkDetails = links.getJSONObject(key);
-                        linkAddress = linkDetails.getString("public_link");
+                        Map.Entry<String, Object> currEntry  = it.next();
+                        Map<String, Object> details = (Map<String, Object>) currEntry.getValue();
+                        linkAddress = (String) details.get("public_link");
                     }
                 }
+
+//                JSONObject json = rsp.toJSON();
+//                if (json.has("LinkUrl")) {
+//                    return json.getString("LinkUrl");
+//                } else {
+//                    JSONObject links = json.getJSONObject("links");
+//                    Iterator<String> it = links.keys();
+//                    while (it.hasNext()) {
+//                        String key = it.next();
+//                        JSONObject linkDetails = links.getJSONObject(key);
+//                        linkAddress = linkDetails.getString("public_link");
+//                    }
+//                }
             } catch (Exception e) {
                 throw SDKException.unexpectedContent(e);
             }

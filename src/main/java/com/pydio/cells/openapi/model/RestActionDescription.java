@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestActionDescription
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestActionDescription {
   public static final String SERIALIZED_NAME_CATEGORY = "Category";
   @SerializedName(SERIALIZED_NAME_CATEGORY)
@@ -91,7 +91,6 @@ public class RestActionDescription {
   }
 
   public RestActionDescription category(String category) {
-    
     this.category = category;
     return this;
   }
@@ -101,11 +100,9 @@ public class RestActionDescription {
    * @return category
   **/
   @javax.annotation.Nullable
-
   public String getCategory() {
     return category;
   }
-
 
   public void setCategory(String category) {
     this.category = category;
@@ -113,7 +110,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -123,11 +119,9 @@ public class RestActionDescription {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -135,7 +129,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription formModule(String formModule) {
-    
     this.formModule = formModule;
     return this;
   }
@@ -145,11 +138,9 @@ public class RestActionDescription {
    * @return formModule
   **/
   @javax.annotation.Nullable
-
   public String getFormModule() {
     return formModule;
   }
-
 
   public void setFormModule(String formModule) {
     this.formModule = formModule;
@@ -157,7 +148,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription formModuleProps(String formModuleProps) {
-    
     this.formModuleProps = formModuleProps;
     return this;
   }
@@ -167,11 +157,9 @@ public class RestActionDescription {
    * @return formModuleProps
   **/
   @javax.annotation.Nullable
-
   public String getFormModuleProps() {
     return formModuleProps;
   }
-
 
   public void setFormModuleProps(String formModuleProps) {
     this.formModuleProps = formModuleProps;
@@ -179,7 +167,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription hasForm(Boolean hasForm) {
-    
     this.hasForm = hasForm;
     return this;
   }
@@ -189,11 +176,9 @@ public class RestActionDescription {
    * @return hasForm
   **/
   @javax.annotation.Nullable
-
   public Boolean getHasForm() {
     return hasForm;
   }
-
 
   public void setHasForm(Boolean hasForm) {
     this.hasForm = hasForm;
@@ -201,7 +186,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription icon(String icon) {
-    
     this.icon = icon;
     return this;
   }
@@ -211,11 +195,9 @@ public class RestActionDescription {
    * @return icon
   **/
   @javax.annotation.Nullable
-
   public String getIcon() {
     return icon;
   }
-
 
   public void setIcon(String icon) {
     this.icon = icon;
@@ -223,7 +205,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription inputDescription(String inputDescription) {
-    
     this.inputDescription = inputDescription;
     return this;
   }
@@ -233,11 +214,9 @@ public class RestActionDescription {
    * @return inputDescription
   **/
   @javax.annotation.Nullable
-
   public String getInputDescription() {
     return inputDescription;
   }
-
 
   public void setInputDescription(String inputDescription) {
     this.inputDescription = inputDescription;
@@ -245,7 +224,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription isInternal(Boolean isInternal) {
-    
     this.isInternal = isInternal;
     return this;
   }
@@ -255,11 +233,9 @@ public class RestActionDescription {
    * @return isInternal
   **/
   @javax.annotation.Nullable
-
   public Boolean getIsInternal() {
     return isInternal;
   }
-
 
   public void setIsInternal(Boolean isInternal) {
     this.isInternal = isInternal;
@@ -267,7 +243,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -277,11 +252,9 @@ public class RestActionDescription {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -289,7 +262,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -299,11 +271,9 @@ public class RestActionDescription {
    * @return name
   **/
   @javax.annotation.Nullable
-
   public String getName() {
     return name;
   }
-
 
   public void setName(String name) {
     this.name = name;
@@ -311,7 +281,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription outputDescription(String outputDescription) {
-    
     this.outputDescription = outputDescription;
     return this;
   }
@@ -321,11 +290,9 @@ public class RestActionDescription {
    * @return outputDescription
   **/
   @javax.annotation.Nullable
-
   public String getOutputDescription() {
     return outputDescription;
   }
-
 
   public void setOutputDescription(String outputDescription) {
     this.outputDescription = outputDescription;
@@ -333,7 +300,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription summaryTemplate(String summaryTemplate) {
-    
     this.summaryTemplate = summaryTemplate;
     return this;
   }
@@ -343,11 +309,9 @@ public class RestActionDescription {
    * @return summaryTemplate
   **/
   @javax.annotation.Nullable
-
   public String getSummaryTemplate() {
     return summaryTemplate;
   }
-
 
   public void setSummaryTemplate(String summaryTemplate) {
     this.summaryTemplate = summaryTemplate;
@@ -355,7 +319,6 @@ public class RestActionDescription {
 
 
   public RestActionDescription tint(String tint) {
-    
     this.tint = tint;
     return this;
   }
@@ -365,11 +328,9 @@ public class RestActionDescription {
    * @return tint
   **/
   @javax.annotation.Nullable
-
   public String getTint() {
     return tint;
   }
-
 
   public void setTint(String tint) {
     this.tint = tint;
@@ -464,25 +425,26 @@ public class RestActionDescription {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestActionDescription
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestActionDescription
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestActionDescription.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestActionDescription.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestActionDescription is not found in the empty JSON string", RestActionDescription.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestActionDescription.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestActionDescription` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestActionDescription` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Category") != null && !jsonObj.get("Category").isJsonNull()) && !jsonObj.get("Category").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Category` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Category").toString()));
       }
@@ -538,9 +500,9 @@ public class RestActionDescription {
 
            @Override
            public RestActionDescription read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

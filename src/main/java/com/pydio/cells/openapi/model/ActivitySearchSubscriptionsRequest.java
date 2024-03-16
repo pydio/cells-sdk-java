@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * ActivitySearchSubscriptionsRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class ActivitySearchSubscriptionsRequest {
   public static final String SERIALIZED_NAME_OBJECT_IDS = "ObjectIds";
   @SerializedName(SERIALIZED_NAME_OBJECT_IDS)
@@ -53,7 +53,6 @@ public class ActivitySearchSubscriptionsRequest {
   }
 
   public ActivitySearchSubscriptionsRequest objectIds(List<String> objectIds) {
-    
     this.objectIds = objectIds;
     return this;
   }
@@ -71,11 +70,9 @@ public class ActivitySearchSubscriptionsRequest {
    * @return objectIds
   **/
   @javax.annotation.Nullable
-
   public List<String> getObjectIds() {
     return objectIds;
   }
-
 
   public void setObjectIds(List<String> objectIds) {
     this.objectIds = objectIds;
@@ -83,7 +80,6 @@ public class ActivitySearchSubscriptionsRequest {
 
 
   public ActivitySearchSubscriptionsRequest objectTypes(List<ActivityOwnerType> objectTypes) {
-    
     this.objectTypes = objectTypes;
     return this;
   }
@@ -101,11 +97,9 @@ public class ActivitySearchSubscriptionsRequest {
    * @return objectTypes
   **/
   @javax.annotation.Nullable
-
   public List<ActivityOwnerType> getObjectTypes() {
     return objectTypes;
   }
-
 
   public void setObjectTypes(List<ActivityOwnerType> objectTypes) {
     this.objectTypes = objectTypes;
@@ -113,7 +107,6 @@ public class ActivitySearchSubscriptionsRequest {
 
 
   public ActivitySearchSubscriptionsRequest userIds(List<String> userIds) {
-    
     this.userIds = userIds;
     return this;
   }
@@ -131,11 +124,9 @@ public class ActivitySearchSubscriptionsRequest {
    * @return userIds
   **/
   @javax.annotation.Nullable
-
   public List<String> getUserIds() {
     return userIds;
   }
-
 
   public void setUserIds(List<String> userIds) {
     this.userIds = userIds;
@@ -200,35 +191,36 @@ public class ActivitySearchSubscriptionsRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to ActivitySearchSubscriptionsRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to ActivitySearchSubscriptionsRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!ActivitySearchSubscriptionsRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!ActivitySearchSubscriptionsRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in ActivitySearchSubscriptionsRequest is not found in the empty JSON string", ActivitySearchSubscriptionsRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!ActivitySearchSubscriptionsRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivitySearchSubscriptionsRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivitySearchSubscriptionsRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // ensure the optional json data is an array if present
-      if (jsonObj.get("ObjectIds") != null && !jsonObj.get("ObjectIds").isJsonArray()) {
+      if (jsonObj.get("ObjectIds") != null && !jsonObj.get("ObjectIds").isJsonNull() && !jsonObj.get("ObjectIds").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `ObjectIds` to be an array in the JSON string but got `%s`", jsonObj.get("ObjectIds").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("ObjectTypes") != null && !jsonObj.get("ObjectTypes").isJsonArray()) {
+      if (jsonObj.get("ObjectTypes") != null && !jsonObj.get("ObjectTypes").isJsonNull() && !jsonObj.get("ObjectTypes").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `ObjectTypes` to be an array in the JSON string but got `%s`", jsonObj.get("ObjectTypes").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("UserIds") != null && !jsonObj.get("UserIds").isJsonArray()) {
+      if (jsonObj.get("UserIds") != null && !jsonObj.get("UserIds").isJsonNull() && !jsonObj.get("UserIds").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `UserIds` to be an array in the JSON string but got `%s`", jsonObj.get("UserIds").toString()));
       }
   }
@@ -253,9 +245,9 @@ public class ActivitySearchSubscriptionsRequest {
 
            @Override
            public ActivitySearchSubscriptionsRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

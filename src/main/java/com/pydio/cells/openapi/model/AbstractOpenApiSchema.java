@@ -16,14 +16,10 @@ package com.pydio.cells.openapi.model;
 import java.util.Map;
 import java.util.Objects;
 
-import jakarta.ws.rs.core.GenericType;
-
-//import com.fasterxml.jackson.annotation.JsonValue;
-
 /**
  * Abstract class for oneOf,anyOf schemas defined in OpenAPI spec
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public abstract class AbstractOpenApiSchema {
 
     // store the actual instance of the schema/object
@@ -45,7 +41,7 @@ public abstract class AbstractOpenApiSchema {
      *
      * @return an instance of the actual schema/object
      */
-    public abstract Map<String, GenericType> getSchemas();
+    public abstract Map<String, Class<?>> getSchemas();
 
     /**
      * Get the actual instance

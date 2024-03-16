@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RegistryListRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RegistryListRequest {
   public static final String SERIALIZED_NAME_ADJACENTS_OPTIONS = "adjacentsOptions";
   @SerializedName(SERIALIZED_NAME_ADJACENTS_OPTIONS)
@@ -47,7 +47,6 @@ public class RegistryListRequest {
   }
 
   public RegistryListRequest adjacentsOptions(RegistryOptions adjacentsOptions) {
-    
     this.adjacentsOptions = adjacentsOptions;
     return this;
   }
@@ -57,11 +56,9 @@ public class RegistryListRequest {
    * @return adjacentsOptions
   **/
   @javax.annotation.Nullable
-
   public RegistryOptions getAdjacentsOptions() {
     return adjacentsOptions;
   }
-
 
   public void setAdjacentsOptions(RegistryOptions adjacentsOptions) {
     this.adjacentsOptions = adjacentsOptions;
@@ -69,7 +66,6 @@ public class RegistryListRequest {
 
 
   public RegistryListRequest options(RegistryOptions options) {
-    
     this.options = options;
     return this;
   }
@@ -79,11 +75,9 @@ public class RegistryListRequest {
    * @return options
   **/
   @javax.annotation.Nullable
-
   public RegistryOptions getOptions() {
     return options;
   }
-
 
   public void setOptions(RegistryOptions options) {
     this.options = options;
@@ -145,32 +139,33 @@ public class RegistryListRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RegistryListRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RegistryListRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RegistryListRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RegistryListRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RegistryListRequest is not found in the empty JSON string", RegistryListRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RegistryListRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryListRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryListRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `adjacentsOptions`
       if (jsonObj.get("adjacentsOptions") != null && !jsonObj.get("adjacentsOptions").isJsonNull()) {
-        RegistryOptions.validateJsonObject(jsonObj.getAsJsonObject("adjacentsOptions"));
+        RegistryOptions.validateJsonElement(jsonObj.get("adjacentsOptions"));
       }
       // validate the optional field `options`
       if (jsonObj.get("options") != null && !jsonObj.get("options").isJsonNull()) {
-        RegistryOptions.validateJsonObject(jsonObj.getAsJsonObject("options"));
+        RegistryOptions.validateJsonElement(jsonObj.get("options"));
       }
   }
 
@@ -194,9 +189,9 @@ public class RegistryListRequest {
 
            @Override
            public RegistryListRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

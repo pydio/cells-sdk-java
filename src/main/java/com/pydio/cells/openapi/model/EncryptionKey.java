@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * EncryptionKey
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class EncryptionKey {
   public static final String SERIALIZED_NAME_CONTENT = "Content";
   @SerializedName(SERIALIZED_NAME_CONTENT)
@@ -63,7 +63,6 @@ public class EncryptionKey {
   }
 
   public EncryptionKey content(String content) {
-    
     this.content = content;
     return this;
   }
@@ -73,11 +72,9 @@ public class EncryptionKey {
    * @return content
   **/
   @javax.annotation.Nullable
-
   public String getContent() {
     return content;
   }
-
 
   public void setContent(String content) {
     this.content = content;
@@ -85,7 +82,6 @@ public class EncryptionKey {
 
 
   public EncryptionKey creationDate(Integer creationDate) {
-    
     this.creationDate = creationDate;
     return this;
   }
@@ -95,11 +91,9 @@ public class EncryptionKey {
    * @return creationDate
   **/
   @javax.annotation.Nullable
-
   public Integer getCreationDate() {
     return creationDate;
   }
-
 
   public void setCreationDate(Integer creationDate) {
     this.creationDate = creationDate;
@@ -107,7 +101,6 @@ public class EncryptionKey {
 
 
   public EncryptionKey ID(String ID) {
-    
     this.ID = ID;
     return this;
   }
@@ -117,11 +110,9 @@ public class EncryptionKey {
    * @return ID
   **/
   @javax.annotation.Nullable
-
   public String getID() {
     return ID;
   }
-
 
   public void setID(String ID) {
     this.ID = ID;
@@ -129,7 +120,6 @@ public class EncryptionKey {
 
 
   public EncryptionKey info(EncryptionKeyInfo info) {
-    
     this.info = info;
     return this;
   }
@@ -139,11 +129,9 @@ public class EncryptionKey {
    * @return info
   **/
   @javax.annotation.Nullable
-
   public EncryptionKeyInfo getInfo() {
     return info;
   }
-
 
   public void setInfo(EncryptionKeyInfo info) {
     this.info = info;
@@ -151,7 +139,6 @@ public class EncryptionKey {
 
 
   public EncryptionKey label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -161,11 +148,9 @@ public class EncryptionKey {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -173,7 +158,6 @@ public class EncryptionKey {
 
 
   public EncryptionKey owner(String owner) {
-    
     this.owner = owner;
     return this;
   }
@@ -183,11 +167,9 @@ public class EncryptionKey {
    * @return owner
   **/
   @javax.annotation.Nullable
-
   public String getOwner() {
     return owner;
   }
-
 
   public void setOwner(String owner) {
     this.owner = owner;
@@ -261,25 +243,26 @@ public class EncryptionKey {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to EncryptionKey
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to EncryptionKey
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!EncryptionKey.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!EncryptionKey.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in EncryptionKey is not found in the empty JSON string", EncryptionKey.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!EncryptionKey.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `EncryptionKey` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `EncryptionKey` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Content") != null && !jsonObj.get("Content").isJsonNull()) && !jsonObj.get("Content").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Content` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Content").toString()));
       }
@@ -288,7 +271,7 @@ public class EncryptionKey {
       }
       // validate the optional field `Info`
       if (jsonObj.get("Info") != null && !jsonObj.get("Info").isJsonNull()) {
-        EncryptionKeyInfo.validateJsonObject(jsonObj.getAsJsonObject("Info"));
+        EncryptionKeyInfo.validateJsonElement(jsonObj.get("Info"));
       }
       if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
@@ -318,9 +301,9 @@ public class EncryptionKey {
 
            @Override
            public EncryptionKey read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

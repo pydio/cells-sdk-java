@@ -1,11 +1,13 @@
 package com.pydio.cells.transport.auth;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.utils.Log;
 
-import org.json.JSONObject;
-
+import java.lang.reflect.Type;
 import java.text.ParseException;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Token {
 
@@ -55,14 +57,27 @@ public class Token {
     }
 
     public static Token decodeOAuthJWT(String jwt) throws ParseException {
+
         Token t = new Token();
-        JSONObject jo = new JSONObject(jwt);
-        t.value = jo.getString("access_token");
-        t.setExpiry(jo.getInt("expires_in"));
-        t.scope = jo.getString("scope");
-        t.idToken = jo.getString("id_token");
-        t.refreshToken = jo.getString("refresh_token");
-        t.tokenType = jo.getString("token_type");
+        Gson gson = new Gson();
+        Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+        Map<String, Object> respMap = gson.fromJson(jwt, objType);
+
+        t.value = (String) respMap.get("access_token");
+        t.setExpiry((int) respMap.get("expires_in"));
+        t.scope = (String) respMap.get("scope");
+        t.idToken = (String) respMap.get("id_token");
+        t.refreshToken = (String) respMap.get("refresh_token");
+        t.tokenType = (String) respMap.get("token_type");
+
+//        Token t = new Token();
+//        JSONObject jo = new JSONObject(jwt);
+//        t.value = jo.getString("access_token");
+//        t.setExpiry(jo.getInt("expires_in"));
+//        t.scope = jo.getString("scope");
+//        t.idToken = jo.getString("id_token");
+//        t.refreshToken = jo.getString("refresh_token");
+//        t.tokenType = jo.getString("token_type");
         return t;
     }
 

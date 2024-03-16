@@ -65,8 +65,6 @@ import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.PathUtils;
 import com.pydio.cells.utils.Str;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import java.io.File;
@@ -602,96 +600,105 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void copy(String ws, String[] files, String folder) throws SDKException {
-        JSONArray nodes = new JSONArray();
-        for (String file : files) {
-            // String path = "/" + ws + file;
-            String path = ws + file;
-            nodes.put(path);
-        }
 
-        JSONObject o = new JSONObject();
-        o.put("nodes", nodes);
-        // o.put("target", "/" + ws + folder);
-        o.put("target", ws + folder);
-        o.put("targetParent", true);
+        throw new SDKException("Reimplement rename job launch with gson");
 
-        RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName(CellsNames.JOB_ID_COPY);
-        request.setJsonParameters(o.toString());
-
-        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-        try {
-            api.userCreateJob(CellsNames.JOB_ID_COPY, request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw SDKException.fromApiException(e);
-        }
+//        JSONArray nodes = new JSONArray();
+//        for (String file : files) {
+//            // String path = "/" + ws + file;
+//            String path = ws + file;
+//            nodes.put(path);
+//        }
+//
+//        JSONObject o = new JSONObject();
+//        o.put("nodes", nodes);
+//        // o.put("target", "/" + ws + folder);
+//        o.put("target", ws + folder);
+//        o.put("targetParent", true);
+//
+//        RestUserJobRequest request = new RestUserJobRequest();
+//        request.setJobName(CellsNames.JOB_ID_COPY);
+//        request.setJsonParameters(o.toString());
+//
+//        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+//        try {
+//            api.userCreateJob(CellsNames.JOB_ID_COPY, request);
+//        } catch (ApiException e) {
+//            e.printStackTrace();
+//            throw SDKException.fromApiException(e);
+//        }
 
     }
 
     @Override
     public void move(String ws, String[] files, String dstFolder) throws SDKException {
 
-        JSONArray nodes = new JSONArray();
-        for (String file : files) {
-            //String path = "/" + ws + file;
-            String path = ws + file;
-            nodes.put(path);
-        }
 
-        JSONObject o = new JSONObject();
-        o.put("nodes", nodes);
-        // o.put("target", "/" + ws + dstFolder);
-        o.put("target", ws + dstFolder);
-        o.put("targetParent", true);
+        throw new SDKException("Reimplement move job launch with gson");
 
-        RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName(CellsNames.JOB_ID_MOVE);
-        request.setJsonParameters(o.toString());
-
-        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-        try {
-            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw SDKException.fromApiException(e);
-        }
+//        JSONArray nodes = new JSONArray();
+//        for (String file : files) {
+//            //String path = "/" + ws + file;
+//            String path = ws + file;
+//            nodes.put(path);
+//        }
+//
+//        JSONObject o = new JSONObject();
+//        o.put("nodes", nodes);
+//        // o.put("target", "/" + ws + dstFolder);
+//        o.put("target", ws + dstFolder);
+//        o.put("targetParent", true);
+//
+//        RestUserJobRequest request = new RestUserJobRequest();
+//        request.setJobName(CellsNames.JOB_ID_MOVE);
+//        request.setJsonParameters(o.toString());
+//
+//        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+//        try {
+//            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
+//        } catch (ApiException e) {
+//            e.printStackTrace();
+//            throw SDKException.fromApiException(e);
+//        }
     }
 
     @Override
     public void rename(String ws, String srcFile, String newName) throws SDKException {
-        JSONArray nodes = new JSONArray();
-        // In Cells, paths directly start with the WS slug (**NO** leading slash)
-        // String path = "/" + ws + srcFile;
-        String path = ws + srcFile;
-        nodes.put(path);
 
-        String parent = new File(srcFile).getParentFile().getPath();
-        String dstFile;
-        if ("/".equals(parent)) {
-            dstFile = parent + newName;
-        } else {
-            dstFile = parent + "/" + newName;
-        }
-        // String targetFile ="/" + ws + dstFile;
-        String targetFile = ws + dstFile;
+        throw new SDKException("Reimplement rename job launch with gson");
 
-        JSONObject o = new JSONObject();
-        o.put("nodes", nodes);
-        o.put("target", targetFile);
-        o.put("targetParent", false);
+        //        JSONArray nodes = new JSONArray();
+//        // In Cells, paths directly start with the WS slug (**NO** leading slash)
+//        // String path = "/" + ws + srcFile;
+//        String path = ws + srcFile;
+//        nodes.put(path);
+//
+//        String parent = new File(srcFile).getParentFile().getPath();
+//        String dstFile;
+//        if ("/".equals(parent)) {
+//            dstFile = parent + newName;
+//        } else {
+//            dstFile = parent + "/" + newName;
+//        }
+//        // String targetFile ="/" + ws + dstFile;
+//        String targetFile = ws + dstFile;
+//
+//        JSONObject o = new JSONObject();
+//        o.put("nodes", nodes);
+//        o.put("target", targetFile);
+//        o.put("targetParent", false);
 
-        RestUserJobRequest request = new RestUserJobRequest();
-        request.setJobName(CellsNames.JOB_ID_MOVE);
-        request.setJsonParameters(o.toString());
+//        RestUserJobRequest request = new RestUserJobRequest();
+//        request.setJobName(CellsNames.JOB_ID_MOVE);
+//        request.setJsonParameters(o.toString());
 
-        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-        try {
-            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
-        } catch (ApiException e) {
-            e.printStackTrace();
-            throw SDKException.fromApiException(e);
-        }
+//        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+//        try {
+//            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
+//        } catch (ApiException e) {
+//            e.printStackTrace();
+//            throw SDKException.fromApiException(e);
+//        }
     }
 
     @Override

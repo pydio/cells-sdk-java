@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * UpdatePackage
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class UpdatePackage {
   public static final String SERIALIZED_NAME_BINARY_ARCH = "BinaryArch";
   @SerializedName(SERIALIZED_NAME_BINARY_ARCH)
@@ -111,7 +111,6 @@ public class UpdatePackage {
   }
 
   public UpdatePackage binaryArch(String binaryArch) {
-    
     this.binaryArch = binaryArch;
     return this;
   }
@@ -121,11 +120,9 @@ public class UpdatePackage {
    * @return binaryArch
   **/
   @javax.annotation.Nullable
-
   public String getBinaryArch() {
     return binaryArch;
   }
-
 
   public void setBinaryArch(String binaryArch) {
     this.binaryArch = binaryArch;
@@ -133,7 +130,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage binaryChecksum(String binaryChecksum) {
-    
     this.binaryChecksum = binaryChecksum;
     return this;
   }
@@ -143,11 +139,9 @@ public class UpdatePackage {
    * @return binaryChecksum
   **/
   @javax.annotation.Nullable
-
   public String getBinaryChecksum() {
     return binaryChecksum;
   }
-
 
   public void setBinaryChecksum(String binaryChecksum) {
     this.binaryChecksum = binaryChecksum;
@@ -155,7 +149,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage binaryHashType(String binaryHashType) {
-    
     this.binaryHashType = binaryHashType;
     return this;
   }
@@ -165,11 +158,9 @@ public class UpdatePackage {
    * @return binaryHashType
   **/
   @javax.annotation.Nullable
-
   public String getBinaryHashType() {
     return binaryHashType;
   }
-
 
   public void setBinaryHashType(String binaryHashType) {
     this.binaryHashType = binaryHashType;
@@ -177,7 +168,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage binaryOS(String binaryOS) {
-    
     this.binaryOS = binaryOS;
     return this;
   }
@@ -187,11 +177,9 @@ public class UpdatePackage {
    * @return binaryOS
   **/
   @javax.annotation.Nullable
-
   public String getBinaryOS() {
     return binaryOS;
   }
-
 
   public void setBinaryOS(String binaryOS) {
     this.binaryOS = binaryOS;
@@ -199,7 +187,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage binarySignature(String binarySignature) {
-    
     this.binarySignature = binarySignature;
     return this;
   }
@@ -209,11 +196,9 @@ public class UpdatePackage {
    * @return binarySignature
   **/
   @javax.annotation.Nullable
-
   public String getBinarySignature() {
     return binarySignature;
   }
-
 
   public void setBinarySignature(String binarySignature) {
     this.binarySignature = binarySignature;
@@ -221,7 +206,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage binarySize(String binarySize) {
-    
     this.binarySize = binarySize;
     return this;
   }
@@ -231,11 +215,9 @@ public class UpdatePackage {
    * @return binarySize
   **/
   @javax.annotation.Nullable
-
   public String getBinarySize() {
     return binarySize;
   }
-
 
   public void setBinarySize(String binarySize) {
     this.binarySize = binarySize;
@@ -243,7 +225,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage binaryURL(String binaryURL) {
-    
     this.binaryURL = binaryURL;
     return this;
   }
@@ -253,11 +234,9 @@ public class UpdatePackage {
    * @return binaryURL
   **/
   @javax.annotation.Nullable
-
   public String getBinaryURL() {
     return binaryURL;
   }
-
 
   public void setBinaryURL(String binaryURL) {
     this.binaryURL = binaryURL;
@@ -265,7 +244,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage changeLog(String changeLog) {
-    
     this.changeLog = changeLog;
     return this;
   }
@@ -275,11 +253,9 @@ public class UpdatePackage {
    * @return changeLog
   **/
   @javax.annotation.Nullable
-
   public String getChangeLog() {
     return changeLog;
   }
-
 
   public void setChangeLog(String changeLog) {
     this.changeLog = changeLog;
@@ -287,7 +263,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -297,11 +272,9 @@ public class UpdatePackage {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -309,7 +282,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage isPatch(Boolean isPatch) {
-    
     this.isPatch = isPatch;
     return this;
   }
@@ -319,11 +291,9 @@ public class UpdatePackage {
    * @return isPatch
   **/
   @javax.annotation.Nullable
-
   public Boolean getIsPatch() {
     return isPatch;
   }
-
 
   public void setIsPatch(Boolean isPatch) {
     this.isPatch = isPatch;
@@ -331,7 +301,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -341,11 +310,9 @@ public class UpdatePackage {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -353,7 +320,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage license(String license) {
-    
     this.license = license;
     return this;
   }
@@ -363,11 +329,9 @@ public class UpdatePackage {
    * @return license
   **/
   @javax.annotation.Nullable
-
   public String getLicense() {
     return license;
   }
-
 
   public void setLicense(String license) {
     this.license = license;
@@ -375,7 +339,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage packageName(String packageName) {
-    
     this.packageName = packageName;
     return this;
   }
@@ -385,11 +348,9 @@ public class UpdatePackage {
    * @return packageName
   **/
   @javax.annotation.Nullable
-
   public String getPackageName() {
     return packageName;
   }
-
 
   public void setPackageName(String packageName) {
     this.packageName = packageName;
@@ -397,7 +358,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage patchAlgorithm(String patchAlgorithm) {
-    
     this.patchAlgorithm = patchAlgorithm;
     return this;
   }
@@ -407,11 +367,9 @@ public class UpdatePackage {
    * @return patchAlgorithm
   **/
   @javax.annotation.Nullable
-
   public String getPatchAlgorithm() {
     return patchAlgorithm;
   }
-
 
   public void setPatchAlgorithm(String patchAlgorithm) {
     this.patchAlgorithm = patchAlgorithm;
@@ -419,7 +377,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage releaseDate(Integer releaseDate) {
-    
     this.releaseDate = releaseDate;
     return this;
   }
@@ -429,11 +386,9 @@ public class UpdatePackage {
    * @return releaseDate
   **/
   @javax.annotation.Nullable
-
   public Integer getReleaseDate() {
     return releaseDate;
   }
-
 
   public void setReleaseDate(Integer releaseDate) {
     this.releaseDate = releaseDate;
@@ -441,7 +396,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage serviceName(String serviceName) {
-    
     this.serviceName = serviceName;
     return this;
   }
@@ -451,11 +405,9 @@ public class UpdatePackage {
    * @return serviceName
   **/
   @javax.annotation.Nullable
-
   public String getServiceName() {
     return serviceName;
   }
-
 
   public void setServiceName(String serviceName) {
     this.serviceName = serviceName;
@@ -463,7 +415,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage status(PackagePackageStatus status) {
-    
     this.status = status;
     return this;
   }
@@ -473,11 +424,9 @@ public class UpdatePackage {
    * @return status
   **/
   @javax.annotation.Nullable
-
   public PackagePackageStatus getStatus() {
     return status;
   }
-
 
   public void setStatus(PackagePackageStatus status) {
     this.status = status;
@@ -485,7 +434,6 @@ public class UpdatePackage {
 
 
   public UpdatePackage version(String version) {
-    
     this.version = version;
     return this;
   }
@@ -495,11 +443,9 @@ public class UpdatePackage {
    * @return version
   **/
   @javax.annotation.Nullable
-
   public String getVersion() {
     return version;
   }
-
 
   public void setVersion(String version) {
     this.version = version;
@@ -609,25 +555,26 @@ public class UpdatePackage {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to UpdatePackage
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to UpdatePackage
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!UpdatePackage.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!UpdatePackage.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in UpdatePackage is not found in the empty JSON string", UpdatePackage.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!UpdatePackage.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `UpdatePackage` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `UpdatePackage` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("BinaryArch") != null && !jsonObj.get("BinaryArch").isJsonNull()) && !jsonObj.get("BinaryArch").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `BinaryArch` to be a primitive type in the JSON string but got `%s`", jsonObj.get("BinaryArch").toString()));
       }
@@ -670,6 +617,10 @@ public class UpdatePackage {
       if ((jsonObj.get("ServiceName") != null && !jsonObj.get("ServiceName").isJsonNull()) && !jsonObj.get("ServiceName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ServiceName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ServiceName").toString()));
       }
+      // validate the optional field `Status`
+      if (jsonObj.get("Status") != null && !jsonObj.get("Status").isJsonNull()) {
+        PackagePackageStatus.validateJsonElement(jsonObj.get("Status"));
+      }
       if ((jsonObj.get("Version") != null && !jsonObj.get("Version").isJsonNull()) && !jsonObj.get("Version").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Version` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Version").toString()));
       }
@@ -695,9 +646,9 @@ public class UpdatePackage {
 
            @Override
            public UpdatePackage read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

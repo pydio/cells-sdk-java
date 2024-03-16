@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * IdmSearchUserMetaRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class IdmSearchUserMetaRequest {
   public static final String SERIALIZED_NAME_META_UUIDS = "MetaUuids";
   @SerializedName(SERIALIZED_NAME_META_UUIDS)
@@ -61,7 +61,6 @@ public class IdmSearchUserMetaRequest {
   }
 
   public IdmSearchUserMetaRequest metaUuids(List<String> metaUuids) {
-    
     this.metaUuids = metaUuids;
     return this;
   }
@@ -79,11 +78,9 @@ public class IdmSearchUserMetaRequest {
    * @return metaUuids
   **/
   @javax.annotation.Nullable
-
   public List<String> getMetaUuids() {
     return metaUuids;
   }
-
 
   public void setMetaUuids(List<String> metaUuids) {
     this.metaUuids = metaUuids;
@@ -91,7 +88,6 @@ public class IdmSearchUserMetaRequest {
 
 
   public IdmSearchUserMetaRequest namespace(String namespace) {
-    
     this.namespace = namespace;
     return this;
   }
@@ -101,11 +97,9 @@ public class IdmSearchUserMetaRequest {
    * @return namespace
   **/
   @javax.annotation.Nullable
-
   public String getNamespace() {
     return namespace;
   }
-
 
   public void setNamespace(String namespace) {
     this.namespace = namespace;
@@ -113,7 +107,6 @@ public class IdmSearchUserMetaRequest {
 
 
   public IdmSearchUserMetaRequest nodeUuids(List<String> nodeUuids) {
-    
     this.nodeUuids = nodeUuids;
     return this;
   }
@@ -131,11 +124,9 @@ public class IdmSearchUserMetaRequest {
    * @return nodeUuids
   **/
   @javax.annotation.Nullable
-
   public List<String> getNodeUuids() {
     return nodeUuids;
   }
-
 
   public void setNodeUuids(List<String> nodeUuids) {
     this.nodeUuids = nodeUuids;
@@ -143,7 +134,6 @@ public class IdmSearchUserMetaRequest {
 
 
   public IdmSearchUserMetaRequest resourceQuery(ServiceResourcePolicyQuery resourceQuery) {
-    
     this.resourceQuery = resourceQuery;
     return this;
   }
@@ -153,11 +143,9 @@ public class IdmSearchUserMetaRequest {
    * @return resourceQuery
   **/
   @javax.annotation.Nullable
-
   public ServiceResourcePolicyQuery getResourceQuery() {
     return resourceQuery;
   }
-
 
   public void setResourceQuery(ServiceResourcePolicyQuery resourceQuery) {
     this.resourceQuery = resourceQuery;
@@ -165,7 +153,6 @@ public class IdmSearchUserMetaRequest {
 
 
   public IdmSearchUserMetaRequest resourceSubjectOwner(String resourceSubjectOwner) {
-    
     this.resourceSubjectOwner = resourceSubjectOwner;
     return this;
   }
@@ -175,11 +162,9 @@ public class IdmSearchUserMetaRequest {
    * @return resourceSubjectOwner
   **/
   @javax.annotation.Nullable
-
   public String getResourceSubjectOwner() {
     return resourceSubjectOwner;
   }
-
 
   public void setResourceSubjectOwner(String resourceSubjectOwner) {
     this.resourceSubjectOwner = resourceSubjectOwner;
@@ -250,39 +235,40 @@ public class IdmSearchUserMetaRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to IdmSearchUserMetaRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to IdmSearchUserMetaRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!IdmSearchUserMetaRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!IdmSearchUserMetaRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in IdmSearchUserMetaRequest is not found in the empty JSON string", IdmSearchUserMetaRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!IdmSearchUserMetaRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmSearchUserMetaRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmSearchUserMetaRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // ensure the optional json data is an array if present
-      if (jsonObj.get("MetaUuids") != null && !jsonObj.get("MetaUuids").isJsonArray()) {
+      if (jsonObj.get("MetaUuids") != null && !jsonObj.get("MetaUuids").isJsonNull() && !jsonObj.get("MetaUuids").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `MetaUuids` to be an array in the JSON string but got `%s`", jsonObj.get("MetaUuids").toString()));
       }
       if ((jsonObj.get("Namespace") != null && !jsonObj.get("Namespace").isJsonNull()) && !jsonObj.get("Namespace").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Namespace` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Namespace").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("NodeUuids") != null && !jsonObj.get("NodeUuids").isJsonArray()) {
+      if (jsonObj.get("NodeUuids") != null && !jsonObj.get("NodeUuids").isJsonNull() && !jsonObj.get("NodeUuids").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `NodeUuids` to be an array in the JSON string but got `%s`", jsonObj.get("NodeUuids").toString()));
       }
       // validate the optional field `ResourceQuery`
       if (jsonObj.get("ResourceQuery") != null && !jsonObj.get("ResourceQuery").isJsonNull()) {
-        ServiceResourcePolicyQuery.validateJsonObject(jsonObj.getAsJsonObject("ResourceQuery"));
+        ServiceResourcePolicyQuery.validateJsonElement(jsonObj.get("ResourceQuery"));
       }
       if ((jsonObj.get("ResourceSubjectOwner") != null && !jsonObj.get("ResourceSubjectOwner").isJsonNull()) && !jsonObj.get("ResourceSubjectOwner").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ResourceSubjectOwner` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ResourceSubjectOwner").toString()));
@@ -309,9 +295,9 @@ public class IdmSearchUserMetaRequest {
 
            @Override
            public IdmSearchUserMetaRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

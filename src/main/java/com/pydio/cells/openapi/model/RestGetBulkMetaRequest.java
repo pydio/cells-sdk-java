@@ -26,20 +26,25 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestGetBulkMetaRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestGetBulkMetaRequest {
   public static final String SERIALIZED_NAME_ALL_META_PROVIDERS = "AllMetaProviders";
   @SerializedName(SERIALIZED_NAME_ALL_META_PROVIDERS)
   private Boolean allMetaProviders;
+
+  public static final String SERIALIZED_NAME_FILTERS = "Filters";
+  @SerializedName(SERIALIZED_NAME_FILTERS)
+  private Map<String, String> filters = new HashMap<>();
 
   public static final String SERIALIZED_NAME_LIMIT = "Limit";
   @SerializedName(SERIALIZED_NAME_LIMIT)
@@ -69,7 +74,6 @@ public class RestGetBulkMetaRequest {
   }
 
   public RestGetBulkMetaRequest allMetaProviders(Boolean allMetaProviders) {
-    
     this.allMetaProviders = allMetaProviders;
     return this;
   }
@@ -79,19 +83,43 @@ public class RestGetBulkMetaRequest {
    * @return allMetaProviders
   **/
   @javax.annotation.Nullable
-
   public Boolean getAllMetaProviders() {
     return allMetaProviders;
   }
-
 
   public void setAllMetaProviders(Boolean allMetaProviders) {
     this.allMetaProviders = allMetaProviders;
   }
 
 
+  public RestGetBulkMetaRequest filters(Map<String, String> filters) {
+    this.filters = filters;
+    return this;
+  }
+
+  public RestGetBulkMetaRequest putFiltersItem(String key, String filtersItem) {
+    if (this.filters == null) {
+      this.filters = new HashMap<>();
+    }
+    this.filters.put(key, filtersItem);
+    return this;
+  }
+
+   /**
+   * Get filters
+   * @return filters
+  **/
+  @javax.annotation.Nullable
+  public Map<String, String> getFilters() {
+    return filters;
+  }
+
+  public void setFilters(Map<String, String> filters) {
+    this.filters = filters;
+  }
+
+
   public RestGetBulkMetaRequest limit(Integer limit) {
-    
     this.limit = limit;
     return this;
   }
@@ -101,11 +129,9 @@ public class RestGetBulkMetaRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-
   public Integer getLimit() {
     return limit;
   }
-
 
   public void setLimit(Integer limit) {
     this.limit = limit;
@@ -113,7 +139,6 @@ public class RestGetBulkMetaRequest {
 
 
   public RestGetBulkMetaRequest nodePaths(List<String> nodePaths) {
-    
     this.nodePaths = nodePaths;
     return this;
   }
@@ -131,11 +156,9 @@ public class RestGetBulkMetaRequest {
    * @return nodePaths
   **/
   @javax.annotation.Nullable
-
   public List<String> getNodePaths() {
     return nodePaths;
   }
-
 
   public void setNodePaths(List<String> nodePaths) {
     this.nodePaths = nodePaths;
@@ -143,7 +166,6 @@ public class RestGetBulkMetaRequest {
 
 
   public RestGetBulkMetaRequest offset(Integer offset) {
-    
     this.offset = offset;
     return this;
   }
@@ -153,11 +175,9 @@ public class RestGetBulkMetaRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-
   public Integer getOffset() {
     return offset;
   }
-
 
   public void setOffset(Integer offset) {
     this.offset = offset;
@@ -165,7 +185,6 @@ public class RestGetBulkMetaRequest {
 
 
   public RestGetBulkMetaRequest sortDirDesc(Boolean sortDirDesc) {
-    
     this.sortDirDesc = sortDirDesc;
     return this;
   }
@@ -175,11 +194,9 @@ public class RestGetBulkMetaRequest {
    * @return sortDirDesc
   **/
   @javax.annotation.Nullable
-
   public Boolean getSortDirDesc() {
     return sortDirDesc;
   }
-
 
   public void setSortDirDesc(Boolean sortDirDesc) {
     this.sortDirDesc = sortDirDesc;
@@ -187,7 +204,6 @@ public class RestGetBulkMetaRequest {
 
 
   public RestGetBulkMetaRequest sortField(String sortField) {
-    
     this.sortField = sortField;
     return this;
   }
@@ -197,11 +213,9 @@ public class RestGetBulkMetaRequest {
    * @return sortField
   **/
   @javax.annotation.Nullable
-
   public String getSortField() {
     return sortField;
   }
-
 
   public void setSortField(String sortField) {
     this.sortField = sortField;
@@ -209,7 +223,6 @@ public class RestGetBulkMetaRequest {
 
 
   public RestGetBulkMetaRequest versions(Boolean versions) {
-    
     this.versions = versions;
     return this;
   }
@@ -219,11 +232,9 @@ public class RestGetBulkMetaRequest {
    * @return versions
   **/
   @javax.annotation.Nullable
-
   public Boolean getVersions() {
     return versions;
   }
-
 
   public void setVersions(Boolean versions) {
     this.versions = versions;
@@ -241,6 +252,7 @@ public class RestGetBulkMetaRequest {
     }
     RestGetBulkMetaRequest restGetBulkMetaRequest = (RestGetBulkMetaRequest) o;
     return Objects.equals(this.allMetaProviders, restGetBulkMetaRequest.allMetaProviders) &&
+        Objects.equals(this.filters, restGetBulkMetaRequest.filters) &&
         Objects.equals(this.limit, restGetBulkMetaRequest.limit) &&
         Objects.equals(this.nodePaths, restGetBulkMetaRequest.nodePaths) &&
         Objects.equals(this.offset, restGetBulkMetaRequest.offset) &&
@@ -251,7 +263,7 @@ public class RestGetBulkMetaRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(allMetaProviders, limit, nodePaths, offset, sortDirDesc, sortField, versions);
+    return Objects.hash(allMetaProviders, filters, limit, nodePaths, offset, sortDirDesc, sortField, versions);
   }
 
   @Override
@@ -259,6 +271,7 @@ public class RestGetBulkMetaRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class RestGetBulkMetaRequest {\n");
     sb.append("    allMetaProviders: ").append(toIndentedString(allMetaProviders)).append("\n");
+    sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("    nodePaths: ").append(toIndentedString(nodePaths)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
@@ -288,6 +301,7 @@ public class RestGetBulkMetaRequest {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("AllMetaProviders");
+    openapiFields.add("Filters");
     openapiFields.add("Limit");
     openapiFields.add("NodePaths");
     openapiFields.add("Offset");
@@ -300,27 +314,28 @@ public class RestGetBulkMetaRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestGetBulkMetaRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestGetBulkMetaRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestGetBulkMetaRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestGetBulkMetaRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestGetBulkMetaRequest is not found in the empty JSON string", RestGetBulkMetaRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestGetBulkMetaRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestGetBulkMetaRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestGetBulkMetaRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // ensure the optional json data is an array if present
-      if (jsonObj.get("NodePaths") != null && !jsonObj.get("NodePaths").isJsonArray()) {
+      if (jsonObj.get("NodePaths") != null && !jsonObj.get("NodePaths").isJsonNull() && !jsonObj.get("NodePaths").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `NodePaths` to be an array in the JSON string but got `%s`", jsonObj.get("NodePaths").toString()));
       }
       if ((jsonObj.get("SortField") != null && !jsonObj.get("SortField").isJsonNull()) && !jsonObj.get("SortField").isJsonPrimitive()) {
@@ -348,9 +363,9 @@ public class RestGetBulkMetaRequest {
 
            @Override
            public RestGetBulkMetaRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

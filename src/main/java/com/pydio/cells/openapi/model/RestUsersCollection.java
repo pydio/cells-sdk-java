@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestUsersCollection
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestUsersCollection {
   public static final String SERIALIZED_NAME_GROUPS = "Groups";
   @SerializedName(SERIALIZED_NAME_GROUPS)
@@ -54,7 +54,6 @@ public class RestUsersCollection {
   }
 
   public RestUsersCollection groups(List<IdmUser> groups) {
-    
     this.groups = groups;
     return this;
   }
@@ -72,11 +71,9 @@ public class RestUsersCollection {
    * @return groups
   **/
   @javax.annotation.Nullable
-
   public List<IdmUser> getGroups() {
     return groups;
   }
-
 
   public void setGroups(List<IdmUser> groups) {
     this.groups = groups;
@@ -84,7 +81,6 @@ public class RestUsersCollection {
 
 
   public RestUsersCollection total(Integer total) {
-    
     this.total = total;
     return this;
   }
@@ -94,11 +90,9 @@ public class RestUsersCollection {
    * @return total
   **/
   @javax.annotation.Nullable
-
   public Integer getTotal() {
     return total;
   }
-
 
   public void setTotal(Integer total) {
     this.total = total;
@@ -106,7 +100,6 @@ public class RestUsersCollection {
 
 
   public RestUsersCollection users(List<IdmUser> users) {
-    
     this.users = users;
     return this;
   }
@@ -124,11 +117,9 @@ public class RestUsersCollection {
    * @return users
   **/
   @javax.annotation.Nullable
-
   public List<IdmUser> getUsers() {
     return users;
   }
-
 
   public void setUsers(List<IdmUser> users) {
     this.users = users;
@@ -193,25 +184,26 @@ public class RestUsersCollection {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestUsersCollection
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestUsersCollection
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestUsersCollection.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestUsersCollection.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestUsersCollection is not found in the empty JSON string", RestUsersCollection.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestUsersCollection.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestUsersCollection` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestUsersCollection` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Groups") != null && !jsonObj.get("Groups").isJsonNull()) {
         JsonArray jsonArraygroups = jsonObj.getAsJsonArray("Groups");
         if (jsonArraygroups != null) {
@@ -222,7 +214,7 @@ public class RestUsersCollection {
 
           // validate the optional field `Groups` (array)
           for (int i = 0; i < jsonArraygroups.size(); i++) {
-            IdmUser.validateJsonObject(jsonArraygroups.get(i).getAsJsonObject());
+            IdmUser.validateJsonElement(jsonArraygroups.get(i));
           };
         }
       }
@@ -236,7 +228,7 @@ public class RestUsersCollection {
 
           // validate the optional field `Users` (array)
           for (int i = 0; i < jsonArrayusers.size(); i++) {
-            IdmUser.validateJsonObject(jsonArrayusers.get(i).getAsJsonObject());
+            IdmUser.validateJsonElement(jsonArrayusers.get(i));
           };
         }
       }
@@ -262,9 +254,9 @@ public class RestUsersCollection {
 
            @Override
            public RestUsersCollection read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

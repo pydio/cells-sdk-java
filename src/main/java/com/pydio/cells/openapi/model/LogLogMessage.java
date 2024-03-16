@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * LogMessage is the format used to transmit log messages to clients via the REST API.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class LogLogMessage {
   public static final String SERIALIZED_NAME_GROUP_PATH = "GroupPath";
   @SerializedName(SERIALIZED_NAME_GROUP_PATH)
@@ -117,6 +117,10 @@ public class LogLogMessage {
   @SerializedName(SERIALIZED_NAME_SPAN_UUID)
   private String spanUuid;
 
+  public static final String SERIALIZED_NAME_TRANSFER_SIZE = "TransferSize";
+  @SerializedName(SERIALIZED_NAME_TRANSFER_SIZE)
+  private String transferSize;
+
   public static final String SERIALIZED_NAME_TS = "Ts";
   @SerializedName(SERIALIZED_NAME_TS)
   private Integer ts;
@@ -145,7 +149,6 @@ public class LogLogMessage {
   }
 
   public LogLogMessage groupPath(String groupPath) {
-    
     this.groupPath = groupPath;
     return this;
   }
@@ -155,11 +158,9 @@ public class LogLogMessage {
    * @return groupPath
   **/
   @javax.annotation.Nullable
-
   public String getGroupPath() {
     return groupPath;
   }
-
 
   public void setGroupPath(String groupPath) {
     this.groupPath = groupPath;
@@ -167,7 +168,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage httpProtocol(String httpProtocol) {
-    
     this.httpProtocol = httpProtocol;
     return this;
   }
@@ -177,11 +177,9 @@ public class LogLogMessage {
    * @return httpProtocol
   **/
   @javax.annotation.Nullable
-
   public String getHttpProtocol() {
     return httpProtocol;
   }
-
 
   public void setHttpProtocol(String httpProtocol) {
     this.httpProtocol = httpProtocol;
@@ -189,7 +187,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage jsonZaps(String jsonZaps) {
-    
     this.jsonZaps = jsonZaps;
     return this;
   }
@@ -199,11 +196,9 @@ public class LogLogMessage {
    * @return jsonZaps
   **/
   @javax.annotation.Nullable
-
   public String getJsonZaps() {
     return jsonZaps;
   }
-
 
   public void setJsonZaps(String jsonZaps) {
     this.jsonZaps = jsonZaps;
@@ -211,7 +206,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage level(String level) {
-    
     this.level = level;
     return this;
   }
@@ -221,11 +215,9 @@ public class LogLogMessage {
    * @return level
   **/
   @javax.annotation.Nullable
-
   public String getLevel() {
     return level;
   }
-
 
   public void setLevel(String level) {
     this.level = level;
@@ -233,7 +225,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage logger(String logger) {
-    
     this.logger = logger;
     return this;
   }
@@ -243,11 +234,9 @@ public class LogLogMessage {
    * @return logger
   **/
   @javax.annotation.Nullable
-
   public String getLogger() {
     return logger;
   }
-
 
   public void setLogger(String logger) {
     this.logger = logger;
@@ -255,7 +244,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage msg(String msg) {
-    
     this.msg = msg;
     return this;
   }
@@ -265,11 +253,9 @@ public class LogLogMessage {
    * @return msg
   **/
   @javax.annotation.Nullable
-
   public String getMsg() {
     return msg;
   }
-
 
   public void setMsg(String msg) {
     this.msg = msg;
@@ -277,7 +263,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage msgId(String msgId) {
-    
     this.msgId = msgId;
     return this;
   }
@@ -287,11 +272,9 @@ public class LogLogMessage {
    * @return msgId
   **/
   @javax.annotation.Nullable
-
   public String getMsgId() {
     return msgId;
   }
-
 
   public void setMsgId(String msgId) {
     this.msgId = msgId;
@@ -299,7 +282,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage nodePath(String nodePath) {
-    
     this.nodePath = nodePath;
     return this;
   }
@@ -309,11 +291,9 @@ public class LogLogMessage {
    * @return nodePath
   **/
   @javax.annotation.Nullable
-
   public String getNodePath() {
     return nodePath;
   }
-
 
   public void setNodePath(String nodePath) {
     this.nodePath = nodePath;
@@ -321,7 +301,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage nodeUuid(String nodeUuid) {
-    
     this.nodeUuid = nodeUuid;
     return this;
   }
@@ -331,11 +310,9 @@ public class LogLogMessage {
    * @return nodeUuid
   **/
   @javax.annotation.Nullable
-
   public String getNodeUuid() {
     return nodeUuid;
   }
-
 
   public void setNodeUuid(String nodeUuid) {
     this.nodeUuid = nodeUuid;
@@ -343,7 +320,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage operationLabel(String operationLabel) {
-    
     this.operationLabel = operationLabel;
     return this;
   }
@@ -353,11 +329,9 @@ public class LogLogMessage {
    * @return operationLabel
   **/
   @javax.annotation.Nullable
-
   public String getOperationLabel() {
     return operationLabel;
   }
-
 
   public void setOperationLabel(String operationLabel) {
     this.operationLabel = operationLabel;
@@ -365,7 +339,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage operationUuid(String operationUuid) {
-    
     this.operationUuid = operationUuid;
     return this;
   }
@@ -375,11 +348,9 @@ public class LogLogMessage {
    * @return operationUuid
   **/
   @javax.annotation.Nullable
-
   public String getOperationUuid() {
     return operationUuid;
   }
-
 
   public void setOperationUuid(String operationUuid) {
     this.operationUuid = operationUuid;
@@ -387,7 +358,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage profile(String profile) {
-    
     this.profile = profile;
     return this;
   }
@@ -397,11 +367,9 @@ public class LogLogMessage {
    * @return profile
   **/
   @javax.annotation.Nullable
-
   public String getProfile() {
     return profile;
   }
-
 
   public void setProfile(String profile) {
     this.profile = profile;
@@ -409,7 +377,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage remoteAddress(String remoteAddress) {
-    
     this.remoteAddress = remoteAddress;
     return this;
   }
@@ -419,11 +386,9 @@ public class LogLogMessage {
    * @return remoteAddress
   **/
   @javax.annotation.Nullable
-
   public String getRemoteAddress() {
     return remoteAddress;
   }
-
 
   public void setRemoteAddress(String remoteAddress) {
     this.remoteAddress = remoteAddress;
@@ -431,7 +396,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage roleUuids(List<String> roleUuids) {
-    
     this.roleUuids = roleUuids;
     return this;
   }
@@ -449,11 +413,9 @@ public class LogLogMessage {
    * @return roleUuids
   **/
   @javax.annotation.Nullable
-
   public List<String> getRoleUuids() {
     return roleUuids;
   }
-
 
   public void setRoleUuids(List<String> roleUuids) {
     this.roleUuids = roleUuids;
@@ -461,7 +423,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage schedulerJobUuid(String schedulerJobUuid) {
-    
     this.schedulerJobUuid = schedulerJobUuid;
     return this;
   }
@@ -471,11 +432,9 @@ public class LogLogMessage {
    * @return schedulerJobUuid
   **/
   @javax.annotation.Nullable
-
   public String getSchedulerJobUuid() {
     return schedulerJobUuid;
   }
-
 
   public void setSchedulerJobUuid(String schedulerJobUuid) {
     this.schedulerJobUuid = schedulerJobUuid;
@@ -483,7 +442,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage schedulerTaskActionPath(String schedulerTaskActionPath) {
-    
     this.schedulerTaskActionPath = schedulerTaskActionPath;
     return this;
   }
@@ -493,11 +451,9 @@ public class LogLogMessage {
    * @return schedulerTaskActionPath
   **/
   @javax.annotation.Nullable
-
   public String getSchedulerTaskActionPath() {
     return schedulerTaskActionPath;
   }
-
 
   public void setSchedulerTaskActionPath(String schedulerTaskActionPath) {
     this.schedulerTaskActionPath = schedulerTaskActionPath;
@@ -505,7 +461,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage schedulerTaskUuid(String schedulerTaskUuid) {
-    
     this.schedulerTaskUuid = schedulerTaskUuid;
     return this;
   }
@@ -515,11 +470,9 @@ public class LogLogMessage {
    * @return schedulerTaskUuid
   **/
   @javax.annotation.Nullable
-
   public String getSchedulerTaskUuid() {
     return schedulerTaskUuid;
   }
-
 
   public void setSchedulerTaskUuid(String schedulerTaskUuid) {
     this.schedulerTaskUuid = schedulerTaskUuid;
@@ -527,7 +480,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage spanParentUuid(String spanParentUuid) {
-    
     this.spanParentUuid = spanParentUuid;
     return this;
   }
@@ -537,11 +489,9 @@ public class LogLogMessage {
    * @return spanParentUuid
   **/
   @javax.annotation.Nullable
-
   public String getSpanParentUuid() {
     return spanParentUuid;
   }
-
 
   public void setSpanParentUuid(String spanParentUuid) {
     this.spanParentUuid = spanParentUuid;
@@ -549,7 +499,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage spanRootUuid(String spanRootUuid) {
-    
     this.spanRootUuid = spanRootUuid;
     return this;
   }
@@ -559,11 +508,9 @@ public class LogLogMessage {
    * @return spanRootUuid
   **/
   @javax.annotation.Nullable
-
   public String getSpanRootUuid() {
     return spanRootUuid;
   }
-
 
   public void setSpanRootUuid(String spanRootUuid) {
     this.spanRootUuid = spanRootUuid;
@@ -571,7 +518,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage spanUuid(String spanUuid) {
-    
     this.spanUuid = spanUuid;
     return this;
   }
@@ -581,19 +527,35 @@ public class LogLogMessage {
    * @return spanUuid
   **/
   @javax.annotation.Nullable
-
   public String getSpanUuid() {
     return spanUuid;
   }
-
 
   public void setSpanUuid(String spanUuid) {
     this.spanUuid = spanUuid;
   }
 
 
+  public LogLogMessage transferSize(String transferSize) {
+    this.transferSize = transferSize;
+    return this;
+  }
+
+   /**
+   * Get transferSize
+   * @return transferSize
+  **/
+  @javax.annotation.Nullable
+  public String getTransferSize() {
+    return transferSize;
+  }
+
+  public void setTransferSize(String transferSize) {
+    this.transferSize = transferSize;
+  }
+
+
   public LogLogMessage ts(Integer ts) {
-    
     this.ts = ts;
     return this;
   }
@@ -603,11 +565,9 @@ public class LogLogMessage {
    * @return ts
   **/
   @javax.annotation.Nullable
-
   public Integer getTs() {
     return ts;
   }
-
 
   public void setTs(Integer ts) {
     this.ts = ts;
@@ -615,7 +575,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage userAgent(String userAgent) {
-    
     this.userAgent = userAgent;
     return this;
   }
@@ -625,11 +584,9 @@ public class LogLogMessage {
    * @return userAgent
   **/
   @javax.annotation.Nullable
-
   public String getUserAgent() {
     return userAgent;
   }
-
 
   public void setUserAgent(String userAgent) {
     this.userAgent = userAgent;
@@ -637,7 +594,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage userName(String userName) {
-    
     this.userName = userName;
     return this;
   }
@@ -647,11 +603,9 @@ public class LogLogMessage {
    * @return userName
   **/
   @javax.annotation.Nullable
-
   public String getUserName() {
     return userName;
   }
-
 
   public void setUserName(String userName) {
     this.userName = userName;
@@ -659,7 +613,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage userUuid(String userUuid) {
-    
     this.userUuid = userUuid;
     return this;
   }
@@ -669,11 +622,9 @@ public class LogLogMessage {
    * @return userUuid
   **/
   @javax.annotation.Nullable
-
   public String getUserUuid() {
     return userUuid;
   }
-
 
   public void setUserUuid(String userUuid) {
     this.userUuid = userUuid;
@@ -681,7 +632,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage wsScope(String wsScope) {
-    
     this.wsScope = wsScope;
     return this;
   }
@@ -691,11 +641,9 @@ public class LogLogMessage {
    * @return wsScope
   **/
   @javax.annotation.Nullable
-
   public String getWsScope() {
     return wsScope;
   }
-
 
   public void setWsScope(String wsScope) {
     this.wsScope = wsScope;
@@ -703,7 +651,6 @@ public class LogLogMessage {
 
 
   public LogLogMessage wsUuid(String wsUuid) {
-    
     this.wsUuid = wsUuid;
     return this;
   }
@@ -713,11 +660,9 @@ public class LogLogMessage {
    * @return wsUuid
   **/
   @javax.annotation.Nullable
-
   public String getWsUuid() {
     return wsUuid;
   }
-
 
   public void setWsUuid(String wsUuid) {
     this.wsUuid = wsUuid;
@@ -754,6 +699,7 @@ public class LogLogMessage {
         Objects.equals(this.spanParentUuid, logLogMessage.spanParentUuid) &&
         Objects.equals(this.spanRootUuid, logLogMessage.spanRootUuid) &&
         Objects.equals(this.spanUuid, logLogMessage.spanUuid) &&
+        Objects.equals(this.transferSize, logLogMessage.transferSize) &&
         Objects.equals(this.ts, logLogMessage.ts) &&
         Objects.equals(this.userAgent, logLogMessage.userAgent) &&
         Objects.equals(this.userName, logLogMessage.userName) &&
@@ -764,7 +710,7 @@ public class LogLogMessage {
 
   @Override
   public int hashCode() {
-    return Objects.hash(groupPath, httpProtocol, jsonZaps, level, logger, msg, msgId, nodePath, nodeUuid, operationLabel, operationUuid, profile, remoteAddress, roleUuids, schedulerJobUuid, schedulerTaskActionPath, schedulerTaskUuid, spanParentUuid, spanRootUuid, spanUuid, ts, userAgent, userName, userUuid, wsScope, wsUuid);
+    return Objects.hash(groupPath, httpProtocol, jsonZaps, level, logger, msg, msgId, nodePath, nodeUuid, operationLabel, operationUuid, profile, remoteAddress, roleUuids, schedulerJobUuid, schedulerTaskActionPath, schedulerTaskUuid, spanParentUuid, spanRootUuid, spanUuid, transferSize, ts, userAgent, userName, userUuid, wsScope, wsUuid);
   }
 
   @Override
@@ -791,6 +737,7 @@ public class LogLogMessage {
     sb.append("    spanParentUuid: ").append(toIndentedString(spanParentUuid)).append("\n");
     sb.append("    spanRootUuid: ").append(toIndentedString(spanRootUuid)).append("\n");
     sb.append("    spanUuid: ").append(toIndentedString(spanUuid)).append("\n");
+    sb.append("    transferSize: ").append(toIndentedString(transferSize)).append("\n");
     sb.append("    ts: ").append(toIndentedString(ts)).append("\n");
     sb.append("    userAgent: ").append(toIndentedString(userAgent)).append("\n");
     sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
@@ -839,6 +786,7 @@ public class LogLogMessage {
     openapiFields.add("SpanParentUuid");
     openapiFields.add("SpanRootUuid");
     openapiFields.add("SpanUuid");
+    openapiFields.add("TransferSize");
     openapiFields.add("Ts");
     openapiFields.add("UserAgent");
     openapiFields.add("UserName");
@@ -851,25 +799,26 @@ public class LogLogMessage {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to LogLogMessage
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to LogLogMessage
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!LogLogMessage.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!LogLogMessage.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in LogLogMessage is not found in the empty JSON string", LogLogMessage.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!LogLogMessage.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `LogLogMessage` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `LogLogMessage` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("GroupPath") != null && !jsonObj.get("GroupPath").isJsonNull()) && !jsonObj.get("GroupPath").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `GroupPath` to be a primitive type in the JSON string but got `%s`", jsonObj.get("GroupPath").toString()));
       }
@@ -910,7 +859,7 @@ public class LogLogMessage {
         throw new IllegalArgumentException(String.format("Expected the field `RemoteAddress` to be a primitive type in the JSON string but got `%s`", jsonObj.get("RemoteAddress").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("RoleUuids") != null && !jsonObj.get("RoleUuids").isJsonArray()) {
+      if (jsonObj.get("RoleUuids") != null && !jsonObj.get("RoleUuids").isJsonNull() && !jsonObj.get("RoleUuids").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `RoleUuids` to be an array in the JSON string but got `%s`", jsonObj.get("RoleUuids").toString()));
       }
       if ((jsonObj.get("SchedulerJobUuid") != null && !jsonObj.get("SchedulerJobUuid").isJsonNull()) && !jsonObj.get("SchedulerJobUuid").isJsonPrimitive()) {
@@ -930,6 +879,9 @@ public class LogLogMessage {
       }
       if ((jsonObj.get("SpanUuid") != null && !jsonObj.get("SpanUuid").isJsonNull()) && !jsonObj.get("SpanUuid").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `SpanUuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SpanUuid").toString()));
+      }
+      if ((jsonObj.get("TransferSize") != null && !jsonObj.get("TransferSize").isJsonNull()) && !jsonObj.get("TransferSize").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `TransferSize` to be a primitive type in the JSON string but got `%s`", jsonObj.get("TransferSize").toString()));
       }
       if ((jsonObj.get("UserAgent") != null && !jsonObj.get("UserAgent").isJsonNull()) && !jsonObj.get("UserAgent").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `UserAgent` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UserAgent").toString()));
@@ -968,9 +920,9 @@ public class LogLogMessage {
 
            @Override
            public LogLogMessage read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

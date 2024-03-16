@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * IdmACLSingleQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class IdmACLSingleQuery {
   public static final String SERIALIZED_NAME_ACTIONS = "Actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
@@ -62,7 +62,6 @@ public class IdmACLSingleQuery {
   }
 
   public IdmACLSingleQuery actions(List<IdmACLAction> actions) {
-    
     this.actions = actions;
     return this;
   }
@@ -80,11 +79,9 @@ public class IdmACLSingleQuery {
    * @return actions
   **/
   @javax.annotation.Nullable
-
   public List<IdmACLAction> getActions() {
     return actions;
   }
-
 
   public void setActions(List<IdmACLAction> actions) {
     this.actions = actions;
@@ -92,7 +89,6 @@ public class IdmACLSingleQuery {
 
 
   public IdmACLSingleQuery nodeIDs(List<String> nodeIDs) {
-    
     this.nodeIDs = nodeIDs;
     return this;
   }
@@ -110,11 +106,9 @@ public class IdmACLSingleQuery {
    * @return nodeIDs
   **/
   @javax.annotation.Nullable
-
   public List<String> getNodeIDs() {
     return nodeIDs;
   }
-
 
   public void setNodeIDs(List<String> nodeIDs) {
     this.nodeIDs = nodeIDs;
@@ -122,7 +116,6 @@ public class IdmACLSingleQuery {
 
 
   public IdmACLSingleQuery roleIDs(List<String> roleIDs) {
-    
     this.roleIDs = roleIDs;
     return this;
   }
@@ -140,11 +133,9 @@ public class IdmACLSingleQuery {
    * @return roleIDs
   **/
   @javax.annotation.Nullable
-
   public List<String> getRoleIDs() {
     return roleIDs;
   }
-
 
   public void setRoleIDs(List<String> roleIDs) {
     this.roleIDs = roleIDs;
@@ -152,7 +143,6 @@ public class IdmACLSingleQuery {
 
 
   public IdmACLSingleQuery workspaceIDs(List<String> workspaceIDs) {
-    
     this.workspaceIDs = workspaceIDs;
     return this;
   }
@@ -170,11 +160,9 @@ public class IdmACLSingleQuery {
    * @return workspaceIDs
   **/
   @javax.annotation.Nullable
-
   public List<String> getWorkspaceIDs() {
     return workspaceIDs;
   }
-
 
   public void setWorkspaceIDs(List<String> workspaceIDs) {
     this.workspaceIDs = workspaceIDs;
@@ -182,7 +170,6 @@ public class IdmACLSingleQuery {
 
 
   public IdmACLSingleQuery not(Boolean not) {
-    
     this.not = not;
     return this;
   }
@@ -192,11 +179,9 @@ public class IdmACLSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-
   public Boolean getNot() {
     return not;
   }
-
 
   public void setNot(Boolean not) {
     this.not = not;
@@ -267,25 +252,26 @@ public class IdmACLSingleQuery {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to IdmACLSingleQuery
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to IdmACLSingleQuery
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!IdmACLSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!IdmACLSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in IdmACLSingleQuery is not found in the empty JSON string", IdmACLSingleQuery.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!IdmACLSingleQuery.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmACLSingleQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmACLSingleQuery` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Actions") != null && !jsonObj.get("Actions").isJsonNull()) {
         JsonArray jsonArrayactions = jsonObj.getAsJsonArray("Actions");
         if (jsonArrayactions != null) {
@@ -296,20 +282,20 @@ public class IdmACLSingleQuery {
 
           // validate the optional field `Actions` (array)
           for (int i = 0; i < jsonArrayactions.size(); i++) {
-            IdmACLAction.validateJsonObject(jsonArrayactions.get(i).getAsJsonObject());
+            IdmACLAction.validateJsonElement(jsonArrayactions.get(i));
           };
         }
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("NodeIDs") != null && !jsonObj.get("NodeIDs").isJsonArray()) {
+      if (jsonObj.get("NodeIDs") != null && !jsonObj.get("NodeIDs").isJsonNull() && !jsonObj.get("NodeIDs").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `NodeIDs` to be an array in the JSON string but got `%s`", jsonObj.get("NodeIDs").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("RoleIDs") != null && !jsonObj.get("RoleIDs").isJsonArray()) {
+      if (jsonObj.get("RoleIDs") != null && !jsonObj.get("RoleIDs").isJsonNull() && !jsonObj.get("RoleIDs").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `RoleIDs` to be an array in the JSON string but got `%s`", jsonObj.get("RoleIDs").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("WorkspaceIDs") != null && !jsonObj.get("WorkspaceIDs").isJsonArray()) {
+      if (jsonObj.get("WorkspaceIDs") != null && !jsonObj.get("WorkspaceIDs").isJsonNull() && !jsonObj.get("WorkspaceIDs").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `WorkspaceIDs` to be an array in the JSON string but got `%s`", jsonObj.get("WorkspaceIDs").toString()));
       }
   }
@@ -334,9 +320,9 @@ public class IdmACLSingleQuery {
 
            @Override
            public IdmACLSingleQuery read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

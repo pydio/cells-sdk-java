@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * ActivityStreamActivitiesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class ActivityStreamActivitiesRequest {
   public static final String SERIALIZED_NAME_AS_DIGEST = "AsDigest";
   @SerializedName(SERIALIZED_NAME_AS_DIGEST)
@@ -79,7 +79,6 @@ public class ActivityStreamActivitiesRequest {
   }
 
   public ActivityStreamActivitiesRequest asDigest(Boolean asDigest) {
-    
     this.asDigest = asDigest;
     return this;
   }
@@ -89,11 +88,9 @@ public class ActivityStreamActivitiesRequest {
    * @return asDigest
   **/
   @javax.annotation.Nullable
-
   public Boolean getAsDigest() {
     return asDigest;
   }
-
 
   public void setAsDigest(Boolean asDigest) {
     this.asDigest = asDigest;
@@ -101,7 +98,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest boxName(String boxName) {
-    
     this.boxName = boxName;
     return this;
   }
@@ -111,11 +107,9 @@ public class ActivityStreamActivitiesRequest {
    * @return boxName
   **/
   @javax.annotation.Nullable
-
   public String getBoxName() {
     return boxName;
   }
-
 
   public void setBoxName(String boxName) {
     this.boxName = boxName;
@@ -123,7 +117,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest context(ActivityStreamContext context) {
-    
     this.context = context;
     return this;
   }
@@ -133,11 +126,9 @@ public class ActivityStreamActivitiesRequest {
    * @return context
   **/
   @javax.annotation.Nullable
-
   public ActivityStreamContext getContext() {
     return context;
   }
-
 
   public void setContext(ActivityStreamContext context) {
     this.context = context;
@@ -145,7 +136,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest contextData(String contextData) {
-    
     this.contextData = contextData;
     return this;
   }
@@ -155,11 +145,9 @@ public class ActivityStreamActivitiesRequest {
    * @return contextData
   **/
   @javax.annotation.Nullable
-
   public String getContextData() {
     return contextData;
   }
-
 
   public void setContextData(String contextData) {
     this.contextData = contextData;
@@ -167,7 +155,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest language(String language) {
-    
     this.language = language;
     return this;
   }
@@ -177,11 +164,9 @@ public class ActivityStreamActivitiesRequest {
    * @return language
   **/
   @javax.annotation.Nullable
-
   public String getLanguage() {
     return language;
   }
-
 
   public void setLanguage(String language) {
     this.language = language;
@@ -189,7 +174,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest limit(String limit) {
-    
     this.limit = limit;
     return this;
   }
@@ -199,11 +183,9 @@ public class ActivityStreamActivitiesRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-
   public String getLimit() {
     return limit;
   }
-
 
   public void setLimit(String limit) {
     this.limit = limit;
@@ -211,7 +193,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest offset(String offset) {
-    
     this.offset = offset;
     return this;
   }
@@ -221,11 +202,9 @@ public class ActivityStreamActivitiesRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-
   public String getOffset() {
     return offset;
   }
-
 
   public void setOffset(String offset) {
     this.offset = offset;
@@ -233,7 +212,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest pointOfView(ActivitySummaryPointOfView pointOfView) {
-    
     this.pointOfView = pointOfView;
     return this;
   }
@@ -243,11 +221,9 @@ public class ActivityStreamActivitiesRequest {
    * @return pointOfView
   **/
   @javax.annotation.Nullable
-
   public ActivitySummaryPointOfView getPointOfView() {
     return pointOfView;
   }
-
 
   public void setPointOfView(ActivitySummaryPointOfView pointOfView) {
     this.pointOfView = pointOfView;
@@ -255,7 +231,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest streamFilter(String streamFilter) {
-    
     this.streamFilter = streamFilter;
     return this;
   }
@@ -265,11 +240,9 @@ public class ActivityStreamActivitiesRequest {
    * @return streamFilter
   **/
   @javax.annotation.Nullable
-
   public String getStreamFilter() {
     return streamFilter;
   }
-
 
   public void setStreamFilter(String streamFilter) {
     this.streamFilter = streamFilter;
@@ -277,7 +250,6 @@ public class ActivityStreamActivitiesRequest {
 
 
   public ActivityStreamActivitiesRequest unreadCountOnly(Boolean unreadCountOnly) {
-    
     this.unreadCountOnly = unreadCountOnly;
     return this;
   }
@@ -287,11 +259,9 @@ public class ActivityStreamActivitiesRequest {
    * @return unreadCountOnly
   **/
   @javax.annotation.Nullable
-
   public Boolean getUnreadCountOnly() {
     return unreadCountOnly;
   }
-
 
   public void setUnreadCountOnly(Boolean unreadCountOnly) {
     this.unreadCountOnly = unreadCountOnly;
@@ -377,27 +347,32 @@ public class ActivityStreamActivitiesRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to ActivityStreamActivitiesRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to ActivityStreamActivitiesRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!ActivityStreamActivitiesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!ActivityStreamActivitiesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in ActivityStreamActivitiesRequest is not found in the empty JSON string", ActivityStreamActivitiesRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!ActivityStreamActivitiesRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivityStreamActivitiesRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ActivityStreamActivitiesRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("BoxName") != null && !jsonObj.get("BoxName").isJsonNull()) && !jsonObj.get("BoxName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `BoxName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("BoxName").toString()));
+      }
+      // validate the optional field `Context`
+      if (jsonObj.get("Context") != null && !jsonObj.get("Context").isJsonNull()) {
+        ActivityStreamContext.validateJsonElement(jsonObj.get("Context"));
       }
       if ((jsonObj.get("ContextData") != null && !jsonObj.get("ContextData").isJsonNull()) && !jsonObj.get("ContextData").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ContextData` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ContextData").toString()));
@@ -410,6 +385,10 @@ public class ActivityStreamActivitiesRequest {
       }
       if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
+      }
+      // validate the optional field `PointOfView`
+      if (jsonObj.get("PointOfView") != null && !jsonObj.get("PointOfView").isJsonNull()) {
+        ActivitySummaryPointOfView.validateJsonElement(jsonObj.get("PointOfView"));
       }
       if ((jsonObj.get("StreamFilter") != null && !jsonObj.get("StreamFilter").isJsonNull()) && !jsonObj.get("StreamFilter").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `StreamFilter` to be a primitive type in the JSON string but got `%s`", jsonObj.get("StreamFilter").toString()));
@@ -436,9 +415,9 @@ public class ActivityStreamActivitiesRequest {
 
            @Override
            public ActivityStreamActivitiesRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

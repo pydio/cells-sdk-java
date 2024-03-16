@@ -13,6 +13,7 @@
 
 package com.pydio.cells.openapi.model;
 
+import com.google.gson.JsonElement;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
@@ -85,6 +86,11 @@ public enum RegistryItemType {
       String value = jsonReader.nextString();
       return RegistryItemType.fromValue(value);
     }
+  }
+
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+    String value = jsonElement.getAsString();
+    RegistryItemType.fromValue(value);
   }
 }
 

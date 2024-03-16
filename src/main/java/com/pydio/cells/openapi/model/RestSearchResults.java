@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestSearchResults
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestSearchResults {
   public static final String SERIALIZED_NAME_FACETS = "Facets";
   @SerializedName(SERIALIZED_NAME_FACETS)
@@ -54,7 +54,6 @@ public class RestSearchResults {
   }
 
   public RestSearchResults facets(List<TreeSearchFacet> facets) {
-    
     this.facets = facets;
     return this;
   }
@@ -72,11 +71,9 @@ public class RestSearchResults {
    * @return facets
   **/
   @javax.annotation.Nullable
-
   public List<TreeSearchFacet> getFacets() {
     return facets;
   }
-
 
   public void setFacets(List<TreeSearchFacet> facets) {
     this.facets = facets;
@@ -84,7 +81,6 @@ public class RestSearchResults {
 
 
   public RestSearchResults results(List<TreeNode> results) {
-    
     this.results = results;
     return this;
   }
@@ -102,11 +98,9 @@ public class RestSearchResults {
    * @return results
   **/
   @javax.annotation.Nullable
-
   public List<TreeNode> getResults() {
     return results;
   }
-
 
   public void setResults(List<TreeNode> results) {
     this.results = results;
@@ -114,7 +108,6 @@ public class RestSearchResults {
 
 
   public RestSearchResults total(Integer total) {
-    
     this.total = total;
     return this;
   }
@@ -124,11 +117,9 @@ public class RestSearchResults {
    * @return total
   **/
   @javax.annotation.Nullable
-
   public Integer getTotal() {
     return total;
   }
-
 
   public void setTotal(Integer total) {
     this.total = total;
@@ -193,25 +184,26 @@ public class RestSearchResults {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestSearchResults
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestSearchResults
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestSearchResults.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestSearchResults.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestSearchResults is not found in the empty JSON string", RestSearchResults.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestSearchResults.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSearchResults` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSearchResults` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Facets") != null && !jsonObj.get("Facets").isJsonNull()) {
         JsonArray jsonArrayfacets = jsonObj.getAsJsonArray("Facets");
         if (jsonArrayfacets != null) {
@@ -222,7 +214,7 @@ public class RestSearchResults {
 
           // validate the optional field `Facets` (array)
           for (int i = 0; i < jsonArrayfacets.size(); i++) {
-            TreeSearchFacet.validateJsonObject(jsonArrayfacets.get(i).getAsJsonObject());
+            TreeSearchFacet.validateJsonElement(jsonArrayfacets.get(i));
           };
         }
       }
@@ -236,7 +228,7 @@ public class RestSearchResults {
 
           // validate the optional field `Results` (array)
           for (int i = 0; i < jsonArrayresults.size(); i++) {
-            TreeNode.validateJsonObject(jsonArrayresults.get(i).getAsJsonObject());
+            TreeNode.validateJsonElement(jsonArrayresults.get(i));
           };
         }
       }
@@ -262,9 +254,9 @@ public class RestSearchResults {
 
            @Override
            public RestSearchResults read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

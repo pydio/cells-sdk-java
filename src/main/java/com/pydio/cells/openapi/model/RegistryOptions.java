@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RegistryOptions
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RegistryOptions {
   public static final String SERIALIZED_NAME_ACTIONS = "actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
@@ -69,7 +69,6 @@ public class RegistryOptions {
   }
 
   public RegistryOptions actions(List<RegistryActionType> actions) {
-    
     this.actions = actions;
     return this;
   }
@@ -87,11 +86,9 @@ public class RegistryOptions {
    * @return actions
   **/
   @javax.annotation.Nullable
-
   public List<RegistryActionType> getActions() {
     return actions;
   }
-
 
   public void setActions(List<RegistryActionType> actions) {
     this.actions = actions;
@@ -99,7 +96,6 @@ public class RegistryOptions {
 
 
   public RegistryOptions ids(List<String> ids) {
-    
     this.ids = ids;
     return this;
   }
@@ -117,11 +113,9 @@ public class RegistryOptions {
    * @return ids
   **/
   @javax.annotation.Nullable
-
   public List<String> getIds() {
     return ids;
   }
-
 
   public void setIds(List<String> ids) {
     this.ids = ids;
@@ -129,7 +123,6 @@ public class RegistryOptions {
 
 
   public RegistryOptions metaName(String metaName) {
-    
     this.metaName = metaName;
     return this;
   }
@@ -139,11 +132,9 @@ public class RegistryOptions {
    * @return metaName
   **/
   @javax.annotation.Nullable
-
   public String getMetaName() {
     return metaName;
   }
-
 
   public void setMetaName(String metaName) {
     this.metaName = metaName;
@@ -151,7 +142,6 @@ public class RegistryOptions {
 
 
   public RegistryOptions metaValue(String metaValue) {
-    
     this.metaValue = metaValue;
     return this;
   }
@@ -161,11 +151,9 @@ public class RegistryOptions {
    * @return metaValue
   **/
   @javax.annotation.Nullable
-
   public String getMetaValue() {
     return metaValue;
   }
-
 
   public void setMetaValue(String metaValue) {
     this.metaValue = metaValue;
@@ -173,7 +161,6 @@ public class RegistryOptions {
 
 
   public RegistryOptions names(List<String> names) {
-    
     this.names = names;
     return this;
   }
@@ -191,11 +178,9 @@ public class RegistryOptions {
    * @return names
   **/
   @javax.annotation.Nullable
-
   public List<String> getNames() {
     return names;
   }
-
 
   public void setNames(List<String> names) {
     this.names = names;
@@ -203,7 +188,6 @@ public class RegistryOptions {
 
 
   public RegistryOptions ttl(String ttl) {
-    
     this.ttl = ttl;
     return this;
   }
@@ -213,11 +197,9 @@ public class RegistryOptions {
    * @return ttl
   **/
   @javax.annotation.Nullable
-
   public String getTtl() {
     return ttl;
   }
-
 
   public void setTtl(String ttl) {
     this.ttl = ttl;
@@ -225,7 +207,6 @@ public class RegistryOptions {
 
 
   public RegistryOptions types(List<RegistryItemType> types) {
-    
     this.types = types;
     return this;
   }
@@ -243,11 +224,9 @@ public class RegistryOptions {
    * @return types
   **/
   @javax.annotation.Nullable
-
   public List<RegistryItemType> getTypes() {
     return types;
   }
-
 
   public void setTypes(List<RegistryItemType> types) {
     this.types = types;
@@ -324,31 +303,32 @@ public class RegistryOptions {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RegistryOptions
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RegistryOptions
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RegistryOptions.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RegistryOptions.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RegistryOptions is not found in the empty JSON string", RegistryOptions.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RegistryOptions.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryOptions` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RegistryOptions` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // ensure the optional json data is an array if present
-      if (jsonObj.get("actions") != null && !jsonObj.get("actions").isJsonArray()) {
+      if (jsonObj.get("actions") != null && !jsonObj.get("actions").isJsonNull() && !jsonObj.get("actions").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `actions` to be an array in the JSON string but got `%s`", jsonObj.get("actions").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("ids") != null && !jsonObj.get("ids").isJsonArray()) {
+      if (jsonObj.get("ids") != null && !jsonObj.get("ids").isJsonNull() && !jsonObj.get("ids").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `ids` to be an array in the JSON string but got `%s`", jsonObj.get("ids").toString()));
       }
       if ((jsonObj.get("metaName") != null && !jsonObj.get("metaName").isJsonNull()) && !jsonObj.get("metaName").isJsonPrimitive()) {
@@ -358,14 +338,14 @@ public class RegistryOptions {
         throw new IllegalArgumentException(String.format("Expected the field `metaValue` to be a primitive type in the JSON string but got `%s`", jsonObj.get("metaValue").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("names") != null && !jsonObj.get("names").isJsonArray()) {
+      if (jsonObj.get("names") != null && !jsonObj.get("names").isJsonNull() && !jsonObj.get("names").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `names` to be an array in the JSON string but got `%s`", jsonObj.get("names").toString()));
       }
       if ((jsonObj.get("ttl") != null && !jsonObj.get("ttl").isJsonNull()) && !jsonObj.get("ttl").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ttl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ttl").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("types") != null && !jsonObj.get("types").isJsonArray()) {
+      if (jsonObj.get("types") != null && !jsonObj.get("types").isJsonNull() && !jsonObj.get("types").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `types` to be an array in the JSON string but got `%s`", jsonObj.get("types").toString()));
       }
   }
@@ -390,9 +370,9 @@ public class RegistryOptions {
 
            @Override
            public RegistryOptions read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

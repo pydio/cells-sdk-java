@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestUserStateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestUserStateResponse {
   public static final String SERIALIZED_NAME_WORKSPACES = "Workspaces";
   @SerializedName(SERIALIZED_NAME_WORKSPACES)
@@ -52,7 +51,6 @@ public class RestUserStateResponse {
   }
 
   public RestUserStateResponse workspaces(List<IdmWorkspace> workspaces) {
-    
     this.workspaces = workspaces;
     return this;
   }
@@ -70,11 +68,9 @@ public class RestUserStateResponse {
    * @return workspaces
   **/
   @javax.annotation.Nullable
-
   public List<IdmWorkspace> getWorkspaces() {
     return workspaces;
   }
-
 
   public void setWorkspaces(List<IdmWorkspace> workspaces) {
     this.workspaces = workspaces;
@@ -82,7 +78,6 @@ public class RestUserStateResponse {
 
 
   public RestUserStateResponse workspacesAccesses(Map<String, String> workspacesAccesses) {
-    
     this.workspacesAccesses = workspacesAccesses;
     return this;
   }
@@ -100,11 +95,9 @@ public class RestUserStateResponse {
    * @return workspacesAccesses
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getWorkspacesAccesses() {
     return workspacesAccesses;
   }
-
 
   public void setWorkspacesAccesses(Map<String, String> workspacesAccesses) {
     this.workspacesAccesses = workspacesAccesses;
@@ -166,25 +159,26 @@ public class RestUserStateResponse {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestUserStateResponse
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestUserStateResponse
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestUserStateResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestUserStateResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestUserStateResponse is not found in the empty JSON string", RestUserStateResponse.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestUserStateResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestUserStateResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestUserStateResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Workspaces") != null && !jsonObj.get("Workspaces").isJsonNull()) {
         JsonArray jsonArrayworkspaces = jsonObj.getAsJsonArray("Workspaces");
         if (jsonArrayworkspaces != null) {
@@ -195,7 +189,7 @@ public class RestUserStateResponse {
 
           // validate the optional field `Workspaces` (array)
           for (int i = 0; i < jsonArrayworkspaces.size(); i++) {
-            IdmWorkspace.validateJsonObject(jsonArrayworkspaces.get(i).getAsJsonObject());
+            IdmWorkspace.validateJsonElement(jsonArrayworkspaces.get(i));
           };
         }
       }
@@ -221,9 +215,9 @@ public class RestUserStateResponse {
 
            @Override
            public RestUserStateResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

@@ -28,14 +28,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * UpdateUpdateRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class UpdateUpdateRequest {
   public static final String SERIALIZED_NAME_CHANNEL = "Channel";
   @SerializedName(SERIALIZED_NAME_CHANNEL)
@@ -69,7 +68,6 @@ public class UpdateUpdateRequest {
   }
 
   public UpdateUpdateRequest channel(String channel) {
-    
     this.channel = channel;
     return this;
   }
@@ -79,11 +77,9 @@ public class UpdateUpdateRequest {
    * @return channel
   **/
   @javax.annotation.Nullable
-
   public String getChannel() {
     return channel;
   }
-
 
   public void setChannel(String channel) {
     this.channel = channel;
@@ -91,7 +87,6 @@ public class UpdateUpdateRequest {
 
 
   public UpdateUpdateRequest currentVersion(String currentVersion) {
-    
     this.currentVersion = currentVersion;
     return this;
   }
@@ -101,11 +96,9 @@ public class UpdateUpdateRequest {
    * @return currentVersion
   **/
   @javax.annotation.Nullable
-
   public String getCurrentVersion() {
     return currentVersion;
   }
-
 
   public void setCurrentVersion(String currentVersion) {
     this.currentVersion = currentVersion;
@@ -113,7 +106,6 @@ public class UpdateUpdateRequest {
 
 
   public UpdateUpdateRequest GOARCH(String GOARCH) {
-    
     this.GOARCH = GOARCH;
     return this;
   }
@@ -123,11 +115,9 @@ public class UpdateUpdateRequest {
    * @return GOARCH
   **/
   @javax.annotation.Nullable
-
   public String getGOARCH() {
     return GOARCH;
   }
-
 
   public void setGOARCH(String GOARCH) {
     this.GOARCH = GOARCH;
@@ -135,7 +125,6 @@ public class UpdateUpdateRequest {
 
 
   public UpdateUpdateRequest GOOS(String GOOS) {
-    
     this.GOOS = GOOS;
     return this;
   }
@@ -145,11 +134,9 @@ public class UpdateUpdateRequest {
    * @return GOOS
   **/
   @javax.annotation.Nullable
-
   public String getGOOS() {
     return GOOS;
   }
-
 
   public void setGOOS(String GOOS) {
     this.GOOS = GOOS;
@@ -157,7 +144,6 @@ public class UpdateUpdateRequest {
 
 
   public UpdateUpdateRequest licenseInfo(Map<String, String> licenseInfo) {
-    
     this.licenseInfo = licenseInfo;
     return this;
   }
@@ -175,11 +161,9 @@ public class UpdateUpdateRequest {
    * @return licenseInfo
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getLicenseInfo() {
     return licenseInfo;
   }
-
 
   public void setLicenseInfo(Map<String, String> licenseInfo) {
     this.licenseInfo = licenseInfo;
@@ -187,7 +171,6 @@ public class UpdateUpdateRequest {
 
 
   public UpdateUpdateRequest packageName(String packageName) {
-    
     this.packageName = packageName;
     return this;
   }
@@ -197,11 +180,9 @@ public class UpdateUpdateRequest {
    * @return packageName
   **/
   @javax.annotation.Nullable
-
   public String getPackageName() {
     return packageName;
   }
-
 
   public void setPackageName(String packageName) {
     this.packageName = packageName;
@@ -209,7 +190,6 @@ public class UpdateUpdateRequest {
 
 
   public UpdateUpdateRequest serviceName(String serviceName) {
-    
     this.serviceName = serviceName;
     return this;
   }
@@ -219,11 +199,9 @@ public class UpdateUpdateRequest {
    * @return serviceName
   **/
   @javax.annotation.Nullable
-
   public String getServiceName() {
     return serviceName;
   }
-
 
   public void setServiceName(String serviceName) {
     this.serviceName = serviceName;
@@ -300,25 +278,26 @@ public class UpdateUpdateRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to UpdateUpdateRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to UpdateUpdateRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!UpdateUpdateRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!UpdateUpdateRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in UpdateUpdateRequest is not found in the empty JSON string", UpdateUpdateRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!UpdateUpdateRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `UpdateUpdateRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `UpdateUpdateRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Channel") != null && !jsonObj.get("Channel").isJsonNull()) && !jsonObj.get("Channel").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Channel` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Channel").toString()));
       }
@@ -359,9 +338,9 @@ public class UpdateUpdateRequest {
 
            @Override
            public UpdateUpdateRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

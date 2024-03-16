@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestPutShareLinkRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestPutShareLinkRequest {
   public static final String SERIALIZED_NAME_CREATE_PASSWORD = "CreatePassword";
   @SerializedName(SERIALIZED_NAME_CREATE_PASSWORD)
@@ -59,7 +59,6 @@ public class RestPutShareLinkRequest {
   }
 
   public RestPutShareLinkRequest createPassword(String createPassword) {
-    
     this.createPassword = createPassword;
     return this;
   }
@@ -69,11 +68,9 @@ public class RestPutShareLinkRequest {
    * @return createPassword
   **/
   @javax.annotation.Nullable
-
   public String getCreatePassword() {
     return createPassword;
   }
-
 
   public void setCreatePassword(String createPassword) {
     this.createPassword = createPassword;
@@ -81,7 +78,6 @@ public class RestPutShareLinkRequest {
 
 
   public RestPutShareLinkRequest passwordEnabled(Boolean passwordEnabled) {
-    
     this.passwordEnabled = passwordEnabled;
     return this;
   }
@@ -91,11 +87,9 @@ public class RestPutShareLinkRequest {
    * @return passwordEnabled
   **/
   @javax.annotation.Nullable
-
   public Boolean getPasswordEnabled() {
     return passwordEnabled;
   }
-
 
   public void setPasswordEnabled(Boolean passwordEnabled) {
     this.passwordEnabled = passwordEnabled;
@@ -103,7 +97,6 @@ public class RestPutShareLinkRequest {
 
 
   public RestPutShareLinkRequest shareLink(RestShareLink shareLink) {
-    
     this.shareLink = shareLink;
     return this;
   }
@@ -113,11 +106,9 @@ public class RestPutShareLinkRequest {
    * @return shareLink
   **/
   @javax.annotation.Nullable
-
   public RestShareLink getShareLink() {
     return shareLink;
   }
-
 
   public void setShareLink(RestShareLink shareLink) {
     this.shareLink = shareLink;
@@ -125,7 +116,6 @@ public class RestPutShareLinkRequest {
 
 
   public RestPutShareLinkRequest updateCustomHash(String updateCustomHash) {
-    
     this.updateCustomHash = updateCustomHash;
     return this;
   }
@@ -135,11 +125,9 @@ public class RestPutShareLinkRequest {
    * @return updateCustomHash
   **/
   @javax.annotation.Nullable
-
   public String getUpdateCustomHash() {
     return updateCustomHash;
   }
-
 
   public void setUpdateCustomHash(String updateCustomHash) {
     this.updateCustomHash = updateCustomHash;
@@ -147,7 +135,6 @@ public class RestPutShareLinkRequest {
 
 
   public RestPutShareLinkRequest updatePassword(String updatePassword) {
-    
     this.updatePassword = updatePassword;
     return this;
   }
@@ -157,11 +144,9 @@ public class RestPutShareLinkRequest {
    * @return updatePassword
   **/
   @javax.annotation.Nullable
-
   public String getUpdatePassword() {
     return updatePassword;
   }
-
 
   public void setUpdatePassword(String updatePassword) {
     this.updatePassword = updatePassword;
@@ -232,31 +217,32 @@ public class RestPutShareLinkRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestPutShareLinkRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestPutShareLinkRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestPutShareLinkRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestPutShareLinkRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestPutShareLinkRequest is not found in the empty JSON string", RestPutShareLinkRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestPutShareLinkRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestPutShareLinkRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestPutShareLinkRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("CreatePassword") != null && !jsonObj.get("CreatePassword").isJsonNull()) && !jsonObj.get("CreatePassword").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `CreatePassword` to be a primitive type in the JSON string but got `%s`", jsonObj.get("CreatePassword").toString()));
       }
       // validate the optional field `ShareLink`
       if (jsonObj.get("ShareLink") != null && !jsonObj.get("ShareLink").isJsonNull()) {
-        RestShareLink.validateJsonObject(jsonObj.getAsJsonObject("ShareLink"));
+        RestShareLink.validateJsonElement(jsonObj.get("ShareLink"));
       }
       if ((jsonObj.get("UpdateCustomHash") != null && !jsonObj.get("UpdateCustomHash").isJsonNull()) && !jsonObj.get("UpdateCustomHash").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `UpdateCustomHash` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UpdateCustomHash").toString()));
@@ -286,9 +272,9 @@ public class RestPutShareLinkRequest {
 
            @Override
            public RestPutShareLinkRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

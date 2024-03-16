@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * TreeQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class TreeQuery {
   public static final String SERIALIZED_NAME_CONTENT = "Content";
   @SerializedName(SERIALIZED_NAME_CONTENT)
@@ -113,7 +113,6 @@ public class TreeQuery {
   }
 
   public TreeQuery content(String content) {
-    
     this.content = content;
     return this;
   }
@@ -123,11 +122,9 @@ public class TreeQuery {
    * @return content
   **/
   @javax.annotation.Nullable
-
   public String getContent() {
     return content;
   }
-
 
   public void setContent(String content) {
     this.content = content;
@@ -135,7 +132,6 @@ public class TreeQuery {
 
 
   public TreeQuery durationDate(String durationDate) {
-    
     this.durationDate = durationDate;
     return this;
   }
@@ -145,11 +141,9 @@ public class TreeQuery {
    * @return durationDate
   **/
   @javax.annotation.Nullable
-
   public String getDurationDate() {
     return durationDate;
   }
-
 
   public void setDurationDate(String durationDate) {
     this.durationDate = durationDate;
@@ -157,7 +151,6 @@ public class TreeQuery {
 
 
   public TreeQuery etag(String etag) {
-    
     this.etag = etag;
     return this;
   }
@@ -167,11 +160,9 @@ public class TreeQuery {
    * @return etag
   **/
   @javax.annotation.Nullable
-
   public String getEtag() {
     return etag;
   }
-
 
   public void setEtag(String etag) {
     this.etag = etag;
@@ -179,7 +170,6 @@ public class TreeQuery {
 
 
   public TreeQuery extension(String extension) {
-    
     this.extension = extension;
     return this;
   }
@@ -189,11 +179,9 @@ public class TreeQuery {
    * @return extension
   **/
   @javax.annotation.Nullable
-
   public String getExtension() {
     return extension;
   }
-
 
   public void setExtension(String extension) {
     this.extension = extension;
@@ -201,7 +189,6 @@ public class TreeQuery {
 
 
   public TreeQuery fileName(String fileName) {
-    
     this.fileName = fileName;
     return this;
   }
@@ -211,11 +198,9 @@ public class TreeQuery {
    * @return fileName
   **/
   @javax.annotation.Nullable
-
   public String getFileName() {
     return fileName;
   }
-
 
   public void setFileName(String fileName) {
     this.fileName = fileName;
@@ -223,7 +208,6 @@ public class TreeQuery {
 
 
   public TreeQuery fileNameOrContent(String fileNameOrContent) {
-    
     this.fileNameOrContent = fileNameOrContent;
     return this;
   }
@@ -233,11 +217,9 @@ public class TreeQuery {
    * @return fileNameOrContent
   **/
   @javax.annotation.Nullable
-
   public String getFileNameOrContent() {
     return fileNameOrContent;
   }
-
 
   public void setFileNameOrContent(String fileNameOrContent) {
     this.fileNameOrContent = fileNameOrContent;
@@ -245,7 +227,6 @@ public class TreeQuery {
 
 
   public TreeQuery freeString(String freeString) {
-    
     this.freeString = freeString;
     return this;
   }
@@ -255,11 +236,9 @@ public class TreeQuery {
    * @return freeString
   **/
   @javax.annotation.Nullable
-
   public String getFreeString() {
     return freeString;
   }
-
 
   public void setFreeString(String freeString) {
     this.freeString = freeString;
@@ -267,7 +246,6 @@ public class TreeQuery {
 
 
   public TreeQuery geoQuery(TreeGeoQuery geoQuery) {
-    
     this.geoQuery = geoQuery;
     return this;
   }
@@ -277,11 +255,9 @@ public class TreeQuery {
    * @return geoQuery
   **/
   @javax.annotation.Nullable
-
   public TreeGeoQuery getGeoQuery() {
     return geoQuery;
   }
-
 
   public void setGeoQuery(TreeGeoQuery geoQuery) {
     this.geoQuery = geoQuery;
@@ -289,7 +265,6 @@ public class TreeQuery {
 
 
   public TreeQuery maxDate(String maxDate) {
-    
     this.maxDate = maxDate;
     return this;
   }
@@ -299,11 +274,9 @@ public class TreeQuery {
    * @return maxDate
   **/
   @javax.annotation.Nullable
-
   public String getMaxDate() {
     return maxDate;
   }
-
 
   public void setMaxDate(String maxDate) {
     this.maxDate = maxDate;
@@ -311,7 +284,6 @@ public class TreeQuery {
 
 
   public TreeQuery maxSize(String maxSize) {
-    
     this.maxSize = maxSize;
     return this;
   }
@@ -321,11 +293,9 @@ public class TreeQuery {
    * @return maxSize
   **/
   @javax.annotation.Nullable
-
   public String getMaxSize() {
     return maxSize;
   }
-
 
   public void setMaxSize(String maxSize) {
     this.maxSize = maxSize;
@@ -333,7 +303,6 @@ public class TreeQuery {
 
 
   public TreeQuery minDate(String minDate) {
-    
     this.minDate = minDate;
     return this;
   }
@@ -343,11 +312,9 @@ public class TreeQuery {
    * @return minDate
   **/
   @javax.annotation.Nullable
-
   public String getMinDate() {
     return minDate;
   }
-
 
   public void setMinDate(String minDate) {
     this.minDate = minDate;
@@ -355,7 +322,6 @@ public class TreeQuery {
 
 
   public TreeQuery minSize(String minSize) {
-    
     this.minSize = minSize;
     return this;
   }
@@ -365,11 +331,9 @@ public class TreeQuery {
    * @return minSize
   **/
   @javax.annotation.Nullable
-
   public String getMinSize() {
     return minSize;
   }
-
 
   public void setMinSize(String minSize) {
     this.minSize = minSize;
@@ -377,7 +341,6 @@ public class TreeQuery {
 
 
   public TreeQuery not(Boolean not) {
-    
     this.not = not;
     return this;
   }
@@ -387,11 +350,9 @@ public class TreeQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-
   public Boolean getNot() {
     return not;
   }
-
 
   public void setNot(Boolean not) {
     this.not = not;
@@ -399,7 +360,6 @@ public class TreeQuery {
 
 
   public TreeQuery pathDepth(Integer pathDepth) {
-    
     this.pathDepth = pathDepth;
     return this;
   }
@@ -409,11 +369,9 @@ public class TreeQuery {
    * @return pathDepth
   **/
   @javax.annotation.Nullable
-
   public Integer getPathDepth() {
     return pathDepth;
   }
-
 
   public void setPathDepth(Integer pathDepth) {
     this.pathDepth = pathDepth;
@@ -421,7 +379,6 @@ public class TreeQuery {
 
 
   public TreeQuery pathPrefix(List<String> pathPrefix) {
-    
     this.pathPrefix = pathPrefix;
     return this;
   }
@@ -439,11 +396,9 @@ public class TreeQuery {
    * @return pathPrefix
   **/
   @javax.annotation.Nullable
-
   public List<String> getPathPrefix() {
     return pathPrefix;
   }
-
 
   public void setPathPrefix(List<String> pathPrefix) {
     this.pathPrefix = pathPrefix;
@@ -451,7 +406,6 @@ public class TreeQuery {
 
 
   public TreeQuery paths(List<String> paths) {
-    
     this.paths = paths;
     return this;
   }
@@ -469,11 +423,9 @@ public class TreeQuery {
    * @return paths
   **/
   @javax.annotation.Nullable
-
   public List<String> getPaths() {
     return paths;
   }
-
 
   public void setPaths(List<String> paths) {
     this.paths = paths;
@@ -481,7 +433,6 @@ public class TreeQuery {
 
 
   public TreeQuery type(TreeNodeType type) {
-    
     this.type = type;
     return this;
   }
@@ -491,11 +442,9 @@ public class TreeQuery {
    * @return type
   **/
   @javax.annotation.Nullable
-
   public TreeNodeType getType() {
     return type;
   }
-
 
   public void setType(TreeNodeType type) {
     this.type = type;
@@ -503,7 +452,6 @@ public class TreeQuery {
 
 
   public TreeQuery uuIDs(List<String> uuIDs) {
-    
     this.uuIDs = uuIDs;
     return this;
   }
@@ -521,11 +469,9 @@ public class TreeQuery {
    * @return uuIDs
   **/
   @javax.annotation.Nullable
-
   public List<String> getUuIDs() {
     return uuIDs;
   }
-
 
   public void setUuIDs(List<String> uuIDs) {
     this.uuIDs = uuIDs;
@@ -635,25 +581,26 @@ public class TreeQuery {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to TreeQuery
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to TreeQuery
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!TreeQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!TreeQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in TreeQuery is not found in the empty JSON string", TreeQuery.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!TreeQuery.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeQuery` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Content") != null && !jsonObj.get("Content").isJsonNull()) && !jsonObj.get("Content").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Content` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Content").toString()));
       }
@@ -677,7 +624,7 @@ public class TreeQuery {
       }
       // validate the optional field `GeoQuery`
       if (jsonObj.get("GeoQuery") != null && !jsonObj.get("GeoQuery").isJsonNull()) {
-        TreeGeoQuery.validateJsonObject(jsonObj.getAsJsonObject("GeoQuery"));
+        TreeGeoQuery.validateJsonElement(jsonObj.get("GeoQuery"));
       }
       if ((jsonObj.get("MaxDate") != null && !jsonObj.get("MaxDate").isJsonNull()) && !jsonObj.get("MaxDate").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `MaxDate` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MaxDate").toString()));
@@ -692,15 +639,19 @@ public class TreeQuery {
         throw new IllegalArgumentException(String.format("Expected the field `MinSize` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MinSize").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("PathPrefix") != null && !jsonObj.get("PathPrefix").isJsonArray()) {
+      if (jsonObj.get("PathPrefix") != null && !jsonObj.get("PathPrefix").isJsonNull() && !jsonObj.get("PathPrefix").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `PathPrefix` to be an array in the JSON string but got `%s`", jsonObj.get("PathPrefix").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Paths") != null && !jsonObj.get("Paths").isJsonArray()) {
+      if (jsonObj.get("Paths") != null && !jsonObj.get("Paths").isJsonNull() && !jsonObj.get("Paths").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Paths` to be an array in the JSON string but got `%s`", jsonObj.get("Paths").toString()));
       }
+      // validate the optional field `Type`
+      if (jsonObj.get("Type") != null && !jsonObj.get("Type").isJsonNull()) {
+        TreeNodeType.validateJsonElement(jsonObj.get("Type"));
+      }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("UUIDs") != null && !jsonObj.get("UUIDs").isJsonArray()) {
+      if (jsonObj.get("UUIDs") != null && !jsonObj.get("UUIDs").isJsonNull() && !jsonObj.get("UUIDs").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `UUIDs` to be an array in the JSON string but got `%s`", jsonObj.get("UUIDs").toString()));
       }
   }
@@ -725,9 +676,9 @@ public class TreeQuery {
 
            @Override
            public TreeQuery read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

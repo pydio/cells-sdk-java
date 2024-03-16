@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestTemplate
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestTemplate {
   public static final String SERIALIZED_NAME_EDITABLE = "Editable";
   @SerializedName(SERIALIZED_NAME_EDITABLE)
@@ -62,7 +62,6 @@ public class RestTemplate {
   }
 
   public RestTemplate editable(Boolean editable) {
-    
     this.editable = editable;
     return this;
   }
@@ -72,11 +71,9 @@ public class RestTemplate {
    * @return editable
   **/
   @javax.annotation.Nullable
-
   public Boolean getEditable() {
     return editable;
   }
-
 
   public void setEditable(Boolean editable) {
     this.editable = editable;
@@ -84,7 +81,6 @@ public class RestTemplate {
 
 
   public RestTemplate label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -94,11 +90,9 @@ public class RestTemplate {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -106,7 +100,6 @@ public class RestTemplate {
 
 
   public RestTemplate node(RestTemplateNode node) {
-    
     this.node = node;
     return this;
   }
@@ -116,11 +109,9 @@ public class RestTemplate {
    * @return node
   **/
   @javax.annotation.Nullable
-
   public RestTemplateNode getNode() {
     return node;
   }
-
 
   public void setNode(RestTemplateNode node) {
     this.node = node;
@@ -128,7 +119,6 @@ public class RestTemplate {
 
 
   public RestTemplate policies(List<ServiceResourcePolicy> policies) {
-    
     this.policies = policies;
     return this;
   }
@@ -146,11 +136,9 @@ public class RestTemplate {
    * @return policies
   **/
   @javax.annotation.Nullable
-
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
   }
-
 
   public void setPolicies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
@@ -158,7 +146,6 @@ public class RestTemplate {
 
 
   public RestTemplate UUID(String UUID) {
-    
     this.UUID = UUID;
     return this;
   }
@@ -168,11 +155,9 @@ public class RestTemplate {
    * @return UUID
   **/
   @javax.annotation.Nullable
-
   public String getUUID() {
     return UUID;
   }
-
 
   public void setUUID(String UUID) {
     this.UUID = UUID;
@@ -243,31 +228,32 @@ public class RestTemplate {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestTemplate
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestTemplate
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestTemplate.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestTemplate.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestTemplate is not found in the empty JSON string", RestTemplate.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestTemplate.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestTemplate` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestTemplate` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
       }
       // validate the optional field `Node`
       if (jsonObj.get("Node") != null && !jsonObj.get("Node").isJsonNull()) {
-        RestTemplateNode.validateJsonObject(jsonObj.getAsJsonObject("Node"));
+        RestTemplateNode.validateJsonElement(jsonObj.get("Node"));
       }
       if (jsonObj.get("Policies") != null && !jsonObj.get("Policies").isJsonNull()) {
         JsonArray jsonArraypolicies = jsonObj.getAsJsonArray("Policies");
@@ -279,7 +265,7 @@ public class RestTemplate {
 
           // validate the optional field `Policies` (array)
           for (int i = 0; i < jsonArraypolicies.size(); i++) {
-            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+            ServiceResourcePolicy.validateJsonElement(jsonArraypolicies.get(i));
           };
         }
       }
@@ -308,9 +294,9 @@ public class RestTemplate {
 
            @Override
            public RestTemplate read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

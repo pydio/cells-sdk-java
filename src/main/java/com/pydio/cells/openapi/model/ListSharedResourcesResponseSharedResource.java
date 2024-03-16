@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * ListSharedResourcesResponseSharedResource
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class ListSharedResourcesResponseSharedResource {
   public static final String SERIALIZED_NAME_CELLS = "Cells";
   @SerializedName(SERIALIZED_NAME_CELLS)
@@ -54,7 +54,6 @@ public class ListSharedResourcesResponseSharedResource {
   }
 
   public ListSharedResourcesResponseSharedResource cells(List<RestCell> cells) {
-    
     this.cells = cells;
     return this;
   }
@@ -72,11 +71,9 @@ public class ListSharedResourcesResponseSharedResource {
    * @return cells
   **/
   @javax.annotation.Nullable
-
   public List<RestCell> getCells() {
     return cells;
   }
-
 
   public void setCells(List<RestCell> cells) {
     this.cells = cells;
@@ -84,7 +81,6 @@ public class ListSharedResourcesResponseSharedResource {
 
 
   public ListSharedResourcesResponseSharedResource link(RestShareLink link) {
-    
     this.link = link;
     return this;
   }
@@ -94,11 +90,9 @@ public class ListSharedResourcesResponseSharedResource {
    * @return link
   **/
   @javax.annotation.Nullable
-
   public RestShareLink getLink() {
     return link;
   }
-
 
   public void setLink(RestShareLink link) {
     this.link = link;
@@ -106,7 +100,6 @@ public class ListSharedResourcesResponseSharedResource {
 
 
   public ListSharedResourcesResponseSharedResource node(TreeNode node) {
-    
     this.node = node;
     return this;
   }
@@ -116,11 +109,9 @@ public class ListSharedResourcesResponseSharedResource {
    * @return node
   **/
   @javax.annotation.Nullable
-
   public TreeNode getNode() {
     return node;
   }
-
 
   public void setNode(TreeNode node) {
     this.node = node;
@@ -185,25 +176,26 @@ public class ListSharedResourcesResponseSharedResource {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to ListSharedResourcesResponseSharedResource
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to ListSharedResourcesResponseSharedResource
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!ListSharedResourcesResponseSharedResource.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!ListSharedResourcesResponseSharedResource.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in ListSharedResourcesResponseSharedResource is not found in the empty JSON string", ListSharedResourcesResponseSharedResource.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!ListSharedResourcesResponseSharedResource.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ListSharedResourcesResponseSharedResource` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ListSharedResourcesResponseSharedResource` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Cells") != null && !jsonObj.get("Cells").isJsonNull()) {
         JsonArray jsonArraycells = jsonObj.getAsJsonArray("Cells");
         if (jsonArraycells != null) {
@@ -214,17 +206,17 @@ public class ListSharedResourcesResponseSharedResource {
 
           // validate the optional field `Cells` (array)
           for (int i = 0; i < jsonArraycells.size(); i++) {
-            RestCell.validateJsonObject(jsonArraycells.get(i).getAsJsonObject());
+            RestCell.validateJsonElement(jsonArraycells.get(i));
           };
         }
       }
       // validate the optional field `Link`
       if (jsonObj.get("Link") != null && !jsonObj.get("Link").isJsonNull()) {
-        RestShareLink.validateJsonObject(jsonObj.getAsJsonObject("Link"));
+        RestShareLink.validateJsonElement(jsonObj.get("Link"));
       }
       // validate the optional field `Node`
       if (jsonObj.get("Node") != null && !jsonObj.get("Node").isJsonNull()) {
-        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Node"));
+        TreeNode.validateJsonElement(jsonObj.get("Node"));
       }
   }
 
@@ -248,9 +240,9 @@ public class ListSharedResourcesResponseSharedResource {
 
            @Override
            public ListSharedResourcesResponseSharedResource read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

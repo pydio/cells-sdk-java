@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * JobsActionMessage
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class JobsActionMessage {
   public static final String SERIALIZED_NAME_ACLS = "Acls";
   @SerializedName(SERIALIZED_NAME_ACLS)
@@ -78,7 +78,6 @@ public class JobsActionMessage {
   }
 
   public JobsActionMessage acls(List<IdmACL> acls) {
-    
     this.acls = acls;
     return this;
   }
@@ -96,11 +95,9 @@ public class JobsActionMessage {
    * @return acls
   **/
   @javax.annotation.Nullable
-
   public List<IdmACL> getAcls() {
     return acls;
   }
-
 
   public void setAcls(List<IdmACL> acls) {
     this.acls = acls;
@@ -108,7 +105,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage activities(List<ActivityObject> activities) {
-    
     this.activities = activities;
     return this;
   }
@@ -126,11 +122,9 @@ public class JobsActionMessage {
    * @return activities
   **/
   @javax.annotation.Nullable
-
   public List<ActivityObject> getActivities() {
     return activities;
   }
-
 
   public void setActivities(List<ActivityObject> activities) {
     this.activities = activities;
@@ -138,7 +132,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage dataSources(List<ObjectDataSource> dataSources) {
-    
     this.dataSources = dataSources;
     return this;
   }
@@ -156,11 +149,9 @@ public class JobsActionMessage {
    * @return dataSources
   **/
   @javax.annotation.Nullable
-
   public List<ObjectDataSource> getDataSources() {
     return dataSources;
   }
-
 
   public void setDataSources(List<ObjectDataSource> dataSources) {
     this.dataSources = dataSources;
@@ -168,7 +159,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage event(ProtobufAny event) {
-    
     this.event = event;
     return this;
   }
@@ -178,11 +168,9 @@ public class JobsActionMessage {
    * @return event
   **/
   @javax.annotation.Nullable
-
   public ProtobufAny getEvent() {
     return event;
   }
-
 
   public void setEvent(ProtobufAny event) {
     this.event = event;
@@ -190,7 +178,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage nodes(List<TreeNode> nodes) {
-    
     this.nodes = nodes;
     return this;
   }
@@ -208,11 +195,9 @@ public class JobsActionMessage {
    * @return nodes
   **/
   @javax.annotation.Nullable
-
   public List<TreeNode> getNodes() {
     return nodes;
   }
-
 
   public void setNodes(List<TreeNode> nodes) {
     this.nodes = nodes;
@@ -220,7 +205,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage outputChain(List<JobsActionOutput> outputChain) {
-    
     this.outputChain = outputChain;
     return this;
   }
@@ -238,11 +222,9 @@ public class JobsActionMessage {
    * @return outputChain
   **/
   @javax.annotation.Nullable
-
   public List<JobsActionOutput> getOutputChain() {
     return outputChain;
   }
-
 
   public void setOutputChain(List<JobsActionOutput> outputChain) {
     this.outputChain = outputChain;
@@ -250,7 +232,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage roles(List<IdmRole> roles) {
-    
     this.roles = roles;
     return this;
   }
@@ -268,11 +249,9 @@ public class JobsActionMessage {
    * @return roles
   **/
   @javax.annotation.Nullable
-
   public List<IdmRole> getRoles() {
     return roles;
   }
-
 
   public void setRoles(List<IdmRole> roles) {
     this.roles = roles;
@@ -280,7 +259,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage users(List<IdmUser> users) {
-    
     this.users = users;
     return this;
   }
@@ -298,11 +276,9 @@ public class JobsActionMessage {
    * @return users
   **/
   @javax.annotation.Nullable
-
   public List<IdmUser> getUsers() {
     return users;
   }
-
 
   public void setUsers(List<IdmUser> users) {
     this.users = users;
@@ -310,7 +286,6 @@ public class JobsActionMessage {
 
 
   public JobsActionMessage workspaces(List<IdmWorkspace> workspaces) {
-    
     this.workspaces = workspaces;
     return this;
   }
@@ -328,11 +303,9 @@ public class JobsActionMessage {
    * @return workspaces
   **/
   @javax.annotation.Nullable
-
   public List<IdmWorkspace> getWorkspaces() {
     return workspaces;
   }
-
 
   public void setWorkspaces(List<IdmWorkspace> workspaces) {
     this.workspaces = workspaces;
@@ -415,25 +388,26 @@ public class JobsActionMessage {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JobsActionMessage
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to JobsActionMessage
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!JobsActionMessage.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!JobsActionMessage.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in JobsActionMessage is not found in the empty JSON string", JobsActionMessage.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!JobsActionMessage.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsActionMessage` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsActionMessage` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Acls") != null && !jsonObj.get("Acls").isJsonNull()) {
         JsonArray jsonArrayacls = jsonObj.getAsJsonArray("Acls");
         if (jsonArrayacls != null) {
@@ -444,7 +418,7 @@ public class JobsActionMessage {
 
           // validate the optional field `Acls` (array)
           for (int i = 0; i < jsonArrayacls.size(); i++) {
-            IdmACL.validateJsonObject(jsonArrayacls.get(i).getAsJsonObject());
+            IdmACL.validateJsonElement(jsonArrayacls.get(i));
           };
         }
       }
@@ -458,7 +432,7 @@ public class JobsActionMessage {
 
           // validate the optional field `Activities` (array)
           for (int i = 0; i < jsonArrayactivities.size(); i++) {
-            ActivityObject.validateJsonObject(jsonArrayactivities.get(i).getAsJsonObject());
+            ActivityObject.validateJsonElement(jsonArrayactivities.get(i));
           };
         }
       }
@@ -472,7 +446,7 @@ public class JobsActionMessage {
 
           // validate the optional field `DataSources` (array)
           for (int i = 0; i < jsonArraydataSources.size(); i++) {
-            ObjectDataSource.validateJsonObject(jsonArraydataSources.get(i).getAsJsonObject());
+            ObjectDataSource.validateJsonElement(jsonArraydataSources.get(i));
           };
         }
       }
@@ -486,7 +460,7 @@ public class JobsActionMessage {
 
           // validate the optional field `Nodes` (array)
           for (int i = 0; i < jsonArraynodes.size(); i++) {
-            TreeNode.validateJsonObject(jsonArraynodes.get(i).getAsJsonObject());
+            TreeNode.validateJsonElement(jsonArraynodes.get(i));
           };
         }
       }
@@ -500,7 +474,7 @@ public class JobsActionMessage {
 
           // validate the optional field `OutputChain` (array)
           for (int i = 0; i < jsonArrayoutputChain.size(); i++) {
-            JobsActionOutput.validateJsonObject(jsonArrayoutputChain.get(i).getAsJsonObject());
+            JobsActionOutput.validateJsonElement(jsonArrayoutputChain.get(i));
           };
         }
       }
@@ -514,7 +488,7 @@ public class JobsActionMessage {
 
           // validate the optional field `Roles` (array)
           for (int i = 0; i < jsonArrayroles.size(); i++) {
-            IdmRole.validateJsonObject(jsonArrayroles.get(i).getAsJsonObject());
+            IdmRole.validateJsonElement(jsonArrayroles.get(i));
           };
         }
       }
@@ -528,7 +502,7 @@ public class JobsActionMessage {
 
           // validate the optional field `Users` (array)
           for (int i = 0; i < jsonArrayusers.size(); i++) {
-            IdmUser.validateJsonObject(jsonArrayusers.get(i).getAsJsonObject());
+            IdmUser.validateJsonElement(jsonArrayusers.get(i));
           };
         }
       }
@@ -542,7 +516,7 @@ public class JobsActionMessage {
 
           // validate the optional field `Workspaces` (array)
           for (int i = 0; i < jsonArrayworkspaces.size(); i++) {
-            IdmWorkspace.validateJsonObject(jsonArrayworkspaces.get(i).getAsJsonObject());
+            IdmWorkspace.validateJsonElement(jsonArrayworkspaces.get(i));
           };
         }
       }
@@ -568,9 +542,9 @@ public class JobsActionMessage {
 
            @Override
            public JobsActionMessage read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

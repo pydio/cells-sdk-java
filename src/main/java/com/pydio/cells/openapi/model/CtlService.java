@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * CtlService
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class CtlService {
   public static final String SERIALIZED_NAME_CONTROLLABLE = "Controllable";
   @SerializedName(SERIALIZED_NAME_CONTROLLABLE)
@@ -76,7 +75,6 @@ public class CtlService {
   }
 
   public CtlService controllable(Boolean controllable) {
-    
     this.controllable = controllable;
     return this;
   }
@@ -86,11 +84,9 @@ public class CtlService {
    * @return controllable
   **/
   @javax.annotation.Nullable
-
   public Boolean getControllable() {
     return controllable;
   }
-
 
   public void setControllable(Boolean controllable) {
     this.controllable = controllable;
@@ -98,7 +94,6 @@ public class CtlService {
 
 
   public CtlService description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -108,11 +103,9 @@ public class CtlService {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -120,7 +113,6 @@ public class CtlService {
 
 
   public CtlService metadata(Map<String, String> metadata) {
-    
     this.metadata = metadata;
     return this;
   }
@@ -138,11 +130,9 @@ public class CtlService {
    * @return metadata
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getMetadata() {
     return metadata;
   }
-
 
   public void setMetadata(Map<String, String> metadata) {
     this.metadata = metadata;
@@ -150,7 +140,6 @@ public class CtlService {
 
 
   public CtlService name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -160,11 +149,9 @@ public class CtlService {
    * @return name
   **/
   @javax.annotation.Nullable
-
   public String getName() {
     return name;
   }
-
 
   public void setName(String name) {
     this.name = name;
@@ -172,7 +159,6 @@ public class CtlService {
 
 
   public CtlService runningPeers(List<CtlPeer> runningPeers) {
-    
     this.runningPeers = runningPeers;
     return this;
   }
@@ -190,11 +176,9 @@ public class CtlService {
    * @return runningPeers
   **/
   @javax.annotation.Nullable
-
   public List<CtlPeer> getRunningPeers() {
     return runningPeers;
   }
-
 
   public void setRunningPeers(List<CtlPeer> runningPeers) {
     this.runningPeers = runningPeers;
@@ -202,7 +186,6 @@ public class CtlService {
 
 
   public CtlService status(CtlServiceStatus status) {
-    
     this.status = status;
     return this;
   }
@@ -212,11 +195,9 @@ public class CtlService {
    * @return status
   **/
   @javax.annotation.Nullable
-
   public CtlServiceStatus getStatus() {
     return status;
   }
-
 
   public void setStatus(CtlServiceStatus status) {
     this.status = status;
@@ -224,7 +205,6 @@ public class CtlService {
 
 
   public CtlService tag(String tag) {
-    
     this.tag = tag;
     return this;
   }
@@ -234,11 +214,9 @@ public class CtlService {
    * @return tag
   **/
   @javax.annotation.Nullable
-
   public String getTag() {
     return tag;
   }
-
 
   public void setTag(String tag) {
     this.tag = tag;
@@ -246,7 +224,6 @@ public class CtlService {
 
 
   public CtlService version(String version) {
-    
     this.version = version;
     return this;
   }
@@ -256,11 +233,9 @@ public class CtlService {
    * @return version
   **/
   @javax.annotation.Nullable
-
   public String getVersion() {
     return version;
   }
-
 
   public void setVersion(String version) {
     this.version = version;
@@ -340,25 +315,26 @@ public class CtlService {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to CtlService
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to CtlService
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!CtlService.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!CtlService.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in CtlService is not found in the empty JSON string", CtlService.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!CtlService.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `CtlService` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `CtlService` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
       }
@@ -375,9 +351,13 @@ public class CtlService {
 
           // validate the optional field `RunningPeers` (array)
           for (int i = 0; i < jsonArrayrunningPeers.size(); i++) {
-            CtlPeer.validateJsonObject(jsonArrayrunningPeers.get(i).getAsJsonObject());
+            CtlPeer.validateJsonElement(jsonArrayrunningPeers.get(i));
           };
         }
+      }
+      // validate the optional field `Status`
+      if (jsonObj.get("Status") != null && !jsonObj.get("Status").isJsonNull()) {
+        CtlServiceStatus.validateJsonElement(jsonObj.get("Status"));
       }
       if ((jsonObj.get("Tag") != null && !jsonObj.get("Tag").isJsonNull()) && !jsonObj.get("Tag").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Tag` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Tag").toString()));
@@ -407,9 +387,9 @@ public class CtlService {
 
            @Override
            public CtlService read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

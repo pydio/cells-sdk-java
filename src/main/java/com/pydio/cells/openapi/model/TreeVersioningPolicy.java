@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * TreeVersioningPolicy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class TreeVersioningPolicy {
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -82,7 +82,6 @@ public class TreeVersioningPolicy {
   }
 
   public TreeVersioningPolicy description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -92,11 +91,9 @@ public class TreeVersioningPolicy {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -104,7 +101,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy ignoreFilesGreaterThan(String ignoreFilesGreaterThan) {
-    
     this.ignoreFilesGreaterThan = ignoreFilesGreaterThan;
     return this;
   }
@@ -114,11 +110,9 @@ public class TreeVersioningPolicy {
    * @return ignoreFilesGreaterThan
   **/
   @javax.annotation.Nullable
-
   public String getIgnoreFilesGreaterThan() {
     return ignoreFilesGreaterThan;
   }
-
 
   public void setIgnoreFilesGreaterThan(String ignoreFilesGreaterThan) {
     this.ignoreFilesGreaterThan = ignoreFilesGreaterThan;
@@ -126,7 +120,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy keepPeriods(List<TreeVersioningKeepPeriod> keepPeriods) {
-    
     this.keepPeriods = keepPeriods;
     return this;
   }
@@ -144,11 +137,9 @@ public class TreeVersioningPolicy {
    * @return keepPeriods
   **/
   @javax.annotation.Nullable
-
   public List<TreeVersioningKeepPeriod> getKeepPeriods() {
     return keepPeriods;
   }
-
 
   public void setKeepPeriods(List<TreeVersioningKeepPeriod> keepPeriods) {
     this.keepPeriods = keepPeriods;
@@ -156,7 +147,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy maxSizePerFile(String maxSizePerFile) {
-    
     this.maxSizePerFile = maxSizePerFile;
     return this;
   }
@@ -166,11 +156,9 @@ public class TreeVersioningPolicy {
    * @return maxSizePerFile
   **/
   @javax.annotation.Nullable
-
   public String getMaxSizePerFile() {
     return maxSizePerFile;
   }
-
 
   public void setMaxSizePerFile(String maxSizePerFile) {
     this.maxSizePerFile = maxSizePerFile;
@@ -178,7 +166,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy maxTotalSize(String maxTotalSize) {
-    
     this.maxTotalSize = maxTotalSize;
     return this;
   }
@@ -188,11 +175,9 @@ public class TreeVersioningPolicy {
    * @return maxTotalSize
   **/
   @javax.annotation.Nullable
-
   public String getMaxTotalSize() {
     return maxTotalSize;
   }
-
 
   public void setMaxTotalSize(String maxTotalSize) {
     this.maxTotalSize = maxTotalSize;
@@ -200,7 +185,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -210,11 +194,9 @@ public class TreeVersioningPolicy {
    * @return name
   **/
   @javax.annotation.Nullable
-
   public String getName() {
     return name;
   }
-
 
   public void setName(String name) {
     this.name = name;
@@ -222,7 +204,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy nodeDeletedStrategy(TreeVersioningNodeDeletedStrategy nodeDeletedStrategy) {
-    
     this.nodeDeletedStrategy = nodeDeletedStrategy;
     return this;
   }
@@ -232,11 +213,9 @@ public class TreeVersioningPolicy {
    * @return nodeDeletedStrategy
   **/
   @javax.annotation.Nullable
-
   public TreeVersioningNodeDeletedStrategy getNodeDeletedStrategy() {
     return nodeDeletedStrategy;
   }
-
 
   public void setNodeDeletedStrategy(TreeVersioningNodeDeletedStrategy nodeDeletedStrategy) {
     this.nodeDeletedStrategy = nodeDeletedStrategy;
@@ -244,7 +223,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -254,11 +232,9 @@ public class TreeVersioningPolicy {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -266,7 +242,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy versionsDataSourceBucket(String versionsDataSourceBucket) {
-    
     this.versionsDataSourceBucket = versionsDataSourceBucket;
     return this;
   }
@@ -276,11 +251,9 @@ public class TreeVersioningPolicy {
    * @return versionsDataSourceBucket
   **/
   @javax.annotation.Nullable
-
   public String getVersionsDataSourceBucket() {
     return versionsDataSourceBucket;
   }
-
 
   public void setVersionsDataSourceBucket(String versionsDataSourceBucket) {
     this.versionsDataSourceBucket = versionsDataSourceBucket;
@@ -288,7 +261,6 @@ public class TreeVersioningPolicy {
 
 
   public TreeVersioningPolicy versionsDataSourceName(String versionsDataSourceName) {
-    
     this.versionsDataSourceName = versionsDataSourceName;
     return this;
   }
@@ -298,11 +270,9 @@ public class TreeVersioningPolicy {
    * @return versionsDataSourceName
   **/
   @javax.annotation.Nullable
-
   public String getVersionsDataSourceName() {
     return versionsDataSourceName;
   }
-
 
   public void setVersionsDataSourceName(String versionsDataSourceName) {
     this.versionsDataSourceName = versionsDataSourceName;
@@ -388,25 +358,26 @@ public class TreeVersioningPolicy {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to TreeVersioningPolicy
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to TreeVersioningPolicy
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!TreeVersioningPolicy.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!TreeVersioningPolicy.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in TreeVersioningPolicy is not found in the empty JSON string", TreeVersioningPolicy.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!TreeVersioningPolicy.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeVersioningPolicy` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeVersioningPolicy` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
       }
@@ -423,7 +394,7 @@ public class TreeVersioningPolicy {
 
           // validate the optional field `KeepPeriods` (array)
           for (int i = 0; i < jsonArraykeepPeriods.size(); i++) {
-            TreeVersioningKeepPeriod.validateJsonObject(jsonArraykeepPeriods.get(i).getAsJsonObject());
+            TreeVersioningKeepPeriod.validateJsonElement(jsonArraykeepPeriods.get(i));
           };
         }
       }
@@ -435,6 +406,10 @@ public class TreeVersioningPolicy {
       }
       if ((jsonObj.get("Name") != null && !jsonObj.get("Name").isJsonNull()) && !jsonObj.get("Name").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Name").toString()));
+      }
+      // validate the optional field `NodeDeletedStrategy`
+      if (jsonObj.get("NodeDeletedStrategy") != null && !jsonObj.get("NodeDeletedStrategy").isJsonNull()) {
+        TreeVersioningNodeDeletedStrategy.validateJsonElement(jsonObj.get("NodeDeletedStrategy"));
       }
       if ((jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonNull()) && !jsonObj.get("Uuid").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Uuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Uuid").toString()));
@@ -467,9 +442,9 @@ public class TreeVersioningPolicy {
 
            @Override
            public TreeVersioningPolicy read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

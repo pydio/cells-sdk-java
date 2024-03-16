@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * JobsDeleteTasksRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class JobsDeleteTasksRequest {
   public static final String SERIALIZED_NAME_JOB_ID = "JobId";
   @SerializedName(SERIALIZED_NAME_JOB_ID)
@@ -57,7 +57,6 @@ public class JobsDeleteTasksRequest {
   }
 
   public JobsDeleteTasksRequest jobId(String jobId) {
-    
     this.jobId = jobId;
     return this;
   }
@@ -67,11 +66,9 @@ public class JobsDeleteTasksRequest {
    * @return jobId
   **/
   @javax.annotation.Nullable
-
   public String getJobId() {
     return jobId;
   }
-
 
   public void setJobId(String jobId) {
     this.jobId = jobId;
@@ -79,7 +76,6 @@ public class JobsDeleteTasksRequest {
 
 
   public JobsDeleteTasksRequest pruneLimit(Integer pruneLimit) {
-    
     this.pruneLimit = pruneLimit;
     return this;
   }
@@ -89,11 +85,9 @@ public class JobsDeleteTasksRequest {
    * @return pruneLimit
   **/
   @javax.annotation.Nullable
-
   public Integer getPruneLimit() {
     return pruneLimit;
   }
-
 
   public void setPruneLimit(Integer pruneLimit) {
     this.pruneLimit = pruneLimit;
@@ -101,7 +95,6 @@ public class JobsDeleteTasksRequest {
 
 
   public JobsDeleteTasksRequest status(List<JobsTaskStatus> status) {
-    
     this.status = status;
     return this;
   }
@@ -119,11 +112,9 @@ public class JobsDeleteTasksRequest {
    * @return status
   **/
   @javax.annotation.Nullable
-
   public List<JobsTaskStatus> getStatus() {
     return status;
   }
-
 
   public void setStatus(List<JobsTaskStatus> status) {
     this.status = status;
@@ -131,7 +122,6 @@ public class JobsDeleteTasksRequest {
 
 
   public JobsDeleteTasksRequest taskID(List<String> taskID) {
-    
     this.taskID = taskID;
     return this;
   }
@@ -149,11 +139,9 @@ public class JobsDeleteTasksRequest {
    * @return taskID
   **/
   @javax.annotation.Nullable
-
   public List<String> getTaskID() {
     return taskID;
   }
-
 
   public void setTaskID(List<String> taskID) {
     this.taskID = taskID;
@@ -221,34 +209,35 @@ public class JobsDeleteTasksRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JobsDeleteTasksRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to JobsDeleteTasksRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!JobsDeleteTasksRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!JobsDeleteTasksRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in JobsDeleteTasksRequest is not found in the empty JSON string", JobsDeleteTasksRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!JobsDeleteTasksRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsDeleteTasksRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsDeleteTasksRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("JobId") != null && !jsonObj.get("JobId").isJsonNull()) && !jsonObj.get("JobId").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `JobId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("JobId").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Status") != null && !jsonObj.get("Status").isJsonArray()) {
+      if (jsonObj.get("Status") != null && !jsonObj.get("Status").isJsonNull() && !jsonObj.get("Status").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Status` to be an array in the JSON string but got `%s`", jsonObj.get("Status").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("TaskID") != null && !jsonObj.get("TaskID").isJsonArray()) {
+      if (jsonObj.get("TaskID") != null && !jsonObj.get("TaskID").isJsonNull() && !jsonObj.get("TaskID").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `TaskID` to be an array in the JSON string but got `%s`", jsonObj.get("TaskID").toString()));
       }
   }
@@ -273,9 +262,9 @@ public class JobsDeleteTasksRequest {
 
            @Override
            public JobsDeleteTasksRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

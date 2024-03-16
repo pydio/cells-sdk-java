@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * JobsAction
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class JobsAction {
   public static final String SERIALIZED_NAME_ACTION_OUTPUT_FILTER = "ActionOutputFilter";
   @SerializedName(SERIALIZED_NAME_ACTION_OUTPUT_FILTER)
@@ -56,9 +55,21 @@ public class JobsAction {
   @SerializedName(SERIALIZED_NAME_CHAINED_ACTIONS)
   private List<JobsAction> chainedActions;
 
+  public static final String SERIALIZED_NAME_CHAT_EVENT_FILTER = "ChatEventFilter";
+  @SerializedName(SERIALIZED_NAME_CHAT_EVENT_FILTER)
+  private JobsChatEventFilter chatEventFilter;
+
   public static final String SERIALIZED_NAME_CONTEXT_META_FILTER = "ContextMetaFilter";
   @SerializedName(SERIALIZED_NAME_CONTEXT_META_FILTER)
   private JobsContextMetaFilter contextMetaFilter;
+
+  public static final String SERIALIZED_NAME_DATA_FILTER = "DataFilter";
+  @SerializedName(SERIALIZED_NAME_DATA_FILTER)
+  private JobsDataSelector dataFilter;
+
+  public static final String SERIALIZED_NAME_DATA_SELECTOR = "DataSelector";
+  @SerializedName(SERIALIZED_NAME_DATA_SELECTOR)
+  private JobsDataSelector dataSelector;
 
   public static final String SERIALIZED_NAME_DATA_SOURCE_FILTER = "DataSourceFilter";
   @SerializedName(SERIALIZED_NAME_DATA_SOURCE_FILTER)
@@ -128,7 +139,6 @@ public class JobsAction {
   }
 
   public JobsAction actionOutputFilter(JobsActionOutputFilter actionOutputFilter) {
-    
     this.actionOutputFilter = actionOutputFilter;
     return this;
   }
@@ -138,11 +148,9 @@ public class JobsAction {
    * @return actionOutputFilter
   **/
   @javax.annotation.Nullable
-
   public JobsActionOutputFilter getActionOutputFilter() {
     return actionOutputFilter;
   }
-
 
   public void setActionOutputFilter(JobsActionOutputFilter actionOutputFilter) {
     this.actionOutputFilter = actionOutputFilter;
@@ -150,7 +158,6 @@ public class JobsAction {
 
 
   public JobsAction breakAfter(Boolean breakAfter) {
-    
     this.breakAfter = breakAfter;
     return this;
   }
@@ -160,11 +167,9 @@ public class JobsAction {
    * @return breakAfter
   **/
   @javax.annotation.Nullable
-
   public Boolean getBreakAfter() {
     return breakAfter;
   }
-
 
   public void setBreakAfter(Boolean breakAfter) {
     this.breakAfter = breakAfter;
@@ -172,7 +177,6 @@ public class JobsAction {
 
 
   public JobsAction bypass(Boolean bypass) {
-    
     this.bypass = bypass;
     return this;
   }
@@ -182,11 +186,9 @@ public class JobsAction {
    * @return bypass
   **/
   @javax.annotation.Nullable
-
   public Boolean getBypass() {
     return bypass;
   }
-
 
   public void setBypass(Boolean bypass) {
     this.bypass = bypass;
@@ -194,7 +196,6 @@ public class JobsAction {
 
 
   public JobsAction chainedActions(List<JobsAction> chainedActions) {
-    
     this.chainedActions = chainedActions;
     return this;
   }
@@ -212,19 +213,35 @@ public class JobsAction {
    * @return chainedActions
   **/
   @javax.annotation.Nullable
-
   public List<JobsAction> getChainedActions() {
     return chainedActions;
   }
-
 
   public void setChainedActions(List<JobsAction> chainedActions) {
     this.chainedActions = chainedActions;
   }
 
 
+  public JobsAction chatEventFilter(JobsChatEventFilter chatEventFilter) {
+    this.chatEventFilter = chatEventFilter;
+    return this;
+  }
+
+   /**
+   * Get chatEventFilter
+   * @return chatEventFilter
+  **/
+  @javax.annotation.Nullable
+  public JobsChatEventFilter getChatEventFilter() {
+    return chatEventFilter;
+  }
+
+  public void setChatEventFilter(JobsChatEventFilter chatEventFilter) {
+    this.chatEventFilter = chatEventFilter;
+  }
+
+
   public JobsAction contextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
-    
     this.contextMetaFilter = contextMetaFilter;
     return this;
   }
@@ -234,19 +251,54 @@ public class JobsAction {
    * @return contextMetaFilter
   **/
   @javax.annotation.Nullable
-
   public JobsContextMetaFilter getContextMetaFilter() {
     return contextMetaFilter;
   }
-
 
   public void setContextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
     this.contextMetaFilter = contextMetaFilter;
   }
 
 
+  public JobsAction dataFilter(JobsDataSelector dataFilter) {
+    this.dataFilter = dataFilter;
+    return this;
+  }
+
+   /**
+   * Get dataFilter
+   * @return dataFilter
+  **/
+  @javax.annotation.Nullable
+  public JobsDataSelector getDataFilter() {
+    return dataFilter;
+  }
+
+  public void setDataFilter(JobsDataSelector dataFilter) {
+    this.dataFilter = dataFilter;
+  }
+
+
+  public JobsAction dataSelector(JobsDataSelector dataSelector) {
+    this.dataSelector = dataSelector;
+    return this;
+  }
+
+   /**
+   * Get dataSelector
+   * @return dataSelector
+  **/
+  @javax.annotation.Nullable
+  public JobsDataSelector getDataSelector() {
+    return dataSelector;
+  }
+
+  public void setDataSelector(JobsDataSelector dataSelector) {
+    this.dataSelector = dataSelector;
+  }
+
+
   public JobsAction dataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
-    
     this.dataSourceFilter = dataSourceFilter;
     return this;
   }
@@ -256,11 +308,9 @@ public class JobsAction {
    * @return dataSourceFilter
   **/
   @javax.annotation.Nullable
-
   public JobsDataSourceSelector getDataSourceFilter() {
     return dataSourceFilter;
   }
-
 
   public void setDataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
     this.dataSourceFilter = dataSourceFilter;
@@ -268,7 +318,6 @@ public class JobsAction {
 
 
   public JobsAction dataSourceSelector(JobsDataSourceSelector dataSourceSelector) {
-    
     this.dataSourceSelector = dataSourceSelector;
     return this;
   }
@@ -278,11 +327,9 @@ public class JobsAction {
    * @return dataSourceSelector
   **/
   @javax.annotation.Nullable
-
   public JobsDataSourceSelector getDataSourceSelector() {
     return dataSourceSelector;
   }
-
 
   public void setDataSourceSelector(JobsDataSourceSelector dataSourceSelector) {
     this.dataSourceSelector = dataSourceSelector;
@@ -290,7 +337,6 @@ public class JobsAction {
 
 
   public JobsAction description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -300,11 +346,9 @@ public class JobsAction {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -312,7 +356,6 @@ public class JobsAction {
 
 
   public JobsAction failedFilterActions(List<JobsAction> failedFilterActions) {
-    
     this.failedFilterActions = failedFilterActions;
     return this;
   }
@@ -330,11 +373,9 @@ public class JobsAction {
    * @return failedFilterActions
   **/
   @javax.annotation.Nullable
-
   public List<JobsAction> getFailedFilterActions() {
     return failedFilterActions;
   }
-
 
   public void setFailedFilterActions(List<JobsAction> failedFilterActions) {
     this.failedFilterActions = failedFilterActions;
@@ -342,7 +383,6 @@ public class JobsAction {
 
 
   public JobsAction ID(String ID) {
-    
     this.ID = ID;
     return this;
   }
@@ -352,11 +392,9 @@ public class JobsAction {
    * @return ID
   **/
   @javax.annotation.Nullable
-
   public String getID() {
     return ID;
   }
-
 
   public void setID(String ID) {
     this.ID = ID;
@@ -364,7 +402,6 @@ public class JobsAction {
 
 
   public JobsAction idmFilter(JobsIdmSelector idmFilter) {
-    
     this.idmFilter = idmFilter;
     return this;
   }
@@ -374,11 +411,9 @@ public class JobsAction {
    * @return idmFilter
   **/
   @javax.annotation.Nullable
-
   public JobsIdmSelector getIdmFilter() {
     return idmFilter;
   }
-
 
   public void setIdmFilter(JobsIdmSelector idmFilter) {
     this.idmFilter = idmFilter;
@@ -386,7 +421,6 @@ public class JobsAction {
 
 
   public JobsAction idmSelector(JobsIdmSelector idmSelector) {
-    
     this.idmSelector = idmSelector;
     return this;
   }
@@ -396,11 +430,9 @@ public class JobsAction {
    * @return idmSelector
   **/
   @javax.annotation.Nullable
-
   public JobsIdmSelector getIdmSelector() {
     return idmSelector;
   }
-
 
   public void setIdmSelector(JobsIdmSelector idmSelector) {
     this.idmSelector = idmSelector;
@@ -408,7 +440,6 @@ public class JobsAction {
 
 
   public JobsAction label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -418,11 +449,9 @@ public class JobsAction {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -430,7 +459,6 @@ public class JobsAction {
 
 
   public JobsAction mergeAction(JobsAction mergeAction) {
-    
     this.mergeAction = mergeAction;
     return this;
   }
@@ -440,11 +468,9 @@ public class JobsAction {
    * @return mergeAction
   **/
   @javax.annotation.Nullable
-
   public JobsAction getMergeAction() {
     return mergeAction;
   }
-
 
   public void setMergeAction(JobsAction mergeAction) {
     this.mergeAction = mergeAction;
@@ -452,7 +478,6 @@ public class JobsAction {
 
 
   public JobsAction nodesFilter(JobsNodesSelector nodesFilter) {
-    
     this.nodesFilter = nodesFilter;
     return this;
   }
@@ -462,11 +487,9 @@ public class JobsAction {
    * @return nodesFilter
   **/
   @javax.annotation.Nullable
-
   public JobsNodesSelector getNodesFilter() {
     return nodesFilter;
   }
-
 
   public void setNodesFilter(JobsNodesSelector nodesFilter) {
     this.nodesFilter = nodesFilter;
@@ -474,7 +497,6 @@ public class JobsAction {
 
 
   public JobsAction nodesSelector(JobsNodesSelector nodesSelector) {
-    
     this.nodesSelector = nodesSelector;
     return this;
   }
@@ -484,11 +506,9 @@ public class JobsAction {
    * @return nodesSelector
   **/
   @javax.annotation.Nullable
-
   public JobsNodesSelector getNodesSelector() {
     return nodesSelector;
   }
-
 
   public void setNodesSelector(JobsNodesSelector nodesSelector) {
     this.nodesSelector = nodesSelector;
@@ -496,7 +516,6 @@ public class JobsAction {
 
 
   public JobsAction parameters(Map<String, String> parameters) {
-    
     this.parameters = parameters;
     return this;
   }
@@ -514,11 +533,9 @@ public class JobsAction {
    * @return parameters
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getParameters() {
     return parameters;
   }
-
 
   public void setParameters(Map<String, String> parameters) {
     this.parameters = parameters;
@@ -526,7 +543,6 @@ public class JobsAction {
 
 
   public JobsAction timeout(String timeout) {
-    
     this.timeout = timeout;
     return this;
   }
@@ -536,11 +552,9 @@ public class JobsAction {
    * @return timeout
   **/
   @javax.annotation.Nullable
-
   public String getTimeout() {
     return timeout;
   }
-
 
   public void setTimeout(String timeout) {
     this.timeout = timeout;
@@ -548,7 +562,6 @@ public class JobsAction {
 
 
   public JobsAction triggerFilter(JobsTriggerFilter triggerFilter) {
-    
     this.triggerFilter = triggerFilter;
     return this;
   }
@@ -558,11 +571,9 @@ public class JobsAction {
    * @return triggerFilter
   **/
   @javax.annotation.Nullable
-
   public JobsTriggerFilter getTriggerFilter() {
     return triggerFilter;
   }
-
 
   public void setTriggerFilter(JobsTriggerFilter triggerFilter) {
     this.triggerFilter = triggerFilter;
@@ -570,7 +581,6 @@ public class JobsAction {
 
 
   public JobsAction usersFilter(JobsUsersSelector usersFilter) {
-    
     this.usersFilter = usersFilter;
     return this;
   }
@@ -580,11 +590,9 @@ public class JobsAction {
    * @return usersFilter
   **/
   @javax.annotation.Nullable
-
   public JobsUsersSelector getUsersFilter() {
     return usersFilter;
   }
-
 
   public void setUsersFilter(JobsUsersSelector usersFilter) {
     this.usersFilter = usersFilter;
@@ -592,7 +600,6 @@ public class JobsAction {
 
 
   public JobsAction usersSelector(JobsUsersSelector usersSelector) {
-    
     this.usersSelector = usersSelector;
     return this;
   }
@@ -602,11 +609,9 @@ public class JobsAction {
    * @return usersSelector
   **/
   @javax.annotation.Nullable
-
   public JobsUsersSelector getUsersSelector() {
     return usersSelector;
   }
-
 
   public void setUsersSelector(JobsUsersSelector usersSelector) {
     this.usersSelector = usersSelector;
@@ -627,7 +632,10 @@ public class JobsAction {
         Objects.equals(this.breakAfter, jobsAction.breakAfter) &&
         Objects.equals(this.bypass, jobsAction.bypass) &&
         Objects.equals(this.chainedActions, jobsAction.chainedActions) &&
+        Objects.equals(this.chatEventFilter, jobsAction.chatEventFilter) &&
         Objects.equals(this.contextMetaFilter, jobsAction.contextMetaFilter) &&
+        Objects.equals(this.dataFilter, jobsAction.dataFilter) &&
+        Objects.equals(this.dataSelector, jobsAction.dataSelector) &&
         Objects.equals(this.dataSourceFilter, jobsAction.dataSourceFilter) &&
         Objects.equals(this.dataSourceSelector, jobsAction.dataSourceSelector) &&
         Objects.equals(this.description, jobsAction.description) &&
@@ -648,7 +656,7 @@ public class JobsAction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(actionOutputFilter, breakAfter, bypass, chainedActions, contextMetaFilter, dataSourceFilter, dataSourceSelector, description, failedFilterActions, ID, idmFilter, idmSelector, label, mergeAction, nodesFilter, nodesSelector, parameters, timeout, triggerFilter, usersFilter, usersSelector);
+    return Objects.hash(actionOutputFilter, breakAfter, bypass, chainedActions, chatEventFilter, contextMetaFilter, dataFilter, dataSelector, dataSourceFilter, dataSourceSelector, description, failedFilterActions, ID, idmFilter, idmSelector, label, mergeAction, nodesFilter, nodesSelector, parameters, timeout, triggerFilter, usersFilter, usersSelector);
   }
 
   @Override
@@ -659,7 +667,10 @@ public class JobsAction {
     sb.append("    breakAfter: ").append(toIndentedString(breakAfter)).append("\n");
     sb.append("    bypass: ").append(toIndentedString(bypass)).append("\n");
     sb.append("    chainedActions: ").append(toIndentedString(chainedActions)).append("\n");
+    sb.append("    chatEventFilter: ").append(toIndentedString(chatEventFilter)).append("\n");
     sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
+    sb.append("    dataFilter: ").append(toIndentedString(dataFilter)).append("\n");
+    sb.append("    dataSelector: ").append(toIndentedString(dataSelector)).append("\n");
     sb.append("    dataSourceFilter: ").append(toIndentedString(dataSourceFilter)).append("\n");
     sb.append("    dataSourceSelector: ").append(toIndentedString(dataSourceSelector)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
@@ -702,7 +713,10 @@ public class JobsAction {
     openapiFields.add("BreakAfter");
     openapiFields.add("Bypass");
     openapiFields.add("ChainedActions");
+    openapiFields.add("ChatEventFilter");
     openapiFields.add("ContextMetaFilter");
+    openapiFields.add("DataFilter");
+    openapiFields.add("DataSelector");
     openapiFields.add("DataSourceFilter");
     openapiFields.add("DataSourceSelector");
     openapiFields.add("Description");
@@ -725,28 +739,29 @@ public class JobsAction {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JobsAction
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to JobsAction
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!JobsAction.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!JobsAction.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in JobsAction is not found in the empty JSON string", JobsAction.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!JobsAction.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsAction` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsAction` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `ActionOutputFilter`
       if (jsonObj.get("ActionOutputFilter") != null && !jsonObj.get("ActionOutputFilter").isJsonNull()) {
-        JobsActionOutputFilter.validateJsonObject(jsonObj.getAsJsonObject("ActionOutputFilter"));
+        JobsActionOutputFilter.validateJsonElement(jsonObj.get("ActionOutputFilter"));
       }
       if (jsonObj.get("ChainedActions") != null && !jsonObj.get("ChainedActions").isJsonNull()) {
         JsonArray jsonArraychainedActions = jsonObj.getAsJsonArray("ChainedActions");
@@ -758,21 +773,33 @@ public class JobsAction {
 
           // validate the optional field `ChainedActions` (array)
           for (int i = 0; i < jsonArraychainedActions.size(); i++) {
-            JobsAction.validateJsonObject(jsonArraychainedActions.get(i).getAsJsonObject());
+            JobsAction.validateJsonElement(jsonArraychainedActions.get(i));
           };
         }
       }
+      // validate the optional field `ChatEventFilter`
+      if (jsonObj.get("ChatEventFilter") != null && !jsonObj.get("ChatEventFilter").isJsonNull()) {
+        JobsChatEventFilter.validateJsonElement(jsonObj.get("ChatEventFilter"));
+      }
       // validate the optional field `ContextMetaFilter`
       if (jsonObj.get("ContextMetaFilter") != null && !jsonObj.get("ContextMetaFilter").isJsonNull()) {
-        JobsContextMetaFilter.validateJsonObject(jsonObj.getAsJsonObject("ContextMetaFilter"));
+        JobsContextMetaFilter.validateJsonElement(jsonObj.get("ContextMetaFilter"));
+      }
+      // validate the optional field `DataFilter`
+      if (jsonObj.get("DataFilter") != null && !jsonObj.get("DataFilter").isJsonNull()) {
+        JobsDataSelector.validateJsonElement(jsonObj.get("DataFilter"));
+      }
+      // validate the optional field `DataSelector`
+      if (jsonObj.get("DataSelector") != null && !jsonObj.get("DataSelector").isJsonNull()) {
+        JobsDataSelector.validateJsonElement(jsonObj.get("DataSelector"));
       }
       // validate the optional field `DataSourceFilter`
       if (jsonObj.get("DataSourceFilter") != null && !jsonObj.get("DataSourceFilter").isJsonNull()) {
-        JobsDataSourceSelector.validateJsonObject(jsonObj.getAsJsonObject("DataSourceFilter"));
+        JobsDataSourceSelector.validateJsonElement(jsonObj.get("DataSourceFilter"));
       }
       // validate the optional field `DataSourceSelector`
       if (jsonObj.get("DataSourceSelector") != null && !jsonObj.get("DataSourceSelector").isJsonNull()) {
-        JobsDataSourceSelector.validateJsonObject(jsonObj.getAsJsonObject("DataSourceSelector"));
+        JobsDataSourceSelector.validateJsonElement(jsonObj.get("DataSourceSelector"));
       }
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
@@ -787,7 +814,7 @@ public class JobsAction {
 
           // validate the optional field `FailedFilterActions` (array)
           for (int i = 0; i < jsonArrayfailedFilterActions.size(); i++) {
-            JobsAction.validateJsonObject(jsonArrayfailedFilterActions.get(i).getAsJsonObject());
+            JobsAction.validateJsonElement(jsonArrayfailedFilterActions.get(i));
           };
         }
       }
@@ -796,41 +823,41 @@ public class JobsAction {
       }
       // validate the optional field `IdmFilter`
       if (jsonObj.get("IdmFilter") != null && !jsonObj.get("IdmFilter").isJsonNull()) {
-        JobsIdmSelector.validateJsonObject(jsonObj.getAsJsonObject("IdmFilter"));
+        JobsIdmSelector.validateJsonElement(jsonObj.get("IdmFilter"));
       }
       // validate the optional field `IdmSelector`
       if (jsonObj.get("IdmSelector") != null && !jsonObj.get("IdmSelector").isJsonNull()) {
-        JobsIdmSelector.validateJsonObject(jsonObj.getAsJsonObject("IdmSelector"));
+        JobsIdmSelector.validateJsonElement(jsonObj.get("IdmSelector"));
       }
       if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
       }
       // validate the optional field `MergeAction`
       if (jsonObj.get("MergeAction") != null && !jsonObj.get("MergeAction").isJsonNull()) {
-        JobsAction.validateJsonObject(jsonObj.getAsJsonObject("MergeAction"));
+        JobsAction.validateJsonElement(jsonObj.get("MergeAction"));
       }
       // validate the optional field `NodesFilter`
       if (jsonObj.get("NodesFilter") != null && !jsonObj.get("NodesFilter").isJsonNull()) {
-        JobsNodesSelector.validateJsonObject(jsonObj.getAsJsonObject("NodesFilter"));
+        JobsNodesSelector.validateJsonElement(jsonObj.get("NodesFilter"));
       }
       // validate the optional field `NodesSelector`
       if (jsonObj.get("NodesSelector") != null && !jsonObj.get("NodesSelector").isJsonNull()) {
-        JobsNodesSelector.validateJsonObject(jsonObj.getAsJsonObject("NodesSelector"));
+        JobsNodesSelector.validateJsonElement(jsonObj.get("NodesSelector"));
       }
       if ((jsonObj.get("Timeout") != null && !jsonObj.get("Timeout").isJsonNull()) && !jsonObj.get("Timeout").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Timeout` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Timeout").toString()));
       }
       // validate the optional field `TriggerFilter`
       if (jsonObj.get("TriggerFilter") != null && !jsonObj.get("TriggerFilter").isJsonNull()) {
-        JobsTriggerFilter.validateJsonObject(jsonObj.getAsJsonObject("TriggerFilter"));
+        JobsTriggerFilter.validateJsonElement(jsonObj.get("TriggerFilter"));
       }
       // validate the optional field `UsersFilter`
       if (jsonObj.get("UsersFilter") != null && !jsonObj.get("UsersFilter").isJsonNull()) {
-        JobsUsersSelector.validateJsonObject(jsonObj.getAsJsonObject("UsersFilter"));
+        JobsUsersSelector.validateJsonElement(jsonObj.get("UsersFilter"));
       }
       // validate the optional field `UsersSelector`
       if (jsonObj.get("UsersSelector") != null && !jsonObj.get("UsersSelector").isJsonNull()) {
-        JobsUsersSelector.validateJsonObject(jsonObj.getAsJsonObject("UsersSelector"));
+        JobsUsersSelector.validateJsonElement(jsonObj.get("UsersSelector"));
       }
   }
 
@@ -854,9 +881,9 @@ public class JobsAction {
 
            @Override
            public JobsAction read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

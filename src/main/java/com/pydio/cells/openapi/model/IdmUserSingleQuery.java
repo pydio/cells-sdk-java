@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * IdmUserSingleQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class IdmUserSingleQuery {
   public static final String SERIALIZED_NAME_ATTRIBUTE_ANY_VALUE = "AttributeAnyValue";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTE_ANY_VALUE)
@@ -95,7 +95,6 @@ public class IdmUserSingleQuery {
   }
 
   public IdmUserSingleQuery attributeAnyValue(Boolean attributeAnyValue) {
-    
     this.attributeAnyValue = attributeAnyValue;
     return this;
   }
@@ -105,11 +104,9 @@ public class IdmUserSingleQuery {
    * @return attributeAnyValue
   **/
   @javax.annotation.Nullable
-
   public Boolean getAttributeAnyValue() {
     return attributeAnyValue;
   }
-
 
   public void setAttributeAnyValue(Boolean attributeAnyValue) {
     this.attributeAnyValue = attributeAnyValue;
@@ -117,7 +114,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery attributeName(String attributeName) {
-    
     this.attributeName = attributeName;
     return this;
   }
@@ -127,11 +123,9 @@ public class IdmUserSingleQuery {
    * @return attributeName
   **/
   @javax.annotation.Nullable
-
   public String getAttributeName() {
     return attributeName;
   }
-
 
   public void setAttributeName(String attributeName) {
     this.attributeName = attributeName;
@@ -139,7 +133,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery attributeValue(String attributeValue) {
-    
     this.attributeValue = attributeValue;
     return this;
   }
@@ -149,11 +142,9 @@ public class IdmUserSingleQuery {
    * @return attributeValue
   **/
   @javax.annotation.Nullable
-
   public String getAttributeValue() {
     return attributeValue;
   }
-
 
   public void setAttributeValue(String attributeValue) {
     this.attributeValue = attributeValue;
@@ -161,7 +152,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery connectedSince(String connectedSince) {
-    
     this.connectedSince = connectedSince;
     return this;
   }
@@ -171,11 +161,9 @@ public class IdmUserSingleQuery {
    * @return connectedSince
   **/
   @javax.annotation.Nullable
-
   public String getConnectedSince() {
     return connectedSince;
   }
-
 
   public void setConnectedSince(String connectedSince) {
     this.connectedSince = connectedSince;
@@ -183,7 +171,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery fullPath(String fullPath) {
-    
     this.fullPath = fullPath;
     return this;
   }
@@ -193,11 +180,9 @@ public class IdmUserSingleQuery {
    * @return fullPath
   **/
   @javax.annotation.Nullable
-
   public String getFullPath() {
     return fullPath;
   }
-
 
   public void setFullPath(String fullPath) {
     this.fullPath = fullPath;
@@ -205,7 +190,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery groupPath(String groupPath) {
-    
     this.groupPath = groupPath;
     return this;
   }
@@ -215,11 +199,9 @@ public class IdmUserSingleQuery {
    * @return groupPath
   **/
   @javax.annotation.Nullable
-
   public String getGroupPath() {
     return groupPath;
   }
-
 
   public void setGroupPath(String groupPath) {
     this.groupPath = groupPath;
@@ -227,7 +209,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery hasProfile(String hasProfile) {
-    
     this.hasProfile = hasProfile;
     return this;
   }
@@ -237,11 +218,9 @@ public class IdmUserSingleQuery {
    * @return hasProfile
   **/
   @javax.annotation.Nullable
-
   public String getHasProfile() {
     return hasProfile;
   }
-
 
   public void setHasProfile(String hasProfile) {
     this.hasProfile = hasProfile;
@@ -249,7 +228,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery hasRole(String hasRole) {
-    
     this.hasRole = hasRole;
     return this;
   }
@@ -259,11 +237,9 @@ public class IdmUserSingleQuery {
    * @return hasRole
   **/
   @javax.annotation.Nullable
-
   public String getHasRole() {
     return hasRole;
   }
-
 
   public void setHasRole(String hasRole) {
     this.hasRole = hasRole;
@@ -271,7 +247,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery login(String login) {
-    
     this.login = login;
     return this;
   }
@@ -281,11 +256,9 @@ public class IdmUserSingleQuery {
    * @return login
   **/
   @javax.annotation.Nullable
-
   public String getLogin() {
     return login;
   }
-
 
   public void setLogin(String login) {
     this.login = login;
@@ -293,7 +266,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery nodeType(IdmNodeType nodeType) {
-    
     this.nodeType = nodeType;
     return this;
   }
@@ -303,11 +275,9 @@ public class IdmUserSingleQuery {
    * @return nodeType
   **/
   @javax.annotation.Nullable
-
   public IdmNodeType getNodeType() {
     return nodeType;
   }
-
 
   public void setNodeType(IdmNodeType nodeType) {
     this.nodeType = nodeType;
@@ -315,7 +285,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery password(String password) {
-    
     this.password = password;
     return this;
   }
@@ -325,11 +294,9 @@ public class IdmUserSingleQuery {
    * @return password
   **/
   @javax.annotation.Nullable
-
   public String getPassword() {
     return password;
   }
-
 
   public void setPassword(String password) {
     this.password = password;
@@ -337,7 +304,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery recursive(Boolean recursive) {
-    
     this.recursive = recursive;
     return this;
   }
@@ -347,11 +313,9 @@ public class IdmUserSingleQuery {
    * @return recursive
   **/
   @javax.annotation.Nullable
-
   public Boolean getRecursive() {
     return recursive;
   }
-
 
   public void setRecursive(Boolean recursive) {
     this.recursive = recursive;
@@ -359,7 +323,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -369,11 +332,9 @@ public class IdmUserSingleQuery {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -381,7 +342,6 @@ public class IdmUserSingleQuery {
 
 
   public IdmUserSingleQuery not(Boolean not) {
-    
     this.not = not;
     return this;
   }
@@ -391,11 +351,9 @@ public class IdmUserSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-
   public Boolean getNot() {
     return not;
   }
-
 
   public void setNot(Boolean not) {
     this.not = not;
@@ -493,25 +451,26 @@ public class IdmUserSingleQuery {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to IdmUserSingleQuery
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to IdmUserSingleQuery
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!IdmUserSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!IdmUserSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in IdmUserSingleQuery is not found in the empty JSON string", IdmUserSingleQuery.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!IdmUserSingleQuery.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmUserSingleQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmUserSingleQuery` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("AttributeName") != null && !jsonObj.get("AttributeName").isJsonNull()) && !jsonObj.get("AttributeName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `AttributeName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AttributeName").toString()));
       }
@@ -535,6 +494,10 @@ public class IdmUserSingleQuery {
       }
       if ((jsonObj.get("Login") != null && !jsonObj.get("Login").isJsonNull()) && !jsonObj.get("Login").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Login").toString()));
+      }
+      // validate the optional field `NodeType`
+      if (jsonObj.get("NodeType") != null && !jsonObj.get("NodeType").isJsonNull()) {
+        IdmNodeType.validateJsonElement(jsonObj.get("NodeType"));
       }
       if ((jsonObj.get("Password") != null && !jsonObj.get("Password").isJsonNull()) && !jsonObj.get("Password").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Password").toString()));
@@ -564,9 +527,9 @@ public class IdmUserSingleQuery {
 
            @Override
            public IdmUserSingleQuery read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

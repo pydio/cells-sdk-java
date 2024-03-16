@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * TreeNode
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class TreeNode {
   public static final String SERIALIZED_NAME_APPEARS_IN = "AppearsIn";
   @SerializedName(SERIALIZED_NAME_APPEARS_IN)
@@ -84,7 +83,6 @@ public class TreeNode {
   }
 
   public TreeNode appearsIn(List<TreeWorkspaceRelativePath> appearsIn) {
-    
     this.appearsIn = appearsIn;
     return this;
   }
@@ -102,11 +100,9 @@ public class TreeNode {
    * @return appearsIn
   **/
   @javax.annotation.Nullable
-
   public List<TreeWorkspaceRelativePath> getAppearsIn() {
     return appearsIn;
   }
-
 
   public void setAppearsIn(List<TreeWorkspaceRelativePath> appearsIn) {
     this.appearsIn = appearsIn;
@@ -114,7 +110,6 @@ public class TreeNode {
 
 
   public TreeNode commits(List<TreeChangeLog> commits) {
-    
     this.commits = commits;
     return this;
   }
@@ -132,11 +127,9 @@ public class TreeNode {
    * @return commits
   **/
   @javax.annotation.Nullable
-
   public List<TreeChangeLog> getCommits() {
     return commits;
   }
-
 
   public void setCommits(List<TreeChangeLog> commits) {
     this.commits = commits;
@@ -144,7 +137,6 @@ public class TreeNode {
 
 
   public TreeNode etag(String etag) {
-    
     this.etag = etag;
     return this;
   }
@@ -154,11 +146,9 @@ public class TreeNode {
    * @return etag
   **/
   @javax.annotation.Nullable
-
   public String getEtag() {
     return etag;
   }
-
 
   public void setEtag(String etag) {
     this.etag = etag;
@@ -166,7 +156,6 @@ public class TreeNode {
 
 
   public TreeNode mtime(String mtime) {
-    
     this.mtime = mtime;
     return this;
   }
@@ -176,11 +165,9 @@ public class TreeNode {
    * @return mtime
   **/
   @javax.annotation.Nullable
-
   public String getMtime() {
     return mtime;
   }
-
 
   public void setMtime(String mtime) {
     this.mtime = mtime;
@@ -188,7 +175,6 @@ public class TreeNode {
 
 
   public TreeNode metaStore(Map<String, String> metaStore) {
-    
     this.metaStore = metaStore;
     return this;
   }
@@ -206,11 +192,9 @@ public class TreeNode {
    * @return metaStore
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getMetaStore() {
     return metaStore;
   }
-
 
   public void setMetaStore(Map<String, String> metaStore) {
     this.metaStore = metaStore;
@@ -218,7 +202,6 @@ public class TreeNode {
 
 
   public TreeNode mode(Integer mode) {
-    
     this.mode = mode;
     return this;
   }
@@ -228,11 +211,9 @@ public class TreeNode {
    * @return mode
   **/
   @javax.annotation.Nullable
-
   public Integer getMode() {
     return mode;
   }
-
 
   public void setMode(Integer mode) {
     this.mode = mode;
@@ -240,7 +221,6 @@ public class TreeNode {
 
 
   public TreeNode path(String path) {
-    
     this.path = path;
     return this;
   }
@@ -250,11 +230,9 @@ public class TreeNode {
    * @return path
   **/
   @javax.annotation.Nullable
-
   public String getPath() {
     return path;
   }
-
 
   public void setPath(String path) {
     this.path = path;
@@ -262,7 +240,6 @@ public class TreeNode {
 
 
   public TreeNode size(String size) {
-    
     this.size = size;
     return this;
   }
@@ -272,11 +249,9 @@ public class TreeNode {
    * @return size
   **/
   @javax.annotation.Nullable
-
   public String getSize() {
     return size;
   }
-
 
   public void setSize(String size) {
     this.size = size;
@@ -284,7 +259,6 @@ public class TreeNode {
 
 
   public TreeNode type(TreeNodeType type) {
-    
     this.type = type;
     return this;
   }
@@ -294,11 +268,9 @@ public class TreeNode {
    * @return type
   **/
   @javax.annotation.Nullable
-
   public TreeNodeType getType() {
     return type;
   }
-
 
   public void setType(TreeNodeType type) {
     this.type = type;
@@ -306,7 +278,6 @@ public class TreeNode {
 
 
   public TreeNode uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -316,11 +287,9 @@ public class TreeNode {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -406,25 +375,26 @@ public class TreeNode {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to TreeNode
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to TreeNode
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!TreeNode.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!TreeNode.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in TreeNode is not found in the empty JSON string", TreeNode.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!TreeNode.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeNode` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeNode` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("AppearsIn") != null && !jsonObj.get("AppearsIn").isJsonNull()) {
         JsonArray jsonArrayappearsIn = jsonObj.getAsJsonArray("AppearsIn");
         if (jsonArrayappearsIn != null) {
@@ -435,7 +405,7 @@ public class TreeNode {
 
           // validate the optional field `AppearsIn` (array)
           for (int i = 0; i < jsonArrayappearsIn.size(); i++) {
-            TreeWorkspaceRelativePath.validateJsonObject(jsonArrayappearsIn.get(i).getAsJsonObject());
+            TreeWorkspaceRelativePath.validateJsonElement(jsonArrayappearsIn.get(i));
           };
         }
       }
@@ -449,7 +419,7 @@ public class TreeNode {
 
           // validate the optional field `Commits` (array)
           for (int i = 0; i < jsonArraycommits.size(); i++) {
-            TreeChangeLog.validateJsonObject(jsonArraycommits.get(i).getAsJsonObject());
+            TreeChangeLog.validateJsonElement(jsonArraycommits.get(i));
           };
         }
       }
@@ -464,6 +434,10 @@ public class TreeNode {
       }
       if ((jsonObj.get("Size") != null && !jsonObj.get("Size").isJsonNull()) && !jsonObj.get("Size").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Size` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Size").toString()));
+      }
+      // validate the optional field `Type`
+      if (jsonObj.get("Type") != null && !jsonObj.get("Type").isJsonNull()) {
+        TreeNodeType.validateJsonElement(jsonObj.get("Type"));
       }
       if ((jsonObj.get("Uuid") != null && !jsonObj.get("Uuid").isJsonNull()) && !jsonObj.get("Uuid").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Uuid` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Uuid").toString()));
@@ -490,9 +464,9 @@ public class TreeNode {
 
            @Override
            public TreeNode read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

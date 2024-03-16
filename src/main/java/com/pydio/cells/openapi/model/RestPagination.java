@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestPagination
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestPagination {
   public static final String SERIALIZED_NAME_CURRENT_OFFSET = "CurrentOffset";
   @SerializedName(SERIALIZED_NAME_CURRENT_OFFSET)
@@ -67,7 +67,6 @@ public class RestPagination {
   }
 
   public RestPagination currentOffset(Integer currentOffset) {
-    
     this.currentOffset = currentOffset;
     return this;
   }
@@ -77,11 +76,9 @@ public class RestPagination {
    * @return currentOffset
   **/
   @javax.annotation.Nullable
-
   public Integer getCurrentOffset() {
     return currentOffset;
   }
-
 
   public void setCurrentOffset(Integer currentOffset) {
     this.currentOffset = currentOffset;
@@ -89,7 +86,6 @@ public class RestPagination {
 
 
   public RestPagination currentPage(Integer currentPage) {
-    
     this.currentPage = currentPage;
     return this;
   }
@@ -99,11 +95,9 @@ public class RestPagination {
    * @return currentPage
   **/
   @javax.annotation.Nullable
-
   public Integer getCurrentPage() {
     return currentPage;
   }
-
 
   public void setCurrentPage(Integer currentPage) {
     this.currentPage = currentPage;
@@ -111,7 +105,6 @@ public class RestPagination {
 
 
   public RestPagination limit(Integer limit) {
-    
     this.limit = limit;
     return this;
   }
@@ -121,11 +114,9 @@ public class RestPagination {
    * @return limit
   **/
   @javax.annotation.Nullable
-
   public Integer getLimit() {
     return limit;
   }
-
 
   public void setLimit(Integer limit) {
     this.limit = limit;
@@ -133,7 +124,6 @@ public class RestPagination {
 
 
   public RestPagination nextOffset(Integer nextOffset) {
-    
     this.nextOffset = nextOffset;
     return this;
   }
@@ -143,11 +133,9 @@ public class RestPagination {
    * @return nextOffset
   **/
   @javax.annotation.Nullable
-
   public Integer getNextOffset() {
     return nextOffset;
   }
-
 
   public void setNextOffset(Integer nextOffset) {
     this.nextOffset = nextOffset;
@@ -155,7 +143,6 @@ public class RestPagination {
 
 
   public RestPagination prevOffset(Integer prevOffset) {
-    
     this.prevOffset = prevOffset;
     return this;
   }
@@ -165,11 +152,9 @@ public class RestPagination {
    * @return prevOffset
   **/
   @javax.annotation.Nullable
-
   public Integer getPrevOffset() {
     return prevOffset;
   }
-
 
   public void setPrevOffset(Integer prevOffset) {
     this.prevOffset = prevOffset;
@@ -177,7 +162,6 @@ public class RestPagination {
 
 
   public RestPagination total(Integer total) {
-    
     this.total = total;
     return this;
   }
@@ -187,11 +171,9 @@ public class RestPagination {
    * @return total
   **/
   @javax.annotation.Nullable
-
   public Integer getTotal() {
     return total;
   }
-
 
   public void setTotal(Integer total) {
     this.total = total;
@@ -199,7 +181,6 @@ public class RestPagination {
 
 
   public RestPagination totalPages(Integer totalPages) {
-    
     this.totalPages = totalPages;
     return this;
   }
@@ -209,11 +190,9 @@ public class RestPagination {
    * @return totalPages
   **/
   @javax.annotation.Nullable
-
   public Integer getTotalPages() {
     return totalPages;
   }
-
 
   public void setTotalPages(Integer totalPages) {
     this.totalPages = totalPages;
@@ -290,25 +269,26 @@ public class RestPagination {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestPagination
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestPagination
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestPagination.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestPagination.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestPagination is not found in the empty JSON string", RestPagination.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestPagination.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestPagination` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestPagination` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
@@ -331,9 +311,9 @@ public class RestPagination {
 
            @Override
            public RestPagination read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

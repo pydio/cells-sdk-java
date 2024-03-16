@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * InstallInstallConfig
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class InstallInstallConfig {
   public static final String SERIALIZED_NAME_CHECK_RESULTS = "CheckResults";
   @SerializedName(SERIALIZED_NAME_CHECK_RESULTS)
@@ -198,7 +198,6 @@ public class InstallInstallConfig {
   }
 
   public InstallInstallConfig checkResults(List<InstallCheckResult> checkResults) {
-    
     this.checkResults = checkResults;
     return this;
   }
@@ -216,11 +215,9 @@ public class InstallInstallConfig {
    * @return checkResults
   **/
   @javax.annotation.Nullable
-
   public List<InstallCheckResult> getCheckResults() {
     return checkResults;
   }
-
 
   public void setCheckResults(List<InstallCheckResult> checkResults) {
     this.checkResults = checkResults;
@@ -228,7 +225,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig documentsDSN(String documentsDSN) {
-    
     this.documentsDSN = documentsDSN;
     return this;
   }
@@ -238,11 +234,9 @@ public class InstallInstallConfig {
    * @return documentsDSN
   **/
   @javax.annotation.Nullable
-
   public String getDocumentsDSN() {
     return documentsDSN;
   }
-
 
   public void setDocumentsDSN(String documentsDSN) {
     this.documentsDSN = documentsDSN;
@@ -250,7 +244,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig proxyConfig(InstallProxyConfig proxyConfig) {
-    
     this.proxyConfig = proxyConfig;
     return this;
   }
@@ -260,11 +253,9 @@ public class InstallInstallConfig {
    * @return proxyConfig
   **/
   @javax.annotation.Nullable
-
   public InstallProxyConfig getProxyConfig() {
     return proxyConfig;
   }
-
 
   public void setProxyConfig(InstallProxyConfig proxyConfig) {
     this.proxyConfig = proxyConfig;
@@ -272,7 +263,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig useDocumentsDSN(Boolean useDocumentsDSN) {
-    
     this.useDocumentsDSN = useDocumentsDSN;
     return this;
   }
@@ -282,11 +272,9 @@ public class InstallInstallConfig {
    * @return useDocumentsDSN
   **/
   @javax.annotation.Nullable
-
   public Boolean getUseDocumentsDSN() {
     return useDocumentsDSN;
   }
-
 
   public void setUseDocumentsDSN(Boolean useDocumentsDSN) {
     this.useDocumentsDSN = useDocumentsDSN;
@@ -294,7 +282,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbConnectionType(String dbConnectionType) {
-    
     this.dbConnectionType = dbConnectionType;
     return this;
   }
@@ -304,11 +291,9 @@ public class InstallInstallConfig {
    * @return dbConnectionType
   **/
   @javax.annotation.Nullable
-
   public String getDbConnectionType() {
     return dbConnectionType;
   }
-
 
   public void setDbConnectionType(String dbConnectionType) {
     this.dbConnectionType = dbConnectionType;
@@ -316,7 +301,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbManualDSN(String dbManualDSN) {
-    
     this.dbManualDSN = dbManualDSN;
     return this;
   }
@@ -326,11 +310,9 @@ public class InstallInstallConfig {
    * @return dbManualDSN
   **/
   @javax.annotation.Nullable
-
   public String getDbManualDSN() {
     return dbManualDSN;
   }
-
 
   public void setDbManualDSN(String dbManualDSN) {
     this.dbManualDSN = dbManualDSN;
@@ -338,7 +320,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbSocketFile(String dbSocketFile) {
-    
     this.dbSocketFile = dbSocketFile;
     return this;
   }
@@ -348,11 +329,9 @@ public class InstallInstallConfig {
    * @return dbSocketFile
   **/
   @javax.annotation.Nullable
-
   public String getDbSocketFile() {
     return dbSocketFile;
   }
-
 
   public void setDbSocketFile(String dbSocketFile) {
     this.dbSocketFile = dbSocketFile;
@@ -360,7 +339,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbSocketName(String dbSocketName) {
-    
     this.dbSocketName = dbSocketName;
     return this;
   }
@@ -370,11 +348,9 @@ public class InstallInstallConfig {
    * @return dbSocketName
   **/
   @javax.annotation.Nullable
-
   public String getDbSocketName() {
     return dbSocketName;
   }
-
 
   public void setDbSocketName(String dbSocketName) {
     this.dbSocketName = dbSocketName;
@@ -382,7 +358,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbSocketPassword(String dbSocketPassword) {
-    
     this.dbSocketPassword = dbSocketPassword;
     return this;
   }
@@ -392,11 +367,9 @@ public class InstallInstallConfig {
    * @return dbSocketPassword
   **/
   @javax.annotation.Nullable
-
   public String getDbSocketPassword() {
     return dbSocketPassword;
   }
-
 
   public void setDbSocketPassword(String dbSocketPassword) {
     this.dbSocketPassword = dbSocketPassword;
@@ -404,7 +377,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbSocketUser(String dbSocketUser) {
-    
     this.dbSocketUser = dbSocketUser;
     return this;
   }
@@ -414,11 +386,9 @@ public class InstallInstallConfig {
    * @return dbSocketUser
   **/
   @javax.annotation.Nullable
-
   public String getDbSocketUser() {
     return dbSocketUser;
   }
-
 
   public void setDbSocketUser(String dbSocketUser) {
     this.dbSocketUser = dbSocketUser;
@@ -426,7 +396,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbTCPHostname(String dbTCPHostname) {
-    
     this.dbTCPHostname = dbTCPHostname;
     return this;
   }
@@ -436,11 +405,9 @@ public class InstallInstallConfig {
    * @return dbTCPHostname
   **/
   @javax.annotation.Nullable
-
   public String getDbTCPHostname() {
     return dbTCPHostname;
   }
-
 
   public void setDbTCPHostname(String dbTCPHostname) {
     this.dbTCPHostname = dbTCPHostname;
@@ -448,7 +415,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbTCPName(String dbTCPName) {
-    
     this.dbTCPName = dbTCPName;
     return this;
   }
@@ -458,11 +424,9 @@ public class InstallInstallConfig {
    * @return dbTCPName
   **/
   @javax.annotation.Nullable
-
   public String getDbTCPName() {
     return dbTCPName;
   }
-
 
   public void setDbTCPName(String dbTCPName) {
     this.dbTCPName = dbTCPName;
@@ -470,7 +434,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbTCPPassword(String dbTCPPassword) {
-    
     this.dbTCPPassword = dbTCPPassword;
     return this;
   }
@@ -480,11 +443,9 @@ public class InstallInstallConfig {
    * @return dbTCPPassword
   **/
   @javax.annotation.Nullable
-
   public String getDbTCPPassword() {
     return dbTCPPassword;
   }
-
 
   public void setDbTCPPassword(String dbTCPPassword) {
     this.dbTCPPassword = dbTCPPassword;
@@ -492,7 +453,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbTCPPort(String dbTCPPort) {
-    
     this.dbTCPPort = dbTCPPort;
     return this;
   }
@@ -502,11 +462,9 @@ public class InstallInstallConfig {
    * @return dbTCPPort
   **/
   @javax.annotation.Nullable
-
   public String getDbTCPPort() {
     return dbTCPPort;
   }
-
 
   public void setDbTCPPort(String dbTCPPort) {
     this.dbTCPPort = dbTCPPort;
@@ -514,7 +472,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbTCPUser(String dbTCPUser) {
-    
     this.dbTCPUser = dbTCPUser;
     return this;
   }
@@ -524,11 +481,9 @@ public class InstallInstallConfig {
    * @return dbTCPUser
   **/
   @javax.annotation.Nullable
-
   public String getDbTCPUser() {
     return dbTCPUser;
   }
-
 
   public void setDbTCPUser(String dbTCPUser) {
     this.dbTCPUser = dbTCPUser;
@@ -536,7 +491,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dbUseDefaults(Boolean dbUseDefaults) {
-    
     this.dbUseDefaults = dbUseDefaults;
     return this;
   }
@@ -546,11 +500,9 @@ public class InstallInstallConfig {
    * @return dbUseDefaults
   **/
   @javax.annotation.Nullable
-
   public Boolean getDbUseDefaults() {
     return dbUseDefaults;
   }
-
 
   public void setDbUseDefaults(Boolean dbUseDefaults) {
     this.dbUseDefaults = dbUseDefaults;
@@ -558,7 +510,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsFolder(String dsFolder) {
-    
     this.dsFolder = dsFolder;
     return this;
   }
@@ -568,11 +519,9 @@ public class InstallInstallConfig {
    * @return dsFolder
   **/
   @javax.annotation.Nullable
-
   public String getDsFolder() {
     return dsFolder;
   }
-
 
   public void setDsFolder(String dsFolder) {
     this.dsFolder = dsFolder;
@@ -580,7 +529,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsName(String dsName) {
-    
     this.dsName = dsName;
     return this;
   }
@@ -590,11 +538,9 @@ public class InstallInstallConfig {
    * @return dsName
   **/
   @javax.annotation.Nullable
-
   public String getDsName() {
     return dsName;
   }
-
 
   public void setDsName(String dsName) {
     this.dsName = dsName;
@@ -602,7 +548,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsPort(String dsPort) {
-    
     this.dsPort = dsPort;
     return this;
   }
@@ -612,11 +557,9 @@ public class InstallInstallConfig {
    * @return dsPort
   **/
   @javax.annotation.Nullable
-
   public String getDsPort() {
     return dsPort;
   }
-
 
   public void setDsPort(String dsPort) {
     this.dsPort = dsPort;
@@ -624,7 +567,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3ApiKey(String dsS3ApiKey) {
-    
     this.dsS3ApiKey = dsS3ApiKey;
     return this;
   }
@@ -634,11 +576,9 @@ public class InstallInstallConfig {
    * @return dsS3ApiKey
   **/
   @javax.annotation.Nullable
-
   public String getDsS3ApiKey() {
     return dsS3ApiKey;
   }
-
 
   public void setDsS3ApiKey(String dsS3ApiKey) {
     this.dsS3ApiKey = dsS3ApiKey;
@@ -646,7 +586,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3ApiSecret(String dsS3ApiSecret) {
-    
     this.dsS3ApiSecret = dsS3ApiSecret;
     return this;
   }
@@ -656,11 +595,9 @@ public class InstallInstallConfig {
    * @return dsS3ApiSecret
   **/
   @javax.annotation.Nullable
-
   public String getDsS3ApiSecret() {
     return dsS3ApiSecret;
   }
-
 
   public void setDsS3ApiSecret(String dsS3ApiSecret) {
     this.dsS3ApiSecret = dsS3ApiSecret;
@@ -668,7 +605,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3BucketBinaries(String dsS3BucketBinaries) {
-    
     this.dsS3BucketBinaries = dsS3BucketBinaries;
     return this;
   }
@@ -678,11 +614,9 @@ public class InstallInstallConfig {
    * @return dsS3BucketBinaries
   **/
   @javax.annotation.Nullable
-
   public String getDsS3BucketBinaries() {
     return dsS3BucketBinaries;
   }
-
 
   public void setDsS3BucketBinaries(String dsS3BucketBinaries) {
     this.dsS3BucketBinaries = dsS3BucketBinaries;
@@ -690,7 +624,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3BucketCells(String dsS3BucketCells) {
-    
     this.dsS3BucketCells = dsS3BucketCells;
     return this;
   }
@@ -700,11 +633,9 @@ public class InstallInstallConfig {
    * @return dsS3BucketCells
   **/
   @javax.annotation.Nullable
-
   public String getDsS3BucketCells() {
     return dsS3BucketCells;
   }
-
 
   public void setDsS3BucketCells(String dsS3BucketCells) {
     this.dsS3BucketCells = dsS3BucketCells;
@@ -712,7 +643,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3BucketDefault(String dsS3BucketDefault) {
-    
     this.dsS3BucketDefault = dsS3BucketDefault;
     return this;
   }
@@ -722,11 +652,9 @@ public class InstallInstallConfig {
    * @return dsS3BucketDefault
   **/
   @javax.annotation.Nullable
-
   public String getDsS3BucketDefault() {
     return dsS3BucketDefault;
   }
-
 
   public void setDsS3BucketDefault(String dsS3BucketDefault) {
     this.dsS3BucketDefault = dsS3BucketDefault;
@@ -734,7 +662,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3BucketPersonal(String dsS3BucketPersonal) {
-    
     this.dsS3BucketPersonal = dsS3BucketPersonal;
     return this;
   }
@@ -744,11 +671,9 @@ public class InstallInstallConfig {
    * @return dsS3BucketPersonal
   **/
   @javax.annotation.Nullable
-
   public String getDsS3BucketPersonal() {
     return dsS3BucketPersonal;
   }
-
 
   public void setDsS3BucketPersonal(String dsS3BucketPersonal) {
     this.dsS3BucketPersonal = dsS3BucketPersonal;
@@ -756,7 +681,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3BucketThumbs(String dsS3BucketThumbs) {
-    
     this.dsS3BucketThumbs = dsS3BucketThumbs;
     return this;
   }
@@ -766,11 +690,9 @@ public class InstallInstallConfig {
    * @return dsS3BucketThumbs
   **/
   @javax.annotation.Nullable
-
   public String getDsS3BucketThumbs() {
     return dsS3BucketThumbs;
   }
-
 
   public void setDsS3BucketThumbs(String dsS3BucketThumbs) {
     this.dsS3BucketThumbs = dsS3BucketThumbs;
@@ -778,7 +700,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3BucketVersions(String dsS3BucketVersions) {
-    
     this.dsS3BucketVersions = dsS3BucketVersions;
     return this;
   }
@@ -788,11 +709,9 @@ public class InstallInstallConfig {
    * @return dsS3BucketVersions
   **/
   @javax.annotation.Nullable
-
   public String getDsS3BucketVersions() {
     return dsS3BucketVersions;
   }
-
 
   public void setDsS3BucketVersions(String dsS3BucketVersions) {
     this.dsS3BucketVersions = dsS3BucketVersions;
@@ -800,7 +719,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3Custom(String dsS3Custom) {
-    
     this.dsS3Custom = dsS3Custom;
     return this;
   }
@@ -810,11 +728,9 @@ public class InstallInstallConfig {
    * @return dsS3Custom
   **/
   @javax.annotation.Nullable
-
   public String getDsS3Custom() {
     return dsS3Custom;
   }
-
 
   public void setDsS3Custom(String dsS3Custom) {
     this.dsS3Custom = dsS3Custom;
@@ -822,7 +738,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsS3CustomRegion(String dsS3CustomRegion) {
-    
     this.dsS3CustomRegion = dsS3CustomRegion;
     return this;
   }
@@ -832,11 +747,9 @@ public class InstallInstallConfig {
    * @return dsS3CustomRegion
   **/
   @javax.annotation.Nullable
-
   public String getDsS3CustomRegion() {
     return dsS3CustomRegion;
   }
-
 
   public void setDsS3CustomRegion(String dsS3CustomRegion) {
     this.dsS3CustomRegion = dsS3CustomRegion;
@@ -844,7 +757,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig dsType(String dsType) {
-    
     this.dsType = dsType;
     return this;
   }
@@ -854,11 +766,9 @@ public class InstallInstallConfig {
    * @return dsType
   **/
   @javax.annotation.Nullable
-
   public String getDsType() {
     return dsType;
   }
-
 
   public void setDsType(String dsType) {
     this.dsType = dsType;
@@ -866,7 +776,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig frontendApplicationTitle(String frontendApplicationTitle) {
-    
     this.frontendApplicationTitle = frontendApplicationTitle;
     return this;
   }
@@ -876,11 +785,9 @@ public class InstallInstallConfig {
    * @return frontendApplicationTitle
   **/
   @javax.annotation.Nullable
-
   public String getFrontendApplicationTitle() {
     return frontendApplicationTitle;
   }
-
 
   public void setFrontendApplicationTitle(String frontendApplicationTitle) {
     this.frontendApplicationTitle = frontendApplicationTitle;
@@ -888,7 +795,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig frontendDefaultLanguage(String frontendDefaultLanguage) {
-    
     this.frontendDefaultLanguage = frontendDefaultLanguage;
     return this;
   }
@@ -898,11 +804,9 @@ public class InstallInstallConfig {
    * @return frontendDefaultLanguage
   **/
   @javax.annotation.Nullable
-
   public String getFrontendDefaultLanguage() {
     return frontendDefaultLanguage;
   }
-
 
   public void setFrontendDefaultLanguage(String frontendDefaultLanguage) {
     this.frontendDefaultLanguage = frontendDefaultLanguage;
@@ -910,7 +814,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig frontendHosts(String frontendHosts) {
-    
     this.frontendHosts = frontendHosts;
     return this;
   }
@@ -920,11 +823,9 @@ public class InstallInstallConfig {
    * @return frontendHosts
   **/
   @javax.annotation.Nullable
-
   public String getFrontendHosts() {
     return frontendHosts;
   }
-
 
   public void setFrontendHosts(String frontendHosts) {
     this.frontendHosts = frontendHosts;
@@ -932,7 +833,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig frontendLogin(String frontendLogin) {
-    
     this.frontendLogin = frontendLogin;
     return this;
   }
@@ -942,11 +842,9 @@ public class InstallInstallConfig {
    * @return frontendLogin
   **/
   @javax.annotation.Nullable
-
   public String getFrontendLogin() {
     return frontendLogin;
   }
-
 
   public void setFrontendLogin(String frontendLogin) {
     this.frontendLogin = frontendLogin;
@@ -954,7 +852,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig frontendPassword(String frontendPassword) {
-    
     this.frontendPassword = frontendPassword;
     return this;
   }
@@ -964,11 +861,9 @@ public class InstallInstallConfig {
    * @return frontendPassword
   **/
   @javax.annotation.Nullable
-
   public String getFrontendPassword() {
     return frontendPassword;
   }
-
 
   public void setFrontendPassword(String frontendPassword) {
     this.frontendPassword = frontendPassword;
@@ -976,7 +871,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig frontendRepeatPassword(String frontendRepeatPassword) {
-    
     this.frontendRepeatPassword = frontendRepeatPassword;
     return this;
   }
@@ -986,11 +880,9 @@ public class InstallInstallConfig {
    * @return frontendRepeatPassword
   **/
   @javax.annotation.Nullable
-
   public String getFrontendRepeatPassword() {
     return frontendRepeatPassword;
   }
-
 
   public void setFrontendRepeatPassword(String frontendRepeatPassword) {
     this.frontendRepeatPassword = frontendRepeatPassword;
@@ -998,7 +890,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig internalUrl(String internalUrl) {
-    
     this.internalUrl = internalUrl;
     return this;
   }
@@ -1008,11 +899,9 @@ public class InstallInstallConfig {
    * @return internalUrl
   **/
   @javax.annotation.Nullable
-
   public String getInternalUrl() {
     return internalUrl;
   }
-
 
   public void setInternalUrl(String internalUrl) {
     this.internalUrl = internalUrl;
@@ -1020,7 +909,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig licenseRequired(Boolean licenseRequired) {
-    
     this.licenseRequired = licenseRequired;
     return this;
   }
@@ -1030,11 +918,9 @@ public class InstallInstallConfig {
    * @return licenseRequired
   **/
   @javax.annotation.Nullable
-
   public Boolean getLicenseRequired() {
     return licenseRequired;
   }
-
 
   public void setLicenseRequired(Boolean licenseRequired) {
     this.licenseRequired = licenseRequired;
@@ -1042,7 +928,6 @@ public class InstallInstallConfig {
 
 
   public InstallInstallConfig licenseString(String licenseString) {
-    
     this.licenseString = licenseString;
     return this;
   }
@@ -1052,11 +937,9 @@ public class InstallInstallConfig {
    * @return licenseString
   **/
   @javax.annotation.Nullable
-
   public String getLicenseString() {
     return licenseString;
   }
-
 
   public void setLicenseString(String licenseString) {
     this.licenseString = licenseString;
@@ -1229,25 +1112,26 @@ public class InstallInstallConfig {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to InstallInstallConfig
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to InstallInstallConfig
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!InstallInstallConfig.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!InstallInstallConfig.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in InstallInstallConfig is not found in the empty JSON string", InstallInstallConfig.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!InstallInstallConfig.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `InstallInstallConfig` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `InstallInstallConfig` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("CheckResults") != null && !jsonObj.get("CheckResults").isJsonNull()) {
         JsonArray jsonArraycheckResults = jsonObj.getAsJsonArray("CheckResults");
         if (jsonArraycheckResults != null) {
@@ -1258,7 +1142,7 @@ public class InstallInstallConfig {
 
           // validate the optional field `CheckResults` (array)
           for (int i = 0; i < jsonArraycheckResults.size(); i++) {
-            InstallCheckResult.validateJsonObject(jsonArraycheckResults.get(i).getAsJsonObject());
+            InstallCheckResult.validateJsonElement(jsonArraycheckResults.get(i));
           };
         }
       }
@@ -1267,7 +1151,7 @@ public class InstallInstallConfig {
       }
       // validate the optional field `ProxyConfig`
       if (jsonObj.get("ProxyConfig") != null && !jsonObj.get("ProxyConfig").isJsonNull()) {
-        InstallProxyConfig.validateJsonObject(jsonObj.getAsJsonObject("ProxyConfig"));
+        InstallProxyConfig.validateJsonElement(jsonObj.get("ProxyConfig"));
       }
       if ((jsonObj.get("dbConnectionType") != null && !jsonObj.get("dbConnectionType").isJsonNull()) && !jsonObj.get("dbConnectionType").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dbConnectionType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dbConnectionType").toString()));
@@ -1390,9 +1274,9 @@ public class InstallInstallConfig {
 
            @Override
            public InstallInstallConfig read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

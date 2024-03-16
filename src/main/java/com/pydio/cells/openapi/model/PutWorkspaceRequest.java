@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * A Workspace is composed of a set of nodes UUIDs and is used to provide accesses to the tree via ACLs.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class PutWorkspaceRequest {
   public static final String SERIALIZED_NAME_ATTRIBUTES = "Attributes";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTES)
@@ -84,7 +83,6 @@ public class PutWorkspaceRequest {
   }
 
   public PutWorkspaceRequest attributes(String attributes) {
-    
     this.attributes = attributes;
     return this;
   }
@@ -94,11 +92,9 @@ public class PutWorkspaceRequest {
    * @return attributes
   **/
   @javax.annotation.Nullable
-
   public String getAttributes() {
     return attributes;
   }
-
 
   public void setAttributes(String attributes) {
     this.attributes = attributes;
@@ -106,7 +102,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -116,11 +111,9 @@ public class PutWorkspaceRequest {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -128,7 +121,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -138,11 +130,9 @@ public class PutWorkspaceRequest {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -150,7 +140,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest lastUpdated(Integer lastUpdated) {
-    
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -160,11 +149,9 @@ public class PutWorkspaceRequest {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-
   public Integer getLastUpdated() {
     return lastUpdated;
   }
-
 
   public void setLastUpdated(Integer lastUpdated) {
     this.lastUpdated = lastUpdated;
@@ -172,7 +159,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest policies(List<ServiceResourcePolicy> policies) {
-    
     this.policies = policies;
     return this;
   }
@@ -190,11 +176,9 @@ public class PutWorkspaceRequest {
    * @return policies
   **/
   @javax.annotation.Nullable
-
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
   }
-
 
   public void setPolicies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
@@ -202,7 +186,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest policiesContextEditable(Boolean policiesContextEditable) {
-    
     this.policiesContextEditable = policiesContextEditable;
     return this;
   }
@@ -212,11 +195,9 @@ public class PutWorkspaceRequest {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
   }
-
 
   public void setPoliciesContextEditable(Boolean policiesContextEditable) {
     this.policiesContextEditable = policiesContextEditable;
@@ -224,7 +205,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest rootNodes(Map<String, TreeNode> rootNodes) {
-    
     this.rootNodes = rootNodes;
     return this;
   }
@@ -242,11 +222,9 @@ public class PutWorkspaceRequest {
    * @return rootNodes
   **/
   @javax.annotation.Nullable
-
   public Map<String, TreeNode> getRootNodes() {
     return rootNodes;
   }
-
 
   public void setRootNodes(Map<String, TreeNode> rootNodes) {
     this.rootNodes = rootNodes;
@@ -254,7 +232,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest rootUUIDs(List<String> rootUUIDs) {
-    
     this.rootUUIDs = rootUUIDs;
     return this;
   }
@@ -272,11 +249,9 @@ public class PutWorkspaceRequest {
    * @return rootUUIDs
   **/
   @javax.annotation.Nullable
-
   public List<String> getRootUUIDs() {
     return rootUUIDs;
   }
-
 
   public void setRootUUIDs(List<String> rootUUIDs) {
     this.rootUUIDs = rootUUIDs;
@@ -284,7 +259,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest scope(IdmWorkspaceScope scope) {
-    
     this.scope = scope;
     return this;
   }
@@ -294,11 +268,9 @@ public class PutWorkspaceRequest {
    * @return scope
   **/
   @javax.annotation.Nullable
-
   public IdmWorkspaceScope getScope() {
     return scope;
   }
-
 
   public void setScope(IdmWorkspaceScope scope) {
     this.scope = scope;
@@ -306,7 +278,6 @@ public class PutWorkspaceRequest {
 
 
   public PutWorkspaceRequest UUID(String UUID) {
-    
     this.UUID = UUID;
     return this;
   }
@@ -316,11 +287,9 @@ public class PutWorkspaceRequest {
    * @return UUID
   **/
   @javax.annotation.Nullable
-
   public String getUUID() {
     return UUID;
   }
-
 
   public void setUUID(String UUID) {
     this.UUID = UUID;
@@ -406,25 +375,26 @@ public class PutWorkspaceRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to PutWorkspaceRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to PutWorkspaceRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!PutWorkspaceRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!PutWorkspaceRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in PutWorkspaceRequest is not found in the empty JSON string", PutWorkspaceRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!PutWorkspaceRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `PutWorkspaceRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `PutWorkspaceRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Attributes") != null && !jsonObj.get("Attributes").isJsonNull()) && !jsonObj.get("Attributes").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Attributes` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Attributes").toString()));
       }
@@ -444,13 +414,17 @@ public class PutWorkspaceRequest {
 
           // validate the optional field `Policies` (array)
           for (int i = 0; i < jsonArraypolicies.size(); i++) {
-            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+            ServiceResourcePolicy.validateJsonElement(jsonArraypolicies.get(i));
           };
         }
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("RootUUIDs") != null && !jsonObj.get("RootUUIDs").isJsonArray()) {
+      if (jsonObj.get("RootUUIDs") != null && !jsonObj.get("RootUUIDs").isJsonNull() && !jsonObj.get("RootUUIDs").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `RootUUIDs` to be an array in the JSON string but got `%s`", jsonObj.get("RootUUIDs").toString()));
+      }
+      // validate the optional field `Scope`
+      if (jsonObj.get("Scope") != null && !jsonObj.get("Scope").isJsonNull()) {
+        IdmWorkspaceScope.validateJsonElement(jsonObj.get("Scope"));
       }
       if ((jsonObj.get("UUID") != null && !jsonObj.get("UUID").isJsonNull()) && !jsonObj.get("UUID").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `UUID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("UUID").toString()));
@@ -477,9 +451,9 @@ public class PutWorkspaceRequest {
 
            @Override
            public PutWorkspaceRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

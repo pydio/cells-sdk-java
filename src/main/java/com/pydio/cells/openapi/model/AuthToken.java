@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * AuthToken
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class AuthToken {
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "AccessToken";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
@@ -55,7 +55,6 @@ public class AuthToken {
   }
 
   public AuthToken accessToken(String accessToken) {
-    
     this.accessToken = accessToken;
     return this;
   }
@@ -65,11 +64,9 @@ public class AuthToken {
    * @return accessToken
   **/
   @javax.annotation.Nullable
-
   public String getAccessToken() {
     return accessToken;
   }
-
 
   public void setAccessToken(String accessToken) {
     this.accessToken = accessToken;
@@ -77,7 +74,6 @@ public class AuthToken {
 
 
   public AuthToken expiresAt(String expiresAt) {
-    
     this.expiresAt = expiresAt;
     return this;
   }
@@ -87,11 +83,9 @@ public class AuthToken {
    * @return expiresAt
   **/
   @javax.annotation.Nullable
-
   public String getExpiresAt() {
     return expiresAt;
   }
-
 
   public void setExpiresAt(String expiresAt) {
     this.expiresAt = expiresAt;
@@ -99,7 +93,6 @@ public class AuthToken {
 
 
   public AuthToken idToken(String idToken) {
-    
     this.idToken = idToken;
     return this;
   }
@@ -109,11 +102,9 @@ public class AuthToken {
    * @return idToken
   **/
   @javax.annotation.Nullable
-
   public String getIdToken() {
     return idToken;
   }
-
 
   public void setIdToken(String idToken) {
     this.idToken = idToken;
@@ -121,7 +112,6 @@ public class AuthToken {
 
 
   public AuthToken refreshToken(String refreshToken) {
-    
     this.refreshToken = refreshToken;
     return this;
   }
@@ -131,11 +121,9 @@ public class AuthToken {
    * @return refreshToken
   **/
   @javax.annotation.Nullable
-
   public String getRefreshToken() {
     return refreshToken;
   }
-
 
   public void setRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;
@@ -203,25 +191,26 @@ public class AuthToken {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to AuthToken
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to AuthToken
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!AuthToken.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!AuthToken.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in AuthToken is not found in the empty JSON string", AuthToken.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!AuthToken.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthToken` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthToken` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("AccessToken") != null && !jsonObj.get("AccessToken").isJsonNull()) && !jsonObj.get("AccessToken").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `AccessToken` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AccessToken").toString()));
       }
@@ -256,9 +245,9 @@ public class AuthToken {
 
            @Override
            public AuthToken read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

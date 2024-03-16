@@ -15,7 +15,7 @@ repositories {
 java.sourceCompatibility = JavaVersion.VERSION_17
 java.targetCompatibility = JavaVersion.VERSION_17
 
-def sdkVersion = '0.4.4'
+def sdkVersion = '0.4.5'
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
 }
@@ -84,7 +84,7 @@ publishing {
 jar {
     manifest {
         attributes('Specification-Title': 'Cells SDK for Java',
-                'Specification-Version': '4.0',
+                'Specification-Version': '4.4',
                 'Specification-Vendor': 'Abstrium SAS',
                 'Implementation-Title': project.name,
                 'Implementation-Vendor': 'Abstrium SAS',
@@ -94,13 +94,13 @@ jar {
 
 dependencies {
 
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
 
-    implementation 'org.threeten:threetenbp:1.5.2'
+    implementation 'org.threeten:threetenbp:1.6.8'
 
     // Updating this cause IdToken decoding failure
-    implementation 'commons-codec:commons-codec:1.16.0'
+    implementation 'commons-codec:commons-codec:1.16.1'
 
     // Used to store info as gson blobs in SQLite
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -113,10 +113,11 @@ dependencies {
     // https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api
     implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.1.0'
     // Necessary for swagger (generation of the openapi package from Cells spec)
-    implementation 'io.swagger:swagger-annotations:1.6.9'
+    implementation 'io.swagger:swagger-annotations:1.6.13'
     // Add the @Nullable annotation
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     // implementation 'org.jetbrains:annotations:23.0.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 
 
     // JUnit test framework

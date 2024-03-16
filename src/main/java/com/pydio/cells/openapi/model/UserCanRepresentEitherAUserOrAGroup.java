@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * UserCanRepresentEitherAUserOrAGroup
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class UserCanRepresentEitherAUserOrAGroup {
   public static final String SERIALIZED_NAME_ATTRIBUTES = "Attributes";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTES)
@@ -88,7 +87,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
   }
 
   public UserCanRepresentEitherAUserOrAGroup attributes(Map<String, String> attributes) {
-    
     this.attributes = attributes;
     return this;
   }
@@ -106,11 +104,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return attributes
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getAttributes() {
     return attributes;
   }
-
 
   public void setAttributes(Map<String, String> attributes) {
     this.attributes = attributes;
@@ -118,7 +114,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup groupLabel(String groupLabel) {
-    
     this.groupLabel = groupLabel;
     return this;
   }
@@ -128,11 +123,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return groupLabel
   **/
   @javax.annotation.Nullable
-
   public String getGroupLabel() {
     return groupLabel;
   }
-
 
   public void setGroupLabel(String groupLabel) {
     this.groupLabel = groupLabel;
@@ -140,7 +133,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup groupPath(String groupPath) {
-    
     this.groupPath = groupPath;
     return this;
   }
@@ -150,11 +142,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return groupPath
   **/
   @javax.annotation.Nullable
-
   public String getGroupPath() {
     return groupPath;
   }
-
 
   public void setGroupPath(String groupPath) {
     this.groupPath = groupPath;
@@ -162,7 +152,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup isGroup(Boolean isGroup) {
-    
     this.isGroup = isGroup;
     return this;
   }
@@ -172,11 +161,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return isGroup
   **/
   @javax.annotation.Nullable
-
   public Boolean getIsGroup() {
     return isGroup;
   }
-
 
   public void setIsGroup(Boolean isGroup) {
     this.isGroup = isGroup;
@@ -184,7 +171,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup lastConnected(Integer lastConnected) {
-    
     this.lastConnected = lastConnected;
     return this;
   }
@@ -194,11 +180,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return lastConnected
   **/
   @javax.annotation.Nullable
-
   public Integer getLastConnected() {
     return lastConnected;
   }
-
 
   public void setLastConnected(Integer lastConnected) {
     this.lastConnected = lastConnected;
@@ -206,7 +190,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup oldPassword(String oldPassword) {
-    
     this.oldPassword = oldPassword;
     return this;
   }
@@ -216,11 +199,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return oldPassword
   **/
   @javax.annotation.Nullable
-
   public String getOldPassword() {
     return oldPassword;
   }
-
 
   public void setOldPassword(String oldPassword) {
     this.oldPassword = oldPassword;
@@ -228,7 +209,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup password(String password) {
-    
     this.password = password;
     return this;
   }
@@ -238,11 +218,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return password
   **/
   @javax.annotation.Nullable
-
   public String getPassword() {
     return password;
   }
-
 
   public void setPassword(String password) {
     this.password = password;
@@ -250,7 +228,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup policies(List<ServiceResourcePolicy> policies) {
-    
     this.policies = policies;
     return this;
   }
@@ -268,11 +245,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return policies
   **/
   @javax.annotation.Nullable
-
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
   }
-
 
   public void setPolicies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
@@ -280,7 +255,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup policiesContextEditable(Boolean policiesContextEditable) {
-    
     this.policiesContextEditable = policiesContextEditable;
     return this;
   }
@@ -290,11 +264,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
   }
-
 
   public void setPoliciesContextEditable(Boolean policiesContextEditable) {
     this.policiesContextEditable = policiesContextEditable;
@@ -302,7 +274,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup roles(List<IdmRole> roles) {
-    
     this.roles = roles;
     return this;
   }
@@ -320,11 +291,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return roles
   **/
   @javax.annotation.Nullable
-
   public List<IdmRole> getRoles() {
     return roles;
   }
-
 
   public void setRoles(List<IdmRole> roles) {
     this.roles = roles;
@@ -332,7 +301,6 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
 
   public UserCanRepresentEitherAUserOrAGroup uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -342,11 +310,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -435,25 +401,26 @@ public class UserCanRepresentEitherAUserOrAGroup {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to UserCanRepresentEitherAUserOrAGroup
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to UserCanRepresentEitherAUserOrAGroup
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!UserCanRepresentEitherAUserOrAGroup.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!UserCanRepresentEitherAUserOrAGroup.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in UserCanRepresentEitherAUserOrAGroup is not found in the empty JSON string", UserCanRepresentEitherAUserOrAGroup.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!UserCanRepresentEitherAUserOrAGroup.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `UserCanRepresentEitherAUserOrAGroup` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `UserCanRepresentEitherAUserOrAGroup` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("GroupLabel") != null && !jsonObj.get("GroupLabel").isJsonNull()) && !jsonObj.get("GroupLabel").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `GroupLabel` to be a primitive type in the JSON string but got `%s`", jsonObj.get("GroupLabel").toString()));
       }
@@ -476,7 +443,7 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
           // validate the optional field `Policies` (array)
           for (int i = 0; i < jsonArraypolicies.size(); i++) {
-            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+            ServiceResourcePolicy.validateJsonElement(jsonArraypolicies.get(i));
           };
         }
       }
@@ -490,7 +457,7 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
           // validate the optional field `Roles` (array)
           for (int i = 0; i < jsonArrayroles.size(); i++) {
-            IdmRole.validateJsonObject(jsonArrayroles.get(i).getAsJsonObject());
+            IdmRole.validateJsonElement(jsonArrayroles.get(i));
           };
         }
       }
@@ -519,9 +486,9 @@ public class UserCanRepresentEitherAUserOrAGroup {
 
            @Override
            public UserCanRepresentEitherAUserOrAGroup read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

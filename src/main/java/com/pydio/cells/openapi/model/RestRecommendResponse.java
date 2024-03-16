@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestRecommendResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestRecommendResponse {
   public static final String SERIALIZED_NAME_NODES = "Nodes";
   @SerializedName(SERIALIZED_NAME_NODES)
@@ -46,7 +46,6 @@ public class RestRecommendResponse {
   }
 
   public RestRecommendResponse nodes(List<TreeNode> nodes) {
-    
     this.nodes = nodes;
     return this;
   }
@@ -64,11 +63,9 @@ public class RestRecommendResponse {
    * @return nodes
   **/
   @javax.annotation.Nullable
-
   public List<TreeNode> getNodes() {
     return nodes;
   }
-
 
   public void setNodes(List<TreeNode> nodes) {
     this.nodes = nodes;
@@ -127,25 +124,26 @@ public class RestRecommendResponse {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestRecommendResponse
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestRecommendResponse
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestRecommendResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestRecommendResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestRecommendResponse is not found in the empty JSON string", RestRecommendResponse.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestRecommendResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestRecommendResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestRecommendResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Nodes") != null && !jsonObj.get("Nodes").isJsonNull()) {
         JsonArray jsonArraynodes = jsonObj.getAsJsonArray("Nodes");
         if (jsonArraynodes != null) {
@@ -156,7 +154,7 @@ public class RestRecommendResponse {
 
           // validate the optional field `Nodes` (array)
           for (int i = 0; i < jsonArraynodes.size(); i++) {
-            TreeNode.validateJsonObject(jsonArraynodes.get(i).getAsJsonObject());
+            TreeNode.validateJsonElement(jsonArraynodes.get(i));
           };
         }
       }
@@ -182,9 +180,9 @@ public class RestRecommendResponse {
 
            @Override
            public RestRecommendResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

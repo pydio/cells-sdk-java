@@ -28,14 +28,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestFrontSessionResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestFrontSessionResponse {
   public static final String SERIALIZED_NAME_ERROR = "Error";
   @SerializedName(SERIALIZED_NAME_ERROR)
@@ -69,7 +68,6 @@ public class RestFrontSessionResponse {
   }
 
   public RestFrontSessionResponse error(String error) {
-    
     this.error = error;
     return this;
   }
@@ -79,11 +77,9 @@ public class RestFrontSessionResponse {
    * @return error
   **/
   @javax.annotation.Nullable
-
   public String getError() {
     return error;
   }
-
 
   public void setError(String error) {
     this.error = error;
@@ -91,7 +87,6 @@ public class RestFrontSessionResponse {
 
 
   public RestFrontSessionResponse expireTime(Integer expireTime) {
-    
     this.expireTime = expireTime;
     return this;
   }
@@ -101,11 +96,9 @@ public class RestFrontSessionResponse {
    * @return expireTime
   **/
   @javax.annotation.Nullable
-
   public Integer getExpireTime() {
     return expireTime;
   }
-
 
   public void setExpireTime(Integer expireTime) {
     this.expireTime = expireTime;
@@ -113,7 +106,6 @@ public class RestFrontSessionResponse {
 
 
   public RestFrontSessionResponse JWT(String JWT) {
-    
     this.JWT = JWT;
     return this;
   }
@@ -123,11 +115,9 @@ public class RestFrontSessionResponse {
    * @return JWT
   **/
   @javax.annotation.Nullable
-
   public String getJWT() {
     return JWT;
   }
-
 
   public void setJWT(String JWT) {
     this.JWT = JWT;
@@ -135,7 +125,6 @@ public class RestFrontSessionResponse {
 
 
   public RestFrontSessionResponse redirectTo(String redirectTo) {
-    
     this.redirectTo = redirectTo;
     return this;
   }
@@ -145,11 +134,9 @@ public class RestFrontSessionResponse {
    * @return redirectTo
   **/
   @javax.annotation.Nullable
-
   public String getRedirectTo() {
     return redirectTo;
   }
-
 
   public void setRedirectTo(String redirectTo) {
     this.redirectTo = redirectTo;
@@ -157,7 +144,6 @@ public class RestFrontSessionResponse {
 
 
   public RestFrontSessionResponse token(AuthToken token) {
-    
     this.token = token;
     return this;
   }
@@ -167,11 +153,9 @@ public class RestFrontSessionResponse {
    * @return token
   **/
   @javax.annotation.Nullable
-
   public AuthToken getToken() {
     return token;
   }
-
 
   public void setToken(AuthToken token) {
     this.token = token;
@@ -179,7 +163,6 @@ public class RestFrontSessionResponse {
 
 
   public RestFrontSessionResponse trigger(String trigger) {
-    
     this.trigger = trigger;
     return this;
   }
@@ -189,11 +172,9 @@ public class RestFrontSessionResponse {
    * @return trigger
   **/
   @javax.annotation.Nullable
-
   public String getTrigger() {
     return trigger;
   }
-
 
   public void setTrigger(String trigger) {
     this.trigger = trigger;
@@ -201,7 +182,6 @@ public class RestFrontSessionResponse {
 
 
   public RestFrontSessionResponse triggerInfo(Map<String, String> triggerInfo) {
-    
     this.triggerInfo = triggerInfo;
     return this;
   }
@@ -219,11 +199,9 @@ public class RestFrontSessionResponse {
    * @return triggerInfo
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getTriggerInfo() {
     return triggerInfo;
   }
-
 
   public void setTriggerInfo(Map<String, String> triggerInfo) {
     this.triggerInfo = triggerInfo;
@@ -300,25 +278,26 @@ public class RestFrontSessionResponse {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestFrontSessionResponse
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestFrontSessionResponse
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestFrontSessionResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestFrontSessionResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestFrontSessionResponse is not found in the empty JSON string", RestFrontSessionResponse.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestFrontSessionResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestFrontSessionResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestFrontSessionResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Error") != null && !jsonObj.get("Error").isJsonNull()) && !jsonObj.get("Error").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Error` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Error").toString()));
       }
@@ -330,7 +309,7 @@ public class RestFrontSessionResponse {
       }
       // validate the optional field `Token`
       if (jsonObj.get("Token") != null && !jsonObj.get("Token").isJsonNull()) {
-        AuthToken.validateJsonObject(jsonObj.getAsJsonObject("Token"));
+        AuthToken.validateJsonElement(jsonObj.get("Token"));
       }
       if ((jsonObj.get("Trigger") != null && !jsonObj.get("Trigger").isJsonNull()) && !jsonObj.get("Trigger").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Trigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Trigger").toString()));
@@ -357,9 +336,9 @@ public class RestFrontSessionResponse {
 
            @Override
            public RestFrontSessionResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

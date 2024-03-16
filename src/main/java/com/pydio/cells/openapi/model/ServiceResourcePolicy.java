@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * ServiceResourcePolicy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class ServiceResourcePolicy {
   public static final String SERIALIZED_NAME_ACTION = "Action";
   @SerializedName(SERIALIZED_NAME_ACTION)
@@ -63,7 +63,6 @@ public class ServiceResourcePolicy {
   }
 
   public ServiceResourcePolicy action(ServiceResourcePolicyAction action) {
-    
     this.action = action;
     return this;
   }
@@ -73,11 +72,9 @@ public class ServiceResourcePolicy {
    * @return action
   **/
   @javax.annotation.Nullable
-
   public ServiceResourcePolicyAction getAction() {
     return action;
   }
-
 
   public void setAction(ServiceResourcePolicyAction action) {
     this.action = action;
@@ -85,7 +82,6 @@ public class ServiceResourcePolicy {
 
 
   public ServiceResourcePolicy effect(ServiceResourcePolicyPolicyEffect effect) {
-    
     this.effect = effect;
     return this;
   }
@@ -95,11 +91,9 @@ public class ServiceResourcePolicy {
    * @return effect
   **/
   @javax.annotation.Nullable
-
   public ServiceResourcePolicyPolicyEffect getEffect() {
     return effect;
   }
-
 
   public void setEffect(ServiceResourcePolicyPolicyEffect effect) {
     this.effect = effect;
@@ -107,7 +101,6 @@ public class ServiceResourcePolicy {
 
 
   public ServiceResourcePolicy jsonConditions(String jsonConditions) {
-    
     this.jsonConditions = jsonConditions;
     return this;
   }
@@ -117,11 +110,9 @@ public class ServiceResourcePolicy {
    * @return jsonConditions
   **/
   @javax.annotation.Nullable
-
   public String getJsonConditions() {
     return jsonConditions;
   }
-
 
   public void setJsonConditions(String jsonConditions) {
     this.jsonConditions = jsonConditions;
@@ -129,7 +120,6 @@ public class ServiceResourcePolicy {
 
 
   public ServiceResourcePolicy resource(String resource) {
-    
     this.resource = resource;
     return this;
   }
@@ -139,11 +129,9 @@ public class ServiceResourcePolicy {
    * @return resource
   **/
   @javax.annotation.Nullable
-
   public String getResource() {
     return resource;
   }
-
 
   public void setResource(String resource) {
     this.resource = resource;
@@ -151,7 +139,6 @@ public class ServiceResourcePolicy {
 
 
   public ServiceResourcePolicy subject(String subject) {
-    
     this.subject = subject;
     return this;
   }
@@ -161,11 +148,9 @@ public class ServiceResourcePolicy {
    * @return subject
   **/
   @javax.annotation.Nullable
-
   public String getSubject() {
     return subject;
   }
-
 
   public void setSubject(String subject) {
     this.subject = subject;
@@ -173,7 +158,6 @@ public class ServiceResourcePolicy {
 
 
   public ServiceResourcePolicy id(String id) {
-    
     this.id = id;
     return this;
   }
@@ -183,11 +167,9 @@ public class ServiceResourcePolicy {
    * @return id
   **/
   @javax.annotation.Nullable
-
   public String getId() {
     return id;
   }
-
 
   public void setId(String id) {
     this.id = id;
@@ -261,24 +243,33 @@ public class ServiceResourcePolicy {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to ServiceResourcePolicy
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to ServiceResourcePolicy
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!ServiceResourcePolicy.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!ServiceResourcePolicy.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in ServiceResourcePolicy is not found in the empty JSON string", ServiceResourcePolicy.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!ServiceResourcePolicy.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ServiceResourcePolicy` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ServiceResourcePolicy` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
+      }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
+      // validate the optional field `Action`
+      if (jsonObj.get("Action") != null && !jsonObj.get("Action").isJsonNull()) {
+        ServiceResourcePolicyAction.validateJsonElement(jsonObj.get("Action"));
+      }
+      // validate the optional field `Effect`
+      if (jsonObj.get("Effect") != null && !jsonObj.get("Effect").isJsonNull()) {
+        ServiceResourcePolicyPolicyEffect.validateJsonElement(jsonObj.get("Effect"));
       }
       if ((jsonObj.get("JsonConditions") != null && !jsonObj.get("JsonConditions").isJsonNull()) && !jsonObj.get("JsonConditions").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `JsonConditions` to be a primitive type in the JSON string but got `%s`", jsonObj.get("JsonConditions").toString()));
@@ -314,9 +305,9 @@ public class ServiceResourcePolicy {
 
            @Override
            public ServiceResourcePolicy read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

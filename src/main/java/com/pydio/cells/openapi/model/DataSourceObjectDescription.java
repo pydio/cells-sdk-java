@@ -28,14 +28,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * DataSourceObjectDescription
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class DataSourceObjectDescription {
   public static final String SERIALIZED_NAME_API_KEY = "ApiKey";
   @SerializedName(SERIALIZED_NAME_API_KEY)
@@ -121,7 +120,6 @@ public class DataSourceObjectDescription {
   }
 
   public DataSourceObjectDescription apiKey(String apiKey) {
-    
     this.apiKey = apiKey;
     return this;
   }
@@ -131,11 +129,9 @@ public class DataSourceObjectDescription {
    * @return apiKey
   **/
   @javax.annotation.Nullable
-
   public String getApiKey() {
     return apiKey;
   }
-
 
   public void setApiKey(String apiKey) {
     this.apiKey = apiKey;
@@ -143,7 +139,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription apiSecret(String apiSecret) {
-    
     this.apiSecret = apiSecret;
     return this;
   }
@@ -153,11 +148,9 @@ public class DataSourceObjectDescription {
    * @return apiSecret
   **/
   @javax.annotation.Nullable
-
   public String getApiSecret() {
     return apiSecret;
   }
-
 
   public void setApiSecret(String apiSecret) {
     this.apiSecret = apiSecret;
@@ -165,7 +158,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription creationDate(Integer creationDate) {
-    
     this.creationDate = creationDate;
     return this;
   }
@@ -175,11 +167,9 @@ public class DataSourceObjectDescription {
    * @return creationDate
   **/
   @javax.annotation.Nullable
-
   public Integer getCreationDate() {
     return creationDate;
   }
-
 
   public void setCreationDate(Integer creationDate) {
     this.creationDate = creationDate;
@@ -187,7 +177,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription disabled(Boolean disabled) {
-    
     this.disabled = disabled;
     return this;
   }
@@ -197,11 +186,9 @@ public class DataSourceObjectDescription {
    * @return disabled
   **/
   @javax.annotation.Nullable
-
   public Boolean getDisabled() {
     return disabled;
   }
-
 
   public void setDisabled(Boolean disabled) {
     this.disabled = disabled;
@@ -209,7 +196,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription encryptionKey(String encryptionKey) {
-    
     this.encryptionKey = encryptionKey;
     return this;
   }
@@ -219,11 +205,9 @@ public class DataSourceObjectDescription {
    * @return encryptionKey
   **/
   @javax.annotation.Nullable
-
   public String getEncryptionKey() {
     return encryptionKey;
   }
-
 
   public void setEncryptionKey(String encryptionKey) {
     this.encryptionKey = encryptionKey;
@@ -231,7 +215,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription encryptionMode(ObjectEncryptionMode encryptionMode) {
-    
     this.encryptionMode = encryptionMode;
     return this;
   }
@@ -241,11 +224,9 @@ public class DataSourceObjectDescription {
    * @return encryptionMode
   **/
   @javax.annotation.Nullable
-
   public ObjectEncryptionMode getEncryptionMode() {
     return encryptionMode;
   }
-
 
   public void setEncryptionMode(ObjectEncryptionMode encryptionMode) {
     this.encryptionMode = encryptionMode;
@@ -253,7 +234,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription flatStorage(Boolean flatStorage) {
-    
     this.flatStorage = flatStorage;
     return this;
   }
@@ -263,11 +243,9 @@ public class DataSourceObjectDescription {
    * @return flatStorage
   **/
   @javax.annotation.Nullable
-
   public Boolean getFlatStorage() {
     return flatStorage;
   }
-
 
   public void setFlatStorage(Boolean flatStorage) {
     this.flatStorage = flatStorage;
@@ -275,7 +253,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription lastSynchronizationDate(Integer lastSynchronizationDate) {
-    
     this.lastSynchronizationDate = lastSynchronizationDate;
     return this;
   }
@@ -285,11 +262,9 @@ public class DataSourceObjectDescription {
    * @return lastSynchronizationDate
   **/
   @javax.annotation.Nullable
-
   public Integer getLastSynchronizationDate() {
     return lastSynchronizationDate;
   }
-
 
   public void setLastSynchronizationDate(Integer lastSynchronizationDate) {
     this.lastSynchronizationDate = lastSynchronizationDate;
@@ -297,7 +272,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription objectsBaseFolder(String objectsBaseFolder) {
-    
     this.objectsBaseFolder = objectsBaseFolder;
     return this;
   }
@@ -307,11 +281,9 @@ public class DataSourceObjectDescription {
    * @return objectsBaseFolder
   **/
   @javax.annotation.Nullable
-
   public String getObjectsBaseFolder() {
     return objectsBaseFolder;
   }
-
 
   public void setObjectsBaseFolder(String objectsBaseFolder) {
     this.objectsBaseFolder = objectsBaseFolder;
@@ -319,7 +291,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription objectsBucket(String objectsBucket) {
-    
     this.objectsBucket = objectsBucket;
     return this;
   }
@@ -329,11 +300,9 @@ public class DataSourceObjectDescription {
    * @return objectsBucket
   **/
   @javax.annotation.Nullable
-
   public String getObjectsBucket() {
     return objectsBucket;
   }
-
 
   public void setObjectsBucket(String objectsBucket) {
     this.objectsBucket = objectsBucket;
@@ -341,7 +310,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription objectsHost(String objectsHost) {
-    
     this.objectsHost = objectsHost;
     return this;
   }
@@ -351,11 +319,9 @@ public class DataSourceObjectDescription {
    * @return objectsHost
   **/
   @javax.annotation.Nullable
-
   public String getObjectsHost() {
     return objectsHost;
   }
-
 
   public void setObjectsHost(String objectsHost) {
     this.objectsHost = objectsHost;
@@ -363,7 +329,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription objectsPort(Integer objectsPort) {
-    
     this.objectsPort = objectsPort;
     return this;
   }
@@ -373,11 +338,9 @@ public class DataSourceObjectDescription {
    * @return objectsPort
   **/
   @javax.annotation.Nullable
-
   public Integer getObjectsPort() {
     return objectsPort;
   }
-
 
   public void setObjectsPort(Integer objectsPort) {
     this.objectsPort = objectsPort;
@@ -385,7 +348,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription objectsSecure(Boolean objectsSecure) {
-    
     this.objectsSecure = objectsSecure;
     return this;
   }
@@ -395,11 +357,9 @@ public class DataSourceObjectDescription {
    * @return objectsSecure
   **/
   @javax.annotation.Nullable
-
   public Boolean getObjectsSecure() {
     return objectsSecure;
   }
-
 
   public void setObjectsSecure(Boolean objectsSecure) {
     this.objectsSecure = objectsSecure;
@@ -407,7 +367,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription objectsServiceName(String objectsServiceName) {
-    
     this.objectsServiceName = objectsServiceName;
     return this;
   }
@@ -417,11 +376,9 @@ public class DataSourceObjectDescription {
    * @return objectsServiceName
   **/
   @javax.annotation.Nullable
-
   public String getObjectsServiceName() {
     return objectsServiceName;
   }
-
 
   public void setObjectsServiceName(String objectsServiceName) {
     this.objectsServiceName = objectsServiceName;
@@ -429,7 +386,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription peerAddress(String peerAddress) {
-    
     this.peerAddress = peerAddress;
     return this;
   }
@@ -439,11 +395,9 @@ public class DataSourceObjectDescription {
    * @return peerAddress
   **/
   @javax.annotation.Nullable
-
   public String getPeerAddress() {
     return peerAddress;
   }
-
 
   public void setPeerAddress(String peerAddress) {
     this.peerAddress = peerAddress;
@@ -451,7 +405,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription skipSyncOnRestart(Boolean skipSyncOnRestart) {
-    
     this.skipSyncOnRestart = skipSyncOnRestart;
     return this;
   }
@@ -461,11 +414,9 @@ public class DataSourceObjectDescription {
    * @return skipSyncOnRestart
   **/
   @javax.annotation.Nullable
-
   public Boolean getSkipSyncOnRestart() {
     return skipSyncOnRestart;
   }
-
 
   public void setSkipSyncOnRestart(Boolean skipSyncOnRestart) {
     this.skipSyncOnRestart = skipSyncOnRestart;
@@ -473,7 +424,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription storageConfiguration(Map<String, String> storageConfiguration) {
-    
     this.storageConfiguration = storageConfiguration;
     return this;
   }
@@ -491,11 +441,9 @@ public class DataSourceObjectDescription {
    * @return storageConfiguration
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getStorageConfiguration() {
     return storageConfiguration;
   }
-
 
   public void setStorageConfiguration(Map<String, String> storageConfiguration) {
     this.storageConfiguration = storageConfiguration;
@@ -503,7 +451,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription storageType(ObjectStorageType storageType) {
-    
     this.storageType = storageType;
     return this;
   }
@@ -513,11 +460,9 @@ public class DataSourceObjectDescription {
    * @return storageType
   **/
   @javax.annotation.Nullable
-
   public ObjectStorageType getStorageType() {
     return storageType;
   }
-
 
   public void setStorageType(ObjectStorageType storageType) {
     this.storageType = storageType;
@@ -525,7 +470,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription versioningPolicyName(String versioningPolicyName) {
-    
     this.versioningPolicyName = versioningPolicyName;
     return this;
   }
@@ -535,11 +479,9 @@ public class DataSourceObjectDescription {
    * @return versioningPolicyName
   **/
   @javax.annotation.Nullable
-
   public String getVersioningPolicyName() {
     return versioningPolicyName;
   }
-
 
   public void setVersioningPolicyName(String versioningPolicyName) {
     this.versioningPolicyName = versioningPolicyName;
@@ -547,7 +489,6 @@ public class DataSourceObjectDescription {
 
 
   public DataSourceObjectDescription watch(Boolean watch) {
-    
     this.watch = watch;
     return this;
   }
@@ -557,11 +498,9 @@ public class DataSourceObjectDescription {
    * @return watch
   **/
   @javax.annotation.Nullable
-
   public Boolean getWatch() {
     return watch;
   }
-
 
   public void setWatch(Boolean watch) {
     this.watch = watch;
@@ -677,25 +616,26 @@ public class DataSourceObjectDescription {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to DataSourceObjectDescription
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to DataSourceObjectDescription
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!DataSourceObjectDescription.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!DataSourceObjectDescription.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in DataSourceObjectDescription is not found in the empty JSON string", DataSourceObjectDescription.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!DataSourceObjectDescription.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `DataSourceObjectDescription` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `DataSourceObjectDescription` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("ApiKey") != null && !jsonObj.get("ApiKey").isJsonNull()) && !jsonObj.get("ApiKey").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ApiKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ApiKey").toString()));
       }
@@ -704,6 +644,10 @@ public class DataSourceObjectDescription {
       }
       if ((jsonObj.get("EncryptionKey") != null && !jsonObj.get("EncryptionKey").isJsonNull()) && !jsonObj.get("EncryptionKey").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `EncryptionKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("EncryptionKey").toString()));
+      }
+      // validate the optional field `EncryptionMode`
+      if (jsonObj.get("EncryptionMode") != null && !jsonObj.get("EncryptionMode").isJsonNull()) {
+        ObjectEncryptionMode.validateJsonElement(jsonObj.get("EncryptionMode"));
       }
       if ((jsonObj.get("ObjectsBaseFolder") != null && !jsonObj.get("ObjectsBaseFolder").isJsonNull()) && !jsonObj.get("ObjectsBaseFolder").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ObjectsBaseFolder` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ObjectsBaseFolder").toString()));
@@ -719,6 +663,10 @@ public class DataSourceObjectDescription {
       }
       if ((jsonObj.get("PeerAddress") != null && !jsonObj.get("PeerAddress").isJsonNull()) && !jsonObj.get("PeerAddress").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `PeerAddress` to be a primitive type in the JSON string but got `%s`", jsonObj.get("PeerAddress").toString()));
+      }
+      // validate the optional field `StorageType`
+      if (jsonObj.get("StorageType") != null && !jsonObj.get("StorageType").isJsonNull()) {
+        ObjectStorageType.validateJsonElement(jsonObj.get("StorageType"));
       }
       if ((jsonObj.get("VersioningPolicyName") != null && !jsonObj.get("VersioningPolicyName").isJsonNull()) && !jsonObj.get("VersioningPolicyName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `VersioningPolicyName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("VersioningPolicyName").toString()));
@@ -745,9 +693,9 @@ public class DataSourceObjectDescription {
 
            @Override
            public DataSourceObjectDescription read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

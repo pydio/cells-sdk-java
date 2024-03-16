@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * TreeListNodesRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class TreeListNodesRequest {
   public static final String SERIALIZED_NAME_ANCESTORS = "Ancestors";
   @SerializedName(SERIALIZED_NAME_ANCESTORS)
@@ -85,7 +85,6 @@ public class TreeListNodesRequest {
   }
 
   public TreeListNodesRequest ancestors(Boolean ancestors) {
-    
     this.ancestors = ancestors;
     return this;
   }
@@ -95,11 +94,9 @@ public class TreeListNodesRequest {
    * @return ancestors
   **/
   @javax.annotation.Nullable
-
   public Boolean getAncestors() {
     return ancestors;
   }
-
 
   public void setAncestors(Boolean ancestors) {
     this.ancestors = ancestors;
@@ -107,7 +104,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest filterType(TreeNodeType filterType) {
-    
     this.filterType = filterType;
     return this;
   }
@@ -117,11 +113,9 @@ public class TreeListNodesRequest {
    * @return filterType
   **/
   @javax.annotation.Nullable
-
   public TreeNodeType getFilterType() {
     return filterType;
   }
-
 
   public void setFilterType(TreeNodeType filterType) {
     this.filterType = filterType;
@@ -129,7 +123,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest limit(String limit) {
-    
     this.limit = limit;
     return this;
   }
@@ -139,11 +132,9 @@ public class TreeListNodesRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-
   public String getLimit() {
     return limit;
   }
-
 
   public void setLimit(String limit) {
     this.limit = limit;
@@ -151,7 +142,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest node(TreeNode node) {
-    
     this.node = node;
     return this;
   }
@@ -161,11 +151,9 @@ public class TreeListNodesRequest {
    * @return node
   **/
   @javax.annotation.Nullable
-
   public TreeNode getNode() {
     return node;
   }
-
 
   public void setNode(TreeNode node) {
     this.node = node;
@@ -173,7 +161,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest offset(String offset) {
-    
     this.offset = offset;
     return this;
   }
@@ -183,11 +170,9 @@ public class TreeListNodesRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-
   public String getOffset() {
     return offset;
   }
-
 
   public void setOffset(String offset) {
     this.offset = offset;
@@ -195,7 +180,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest recursive(Boolean recursive) {
-    
     this.recursive = recursive;
     return this;
   }
@@ -205,11 +189,9 @@ public class TreeListNodesRequest {
    * @return recursive
   **/
   @javax.annotation.Nullable
-
   public Boolean getRecursive() {
     return recursive;
   }
-
 
   public void setRecursive(Boolean recursive) {
     this.recursive = recursive;
@@ -217,7 +199,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest sortDirDesc(Boolean sortDirDesc) {
-    
     this.sortDirDesc = sortDirDesc;
     return this;
   }
@@ -227,11 +208,9 @@ public class TreeListNodesRequest {
    * @return sortDirDesc
   **/
   @javax.annotation.Nullable
-
   public Boolean getSortDirDesc() {
     return sortDirDesc;
   }
-
 
   public void setSortDirDesc(Boolean sortDirDesc) {
     this.sortDirDesc = sortDirDesc;
@@ -239,7 +218,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest sortField(String sortField) {
-    
     this.sortField = sortField;
     return this;
   }
@@ -249,11 +227,9 @@ public class TreeListNodesRequest {
    * @return sortField
   **/
   @javax.annotation.Nullable
-
   public String getSortField() {
     return sortField;
   }
-
 
   public void setSortField(String sortField) {
     this.sortField = sortField;
@@ -261,7 +237,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest statFlags(List<Long> statFlags) {
-    
     this.statFlags = statFlags;
     return this;
   }
@@ -279,11 +254,9 @@ public class TreeListNodesRequest {
    * @return statFlags
   **/
   @javax.annotation.Nullable
-
   public List<Long> getStatFlags() {
     return statFlags;
   }
-
 
   public void setStatFlags(List<Long> statFlags) {
     this.statFlags = statFlags;
@@ -291,7 +264,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest withCommits(Boolean withCommits) {
-    
     this.withCommits = withCommits;
     return this;
   }
@@ -301,11 +273,9 @@ public class TreeListNodesRequest {
    * @return withCommits
   **/
   @javax.annotation.Nullable
-
   public Boolean getWithCommits() {
     return withCommits;
   }
-
 
   public void setWithCommits(Boolean withCommits) {
     this.withCommits = withCommits;
@@ -313,7 +283,6 @@ public class TreeListNodesRequest {
 
 
   public TreeListNodesRequest withVersions(Boolean withVersions) {
-    
     this.withVersions = withVersions;
     return this;
   }
@@ -323,11 +292,9 @@ public class TreeListNodesRequest {
    * @return withVersions
   **/
   @javax.annotation.Nullable
-
   public Boolean getWithVersions() {
     return withVersions;
   }
-
 
   public void setWithVersions(Boolean withVersions) {
     this.withVersions = withVersions;
@@ -416,31 +383,36 @@ public class TreeListNodesRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to TreeListNodesRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to TreeListNodesRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!TreeListNodesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!TreeListNodesRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in TreeListNodesRequest is not found in the empty JSON string", TreeListNodesRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!TreeListNodesRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeListNodesRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeListNodesRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
+      }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
+      // validate the optional field `FilterType`
+      if (jsonObj.get("FilterType") != null && !jsonObj.get("FilterType").isJsonNull()) {
+        TreeNodeType.validateJsonElement(jsonObj.get("FilterType"));
       }
       if ((jsonObj.get("Limit") != null && !jsonObj.get("Limit").isJsonNull()) && !jsonObj.get("Limit").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Limit` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Limit").toString()));
       }
       // validate the optional field `Node`
       if (jsonObj.get("Node") != null && !jsonObj.get("Node").isJsonNull()) {
-        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Node"));
+        TreeNode.validateJsonElement(jsonObj.get("Node"));
       }
       if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
@@ -449,7 +421,7 @@ public class TreeListNodesRequest {
         throw new IllegalArgumentException(String.format("Expected the field `SortField` to be a primitive type in the JSON string but got `%s`", jsonObj.get("SortField").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("StatFlags") != null && !jsonObj.get("StatFlags").isJsonArray()) {
+      if (jsonObj.get("StatFlags") != null && !jsonObj.get("StatFlags").isJsonNull() && !jsonObj.get("StatFlags").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `StatFlags` to be an array in the JSON string but got `%s`", jsonObj.get("StatFlags").toString()));
       }
   }
@@ -474,9 +446,9 @@ public class TreeListNodesRequest {
 
            @Override
            public TreeListNodesRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

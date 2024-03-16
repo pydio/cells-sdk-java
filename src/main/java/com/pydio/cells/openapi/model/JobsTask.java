@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * JobsTask
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class JobsTask {
   public static final String SERIALIZED_NAME_ACTIONS_LOGS = "ActionsLogs";
   @SerializedName(SERIALIZED_NAME_ACTIONS_LOGS)
@@ -90,7 +90,6 @@ public class JobsTask {
   }
 
   public JobsTask actionsLogs(List<JobsActionLog> actionsLogs) {
-    
     this.actionsLogs = actionsLogs;
     return this;
   }
@@ -108,11 +107,9 @@ public class JobsTask {
    * @return actionsLogs
   **/
   @javax.annotation.Nullable
-
   public List<JobsActionLog> getActionsLogs() {
     return actionsLogs;
   }
-
 
   public void setActionsLogs(List<JobsActionLog> actionsLogs) {
     this.actionsLogs = actionsLogs;
@@ -120,7 +117,6 @@ public class JobsTask {
 
 
   public JobsTask canPause(Boolean canPause) {
-    
     this.canPause = canPause;
     return this;
   }
@@ -130,11 +126,9 @@ public class JobsTask {
    * @return canPause
   **/
   @javax.annotation.Nullable
-
   public Boolean getCanPause() {
     return canPause;
   }
-
 
   public void setCanPause(Boolean canPause) {
     this.canPause = canPause;
@@ -142,7 +136,6 @@ public class JobsTask {
 
 
   public JobsTask canStop(Boolean canStop) {
-    
     this.canStop = canStop;
     return this;
   }
@@ -152,11 +145,9 @@ public class JobsTask {
    * @return canStop
   **/
   @javax.annotation.Nullable
-
   public Boolean getCanStop() {
     return canStop;
   }
-
 
   public void setCanStop(Boolean canStop) {
     this.canStop = canStop;
@@ -164,7 +155,6 @@ public class JobsTask {
 
 
   public JobsTask endTime(Integer endTime) {
-    
     this.endTime = endTime;
     return this;
   }
@@ -174,11 +164,9 @@ public class JobsTask {
    * @return endTime
   **/
   @javax.annotation.Nullable
-
   public Integer getEndTime() {
     return endTime;
   }
-
 
   public void setEndTime(Integer endTime) {
     this.endTime = endTime;
@@ -186,7 +174,6 @@ public class JobsTask {
 
 
   public JobsTask hasProgress(Boolean hasProgress) {
-    
     this.hasProgress = hasProgress;
     return this;
   }
@@ -196,11 +183,9 @@ public class JobsTask {
    * @return hasProgress
   **/
   @javax.annotation.Nullable
-
   public Boolean getHasProgress() {
     return hasProgress;
   }
-
 
   public void setHasProgress(Boolean hasProgress) {
     this.hasProgress = hasProgress;
@@ -208,7 +193,6 @@ public class JobsTask {
 
 
   public JobsTask ID(String ID) {
-    
     this.ID = ID;
     return this;
   }
@@ -218,11 +202,9 @@ public class JobsTask {
    * @return ID
   **/
   @javax.annotation.Nullable
-
   public String getID() {
     return ID;
   }
-
 
   public void setID(String ID) {
     this.ID = ID;
@@ -230,7 +212,6 @@ public class JobsTask {
 
 
   public JobsTask jobID(String jobID) {
-    
     this.jobID = jobID;
     return this;
   }
@@ -240,11 +221,9 @@ public class JobsTask {
    * @return jobID
   **/
   @javax.annotation.Nullable
-
   public String getJobID() {
     return jobID;
   }
-
 
   public void setJobID(String jobID) {
     this.jobID = jobID;
@@ -252,7 +231,6 @@ public class JobsTask {
 
 
   public JobsTask progress(Float progress) {
-    
     this.progress = progress;
     return this;
   }
@@ -262,11 +240,9 @@ public class JobsTask {
    * @return progress
   **/
   @javax.annotation.Nullable
-
   public Float getProgress() {
     return progress;
   }
-
 
   public void setProgress(Float progress) {
     this.progress = progress;
@@ -274,7 +250,6 @@ public class JobsTask {
 
 
   public JobsTask startTime(Integer startTime) {
-    
     this.startTime = startTime;
     return this;
   }
@@ -284,11 +259,9 @@ public class JobsTask {
    * @return startTime
   **/
   @javax.annotation.Nullable
-
   public Integer getStartTime() {
     return startTime;
   }
-
 
   public void setStartTime(Integer startTime) {
     this.startTime = startTime;
@@ -296,7 +269,6 @@ public class JobsTask {
 
 
   public JobsTask status(JobsTaskStatus status) {
-    
     this.status = status;
     return this;
   }
@@ -306,11 +278,9 @@ public class JobsTask {
    * @return status
   **/
   @javax.annotation.Nullable
-
   public JobsTaskStatus getStatus() {
     return status;
   }
-
 
   public void setStatus(JobsTaskStatus status) {
     this.status = status;
@@ -318,7 +288,6 @@ public class JobsTask {
 
 
   public JobsTask statusMessage(String statusMessage) {
-    
     this.statusMessage = statusMessage;
     return this;
   }
@@ -328,11 +297,9 @@ public class JobsTask {
    * @return statusMessage
   **/
   @javax.annotation.Nullable
-
   public String getStatusMessage() {
     return statusMessage;
   }
-
 
   public void setStatusMessage(String statusMessage) {
     this.statusMessage = statusMessage;
@@ -340,7 +307,6 @@ public class JobsTask {
 
 
   public JobsTask triggerOwner(String triggerOwner) {
-    
     this.triggerOwner = triggerOwner;
     return this;
   }
@@ -350,11 +316,9 @@ public class JobsTask {
    * @return triggerOwner
   **/
   @javax.annotation.Nullable
-
   public String getTriggerOwner() {
     return triggerOwner;
   }
-
 
   public void setTriggerOwner(String triggerOwner) {
     this.triggerOwner = triggerOwner;
@@ -446,25 +410,26 @@ public class JobsTask {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JobsTask
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to JobsTask
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!JobsTask.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!JobsTask.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in JobsTask is not found in the empty JSON string", JobsTask.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!JobsTask.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsTask` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsTask` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("ActionsLogs") != null && !jsonObj.get("ActionsLogs").isJsonNull()) {
         JsonArray jsonArrayactionsLogs = jsonObj.getAsJsonArray("ActionsLogs");
         if (jsonArrayactionsLogs != null) {
@@ -475,7 +440,7 @@ public class JobsTask {
 
           // validate the optional field `ActionsLogs` (array)
           for (int i = 0; i < jsonArrayactionsLogs.size(); i++) {
-            JobsActionLog.validateJsonObject(jsonArrayactionsLogs.get(i).getAsJsonObject());
+            JobsActionLog.validateJsonElement(jsonArrayactionsLogs.get(i));
           };
         }
       }
@@ -484,6 +449,10 @@ public class JobsTask {
       }
       if ((jsonObj.get("JobID") != null && !jsonObj.get("JobID").isJsonNull()) && !jsonObj.get("JobID").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `JobID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("JobID").toString()));
+      }
+      // validate the optional field `Status`
+      if (jsonObj.get("Status") != null && !jsonObj.get("Status").isJsonNull()) {
+        JobsTaskStatus.validateJsonElement(jsonObj.get("Status"));
       }
       if ((jsonObj.get("StatusMessage") != null && !jsonObj.get("StatusMessage").isJsonNull()) && !jsonObj.get("StatusMessage").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `StatusMessage` to be a primitive type in the JSON string but got `%s`", jsonObj.get("StatusMessage").toString()));
@@ -513,9 +482,9 @@ public class JobsTask {
 
            @Override
            public JobsTask read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

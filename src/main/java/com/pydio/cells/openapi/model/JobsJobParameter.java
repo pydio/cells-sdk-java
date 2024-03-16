@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * JobsJobParameter
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class JobsJobParameter {
   public static final String SERIALIZED_NAME_DESCRIPTION = "Description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -63,7 +63,6 @@ public class JobsJobParameter {
   }
 
   public JobsJobParameter description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -73,11 +72,9 @@ public class JobsJobParameter {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -85,7 +82,6 @@ public class JobsJobParameter {
 
 
   public JobsJobParameter jsonChoices(String jsonChoices) {
-    
     this.jsonChoices = jsonChoices;
     return this;
   }
@@ -95,11 +91,9 @@ public class JobsJobParameter {
    * @return jsonChoices
   **/
   @javax.annotation.Nullable
-
   public String getJsonChoices() {
     return jsonChoices;
   }
-
 
   public void setJsonChoices(String jsonChoices) {
     this.jsonChoices = jsonChoices;
@@ -107,7 +101,6 @@ public class JobsJobParameter {
 
 
   public JobsJobParameter mandatory(Boolean mandatory) {
-    
     this.mandatory = mandatory;
     return this;
   }
@@ -117,11 +110,9 @@ public class JobsJobParameter {
    * @return mandatory
   **/
   @javax.annotation.Nullable
-
   public Boolean getMandatory() {
     return mandatory;
   }
-
 
   public void setMandatory(Boolean mandatory) {
     this.mandatory = mandatory;
@@ -129,7 +120,6 @@ public class JobsJobParameter {
 
 
   public JobsJobParameter name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -139,11 +129,9 @@ public class JobsJobParameter {
    * @return name
   **/
   @javax.annotation.Nullable
-
   public String getName() {
     return name;
   }
-
 
   public void setName(String name) {
     this.name = name;
@@ -151,7 +139,6 @@ public class JobsJobParameter {
 
 
   public JobsJobParameter type(String type) {
-    
     this.type = type;
     return this;
   }
@@ -161,11 +148,9 @@ public class JobsJobParameter {
    * @return type
   **/
   @javax.annotation.Nullable
-
   public String getType() {
     return type;
   }
-
 
   public void setType(String type) {
     this.type = type;
@@ -173,7 +158,6 @@ public class JobsJobParameter {
 
 
   public JobsJobParameter value(String value) {
-    
     this.value = value;
     return this;
   }
@@ -183,11 +167,9 @@ public class JobsJobParameter {
    * @return value
   **/
   @javax.annotation.Nullable
-
   public String getValue() {
     return value;
   }
-
 
   public void setValue(String value) {
     this.value = value;
@@ -261,25 +243,26 @@ public class JobsJobParameter {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JobsJobParameter
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to JobsJobParameter
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!JobsJobParameter.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!JobsJobParameter.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in JobsJobParameter is not found in the empty JSON string", JobsJobParameter.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!JobsJobParameter.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsJobParameter` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsJobParameter` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
       }
@@ -317,9 +300,9 @@ public class JobsJobParameter {
 
            @Override
            public JobsJobParameter read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

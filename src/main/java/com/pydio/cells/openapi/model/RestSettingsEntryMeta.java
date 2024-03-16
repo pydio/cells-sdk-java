@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestSettingsEntryMeta
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestSettingsEntryMeta {
   public static final String SERIALIZED_NAME_ADVANCED = "advanced";
   @SerializedName(SERIALIZED_NAME_ADVANCED)
@@ -61,7 +61,6 @@ public class RestSettingsEntryMeta {
   }
 
   public RestSettingsEntryMeta advanced(Boolean advanced) {
-    
     this.advanced = advanced;
     return this;
   }
@@ -71,11 +70,9 @@ public class RestSettingsEntryMeta {
    * @return advanced
   **/
   @javax.annotation.Nullable
-
   public Boolean getAdvanced() {
     return advanced;
   }
-
 
   public void setAdvanced(Boolean advanced) {
     this.advanced = advanced;
@@ -83,7 +80,6 @@ public class RestSettingsEntryMeta {
 
 
   public RestSettingsEntryMeta component(String component) {
-    
     this.component = component;
     return this;
   }
@@ -93,11 +89,9 @@ public class RestSettingsEntryMeta {
    * @return component
   **/
   @javax.annotation.Nullable
-
   public String getComponent() {
     return component;
   }
-
 
   public void setComponent(String component) {
     this.component = component;
@@ -105,7 +99,6 @@ public class RestSettingsEntryMeta {
 
 
   public RestSettingsEntryMeta iconClass(String iconClass) {
-    
     this.iconClass = iconClass;
     return this;
   }
@@ -115,11 +108,9 @@ public class RestSettingsEntryMeta {
    * @return iconClass
   **/
   @javax.annotation.Nullable
-
   public String getIconClass() {
     return iconClass;
   }
-
 
   public void setIconClass(String iconClass) {
     this.iconClass = iconClass;
@@ -127,7 +118,6 @@ public class RestSettingsEntryMeta {
 
 
   public RestSettingsEntryMeta indexed(List<String> indexed) {
-    
     this.indexed = indexed;
     return this;
   }
@@ -145,11 +135,9 @@ public class RestSettingsEntryMeta {
    * @return indexed
   **/
   @javax.annotation.Nullable
-
   public List<String> getIndexed() {
     return indexed;
   }
-
 
   public void setIndexed(List<String> indexed) {
     this.indexed = indexed;
@@ -157,7 +145,6 @@ public class RestSettingsEntryMeta {
 
 
   public RestSettingsEntryMeta props(String props) {
-    
     this.props = props;
     return this;
   }
@@ -167,11 +154,9 @@ public class RestSettingsEntryMeta {
    * @return props
   **/
   @javax.annotation.Nullable
-
   public String getProps() {
     return props;
   }
-
 
   public void setProps(String props) {
     this.props = props;
@@ -242,25 +227,26 @@ public class RestSettingsEntryMeta {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestSettingsEntryMeta
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestSettingsEntryMeta
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestSettingsEntryMeta.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestSettingsEntryMeta.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestSettingsEntryMeta is not found in the empty JSON string", RestSettingsEntryMeta.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestSettingsEntryMeta.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSettingsEntryMeta` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSettingsEntryMeta` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("component") != null && !jsonObj.get("component").isJsonNull()) && !jsonObj.get("component").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `component` to be a primitive type in the JSON string but got `%s`", jsonObj.get("component").toString()));
       }
@@ -268,7 +254,7 @@ public class RestSettingsEntryMeta {
         throw new IllegalArgumentException(String.format("Expected the field `icon_class` to be a primitive type in the JSON string but got `%s`", jsonObj.get("icon_class").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("indexed") != null && !jsonObj.get("indexed").isJsonArray()) {
+      if (jsonObj.get("indexed") != null && !jsonObj.get("indexed").isJsonNull() && !jsonObj.get("indexed").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `indexed` to be an array in the JSON string but got `%s`", jsonObj.get("indexed").toString()));
       }
       if ((jsonObj.get("props") != null && !jsonObj.get("props").isJsonNull()) && !jsonObj.get("props").isJsonPrimitive()) {
@@ -296,9 +282,9 @@ public class RestSettingsEntryMeta {
 
            @Override
            public RestSettingsEntryMeta read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

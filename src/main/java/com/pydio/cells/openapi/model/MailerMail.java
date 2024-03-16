@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * MailerMail
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class MailerMail {
   public static final String SERIALIZED_NAME_ATTACHMENTS = "Attachments";
   @SerializedName(SERIALIZED_NAME_ATTACHMENTS)
@@ -108,7 +107,6 @@ public class MailerMail {
   }
 
   public MailerMail attachments(List<String> attachments) {
-    
     this.attachments = attachments;
     return this;
   }
@@ -126,11 +124,9 @@ public class MailerMail {
    * @return attachments
   **/
   @javax.annotation.Nullable
-
   public List<String> getAttachments() {
     return attachments;
   }
-
 
   public void setAttachments(List<String> attachments) {
     this.attachments = attachments;
@@ -138,7 +134,6 @@ public class MailerMail {
 
 
   public MailerMail cc(List<MailerUser> cc) {
-    
     this.cc = cc;
     return this;
   }
@@ -156,11 +151,9 @@ public class MailerMail {
    * @return cc
   **/
   @javax.annotation.Nullable
-
   public List<MailerUser> getCc() {
     return cc;
   }
-
 
   public void setCc(List<MailerUser> cc) {
     this.cc = cc;
@@ -168,7 +161,6 @@ public class MailerMail {
 
 
   public MailerMail contentHtml(String contentHtml) {
-    
     this.contentHtml = contentHtml;
     return this;
   }
@@ -178,11 +170,9 @@ public class MailerMail {
    * @return contentHtml
   **/
   @javax.annotation.Nullable
-
   public String getContentHtml() {
     return contentHtml;
   }
-
 
   public void setContentHtml(String contentHtml) {
     this.contentHtml = contentHtml;
@@ -190,7 +180,6 @@ public class MailerMail {
 
 
   public MailerMail contentMarkdown(String contentMarkdown) {
-    
     this.contentMarkdown = contentMarkdown;
     return this;
   }
@@ -200,11 +189,9 @@ public class MailerMail {
    * @return contentMarkdown
   **/
   @javax.annotation.Nullable
-
   public String getContentMarkdown() {
     return contentMarkdown;
   }
-
 
   public void setContentMarkdown(String contentMarkdown) {
     this.contentMarkdown = contentMarkdown;
@@ -212,7 +199,6 @@ public class MailerMail {
 
 
   public MailerMail contentPlain(String contentPlain) {
-    
     this.contentPlain = contentPlain;
     return this;
   }
@@ -222,11 +208,9 @@ public class MailerMail {
    * @return contentPlain
   **/
   @javax.annotation.Nullable
-
   public String getContentPlain() {
     return contentPlain;
   }
-
 
   public void setContentPlain(String contentPlain) {
     this.contentPlain = contentPlain;
@@ -234,7 +218,6 @@ public class MailerMail {
 
 
   public MailerMail dateSent(String dateSent) {
-    
     this.dateSent = dateSent;
     return this;
   }
@@ -244,11 +227,9 @@ public class MailerMail {
    * @return dateSent
   **/
   @javax.annotation.Nullable
-
   public String getDateSent() {
     return dateSent;
   }
-
 
   public void setDateSent(String dateSent) {
     this.dateSent = dateSent;
@@ -256,7 +237,6 @@ public class MailerMail {
 
 
   public MailerMail from(MailerUser from) {
-    
     this.from = from;
     return this;
   }
@@ -266,11 +246,9 @@ public class MailerMail {
    * @return from
   **/
   @javax.annotation.Nullable
-
   public MailerUser getFrom() {
     return from;
   }
-
 
   public void setFrom(MailerUser from) {
     this.from = from;
@@ -278,7 +256,6 @@ public class MailerMail {
 
 
   public MailerMail retries(Integer retries) {
-    
     this.retries = retries;
     return this;
   }
@@ -288,11 +265,9 @@ public class MailerMail {
    * @return retries
   **/
   @javax.annotation.Nullable
-
   public Integer getRetries() {
     return retries;
   }
-
 
   public void setRetries(Integer retries) {
     this.retries = retries;
@@ -300,7 +275,6 @@ public class MailerMail {
 
 
   public MailerMail sender(MailerUser sender) {
-    
     this.sender = sender;
     return this;
   }
@@ -310,11 +284,9 @@ public class MailerMail {
    * @return sender
   **/
   @javax.annotation.Nullable
-
   public MailerUser getSender() {
     return sender;
   }
-
 
   public void setSender(MailerUser sender) {
     this.sender = sender;
@@ -322,7 +294,6 @@ public class MailerMail {
 
 
   public MailerMail subject(String subject) {
-    
     this.subject = subject;
     return this;
   }
@@ -332,11 +303,9 @@ public class MailerMail {
    * @return subject
   **/
   @javax.annotation.Nullable
-
   public String getSubject() {
     return subject;
   }
-
 
   public void setSubject(String subject) {
     this.subject = subject;
@@ -344,7 +313,6 @@ public class MailerMail {
 
 
   public MailerMail templateData(Map<String, String> templateData) {
-    
     this.templateData = templateData;
     return this;
   }
@@ -362,11 +330,9 @@ public class MailerMail {
    * @return templateData
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getTemplateData() {
     return templateData;
   }
-
 
   public void setTemplateData(Map<String, String> templateData) {
     this.templateData = templateData;
@@ -374,7 +340,6 @@ public class MailerMail {
 
 
   public MailerMail templateId(String templateId) {
-    
     this.templateId = templateId;
     return this;
   }
@@ -384,11 +349,9 @@ public class MailerMail {
    * @return templateId
   **/
   @javax.annotation.Nullable
-
   public String getTemplateId() {
     return templateId;
   }
-
 
   public void setTemplateId(String templateId) {
     this.templateId = templateId;
@@ -396,7 +359,6 @@ public class MailerMail {
 
 
   public MailerMail threadIndex(String threadIndex) {
-    
     this.threadIndex = threadIndex;
     return this;
   }
@@ -406,11 +368,9 @@ public class MailerMail {
    * @return threadIndex
   **/
   @javax.annotation.Nullable
-
   public String getThreadIndex() {
     return threadIndex;
   }
-
 
   public void setThreadIndex(String threadIndex) {
     this.threadIndex = threadIndex;
@@ -418,7 +378,6 @@ public class MailerMail {
 
 
   public MailerMail threadUuid(String threadUuid) {
-    
     this.threadUuid = threadUuid;
     return this;
   }
@@ -428,11 +387,9 @@ public class MailerMail {
    * @return threadUuid
   **/
   @javax.annotation.Nullable
-
   public String getThreadUuid() {
     return threadUuid;
   }
-
 
   public void setThreadUuid(String threadUuid) {
     this.threadUuid = threadUuid;
@@ -440,7 +397,6 @@ public class MailerMail {
 
 
   public MailerMail to(List<MailerUser> to) {
-    
     this.to = to;
     return this;
   }
@@ -458,11 +414,9 @@ public class MailerMail {
    * @return to
   **/
   @javax.annotation.Nullable
-
   public List<MailerUser> getTo() {
     return to;
   }
-
 
   public void setTo(List<MailerUser> to) {
     this.to = to;
@@ -470,7 +424,6 @@ public class MailerMail {
 
 
   public MailerMail sendErrors(List<String> sendErrors) {
-    
     this.sendErrors = sendErrors;
     return this;
   }
@@ -488,11 +441,9 @@ public class MailerMail {
    * @return sendErrors
   **/
   @javax.annotation.Nullable
-
   public List<String> getSendErrors() {
     return sendErrors;
   }
-
 
   public void setSendErrors(List<String> sendErrors) {
     this.sendErrors = sendErrors;
@@ -596,27 +547,28 @@ public class MailerMail {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to MailerMail
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to MailerMail
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!MailerMail.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!MailerMail.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in MailerMail is not found in the empty JSON string", MailerMail.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!MailerMail.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MailerMail` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MailerMail` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Attachments") != null && !jsonObj.get("Attachments").isJsonArray()) {
+      if (jsonObj.get("Attachments") != null && !jsonObj.get("Attachments").isJsonNull() && !jsonObj.get("Attachments").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Attachments` to be an array in the JSON string but got `%s`", jsonObj.get("Attachments").toString()));
       }
       if (jsonObj.get("Cc") != null && !jsonObj.get("Cc").isJsonNull()) {
@@ -629,7 +581,7 @@ public class MailerMail {
 
           // validate the optional field `Cc` (array)
           for (int i = 0; i < jsonArraycc.size(); i++) {
-            MailerUser.validateJsonObject(jsonArraycc.get(i).getAsJsonObject());
+            MailerUser.validateJsonElement(jsonArraycc.get(i));
           };
         }
       }
@@ -647,11 +599,11 @@ public class MailerMail {
       }
       // validate the optional field `From`
       if (jsonObj.get("From") != null && !jsonObj.get("From").isJsonNull()) {
-        MailerUser.validateJsonObject(jsonObj.getAsJsonObject("From"));
+        MailerUser.validateJsonElement(jsonObj.get("From"));
       }
       // validate the optional field `Sender`
       if (jsonObj.get("Sender") != null && !jsonObj.get("Sender").isJsonNull()) {
-        MailerUser.validateJsonObject(jsonObj.getAsJsonObject("Sender"));
+        MailerUser.validateJsonElement(jsonObj.get("Sender"));
       }
       if ((jsonObj.get("Subject") != null && !jsonObj.get("Subject").isJsonNull()) && !jsonObj.get("Subject").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Subject` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Subject").toString()));
@@ -675,12 +627,12 @@ public class MailerMail {
 
           // validate the optional field `To` (array)
           for (int i = 0; i < jsonArrayto.size(); i++) {
-            MailerUser.validateJsonObject(jsonArrayto.get(i).getAsJsonObject());
+            MailerUser.validateJsonElement(jsonArrayto.get(i));
           };
         }
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("sendErrors") != null && !jsonObj.get("sendErrors").isJsonArray()) {
+      if (jsonObj.get("sendErrors") != null && !jsonObj.get("sendErrors").isJsonNull() && !jsonObj.get("sendErrors").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `sendErrors` to be an array in the JSON string but got `%s`", jsonObj.get("sendErrors").toString()));
       }
   }
@@ -705,9 +657,9 @@ public class MailerMail {
 
            @Override
            public MailerMail read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

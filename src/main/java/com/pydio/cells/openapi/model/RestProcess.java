@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestProcess
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestProcess {
   public static final String SERIALIZED_NAME_I_D = "ID";
   @SerializedName(SERIALIZED_NAME_I_D)
@@ -69,7 +69,6 @@ public class RestProcess {
   }
 
   public RestProcess ID(String ID) {
-    
     this.ID = ID;
     return this;
   }
@@ -79,11 +78,9 @@ public class RestProcess {
    * @return ID
   **/
   @javax.annotation.Nullable
-
   public String getID() {
     return ID;
   }
-
 
   public void setID(String ID) {
     this.ID = ID;
@@ -91,7 +88,6 @@ public class RestProcess {
 
 
   public RestProcess metricsPort(Integer metricsPort) {
-    
     this.metricsPort = metricsPort;
     return this;
   }
@@ -101,11 +97,9 @@ public class RestProcess {
    * @return metricsPort
   **/
   @javax.annotation.Nullable
-
   public Integer getMetricsPort() {
     return metricsPort;
   }
-
 
   public void setMetricsPort(Integer metricsPort) {
     this.metricsPort = metricsPort;
@@ -113,7 +107,6 @@ public class RestProcess {
 
 
   public RestProcess parentID(String parentID) {
-    
     this.parentID = parentID;
     return this;
   }
@@ -123,11 +116,9 @@ public class RestProcess {
    * @return parentID
   **/
   @javax.annotation.Nullable
-
   public String getParentID() {
     return parentID;
   }
-
 
   public void setParentID(String parentID) {
     this.parentID = parentID;
@@ -135,7 +126,6 @@ public class RestProcess {
 
 
   public RestProcess peerAddress(String peerAddress) {
-    
     this.peerAddress = peerAddress;
     return this;
   }
@@ -145,11 +135,9 @@ public class RestProcess {
    * @return peerAddress
   **/
   @javax.annotation.Nullable
-
   public String getPeerAddress() {
     return peerAddress;
   }
-
 
   public void setPeerAddress(String peerAddress) {
     this.peerAddress = peerAddress;
@@ -157,7 +145,6 @@ public class RestProcess {
 
 
   public RestProcess peerId(String peerId) {
-    
     this.peerId = peerId;
     return this;
   }
@@ -167,11 +154,9 @@ public class RestProcess {
    * @return peerId
   **/
   @javax.annotation.Nullable
-
   public String getPeerId() {
     return peerId;
   }
-
 
   public void setPeerId(String peerId) {
     this.peerId = peerId;
@@ -179,7 +164,6 @@ public class RestProcess {
 
 
   public RestProcess services(List<String> services) {
-    
     this.services = services;
     return this;
   }
@@ -197,11 +181,9 @@ public class RestProcess {
    * @return services
   **/
   @javax.annotation.Nullable
-
   public List<String> getServices() {
     return services;
   }
-
 
   public void setServices(List<String> services) {
     this.services = services;
@@ -209,7 +191,6 @@ public class RestProcess {
 
 
   public RestProcess startTag(String startTag) {
-    
     this.startTag = startTag;
     return this;
   }
@@ -219,11 +200,9 @@ public class RestProcess {
    * @return startTag
   **/
   @javax.annotation.Nullable
-
   public String getStartTag() {
     return startTag;
   }
-
 
   public void setStartTag(String startTag) {
     this.startTag = startTag;
@@ -300,25 +279,26 @@ public class RestProcess {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestProcess
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestProcess
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestProcess.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestProcess.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestProcess is not found in the empty JSON string", RestProcess.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestProcess.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestProcess` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestProcess` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("ID") != null && !jsonObj.get("ID").isJsonNull()) && !jsonObj.get("ID").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ID").toString()));
       }
@@ -332,7 +312,7 @@ public class RestProcess {
         throw new IllegalArgumentException(String.format("Expected the field `PeerId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("PeerId").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Services") != null && !jsonObj.get("Services").isJsonArray()) {
+      if (jsonObj.get("Services") != null && !jsonObj.get("Services").isJsonNull() && !jsonObj.get("Services").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Services` to be an array in the JSON string but got `%s`", jsonObj.get("Services").toString()));
       }
       if ((jsonObj.get("StartTag") != null && !jsonObj.get("StartTag").isJsonNull()) && !jsonObj.get("StartTag").isJsonPrimitive()) {
@@ -360,9 +340,9 @@ public class RestProcess {
 
            @Override
            public RestProcess read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

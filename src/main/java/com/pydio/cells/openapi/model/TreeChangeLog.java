@@ -27,14 +27,14 @@ import com.pydio.cells.openapi.JSON;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * TreeChangeLog
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class TreeChangeLog {
   public static final String SERIALIZED_NAME_DATA = "Data";
   @SerializedName(SERIALIZED_NAME_DATA)
@@ -72,7 +72,6 @@ public class TreeChangeLog {
   }
 
   public TreeChangeLog data(byte[] data) {
-    
     this.data = data;
     return this;
   }
@@ -82,11 +81,9 @@ public class TreeChangeLog {
    * @return data
   **/
   @javax.annotation.Nullable
-
   public byte[] getData() {
     return data;
   }
-
 
   public void setData(byte[] data) {
     this.data = data;
@@ -94,7 +91,6 @@ public class TreeChangeLog {
 
 
   public TreeChangeLog description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -104,11 +100,9 @@ public class TreeChangeLog {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -116,7 +110,6 @@ public class TreeChangeLog {
 
 
   public TreeChangeLog event(TreeNodeChangeEvent event) {
-    
     this.event = event;
     return this;
   }
@@ -126,11 +119,9 @@ public class TreeChangeLog {
    * @return event
   **/
   @javax.annotation.Nullable
-
   public TreeNodeChangeEvent getEvent() {
     return event;
   }
-
 
   public void setEvent(TreeNodeChangeEvent event) {
     this.event = event;
@@ -138,7 +129,6 @@ public class TreeChangeLog {
 
 
   public TreeChangeLog location(TreeNode location) {
-    
     this.location = location;
     return this;
   }
@@ -148,11 +138,9 @@ public class TreeChangeLog {
    * @return location
   **/
   @javax.annotation.Nullable
-
   public TreeNode getLocation() {
     return location;
   }
-
 
   public void setLocation(TreeNode location) {
     this.location = location;
@@ -160,7 +148,6 @@ public class TreeChangeLog {
 
 
   public TreeChangeLog mtime(String mtime) {
-    
     this.mtime = mtime;
     return this;
   }
@@ -170,11 +157,9 @@ public class TreeChangeLog {
    * @return mtime
   **/
   @javax.annotation.Nullable
-
   public String getMtime() {
     return mtime;
   }
-
 
   public void setMtime(String mtime) {
     this.mtime = mtime;
@@ -182,7 +167,6 @@ public class TreeChangeLog {
 
 
   public TreeChangeLog ownerUuid(String ownerUuid) {
-    
     this.ownerUuid = ownerUuid;
     return this;
   }
@@ -192,11 +176,9 @@ public class TreeChangeLog {
    * @return ownerUuid
   **/
   @javax.annotation.Nullable
-
   public String getOwnerUuid() {
     return ownerUuid;
   }
-
 
   public void setOwnerUuid(String ownerUuid) {
     this.ownerUuid = ownerUuid;
@@ -204,7 +186,6 @@ public class TreeChangeLog {
 
 
   public TreeChangeLog size(String size) {
-    
     this.size = size;
     return this;
   }
@@ -214,11 +195,9 @@ public class TreeChangeLog {
    * @return size
   **/
   @javax.annotation.Nullable
-
   public String getSize() {
     return size;
   }
-
 
   public void setSize(String size) {
     this.size = size;
@@ -226,7 +205,6 @@ public class TreeChangeLog {
 
 
   public TreeChangeLog uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -236,11 +214,9 @@ public class TreeChangeLog {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -320,35 +296,36 @@ public class TreeChangeLog {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to TreeChangeLog
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to TreeChangeLog
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!TreeChangeLog.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!TreeChangeLog.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in TreeChangeLog is not found in the empty JSON string", TreeChangeLog.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!TreeChangeLog.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeChangeLog` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeChangeLog` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
       }
       // validate the optional field `Event`
       if (jsonObj.get("Event") != null && !jsonObj.get("Event").isJsonNull()) {
-        TreeNodeChangeEvent.validateJsonObject(jsonObj.getAsJsonObject("Event"));
+        TreeNodeChangeEvent.validateJsonElement(jsonObj.get("Event"));
       }
       // validate the optional field `Location`
       if (jsonObj.get("Location") != null && !jsonObj.get("Location").isJsonNull()) {
-        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Location"));
+        TreeNode.validateJsonElement(jsonObj.get("Location"));
       }
       if ((jsonObj.get("MTime") != null && !jsonObj.get("MTime").isJsonNull()) && !jsonObj.get("MTime").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `MTime` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MTime").toString()));
@@ -384,9 +361,9 @@ public class TreeChangeLog {
 
            @Override
            public TreeChangeLog read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

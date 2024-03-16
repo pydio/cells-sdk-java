@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestRelationResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestRelationResponse {
   public static final String SERIALIZED_NAME_BELONGS_TO_TEAMS = "BelongsToTeams";
   @SerializedName(SERIALIZED_NAME_BELONGS_TO_TEAMS)
@@ -50,7 +50,6 @@ public class RestRelationResponse {
   }
 
   public RestRelationResponse belongsToTeams(List<IdmRole> belongsToTeams) {
-    
     this.belongsToTeams = belongsToTeams;
     return this;
   }
@@ -68,11 +67,9 @@ public class RestRelationResponse {
    * @return belongsToTeams
   **/
   @javax.annotation.Nullable
-
   public List<IdmRole> getBelongsToTeams() {
     return belongsToTeams;
   }
-
 
   public void setBelongsToTeams(List<IdmRole> belongsToTeams) {
     this.belongsToTeams = belongsToTeams;
@@ -80,7 +77,6 @@ public class RestRelationResponse {
 
 
   public RestRelationResponse sharedCells(List<IdmWorkspace> sharedCells) {
-    
     this.sharedCells = sharedCells;
     return this;
   }
@@ -98,11 +94,9 @@ public class RestRelationResponse {
    * @return sharedCells
   **/
   @javax.annotation.Nullable
-
   public List<IdmWorkspace> getSharedCells() {
     return sharedCells;
   }
-
 
   public void setSharedCells(List<IdmWorkspace> sharedCells) {
     this.sharedCells = sharedCells;
@@ -164,25 +158,26 @@ public class RestRelationResponse {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestRelationResponse
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestRelationResponse
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestRelationResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestRelationResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestRelationResponse is not found in the empty JSON string", RestRelationResponse.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestRelationResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestRelationResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestRelationResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("BelongsToTeams") != null && !jsonObj.get("BelongsToTeams").isJsonNull()) {
         JsonArray jsonArraybelongsToTeams = jsonObj.getAsJsonArray("BelongsToTeams");
         if (jsonArraybelongsToTeams != null) {
@@ -193,7 +188,7 @@ public class RestRelationResponse {
 
           // validate the optional field `BelongsToTeams` (array)
           for (int i = 0; i < jsonArraybelongsToTeams.size(); i++) {
-            IdmRole.validateJsonObject(jsonArraybelongsToTeams.get(i).getAsJsonObject());
+            IdmRole.validateJsonElement(jsonArraybelongsToTeams.get(i));
           };
         }
       }
@@ -207,7 +202,7 @@ public class RestRelationResponse {
 
           // validate the optional field `SharedCells` (array)
           for (int i = 0; i < jsonArraysharedCells.size(); i++) {
-            IdmWorkspace.validateJsonObject(jsonArraysharedCells.get(i).getAsJsonObject());
+            IdmWorkspace.validateJsonElement(jsonArraysharedCells.get(i));
           };
         }
       }
@@ -233,9 +228,9 @@ public class RestRelationResponse {
 
            @Override
            public RestRelationResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

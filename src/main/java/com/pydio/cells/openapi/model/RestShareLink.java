@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestShareLink
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestShareLink {
   public static final String SERIALIZED_NAME_ACCESS_END = "AccessEnd";
   @SerializedName(SERIALIZED_NAME_ACCESS_END)
@@ -120,7 +119,6 @@ public class RestShareLink {
   }
 
   public RestShareLink accessEnd(String accessEnd) {
-    
     this.accessEnd = accessEnd;
     return this;
   }
@@ -130,11 +128,9 @@ public class RestShareLink {
    * @return accessEnd
   **/
   @javax.annotation.Nullable
-
   public String getAccessEnd() {
     return accessEnd;
   }
-
 
   public void setAccessEnd(String accessEnd) {
     this.accessEnd = accessEnd;
@@ -142,7 +138,6 @@ public class RestShareLink {
 
 
   public RestShareLink accessStart(String accessStart) {
-    
     this.accessStart = accessStart;
     return this;
   }
@@ -152,11 +147,9 @@ public class RestShareLink {
    * @return accessStart
   **/
   @javax.annotation.Nullable
-
   public String getAccessStart() {
     return accessStart;
   }
-
 
   public void setAccessStart(String accessStart) {
     this.accessStart = accessStart;
@@ -164,7 +157,6 @@ public class RestShareLink {
 
 
   public RestShareLink currentDownloads(String currentDownloads) {
-    
     this.currentDownloads = currentDownloads;
     return this;
   }
@@ -174,11 +166,9 @@ public class RestShareLink {
    * @return currentDownloads
   **/
   @javax.annotation.Nullable
-
   public String getCurrentDownloads() {
     return currentDownloads;
   }
-
 
   public void setCurrentDownloads(String currentDownloads) {
     this.currentDownloads = currentDownloads;
@@ -186,7 +176,6 @@ public class RestShareLink {
 
 
   public RestShareLink description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -196,11 +185,9 @@ public class RestShareLink {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -208,7 +195,6 @@ public class RestShareLink {
 
 
   public RestShareLink label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -218,11 +204,9 @@ public class RestShareLink {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -230,7 +214,6 @@ public class RestShareLink {
 
 
   public RestShareLink linkHash(String linkHash) {
-    
     this.linkHash = linkHash;
     return this;
   }
@@ -240,11 +223,9 @@ public class RestShareLink {
    * @return linkHash
   **/
   @javax.annotation.Nullable
-
   public String getLinkHash() {
     return linkHash;
   }
-
 
   public void setLinkHash(String linkHash) {
     this.linkHash = linkHash;
@@ -252,7 +233,6 @@ public class RestShareLink {
 
 
   public RestShareLink linkUrl(String linkUrl) {
-    
     this.linkUrl = linkUrl;
     return this;
   }
@@ -262,11 +242,9 @@ public class RestShareLink {
    * @return linkUrl
   **/
   @javax.annotation.Nullable
-
   public String getLinkUrl() {
     return linkUrl;
   }
-
 
   public void setLinkUrl(String linkUrl) {
     this.linkUrl = linkUrl;
@@ -274,7 +252,6 @@ public class RestShareLink {
 
 
   public RestShareLink maxDownloads(String maxDownloads) {
-    
     this.maxDownloads = maxDownloads;
     return this;
   }
@@ -284,11 +261,9 @@ public class RestShareLink {
    * @return maxDownloads
   **/
   @javax.annotation.Nullable
-
   public String getMaxDownloads() {
     return maxDownloads;
   }
-
 
   public void setMaxDownloads(String maxDownloads) {
     this.maxDownloads = maxDownloads;
@@ -296,7 +271,6 @@ public class RestShareLink {
 
 
   public RestShareLink passwordRequired(Boolean passwordRequired) {
-    
     this.passwordRequired = passwordRequired;
     return this;
   }
@@ -306,11 +280,9 @@ public class RestShareLink {
    * @return passwordRequired
   **/
   @javax.annotation.Nullable
-
   public Boolean getPasswordRequired() {
     return passwordRequired;
   }
-
 
   public void setPasswordRequired(Boolean passwordRequired) {
     this.passwordRequired = passwordRequired;
@@ -318,7 +290,6 @@ public class RestShareLink {
 
 
   public RestShareLink permissions(List<RestShareLinkAccessType> permissions) {
-    
     this.permissions = permissions;
     return this;
   }
@@ -336,11 +307,9 @@ public class RestShareLink {
    * @return permissions
   **/
   @javax.annotation.Nullable
-
   public List<RestShareLinkAccessType> getPermissions() {
     return permissions;
   }
-
 
   public void setPermissions(List<RestShareLinkAccessType> permissions) {
     this.permissions = permissions;
@@ -348,7 +317,6 @@ public class RestShareLink {
 
 
   public RestShareLink policies(List<ServiceResourcePolicy> policies) {
-    
     this.policies = policies;
     return this;
   }
@@ -366,11 +334,9 @@ public class RestShareLink {
    * @return policies
   **/
   @javax.annotation.Nullable
-
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
   }
-
 
   public void setPolicies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
@@ -378,7 +344,6 @@ public class RestShareLink {
 
 
   public RestShareLink policiesContextEditable(Boolean policiesContextEditable) {
-    
     this.policiesContextEditable = policiesContextEditable;
     return this;
   }
@@ -388,11 +353,9 @@ public class RestShareLink {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
   }
-
 
   public void setPoliciesContextEditable(Boolean policiesContextEditable) {
     this.policiesContextEditable = policiesContextEditable;
@@ -400,7 +363,6 @@ public class RestShareLink {
 
 
   public RestShareLink restrictToTargetUsers(Boolean restrictToTargetUsers) {
-    
     this.restrictToTargetUsers = restrictToTargetUsers;
     return this;
   }
@@ -410,11 +372,9 @@ public class RestShareLink {
    * @return restrictToTargetUsers
   **/
   @javax.annotation.Nullable
-
   public Boolean getRestrictToTargetUsers() {
     return restrictToTargetUsers;
   }
-
 
   public void setRestrictToTargetUsers(Boolean restrictToTargetUsers) {
     this.restrictToTargetUsers = restrictToTargetUsers;
@@ -422,7 +382,6 @@ public class RestShareLink {
 
 
   public RestShareLink rootNodes(List<TreeNode> rootNodes) {
-    
     this.rootNodes = rootNodes;
     return this;
   }
@@ -440,11 +399,9 @@ public class RestShareLink {
    * @return rootNodes
   **/
   @javax.annotation.Nullable
-
   public List<TreeNode> getRootNodes() {
     return rootNodes;
   }
-
 
   public void setRootNodes(List<TreeNode> rootNodes) {
     this.rootNodes = rootNodes;
@@ -452,7 +409,6 @@ public class RestShareLink {
 
 
   public RestShareLink targetUsers(Map<String, RestShareLinkTargetUser> targetUsers) {
-    
     this.targetUsers = targetUsers;
     return this;
   }
@@ -470,11 +426,9 @@ public class RestShareLink {
    * @return targetUsers
   **/
   @javax.annotation.Nullable
-
   public Map<String, RestShareLinkTargetUser> getTargetUsers() {
     return targetUsers;
   }
-
 
   public void setTargetUsers(Map<String, RestShareLinkTargetUser> targetUsers) {
     this.targetUsers = targetUsers;
@@ -482,7 +436,6 @@ public class RestShareLink {
 
 
   public RestShareLink userLogin(String userLogin) {
-    
     this.userLogin = userLogin;
     return this;
   }
@@ -492,11 +445,9 @@ public class RestShareLink {
    * @return userLogin
   **/
   @javax.annotation.Nullable
-
   public String getUserLogin() {
     return userLogin;
   }
-
 
   public void setUserLogin(String userLogin) {
     this.userLogin = userLogin;
@@ -504,7 +455,6 @@ public class RestShareLink {
 
 
   public RestShareLink userUuid(String userUuid) {
-    
     this.userUuid = userUuid;
     return this;
   }
@@ -514,11 +464,9 @@ public class RestShareLink {
    * @return userUuid
   **/
   @javax.annotation.Nullable
-
   public String getUserUuid() {
     return userUuid;
   }
-
 
   public void setUserUuid(String userUuid) {
     this.userUuid = userUuid;
@@ -526,7 +474,6 @@ public class RestShareLink {
 
 
   public RestShareLink uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -536,11 +483,9 @@ public class RestShareLink {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -548,7 +493,6 @@ public class RestShareLink {
 
 
   public RestShareLink viewTemplateName(String viewTemplateName) {
-    
     this.viewTemplateName = viewTemplateName;
     return this;
   }
@@ -558,11 +502,9 @@ public class RestShareLink {
    * @return viewTemplateName
   **/
   @javax.annotation.Nullable
-
   public String getViewTemplateName() {
     return viewTemplateName;
   }
-
 
   public void setViewTemplateName(String viewTemplateName) {
     this.viewTemplateName = viewTemplateName;
@@ -675,25 +617,26 @@ public class RestShareLink {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestShareLink
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestShareLink
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestShareLink.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestShareLink.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestShareLink is not found in the empty JSON string", RestShareLink.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestShareLink.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestShareLink` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestShareLink` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("AccessEnd") != null && !jsonObj.get("AccessEnd").isJsonNull()) && !jsonObj.get("AccessEnd").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `AccessEnd` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AccessEnd").toString()));
       }
@@ -719,7 +662,7 @@ public class RestShareLink {
         throw new IllegalArgumentException(String.format("Expected the field `MaxDownloads` to be a primitive type in the JSON string but got `%s`", jsonObj.get("MaxDownloads").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Permissions") != null && !jsonObj.get("Permissions").isJsonArray()) {
+      if (jsonObj.get("Permissions") != null && !jsonObj.get("Permissions").isJsonNull() && !jsonObj.get("Permissions").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Permissions` to be an array in the JSON string but got `%s`", jsonObj.get("Permissions").toString()));
       }
       if (jsonObj.get("Policies") != null && !jsonObj.get("Policies").isJsonNull()) {
@@ -732,7 +675,7 @@ public class RestShareLink {
 
           // validate the optional field `Policies` (array)
           for (int i = 0; i < jsonArraypolicies.size(); i++) {
-            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+            ServiceResourcePolicy.validateJsonElement(jsonArraypolicies.get(i));
           };
         }
       }
@@ -746,7 +689,7 @@ public class RestShareLink {
 
           // validate the optional field `RootNodes` (array)
           for (int i = 0; i < jsonArrayrootNodes.size(); i++) {
-            TreeNode.validateJsonObject(jsonArrayrootNodes.get(i).getAsJsonObject());
+            TreeNode.validateJsonElement(jsonArrayrootNodes.get(i));
           };
         }
       }
@@ -784,9 +727,9 @@ public class RestShareLink {
 
            @Override
            public RestShareLink read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

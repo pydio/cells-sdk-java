@@ -28,14 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * JobsNodesSelector
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class JobsNodesSelector {
   public static final String SERIALIZED_NAME_ALL = "All";
   @SerializedName(SERIALIZED_NAME_ALL)
@@ -69,6 +69,10 @@ public class JobsNodesSelector {
   @SerializedName(SERIALIZED_NAME_QUERY)
   private ServiceQuery query;
 
+  public static final String SERIALIZED_NAME_RANGE = "Range";
+  @SerializedName(SERIALIZED_NAME_RANGE)
+  private JobsSelectorRange range;
+
   public static final String SERIALIZED_NAME_TIMEOUT = "Timeout";
   @SerializedName(SERIALIZED_NAME_TIMEOUT)
   private String timeout;
@@ -77,7 +81,6 @@ public class JobsNodesSelector {
   }
 
   public JobsNodesSelector all(Boolean all) {
-    
     this.all = all;
     return this;
   }
@@ -87,11 +90,9 @@ public class JobsNodesSelector {
    * @return all
   **/
   @javax.annotation.Nullable
-
   public Boolean getAll() {
     return all;
   }
-
 
   public void setAll(Boolean all) {
     this.all = all;
@@ -99,7 +100,6 @@ public class JobsNodesSelector {
 
 
   public JobsNodesSelector clearInput(Boolean clearInput) {
-    
     this.clearInput = clearInput;
     return this;
   }
@@ -109,11 +109,9 @@ public class JobsNodesSelector {
    * @return clearInput
   **/
   @javax.annotation.Nullable
-
   public Boolean getClearInput() {
     return clearInput;
   }
-
 
   public void setClearInput(Boolean clearInput) {
     this.clearInput = clearInput;
@@ -121,7 +119,6 @@ public class JobsNodesSelector {
 
 
   public JobsNodesSelector collect(Boolean collect) {
-    
     this.collect = collect;
     return this;
   }
@@ -131,11 +128,9 @@ public class JobsNodesSelector {
    * @return collect
   **/
   @javax.annotation.Nullable
-
   public Boolean getCollect() {
     return collect;
   }
-
 
   public void setCollect(Boolean collect) {
     this.collect = collect;
@@ -143,7 +138,6 @@ public class JobsNodesSelector {
 
 
   public JobsNodesSelector description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -153,11 +147,9 @@ public class JobsNodesSelector {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -165,7 +157,6 @@ public class JobsNodesSelector {
 
 
   public JobsNodesSelector fanOutInput(Boolean fanOutInput) {
-    
     this.fanOutInput = fanOutInput;
     return this;
   }
@@ -175,11 +166,9 @@ public class JobsNodesSelector {
    * @return fanOutInput
   **/
   @javax.annotation.Nullable
-
   public Boolean getFanOutInput() {
     return fanOutInput;
   }
-
 
   public void setFanOutInput(Boolean fanOutInput) {
     this.fanOutInput = fanOutInput;
@@ -187,7 +176,6 @@ public class JobsNodesSelector {
 
 
   public JobsNodesSelector label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -197,11 +185,9 @@ public class JobsNodesSelector {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -209,7 +195,6 @@ public class JobsNodesSelector {
 
 
   public JobsNodesSelector pathes(List<String> pathes) {
-    
     this.pathes = pathes;
     return this;
   }
@@ -227,11 +212,9 @@ public class JobsNodesSelector {
    * @return pathes
   **/
   @javax.annotation.Nullable
-
   public List<String> getPathes() {
     return pathes;
   }
-
 
   public void setPathes(List<String> pathes) {
     this.pathes = pathes;
@@ -239,7 +222,6 @@ public class JobsNodesSelector {
 
 
   public JobsNodesSelector query(ServiceQuery query) {
-    
     this.query = query;
     return this;
   }
@@ -249,19 +231,35 @@ public class JobsNodesSelector {
    * @return query
   **/
   @javax.annotation.Nullable
-
   public ServiceQuery getQuery() {
     return query;
   }
-
 
   public void setQuery(ServiceQuery query) {
     this.query = query;
   }
 
 
+  public JobsNodesSelector range(JobsSelectorRange range) {
+    this.range = range;
+    return this;
+  }
+
+   /**
+   * Get range
+   * @return range
+  **/
+  @javax.annotation.Nullable
+  public JobsSelectorRange getRange() {
+    return range;
+  }
+
+  public void setRange(JobsSelectorRange range) {
+    this.range = range;
+  }
+
+
   public JobsNodesSelector timeout(String timeout) {
-    
     this.timeout = timeout;
     return this;
   }
@@ -271,11 +269,9 @@ public class JobsNodesSelector {
    * @return timeout
   **/
   @javax.annotation.Nullable
-
   public String getTimeout() {
     return timeout;
   }
-
 
   public void setTimeout(String timeout) {
     this.timeout = timeout;
@@ -300,12 +296,13 @@ public class JobsNodesSelector {
         Objects.equals(this.label, jobsNodesSelector.label) &&
         Objects.equals(this.pathes, jobsNodesSelector.pathes) &&
         Objects.equals(this.query, jobsNodesSelector.query) &&
+        Objects.equals(this.range, jobsNodesSelector.range) &&
         Objects.equals(this.timeout, jobsNodesSelector.timeout);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(all, clearInput, collect, description, fanOutInput, label, pathes, query, timeout);
+    return Objects.hash(all, clearInput, collect, description, fanOutInput, label, pathes, query, range, timeout);
   }
 
   @Override
@@ -320,6 +317,7 @@ public class JobsNodesSelector {
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    pathes: ").append(toIndentedString(pathes)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    range: ").append(toIndentedString(range)).append("\n");
     sb.append("    timeout: ").append(toIndentedString(timeout)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -351,6 +349,7 @@ public class JobsNodesSelector {
     openapiFields.add("Label");
     openapiFields.add("Pathes");
     openapiFields.add("Query");
+    openapiFields.add("Range");
     openapiFields.add("Timeout");
 
     // a set of required properties/fields (JSON key names)
@@ -358,25 +357,26 @@ public class JobsNodesSelector {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JobsNodesSelector
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to JobsNodesSelector
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!JobsNodesSelector.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!JobsNodesSelector.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in JobsNodesSelector is not found in the empty JSON string", JobsNodesSelector.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!JobsNodesSelector.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsNodesSelector` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsNodesSelector` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Description") != null && !jsonObj.get("Description").isJsonNull()) && !jsonObj.get("Description").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Description").toString()));
       }
@@ -384,12 +384,16 @@ public class JobsNodesSelector {
         throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Pathes") != null && !jsonObj.get("Pathes").isJsonArray()) {
+      if (jsonObj.get("Pathes") != null && !jsonObj.get("Pathes").isJsonNull() && !jsonObj.get("Pathes").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Pathes` to be an array in the JSON string but got `%s`", jsonObj.get("Pathes").toString()));
       }
       // validate the optional field `Query`
       if (jsonObj.get("Query") != null && !jsonObj.get("Query").isJsonNull()) {
-        ServiceQuery.validateJsonObject(jsonObj.getAsJsonObject("Query"));
+        ServiceQuery.validateJsonElement(jsonObj.get("Query"));
+      }
+      // validate the optional field `Range`
+      if (jsonObj.get("Range") != null && !jsonObj.get("Range").isJsonNull()) {
+        JobsSelectorRange.validateJsonElement(jsonObj.get("Range"));
       }
       if ((jsonObj.get("Timeout") != null && !jsonObj.get("Timeout").isJsonNull()) && !jsonObj.get("Timeout").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Timeout` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Timeout").toString()));
@@ -416,9 +420,9 @@ public class JobsNodesSelector {
 
            @Override
            public JobsNodesSelector read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

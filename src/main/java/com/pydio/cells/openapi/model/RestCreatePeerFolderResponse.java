@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestCreatePeerFolderResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestCreatePeerFolderResponse {
   public static final String SERIALIZED_NAME_NODE = "Node";
   @SerializedName(SERIALIZED_NAME_NODE)
@@ -47,7 +47,6 @@ public class RestCreatePeerFolderResponse {
   }
 
   public RestCreatePeerFolderResponse node(TreeNode node) {
-    
     this.node = node;
     return this;
   }
@@ -57,11 +56,9 @@ public class RestCreatePeerFolderResponse {
    * @return node
   **/
   @javax.annotation.Nullable
-
   public TreeNode getNode() {
     return node;
   }
-
 
   public void setNode(TreeNode node) {
     this.node = node;
@@ -69,7 +66,6 @@ public class RestCreatePeerFolderResponse {
 
 
   public RestCreatePeerFolderResponse success(Boolean success) {
-    
     this.success = success;
     return this;
   }
@@ -79,11 +75,9 @@ public class RestCreatePeerFolderResponse {
    * @return success
   **/
   @javax.annotation.Nullable
-
   public Boolean getSuccess() {
     return success;
   }
-
 
   public void setSuccess(Boolean success) {
     this.success = success;
@@ -145,28 +139,29 @@ public class RestCreatePeerFolderResponse {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestCreatePeerFolderResponse
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestCreatePeerFolderResponse
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestCreatePeerFolderResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestCreatePeerFolderResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestCreatePeerFolderResponse is not found in the empty JSON string", RestCreatePeerFolderResponse.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestCreatePeerFolderResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestCreatePeerFolderResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestCreatePeerFolderResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `Node`
       if (jsonObj.get("Node") != null && !jsonObj.get("Node").isJsonNull()) {
-        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Node"));
+        TreeNode.validateJsonElement(jsonObj.get("Node"));
       }
   }
 
@@ -190,9 +185,9 @@ public class RestCreatePeerFolderResponse {
 
            @Override
            public RestCreatePeerFolderResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

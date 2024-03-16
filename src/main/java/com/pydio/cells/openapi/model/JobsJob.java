@@ -31,14 +31,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * JobsJob
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class JobsJob {
   public static final String SERIALIZED_NAME_ACTIONS = "Actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
@@ -55,6 +54,10 @@ public class JobsJob {
   public static final String SERIALIZED_NAME_AUTO_START = "AutoStart";
   @SerializedName(SERIALIZED_NAME_AUTO_START)
   private Boolean autoStart;
+
+  public static final String SERIALIZED_NAME_CHAT_EVENT_FILTER = "ChatEventFilter";
+  @SerializedName(SERIALIZED_NAME_CHAT_EVENT_FILTER)
+  private JobsChatEventFilter chatEventFilter;
 
   public static final String SERIALIZED_NAME_CONTEXT_META_FILTER = "ContextMetaFilter";
   @SerializedName(SERIALIZED_NAME_CONTEXT_META_FILTER)
@@ -108,6 +111,10 @@ public class JobsJob {
   @SerializedName(SERIALIZED_NAME_MERGE_ACTION)
   private JobsAction mergeAction;
 
+  public static final String SERIALIZED_NAME_METADATA = "Metadata";
+  @SerializedName(SERIALIZED_NAME_METADATA)
+  private Map<String, String> metadata = new HashMap<>();
+
   public static final String SERIALIZED_NAME_MODIFIED_AT = "ModifiedAt";
   @SerializedName(SERIALIZED_NAME_MODIFIED_AT)
   private Integer modifiedAt;
@@ -156,7 +163,6 @@ public class JobsJob {
   }
 
   public JobsJob actions(List<JobsAction> actions) {
-    
     this.actions = actions;
     return this;
   }
@@ -174,11 +180,9 @@ public class JobsJob {
    * @return actions
   **/
   @javax.annotation.Nullable
-
   public List<JobsAction> getActions() {
     return actions;
   }
-
 
   public void setActions(List<JobsAction> actions) {
     this.actions = actions;
@@ -186,7 +190,6 @@ public class JobsJob {
 
 
   public JobsJob autoClean(Boolean autoClean) {
-    
     this.autoClean = autoClean;
     return this;
   }
@@ -196,11 +199,9 @@ public class JobsJob {
    * @return autoClean
   **/
   @javax.annotation.Nullable
-
   public Boolean getAutoClean() {
     return autoClean;
   }
-
 
   public void setAutoClean(Boolean autoClean) {
     this.autoClean = autoClean;
@@ -208,7 +209,6 @@ public class JobsJob {
 
 
   public JobsJob autoRestart(Boolean autoRestart) {
-    
     this.autoRestart = autoRestart;
     return this;
   }
@@ -218,11 +218,9 @@ public class JobsJob {
    * @return autoRestart
   **/
   @javax.annotation.Nullable
-
   public Boolean getAutoRestart() {
     return autoRestart;
   }
-
 
   public void setAutoRestart(Boolean autoRestart) {
     this.autoRestart = autoRestart;
@@ -230,7 +228,6 @@ public class JobsJob {
 
 
   public JobsJob autoStart(Boolean autoStart) {
-    
     this.autoStart = autoStart;
     return this;
   }
@@ -240,19 +237,35 @@ public class JobsJob {
    * @return autoStart
   **/
   @javax.annotation.Nullable
-
   public Boolean getAutoStart() {
     return autoStart;
   }
-
 
   public void setAutoStart(Boolean autoStart) {
     this.autoStart = autoStart;
   }
 
 
+  public JobsJob chatEventFilter(JobsChatEventFilter chatEventFilter) {
+    this.chatEventFilter = chatEventFilter;
+    return this;
+  }
+
+   /**
+   * Get chatEventFilter
+   * @return chatEventFilter
+  **/
+  @javax.annotation.Nullable
+  public JobsChatEventFilter getChatEventFilter() {
+    return chatEventFilter;
+  }
+
+  public void setChatEventFilter(JobsChatEventFilter chatEventFilter) {
+    this.chatEventFilter = chatEventFilter;
+  }
+
+
   public JobsJob contextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
-    
     this.contextMetaFilter = contextMetaFilter;
     return this;
   }
@@ -262,11 +275,9 @@ public class JobsJob {
    * @return contextMetaFilter
   **/
   @javax.annotation.Nullable
-
   public JobsContextMetaFilter getContextMetaFilter() {
     return contextMetaFilter;
   }
-
 
   public void setContextMetaFilter(JobsContextMetaFilter contextMetaFilter) {
     this.contextMetaFilter = contextMetaFilter;
@@ -274,7 +285,6 @@ public class JobsJob {
 
 
   public JobsJob createdAt(Integer createdAt) {
-    
     this.createdAt = createdAt;
     return this;
   }
@@ -284,11 +294,9 @@ public class JobsJob {
    * @return createdAt
   **/
   @javax.annotation.Nullable
-
   public Integer getCreatedAt() {
     return createdAt;
   }
-
 
   public void setCreatedAt(Integer createdAt) {
     this.createdAt = createdAt;
@@ -296,7 +304,6 @@ public class JobsJob {
 
 
   public JobsJob custom(Boolean custom) {
-    
     this.custom = custom;
     return this;
   }
@@ -306,11 +313,9 @@ public class JobsJob {
    * @return custom
   **/
   @javax.annotation.Nullable
-
   public Boolean getCustom() {
     return custom;
   }
-
 
   public void setCustom(Boolean custom) {
     this.custom = custom;
@@ -318,7 +323,6 @@ public class JobsJob {
 
 
   public JobsJob dataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
-    
     this.dataSourceFilter = dataSourceFilter;
     return this;
   }
@@ -328,11 +332,9 @@ public class JobsJob {
    * @return dataSourceFilter
   **/
   @javax.annotation.Nullable
-
   public JobsDataSourceSelector getDataSourceFilter() {
     return dataSourceFilter;
   }
-
 
   public void setDataSourceFilter(JobsDataSourceSelector dataSourceFilter) {
     this.dataSourceFilter = dataSourceFilter;
@@ -340,7 +342,6 @@ public class JobsJob {
 
 
   public JobsJob eventNames(List<String> eventNames) {
-    
     this.eventNames = eventNames;
     return this;
   }
@@ -358,11 +359,9 @@ public class JobsJob {
    * @return eventNames
   **/
   @javax.annotation.Nullable
-
   public List<String> getEventNames() {
     return eventNames;
   }
-
 
   public void setEventNames(List<String> eventNames) {
     this.eventNames = eventNames;
@@ -370,7 +369,6 @@ public class JobsJob {
 
 
   public JobsJob hooks(List<JobsJobHook> hooks) {
-    
     this.hooks = hooks;
     return this;
   }
@@ -388,11 +386,9 @@ public class JobsJob {
    * @return hooks
   **/
   @javax.annotation.Nullable
-
   public List<JobsJobHook> getHooks() {
     return hooks;
   }
-
 
   public void setHooks(List<JobsJobHook> hooks) {
     this.hooks = hooks;
@@ -400,7 +396,6 @@ public class JobsJob {
 
 
   public JobsJob ID(String ID) {
-    
     this.ID = ID;
     return this;
   }
@@ -410,11 +405,9 @@ public class JobsJob {
    * @return ID
   **/
   @javax.annotation.Nullable
-
   public String getID() {
     return ID;
   }
-
 
   public void setID(String ID) {
     this.ID = ID;
@@ -422,7 +415,6 @@ public class JobsJob {
 
 
   public JobsJob idmFilter(JobsIdmSelector idmFilter) {
-    
     this.idmFilter = idmFilter;
     return this;
   }
@@ -432,11 +424,9 @@ public class JobsJob {
    * @return idmFilter
   **/
   @javax.annotation.Nullable
-
   public JobsIdmSelector getIdmFilter() {
     return idmFilter;
   }
-
 
   public void setIdmFilter(JobsIdmSelector idmFilter) {
     this.idmFilter = idmFilter;
@@ -444,7 +434,6 @@ public class JobsJob {
 
 
   public JobsJob inactive(Boolean inactive) {
-    
     this.inactive = inactive;
     return this;
   }
@@ -454,11 +443,9 @@ public class JobsJob {
    * @return inactive
   **/
   @javax.annotation.Nullable
-
   public Boolean getInactive() {
     return inactive;
   }
-
 
   public void setInactive(Boolean inactive) {
     this.inactive = inactive;
@@ -466,7 +453,6 @@ public class JobsJob {
 
 
   public JobsJob label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -476,11 +462,9 @@ public class JobsJob {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -488,7 +472,6 @@ public class JobsJob {
 
 
   public JobsJob languages(List<String> languages) {
-    
     this.languages = languages;
     return this;
   }
@@ -506,11 +489,9 @@ public class JobsJob {
    * @return languages
   **/
   @javax.annotation.Nullable
-
   public List<String> getLanguages() {
     return languages;
   }
-
 
   public void setLanguages(List<String> languages) {
     this.languages = languages;
@@ -518,7 +499,6 @@ public class JobsJob {
 
 
   public JobsJob maxConcurrency(Integer maxConcurrency) {
-    
     this.maxConcurrency = maxConcurrency;
     return this;
   }
@@ -528,11 +508,9 @@ public class JobsJob {
    * @return maxConcurrency
   **/
   @javax.annotation.Nullable
-
   public Integer getMaxConcurrency() {
     return maxConcurrency;
   }
-
 
   public void setMaxConcurrency(Integer maxConcurrency) {
     this.maxConcurrency = maxConcurrency;
@@ -540,7 +518,6 @@ public class JobsJob {
 
 
   public JobsJob mergeAction(JobsAction mergeAction) {
-    
     this.mergeAction = mergeAction;
     return this;
   }
@@ -550,19 +527,43 @@ public class JobsJob {
    * @return mergeAction
   **/
   @javax.annotation.Nullable
-
   public JobsAction getMergeAction() {
     return mergeAction;
   }
-
 
   public void setMergeAction(JobsAction mergeAction) {
     this.mergeAction = mergeAction;
   }
 
 
+  public JobsJob metadata(Map<String, String> metadata) {
+    this.metadata = metadata;
+    return this;
+  }
+
+  public JobsJob putMetadataItem(String key, String metadataItem) {
+    if (this.metadata == null) {
+      this.metadata = new HashMap<>();
+    }
+    this.metadata.put(key, metadataItem);
+    return this;
+  }
+
+   /**
+   * Additional user-defined metadata, can be used for icon, documentation, pre-requisites, etc.
+   * @return metadata
+  **/
+  @javax.annotation.Nullable
+  public Map<String, String> getMetadata() {
+    return metadata;
+  }
+
+  public void setMetadata(Map<String, String> metadata) {
+    this.metadata = metadata;
+  }
+
+
   public JobsJob modifiedAt(Integer modifiedAt) {
-    
     this.modifiedAt = modifiedAt;
     return this;
   }
@@ -572,11 +573,9 @@ public class JobsJob {
    * @return modifiedAt
   **/
   @javax.annotation.Nullable
-
   public Integer getModifiedAt() {
     return modifiedAt;
   }
-
 
   public void setModifiedAt(Integer modifiedAt) {
     this.modifiedAt = modifiedAt;
@@ -584,7 +583,6 @@ public class JobsJob {
 
 
   public JobsJob nodeEventFilter(JobsNodesSelector nodeEventFilter) {
-    
     this.nodeEventFilter = nodeEventFilter;
     return this;
   }
@@ -594,11 +592,9 @@ public class JobsJob {
    * @return nodeEventFilter
   **/
   @javax.annotation.Nullable
-
   public JobsNodesSelector getNodeEventFilter() {
     return nodeEventFilter;
   }
-
 
   public void setNodeEventFilter(JobsNodesSelector nodeEventFilter) {
     this.nodeEventFilter = nodeEventFilter;
@@ -606,7 +602,6 @@ public class JobsJob {
 
 
   public JobsJob owner(String owner) {
-    
     this.owner = owner;
     return this;
   }
@@ -616,11 +611,9 @@ public class JobsJob {
    * @return owner
   **/
   @javax.annotation.Nullable
-
   public String getOwner() {
     return owner;
   }
-
 
   public void setOwner(String owner) {
     this.owner = owner;
@@ -628,7 +621,6 @@ public class JobsJob {
 
 
   public JobsJob parameters(List<JobsJobParameter> parameters) {
-    
     this.parameters = parameters;
     return this;
   }
@@ -646,11 +638,9 @@ public class JobsJob {
    * @return parameters
   **/
   @javax.annotation.Nullable
-
   public List<JobsJobParameter> getParameters() {
     return parameters;
   }
-
 
   public void setParameters(List<JobsJobParameter> parameters) {
     this.parameters = parameters;
@@ -658,7 +648,6 @@ public class JobsJob {
 
 
   public JobsJob resourcesDependencies(List<ProtobufAny> resourcesDependencies) {
-    
     this.resourcesDependencies = resourcesDependencies;
     return this;
   }
@@ -676,11 +665,9 @@ public class JobsJob {
    * @return resourcesDependencies
   **/
   @javax.annotation.Nullable
-
   public List<ProtobufAny> getResourcesDependencies() {
     return resourcesDependencies;
   }
-
 
   public void setResourcesDependencies(List<ProtobufAny> resourcesDependencies) {
     this.resourcesDependencies = resourcesDependencies;
@@ -688,7 +675,6 @@ public class JobsJob {
 
 
   public JobsJob schedule(JobsSchedule schedule) {
-    
     this.schedule = schedule;
     return this;
   }
@@ -698,11 +684,9 @@ public class JobsJob {
    * @return schedule
   **/
   @javax.annotation.Nullable
-
   public JobsSchedule getSchedule() {
     return schedule;
   }
-
 
   public void setSchedule(JobsSchedule schedule) {
     this.schedule = schedule;
@@ -710,7 +694,6 @@ public class JobsJob {
 
 
   public JobsJob tasks(List<JobsTask> tasks) {
-    
     this.tasks = tasks;
     return this;
   }
@@ -728,11 +711,9 @@ public class JobsJob {
    * @return tasks
   **/
   @javax.annotation.Nullable
-
   public List<JobsTask> getTasks() {
     return tasks;
   }
-
 
   public void setTasks(List<JobsTask> tasks) {
     this.tasks = tasks;
@@ -740,7 +721,6 @@ public class JobsJob {
 
 
   public JobsJob tasksSilentUpdate(Boolean tasksSilentUpdate) {
-    
     this.tasksSilentUpdate = tasksSilentUpdate;
     return this;
   }
@@ -750,11 +730,9 @@ public class JobsJob {
    * @return tasksSilentUpdate
   **/
   @javax.annotation.Nullable
-
   public Boolean getTasksSilentUpdate() {
     return tasksSilentUpdate;
   }
-
 
   public void setTasksSilentUpdate(Boolean tasksSilentUpdate) {
     this.tasksSilentUpdate = tasksSilentUpdate;
@@ -762,7 +740,6 @@ public class JobsJob {
 
 
   public JobsJob timeout(String timeout) {
-    
     this.timeout = timeout;
     return this;
   }
@@ -772,11 +749,9 @@ public class JobsJob {
    * @return timeout
   **/
   @javax.annotation.Nullable
-
   public String getTimeout() {
     return timeout;
   }
-
 
   public void setTimeout(String timeout) {
     this.timeout = timeout;
@@ -784,7 +759,6 @@ public class JobsJob {
 
 
   public JobsJob userEventFilter(JobsUsersSelector userEventFilter) {
-    
     this.userEventFilter = userEventFilter;
     return this;
   }
@@ -794,11 +768,9 @@ public class JobsJob {
    * @return userEventFilter
   **/
   @javax.annotation.Nullable
-
   public JobsUsersSelector getUserEventFilter() {
     return userEventFilter;
   }
-
 
   public void setUserEventFilter(JobsUsersSelector userEventFilter) {
     this.userEventFilter = userEventFilter;
@@ -806,7 +778,6 @@ public class JobsJob {
 
 
   public JobsJob versionMeta(Map<String, String> versionMeta) {
-    
     this.versionMeta = versionMeta;
     return this;
   }
@@ -824,11 +795,9 @@ public class JobsJob {
    * @return versionMeta
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getVersionMeta() {
     return versionMeta;
   }
-
 
   public void setVersionMeta(Map<String, String> versionMeta) {
     this.versionMeta = versionMeta;
@@ -849,6 +818,7 @@ public class JobsJob {
         Objects.equals(this.autoClean, jobsJob.autoClean) &&
         Objects.equals(this.autoRestart, jobsJob.autoRestart) &&
         Objects.equals(this.autoStart, jobsJob.autoStart) &&
+        Objects.equals(this.chatEventFilter, jobsJob.chatEventFilter) &&
         Objects.equals(this.contextMetaFilter, jobsJob.contextMetaFilter) &&
         Objects.equals(this.createdAt, jobsJob.createdAt) &&
         Objects.equals(this.custom, jobsJob.custom) &&
@@ -862,6 +832,7 @@ public class JobsJob {
         Objects.equals(this.languages, jobsJob.languages) &&
         Objects.equals(this.maxConcurrency, jobsJob.maxConcurrency) &&
         Objects.equals(this.mergeAction, jobsJob.mergeAction) &&
+        Objects.equals(this.metadata, jobsJob.metadata) &&
         Objects.equals(this.modifiedAt, jobsJob.modifiedAt) &&
         Objects.equals(this.nodeEventFilter, jobsJob.nodeEventFilter) &&
         Objects.equals(this.owner, jobsJob.owner) &&
@@ -877,7 +848,7 @@ public class JobsJob {
 
   @Override
   public int hashCode() {
-    return Objects.hash(actions, autoClean, autoRestart, autoStart, contextMetaFilter, createdAt, custom, dataSourceFilter, eventNames, hooks, ID, idmFilter, inactive, label, languages, maxConcurrency, mergeAction, modifiedAt, nodeEventFilter, owner, parameters, resourcesDependencies, schedule, tasks, tasksSilentUpdate, timeout, userEventFilter, versionMeta);
+    return Objects.hash(actions, autoClean, autoRestart, autoStart, chatEventFilter, contextMetaFilter, createdAt, custom, dataSourceFilter, eventNames, hooks, ID, idmFilter, inactive, label, languages, maxConcurrency, mergeAction, metadata, modifiedAt, nodeEventFilter, owner, parameters, resourcesDependencies, schedule, tasks, tasksSilentUpdate, timeout, userEventFilter, versionMeta);
   }
 
   @Override
@@ -888,6 +859,7 @@ public class JobsJob {
     sb.append("    autoClean: ").append(toIndentedString(autoClean)).append("\n");
     sb.append("    autoRestart: ").append(toIndentedString(autoRestart)).append("\n");
     sb.append("    autoStart: ").append(toIndentedString(autoStart)).append("\n");
+    sb.append("    chatEventFilter: ").append(toIndentedString(chatEventFilter)).append("\n");
     sb.append("    contextMetaFilter: ").append(toIndentedString(contextMetaFilter)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
@@ -901,6 +873,7 @@ public class JobsJob {
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    maxConcurrency: ").append(toIndentedString(maxConcurrency)).append("\n");
     sb.append("    mergeAction: ").append(toIndentedString(mergeAction)).append("\n");
+    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("    modifiedAt: ").append(toIndentedString(modifiedAt)).append("\n");
     sb.append("    nodeEventFilter: ").append(toIndentedString(nodeEventFilter)).append("\n");
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
@@ -938,6 +911,7 @@ public class JobsJob {
     openapiFields.add("AutoClean");
     openapiFields.add("AutoRestart");
     openapiFields.add("AutoStart");
+    openapiFields.add("ChatEventFilter");
     openapiFields.add("ContextMetaFilter");
     openapiFields.add("CreatedAt");
     openapiFields.add("Custom");
@@ -951,6 +925,7 @@ public class JobsJob {
     openapiFields.add("Languages");
     openapiFields.add("MaxConcurrency");
     openapiFields.add("MergeAction");
+    openapiFields.add("Metadata");
     openapiFields.add("ModifiedAt");
     openapiFields.add("NodeEventFilter");
     openapiFields.add("Owner");
@@ -968,25 +943,26 @@ public class JobsJob {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JobsJob
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to JobsJob
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!JobsJob.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!JobsJob.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in JobsJob is not found in the empty JSON string", JobsJob.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!JobsJob.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsJob` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JobsJob` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Actions") != null && !jsonObj.get("Actions").isJsonNull()) {
         JsonArray jsonArrayactions = jsonObj.getAsJsonArray("Actions");
         if (jsonArrayactions != null) {
@@ -997,20 +973,24 @@ public class JobsJob {
 
           // validate the optional field `Actions` (array)
           for (int i = 0; i < jsonArrayactions.size(); i++) {
-            JobsAction.validateJsonObject(jsonArrayactions.get(i).getAsJsonObject());
+            JobsAction.validateJsonElement(jsonArrayactions.get(i));
           };
         }
       }
+      // validate the optional field `ChatEventFilter`
+      if (jsonObj.get("ChatEventFilter") != null && !jsonObj.get("ChatEventFilter").isJsonNull()) {
+        JobsChatEventFilter.validateJsonElement(jsonObj.get("ChatEventFilter"));
+      }
       // validate the optional field `ContextMetaFilter`
       if (jsonObj.get("ContextMetaFilter") != null && !jsonObj.get("ContextMetaFilter").isJsonNull()) {
-        JobsContextMetaFilter.validateJsonObject(jsonObj.getAsJsonObject("ContextMetaFilter"));
+        JobsContextMetaFilter.validateJsonElement(jsonObj.get("ContextMetaFilter"));
       }
       // validate the optional field `DataSourceFilter`
       if (jsonObj.get("DataSourceFilter") != null && !jsonObj.get("DataSourceFilter").isJsonNull()) {
-        JobsDataSourceSelector.validateJsonObject(jsonObj.getAsJsonObject("DataSourceFilter"));
+        JobsDataSourceSelector.validateJsonElement(jsonObj.get("DataSourceFilter"));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("EventNames") != null && !jsonObj.get("EventNames").isJsonArray()) {
+      if (jsonObj.get("EventNames") != null && !jsonObj.get("EventNames").isJsonNull() && !jsonObj.get("EventNames").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `EventNames` to be an array in the JSON string but got `%s`", jsonObj.get("EventNames").toString()));
       }
       if (jsonObj.get("Hooks") != null && !jsonObj.get("Hooks").isJsonNull()) {
@@ -1023,7 +1003,7 @@ public class JobsJob {
 
           // validate the optional field `Hooks` (array)
           for (int i = 0; i < jsonArrayhooks.size(); i++) {
-            JobsJobHook.validateJsonObject(jsonArrayhooks.get(i).getAsJsonObject());
+            JobsJobHook.validateJsonElement(jsonArrayhooks.get(i));
           };
         }
       }
@@ -1032,22 +1012,22 @@ public class JobsJob {
       }
       // validate the optional field `IdmFilter`
       if (jsonObj.get("IdmFilter") != null && !jsonObj.get("IdmFilter").isJsonNull()) {
-        JobsIdmSelector.validateJsonObject(jsonObj.getAsJsonObject("IdmFilter"));
+        JobsIdmSelector.validateJsonElement(jsonObj.get("IdmFilter"));
       }
       if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Label").toString()));
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("Languages") != null && !jsonObj.get("Languages").isJsonArray()) {
+      if (jsonObj.get("Languages") != null && !jsonObj.get("Languages").isJsonNull() && !jsonObj.get("Languages").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `Languages` to be an array in the JSON string but got `%s`", jsonObj.get("Languages").toString()));
       }
       // validate the optional field `MergeAction`
       if (jsonObj.get("MergeAction") != null && !jsonObj.get("MergeAction").isJsonNull()) {
-        JobsAction.validateJsonObject(jsonObj.getAsJsonObject("MergeAction"));
+        JobsAction.validateJsonElement(jsonObj.get("MergeAction"));
       }
       // validate the optional field `NodeEventFilter`
       if (jsonObj.get("NodeEventFilter") != null && !jsonObj.get("NodeEventFilter").isJsonNull()) {
-        JobsNodesSelector.validateJsonObject(jsonObj.getAsJsonObject("NodeEventFilter"));
+        JobsNodesSelector.validateJsonElement(jsonObj.get("NodeEventFilter"));
       }
       if ((jsonObj.get("Owner") != null && !jsonObj.get("Owner").isJsonNull()) && !jsonObj.get("Owner").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Owner` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Owner").toString()));
@@ -1062,17 +1042,17 @@ public class JobsJob {
 
           // validate the optional field `Parameters` (array)
           for (int i = 0; i < jsonArrayparameters.size(); i++) {
-            JobsJobParameter.validateJsonObject(jsonArrayparameters.get(i).getAsJsonObject());
+            JobsJobParameter.validateJsonElement(jsonArrayparameters.get(i));
           };
         }
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("ResourcesDependencies") != null && !jsonObj.get("ResourcesDependencies").isJsonArray()) {
+      if (jsonObj.get("ResourcesDependencies") != null && !jsonObj.get("ResourcesDependencies").isJsonNull() && !jsonObj.get("ResourcesDependencies").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `ResourcesDependencies` to be an array in the JSON string but got `%s`", jsonObj.get("ResourcesDependencies").toString()));
       }
       // validate the optional field `Schedule`
       if (jsonObj.get("Schedule") != null && !jsonObj.get("Schedule").isJsonNull()) {
-        JobsSchedule.validateJsonObject(jsonObj.getAsJsonObject("Schedule"));
+        JobsSchedule.validateJsonElement(jsonObj.get("Schedule"));
       }
       if (jsonObj.get("Tasks") != null && !jsonObj.get("Tasks").isJsonNull()) {
         JsonArray jsonArraytasks = jsonObj.getAsJsonArray("Tasks");
@@ -1084,7 +1064,7 @@ public class JobsJob {
 
           // validate the optional field `Tasks` (array)
           for (int i = 0; i < jsonArraytasks.size(); i++) {
-            JobsTask.validateJsonObject(jsonArraytasks.get(i).getAsJsonObject());
+            JobsTask.validateJsonElement(jsonArraytasks.get(i));
           };
         }
       }
@@ -1093,7 +1073,7 @@ public class JobsJob {
       }
       // validate the optional field `UserEventFilter`
       if (jsonObj.get("UserEventFilter") != null && !jsonObj.get("UserEventFilter").isJsonNull()) {
-        JobsUsersSelector.validateJsonObject(jsonObj.getAsJsonObject("UserEventFilter"));
+        JobsUsersSelector.validateJsonElement(jsonObj.get("UserEventFilter"));
       }
   }
 
@@ -1117,9 +1097,9 @@ public class JobsJob {
 
            @Override
            public JobsJob read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

@@ -7,7 +7,6 @@ import com.pydio.cells.api.callbacks.StringHandler;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 
-import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -211,10 +210,6 @@ public class P8Response implements Closeable {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public JSONObject toJSON() throws ParseException, IOException {
-        return new JSONObject(asString());
     }
 
     public int lineByLine(String charset, String delimiter, StringHandler h) {

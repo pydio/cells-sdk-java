@@ -16,16 +16,19 @@ package com.pydio.cells.openapi;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * <p>ApiException class.</p>
  */
 @SuppressWarnings("serial")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class ApiException extends Exception {
+    private static final long serialVersionUID = 1L;
+
     private int code = 0;
     private Map<String, List<String>> responseHeaders = null;
     private String responseBody = null;
- 
+
     /**
      * <p>Constructor for ApiException.</p>
      */

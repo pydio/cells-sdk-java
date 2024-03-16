@@ -28,14 +28,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * TreeNodeChangeEvent
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class TreeNodeChangeEvent {
   public static final String SERIALIZED_NAME_METADATA = "Metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
@@ -65,7 +64,6 @@ public class TreeNodeChangeEvent {
   }
 
   public TreeNodeChangeEvent metadata(Map<String, String> metadata) {
-    
     this.metadata = metadata;
     return this;
   }
@@ -83,11 +81,9 @@ public class TreeNodeChangeEvent {
    * @return metadata
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getMetadata() {
     return metadata;
   }
-
 
   public void setMetadata(Map<String, String> metadata) {
     this.metadata = metadata;
@@ -95,7 +91,6 @@ public class TreeNodeChangeEvent {
 
 
   public TreeNodeChangeEvent optimistic(Boolean optimistic) {
-    
     this.optimistic = optimistic;
     return this;
   }
@@ -105,11 +100,9 @@ public class TreeNodeChangeEvent {
    * @return optimistic
   **/
   @javax.annotation.Nullable
-
   public Boolean getOptimistic() {
     return optimistic;
   }
-
 
   public void setOptimistic(Boolean optimistic) {
     this.optimistic = optimistic;
@@ -117,7 +110,6 @@ public class TreeNodeChangeEvent {
 
 
   public TreeNodeChangeEvent silent(Boolean silent) {
-    
     this.silent = silent;
     return this;
   }
@@ -127,11 +119,9 @@ public class TreeNodeChangeEvent {
    * @return silent
   **/
   @javax.annotation.Nullable
-
   public Boolean getSilent() {
     return silent;
   }
-
 
   public void setSilent(Boolean silent) {
     this.silent = silent;
@@ -139,7 +129,6 @@ public class TreeNodeChangeEvent {
 
 
   public TreeNodeChangeEvent source(TreeNode source) {
-    
     this.source = source;
     return this;
   }
@@ -149,11 +138,9 @@ public class TreeNodeChangeEvent {
    * @return source
   **/
   @javax.annotation.Nullable
-
   public TreeNode getSource() {
     return source;
   }
-
 
   public void setSource(TreeNode source) {
     this.source = source;
@@ -161,7 +148,6 @@ public class TreeNodeChangeEvent {
 
 
   public TreeNodeChangeEvent target(TreeNode target) {
-    
     this.target = target;
     return this;
   }
@@ -171,11 +157,9 @@ public class TreeNodeChangeEvent {
    * @return target
   **/
   @javax.annotation.Nullable
-
   public TreeNode getTarget() {
     return target;
   }
-
 
   public void setTarget(TreeNode target) {
     this.target = target;
@@ -183,7 +167,6 @@ public class TreeNodeChangeEvent {
 
 
   public TreeNodeChangeEvent type(TreeNodeChangeEventEventType type) {
-    
     this.type = type;
     return this;
   }
@@ -193,11 +176,9 @@ public class TreeNodeChangeEvent {
    * @return type
   **/
   @javax.annotation.Nullable
-
   public TreeNodeChangeEventEventType getType() {
     return type;
   }
-
 
   public void setType(TreeNodeChangeEventEventType type) {
     this.type = type;
@@ -271,32 +252,37 @@ public class TreeNodeChangeEvent {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to TreeNodeChangeEvent
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to TreeNodeChangeEvent
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!TreeNodeChangeEvent.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!TreeNodeChangeEvent.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in TreeNodeChangeEvent is not found in the empty JSON string", TreeNodeChangeEvent.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!TreeNodeChangeEvent.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeNodeChangeEvent` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `TreeNodeChangeEvent` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `Source`
       if (jsonObj.get("Source") != null && !jsonObj.get("Source").isJsonNull()) {
-        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Source"));
+        TreeNode.validateJsonElement(jsonObj.get("Source"));
       }
       // validate the optional field `Target`
       if (jsonObj.get("Target") != null && !jsonObj.get("Target").isJsonNull()) {
-        TreeNode.validateJsonObject(jsonObj.getAsJsonObject("Target"));
+        TreeNode.validateJsonElement(jsonObj.get("Target"));
+      }
+      // validate the optional field `Type`
+      if (jsonObj.get("Type") != null && !jsonObj.get("Type").isJsonNull()) {
+        TreeNodeChangeEventEventType.validateJsonElement(jsonObj.get("Type"));
       }
   }
 
@@ -320,9 +306,9 @@ public class TreeNodeChangeEvent {
 
            @Override
            public TreeNodeChangeEvent read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

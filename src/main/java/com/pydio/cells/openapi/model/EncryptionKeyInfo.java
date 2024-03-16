@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * EncryptionKeyInfo
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class EncryptionKeyInfo {
   public static final String SERIALIZED_NAME_EXPORTS = "Exports";
   @SerializedName(SERIALIZED_NAME_EXPORTS)
@@ -50,7 +50,6 @@ public class EncryptionKeyInfo {
   }
 
   public EncryptionKeyInfo exports(List<EncryptionExport> exports) {
-    
     this.exports = exports;
     return this;
   }
@@ -68,11 +67,9 @@ public class EncryptionKeyInfo {
    * @return exports
   **/
   @javax.annotation.Nullable
-
   public List<EncryptionExport> getExports() {
     return exports;
   }
-
 
   public void setExports(List<EncryptionExport> exports) {
     this.exports = exports;
@@ -80,7 +77,6 @@ public class EncryptionKeyInfo {
 
 
   public EncryptionKeyInfo imports(List<EncryptionImport> imports) {
-    
     this.imports = imports;
     return this;
   }
@@ -98,11 +94,9 @@ public class EncryptionKeyInfo {
    * @return imports
   **/
   @javax.annotation.Nullable
-
   public List<EncryptionImport> getImports() {
     return imports;
   }
-
 
   public void setImports(List<EncryptionImport> imports) {
     this.imports = imports;
@@ -164,25 +158,26 @@ public class EncryptionKeyInfo {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to EncryptionKeyInfo
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to EncryptionKeyInfo
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!EncryptionKeyInfo.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!EncryptionKeyInfo.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in EncryptionKeyInfo is not found in the empty JSON string", EncryptionKeyInfo.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!EncryptionKeyInfo.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `EncryptionKeyInfo` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `EncryptionKeyInfo` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Exports") != null && !jsonObj.get("Exports").isJsonNull()) {
         JsonArray jsonArrayexports = jsonObj.getAsJsonArray("Exports");
         if (jsonArrayexports != null) {
@@ -193,7 +188,7 @@ public class EncryptionKeyInfo {
 
           // validate the optional field `Exports` (array)
           for (int i = 0; i < jsonArrayexports.size(); i++) {
-            EncryptionExport.validateJsonObject(jsonArrayexports.get(i).getAsJsonObject());
+            EncryptionExport.validateJsonElement(jsonArrayexports.get(i));
           };
         }
       }
@@ -207,7 +202,7 @@ public class EncryptionKeyInfo {
 
           // validate the optional field `Imports` (array)
           for (int i = 0; i < jsonArrayimports.size(); i++) {
-            EncryptionImport.validateJsonObject(jsonArrayimports.get(i).getAsJsonObject());
+            EncryptionImport.validateJsonElement(jsonArrayimports.get(i));
           };
         }
       }
@@ -233,9 +228,9 @@ public class EncryptionKeyInfo {
 
            @Override
            public EncryptionKeyInfo read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * Role represents a generic set of permissions that can be applied to any users or groups.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class SetRoleRequest {
   public static final String SERIALIZED_NAME_AUTO_APPLIES = "AutoApplies";
   @SerializedName(SERIALIZED_NAME_AUTO_APPLIES)
@@ -78,7 +78,6 @@ public class SetRoleRequest {
   }
 
   public SetRoleRequest autoApplies(List<String> autoApplies) {
-    
     this.autoApplies = autoApplies;
     return this;
   }
@@ -96,11 +95,9 @@ public class SetRoleRequest {
    * @return autoApplies
   **/
   @javax.annotation.Nullable
-
   public List<String> getAutoApplies() {
     return autoApplies;
   }
-
 
   public void setAutoApplies(List<String> autoApplies) {
     this.autoApplies = autoApplies;
@@ -108,7 +105,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest forceOverride(Boolean forceOverride) {
-    
     this.forceOverride = forceOverride;
     return this;
   }
@@ -118,11 +114,9 @@ public class SetRoleRequest {
    * @return forceOverride
   **/
   @javax.annotation.Nullable
-
   public Boolean getForceOverride() {
     return forceOverride;
   }
-
 
   public void setForceOverride(Boolean forceOverride) {
     this.forceOverride = forceOverride;
@@ -130,7 +124,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest groupRole(Boolean groupRole) {
-    
     this.groupRole = groupRole;
     return this;
   }
@@ -140,11 +133,9 @@ public class SetRoleRequest {
    * @return groupRole
   **/
   @javax.annotation.Nullable
-
   public Boolean getGroupRole() {
     return groupRole;
   }
-
 
   public void setGroupRole(Boolean groupRole) {
     this.groupRole = groupRole;
@@ -152,7 +143,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest isTeam(Boolean isTeam) {
-    
     this.isTeam = isTeam;
     return this;
   }
@@ -162,11 +152,9 @@ public class SetRoleRequest {
    * @return isTeam
   **/
   @javax.annotation.Nullable
-
   public Boolean getIsTeam() {
     return isTeam;
   }
-
 
   public void setIsTeam(Boolean isTeam) {
     this.isTeam = isTeam;
@@ -174,7 +162,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -184,11 +171,9 @@ public class SetRoleRequest {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -196,7 +181,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest lastUpdated(Integer lastUpdated) {
-    
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -206,11 +190,9 @@ public class SetRoleRequest {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-
   public Integer getLastUpdated() {
     return lastUpdated;
   }
-
 
   public void setLastUpdated(Integer lastUpdated) {
     this.lastUpdated = lastUpdated;
@@ -218,7 +200,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest policies(List<ServiceResourcePolicy> policies) {
-    
     this.policies = policies;
     return this;
   }
@@ -236,11 +217,9 @@ public class SetRoleRequest {
    * @return policies
   **/
   @javax.annotation.Nullable
-
   public List<ServiceResourcePolicy> getPolicies() {
     return policies;
   }
-
 
   public void setPolicies(List<ServiceResourcePolicy> policies) {
     this.policies = policies;
@@ -248,7 +227,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest policiesContextEditable(Boolean policiesContextEditable) {
-    
     this.policiesContextEditable = policiesContextEditable;
     return this;
   }
@@ -258,11 +236,9 @@ public class SetRoleRequest {
    * @return policiesContextEditable
   **/
   @javax.annotation.Nullable
-
   public Boolean getPoliciesContextEditable() {
     return policiesContextEditable;
   }
-
 
   public void setPoliciesContextEditable(Boolean policiesContextEditable) {
     this.policiesContextEditable = policiesContextEditable;
@@ -270,7 +246,6 @@ public class SetRoleRequest {
 
 
   public SetRoleRequest userRole(Boolean userRole) {
-    
     this.userRole = userRole;
     return this;
   }
@@ -280,11 +255,9 @@ public class SetRoleRequest {
    * @return userRole
   **/
   @javax.annotation.Nullable
-
   public Boolean getUserRole() {
     return userRole;
   }
-
 
   public void setUserRole(Boolean userRole) {
     this.userRole = userRole;
@@ -367,27 +340,28 @@ public class SetRoleRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to SetRoleRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to SetRoleRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!SetRoleRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!SetRoleRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in SetRoleRequest is not found in the empty JSON string", SetRoleRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!SetRoleRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `SetRoleRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `SetRoleRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // ensure the optional json data is an array if present
-      if (jsonObj.get("AutoApplies") != null && !jsonObj.get("AutoApplies").isJsonArray()) {
+      if (jsonObj.get("AutoApplies") != null && !jsonObj.get("AutoApplies").isJsonNull() && !jsonObj.get("AutoApplies").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `AutoApplies` to be an array in the JSON string but got `%s`", jsonObj.get("AutoApplies").toString()));
       }
       if ((jsonObj.get("Label") != null && !jsonObj.get("Label").isJsonNull()) && !jsonObj.get("Label").isJsonPrimitive()) {
@@ -403,7 +377,7 @@ public class SetRoleRequest {
 
           // validate the optional field `Policies` (array)
           for (int i = 0; i < jsonArraypolicies.size(); i++) {
-            ServiceResourcePolicy.validateJsonObject(jsonArraypolicies.get(i).getAsJsonObject());
+            ServiceResourcePolicy.validateJsonElement(jsonArraypolicies.get(i));
           };
         }
       }
@@ -429,9 +403,9 @@ public class SetRoleRequest {
 
            @Override
            public SetRoleRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

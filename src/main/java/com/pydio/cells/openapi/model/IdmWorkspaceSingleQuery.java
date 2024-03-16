@@ -26,14 +26,14 @@ import com.pydio.cells.openapi.JSON;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * IdmWorkspaceSingleQuery
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class IdmWorkspaceSingleQuery {
   public static final String SERIALIZED_NAME_ATTRIBUTE_NAME = "AttributeName";
   @SerializedName(SERIALIZED_NAME_ATTRIBUTE_NAME)
@@ -79,7 +79,6 @@ public class IdmWorkspaceSingleQuery {
   }
 
   public IdmWorkspaceSingleQuery attributeName(String attributeName) {
-    
     this.attributeName = attributeName;
     return this;
   }
@@ -89,11 +88,9 @@ public class IdmWorkspaceSingleQuery {
    * @return attributeName
   **/
   @javax.annotation.Nullable
-
   public String getAttributeName() {
     return attributeName;
   }
-
 
   public void setAttributeName(String attributeName) {
     this.attributeName = attributeName;
@@ -101,7 +98,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery attributeValue(String attributeValue) {
-    
     this.attributeValue = attributeValue;
     return this;
   }
@@ -111,11 +107,9 @@ public class IdmWorkspaceSingleQuery {
    * @return attributeValue
   **/
   @javax.annotation.Nullable
-
   public String getAttributeValue() {
     return attributeValue;
   }
-
 
   public void setAttributeValue(String attributeValue) {
     this.attributeValue = attributeValue;
@@ -123,7 +117,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery hasAttribute(String hasAttribute) {
-    
     this.hasAttribute = hasAttribute;
     return this;
   }
@@ -133,11 +126,9 @@ public class IdmWorkspaceSingleQuery {
    * @return hasAttribute
   **/
   @javax.annotation.Nullable
-
   public String getHasAttribute() {
     return hasAttribute;
   }
-
 
   public void setHasAttribute(String hasAttribute) {
     this.hasAttribute = hasAttribute;
@@ -145,7 +136,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery lastUpdated(String lastUpdated) {
-    
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -155,11 +145,9 @@ public class IdmWorkspaceSingleQuery {
    * @return lastUpdated
   **/
   @javax.annotation.Nullable
-
   public String getLastUpdated() {
     return lastUpdated;
   }
-
 
   public void setLastUpdated(String lastUpdated) {
     this.lastUpdated = lastUpdated;
@@ -167,7 +155,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery description(String description) {
-    
     this.description = description;
     return this;
   }
@@ -177,11 +164,9 @@ public class IdmWorkspaceSingleQuery {
    * @return description
   **/
   @javax.annotation.Nullable
-
   public String getDescription() {
     return description;
   }
-
 
   public void setDescription(String description) {
     this.description = description;
@@ -189,7 +174,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery label(String label) {
-    
     this.label = label;
     return this;
   }
@@ -199,11 +183,9 @@ public class IdmWorkspaceSingleQuery {
    * @return label
   **/
   @javax.annotation.Nullable
-
   public String getLabel() {
     return label;
   }
-
 
   public void setLabel(String label) {
     this.label = label;
@@ -211,7 +193,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery not(Boolean not) {
-    
     this.not = not;
     return this;
   }
@@ -221,11 +202,9 @@ public class IdmWorkspaceSingleQuery {
    * @return not
   **/
   @javax.annotation.Nullable
-
   public Boolean getNot() {
     return not;
   }
-
 
   public void setNot(Boolean not) {
     this.not = not;
@@ -233,7 +212,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery scope(IdmWorkspaceScope scope) {
-    
     this.scope = scope;
     return this;
   }
@@ -243,11 +221,9 @@ public class IdmWorkspaceSingleQuery {
    * @return scope
   **/
   @javax.annotation.Nullable
-
   public IdmWorkspaceScope getScope() {
     return scope;
   }
-
 
   public void setScope(IdmWorkspaceScope scope) {
     this.scope = scope;
@@ -255,7 +231,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery slug(String slug) {
-    
     this.slug = slug;
     return this;
   }
@@ -265,11 +240,9 @@ public class IdmWorkspaceSingleQuery {
    * @return slug
   **/
   @javax.annotation.Nullable
-
   public String getSlug() {
     return slug;
   }
-
 
   public void setSlug(String slug) {
     this.slug = slug;
@@ -277,7 +250,6 @@ public class IdmWorkspaceSingleQuery {
 
 
   public IdmWorkspaceSingleQuery uuid(String uuid) {
-    
     this.uuid = uuid;
     return this;
   }
@@ -287,11 +259,9 @@ public class IdmWorkspaceSingleQuery {
    * @return uuid
   **/
   @javax.annotation.Nullable
-
   public String getUuid() {
     return uuid;
   }
-
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
@@ -377,25 +347,26 @@ public class IdmWorkspaceSingleQuery {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to IdmWorkspaceSingleQuery
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to IdmWorkspaceSingleQuery
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!IdmWorkspaceSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!IdmWorkspaceSingleQuery.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in IdmWorkspaceSingleQuery is not found in the empty JSON string", IdmWorkspaceSingleQuery.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!IdmWorkspaceSingleQuery.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmWorkspaceSingleQuery` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IdmWorkspaceSingleQuery` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("AttributeName") != null && !jsonObj.get("AttributeName").isJsonNull()) && !jsonObj.get("AttributeName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `AttributeName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AttributeName").toString()));
       }
@@ -413,6 +384,10 @@ public class IdmWorkspaceSingleQuery {
       }
       if ((jsonObj.get("label") != null && !jsonObj.get("label").isJsonNull()) && !jsonObj.get("label").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("label").toString()));
+      }
+      // validate the optional field `scope`
+      if (jsonObj.get("scope") != null && !jsonObj.get("scope").isJsonNull()) {
+        IdmWorkspaceScope.validateJsonElement(jsonObj.get("scope"));
       }
       if ((jsonObj.get("slug") != null && !jsonObj.get("slug").isJsonNull()) && !jsonObj.get("slug").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `slug` to be a primitive type in the JSON string but got `%s`", jsonObj.get("slug").toString()));
@@ -442,9 +417,9 @@ public class IdmWorkspaceSingleQuery {
 
            @Override
            public IdmWorkspaceSingleQuery read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestSearchUserRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestSearchUserRequest {
   public static final String SERIALIZED_NAME_COUNT_ONLY = "CountOnly";
   @SerializedName(SERIALIZED_NAME_COUNT_ONLY)
@@ -70,7 +70,6 @@ public class RestSearchUserRequest {
   }
 
   public RestSearchUserRequest countOnly(Boolean countOnly) {
-    
     this.countOnly = countOnly;
     return this;
   }
@@ -80,11 +79,9 @@ public class RestSearchUserRequest {
    * @return countOnly
   **/
   @javax.annotation.Nullable
-
   public Boolean getCountOnly() {
     return countOnly;
   }
-
 
   public void setCountOnly(Boolean countOnly) {
     this.countOnly = countOnly;
@@ -92,7 +89,6 @@ public class RestSearchUserRequest {
 
 
   public RestSearchUserRequest groupBy(Integer groupBy) {
-    
     this.groupBy = groupBy;
     return this;
   }
@@ -102,11 +98,9 @@ public class RestSearchUserRequest {
    * @return groupBy
   **/
   @javax.annotation.Nullable
-
   public Integer getGroupBy() {
     return groupBy;
   }
-
 
   public void setGroupBy(Integer groupBy) {
     this.groupBy = groupBy;
@@ -114,7 +108,6 @@ public class RestSearchUserRequest {
 
 
   public RestSearchUserRequest limit(String limit) {
-    
     this.limit = limit;
     return this;
   }
@@ -124,11 +117,9 @@ public class RestSearchUserRequest {
    * @return limit
   **/
   @javax.annotation.Nullable
-
   public String getLimit() {
     return limit;
   }
-
 
   public void setLimit(String limit) {
     this.limit = limit;
@@ -136,7 +127,6 @@ public class RestSearchUserRequest {
 
 
   public RestSearchUserRequest offset(String offset) {
-    
     this.offset = offset;
     return this;
   }
@@ -146,11 +136,9 @@ public class RestSearchUserRequest {
    * @return offset
   **/
   @javax.annotation.Nullable
-
   public String getOffset() {
     return offset;
   }
-
 
   public void setOffset(String offset) {
     this.offset = offset;
@@ -158,7 +146,6 @@ public class RestSearchUserRequest {
 
 
   public RestSearchUserRequest operation(ServiceOperationType operation) {
-    
     this.operation = operation;
     return this;
   }
@@ -168,11 +155,9 @@ public class RestSearchUserRequest {
    * @return operation
   **/
   @javax.annotation.Nullable
-
   public ServiceOperationType getOperation() {
     return operation;
   }
-
 
   public void setOperation(ServiceOperationType operation) {
     this.operation = operation;
@@ -180,7 +165,6 @@ public class RestSearchUserRequest {
 
 
   public RestSearchUserRequest queries(List<IdmUserSingleQuery> queries) {
-    
     this.queries = queries;
     return this;
   }
@@ -198,11 +182,9 @@ public class RestSearchUserRequest {
    * @return queries
   **/
   @javax.annotation.Nullable
-
   public List<IdmUserSingleQuery> getQueries() {
     return queries;
   }
-
 
   public void setQueries(List<IdmUserSingleQuery> queries) {
     this.queries = queries;
@@ -210,7 +192,6 @@ public class RestSearchUserRequest {
 
 
   public RestSearchUserRequest resourcePolicyQuery(RestResourcePolicyQuery resourcePolicyQuery) {
-    
     this.resourcePolicyQuery = resourcePolicyQuery;
     return this;
   }
@@ -220,11 +201,9 @@ public class RestSearchUserRequest {
    * @return resourcePolicyQuery
   **/
   @javax.annotation.Nullable
-
   public RestResourcePolicyQuery getResourcePolicyQuery() {
     return resourcePolicyQuery;
   }
-
 
   public void setResourcePolicyQuery(RestResourcePolicyQuery resourcePolicyQuery) {
     this.resourcePolicyQuery = resourcePolicyQuery;
@@ -301,30 +280,35 @@ public class RestSearchUserRequest {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestSearchUserRequest
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestSearchUserRequest
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestSearchUserRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestSearchUserRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestSearchUserRequest is not found in the empty JSON string", RestSearchUserRequest.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestSearchUserRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSearchUserRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestSearchUserRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("Limit") != null && !jsonObj.get("Limit").isJsonNull()) && !jsonObj.get("Limit").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Limit` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Limit").toString()));
       }
       if ((jsonObj.get("Offset") != null && !jsonObj.get("Offset").isJsonNull()) && !jsonObj.get("Offset").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `Offset` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Offset").toString()));
+      }
+      // validate the optional field `Operation`
+      if (jsonObj.get("Operation") != null && !jsonObj.get("Operation").isJsonNull()) {
+        ServiceOperationType.validateJsonElement(jsonObj.get("Operation"));
       }
       if (jsonObj.get("Queries") != null && !jsonObj.get("Queries").isJsonNull()) {
         JsonArray jsonArrayqueries = jsonObj.getAsJsonArray("Queries");
@@ -336,13 +320,13 @@ public class RestSearchUserRequest {
 
           // validate the optional field `Queries` (array)
           for (int i = 0; i < jsonArrayqueries.size(); i++) {
-            IdmUserSingleQuery.validateJsonObject(jsonArrayqueries.get(i).getAsJsonObject());
+            IdmUserSingleQuery.validateJsonElement(jsonArrayqueries.get(i));
           };
         }
       }
       // validate the optional field `ResourcePolicyQuery`
       if (jsonObj.get("ResourcePolicyQuery") != null && !jsonObj.get("ResourcePolicyQuery").isJsonNull()) {
-        RestResourcePolicyQuery.validateJsonObject(jsonObj.getAsJsonObject("ResourcePolicyQuery"));
+        RestResourcePolicyQuery.validateJsonElement(jsonObj.get("ResourcePolicyQuery"));
       }
   }
 
@@ -366,9 +350,9 @@ public class RestSearchUserRequest {
 
            @Override
            public RestSearchUserRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

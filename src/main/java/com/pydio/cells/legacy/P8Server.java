@@ -1,5 +1,7 @@
 package com.pydio.cells.legacy;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
@@ -9,12 +11,12 @@ import com.pydio.cells.transport.auth.jwt.OAuthConfig;
 import com.pydio.cells.utils.IoHelpers;
 import com.pydio.cells.utils.Log;
 
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class P8Server implements Server {
 
@@ -129,19 +131,52 @@ public class P8Server implements Server {
                 throw new SDKException(ErrorCodes.api_error, "Could not get boot configuration at " + serverURL);
             }
 
-            JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-            version = bootConf.getString("ajxpVersion");
-            if (bootConf.has("customWording")) {
-                JSONObject customWordings = bootConf.getJSONObject("customWording");
-                title = customWordings.getString("title");
-                String tmpPath = customWordings.getString("icon");
+
+            Gson gson = new Gson();
+            String outStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+            Map<String, Object> respMap = gson.fromJson(outStr, objType);
+
+            version = (String) respMap.get("ajxpVersion");
+            if (respMap.containsKey("customWording")) {
+                Map<String, Object> wordingMap = (Map<String, Object>) respMap.get("customWording");
+                title = (String)wordingMap.get("title");
+                String tmpPath = (String)wordingMap.get("icon");
                 // Paths always start with a leading slash in our world.
                 iconPath = tmpPath.startsWith("/") ? tmpPath : "/" + tmpPath;
 
-                if (customWordings.has("welcomeMessage")) {
-                    welcomeMessage = customWordings.getString("welcomeMessage");
+                if (wordingMap.containsKey("welcomeMessage")) {
+                    welcomeMessage = (String)wordingMap.get("welcomeMessage");
                 }
             }
+
+//            if (respMap.containsKey("LinkUrl")) {
+//                return (String) respMap.get("LinkUrl");
+//            } else {
+//                Map<String, Object> linkMap = (Map<String, Object>) respMap.get("links");
+//                Iterator<Map.Entry<String, Object>> it = linkMap.entrySet().iterator();
+//                while (it.hasNext()) {
+//                    Map.Entry<String, Object> currEntry  = it.next();
+//                    Map<String, Object> details = (Map<String, Object>) currEntry.getValue();
+//                    linkAddress = (String) details.get("public_link");
+//                }
+//            }
+
+
+//
+//            JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
+//            version = bootConf.getString("ajxpVersion");
+//            if (bootConf.has("customWording")) {
+//                JSONObject customWordings = bootConf.getJSONObject("customWording");
+//                title = customWordings.getString("title");
+//                String tmpPath = customWordings.getString("icon");
+//                // Paths always start with a leading slash in our world.
+//                iconPath = tmpPath.startsWith("/") ? tmpPath : "/" + tmpPath;
+//
+//                if (customWordings.has("welcomeMessage")) {
+//                    welcomeMessage = customWordings.getString("welcomeMessage");
+//                }
+//            }
             // Log.e(logTag, "Got a boot conf");
         } catch (Exception e) {
             Log.e(logTag, "Could not get boot configuration at " + getId());

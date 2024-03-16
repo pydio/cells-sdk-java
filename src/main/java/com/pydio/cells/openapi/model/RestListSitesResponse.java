@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestListSitesResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestListSitesResponse {
   public static final String SERIALIZED_NAME_SITES = "Sites";
   @SerializedName(SERIALIZED_NAME_SITES)
@@ -46,7 +46,6 @@ public class RestListSitesResponse {
   }
 
   public RestListSitesResponse sites(List<InstallProxyConfig> sites) {
-    
     this.sites = sites;
     return this;
   }
@@ -64,11 +63,9 @@ public class RestListSitesResponse {
    * @return sites
   **/
   @javax.annotation.Nullable
-
   public List<InstallProxyConfig> getSites() {
     return sites;
   }
-
 
   public void setSites(List<InstallProxyConfig> sites) {
     this.sites = sites;
@@ -127,25 +124,26 @@ public class RestListSitesResponse {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestListSitesResponse
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestListSitesResponse
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestListSitesResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestListSitesResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestListSitesResponse is not found in the empty JSON string", RestListSitesResponse.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestListSitesResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestListSitesResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestListSitesResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("Sites") != null && !jsonObj.get("Sites").isJsonNull()) {
         JsonArray jsonArraysites = jsonObj.getAsJsonArray("Sites");
         if (jsonArraysites != null) {
@@ -156,7 +154,7 @@ public class RestListSitesResponse {
 
           // validate the optional field `Sites` (array)
           for (int i = 0; i < jsonArraysites.size(); i++) {
-            InstallProxyConfig.validateJsonObject(jsonArraysites.get(i).getAsJsonObject());
+            InstallProxyConfig.validateJsonElement(jsonArraysites.get(i));
           };
         }
       }
@@ -182,9 +180,9 @@ public class RestListSitesResponse {
 
            @Override
            public RestListSitesResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

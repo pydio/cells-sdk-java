@@ -28,14 +28,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * RestDiscoveryResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-15T17:35:14.400736592+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T11:01:01.368056162+01:00[Europe/Berlin]", comments = "Generator version: 7.4.0")
 public class RestDiscoveryResponse {
   public static final String SERIALIZED_NAME_BUILD_REVISION = "BuildRevision";
   @SerializedName(SERIALIZED_NAME_BUILD_REVISION)
@@ -65,7 +64,6 @@ public class RestDiscoveryResponse {
   }
 
   public RestDiscoveryResponse buildRevision(String buildRevision) {
-    
     this.buildRevision = buildRevision;
     return this;
   }
@@ -75,11 +73,9 @@ public class RestDiscoveryResponse {
    * @return buildRevision
   **/
   @javax.annotation.Nullable
-
   public String getBuildRevision() {
     return buildRevision;
   }
-
 
   public void setBuildRevision(String buildRevision) {
     this.buildRevision = buildRevision;
@@ -87,7 +83,6 @@ public class RestDiscoveryResponse {
 
 
   public RestDiscoveryResponse buildStamp(Integer buildStamp) {
-    
     this.buildStamp = buildStamp;
     return this;
   }
@@ -97,11 +92,9 @@ public class RestDiscoveryResponse {
    * @return buildStamp
   **/
   @javax.annotation.Nullable
-
   public Integer getBuildStamp() {
     return buildStamp;
   }
-
 
   public void setBuildStamp(Integer buildStamp) {
     this.buildStamp = buildStamp;
@@ -109,7 +102,6 @@ public class RestDiscoveryResponse {
 
 
   public RestDiscoveryResponse endpoints(Map<String, String> endpoints) {
-    
     this.endpoints = endpoints;
     return this;
   }
@@ -127,11 +119,9 @@ public class RestDiscoveryResponse {
    * @return endpoints
   **/
   @javax.annotation.Nullable
-
   public Map<String, String> getEndpoints() {
     return endpoints;
   }
-
 
   public void setEndpoints(Map<String, String> endpoints) {
     this.endpoints = endpoints;
@@ -139,7 +129,6 @@ public class RestDiscoveryResponse {
 
 
   public RestDiscoveryResponse packageLabel(String packageLabel) {
-    
     this.packageLabel = packageLabel;
     return this;
   }
@@ -149,11 +138,9 @@ public class RestDiscoveryResponse {
    * @return packageLabel
   **/
   @javax.annotation.Nullable
-
   public String getPackageLabel() {
     return packageLabel;
   }
-
 
   public void setPackageLabel(String packageLabel) {
     this.packageLabel = packageLabel;
@@ -161,7 +148,6 @@ public class RestDiscoveryResponse {
 
 
   public RestDiscoveryResponse packageType(String packageType) {
-    
     this.packageType = packageType;
     return this;
   }
@@ -171,11 +157,9 @@ public class RestDiscoveryResponse {
    * @return packageType
   **/
   @javax.annotation.Nullable
-
   public String getPackageType() {
     return packageType;
   }
-
 
   public void setPackageType(String packageType) {
     this.packageType = packageType;
@@ -183,7 +167,6 @@ public class RestDiscoveryResponse {
 
 
   public RestDiscoveryResponse version(String version) {
-    
     this.version = version;
     return this;
   }
@@ -193,11 +176,9 @@ public class RestDiscoveryResponse {
    * @return version
   **/
   @javax.annotation.Nullable
-
   public String getVersion() {
     return version;
   }
-
 
   public void setVersion(String version) {
     this.version = version;
@@ -271,25 +252,26 @@ public class RestDiscoveryResponse {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RestDiscoveryResponse
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to RestDiscoveryResponse
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!RestDiscoveryResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!RestDiscoveryResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in RestDiscoveryResponse is not found in the empty JSON string", RestDiscoveryResponse.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!RestDiscoveryResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestDiscoveryResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RestDiscoveryResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("BuildRevision") != null && !jsonObj.get("BuildRevision").isJsonNull()) && !jsonObj.get("BuildRevision").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `BuildRevision` to be a primitive type in the JSON string but got `%s`", jsonObj.get("BuildRevision").toString()));
       }
@@ -324,9 +306,9 @@ public class RestDiscoveryResponse {
 
            @Override
            public RestDiscoveryResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();
