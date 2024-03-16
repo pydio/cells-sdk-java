@@ -22,7 +22,7 @@ cd /tmp/forSwagger
 git clone https://github.com/pydio/cells-sdk-java.git
 cd cells-sdk-java
 
-GENERATOR_VERSION=6.5.0
+GENERATOR_VERSION=7.4.0
 wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${GENERATOR_VERSION}/openapi-generator-cli-${GENERATOR_VERSION}.jar -O openapi-generator-cli.jar
 
 ```
@@ -80,7 +80,7 @@ Then generate the SDK
 
 ```sh
 # WARNING: Update
-SDK_DEFAULT_AGENT="PydioCells/v4.2.0/JavaSDK/v0.4.4"
+SDK_DEFAULT_AGENT="PydioCells/v4.4.0-alpha2/JavaSDK/v0.4.5"
 
 java -jar openapi-generator-cli.jar generate -g java \
     -i ./cellsapi-rest.swagger.yml \
@@ -96,7 +96,7 @@ rm -rf ./openapi
 mv /tmp/forSwagger/cells-sdk-java/src/main/java/com/pydio/cells/openapi .
 
 # Also copy used sagger file for later references
-export CELLS_VERSION=4.2.0
+export CELLS_VERSION=4.4.0-alpha2
 cp /tmp/forSwagger/cells-sdk-java/cellsapi-rest.swagger.yml $GITPATH/github.com/pydio/cells-sdk-java/src/main/java/com/pydio/cells/openapi/cellsapi-rest-${CELLS_VERSION}.swagger.yml
 
 # For the record, more details about the possible options:
