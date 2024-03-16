@@ -6,7 +6,6 @@ import com.pydio.cells.utils.Log;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Token {
@@ -60,11 +59,12 @@ public class Token {
 
         Token t = new Token();
         Gson gson = new Gson();
-        Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+        Type objType = new TypeToken<Map<String, Object>>() {
+        }.getType();
         Map<String, Object> respMap = gson.fromJson(jwt, objType);
 
         t.value = (String) respMap.get("access_token");
-        t.setExpiry((int) respMap.get("expires_in"));
+        t.setExpiry((int) ((double) respMap.get("expires_in")));
         t.scope = (String) respMap.get("scope");
         t.idToken = (String) respMap.get("id_token");
         t.refreshToken = (String) respMap.get("refresh_token");
