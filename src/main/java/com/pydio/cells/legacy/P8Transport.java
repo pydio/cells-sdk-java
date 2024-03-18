@@ -538,7 +538,7 @@ public class P8Transport implements ILegacyTransport, SdkNames {
             StringBuilder postData = new StringBuilder();
             for (Map.Entry<String, String> entry : request.getParams().get().entrySet()) {
                 if (postData.length() != 0) postData.append('&');
-                postData.append(utf8Encode(entry.getKey()));
+                postData.append(StateID.utf8Encode(entry.getKey()));
                 postData.append('=');
                 postData.append(utf8Encode(String.valueOf(entry.getValue())));
                 //postData.append(URLEncoder.encode(String.valueOf(entry.getValue()), UTF_8));

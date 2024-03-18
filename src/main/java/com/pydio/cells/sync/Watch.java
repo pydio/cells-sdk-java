@@ -41,8 +41,7 @@ public class Watch {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Watch)) return false;
-        Watch watch = (Watch) o;
+        if (!(o instanceof Watch watch)) return false;
         return getSourceFs().equals(watch.getSourceFs()) &&
                 getTargetFs().equals(watch.getTargetFs()) &&
                 getPath().equals(watch.getPath());

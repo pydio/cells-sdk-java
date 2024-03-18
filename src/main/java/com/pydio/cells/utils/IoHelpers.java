@@ -1,5 +1,7 @@
 package com.pydio.cells.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.callbacks.ProgressListener;
 
@@ -12,13 +14,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 /**
  * Legacy inherited static helpers to simplify implementation of stream related methods
  * and {@code Exception} management.
  */
 public class IoHelpers {
+
+    private static Gson gson = new Gson();
 
     public static int bufferSize = 4096;
 
@@ -171,4 +179,35 @@ public class IoHelpers {
         return total_read;
     }
 
+
+    @SuppressWarnings("NewApi")
+    public static Map<String, Object> fromJsonByteArray(ByteArrayOutputStream data) {
+
+        String strValue;
+        try {
+            strValue = data.toString(StandardCharsets.UTF_8);
+        } catch (NoSuchMethodError e) {
+            try {
+                strValue = data.toString("utf-8");
+            } catch (NoSuchMethodError | UnsupportedEncodingException e2) {
+                strValue = data.toString();
+            }
+        }
+        Type objType = new TypeToken<Map<String, Object>>() {
+        }.getType();
+        return gson.fromJson(strValue, objType);
+    }
+
+    @SuppressWarnings("NewApi")
+    public static String toUtf8String(ByteArrayOutputStream data) {
+        try {
+            return data.toString(StandardCharsets.UTF_8);
+        } catch (NoSuchMethodError e) {
+            try {
+                return data.toString("utf-8");
+            } catch (NoSuchMethodError | UnsupportedEncodingException e2) {
+                return data.toString();
+            }
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package com.pydio.cells.transport;
 
-import com.google.gson.Gson;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
@@ -16,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class CellsServer implements Server {
@@ -133,10 +131,7 @@ public class CellsServer implements Server {
             con = openAnonConnection(BOOTCONF_PATH);
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
-
-            String jsonString = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            Gson gson = new Gson();
-            @SuppressWarnings("unchecked") Map<String, Object> map = gson.fromJson(jsonString, Map.class);
+            Map<String, Object> map = IoHelpers.fromJsonByteArray(out);
 
             if (map.containsKey("customWording")) {
                 @SuppressWarnings("unchecked") Map<String, Object> customWordings = (Map<String, Object>) map.get("customWording");
@@ -199,8 +194,8 @@ public class CellsServer implements Server {
             con.setRequestMethod("GET");
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
-            String oidcStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            authConfig = OAuthConfig.fromOIDCResponse(oidcStr);
+            Map<String, Object> response = IoHelpers.fromJsonByteArray(out);
+            authConfig = OAuthConfig.fromMap(response);
         } catch (FileNotFoundException e) {
             Log.e(logTag, "Cannot retrieve OIDC configuration at " + e.getMessage());
             e.printStackTrace();

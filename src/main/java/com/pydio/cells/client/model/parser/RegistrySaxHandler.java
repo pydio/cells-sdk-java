@@ -123,7 +123,6 @@ public class RegistrySaxHandler extends DefaultHandler {
 
         if (inside_repositories && "repo".equals(qName)) {
             inside_repo = true;
-            return;
         }
     }
 
@@ -132,7 +131,6 @@ public class RegistrySaxHandler extends DefaultHandler {
         String content = new String(ch, start, length);
         if (inside_repo && inner_element != null && inner_element.length() != 0) {
             p.setProperty(inner_element, content);
-            return;
         }
 
         /*if (insidePluginConfigs && pluginProperty != null) {

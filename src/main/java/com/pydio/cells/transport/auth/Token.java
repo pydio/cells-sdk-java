@@ -69,15 +69,6 @@ public class Token {
         t.idToken = (String) respMap.get("id_token");
         t.refreshToken = (String) respMap.get("refresh_token");
         t.tokenType = (String) respMap.get("token_type");
-
-//        Token t = new Token();
-//        JSONObject jo = new JSONObject(jwt);
-//        t.value = jo.getString("access_token");
-//        t.setExpiry(jo.getInt("expires_in"));
-//        t.scope = jo.getString("scope");
-//        t.idToken = jo.getString("id_token");
-//        t.refreshToken = jo.getString("refresh_token");
-//        t.tokenType = jo.getString("token_type");
         return t;
     }
 

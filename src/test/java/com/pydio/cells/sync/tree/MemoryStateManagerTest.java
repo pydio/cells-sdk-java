@@ -17,7 +17,7 @@ public class MemoryStateManagerTest {
 
     private StateManager manager;
 
- //   @Before
+    //   @Before
 //    public void setupServices() {
 //        TokenService.init(new TokenMemoryStore());
 //    }
@@ -34,12 +34,12 @@ public class MemoryStateManagerTest {
         Assert.assertEquals(rootInfo.getName(), "/");
         Assert.assertEquals(rootInfo.getPath(), "common-ws/");
         Assert.assertEquals(rootInfo.getETag(), "eTag");
-        Assert.assertEquals(rootInfo.isLeaf(), false);
+        Assert.assertFalse(rootInfo.isLeaf());
     }
 
     @Test
     public void testGetChildren() {
-        
+
         // Build a simple tree in the state manager 
         manager.put("common-ws/", new TreeNodeInfo("eTag", "common-ws/", false, 0, 0));
         manager.put("common-ws/parent", new TreeNodeInfo("eTag", "common-ws/parent", false, 0, 0));
@@ -55,7 +55,7 @@ public class MemoryStateManagerTest {
         Assert.assertEquals(nodeInfo.getName(), "child");
         Assert.assertEquals(nodeInfo.getPath(), "common-ws/parent/child");
         Assert.assertEquals(nodeInfo.getETag(), "eTag2");
-        Assert.assertEquals(nodeInfo.isLeaf(), false);
+        Assert.assertFalse(nodeInfo.isLeaf());
 
         // Check getChildren  
         List<TreeNodeInfo> children = manager.getChildren("common-ws/parent");

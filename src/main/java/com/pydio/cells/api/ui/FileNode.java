@@ -138,9 +138,8 @@ public class FileNode extends AbstractNode {
     public boolean equals(Object obj) {
 
         if (obj == this) return true;
-        if (!(obj instanceof FileNode)) return false;
+        if (!(obj instanceof FileNode other)) return false;
 
-        FileNode other = (FileNode) obj;
         return getWorkspace().equals(other.getWorkspace()) &&
                 getPath().equals(other.getPath());
     }
@@ -152,11 +151,9 @@ public class FileNode extends AbstractNode {
         }
 
         // TODO finalize this, do we want to compare node with e.g. workspaces?
-        if (!(node instanceof FileNode)) {
+        if (!(node instanceof FileNode other)) {
             return -1;
         }
-
-        FileNode other = (FileNode) node;
 
         // We rather only rely on file names for canonical sorting,
         // The "User friendly sorting" (with folder before files) must be handled by the client.

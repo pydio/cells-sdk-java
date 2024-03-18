@@ -30,7 +30,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -218,13 +217,13 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         authInfo.put("type", "credentials");
         ClientData cd = ClientData.getInstance();
         authInfo.put("client_id", cd.getClientId());
-        if (Str.notEmpty(cd.getClientSecret())) {
-            // This additional header is only used for "private" clients and not used with
-            // default standard clients that have no client secret
-            String authHeader = "Basic "
-                    + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
-            authInfo.put("Authorization", authHeader);
-        }
+//        if (Str.notEmpty(cd.getClientSecret())) {
+//            // This additional header is only used for "private" clients and not used with
+//            // default standard clients that have no client secret
+//            String authHeader = "Basic "
+//                    + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
+//            authInfo.put("Authorization", authHeader);
+//        }
 
         RestFrontSessionRequest request = new RestFrontSessionRequest();
         request.setClientTime((int) System.currentTimeMillis());
@@ -281,7 +280,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             }
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
-            String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            String jwtStr = IoHelpers.toUtf8String(out);
             return Token.decodeOAuthJWT(jwtStr);
         } finally {
             IoHelpers.closeQuietly(in);
@@ -311,7 +310,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             in = con.getInputStream();
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
-            String jwtStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            String jwtStr = IoHelpers.toUtf8String(out);
             Token newToken = Token.decodeOAuthJWT(jwtStr);
             Log.i(logTag, String.format("Retrieved a refreshed token for %s@%s. New expiration time %s",
                     username, getServer().url(), timeFormatter.format(new Date(newToken.expirationTime * 1000L))));

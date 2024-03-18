@@ -1,7 +1,5 @@
 package com.pydio.cells.legacy;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.api.ErrorCodes;
 import com.pydio.cells.api.SDKException;
 import com.pydio.cells.api.SdkNames;
@@ -13,9 +11,7 @@ import com.pydio.cells.utils.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class P8Server implements Server {
@@ -131,22 +127,18 @@ public class P8Server implements Server {
                 throw new SDKException(ErrorCodes.api_error, "Could not get boot configuration at " + serverURL);
             }
 
-
-            Gson gson = new Gson();
-            String outStr = new String(out.toByteArray(), StandardCharsets.UTF_8);
-            Type objType = new TypeToken<Map<String, Object>>() {}.getType();
-            Map<String, Object> respMap = gson.fromJson(outStr, objType);
+            Map<String, Object> respMap = IoHelpers.fromJsonByteArray(out);
 
             version = (String) respMap.get("ajxpVersion");
-            if (respMap.containsKey("customWording")) {
+            if (respMap.containsKey("customWording") && respMap.get("customWording") instanceof Map) {
                 Map<String, Object> wordingMap = (Map<String, Object>) respMap.get("customWording");
-                title = (String)wordingMap.get("title");
-                String tmpPath = (String)wordingMap.get("icon");
+                title = (String) wordingMap.get("title");
+                String tmpPath = (String) wordingMap.get("icon");
                 // Paths always start with a leading slash in our world.
                 iconPath = tmpPath.startsWith("/") ? tmpPath : "/" + tmpPath;
 
                 if (wordingMap.containsKey("welcomeMessage")) {
-                    welcomeMessage = (String)wordingMap.get("welcomeMessage");
+                    welcomeMessage = (String) wordingMap.get("welcomeMessage");
                 }
             }
 

@@ -4,10 +4,10 @@ import java.io.UnsupportedEncodingException;
 
 public interface CustomEncoder {
 
-    byte[] base64Encode(byte[] inValue);
-
-    String base64Encode(String inValue);
-
+    //    byte[] base64Encode(byte[] inValue);
+//
+//    String base64Encode(String inValue);
+//
     byte[] base64Decode(byte[] inValue);
 
     String base64Decode(String inValue);

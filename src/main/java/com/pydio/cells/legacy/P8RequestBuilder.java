@@ -6,6 +6,7 @@ import com.pydio.cells.utils.Str;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class P8RequestBuilder {
@@ -166,7 +167,7 @@ public class P8RequestBuilder {
                 .setAction(P8Names.upload)
                 .setParam(P8Names.dir, dir)
                 .setParam(P8Names.tmpRepositoryId, ws);
-        String urlEncodedName = java.net.URLEncoder.encode(name, "utf-8");
+        String urlEncodedName = java.net.URLEncoder.encode(name, StandardCharsets.UTF_8);
         builder.setParam(P8Names.urlencodedFilename, urlEncodedName)
                 .setParam(P8Names.autoRename, String.valueOf(autoRename))
                 .setParam(P8Names.xhrUploader, "true")

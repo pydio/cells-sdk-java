@@ -46,6 +46,14 @@ public class OAuthConfig {
         return cfg;
     }
 
+    public static OAuthConfig fromMap(Map<String, Object> map) {
+        OAuthConfig cfg = new OAuthConfig();
+        cfg.authorizeEndpoint = (String) map.get(AUTH_ENDPOINT);
+        cfg.tokenEndpoint = (String) map.get(TOKEN_ENDPOINT);
+        cfg.revokeEndpoint = (String) map.get(REVOCATION_ENDPOINT);
+        return cfg;
+    }
+
     private OAuthConfig() {
         this.redirectURI = DEFAULT_REDIRECT_URI;
         this.scope = defaultScope;

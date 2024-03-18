@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
  */
 public class CecWrapper {
 
-    private String logTag = "CecWrapper";
+    private final String logTag = "CecWrapper";
 
     private String basePath;
     private String cecCmd;

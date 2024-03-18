@@ -88,6 +88,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class CellsClient implements Client, SdkNames {
 
+    private Gson gson = new Gson();
+
     private final static String logTag = "CellsClient";
 
     private final CellsTransport transport;
@@ -665,12 +667,36 @@ public class CellsClient implements Client, SdkNames {
     @Override
     public void rename(String ws, String srcFile, String newName) throws SDKException {
 
-        throw new SDKException("Reimplement rename job launch with gson");
+        String path = ws + srcFile;
+        String[] srcNodes = {path};
+
+        String parent = new File(srcFile).getParentFile().getPath();
+        String dstFile;
+        if ("/".equals(parent)) {
+            dstFile = parent + newName;
+        } else {
+            dstFile = parent + "/" + newName;
+        }
+
+        Map<String, Object> params = new HashMap<>(3);
+        params.put("nodes", srcNodes);
+        params.put("target", ws + dstFile);
+        params.put("targetParent", false);
+
+        RestUserJobRequest request = new RestUserJobRequest();
+        request.setJobName(CellsNames.JOB_ID_MOVE);
+        request.setJsonParameters(gson.toJson(params));
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+        try {
+            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
+        } catch (ApiException e) {
+            throw SDKException.fromApiException(e);
+        }
 
         //        JSONArray nodes = new JSONArray();
 //        // In Cells, paths directly start with the WS slug (**NO** leading slash)
 //        // String path = "/" + ws + srcFile;
-//        String path = ws + srcFile;
+//
 //        nodes.put(path);
 //
 //        String parent = new File(srcFile).getParentFile().getPath();
@@ -688,9 +714,6 @@ public class CellsClient implements Client, SdkNames {
 //        o.put("target", targetFile);
 //        o.put("targetParent", false);
 
-//        RestUserJobRequest request = new RestUserJobRequest();
-//        request.setJobName(CellsNames.JOB_ID_MOVE);
-//        request.setJsonParameters(o.toString());
 
 //        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
 //        try {

@@ -66,8 +66,7 @@ public class P8TransportTest {
             AtomicBoolean foundDefault = new AtomicBoolean(false);
 
             p8Client.workspaceList(node -> {
-                if (node instanceof WorkspaceNode) {
-                    WorkspaceNode wn = (WorkspaceNode) node;
+                if (node instanceof WorkspaceNode wn) {
                     hasWs.set(true);
                     if (p8Conf.defaultWS.equals(wn.getSlug())) {
                         foundDefault.set(true);

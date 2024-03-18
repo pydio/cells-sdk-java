@@ -4,11 +4,11 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.PathUtils;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Central object to ease manipulation of remote nodes by defining a unique ID
@@ -19,6 +19,7 @@ import java.net.URLEncoder;
  */
 public class StateID {
 
+    //    private final static String version = System.getProperty("java.version");
     public static final StateID NONE = new StateID(Transport.UNDEFINED_URL);
     private final static String logTag = "StateID";
 
@@ -297,19 +298,28 @@ public class StateID {
     // TODO find a elegant way to rather inject the CustomEncoder.
     //   Not perfect: Might have side effects when switching from plain Java to Android
     // TODO this should also be private or protected
+    @SuppressWarnings({"NewApi"})
     public static String utf8Encode(String value) {
         try {
-            return URLEncoder.encode(value, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Unexpected encoding issue", e);
+            return URLEncoder.encode(value, StandardCharsets.UTF_8);
+        } catch (NoSuchMethodError e) {
+            return URLEncoder.encode(value);
         }
     }
 
+    @SuppressWarnings("NewApi")
     public static String utf8Decode(String value) {
         try {
-            return URLDecoder.decode(value, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Unexpected decoding issue", e);
+            return URLDecoder.decode(value, StandardCharsets.UTF_8);
+        } catch (NoSuchMethodError e) {
+            return URLDecoder.decode(value);
         }
+
+//        if (version.startsWith("15") || version.startsWith("16") || version.startsWith("17") ||
+//                version.startsWith("18") || version.startsWith("19") || version.startsWith("20") || version.startsWith("21")) {
+//            return URLDecoder.decode(value, StandardCharsets.UTF_8);
+//        } else {
+//            return URLDecoder.decode(value);
+//        }
     }
 }
