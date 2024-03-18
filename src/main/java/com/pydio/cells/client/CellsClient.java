@@ -602,66 +602,47 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void copy(String ws, String[] files, String folder) throws SDKException {
+        List<String> srcNodes = new ArrayList<>();
+        for (String file : files) {
+            String path = ws + file;
+            srcNodes.add(path);
+        }
+        Map<String, Object> params = new HashMap<>(3);
+        params.put("nodes", srcNodes.toArray());
+        params.put("target", ws + folder);
+        params.put("targetParent", true);
 
-        throw new SDKException("Reimplement rename job launch with gson");
-
-//        JSONArray nodes = new JSONArray();
-//        for (String file : files) {
-//            // String path = "/" + ws + file;
-//            String path = ws + file;
-//            nodes.put(path);
-//        }
-//
-//        JSONObject o = new JSONObject();
-//        o.put("nodes", nodes);
-//        // o.put("target", "/" + ws + folder);
-//        o.put("target", ws + folder);
-//        o.put("targetParent", true);
-//
-//        RestUserJobRequest request = new RestUserJobRequest();
-//        request.setJobName(CellsNames.JOB_ID_COPY);
-//        request.setJsonParameters(o.toString());
-//
-//        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-//        try {
-//            api.userCreateJob(CellsNames.JOB_ID_COPY, request);
-//        } catch (ApiException e) {
-//            e.printStackTrace();
-//            throw SDKException.fromApiException(e);
-//        }
-
+        RestUserJobRequest request = new RestUserJobRequest();
+        request.setJobName(CellsNames.JOB_ID_COPY);
+        request.setJsonParameters(gson.toJson(params));
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+        try {
+            api.userCreateJob(CellsNames.JOB_ID_COPY, request);
+        } catch (ApiException e) {
+            throw SDKException.fromApiException(e);
+        }
     }
 
     @Override
     public void move(String ws, String[] files, String dstFolder) throws SDKException {
-
-
-        throw new SDKException("Reimplement move job launch with gson");
-
-//        JSONArray nodes = new JSONArray();
-//        for (String file : files) {
-//            //String path = "/" + ws + file;
-//            String path = ws + file;
-//            nodes.put(path);
-//        }
-//
-//        JSONObject o = new JSONObject();
-//        o.put("nodes", nodes);
-//        // o.put("target", "/" + ws + dstFolder);
-//        o.put("target", ws + dstFolder);
-//        o.put("targetParent", true);
-//
-//        RestUserJobRequest request = new RestUserJobRequest();
-//        request.setJobName(CellsNames.JOB_ID_MOVE);
-//        request.setJsonParameters(o.toString());
-//
-//        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-//        try {
-//            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
-//        } catch (ApiException e) {
-//            e.printStackTrace();
-//            throw SDKException.fromApiException(e);
-//        }
+        List<String> srcNodes = new ArrayList<>();
+        for (String file : files) {
+            String path = ws + file;
+            srcNodes.add(path);
+        }
+        Map<String, Object> params = new HashMap<>(3);
+        params.put("nodes", srcNodes.toArray());
+        params.put("target", ws + dstFolder);
+        params.put("targetParent", true);
+        RestUserJobRequest request = new RestUserJobRequest();
+        request.setJobName(CellsNames.JOB_ID_MOVE);
+        request.setJsonParameters(gson.toJson(params));
+        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
+        try {
+            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
+        } catch (ApiException e) {
+            throw SDKException.fromApiException(e);
+        }
     }
 
     @Override
@@ -692,36 +673,6 @@ public class CellsClient implements Client, SdkNames {
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
         }
-
-        //        JSONArray nodes = new JSONArray();
-//        // In Cells, paths directly start with the WS slug (**NO** leading slash)
-//        // String path = "/" + ws + srcFile;
-//
-//        nodes.put(path);
-//
-//        String parent = new File(srcFile).getParentFile().getPath();
-//        String dstFile;
-//        if ("/".equals(parent)) {
-//            dstFile = parent + newName;
-//        } else {
-//            dstFile = parent + "/" + newName;
-//        }
-//        // String targetFile ="/" + ws + dstFile;
-//        String targetFile = ws + dstFile;
-//
-//        JSONObject o = new JSONObject();
-//        o.put("nodes", nodes);
-//        o.put("target", targetFile);
-//        o.put("targetParent", false);
-
-
-//        JobsServiceApi api = new JobsServiceApi(authenticatedClient());
-//        try {
-//            api.userCreateJob(CellsNames.JOB_ID_MOVE, request);
-//        } catch (ApiException e) {
-//            e.printStackTrace();
-//            throw SDKException.fromApiException(e);
-//        }
     }
 
     @Override
@@ -737,11 +688,9 @@ public class CellsClient implements Client, SdkNames {
         request.setNodes(nodes);
 
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-
         try {
             api.deleteNodes(request);
         } catch (ApiException e) {
-            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
     }
@@ -762,7 +711,6 @@ public class CellsClient implements Client, SdkNames {
         try {
             api.restoreNodes(request);
         } catch (ApiException e) {
-            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
     }
@@ -835,9 +783,6 @@ public class CellsClient implements Client, SdkNames {
             }
         } catch (NullPointerException e) {
             Log.e(logTag, "###############################################################");
-            Log.e(logTag, "###############################################################");
-            Log.e(logTag, "###############################################################");
-            Log.e(logTag, "###############################################################");
             Log.e(logTag, "Could node create FileNode for " + node.getPath() + ", skipping");
             e.printStackTrace();
         }
@@ -882,7 +827,7 @@ public class CellsClient implements Client, SdkNames {
         try {
             api.updateUserMeta(request);
         } catch (ApiException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new SDKException(ErrorCodes.api_error, "could not update bookmark user-meta: " + e.getMessage(), e);
         }
     }
@@ -1130,16 +1075,13 @@ public class CellsClient implements Client, SdkNames {
 
     private TreeNode internalStatNode(String fullPath) throws SDKException {
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-        // Log.d(logTag, "############# ");
-        // Log.d(logTag, "############# internal stat for [" + fullPath + "]");
-        // Log.d(logTag, "############# ");
         try {
             return api.headNode(fullPath).getNode();
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
         } catch (Exception e) {
             Log.e(logTag, "unexpected error when doing stat node for " + fullPath);
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new SDKException(ErrorCodes.internal_error, "unexpected error when doing stat node for " + fullPath, e);
         }
     }
