@@ -198,6 +198,12 @@ public class IoHelpers {
         return gson.fromJson(strValue, objType);
     }
 
+    public static Map<String, Object> fromJsonString(String data) {
+        Type objType = new TypeToken<Map<String, Object>>() {
+        }.getType();
+        return gson.fromJson(data, objType);
+    }
+
     @SuppressWarnings("NewApi")
     public static String toUtf8String(ByteArrayOutputStream data) {
         try {

@@ -15,6 +15,8 @@ public interface SdkNames {
     String NODE_MIME_FOLDER = "pydio/nodes-list";
     String NODE_MIME_RECYCLE = "pydio/recycle";
     String NODE_MIME_DEFAULT = "application/octet-stream";
+    String NODE_MIME_DEFAULT2 = "binary/octet-stream";
+
     // Workspaces types
     String WS_TYPE_PERSONAL = "workspace-personal";
     String WS_TYPE_CELL = "cell";
@@ -64,47 +66,12 @@ public interface SdkNames {
 
     String META_KEY_IMG_THUMBS = "ImageThumbnails";
 
-//    String META_KEY_THUMB_PROCESSING = "Processing";
-//    String META_KEY_THUMB_DATA = "thumbnails";
-//    String NODE_PROPERTY_SHARE_INFO = "share_json_info";
-//    String NODE_PROPERTY_META_ENCODED = "meta_encoded";
-
-
     // TODO Clean legacy properties below
     // These 2 should rather be lower cased - necessitate a migration of the cache
     String NODE_PROPERTY_UID = "Uuid";
     String NODE_PROPERTY_SHARE_UUID = "share_Uuid";
     //    String NODE_PROPERTY_UUID = "uuid";
     //    String NODE_PROPERTY_SHARE_UUID = "share_uuid";
-
-//    String NODE_PROPERTY_ENCODED = "encoded";
-//    String NODE_PROPERTY_ENCODING = "encoding";
-//
-//    String NODE_PROPERTY_ENCODED_HASH = "encoded_hash";
-//    String NODE_PROPERTY_TYPE = "Type";
-//
-//    String NODE_PROPERTY_ID = "id";
-//    String NODE_PROPERTY_AJXP_MIME = "ajxp_mime";
-//    String NODE_PROPERTY_AJXP_BOOKMARKED = "ajxp_bookmarked";
-//    String NODE_PROPERTY_JSON_ENCODED = "encoded";
-//    String NODE_PROPERTY_FILE_GROUP = "file_group";
-//    String NODE_PROPERTY_FILE_OWNER = "file_owner";
-//    String NODE_PROPERTY_FILE_SIZE = "filesize";
-//    String NODE_PROPERTY_WORKSPACE_ID = "workspace_id";
-//    String NODE_PROPERTY_ORIGINAL_PATH = "original_path";
-//    String NODE_PROPERTY_ICON = "icon";
-//    String NODE_PROPERTY_SHARE_LINK_DESCRIPTION = "share_link_description";
-//    String NODE_PROPERTY_SHARE_LINK_EXPIRED = "share_link_expired";
-//    String NODE_PROPERTY_META_FIELDS = "meta_fields";
-//    String NODE_PROPERTY_META_LABELS = "meta_labels";
-//    String NODE_PROPERTY_META_TYPES = "meta_types";
-//    String NODE_PROPERTY_MIMESTRING = "mimestring";
-//    String NODE_PROPERTY_MIMESTRING_ID = "mimestring_id";
-//    String NODE_PROPERTY_READABLE_DIMENSION = "readable_dimension";
-//    String NODE_PROPERTY_OPEN_ICON = "openicon";
-//    String NODE_PROPERTY_REPO_HAS_RECYCLE_BIN = "repo_has_recycle";
-//    String NODE_PROPERTY_WORKSPACE_UUID = "workspace_id";
-
 
     String WORKSPACE_PROPERTY_ID = "id";
     String WORKSPACE_DESCRIPTION = "description";
@@ -132,15 +99,12 @@ public interface SdkNames {
     String WORKSPACE_ACCESS_TYPE_HOME = "ajxp_home";
     String WORKSPACE_ACCESS_TYPE_HOMEPAGE = "homepage";
     String WORKSPACE_ACCESS_TYPE_ADMIN = "ajxp_admin";
-    //    String WORKSPACE_ACCESS_TYPE_FS = "fs";
-//    String WORKSPACE_ACCESS_TYPE_GATEWAY = "gateway";
     String WORKSPACE_ACCESS_TYPE_SETTINGS = "settings";
     String WORKSPACE_ACCESS_TYPE_INBOX = "inbox";
 
     String NODE_DIFF_ADD = "add";
     String NODE_DIFF_UPDATE = "update";
     String NODE_DIFF_REMOVE = "remove";
-//    String NODE_WORKSPACE = "workspace";
 
     String XML_MESSAGE = "message";
     String XML_NODES_DIFF = "nodes_diff";

@@ -64,7 +64,6 @@ public class P8Client implements Client, SdkNames {
     private P8Request refreshSecureToken(P8Request req) {
         try {
             transport.invalidateToken();
-
             if (!transport.useCaptcha()) {
                 return transport.withAuth(P8RequestBuilder.update(req)).getRequest();
             }
@@ -271,7 +270,7 @@ public class P8Client implements Client, SdkNames {
             P8NodeSaxHandler parser;
             String ws = PathUtils.getWorkspace(parentPath);
             if (Str.empty(ws)) {
-                final Map<String, String> wss = new HashMap();
+                final Map<String, String> wss = new HashMap<>();
                 workspaceList((n) -> wss.put(n.getProperty("id"), n.getProperty("repositorySlug")));
                 parser = new P8NodeSaxHandler(wss, new SearchNodeHandler(nodes));
             } else {
@@ -375,7 +374,7 @@ public class P8Client implements Client, SdkNames {
         try {
             builder = transport.withAuth(P8RequestBuilder.upload(ws, path, name, autoRename, cb));
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw SDKException.encoding(e);
         }
 
@@ -744,7 +743,8 @@ public class P8Client implements Client, SdkNames {
 
 
                 Gson gson = new Gson();
-                Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+                Type objType = new TypeToken<Map<String, Object>>() {
+                }.getType();
                 Map<String, Object> respMap = gson.fromJson(rsp.asString(), objType);
 
                 if (!respMap.containsKey("hash") && !respMap.containsKey("mtime") && !respMap.containsKey("size")) {
@@ -793,7 +793,8 @@ public class P8Client implements Client, SdkNames {
                 }
 
                 Gson gson = new Gson();
-                Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+                Type objType = new TypeToken<Map<String, Object>>() {
+                }.getType();
                 Map<String, Object> respMap = gson.fromJson(line, objType);
                 lastSeq[0] = Math.max(lastSeq[0], (Long) respMap.get(CHANGE_SEQ));
                 Change change = new Change();
@@ -828,7 +829,6 @@ public class P8Client implements Client, SdkNames {
                 node.setWorkspace((String) changeMap.get(CHANGE_NODE_WORKSPACE));
 
                 handler.onChange(change);
-
 
 
 //                stats.setmTime((Long) respMap.get("mtime"));
@@ -969,7 +969,8 @@ public class P8Client implements Client, SdkNames {
             try {
 
                 Gson gson = new Gson();
-                Type objType = new TypeToken<Map<String, Object>>() {}.getType();
+                Type objType = new TypeToken<Map<String, Object>>() {
+                }.getType();
                 Map<String, Object> respMap = gson.fromJson(rsp.asString(), objType);
                 if (respMap.containsKey("LinkUrl")) {
                     return (String) respMap.get("LinkUrl");
@@ -977,7 +978,7 @@ public class P8Client implements Client, SdkNames {
                     Map<String, Object> linkMap = (Map<String, Object>) respMap.get("links");
                     Iterator<Map.Entry<String, Object>> it = linkMap.entrySet().iterator();
                     while (it.hasNext()) {
-                        Map.Entry<String, Object> currEntry  = it.next();
+                        Map.Entry<String, Object> currEntry = it.next();
                         Map<String, Object> details = (Map<String, Object>) currEntry.getValue();
                         linkAddress = (String) details.get("public_link");
                     }

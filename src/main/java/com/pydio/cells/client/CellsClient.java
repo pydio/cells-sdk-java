@@ -88,7 +88,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class CellsClient implements Client, SdkNames {
 
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     private final static String logTag = "CellsClient";
 
@@ -114,7 +114,7 @@ public class CellsClient implements Client, SdkNames {
             return false;
         } catch (ApiException e) {
             Log.e(logTag, "API error while checking auth state for " + StateID.fromId(transport.getId()));
-            e.printStackTrace();
+//            e.printStackTrace();
             if (e.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 return false;
             }
@@ -233,7 +233,7 @@ public class CellsClient implements Client, SdkNames {
                     fileNode = toFileNode(node);
                 } catch (NullPointerException e) {
                     Log.e(logTag, "Unexpected error while parsing response, cannot create FileNode");
-                    e.printStackTrace();
+//                    e.printStackTrace();
                     continue;
                 }
 
@@ -260,11 +260,12 @@ public class CellsClient implements Client, SdkNames {
 
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
 
-        RestNodesCollection response;
+//        RestNodesCollection response;
         try {
-            response = api.createNodes(request);
+//            response =
+            api.createNodes(request);
         } catch (ApiException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
     }
@@ -328,7 +329,8 @@ public class CellsClient implements Client, SdkNames {
             return null;
         }
 
-        Map<String, Object> thumbData = new Gson().fromJson(imgThumbsStr, Map.class);
+        Map<String, Object> thumbData = IoHelpers.fromJsonString(imgThumbsStr);
+        // new Gson().fromJson(imgThumbsStr, Map.class);
         if (thumbData != null && thumbData.containsKey("Processing")
                 && !((boolean) thumbData.get("Processing"))
                 && thumbData.containsKey("thumbnails")
@@ -367,7 +369,7 @@ public class CellsClient implements Client, SdkNames {
         try {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
 
@@ -389,7 +391,7 @@ public class CellsClient implements Client, SdkNames {
         try {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
 
@@ -647,10 +649,8 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void rename(String ws, String srcFile, String newName) throws SDKException {
-
         String path = ws + srcFile;
         String[] srcNodes = {path};
-
         String parent = new File(srcFile).getParentFile().getPath();
         String dstFile;
         if ("/".equals(parent)) {
