@@ -23,7 +23,7 @@ ext {
 // Also publish sources and Javadoc
 java {
     // Temporary disable javadoc, they are broken after updating to java 17 and gradle 8.1
-    // withJavadocJar()
+    withJavadocJar()
     withSourcesJar()
 }
 
@@ -119,7 +119,6 @@ dependencies {
     // implementation 'org.jetbrains:annotations:23.0.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 
-
     // JUnit test framework
     testImplementation 'junit:junit:4.13.2'
 
@@ -129,7 +128,7 @@ dependencies {
 
 // Helper tasks to debug
 
-// Uncomment this to get more messages during build during code cleaning sprints.
+// Uncomment this to get more messages during build for code cleaning sprints.
 // tasks.withType(JavaCompile) {
 //    options.compilerArgs << '-Xlint:unchecked'
 //    options.deprecation = true

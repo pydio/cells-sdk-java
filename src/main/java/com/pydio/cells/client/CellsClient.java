@@ -104,7 +104,6 @@ public class CellsClient implements Client, SdkNames {
     public boolean stillAuthenticated() throws SDKException {
         try {
             UserServiceApi api = new UserServiceApi(authenticatedClient());
-//            IdmUser user =
             api.getUser(transport.getUsername(), null, null, null, null,
                     false, null, -1, true);
             return true;
@@ -114,7 +113,6 @@ public class CellsClient implements Client, SdkNames {
             return false;
         } catch (ApiException e) {
             Log.e(logTag, "API error while checking auth state for " + StateID.fromId(transport.getId()));
-//            e.printStackTrace();
             if (e.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 return false;
             }
@@ -233,7 +231,6 @@ public class CellsClient implements Client, SdkNames {
                     fileNode = toFileNode(node);
                 } catch (NullPointerException e) {
                     Log.e(logTag, "Unexpected error while parsing response, cannot create FileNode");
-//                    e.printStackTrace();
                     continue;
                 }
 
@@ -250,22 +247,17 @@ public class CellsClient implements Client, SdkNames {
 
     @Override
     public void mkdir(String ws, String parent, String name) throws SDKException {
+        RestCreateNodesRequest request = new RestCreateNodesRequest();
+        request.recursive(false);
         TreeNode node = new TreeNode();
         node.setPath((ws + parent + "/" + name).replace("//", "/"));
         node.setType(TreeNodeType.COLLECTION);
-
-        RestCreateNodesRequest request = new RestCreateNodesRequest();
-        request.recursive(false);
         request.addNodesItem(node);
 
         TreeServiceApi api = new TreeServiceApi(authenticatedClient());
-
-//        RestNodesCollection response;
         try {
-//            response =
             api.createNodes(request);
         } catch (ApiException e) {
-//            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
     }
@@ -330,7 +322,6 @@ public class CellsClient implements Client, SdkNames {
         }
 
         Map<String, Object> thumbData = IoHelpers.fromJsonString(imgThumbsStr);
-        // new Gson().fromJson(imgThumbsStr, Map.class);
         if (thumbData != null && thumbData.containsKey("Processing")
                 && !((boolean) thumbData.get("Processing"))
                 && thumbData.containsKey("thumbnails")
@@ -339,7 +330,6 @@ public class CellsClient implements Client, SdkNames {
             ArrayList<Map<String, Object>> thumbs = (ArrayList<Map<String, Object>>) thumbData.get("thumbnails");
 
             for (Map<String, Object> currThumb : thumbs) {
-                // Map<String, Object> currThumb = (Map<String, Object>) currThumbObj;
                 int size = Double.valueOf((double) currThumb.get("size")).intValue();
                 String format = (String) currThumb.get("format");
                 String currName = currNode.getId() + "-" + size + "." + format;
@@ -354,7 +344,6 @@ public class CellsClient implements Client, SdkNames {
                 }
             }
         }
-
         return thumbName;
     }
 
@@ -369,7 +358,6 @@ public class CellsClient implements Client, SdkNames {
         try {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
-//            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
 
@@ -391,7 +379,6 @@ public class CellsClient implements Client, SdkNames {
         try {
             response = api.bulkStatNodes(request);
         } catch (ApiException e) {
-//            e.printStackTrace();
             throw SDKException.fromApiException(e);
         }
 
@@ -434,16 +421,6 @@ public class CellsClient implements Client, SdkNames {
         if (nodes != null) {
             for (TreeNode treeNode : nodes) {
                 toMultipleNode(h, treeNode);
-//                FileNode fileNode;
-//                try {
-//                    fileNode = toFileNode(treeNode);
-//                } catch (NullPointerException ignored) {
-//                    continue;
-//                }
-//
-//                if (fileNode != null) {
-//                    h.onNode(fileNode);
-//                }
             }
         }
     }
@@ -478,8 +455,6 @@ public class CellsClient implements Client, SdkNames {
                     fileNodes.add(fileNode);
                 }
             }
-            // Log.d(logTag, " .. After to multiple: " + fileNodes.size());
-
             return fileNodes;
         } catch (ApiException e) {
             throw SDKException.fromApiException(e);
@@ -750,12 +725,12 @@ public class CellsClient implements Client, SdkNames {
         }
     }
 
-    private void toMultipleNode(List<FileNode> nodes, TreeNode treeNode) {
-        toMultipleNode(node -> {
-            if (node instanceof FileNode) nodes.add((FileNode) node);
-            // TODO clean this.
-        }, treeNode);
-    }
+//    private void toMultipleNode(List<FileNode> nodes, TreeNode treeNode) {
+//        toMultipleNode(node -> {
+//            if (node instanceof FileNode) nodes.add((FileNode) node);
+//            // TODO clean this.
+//        }, treeNode);
+//    }
 
     private void toMultipleNode(NodeHandler h, TreeNode node) {
         try {
@@ -782,7 +757,6 @@ public class CellsClient implements Client, SdkNames {
                 }
             }
         } catch (NullPointerException e) {
-            Log.e(logTag, "###############################################################");
             Log.e(logTag, "Could node create FileNode for " + node.getPath() + ", skipping");
             e.printStackTrace();
         }
