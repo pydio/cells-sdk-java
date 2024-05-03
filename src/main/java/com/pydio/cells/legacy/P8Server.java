@@ -19,7 +19,7 @@ public class P8Server implements Server {
     private final String logTag = "P8Server";
 
     public final static String API_PREFIX = "/index.php?";
-    public final static String BOOTCONF_PATH = API_PREFIX + "get_action=" + P8Names.GET_BOOT_CONF;
+    public final static String BOOT_CONF_PATH = API_PREFIX + "get_action=" + P8Names.GET_BOOT_CONF;
     private String version = null;
 
     private final ServerURL serverURL;
@@ -71,15 +71,9 @@ public class P8Server implements Server {
         return null;
     }
 
-    public boolean hasLicenseFeatures() {
-        return false;
-        // TODO reimplement this
-        // return bootConf != null && bootConf.has("license_features");
-    }
-
     @Override
     public String getLabel() {
-        if (title != null && !"".equals(title)) {
+        if (title != null && !title.isEmpty()) {
             return title;
         }
         return url();
@@ -119,7 +113,7 @@ public class P8Server implements Server {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
-            con = serverURL.withSpec(BOOTCONF_PATH).openConnection();
+            con = serverURL.withSpec(BOOT_CONF_PATH).openConnection();
             in = con.getInputStream();
             long read = IoHelpers.pipeRead(in, out);
 
@@ -141,35 +135,6 @@ public class P8Server implements Server {
                     welcomeMessage = (String) wordingMap.get("welcomeMessage");
                 }
             }
-
-//            if (respMap.containsKey("LinkUrl")) {
-//                return (String) respMap.get("LinkUrl");
-//            } else {
-//                Map<String, Object> linkMap = (Map<String, Object>) respMap.get("links");
-//                Iterator<Map.Entry<String, Object>> it = linkMap.entrySet().iterator();
-//                while (it.hasNext()) {
-//                    Map.Entry<String, Object> currEntry  = it.next();
-//                    Map<String, Object> details = (Map<String, Object>) currEntry.getValue();
-//                    linkAddress = (String) details.get("public_link");
-//                }
-//            }
-
-
-//
-//            JSONObject bootConf = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
-//            version = bootConf.getString("ajxpVersion");
-//            if (bootConf.has("customWording")) {
-//                JSONObject customWordings = bootConf.getJSONObject("customWording");
-//                title = customWordings.getString("title");
-//                String tmpPath = customWordings.getString("icon");
-//                // Paths always start with a leading slash in our world.
-//                iconPath = tmpPath.startsWith("/") ? tmpPath : "/" + tmpPath;
-//
-//                if (customWordings.has("welcomeMessage")) {
-//                    welcomeMessage = customWordings.getString("welcomeMessage");
-//                }
-//            }
-            // Log.e(logTag, "Got a boot conf");
         } catch (Exception e) {
             Log.e(logTag, "Could not get boot configuration at " + getId());
             throw new SDKException(ErrorCodes.api_error, "Could not get boot configuration at " + getId(), e);
@@ -188,7 +153,7 @@ public class P8Server implements Server {
     }
 
     public OAuthConfig getOAuthConfig() {
+        Log.e(logTag, "Trying to retrieve an OAuth config on a P8 Server");
         throw new RuntimeException("Pydio 8 server does not support OAuth credential flows.");
     }
-
 }

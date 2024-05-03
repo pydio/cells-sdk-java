@@ -31,13 +31,6 @@ public abstract class AbstractNode implements Node, Comparable<Node>, SdkNames {
         properties.setProperty(key, value);
     }
 
-//    @Override
-//    public void deleteProperty(String key) {
-//        if (properties != null && properties.contains(key)) {
-//            properties.remove(key);
-//        }
-//    }
-
     /**
      * Handle comparison when nodes are not of the same type
      */

@@ -69,7 +69,7 @@ public class ServerFactory implements IServerFactory {
 
         // We do not have any other choice than to try the various well-known endpoints
         try {
-            ServerURL currURL = serverURL.withPath(CellsServer.BOOTCONF_PATH);
+            ServerURL currURL = serverURL.withPath(CellsServer.BOOT_CONF_PATH);
             currURL.ping();
             return SdkNames.TYPE_CELLS;
         } catch (IOException ce) {
@@ -77,7 +77,7 @@ public class ServerFactory implements IServerFactory {
         } catch (SDKException e) {
             if (e.getCode() == 404) {
                 try {
-                    ServerURL currURL = serverURL.withSpec(P8Server.BOOTCONF_PATH);
+                    ServerURL currURL = serverURL.withSpec(P8Server.BOOT_CONF_PATH);
                     currURL.ping();
                     return SdkNames.TYPE_LEGACY_P8;
                 } catch (IOException e2) {

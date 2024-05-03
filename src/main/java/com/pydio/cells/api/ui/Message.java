@@ -40,7 +40,7 @@ public class Message implements Serializable {
     }
 
     public boolean hasEvents() {
-        return this.added.size() > 0 || this.deleted.size() > 0 || this.updated.size() > 0;
+        return !this.added.isEmpty() || !this.deleted.isEmpty() || !this.updated.isEmpty();
     }
 
     private static Message empty() {

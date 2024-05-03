@@ -27,11 +27,8 @@ public class ServerUrlTest {
         Assert.assertEquals("localhost:8080", httpsSSURL.getURL().getAuthority());
         Assert.assertEquals("", httpsSSURL.getURL().getPath());
 
-//        ServerURL httpsFailURL = ServerURLImpl.fromAddress(" https://localhost:8080 ");
-//        ServerURL httpsURL = ServerURLImpl.fromAddress("https://cells.example.com ");
         ServerURL p8URL = ServerURLImpl.fromAddress("https://pydio8.example.com/");
         Assert.assertEquals("", p8URL.getURL().getPath());
-
     }
 
     @Test

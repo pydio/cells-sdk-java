@@ -15,7 +15,7 @@ repositories {
 java.sourceCompatibility = JavaVersion.VERSION_17
 java.targetCompatibility = JavaVersion.VERSION_17
 
-def sdkVersion = '0.4.5'
+def sdkVersion = '0.4.6'
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
 }
@@ -23,7 +23,7 @@ ext {
 // Also publish sources and Javadoc
 java {
     // Temporary disable javadoc, they are broken after updating to java 17 and gradle 8.1
-    withJavadocJar()
+    // withJavadocJar()
     withSourcesJar()
 }
 
@@ -71,7 +71,7 @@ publishing {
             version = sdkVersion
 
             pom.withXml {
-                def root = asNode()
+                def root = asNode
                 root.appendNode('description', 'Provide base java libraries to communicate with the Pydio Cells stack')
                 root.appendNode('name', 'Cells SDK for Java')
                 root.appendNode('url', 'https://pydio.com')

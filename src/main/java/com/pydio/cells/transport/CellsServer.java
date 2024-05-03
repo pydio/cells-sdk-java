@@ -22,7 +22,7 @@ public class CellsServer implements Server {
     public final static String logTag = CellsServer.class.getSimpleName();
 
     public final static String API_PREFIX = "/a";
-    public final static String BOOTCONF_PATH = API_PREFIX + "/frontend/bootconf";
+    public final static String BOOT_CONF_PATH = API_PREFIX + "/frontend/bootconf";
 
     private final ServerURL serverURL;
 
@@ -31,7 +31,6 @@ public class CellsServer implements Server {
     private String welcomeMessage;
     private String iconPath;
     private String version = null;
-    private boolean hasLicenceFeatures = false;
     private String customPrimaryColor = null;
 
     public CellsServer(ServerURL serverURL) {
@@ -74,7 +73,7 @@ public class CellsServer implements Server {
 
     @Override
     public String getLabel() {
-        if (title != null && !"".equals(title)) {
+        if (title != null && !title.isEmpty()) {
             return title;
         }
         return url();
@@ -98,10 +97,6 @@ public class CellsServer implements Server {
         return version;
     }
 
-    public boolean hasLicenseFeatures() {
-        return hasLicenceFeatures;
-    }
-
     @Override
     public String getCustomPrimaryColor() {
         return customPrimaryColor;
@@ -114,7 +109,6 @@ public class CellsServer implements Server {
     @Deprecated
     @Override
     public boolean supportsOauth() {
-        // return authConfig != null;
         return true;
     }
 
@@ -128,7 +122,7 @@ public class CellsServer implements Server {
         InputStream in = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            con = openAnonConnection(BOOTCONF_PATH);
+            con = openAnonConnection(BOOT_CONF_PATH);
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
             Map<String, Object> map = IoHelpers.fromJsonByteArray(out);
@@ -146,10 +140,6 @@ public class CellsServer implements Server {
                 version = (String) map.get("ajxpVersion");
             }
 
-            // FIXME this is broken. Find where it is used and fix if necessary.
-            hasLicenceFeatures = map.containsKey("license_features");
-
-            // TODO factorize this and then remove the JSON old library
             if (map.containsKey("other")) {
                 Object oo = map.get("other");
                 if (oo instanceof Map) {
@@ -198,13 +188,11 @@ public class CellsServer implements Server {
             authConfig = OAuthConfig.fromMap(response);
         } catch (FileNotFoundException e) {
             Log.e(logTag, "Cannot retrieve OIDC configuration at " + e.getMessage());
-            e.printStackTrace();
             throw new SDKException(ErrorCodes.server_configuration_issue,
                     "Cannot retrieve OIDC well known file for " + getServerURL().getURL().toString() + ", please check your server config", e);
         } catch (Exception e) {
             Log.e(logTag, "Unexpected error while retrieving OIDC configuration"
                     + ", cause: " + e.getMessage());
-            e.printStackTrace();
             throw SDKException.unexpectedContent(e);
         } finally {
             IoHelpers.closeQuietly(con);

@@ -53,7 +53,7 @@ public interface Server {
 
     String getVersionName();
 
-    boolean hasLicenseFeatures();
+//    boolean hasLicenseFeatures();
 
     String getCustomPrimaryColor();
 

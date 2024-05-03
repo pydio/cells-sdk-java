@@ -173,7 +173,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         InputStream in = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            con = openConnection(CellsServer.BOOTCONF_PATH);
+            con = openConnection(CellsServer.BOOT_CONF_PATH);
             in = con.getInputStream();
             IoHelpers.pipeRead(in, out);
         } finally {

@@ -1,13 +1,13 @@
 package com.pydio.cells.sync.tree;
 
-import java.util.List;
-
 import com.pydio.cells.client.model.TreeNodeInfo;
 
-import org.junit.Assert;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Wraps a TreeMap to simply store the full tree in memory. Children are
@@ -59,7 +59,7 @@ public class MemoryStateManagerTest {
 
         // Check getChildren  
         List<TreeNodeInfo> children = manager.getChildren("common-ws/parent");
-        Assert.assertTrue(children.size() >= 1);
+        Assert.assertTrue(!children.isEmpty());
         Assert.assertEquals(5, children.size());
     }
 
