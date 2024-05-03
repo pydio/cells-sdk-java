@@ -1,7 +1,5 @@
 package com.pydio.cells.transport;
 
-import com.pydio.cells.transport.StateID;
-
 import com.pydio.cells.api.CustomEncoder;
 import com.pydio.cells.utils.JavaCustomEncoder;
 
