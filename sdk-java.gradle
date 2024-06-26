@@ -71,7 +71,7 @@ dependencies {
     // Set of carefully chosen third-party libraries. See sibling "build.gradle" file.
     // Do not update if you do not *really* know what you are doing.
 
-    implementation 'commons-codec:commons-codec:1.16.1'
+    implementation 'commons-codec:commons-codec:1.17.0'
     implementation 'org.threeten:threetenbp:1.6.8'
 
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
