@@ -1,5 +1,4 @@
 plugins {
-    // Enable test as a stand alone project
     id 'java'
 
     // Publish the generated resources as Maven Artifacts
@@ -94,33 +93,33 @@ jar {
 
 dependencies {
 
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    implementation libs.okhttp
+    implementation libs.logging.interceptor
 
-    implementation 'org.threeten:threetenbp:1.6.8'
+    implementation libs.threetenbp
 
     // Updating this cause IdToken decoding failure
-    implementation 'commons-codec:commons-codec:1.17.0'
+    implementation libs.commons.codec
 
     // Used to store info as gson blobs in SQLite
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation libs.google.gson
     // gsonfire library adds some more feature (like date de-serialization) to the basic GSON library
     // It is used by the swagger generated SDK code.
-    implementation 'io.gsonfire:gson-fire:1.9.0'
+    implementation libs.gson.fire
 
     // Necessary when developing / building with a JDK 11
-    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    implementation libs.javax.annotation.api
     // https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api
-    implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.1.0'
+    implementation libs.jakarta.ws.rs.api
     // Necessary for swagger (generation of the openapi package from Cells spec)
-    implementation 'io.swagger:swagger-annotations:1.6.13'
+    implementation libs.swagger.annotations
     // Add the @Nullable annotation
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation libs.jsr305
     // implementation 'org.jetbrains:annotations:23.0.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    implementation libs.jackson.databind
 
     // JUnit test framework
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation libs.junit
 
     // S3 transport is configured in calling layer and use a specific either Java or Android implementation.
     // See cells-android-client or cells-java-client repos.
