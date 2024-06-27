@@ -394,10 +394,10 @@ public class P8Client implements Client, SdkNames {
                 NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
                 if (diff.updated != null && diff.updated.size() > 0) {
                     name = diff.updated.get(0).getName();
-                } else if (diff.added != null && diff.added.size() > 0) {
+                } else if (diff.added != null && !diff.added.isEmpty()) {
                     name = diff.added.get(0).getName();
-                } else {
-                    //todo: stats "name" to get info
+//                } else {
+                    // TODO: stats "name" to get info
                 }
                 builder.setParam(P8Names.appendToUrlencodedPart, name);
                 rsp = transport.execute(builder.getRequest());

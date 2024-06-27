@@ -4,6 +4,7 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.PathUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -55,7 +56,7 @@ public class StateID {
      */
     public static StateID fromId(String stateId) {
 
-        if (stateId == null || stateId.length() == 0) {
+        if (stateId == null || stateId.isEmpty()) {
             return null;
         }
 
@@ -109,7 +110,7 @@ public class StateID {
      */
     public String getId() {
         StringBuilder builder = new StringBuilder(getAccountId());
-        if (path != null && path.length() > 0 && !"/".equals(path)) {
+        if (path != null && !path.isEmpty() && !"/".equals(path)) {
             builder.append("@").append(utf8Encode(path));
         }
         return builder.toString();
@@ -197,7 +198,7 @@ public class StateID {
      * @return a valid StateID for a child of the current workspace or folder.
      */
     public StateID child(String fileName) {
-        if (fileName == null || "".equals(fileName) || "/".equals(fileName)) {
+        if (fileName == null || fileName.isEmpty() || "/".equals(fileName)) {
             return this;
         }
 
@@ -251,7 +252,7 @@ public class StateID {
             return null;
         }
         String parentPath = path.substring(0, path.lastIndexOf("/"));
-        if ("".equals(parentPath)) {
+        if (parentPath.isEmpty()) {
             return null;
         }
         return parentPath;
@@ -263,7 +264,7 @@ public class StateID {
             return null;
         }
         String parentFile = file.substring(0, file.lastIndexOf("/"));
-        if ("".equals(parentFile)) {
+        if (parentFile.isEmpty()) {
             parentFile = "/";
         }
         return parentFile;
@@ -275,7 +276,7 @@ public class StateID {
             builder.append(username).append("@");
         }
         builder.append(serverUrl);
-        if (path != null && path.length() > 0 && !"/".equals(path)) {
+        if (path != null && !path.isEmpty() && !"/".equals(path)) {
             builder.append(path);
         }
         return builder.toString();
@@ -303,7 +304,11 @@ public class StateID {
         try {
             return URLEncoder.encode(value, StandardCharsets.UTF_8);
         } catch (NoSuchMethodError e) {
-            return URLEncoder.encode(value);
+            try {
+                return URLEncoder.encode(value, "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                return value;
+            }
         }
     }
 
@@ -312,14 +317,11 @@ public class StateID {
         try {
             return URLDecoder.decode(value, StandardCharsets.UTF_8);
         } catch (NoSuchMethodError e) {
-            return URLDecoder.decode(value);
+            try {
+                return URLDecoder.decode(value, "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                return value;
+            }
         }
-
-//        if (version.startsWith("15") || version.startsWith("16") || version.startsWith("17") ||
-//                version.startsWith("18") || version.startsWith("19") || version.startsWith("20") || version.startsWith("21")) {
-//            return URLDecoder.decode(value, StandardCharsets.UTF_8);
-//        } else {
-//            return URLDecoder.decode(value);
-//        }
     }
 }

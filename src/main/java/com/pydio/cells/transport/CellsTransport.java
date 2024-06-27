@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class CellsTransport implements ICellsTransport, SdkNames {
@@ -42,7 +43,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     private final static String logTag = "CellsTransport";
     private final static String registryPath = "/frontend/state";
     private final CustomEncoder encoder;
-    private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+    private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.US);
     private final CredentialService credentialService;
 
     // TODO rather rely on a state ID
@@ -204,7 +205,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             con.setRequestMethod("GET");
             return con.getInputStream();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw SDKException.conFailed("cannot get registry as authenticated user", e);
         }
     }
@@ -217,13 +218,6 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         authInfo.put("type", "credentials");
         ClientData cd = ClientData.getInstance();
         authInfo.put("client_id", cd.getClientId());
-//        if (Str.notEmpty(cd.getClientSecret())) {
-//            // This additional header is only used for "private" clients and not used with
-//            // default standard clients that have no client secret
-//            String authHeader = "Basic "
-//                    + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
-//            authInfo.put("Authorization", authHeader);
-//        }
 
         RestFrontSessionRequest request = new RestFrontSessionRequest();
         request.setClientTime((int) System.currentTimeMillis());
@@ -258,16 +252,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             HttpURLConnection con = openAnonConnection(endpointURI.getPath());
 
             // Manage Body as URL encoded form
-            Map<String, String> authData = new HashMap<>();
-            authData.put("grant_type", "authorization_code");
-            authData.put("code", code);
-            authData.put("redirect_uri", cfg.redirectURI);
-
-            ClientData cd = ClientData.getInstance();
-            authData.put("client_id", cd.getClientId());
-            if (Str.notEmpty(cd.getClientSecret())) {
-                authData.put("client_secret", cd.getClientSecret());
-            }
+            Map<String, String> authData = buildAuthDataMap(code, cfg);
             // String authHeader = "Basic " + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
             addPostData(con, authData, null);
 
@@ -286,6 +271,19 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             IoHelpers.closeQuietly(in);
             IoHelpers.closeQuietly(out);
         }
+    }
+
+    private Map<String, String> buildAuthDataMap(String code, OAuthConfig cfg) {
+        Map<String, String> authData = new HashMap<>();
+        authData.put("grant_type", "authorization_code");
+        authData.put("code", code);
+        authData.put("redirect_uri", cfg.redirectURI);
+        ClientData cd = ClientData.getInstance();
+        authData.put("client_id", cd.getClientId());
+        if (Str.notEmpty(cd.getClientSecret())) {
+            authData.put("client_secret", cd.getClientSecret());
+        }
+        return authData;
     }
 
     public Token getRefreshedOAuthToken(String refreshToken) throws SDKException {
@@ -321,7 +319,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
                 throw new SDKException(ErrorCodes.refresh_token_not_valid,
-                        "FNFE while trying to refresh. It usually means that the refresh token has already been consumed", e);
+                        "Not found exception while trying to refresh. It usually means that the refresh token has already been consumed", e);
             } else {
                 throw new SDKException.RemoteIOException("Token request failed: " + e.getLocalizedMessage());
             }
@@ -356,7 +354,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             }
             StringBuilder builder = new StringBuilder();
             for (Map.Entry<String, String> entry : postData.entrySet()) {
-                if (builder.length() != 0) builder.append('&');
+                if (!builder.isEmpty()) builder.append('&');
                 builder.append(encoder.utf8Encode(entry.getKey()));
                 builder.append('=');
                 builder.append(encoder.utf8Encode(String.valueOf(entry.getValue())));

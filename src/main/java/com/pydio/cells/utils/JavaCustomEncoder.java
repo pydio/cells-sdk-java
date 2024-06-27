@@ -2,24 +2,14 @@ package com.pydio.cells.utils;
 
 import com.pydio.cells.api.CustomEncoder;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class JavaCustomEncoder implements CustomEncoder {
-
-//    @SuppressWarnings("NewApi")
-//    @Override
-//    public byte[] base64Encode(byte[] inValue) {
-//        Base64.getEncoder().encode(inValue);
-//        return inValue;
-//    }
-//
-//    @Override
-//    public String base64Encode(String inValue) {
-//        return new String(base64Encode(inValue.getBytes()));
-//    }
 
     @SuppressWarnings({"NewApi"})
     @Override
@@ -28,7 +18,7 @@ public class JavaCustomEncoder implements CustomEncoder {
             Base64.getDecoder().decode(inValue);
             return new byte[0];
         } catch (NoSuchMethodError e) {
-            throw new RuntimeException("Could not decode base 64 string: [" + inValue + "]", e);
+            throw new RuntimeException("Could not decode base 64 string: [" + Arrays.toString(inValue) + "]", e);
         }
     }
 
@@ -42,7 +32,11 @@ public class JavaCustomEncoder implements CustomEncoder {
         try {
             return URLEncoder.encode(value, StandardCharsets.UTF_8);
         } catch (NoSuchMethodError e) {
-            return URLEncoder.encode(value);
+            try {
+                return URLEncoder.encode(value, "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                return value;
+            }
         }
     }
 
@@ -51,7 +45,11 @@ public class JavaCustomEncoder implements CustomEncoder {
         try {
             return URLDecoder.decode(value, StandardCharsets.UTF_8);
         } catch (NoSuchMethodError e) {
-            return URLDecoder.decode(value);
+            try {
+                return URLDecoder.decode(value, "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                return value;
+            }
         }
     }
 
