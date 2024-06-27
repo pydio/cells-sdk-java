@@ -1,11 +1,13 @@
 package com.pydio.cells.api;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.utils.Log;
 import com.pydio.cells.utils.Str;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -46,7 +48,9 @@ public class SDKException extends Exception {
                 Gson gson = new Gson();
                 // Best effort to gather more info about the error
                 try {
-                    HashMap<String, String> responseBody = gson.fromJson(body, HashMap.class);
+                    Type type = new TypeToken<HashMap<String, String>>() {
+                    }.getType();
+                    HashMap<String, String> responseBody = gson.fromJson(body, type);
                     return new SDKException(cause.getCode(), responseBody.get("Title"), cause);
                 } catch (Exception je) {
                     Log.w(logTag, "Could not retrieve info from JSON response body: " + je.getMessage());

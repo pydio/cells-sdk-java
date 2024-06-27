@@ -12,18 +12,15 @@ import com.pydio.cells.api.Transport;
 import com.pydio.cells.api.callbacks.ChangeHandler;
 import com.pydio.cells.api.callbacks.NodeHandler;
 import com.pydio.cells.api.callbacks.ProgressListener;
-import com.pydio.cells.api.callbacks.RegistryItemHandler;
 import com.pydio.cells.api.ui.ChangeNode;
 import com.pydio.cells.api.ui.FileNode;
 import com.pydio.cells.api.ui.Message;
 import com.pydio.cells.api.ui.Node;
 import com.pydio.cells.api.ui.PageOptions;
-import com.pydio.cells.api.ui.Plugin;
 import com.pydio.cells.api.ui.Stats;
 import com.pydio.cells.api.ui.WorkspaceNode;
 import com.pydio.cells.client.model.DocumentRegistry;
 import com.pydio.cells.client.model.NodeDiff;
-import com.pydio.cells.client.model.parser.RegistrySaxHandler;
 import com.pydio.cells.client.model.parser.WorkspaceNodeSaxHandler;
 import com.pydio.cells.transport.StateID;
 import com.pydio.cells.utils.IoHelpers;
@@ -48,7 +45,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.UUID;
 
 public class P8Client implements Client, SdkNames {
@@ -68,7 +64,7 @@ public class P8Client implements Client, SdkNames {
                 return transport.withAuth(P8RequestBuilder.update(req)).getRequest();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("could not refresh secure token", e);
         }
         return null;
     }
@@ -138,21 +134,21 @@ public class P8Client implements Client, SdkNames {
         }
     }
 
-    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
-        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.workspaceRegistry(ws));
-        try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
-            if (rsp.code() != ErrorCodes.ok) {
-                throw new SDKException(rsp.code());
-            }
-            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
-            if (code != ErrorCodes.ok) {
-                rsp.close();
-                throw new SDKException(code);
-            }
-        } catch (IOException ioe) {
-            throw new SDKException(ioe);
-        }
-    }
+//    public void downloadWorkspaceRegistry(String ws, RegistryItemHandler itemHandler) throws SDKException {
+//        P8RequestBuilder builder = transport.withAuth(P8RequestBuilder.workspaceRegistry(ws));
+//        try (P8Response rsp = transport.execute(builder.getRequest(), this::refreshSecureToken, ErrorCodes.authentication_required)) {
+//            if (rsp.code() != ErrorCodes.ok) {
+//                throw new SDKException(rsp.code());
+//            }
+//            final int code = rsp.saxParse(new RegistrySaxHandler(itemHandler));
+//            if (code != ErrorCodes.ok) {
+//                rsp.close();
+//                throw new SDKException(code);
+//            }
+//        } catch (IOException ioe) {
+//            throw new SDKException(ioe);
+//        }
+//    }
 
     @Override
     public FileNode nodeInfo(String ws, String path) throws SDKException {
@@ -182,26 +178,26 @@ public class P8Client implements Client, SdkNames {
         return nodeInfo(ws, file);
     }
 
-    // TODO used for debug purposes. remove
-    private static class RIH extends RegistryItemHandler {
-
-        public void onPref(String name, String value) {
-            System.out.println("OnPref: " + name);
-        }
-
-        public void onAction(String action, String read, String write) {
-            System.out.println("OnAction: " + action);
-        }
-
-        public void onWorkspace(Properties p) {
-            System.out.println("OnWS ");
-
-        }
-
-        public void onPlugin(Plugin p) {
-            System.out.println("OnPlugin: " + p.getName());
-        }
-    }
+//    // TODO used for debug purposes. remove
+//    private static class RIH extends RegistryItemHandler {
+//
+//        public void onPref(String name, String value) {
+//            System.out.println("OnPref: " + name);
+//        }
+//
+//        public void onAction(String action, String read, String write) {
+//            System.out.println("OnAction: " + action);
+//        }
+//
+//        public void onWorkspace(Properties p) {
+//            System.out.println("OnWS ");
+//
+//        }
+//
+//        public void onPlugin(Plugin p) {
+//            System.out.println("OnPlugin: " + p.getName());
+//        }
+//    }
 
     @Override
     public PageOptions ls(String ws, String folder, PageOptions options, NodeHandler handler) throws SDKException {
@@ -392,7 +388,7 @@ public class P8Client implements Client, SdkNames {
                 Log.e(logTag, "- In while ");
 
                 NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
-                if (diff.updated != null && diff.updated.size() > 0) {
+                if (diff.updated != null && !diff.updated.isEmpty()) {
                     name = diff.updated.get(0).getName();
                 } else if (diff.added != null && !diff.added.isEmpty()) {
                     name = diff.added.get(0).getName();
@@ -470,7 +466,7 @@ public class P8Client implements Client, SdkNames {
     public String uploadURL(String ws, String folder, String name, boolean autoRename) throws SDKException {
         // FIXME upload URL must be reimplemented (or not?)
         Thread.dumpStack();
-        throw new RuntimeException("Reimplement");
+        throw new SDKException("Reimplement");
 //        try {
 //            P8RequestBuilder builder = null;
 //            try {
@@ -520,7 +516,7 @@ public class P8Client implements Client, SdkNames {
     }
 
     @Override
-    public String downloadPath(String ws, String file) throws SDKException {
+    public String downloadPath(String ws, String file) {
         P8RequestBuilder builder = P8RequestBuilder.download(ws, file);
         return transport.pathFromRequest(builder.getRequest());
     }
@@ -555,7 +551,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document xml = rsp.toXMLDocument();
+//            Document xml = rsp.toXMLDocument();
             // return Message.create(xml);
         }
     }
@@ -567,7 +563,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document xml = rsp.toXMLDocument();
+//            Document xml = rsp.toXMLDocument();
             // return Message.create(xml);
         }
     }
@@ -580,7 +576,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document xml = rsp.toXMLDocument();
+//            Document xml = rsp.toXMLDocument();
 //            return Message.create(xml);
         }
     }
@@ -593,7 +589,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document xml = rsp.toXMLDocument();
+//            Document xml = rsp.toXMLDocument();
 //            return Message.create(xml);
         }
     }
@@ -617,7 +613,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document xml = rsp.toXMLDocument();
+//            Document xml = rsp.toXMLDocument();
 //            return Message.create(xml);
         }
     }
@@ -630,7 +626,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document xml = rsp.toXMLDocument();
+//            Document xml = rsp.toXMLDocument();
 //            return Message.create(xml);
         }
     }
@@ -644,7 +640,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document xml = rsp.toXMLDocument();
+//            Document xml = rsp.toXMLDocument();
 //            return Message.create(xml);
         }
     }
@@ -688,7 +684,7 @@ public class P8Client implements Client, SdkNames {
     @Override
     public String streamingAudioURL(String ws, String file) throws SDKException {
         Thread.dumpStack();
-        throw new RuntimeException("Streaming is not supported with Pydio 8 servers.");
+        throw new SDKException("Streaming is not supported with Pydio 8 servers.");
 //        P8RequestBuilder builder = P8RequestBuilder.streamingAudio(ws, file).setToken(session);
 //        try {
 //            return session.getURL(builder.getRequest());
@@ -702,7 +698,7 @@ public class P8Client implements Client, SdkNames {
     @Override
     public String streamingVideoURL(String ws, String file) throws SDKException {
         Thread.dumpStack();
-        throw new RuntimeException("Streaming is not supported with Pydio 8 servers.");
+        throw new SDKException("Streaming is not supported with Pydio 8 servers.");
         //         P8RequestBuilder builder = P8RequestBuilder.streamingVideo(ws, file).setToken(session);
 //         try {
 //             return session.getURL(builder.getRequest());
@@ -808,29 +804,31 @@ public class P8Client implements Client, SdkNames {
                 ChangeNode node = new ChangeNode();
                 change.setNode(node);
 
-                Map<String, Object> changeMap = (Map<String, Object>) respMap.get(CHANGE_NODE);
+                Object obj = respMap.get(CHANGE_NODE);
+//                 changeMap = null;
+                if (obj instanceof Map<?, ?>) //noinspection SingleStatementInBlock
+                {
+                    Map<String, Object> changeMap = (Map<String, Object>) obj;
+                    try {
+                        node.setSize((Long) changeMap.get(CHANGE_NODE_BYTESIZE));
+                    } catch (Exception ignore) {
+                    }
+                    try {
+                        node.setMd5((String) changeMap.get(CHANGE_NODE_MD5));
+                    } catch (Exception ignore) {
+                    }
+                    try {
+                        node.setmTime((Long) changeMap.get(CHANGE_NODE_MTIME));
+                    } catch (Exception ignore) {
+                    }
+                    try {
+                        node.setPath((String) changeMap.get(CHANGE_NODE_PATH));
+                    } catch (Exception ignore) {
+                    }
+                    node.setWorkspace((String) changeMap.get(CHANGE_NODE_WORKSPACE));
 
-                try {
-                    node.setSize((Long) changeMap.get(CHANGE_NODE_BYTESIZE));
-                } catch (Exception ignore) {
+                    handler.onChange(change);
                 }
-                try {
-                    node.setMd5((String) changeMap.get(CHANGE_NODE_MD5));
-                } catch (Exception ignore) {
-                }
-                try {
-                    node.setmTime((Long) changeMap.get(CHANGE_NODE_MTIME));
-                } catch (Exception ignore) {
-                }
-                try {
-                    node.setPath((String) changeMap.get(CHANGE_NODE_PATH));
-                } catch (Exception ignore) {
-                }
-                node.setWorkspace((String) changeMap.get(CHANGE_NODE_WORKSPACE));
-
-                handler.onChange(change);
-
-
 //                stats.setmTime((Long) respMap.get("mtime"));
 //                stats.setSize((Long) respMap.get("size"));
 //
@@ -915,7 +913,7 @@ public class P8Client implements Client, SdkNames {
     public String share(String ws, String file, String ws_label, boolean isFolder, String ws_description, String password, int expiration, int download, boolean canPreview, boolean canDownload) throws SDKException {
         P8RequestBuilder builder = P8RequestBuilder.share(ws, file, ws_description);
         builder = transport.withAuth(builder);
-        if (password != null && !"".equals(password)) {
+        if (password != null && !password.isEmpty()) {
             builder.setParam(P8Names.shareGuestUserPassword, password);
         }
 
@@ -1016,7 +1014,7 @@ public class P8Client implements Client, SdkNames {
             if (rsp.code() != ErrorCodes.ok) {
                 throw new SDKException(rsp.code());
             }
-            Document doc = rsp.toXMLDocument();
+//            Document doc = rsp.toXMLDocument();
 //            return null;
         }
     }
