@@ -1,5 +1,5 @@
 // This gradle file is used when the sdk java is opened as a sub-module of the cells-android-app repo.
-// See the sibling "build-standalone.gradle" file if you are build thinge SDK Java as a stand alone module.
+// See the sibling "build-standalone.gradle" file if you are build the SDK Java as a stand alone module.
 
 plugins {
     // Build java project
@@ -70,20 +70,18 @@ jar {
 }
 
 dependencies {
-    implementation libs.commons.codec
-    implementation libs.threetenbp
-    implementation libs.okhttp
-    implementation libs.logging.interceptor
-    implementation libs.google.gson
-    implementation libs.gson.fire
-    implementation libs.jackson.databind
-
-    // Necessary when developing / building with a JDK 11
-    implementation libs.javax.annotation.api
     implementation libs.swagger.annotations
     implementation libs.jsr305
+    implementation libs.commons.codec
+    implementation libs.okhttp
+    implementation libs.google.gson
+    implementation libs.gson.fire
+    implementation libs.threetenbp
+    implementation libs.jackson.databind
+    implementation libs.logging.interceptor
     implementation libs.jakarta.ws.rs.api
-
+    // Necessary when developing / building with a JDK 11
+    implementation libs.javax.annotation.api
     // JUnit test framework
     testImplementation libs.junit
 }

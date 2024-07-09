@@ -1,1 +1,3 @@
+// We override the defaults to also build the Cells Java SDK as a stand alone module.
 rootProject.name = 'Cells SDK Java'
+rootProject.buildFileName = 'build-standalone.gradle'

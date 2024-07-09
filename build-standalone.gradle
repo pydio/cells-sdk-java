@@ -93,30 +93,26 @@ jar {
 
 dependencies {
 
-    implementation libs.okhttp
-    implementation libs.logging.interceptor
-
-    implementation libs.threetenbp
-
-    // Updating this cause IdToken decoding failure
+    // Necessary for swagger (generation of the openapi package from Cells spec)
+    implementation libs.swagger.annotations
+    // Add the @Nullable annotation
+    implementation libs.jsr305
     implementation libs.commons.codec
-
+    implementation libs.okhttp
     // Used to store info as gson blobs in SQLite
     implementation libs.google.gson
     // gsonfire library adds some more feature (like date de-serialization) to the basic GSON library
     // It is used by the swagger generated SDK code.
     implementation libs.gson.fire
-
-    // Necessary when developing / building with a JDK 11
-    implementation libs.javax.annotation.api
+    implementation libs.threetenbp
+    implementation libs.jackson.databind
+    implementation libs.logging.interceptor
     // https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api
     implementation libs.jakarta.ws.rs.api
-    // Necessary for swagger (generation of the openapi package from Cells spec)
-    implementation libs.swagger.annotations
-    // Add the @Nullable annotation
-    implementation libs.jsr305
-    // implementation 'org.jetbrains:annotations:23.0.0'
-    implementation libs.jackson.databind
+    // Necessary when developing / building with a JDK 11
+    implementation libs.javax.annotation.api
+    // JUnit test framework
+    testImplementation libs.junit
 
     // JUnit test framework
     testImplementation libs.junit
