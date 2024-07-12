@@ -73,7 +73,7 @@ public class P8Server implements Server {
 
     @Override
     public String getLabel() {
-        if (title != null && !title.isEmpty()) {
+        if (title != null && !"".equals(title)) {
             return title;
         }
         return url();

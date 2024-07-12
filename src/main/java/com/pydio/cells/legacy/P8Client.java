@@ -388,7 +388,7 @@ public class P8Client implements Client, SdkNames {
                 Log.e(logTag, "- In while ");
 
                 NodeDiff diff = NodeDiff.create(rsp.toXMLDocument());
-                if (diff.updated != null && !diff.updated.isEmpty()) {
+                if (diff.updated != null && diff.updated.isEmpty()) {
                     name = diff.updated.get(0).getName();
                 } else if (diff.added != null && !diff.added.isEmpty()) {
                     name = diff.added.get(0).getName();

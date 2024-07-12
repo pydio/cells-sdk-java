@@ -39,9 +39,9 @@ public class Message implements Serializable {
         this.type = type;
     }
 
-    public boolean hasEvents() {
-        return !this.added.isEmpty() || !this.deleted.isEmpty() || !this.updated.isEmpty();
-    }
+//     public boolean hasEvents() {
+//        return !this.added.isEmpty() || !this.deleted.isEmpty() || !this.updated.isEmpty();
+//     }
 
     private static Message empty() {
         Message m = new Message();

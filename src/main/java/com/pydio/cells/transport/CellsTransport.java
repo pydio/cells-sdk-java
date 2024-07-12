@@ -354,7 +354,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             }
             StringBuilder builder = new StringBuilder();
             for (Map.Entry<String, String> entry : postData.entrySet()) {
-                if (!builder.isEmpty()) builder.append('&');
+                if (builder.length() > 0) builder.append('&');
                 builder.append(encoder.utf8Encode(entry.getKey()));
                 builder.append('=');
                 builder.append(encoder.utf8Encode(String.valueOf(entry.getValue())));
