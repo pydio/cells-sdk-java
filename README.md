@@ -25,13 +25,12 @@ Useful commands:
 ## Remote server
 
 A remote server is completely defined by a ServerURL. It wraps the validated URL of a remote server and is also in charge of managing TLS, it also holds a skipVerify flag to violently skip all TLS layers.
-
 A successful call to the `ServerURL.ping()` method insure we perform HTTP requests to this address, with no SSL issue and have a valid ServerURL.
 
 Given a valid ServerURL, the ServerFactory:
 
-- checks various well-known endpoints to determinate the server type (P8 or Cells)
-- instantiates the correct implementation of the server.
+- Checks various well-known endpoints to determinate the server type (P8 or Cells)
+- Instantiates the correct implementation of the server.
 
 ## Authentication
 
@@ -51,7 +50,7 @@ To get a transport, you must first register an account via the ServerFactory by 
 
 Pydio Cells relies on the S3 protocol to effectively transfer files. To ease dependency management, we do not provide implementation of the necessary S3Client at this layer, only an interface.  
 
-Thus, you can instantiate a Client from within the SDK-Java but it will not be able the files themselves, only the metadata.
+Thus, you can instantiate a Client from within the SDK-Java but it will not be able to handle the files themselves, only the metadata.
 
 To see some sample code on how to manage this, please refer to the cells-java-client or the cells-android-client repository depending on your setup.
 

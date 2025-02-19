@@ -17,8 +17,6 @@ junit-version = "4.13.2"
 
 [libraries]
 
-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle-version" }
-
 google-gson = { module = "com.google.code.gson:gson", version.ref = "gson-version" }
 gson-fire = { module = "io.gsonfire:gson-fire", version.ref = "gson-fire-version" }
 jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305-version" }
