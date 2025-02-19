@@ -13,9 +13,16 @@
 
 package com.pydio.cells.openapi;
 
-import com.pydio.cells.openapi.auth.ApiKeyAuth;
-import com.pydio.cells.openapi.auth.Authentication;
-import com.pydio.cells.openapi.auth.HttpBasicAuth;
+import okhttp3.*;
+import okhttp3.internal.http.HttpMethod;
+import okhttp3.internal.tls.OkHostnameVerifier;
+import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.logging.HttpLoggingInterceptor.Level;
+import okio.Buffer;
+import okio.BufferedSink;
+import okio.Okio;
+
+import javax.net.ssl.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,48 +41,22 @@ import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.internal.http.HttpMethod;
-import okhttp3.internal.tls.OkHostnameVerifier;
-import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.logging.HttpLoggingInterceptor.Level;
-import okio.Buffer;
-import okio.BufferedSink;
-import okio.Okio;
+import com.pydio.cells.openapi.auth.Authentication;
+import com.pydio.cells.openapi.auth.HttpBasicAuth;
+import com.pydio.cells.openapi.auth.HttpBearerAuth;
+import com.pydio.cells.openapi.auth.ApiKeyAuth;
 
 /**
  * <p>ApiClient class.</p>
@@ -160,7 +141,7 @@ public class ApiClient {
         json = new JSON();
 
         // Set default User-Agent.
-        setUserAgent("PydioCells/v4.4.0-alpha2/JavaSDK/v0.4.5");
+        setUserAgent("PydioCells/v4.9.92-alpha1/JavaSDK/v0.5.0");
 
         authentications = new HashMap<String, Authentication>();
     }
@@ -487,6 +468,19 @@ public class ApiClient {
     }
 
     /**
+     * Helper method to set credentials for AWSV4 Signature
+     *
+     * @param accessKey    Access Key
+     * @param secretKey    Secret Key
+     * @param sessionToken Session Token
+     * @param region       Region
+     * @param service      Service to access to
+     */
+    public void setAWS4Configuration(String accessKey, String secretKey, String sessionToken, String region, String service) {
+        throw new RuntimeException("No AWS4 authentication configured!");
+    }
+
+    /**
      * Set the User-Agent header's value (by adding to the default header map).
      *
      * @param userAgent HTTP request's user agent
@@ -649,7 +643,6 @@ public class ApiClient {
      * @param param Parameter
      * @return String representation of the parameter
      */
-    @SuppressWarnings("NewApi")
     public String parameterToString(Object param) {
         if (param == null) {
             return "";
@@ -741,6 +734,30 @@ public class ApiClient {
 
         return params;
     }
+
+    /**
+     * Formats the specified free-form query parameters to a list of {@code Pair} objects.
+     *
+     * @param value The free-form query parameters.
+     * @return A list of {@code Pair} objects.
+     */
+    public List<Pair> freeFormParameterToPairs(Object value) {
+        List<Pair> params = new ArrayList<>();
+
+        // preconditions
+        if (value == null || !(value instanceof Map)) {
+            return params;
+        }
+
+        @SuppressWarnings("unchecked") final Map<String, Object> valuesMap = (Map<String, Object>) value;
+
+        for (Map.Entry<String, Object> entry : valuesMap.entrySet()) {
+            params.add(new Pair(entry.getKey(), parameterToString(entry.getValue())));
+        }
+
+        return params;
+    }
+
 
     /**
      * Formats the specified collection path parameter to a string value.
@@ -858,17 +875,8 @@ public class ApiClient {
      * @param str String to be escaped
      * @return Escaped string
      */
-    @SuppressWarnings("NewApi")
     public String escapeString(String str) {
-        try {
-            return URLEncoder.encode(str, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
-        } catch (NoSuchMethodError e) {
-            try {
-                return URLEncoder.encode(str, "utf-8").replaceAll("\\+", "%20");
-            } catch (NoSuchMethodError | UnsupportedEncodingException e2) {
-                return URLEncoder.encode(str).replaceAll("\\+", "%20");
-            }
-        }
+        return URLEncoder.encode(str, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
     }
 
     /**
@@ -1093,7 +1101,7 @@ public class ApiClient {
             public void onResponse(Call call, Response response) throws IOException {
                 T result;
                 try {
-                    result = (T) handleResponse(response, returnType);
+                    result = handleResponse(response, returnType);
                 } catch (ApiException e) {
                     callback.onFailure(e, response.code(), response.headers().toMultimap());
                     return;
@@ -1186,10 +1194,6 @@ public class ApiClient {
      * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object
      */
     public Request buildRequest(String baseUrl, String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, String> cookieParams, Map<String, Object> formParams, String[] authNames, ApiCallback callback) throws ApiException {
-        // aggregate queryParams (non-collection) and collectionQueryParams into allQueryParams
-        List<Pair> allQueryParams = new ArrayList<Pair>(queryParams);
-        allQueryParams.addAll(collectionQueryParams);
-
         final String url = buildUrl(baseUrl, path, queryParams, collectionQueryParams);
 
         // prepare HTTP request body
@@ -1217,10 +1221,12 @@ public class ApiClient {
             reqBody = serialize(body, contentType);
         }
 
-        // update parameters with authentication settings
-        updateParamsForAuth(authNames, allQueryParams, headerParams, cookieParams, requestBodyToString(reqBody), method, URI.create(url));
+        List<Pair> updatedQueryParams = new ArrayList<>(queryParams);
 
-        final Request.Builder reqBuilder = new Request.Builder().url(url);
+        // update parameters with authentication settings
+        updateParamsForAuth(authNames, updatedQueryParams, headerParams, cookieParams, requestBodyToString(reqBody), method, URI.create(url));
+
+        final Request.Builder reqBuilder = new Request.Builder().url(buildUrl(baseUrl, path, updatedQueryParams, collectionQueryParams));
         processHeaderParams(headerParams, reqBuilder);
         processCookieParams(cookieParams, reqBuilder);
 

@@ -13,13 +13,17 @@
 
 package com.pydio.cells.openapi.model;
 
-import com.google.gson.JsonElement;
+import java.util.Objects;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.io.IOException;
+
 import com.google.gson.TypeAdapter;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
-import java.io.IOException;
 
 /**
  * Gets or Sets treeVersioningNodeDeletedStrategy
@@ -27,11 +31,11 @@ import java.io.IOException;
 @JsonAdapter(TreeVersioningNodeDeletedStrategy.Adapter.class)
 public enum TreeVersioningNodeDeletedStrategy {
 
-    KEEPALL("KeepAll"),
+    KEEP_ALL("KeepAll"),
 
-    KEEPLAST("KeepLast"),
+    KEEP_LAST("KeepLast"),
 
-    KEEPNONE("KeepNone");
+    KEEP_NONE("KeepNone");
 
     private final String value;
 

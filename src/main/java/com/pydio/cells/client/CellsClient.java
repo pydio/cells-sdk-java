@@ -104,7 +104,7 @@ public class CellsClient implements Client, SdkNames {
     public boolean stillAuthenticated() throws SDKException {
         try {
             UserServiceApi api = new UserServiceApi(authenticatedClient());
-            api.getUser(transport.getUsername(), null, null, null, null,
+            api.getUser(transport.getUsername(), null, null, null, null,null,
                     false, null, -1, true);
             return true;
         } catch (SDKException e) {

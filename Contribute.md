@@ -105,14 +105,12 @@ java -jar swagger-codegen-cli.jar help generate
 
 #### More tweaks
 
-In Jan. 2023, we should also do the following to finalize SDK generation:
+In Feb 2025 with generator v7.11.0, we also do the followings to finalize a clean SDK:
 
-- Import the project in Android Studio to insure we did not miss any issue
-- Change the `javax.ws` prefix in the package imports of all class in the openapi package, to
-  import `jakarta.ws.rs.core.GenericType` rather than `javax.ws.rs.core.GenericType`: the later
-  package is not maintained anymore.
+- Import the project in Android Studio to ensure we did not miss any issue
 - perform a "optimize import" on the `com.pydio.cells.openapi` client to remove unnecessary
   warnings.
+
 
 ## Developer Tips
 
@@ -145,3 +143,12 @@ reference.
   packages in a future proof way. We will go trough a temporary phase where we put generated methods
   at 2 distinct locations while deprecating the legacy one. Some solution can be found
   in [this stackoverflow question](https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java)
+
+#### More tweaks
+
+In Jan. 2023, we also had to do the following to finalize SDK generation:
+=> it seems to not be compulsory anymore in Feb 2025 with generator v7.11.0
+
+- Change the `javax.ws` prefix in the package imports of all class in the openapi package, to
+  import `jakarta.ws.rs.core.GenericType` rather than `javax.ws.rs.core.GenericType`: the later
+  package is not maintained anymore.

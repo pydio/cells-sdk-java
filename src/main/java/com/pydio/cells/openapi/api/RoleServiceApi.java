@@ -23,7 +23,7 @@ import com.pydio.cells.openapi.Pair;
 import com.pydio.cells.openapi.model.IdmRole;
 import com.pydio.cells.openapi.model.RestRolesCollection;
 import com.pydio.cells.openapi.model.RestSearchRoleRequest;
-import com.pydio.cells.openapi.model.SetRoleRequest;
+import com.pydio.cells.openapi.model.RoleServiceSetRoleBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -83,7 +83,8 @@ public class RoleServiceApi {
      * @param _callback               Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -194,7 +195,8 @@ public class RoleServiceApi {
      * @param forceOverride           Is used in a stack of roles, this one will always be applied last. (optional)
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -222,7 +224,8 @@ public class RoleServiceApi {
      * @param forceOverride           Is used in a stack of roles, this one will always be applied last. (optional)
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -253,7 +256,8 @@ public class RoleServiceApi {
      * @param _callback               The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -286,7 +290,8 @@ public class RoleServiceApi {
      * @param _callback               Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -397,7 +402,8 @@ public class RoleServiceApi {
      * @param forceOverride           Is used in a stack of roles, this one will always be applied last. (optional)
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -425,7 +431,8 @@ public class RoleServiceApi {
      * @param forceOverride           Is used in a stack of roles, this one will always be applied last. (optional)
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -456,7 +463,8 @@ public class RoleServiceApi {
      * @param _callback               The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -481,7 +489,8 @@ public class RoleServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -552,7 +561,8 @@ public class RoleServiceApi {
      * @param body (required)
      * @return RestRolesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -572,7 +582,8 @@ public class RoleServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestRolesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -595,7 +606,8 @@ public class RoleServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -621,7 +633,8 @@ public class RoleServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -630,7 +643,7 @@ public class RoleServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call setRoleCall(String uuid, SetRoleRequest body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call setRoleCall(String uuid, RoleServiceSetRoleBody body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -677,7 +690,7 @@ public class RoleServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call setRoleValidateBeforeCall(String uuid, SetRoleRequest body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call setRoleValidateBeforeCall(String uuid, RoleServiceSetRoleBody body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
             throw new ApiException("Missing the required parameter 'uuid' when calling setRole(Async)");
@@ -699,7 +712,8 @@ public class RoleServiceApi {
      * @param body (required)
      * @return IdmRole
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -708,7 +722,7 @@ public class RoleServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public IdmRole setRole(String uuid, SetRoleRequest body) throws ApiException {
+    public IdmRole setRole(String uuid, RoleServiceSetRoleBody body) throws ApiException {
         ApiResponse<IdmRole> localVarResp = setRoleWithHttpInfo(uuid, body);
         return localVarResp.getData();
     }
@@ -720,7 +734,8 @@ public class RoleServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;IdmRole&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -729,7 +744,7 @@ public class RoleServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<IdmRole> setRoleWithHttpInfo(String uuid, SetRoleRequest body) throws ApiException {
+    public ApiResponse<IdmRole> setRoleWithHttpInfo(String uuid, RoleServiceSetRoleBody body) throws ApiException {
         okhttp3.Call localVarCall = setRoleValidateBeforeCall(uuid, body, null);
         Type localVarReturnType = new TypeToken<IdmRole>() {
         }.getType();
@@ -744,7 +759,8 @@ public class RoleServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -753,7 +769,7 @@ public class RoleServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call setRoleAsync(String uuid, SetRoleRequest body, final ApiCallback<IdmRole> _callback) throws ApiException {
+    public okhttp3.Call setRoleAsync(String uuid, RoleServiceSetRoleBody body, final ApiCallback<IdmRole> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = setRoleValidateBeforeCall(uuid, body, _callback);
         Type localVarReturnType = new TypeToken<IdmRole>() {

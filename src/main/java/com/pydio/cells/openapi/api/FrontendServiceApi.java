@@ -80,7 +80,8 @@ public class FrontendServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -144,7 +145,8 @@ public class FrontendServiceApi {
      *
      * @return RestFrontBootConfResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -163,7 +165,8 @@ public class FrontendServiceApi {
      *
      * @return ApiResponse&lt;RestFrontBootConfResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -185,7 +188,8 @@ public class FrontendServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -210,7 +214,8 @@ public class FrontendServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -281,7 +286,8 @@ public class FrontendServiceApi {
      * @param body (required)
      * @return RestFrontEnrollAuthResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -301,7 +307,8 @@ public class FrontendServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestFrontEnrollAuthResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -324,7 +331,8 @@ public class FrontendServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -349,7 +357,8 @@ public class FrontendServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -420,7 +429,8 @@ public class FrontendServiceApi {
      * @param lang (required)
      * @return RestFrontMessagesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -440,7 +450,8 @@ public class FrontendServiceApi {
      * @param lang (required)
      * @return ApiResponse&lt;RestFrontMessagesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -463,7 +474,8 @@ public class FrontendServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -488,7 +500,8 @@ public class FrontendServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -559,7 +572,8 @@ public class FrontendServiceApi {
      * @param lang (required)
      * @return RestFrontPluginsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -579,7 +593,8 @@ public class FrontendServiceApi {
      * @param lang (required)
      * @return ApiResponse&lt;RestFrontPluginsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -602,7 +617,8 @@ public class FrontendServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -628,7 +644,8 @@ public class FrontendServiceApi {
      * @param _callback  Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -706,7 +723,8 @@ public class FrontendServiceApi {
      * @param uuid       Id of the binary (required)
      * @return RestFrontBinaryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -727,7 +745,8 @@ public class FrontendServiceApi {
      * @param uuid       Id of the binary (required)
      * @return ApiResponse&lt;RestFrontBinaryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -751,7 +770,8 @@ public class FrontendServiceApi {
      * @param _callback  The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -777,7 +797,8 @@ public class FrontendServiceApi {
      * @param _callback  Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -855,7 +876,8 @@ public class FrontendServiceApi {
      * @param uuid       Id of the binary (required)
      * @return RestFrontBinaryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -876,7 +898,8 @@ public class FrontendServiceApi {
      * @param uuid       Id of the binary (required)
      * @return ApiResponse&lt;RestFrontBinaryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -900,7 +923,8 @@ public class FrontendServiceApi {
      * @param _callback  The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -925,7 +949,8 @@ public class FrontendServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -996,7 +1021,8 @@ public class FrontendServiceApi {
      * @param body (required)
      * @return RestFrontSessionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1016,7 +1042,8 @@ public class FrontendServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestFrontSessionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1039,7 +1066,8 @@ public class FrontendServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1064,7 +1092,8 @@ public class FrontendServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1133,7 +1162,8 @@ public class FrontendServiceApi {
      * @param xpath (optional)
      * @return RestFrontStateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1153,7 +1183,8 @@ public class FrontendServiceApi {
      * @param xpath (optional)
      * @return ApiResponse&lt;RestFrontStateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1176,7 +1207,8 @@ public class FrontendServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1200,7 +1232,8 @@ public class FrontendServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1264,7 +1297,8 @@ public class FrontendServiceApi {
      *
      * @return RestSettingsMenuResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1283,7 +1317,8 @@ public class FrontendServiceApi {
      *
      * @return ApiResponse&lt;RestSettingsMenuResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1305,7 +1340,8 @@ public class FrontendServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>

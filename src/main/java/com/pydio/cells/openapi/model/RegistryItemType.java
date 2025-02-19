@@ -49,7 +49,9 @@ public enum RegistryItemType {
 
     ENDPOINT("ENDPOINT"),
 
-    STATS("STATS");
+    STATS("STATS"),
+
+    STORAGE("STORAGE");
 
     private final String value;
 

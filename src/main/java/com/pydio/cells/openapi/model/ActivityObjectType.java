@@ -27,7 +27,7 @@ import java.io.IOException;
 @JsonAdapter(ActivityObjectType.Adapter.class)
 public enum ActivityObjectType {
 
-    BASEOBJECT("BaseObject"),
+    BASE_OBJECT("BaseObject"),
 
     ACTIVITY("Activity"),
 
@@ -37,11 +37,11 @@ public enum ActivityObjectType {
 
     COLLECTION("Collection"),
 
-    ORDEREDCOLLECTION("OrderedCollection"),
+    ORDERED_COLLECTION("OrderedCollection"),
 
-    COLLECTIONPAGE("CollectionPage"),
+    COLLECTION_PAGE("CollectionPage"),
 
-    ORDEREDCOLLECTIONPAGE("OrderedCollectionPage"),
+    ORDERED_COLLECTION_PAGE("OrderedCollectionPage"),
 
     APPLICATION("Application"),
 
@@ -121,9 +121,9 @@ public enum ActivityObjectType {
 
     REMOVE("Remove"),
 
-    TENTATIVEREJECT("TentativeReject"),
+    TENTATIVE_REJECT("TentativeReject"),
 
-    TENTATIVEACCEPT("TentativeAccept"),
+    TENTATIVE_ACCEPT("TentativeAccept"),
 
     TRAVEL("Travel"),
 
@@ -131,9 +131,9 @@ public enum ActivityObjectType {
 
     UPDATE("Update"),
 
-    UPDATECOMMENT("UpdateComment"),
+    UPDATE_COMMENT("UpdateComment"),
 
-    UPDATEMETA("UpdateMeta"),
+    UPDATE_META("UpdateMeta"),
 
     VIEW("View"),
 

@@ -85,7 +85,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -163,7 +164,8 @@ public class UserMetaServiceApi {
      * @param tags      Delete this tag (required)
      * @return RestDeleteUserMetaTagsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -184,7 +186,8 @@ public class UserMetaServiceApi {
      * @param tags      Delete this tag (required)
      * @return ApiResponse&lt;RestDeleteUserMetaTagsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -208,7 +211,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -232,7 +236,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -296,7 +301,8 @@ public class UserMetaServiceApi {
      *
      * @return RestUserMetaNamespaceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -315,7 +321,8 @@ public class UserMetaServiceApi {
      *
      * @return ApiResponse&lt;RestUserMetaNamespaceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -337,7 +344,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -362,7 +370,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -433,7 +442,8 @@ public class UserMetaServiceApi {
      * @param namespace List user meta tags for this namespace (required)
      * @return RestListUserMetaTagsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -453,7 +463,8 @@ public class UserMetaServiceApi {
      * @param namespace List user meta tags for this namespace (required)
      * @return ApiResponse&lt;RestListUserMetaTagsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -476,7 +487,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -502,7 +514,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -580,7 +593,8 @@ public class UserMetaServiceApi {
      * @param body      (required)
      * @return RestPutUserMetaTagResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -601,7 +615,8 @@ public class UserMetaServiceApi {
      * @param body      (required)
      * @return ApiResponse&lt;RestPutUserMetaTagResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -625,7 +640,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -650,7 +666,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -721,7 +738,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return RestUserMetaCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -741,7 +759,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestUserMetaCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -764,7 +783,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -789,7 +809,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -860,7 +881,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return IdmUpdateUserMetaResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -880,7 +902,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;IdmUpdateUserMetaResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -903,7 +926,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -928,7 +952,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -999,7 +1024,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return IdmUpdateUserMetaNamespaceResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1019,7 +1045,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;IdmUpdateUserMetaNamespaceResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1042,7 +1069,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1067,7 +1095,8 @@ public class UserMetaServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1138,7 +1167,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return RestBulkMetaResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1158,7 +1188,8 @@ public class UserMetaServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestBulkMetaResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1181,7 +1212,8 @@ public class UserMetaServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>

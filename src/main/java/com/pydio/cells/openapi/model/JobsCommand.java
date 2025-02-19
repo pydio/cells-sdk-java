@@ -37,7 +37,7 @@ public enum JobsCommand {
 
     DELETE("Delete"),
 
-    RUNONCE("RunOnce"),
+    RUN_ONCE("RunOnce"),
 
     INACTIVE("Inactive"),
 

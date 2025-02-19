@@ -20,9 +20,9 @@ import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.model.ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue;
+import com.pydio.cells.openapi.model.ConfigServicePutConfigBody;
+import com.pydio.cells.openapi.model.ConfigServicePutDataSourceBody;
 import com.pydio.cells.openapi.model.CtlService;
-import com.pydio.cells.openapi.model.DataSourceObjectDescription;
 import com.pydio.cells.openapi.model.EncryptionAdminCreateKeyRequest;
 import com.pydio.cells.openapi.model.EncryptionAdminCreateKeyResponse;
 import com.pydio.cells.openapi.model.EncryptionAdminDeleteKeyRequest;
@@ -109,7 +109,8 @@ public class ConfigServiceApi {
      * @param _callback   Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -180,7 +181,8 @@ public class ConfigServiceApi {
      * @param serviceName Retrieve a configuration form for a given service (required)
      * @return RestDiscoveryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -200,7 +202,8 @@ public class ConfigServiceApi {
      * @param serviceName Retrieve a configuration form for a given service (required)
      * @return ApiResponse&lt;RestDiscoveryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -223,7 +226,8 @@ public class ConfigServiceApi {
      * @param _callback   The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -248,7 +252,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -319,7 +324,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return CtlService
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -339,7 +345,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;CtlService&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -362,7 +369,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -387,7 +395,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -458,7 +467,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return EncryptionAdminCreateKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -478,7 +488,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;EncryptionAdminCreateKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -501,7 +512,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -527,7 +539,8 @@ public class ConfigServiceApi {
      * @param _callback   Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -605,7 +618,8 @@ public class ConfigServiceApi {
      * @param body        (required)
      * @return RestCreatePeerFolderResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -626,7 +640,8 @@ public class ConfigServiceApi {
      * @param body        (required)
      * @return ApiResponse&lt;RestCreatePeerFolderResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -650,7 +665,8 @@ public class ConfigServiceApi {
      * @param _callback   The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -676,7 +692,8 @@ public class ConfigServiceApi {
      * @param _callback  Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -754,7 +771,8 @@ public class ConfigServiceApi {
      * @param body       (required)
      * @return RestCreateStorageBucketResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -775,7 +793,8 @@ public class ConfigServiceApi {
      * @param body       (required)
      * @return ApiResponse&lt;RestCreateStorageBucketResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -799,7 +818,8 @@ public class ConfigServiceApi {
      * @param _callback  The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -823,6 +843,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -843,7 +864,8 @@ public class ConfigServiceApi {
      * @param _callback               Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -852,7 +874,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call deleteDataSourceCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call deleteDataSourceCall(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -884,6 +906,10 @@ public class ConfigServiceApi {
 
         if (storageType != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("StorageType", storageType));
+        }
+
+        if (storageConfiguration != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("StorageConfiguration", storageConfiguration));
         }
 
         if (objectsServiceName != null) {
@@ -974,13 +1000,13 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'name' is set
         if (name == null) {
             throw new ApiException("Missing the required parameter 'name' when calling deleteDataSource(Async)");
         }
 
-        return deleteDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
+        return deleteDataSourceCall(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
 
     }
 
@@ -990,6 +1016,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -1009,7 +1036,8 @@ public class ConfigServiceApi {
      * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return RestDeleteDataSourceResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1018,8 +1046,8 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public RestDeleteDataSourceResponse deleteDataSource(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
-        ApiResponse<RestDeleteDataSourceResponse> localVarResp = deleteDataSourceWithHttpInfo(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
+    public RestDeleteDataSourceResponse deleteDataSource(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+        ApiResponse<RestDeleteDataSourceResponse> localVarResp = deleteDataSourceWithHttpInfo(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
         return localVarResp.getData();
     }
 
@@ -1029,6 +1057,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -1048,7 +1077,8 @@ public class ConfigServiceApi {
      * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return ApiResponse&lt;RestDeleteDataSourceResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1057,8 +1087,8 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<RestDeleteDataSourceResponse> deleteDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
-        okhttp3.Call localVarCall = deleteDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null);
+    public ApiResponse<RestDeleteDataSourceResponse> deleteDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+        okhttp3.Call localVarCall = deleteDataSourceValidateBeforeCall(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null);
         Type localVarReturnType = new TypeToken<RestDeleteDataSourceResponse>() {
         }.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -1070,6 +1100,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -1090,7 +1121,8 @@ public class ConfigServiceApi {
      * @param _callback               The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1099,9 +1131,9 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call deleteDataSourceAsync(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<RestDeleteDataSourceResponse> _callback) throws ApiException {
+    public okhttp3.Call deleteDataSourceAsync(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<RestDeleteDataSourceResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
+        okhttp3.Call localVarCall = deleteDataSourceValidateBeforeCall(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
         Type localVarReturnType = new TypeToken<RestDeleteDataSourceResponse>() {
         }.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
@@ -1115,7 +1147,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1186,7 +1219,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return EncryptionAdminDeleteKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1206,7 +1240,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;EncryptionAdminDeleteKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1229,7 +1264,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1254,7 +1290,8 @@ public class ConfigServiceApi {
      * @param _callback    Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1323,7 +1360,8 @@ public class ConfigServiceApi {
      * @param endpointType Filter result to a specific endpoint type (optional)
      * @return RestDiscoveryResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1343,7 +1381,8 @@ public class ConfigServiceApi {
      * @param endpointType Filter result to a specific endpoint type (optional)
      * @return ApiResponse&lt;RestDiscoveryResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1366,7 +1405,8 @@ public class ConfigServiceApi {
      * @param _callback    The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1391,7 +1431,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1462,7 +1503,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return EncryptionAdminExportKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1482,7 +1524,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;EncryptionAdminExportKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1505,7 +1548,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1531,7 +1575,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1607,7 +1652,8 @@ public class ConfigServiceApi {
      * @param data     JSON-encoded data to store (optional)
      * @return RestConfiguration
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1628,7 +1674,8 @@ public class ConfigServiceApi {
      * @param data     JSON-encoded data to store (optional)
      * @return ApiResponse&lt;RestConfiguration&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1652,7 +1699,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1676,6 +1724,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -1696,7 +1745,8 @@ public class ConfigServiceApi {
      * @param _callback               Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1705,7 +1755,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call getDataSourceCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getDataSourceCall(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -1737,6 +1787,10 @@ public class ConfigServiceApi {
 
         if (storageType != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("StorageType", storageType));
+        }
+
+        if (storageConfiguration != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("StorageConfiguration", storageConfiguration));
         }
 
         if (objectsServiceName != null) {
@@ -1827,13 +1881,13 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getDataSourceValidateBeforeCall(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'name' is set
         if (name == null) {
             throw new ApiException("Missing the required parameter 'name' when calling getDataSource(Async)");
         }
 
-        return getDataSourceCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
+        return getDataSourceCall(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
 
     }
 
@@ -1843,6 +1897,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -1862,7 +1917,8 @@ public class ConfigServiceApi {
      * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return ObjectDataSource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1871,8 +1927,8 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ObjectDataSource getDataSource(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
-        ApiResponse<ObjectDataSource> localVarResp = getDataSourceWithHttpInfo(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
+    public ObjectDataSource getDataSource(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+        ApiResponse<ObjectDataSource> localVarResp = getDataSourceWithHttpInfo(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate);
         return localVarResp.getData();
     }
 
@@ -1882,6 +1938,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -1901,7 +1958,8 @@ public class ConfigServiceApi {
      * @param lastSynchronizationDate Data Source last synchronization date (optional)
      * @return ApiResponse&lt;ObjectDataSource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1910,8 +1968,8 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<ObjectDataSource> getDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
-        okhttp3.Call localVarCall = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null);
+    public ApiResponse<ObjectDataSource> getDataSourceWithHttpInfo(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate) throws ApiException {
+        okhttp3.Call localVarCall = getDataSourceValidateBeforeCall(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, null);
         Type localVarReturnType = new TypeToken<ObjectDataSource>() {
         }.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -1923,6 +1981,7 @@ public class ConfigServiceApi {
      * @param name                    Name of the data source (max length 34) (required)
      * @param disabled                Whether this data source is disabled or running (optional)
      * @param storageType             Type of underlying storage (LOCAL, S3, AZURE, GCS) (optional, default to LOCAL)
+     * @param storageConfiguration    List of key values describing storage configuration  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param objectsServiceName      Corresponding objects service name (underlying s3 service) (optional)
      * @param objectsHost             Corresponding objects service host (optional)
      * @param objectsPort             Corresponding objects service port (optional)
@@ -1943,7 +2002,8 @@ public class ConfigServiceApi {
      * @param _callback               The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -1952,9 +2012,9 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call getDataSourceAsync(String name, Boolean disabled, String storageType, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<ObjectDataSource> _callback) throws ApiException {
+    public okhttp3.Call getDataSourceAsync(String name, Boolean disabled, String storageType, String storageConfiguration, String objectsServiceName, String objectsHost, Integer objectsPort, Boolean objectsSecure, String objectsBucket, String objectsBaseFolder, String apiKey, String apiSecret, String peerAddress, Boolean watch, Boolean flatStorage, Boolean skipSyncOnRestart, String encryptionMode, String encryptionKey, String versioningPolicyName, Integer creationDate, Integer lastSynchronizationDate, final ApiCallback<ObjectDataSource> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getDataSourceValidateBeforeCall(name, disabled, storageType, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
+        okhttp3.Call localVarCall = getDataSourceValidateBeforeCall(name, disabled, storageType, storageConfiguration, objectsServiceName, objectsHost, objectsPort, objectsSecure, objectsBucket, objectsBaseFolder, apiKey, apiSecret, peerAddress, watch, flatStorage, skipSyncOnRestart, encryptionMode, encryptionKey, versioningPolicyName, creationDate, lastSynchronizationDate, _callback);
         Type localVarReturnType = new TypeToken<ObjectDataSource>() {
         }.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
@@ -1976,7 +2036,8 @@ public class ConfigServiceApi {
      * @param _callback                Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2087,7 +2148,8 @@ public class ConfigServiceApi {
      * @param nodeDeletedStrategy      (optional, default to KeepAll)
      * @return TreeVersioningPolicy
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2115,7 +2177,8 @@ public class ConfigServiceApi {
      * @param nodeDeletedStrategy      (optional, default to KeepAll)
      * @return ApiResponse&lt;TreeVersioningPolicy&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2146,7 +2209,8 @@ public class ConfigServiceApi {
      * @param _callback                The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2171,7 +2235,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2242,7 +2307,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return EncryptionAdminImportKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2262,7 +2328,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;EncryptionAdminImportKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2285,7 +2352,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2309,7 +2377,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2373,7 +2442,8 @@ public class ConfigServiceApi {
      *
      * @return RestDataSourceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2392,7 +2462,8 @@ public class ConfigServiceApi {
      *
      * @return ApiResponse&lt;RestDataSourceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2414,7 +2485,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2439,7 +2511,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2510,7 +2583,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return EncryptionAdminListKeysResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2530,7 +2604,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;EncryptionAdminListKeysResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2553,7 +2628,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2579,7 +2655,8 @@ public class ConfigServiceApi {
      * @param _callback   Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2657,7 +2734,8 @@ public class ConfigServiceApi {
      * @param body        (required)
      * @return RestNodesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2678,7 +2756,8 @@ public class ConfigServiceApi {
      * @param body        (required)
      * @return ApiResponse&lt;RestNodesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2702,7 +2781,8 @@ public class ConfigServiceApi {
      * @param _callback   The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2726,7 +2806,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2790,7 +2871,8 @@ public class ConfigServiceApi {
      *
      * @return RestListPeersAddressesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2809,7 +2891,8 @@ public class ConfigServiceApi {
      *
      * @return ApiResponse&lt;RestListPeersAddressesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2831,7 +2914,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2856,7 +2940,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2927,7 +3012,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return RestListProcessesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2947,7 +3033,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestListProcessesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2970,7 +3057,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -2995,7 +3083,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3064,7 +3153,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return RegistryListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3082,7 +3172,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RegistryListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3105,7 +3196,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3130,7 +3222,8 @@ public class ConfigServiceApi {
      * @param _callback    Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3199,7 +3292,8 @@ public class ConfigServiceApi {
      * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING) (optional, default to ANY)
      * @return RestServiceCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3219,7 +3313,8 @@ public class ConfigServiceApi {
      * @param statusFilter Filter services by a given status (ANY, STOPPED, STOPPING, RUNNING) (optional, default to ANY)
      * @return ApiResponse&lt;RestServiceCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3242,7 +3337,8 @@ public class ConfigServiceApi {
      * @param _callback    The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3267,7 +3363,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3338,7 +3435,8 @@ public class ConfigServiceApi {
      * @param filter (required)
      * @return RestListSitesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3358,7 +3456,8 @@ public class ConfigServiceApi {
      * @param filter (required)
      * @return ApiResponse&lt;RestListSitesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3381,7 +3480,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3406,7 +3506,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3477,7 +3578,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return RestNodesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3497,7 +3599,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestNodesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3520,7 +3623,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3544,7 +3648,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3608,7 +3713,8 @@ public class ConfigServiceApi {
      *
      * @return RestVersioningPolicyCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3627,7 +3733,8 @@ public class ConfigServiceApi {
      *
      * @return ApiResponse&lt;RestVersioningPolicyCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3649,7 +3756,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3673,7 +3781,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3737,7 +3846,8 @@ public class ConfigServiceApi {
      *
      * @return RestNodesCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3756,7 +3866,8 @@ public class ConfigServiceApi {
      *
      * @return ApiResponse&lt;RestNodesCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3778,7 +3889,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3803,7 +3915,8 @@ public class ConfigServiceApi {
      * @param _callback    Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3872,7 +3985,8 @@ public class ConfigServiceApi {
      * @param endpointType Filter result to a specific endpoint type (optional)
      * @return RestOpenApiResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3892,7 +4006,8 @@ public class ConfigServiceApi {
      * @param endpointType Filter result to a specific endpoint type (optional)
      * @return ApiResponse&lt;RestOpenApiResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3915,7 +4030,8 @@ public class ConfigServiceApi {
      * @param _callback    The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3941,7 +4057,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -3950,7 +4067,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putConfigCall(String fullPath, ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putConfigCall(String fullPath, ConfigServicePutConfigBody body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -3997,7 +4114,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putConfigValidateBeforeCall(String fullPath, ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putConfigValidateBeforeCall(String fullPath, ConfigServicePutConfigBody body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'fullPath' is set
         if (fullPath == null) {
             throw new ApiException("Missing the required parameter 'fullPath' when calling putConfig(Async)");
@@ -4019,7 +4136,8 @@ public class ConfigServiceApi {
      * @param body     (required)
      * @return RestConfiguration
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4028,7 +4146,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public RestConfiguration putConfig(String fullPath, ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue body) throws ApiException {
+    public RestConfiguration putConfig(String fullPath, ConfigServicePutConfigBody body) throws ApiException {
         ApiResponse<RestConfiguration> localVarResp = putConfigWithHttpInfo(fullPath, body);
         return localVarResp.getData();
     }
@@ -4040,7 +4158,8 @@ public class ConfigServiceApi {
      * @param body     (required)
      * @return ApiResponse&lt;RestConfiguration&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4049,7 +4168,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<RestConfiguration> putConfigWithHttpInfo(String fullPath, ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue body) throws ApiException {
+    public ApiResponse<RestConfiguration> putConfigWithHttpInfo(String fullPath, ConfigServicePutConfigBody body) throws ApiException {
         okhttp3.Call localVarCall = putConfigValidateBeforeCall(fullPath, body, null);
         Type localVarReturnType = new TypeToken<RestConfiguration>() {
         }.getType();
@@ -4064,7 +4183,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4073,7 +4193,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putConfigAsync(String fullPath, ConfigurationMessageDataIsAnJsonRepresentationOfAnyValue body, final ApiCallback<RestConfiguration> _callback) throws ApiException {
+    public okhttp3.Call putConfigAsync(String fullPath, ConfigServicePutConfigBody body, final ApiCallback<RestConfiguration> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putConfigValidateBeforeCall(fullPath, body, _callback);
         Type localVarReturnType = new TypeToken<RestConfiguration>() {
@@ -4090,7 +4210,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4099,7 +4220,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putDataSourceCall(String name, DataSourceObjectDescription body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putDataSourceCall(String name, ConfigServicePutDataSourceBody body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -4146,7 +4267,7 @@ public class ConfigServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putDataSourceValidateBeforeCall(String name, DataSourceObjectDescription body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putDataSourceValidateBeforeCall(String name, ConfigServicePutDataSourceBody body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'name' is set
         if (name == null) {
             throw new ApiException("Missing the required parameter 'name' when calling putDataSource(Async)");
@@ -4168,7 +4289,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ObjectDataSource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4177,7 +4299,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ObjectDataSource putDataSource(String name, DataSourceObjectDescription body) throws ApiException {
+    public ObjectDataSource putDataSource(String name, ConfigServicePutDataSourceBody body) throws ApiException {
         ApiResponse<ObjectDataSource> localVarResp = putDataSourceWithHttpInfo(name, body);
         return localVarResp.getData();
     }
@@ -4189,7 +4311,8 @@ public class ConfigServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;ObjectDataSource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4198,7 +4321,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<ObjectDataSource> putDataSourceWithHttpInfo(String name, DataSourceObjectDescription body) throws ApiException {
+    public ApiResponse<ObjectDataSource> putDataSourceWithHttpInfo(String name, ConfigServicePutDataSourceBody body) throws ApiException {
         okhttp3.Call localVarCall = putDataSourceValidateBeforeCall(name, body, null);
         Type localVarReturnType = new TypeToken<ObjectDataSource>() {
         }.getType();
@@ -4213,7 +4336,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4222,7 +4346,7 @@ public class ConfigServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putDataSourceAsync(String name, DataSourceObjectDescription body, final ApiCallback<ObjectDataSource> _callback) throws ApiException {
+    public okhttp3.Call putDataSourceAsync(String name, ConfigServicePutDataSourceBody body, final ApiCallback<ObjectDataSource> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putDataSourceValidateBeforeCall(name, body, _callback);
         Type localVarReturnType = new TypeToken<ObjectDataSource>() {
@@ -4238,7 +4362,8 @@ public class ConfigServiceApi {
      * @param _callback  Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4309,7 +4434,8 @@ public class ConfigServiceApi {
      * @param actionName Name of the action to load (required)
      * @return RestSchedulerActionFormResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4329,7 +4455,8 @@ public class ConfigServiceApi {
      * @param actionName Name of the action to load (required)
      * @return ApiResponse&lt;RestSchedulerActionFormResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4352,7 +4479,8 @@ public class ConfigServiceApi {
      * @param _callback  The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4376,7 +4504,8 @@ public class ConfigServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4440,7 +4569,8 @@ public class ConfigServiceApi {
      *
      * @return RestSchedulerActionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4459,7 +4589,8 @@ public class ConfigServiceApi {
      *
      * @return ApiResponse&lt;RestSchedulerActionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -4481,7 +4612,8 @@ public class ConfigServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>

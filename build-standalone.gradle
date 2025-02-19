@@ -14,7 +14,7 @@ repositories {
 java.sourceCompatibility = JavaVersion.VERSION_17
 java.targetCompatibility = JavaVersion.VERSION_17
 
-def sdkVersion = '0.4.6'
+def sdkVersion = '0.5.0'
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
 }
@@ -83,7 +83,7 @@ publishing {
 jar {
     manifest {
         attributes('Specification-Title': 'Cells SDK for Java',
-                'Specification-Version': '4.4',
+                'Specification-Version': '4.9',
                 'Specification-Vendor': 'Abstrium SAS',
                 'Implementation-Title': project.name,
                 'Implementation-Vendor': 'Abstrium SAS',

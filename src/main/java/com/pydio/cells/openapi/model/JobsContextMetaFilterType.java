@@ -13,13 +13,17 @@
 
 package com.pydio.cells.openapi.model;
 
-import com.google.gson.JsonElement;
+import java.util.Objects;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.io.IOException;
+
 import com.google.gson.TypeAdapter;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
-import java.io.IOException;
 
 /**
  * Gets or Sets jobsContextMetaFilterType
@@ -27,9 +31,9 @@ import java.io.IOException;
 @JsonAdapter(JobsContextMetaFilterType.Adapter.class)
 public enum JobsContextMetaFilterType {
 
-    REQUESTMETA("RequestMeta"),
+    REQUEST_META("RequestMeta"),
 
-    CONTEXTUSER("ContextUser");
+    CONTEXT_USER("ContextUser");
 
     private final String value;
 

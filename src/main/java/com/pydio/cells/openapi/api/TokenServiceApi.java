@@ -20,7 +20,6 @@ import com.pydio.cells.openapi.ApiException;
 import com.pydio.cells.openapi.ApiResponse;
 import com.pydio.cells.openapi.Configuration;
 import com.pydio.cells.openapi.Pair;
-import com.pydio.cells.openapi.model.ResetPasswordTokenRequest;
 import com.pydio.cells.openapi.model.RestDocumentAccessTokenRequest;
 import com.pydio.cells.openapi.model.RestDocumentAccessTokenResponse;
 import com.pydio.cells.openapi.model.RestResetPasswordRequest;
@@ -28,6 +27,7 @@ import com.pydio.cells.openapi.model.RestResetPasswordResponse;
 import com.pydio.cells.openapi.model.RestResetPasswordTokenResponse;
 import com.pydio.cells.openapi.model.RestRevokeRequest;
 import com.pydio.cells.openapi.model.RestRevokeResponse;
+import com.pydio.cells.openapi.model.TokenServiceResetPasswordTokenBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -79,7 +79,8 @@ public class TokenServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -150,7 +151,8 @@ public class TokenServiceApi {
      * @param body (required)
      * @return RestDocumentAccessTokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -170,7 +172,8 @@ public class TokenServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestDocumentAccessTokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -193,7 +196,8 @@ public class TokenServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -218,7 +222,8 @@ public class TokenServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -289,7 +294,8 @@ public class TokenServiceApi {
      * @param body (required)
      * @return RestResetPasswordResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -309,7 +315,8 @@ public class TokenServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestResetPasswordResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -332,7 +339,8 @@ public class TokenServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -358,7 +366,8 @@ public class TokenServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -367,7 +376,7 @@ public class TokenServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call resetPasswordTokenCall(String userLogin, ResetPasswordTokenRequest body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call resetPasswordTokenCall(String userLogin, TokenServiceResetPasswordTokenBody body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -414,7 +423,7 @@ public class TokenServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call resetPasswordTokenValidateBeforeCall(String userLogin, ResetPasswordTokenRequest body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call resetPasswordTokenValidateBeforeCall(String userLogin, TokenServiceResetPasswordTokenBody body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'userLogin' is set
         if (userLogin == null) {
             throw new ApiException("Missing the required parameter 'userLogin' when calling resetPasswordToken(Async)");
@@ -436,7 +445,8 @@ public class TokenServiceApi {
      * @param body      (required)
      * @return RestResetPasswordTokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -445,7 +455,7 @@ public class TokenServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public RestResetPasswordTokenResponse resetPasswordToken(String userLogin, ResetPasswordTokenRequest body) throws ApiException {
+    public RestResetPasswordTokenResponse resetPasswordToken(String userLogin, TokenServiceResetPasswordTokenBody body) throws ApiException {
         ApiResponse<RestResetPasswordTokenResponse> localVarResp = resetPasswordTokenWithHttpInfo(userLogin, body);
         return localVarResp.getData();
     }
@@ -457,7 +467,8 @@ public class TokenServiceApi {
      * @param body      (required)
      * @return ApiResponse&lt;RestResetPasswordTokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -466,7 +477,7 @@ public class TokenServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<RestResetPasswordTokenResponse> resetPasswordTokenWithHttpInfo(String userLogin, ResetPasswordTokenRequest body) throws ApiException {
+    public ApiResponse<RestResetPasswordTokenResponse> resetPasswordTokenWithHttpInfo(String userLogin, TokenServiceResetPasswordTokenBody body) throws ApiException {
         okhttp3.Call localVarCall = resetPasswordTokenValidateBeforeCall(userLogin, body, null);
         Type localVarReturnType = new TypeToken<RestResetPasswordTokenResponse>() {
         }.getType();
@@ -481,7 +492,8 @@ public class TokenServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -490,7 +502,7 @@ public class TokenServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call resetPasswordTokenAsync(String userLogin, ResetPasswordTokenRequest body, final ApiCallback<RestResetPasswordTokenResponse> _callback) throws ApiException {
+    public okhttp3.Call resetPasswordTokenAsync(String userLogin, TokenServiceResetPasswordTokenBody body, final ApiCallback<RestResetPasswordTokenResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = resetPasswordTokenValidateBeforeCall(userLogin, body, _callback);
         Type localVarReturnType = new TypeToken<RestResetPasswordTokenResponse>() {
@@ -506,7 +518,8 @@ public class TokenServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -577,7 +590,8 @@ public class TokenServiceApi {
      * @param body (required)
      * @return RestRevokeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -597,7 +611,8 @@ public class TokenServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestRevokeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -620,7 +635,8 @@ public class TokenServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>

@@ -24,7 +24,8 @@ import com.pydio.cells.openapi.model.IdmUser;
 import com.pydio.cells.openapi.model.RestDeleteResponse;
 import com.pydio.cells.openapi.model.RestSearchUserRequest;
 import com.pydio.cells.openapi.model.RestUsersCollection;
-import com.pydio.cells.openapi.model.UserCanRepresentEitherAUserOrAGroup;
+import com.pydio.cells.openapi.model.UserServicePutRolesBody;
+import com.pydio.cells.openapi.model.UserServicePutUserBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -84,7 +86,8 @@ public class UserServiceApi {
      * @param _callback               Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -93,7 +96,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call deleteUserCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call deleteUserCall(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -125,6 +128,10 @@ public class UserServiceApi {
 
         if (groupPath != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("GroupPath", groupPath));
+        }
+
+        if (attributes != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("Attributes", attributes));
         }
 
         if (password != null) {
@@ -171,13 +178,13 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteUserValidateBeforeCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteUserValidateBeforeCall(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling deleteUser(Async)");
         }
 
-        return deleteUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
+        return deleteUserCall(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
 
     }
 
@@ -187,6 +194,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -195,7 +203,8 @@ public class UserServiceApi {
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return RestDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -204,8 +213,8 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public RestDeleteResponse deleteUser(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
-        ApiResponse<RestDeleteResponse> localVarResp = deleteUserWithHttpInfo(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable);
+    public RestDeleteResponse deleteUser(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+        ApiResponse<RestDeleteResponse> localVarResp = deleteUserWithHttpInfo(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable);
         return localVarResp.getData();
     }
 
@@ -215,6 +224,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -223,7 +233,8 @@ public class UserServiceApi {
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return ApiResponse&lt;RestDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -232,8 +243,8 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<RestDeleteResponse> deleteUserWithHttpInfo(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
-        okhttp3.Call localVarCall = deleteUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, null);
+    public ApiResponse<RestDeleteResponse> deleteUserWithHttpInfo(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+        okhttp3.Call localVarCall = deleteUserValidateBeforeCall(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, null);
         Type localVarReturnType = new TypeToken<RestDeleteResponse>() {
         }.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -245,6 +256,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -254,7 +266,8 @@ public class UserServiceApi {
      * @param _callback               The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -263,9 +276,9 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call deleteUserAsync(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback<RestDeleteResponse> _callback) throws ApiException {
+    public okhttp3.Call deleteUserAsync(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback<RestDeleteResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
+        okhttp3.Call localVarCall = deleteUserValidateBeforeCall(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
         Type localVarReturnType = new TypeToken<RestDeleteResponse>() {
         }.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
@@ -278,6 +291,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -287,7 +301,8 @@ public class UserServiceApi {
      * @param _callback               Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -296,7 +311,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call getUserCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getUserCall(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -328,6 +343,10 @@ public class UserServiceApi {
 
         if (groupPath != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("GroupPath", groupPath));
+        }
+
+        if (attributes != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("Attributes", attributes));
         }
 
         if (password != null) {
@@ -374,13 +393,13 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getUserValidateBeforeCall(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getUserValidateBeforeCall(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling getUser(Async)");
         }
 
-        return getUserCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
+        return getUserCall(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
 
     }
 
@@ -390,6 +409,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -398,7 +418,8 @@ public class UserServiceApi {
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -407,8 +428,8 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public IdmUser getUser(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
-        ApiResponse<IdmUser> localVarResp = getUserWithHttpInfo(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable);
+    public IdmUser getUser(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+        ApiResponse<IdmUser> localVarResp = getUserWithHttpInfo(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable);
         return localVarResp.getData();
     }
 
@@ -418,6 +439,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -426,7 +448,8 @@ public class UserServiceApi {
      * @param policiesContextEditable Context-resolved to quickly check if user is editable or not. (optional)
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -435,8 +458,8 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<IdmUser> getUserWithHttpInfo(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
-        okhttp3.Call localVarCall = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, null);
+    public ApiResponse<IdmUser> getUserWithHttpInfo(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable) throws ApiException {
+        okhttp3.Call localVarCall = getUserValidateBeforeCall(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, null);
         Type localVarReturnType = new TypeToken<IdmUser>() {
         }.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -448,6 +471,7 @@ public class UserServiceApi {
      * @param login                   User login is used to connect, field is empty for groups (required)
      * @param uuid                    User unique identifier (optional)
      * @param groupPath               Path to the parent group (optional)
+     * @param attributes              A free list of attributes  This is a request variable of the map type. The query format is \&quot;map_name[key]&#x3D;value\&quot;, e.g. If the map name is Age, the key type is string, and the value type is integer, the query parameter is expressed as Age[\&quot;bob\&quot;]&#x3D;18 (optional)
      * @param password                Password can be passed to be updated (but never read back), field is empty for groups (optional)
      * @param oldPassword             OldPassword must be set when a user updates her own password (optional)
      * @param isGroup                 Whether this object is a group or a user (optional)
@@ -457,7 +481,8 @@ public class UserServiceApi {
      * @param _callback               The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -466,9 +491,9 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call getUserAsync(String login, String uuid, String groupPath, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback<IdmUser> _callback) throws ApiException {
+    public okhttp3.Call getUserAsync(String login, String uuid, String groupPath, String attributes, String password, String oldPassword, Boolean isGroup, String groupLabel, Integer lastConnected, Boolean policiesContextEditable, final ApiCallback<IdmUser> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getUserValidateBeforeCall(login, uuid, groupPath, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
+        okhttp3.Call localVarCall = getUserValidateBeforeCall(login, uuid, groupPath, attributes, password, oldPassword, isGroup, groupLabel, lastConnected, policiesContextEditable, _callback);
         Type localVarReturnType = new TypeToken<IdmUser>() {
         }.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
@@ -483,7 +508,8 @@ public class UserServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -492,7 +518,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putRolesCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putRolesCall(String login, UserServicePutRolesBody body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -539,7 +565,7 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putRolesValidateBeforeCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putRolesValidateBeforeCall(String login, UserServicePutRolesBody body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling putRoles(Async)");
@@ -561,7 +587,8 @@ public class UserServiceApi {
      * @param body  (required)
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -570,7 +597,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public IdmUser putRoles(String login, UserCanRepresentEitherAUserOrAGroup body) throws ApiException {
+    public IdmUser putRoles(String login, UserServicePutRolesBody body) throws ApiException {
         ApiResponse<IdmUser> localVarResp = putRolesWithHttpInfo(login, body);
         return localVarResp.getData();
     }
@@ -582,7 +609,8 @@ public class UserServiceApi {
      * @param body  (required)
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -591,7 +619,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<IdmUser> putRolesWithHttpInfo(String login, UserCanRepresentEitherAUserOrAGroup body) throws ApiException {
+    public ApiResponse<IdmUser> putRolesWithHttpInfo(String login, UserServicePutRolesBody body) throws ApiException {
         okhttp3.Call localVarCall = putRolesValidateBeforeCall(login, body, null);
         Type localVarReturnType = new TypeToken<IdmUser>() {
         }.getType();
@@ -606,7 +634,8 @@ public class UserServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -615,7 +644,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putRolesAsync(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback<IdmUser> _callback) throws ApiException {
+    public okhttp3.Call putRolesAsync(String login, UserServicePutRolesBody body, final ApiCallback<IdmUser> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putRolesValidateBeforeCall(login, body, _callback);
         Type localVarReturnType = new TypeToken<IdmUser>() {
@@ -632,7 +661,8 @@ public class UserServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -641,7 +671,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putUserCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putUserCall(String login, UserServicePutUserBody body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[]{};
@@ -688,7 +718,7 @@ public class UserServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putUserValidateBeforeCall(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putUserValidateBeforeCall(String login, UserServicePutUserBody body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'login' is set
         if (login == null) {
             throw new ApiException("Missing the required parameter 'login' when calling putUser(Async)");
@@ -710,7 +740,8 @@ public class UserServiceApi {
      * @param body  (required)
      * @return IdmUser
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -719,7 +750,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public IdmUser putUser(String login, UserCanRepresentEitherAUserOrAGroup body) throws ApiException {
+    public IdmUser putUser(String login, UserServicePutUserBody body) throws ApiException {
         ApiResponse<IdmUser> localVarResp = putUserWithHttpInfo(login, body);
         return localVarResp.getData();
     }
@@ -731,7 +762,8 @@ public class UserServiceApi {
      * @param body  (required)
      * @return ApiResponse&lt;IdmUser&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -740,7 +772,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public ApiResponse<IdmUser> putUserWithHttpInfo(String login, UserCanRepresentEitherAUserOrAGroup body) throws ApiException {
+    public ApiResponse<IdmUser> putUserWithHttpInfo(String login, UserServicePutUserBody body) throws ApiException {
         okhttp3.Call localVarCall = putUserValidateBeforeCall(login, body, null);
         Type localVarReturnType = new TypeToken<IdmUser>() {
         }.getType();
@@ -755,7 +787,8 @@ public class UserServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -764,7 +797,7 @@ public class UserServiceApi {
      * <tr><td> 500 </td><td> An internal error occurred in the backend </td><td>  -  </td></tr>
      * </table>
      */
-    public okhttp3.Call putUserAsync(String login, UserCanRepresentEitherAUserOrAGroup body, final ApiCallback<IdmUser> _callback) throws ApiException {
+    public okhttp3.Call putUserAsync(String login, UserServicePutUserBody body, final ApiCallback<IdmUser> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putUserValidateBeforeCall(login, body, _callback);
         Type localVarReturnType = new TypeToken<IdmUser>() {
@@ -780,7 +813,8 @@ public class UserServiceApi {
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -851,7 +885,8 @@ public class UserServiceApi {
      * @param body (required)
      * @return RestUsersCollection
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -871,7 +906,8 @@ public class UserServiceApi {
      * @param body (required)
      * @return ApiResponse&lt;RestUsersCollection&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
@@ -894,7 +930,8 @@ public class UserServiceApi {
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details <table summary="Response Details" border="1">
+     * @http.response.details <table border="1">
+     * <caption>Response Details</caption>
      * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
      * <tr><td> 200 </td><td> A successful response. </td><td>  -  </td></tr>
      * <tr><td> 401 </td><td> User is not authenticated </td><td>  -  </td></tr>
