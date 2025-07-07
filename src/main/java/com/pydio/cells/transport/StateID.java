@@ -6,6 +6,7 @@ import com.pydio.cells.utils.PathUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -143,7 +144,7 @@ public class StateID {
      */
     public String getServerHost() {
         try {
-            URL url = new URL(getServerUrl());
+            URL url = URI.create(getServerUrl()).toURL();
             return url.getHost();
         } catch (MalformedURLException e) {
             return serverUrl;
