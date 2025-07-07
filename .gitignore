@@ -1,4 +1,5 @@
 *.class
+.DS_Store
 
 # Stores credentials and setup info: do not commit this file.
 local.properties
