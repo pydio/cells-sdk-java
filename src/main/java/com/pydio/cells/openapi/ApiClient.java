@@ -13,16 +13,9 @@
 
 package com.pydio.cells.openapi;
 
-import okhttp3.*;
-import okhttp3.internal.http.HttpMethod;
-import okhttp3.internal.tls.OkHostnameVerifier;
-import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.logging.HttpLoggingInterceptor.Level;
-import okio.Buffer;
-import okio.BufferedSink;
-import okio.Okio;
-
-import javax.net.ssl.*;
+import com.pydio.cells.openapi.auth.ApiKeyAuth;
+import com.pydio.cells.openapi.auth.Authentication;
+import com.pydio.cells.openapi.auth.HttpBasicAuth;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,22 +34,48 @@ import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.pydio.cells.openapi.auth.Authentication;
-import com.pydio.cells.openapi.auth.HttpBasicAuth;
-import com.pydio.cells.openapi.auth.HttpBearerAuth;
-import com.pydio.cells.openapi.auth.ApiKeyAuth;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.internal.http.HttpMethod;
+import okhttp3.internal.tls.OkHostnameVerifier;
+import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.logging.HttpLoggingInterceptor.Level;
+import okio.Buffer;
+import okio.BufferedSink;
+import okio.Okio;
 
 /**
  * <p>ApiClient class.</p>
@@ -875,708 +894,738 @@ public class ApiClient {
      * @param str String to be escaped
      * @return Escaped string
      */
+    @SuppressWarnings("NewApi")
     public String escapeString(String str) {
-        return URLEncoder.encode(str, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+        try {
+            return URLEncoder.encode(str, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+        } catch (NoSuchMethodError e) {
+            try {
+                return URLEncoder.encode(str, "utf-8").replaceAll("\\+", "%20");
+            } catch (NoSuchMethodError | UnsupportedEncodingException e2) {
+                return URLEncoder.encode(str).replaceAll("\\+", "%20");
+            }
+        }
     }
 
-    /**
-     * Deserialize response body to Java object, according to the return type and
-     * the Content-Type response header.
-     *
-     * @param <T>        Type
-     * @param response   HTTP response
-     * @param returnType The type of the Java object
-     * @return The deserialized Java object
-     * @throws com.pydio.cells.openapi.ApiException If fail to deserialize response body, i.e. cannot read response body
-     *                                              or the Content-Type of the response is not supported.
-     */
-    @SuppressWarnings("unchecked")
-    public <T> T deserialize(Response response, Type returnType) throws ApiException {
-        if (response == null || returnType == null) {
-            return null;
-        }
 
-        if ("byte[]".equals(returnType.toString())) {
-            // Handle binary response (byte array).
+        /**
+         * Deserialize response body to Java object, according to the return type and
+         * the Content-Type response header.
+         *
+         * @param <T>        Type
+         * @param response   HTTP response
+         * @param returnType The type of the Java object
+         * @return The deserialized Java object
+         * @throws com.pydio.cells.openapi.ApiException If fail to deserialize response body, i.e. cannot read response body
+         *                                              or the Content-Type of the response is not supported.
+         */
+        @SuppressWarnings("unchecked")
+        public <T > T deserialize(Response response, Type returnType) throws ApiException {
+            if (response == null || returnType == null) {
+                return null;
+            }
+
+            if ("byte[]".equals(returnType.toString())) {
+                // Handle binary response (byte array).
+                try {
+                    return (T) response.body().bytes();
+                } catch (IOException e) {
+                    throw new ApiException(e);
+                }
+            } else if (returnType.equals(File.class)) {
+                // Handle file downloading.
+                return (T) downloadFileFromResponse(response);
+            }
+
+            String respBody;
             try {
-                return (T) response.body().bytes();
+                if (response.body() != null)
+                    respBody = response.body().string();
+                else
+                    respBody = null;
             } catch (IOException e) {
                 throw new ApiException(e);
             }
-        } else if (returnType.equals(File.class)) {
-            // Handle file downloading.
-            return (T) downloadFileFromResponse(response);
-        }
 
-        String respBody;
-        try {
-            if (response.body() != null)
-                respBody = response.body().string();
-            else
-                respBody = null;
-        } catch (IOException e) {
-            throw new ApiException(e);
-        }
-
-        if (respBody == null || "".equals(respBody)) {
-            return null;
-        }
-
-        String contentType = response.headers().get("Content-Type");
-        if (contentType == null) {
-            // ensuring a default content type
-            contentType = "application/json";
-        }
-        if (isJsonMime(contentType)) {
-            return JSON.deserialize(respBody, returnType);
-        } else if (returnType.equals(String.class)) {
-            // Expecting string, return the raw response body.
-            return (T) respBody;
-        } else {
-            throw new ApiException(
-                    "Content type \"" + contentType + "\" is not supported for type: " + returnType,
-                    response.code(),
-                    response.headers().toMultimap(),
-                    respBody);
-        }
-    }
-
-    /**
-     * Serialize the given Java object into request body according to the object's
-     * class and the request Content-Type.
-     *
-     * @param obj         The Java object
-     * @param contentType The request Content-Type
-     * @return The serialized request body
-     * @throws com.pydio.cells.openapi.ApiException If fail to serialize the given object
-     */
-    public RequestBody serialize(Object obj, String contentType) throws ApiException {
-        if (obj instanceof byte[]) {
-            // Binary (byte array) body parameter support.
-            return RequestBody.create((byte[]) obj, MediaType.parse(contentType));
-        } else if (obj instanceof File) {
-            // File body parameter support.
-            return RequestBody.create((File) obj, MediaType.parse(contentType));
-        } else if ("text/plain".equals(contentType) && obj instanceof String) {
-            return RequestBody.create((String) obj, MediaType.parse(contentType));
-        } else if (isJsonMime(contentType)) {
-            String content;
-            if (obj != null) {
-                content = JSON.serialize(obj);
-            } else {
-                content = null;
-            }
-            return RequestBody.create(content, MediaType.parse(contentType));
-        } else if (obj instanceof String) {
-            return RequestBody.create((String) obj, MediaType.parse(contentType));
-        } else {
-            throw new ApiException("Content type \"" + contentType + "\" is not supported");
-        }
-    }
-
-    /**
-     * Download file from the given response.
-     *
-     * @param response An instance of the Response object
-     * @return Downloaded file
-     * @throws com.pydio.cells.openapi.ApiException If fail to read file content from response and write to disk
-     */
-    public File downloadFileFromResponse(Response response) throws ApiException {
-        try {
-            File file = prepareDownloadFile(response);
-            BufferedSink sink = Okio.buffer(Okio.sink(file));
-            sink.writeAll(response.body().source());
-            sink.close();
-            return file;
-        } catch (IOException e) {
-            throw new ApiException(e);
-        }
-    }
-
-    /**
-     * Prepare file for download
-     *
-     * @param response An instance of the Response object
-     * @return Prepared file for the download
-     * @throws java.io.IOException If fail to prepare file for download
-     */
-    public File prepareDownloadFile(Response response) throws IOException {
-        String filename = null;
-        String contentDisposition = response.header("Content-Disposition");
-        if (contentDisposition != null && !"".equals(contentDisposition)) {
-            // Get filename from the Content-Disposition header.
-            Pattern pattern = Pattern.compile("filename=['\"]?([^'\"\\s]+)['\"]?");
-            Matcher matcher = pattern.matcher(contentDisposition);
-            if (matcher.find()) {
-                filename = sanitizeFilename(matcher.group(1));
-            }
-        }
-
-        String prefix = null;
-        String suffix = null;
-        if (filename == null) {
-            prefix = "download-";
-            suffix = "";
-        } else {
-            int pos = filename.lastIndexOf(".");
-            if (pos == -1) {
-                prefix = filename + "-";
-            } else {
-                prefix = filename.substring(0, pos) + "-";
-                suffix = filename.substring(pos);
-            }
-            // Files.createTempFile requires the prefix to be at least three characters long
-            if (prefix.length() < 3)
-                prefix = "download-";
-        }
-
-        if (tempFolderPath == null)
-            return Files.createTempFile(prefix, suffix).toFile();
-        else
-            return Files.createTempFile(Paths.get(tempFolderPath), prefix, suffix).toFile();
-    }
-
-    /**
-     * {@link #execute(Call, Type)}
-     *
-     * @param <T>  Type
-     * @param call An instance of the Call object
-     * @return ApiResponse&lt;T&gt;
-     * @throws com.pydio.cells.openapi.ApiException If fail to execute the call
-     */
-    public <T> ApiResponse<T> execute(Call call) throws ApiException {
-        return execute(call, null);
-    }
-
-    /**
-     * Execute HTTP call and deserialize the HTTP response body into the given return type.
-     *
-     * @param returnType The return type used to deserialize HTTP response body
-     * @param <T>        The return type corresponding to (same with) returnType
-     * @param call       Call
-     * @return ApiResponse object containing response status, headers and
-     * data, which is a Java object deserialized from response body and would be null
-     * when returnType is null.
-     * @throws com.pydio.cells.openapi.ApiException If fail to execute the call
-     */
-    public <T> ApiResponse<T> execute(Call call, Type returnType) throws ApiException {
-        try {
-            Response response = call.execute();
-            T data = handleResponse(response, returnType);
-            return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
-        } catch (IOException e) {
-            throw new ApiException(e);
-        }
-    }
-
-    /**
-     * {@link #executeAsync(Call, Type, ApiCallback)}
-     *
-     * @param <T>      Type
-     * @param call     An instance of the Call object
-     * @param callback ApiCallback&lt;T&gt;
-     */
-    public <T> void executeAsync(Call call, ApiCallback<T> callback) {
-        executeAsync(call, null, callback);
-    }
-
-    /**
-     * Execute HTTP call asynchronously.
-     *
-     * @param <T>        Type
-     * @param call       The callback to be executed when the API call finishes
-     * @param returnType Return type
-     * @param callback   ApiCallback
-     * @see #execute(Call, Type)
-     */
-    @SuppressWarnings("unchecked")
-    public <T> void executeAsync(Call call, final Type returnType, final ApiCallback<T> callback) {
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callback.onFailure(new ApiException(e), 0, null);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                T result;
-                try {
-                    result = handleResponse(response, returnType);
-                } catch (ApiException e) {
-                    callback.onFailure(e, response.code(), response.headers().toMultimap());
-                    return;
-                } catch (Exception e) {
-                    callback.onFailure(new ApiException(e), response.code(), response.headers().toMultimap());
-                    return;
-                }
-                callback.onSuccess(result, response.code(), response.headers().toMultimap());
-            }
-        });
-    }
-
-    /**
-     * Handle the given response, return the deserialized object when the response is successful.
-     *
-     * @param <T>        Type
-     * @param response   Response
-     * @param returnType Return type
-     * @return Type
-     * @throws com.pydio.cells.openapi.ApiException If the response has an unsuccessful status code or
-     *                                              fail to deserialize the response body
-     */
-    public <T> T handleResponse(Response response, Type returnType) throws ApiException {
-        if (response.isSuccessful()) {
-            if (returnType == null || response.code() == 204) {
-                // returning null if the returnType is not defined,
-                // or the status code is 204 (No Content)
-                if (response.body() != null) {
-                    try {
-                        response.body().close();
-                    } catch (Exception e) {
-                        throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
-                    }
-                }
+            if (respBody == null || "".equals(respBody)) {
                 return null;
+            }
+
+            String contentType = response.headers().get("Content-Type");
+            if (contentType == null) {
+                // ensuring a default content type
+                contentType = "application/json";
+            }
+            if (isJsonMime(contentType)) {
+                return JSON.deserialize(respBody, returnType);
+            } else if (returnType.equals(String.class)) {
+                // Expecting string, return the raw response body.
+                return (T) respBody;
             } else {
-                return deserialize(response, returnType);
-            }
-        } else {
-            String respBody = null;
-            if (response.body() != null) {
-                try {
-                    respBody = response.body().string();
-                } catch (IOException e) {
-                    throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
-                }
-            }
-            throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
-        }
-    }
-
-    /**
-     * Build HTTP call with the given options.
-     *
-     * @param baseUrl               The base URL
-     * @param path                  The sub-path of the HTTP URL
-     * @param method                The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
-     * @param queryParams           The query parameters
-     * @param collectionQueryParams The collection query parameters
-     * @param body                  The request body object
-     * @param headerParams          The header parameters
-     * @param cookieParams          The cookie parameters
-     * @param formParams            The form parameters
-     * @param authNames             The authentications to apply
-     * @param callback              Callback for upload/download progress
-     * @return The HTTP call
-     * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object
-     */
-    public Call buildCall(String baseUrl, String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, String> cookieParams, Map<String, Object> formParams, String[] authNames, ApiCallback callback) throws ApiException {
-        Request request = buildRequest(baseUrl, path, method, queryParams, collectionQueryParams, body, headerParams, cookieParams, formParams, authNames, callback);
-
-        return httpClient.newCall(request);
-    }
-
-    /**
-     * Build an HTTP request with the given options.
-     *
-     * @param baseUrl               The base URL
-     * @param path                  The sub-path of the HTTP URL
-     * @param method                The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
-     * @param queryParams           The query parameters
-     * @param collectionQueryParams The collection query parameters
-     * @param body                  The request body object
-     * @param headerParams          The header parameters
-     * @param cookieParams          The cookie parameters
-     * @param formParams            The form parameters
-     * @param authNames             The authentications to apply
-     * @param callback              Callback for upload/download progress
-     * @return The HTTP request
-     * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object
-     */
-    public Request buildRequest(String baseUrl, String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, String> cookieParams, Map<String, Object> formParams, String[] authNames, ApiCallback callback) throws ApiException {
-        final String url = buildUrl(baseUrl, path, queryParams, collectionQueryParams);
-
-        // prepare HTTP request body
-        RequestBody reqBody;
-        String contentType = headerParams.get("Content-Type");
-        String contentTypePure = contentType;
-        if (contentTypePure != null && contentTypePure.contains(";")) {
-            contentTypePure = contentType.substring(0, contentType.indexOf(";"));
-        }
-        if (!HttpMethod.permitsRequestBody(method)) {
-            reqBody = null;
-        } else if ("application/x-www-form-urlencoded".equals(contentTypePure)) {
-            reqBody = buildRequestBodyFormEncoding(formParams);
-        } else if ("multipart/form-data".equals(contentTypePure)) {
-            reqBody = buildRequestBodyMultipart(formParams);
-        } else if (body == null) {
-            if ("DELETE".equals(method)) {
-                // allow calling DELETE without sending a request body
-                reqBody = null;
-            } else {
-                // use an empty request body (for POST, PUT and PATCH)
-                reqBody = RequestBody.create("", contentType == null ? null : MediaType.parse(contentType));
-            }
-        } else {
-            reqBody = serialize(body, contentType);
-        }
-
-        List<Pair> updatedQueryParams = new ArrayList<>(queryParams);
-
-        // update parameters with authentication settings
-        updateParamsForAuth(authNames, updatedQueryParams, headerParams, cookieParams, requestBodyToString(reqBody), method, URI.create(url));
-
-        final Request.Builder reqBuilder = new Request.Builder().url(buildUrl(baseUrl, path, updatedQueryParams, collectionQueryParams));
-        processHeaderParams(headerParams, reqBuilder);
-        processCookieParams(cookieParams, reqBuilder);
-
-        // Associate callback with request (if not null) so interceptor can
-        // access it when creating ProgressResponseBody
-        reqBuilder.tag(callback);
-
-        Request request = null;
-
-        if (callback != null && reqBody != null) {
-            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, callback);
-            request = reqBuilder.method(method, progressRequestBody).build();
-        } else {
-            request = reqBuilder.method(method, reqBody).build();
-        }
-
-        return request;
-    }
-
-    /**
-     * Build full URL by concatenating base path, the given sub path and query parameters.
-     *
-     * @param baseUrl               The base URL
-     * @param path                  The sub path
-     * @param queryParams           The query parameters
-     * @param collectionQueryParams The collection query parameters
-     * @return The full URL
-     */
-    public String buildUrl(String baseUrl, String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
-        final StringBuilder url = new StringBuilder();
-        if (baseUrl != null) {
-            url.append(baseUrl).append(path);
-        } else {
-            String baseURL;
-            if (serverIndex != null) {
-                if (serverIndex < 0 || serverIndex >= servers.size()) {
-                    throw new ArrayIndexOutOfBoundsException(String.format(
-                            "Invalid index %d when selecting the host settings. Must be less than %d", serverIndex, servers.size()
-                    ));
-                }
-                baseURL = servers.get(serverIndex).URL(serverVariables);
-            } else {
-                baseURL = basePath;
-            }
-            url.append(baseURL).append(path);
-        }
-
-        if (queryParams != null && !queryParams.isEmpty()) {
-            // support (constant) query string in `path`, e.g. "/posts?draft=1"
-            String prefix = path.contains("?") ? "&" : "?";
-            for (Pair param : queryParams) {
-                if (param.getValue() != null) {
-                    if (prefix != null) {
-                        url.append(prefix);
-                        prefix = null;
-                    } else {
-                        url.append("&");
-                    }
-                    String value = parameterToString(param.getValue());
-                    url.append(escapeString(param.getName())).append("=").append(escapeString(value));
-                }
+                throw new ApiException(
+                        "Content type \"" + contentType + "\" is not supported for type: " + returnType,
+                        response.code(),
+                        response.headers().toMultimap(),
+                        respBody);
             }
         }
 
-        if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
-            String prefix = url.toString().contains("?") ? "&" : "?";
-            for (Pair param : collectionQueryParams) {
-                if (param.getValue() != null) {
-                    if (prefix != null) {
-                        url.append(prefix);
-                        prefix = null;
-                    } else {
-                        url.append("&");
-                    }
-                    String value = parameterToString(param.getValue());
-                    // collection query parameter value already escaped as part of parameterToPairs
-                    url.append(escapeString(param.getName())).append("=").append(value);
-                }
-            }
-        }
-
-        return url.toString();
-    }
-
-    /**
-     * Set header parameters to the request builder, including default headers.
-     *
-     * @param headerParams Header parameters in the form of Map
-     * @param reqBuilder   Request.Builder
-     */
-    public void processHeaderParams(Map<String, String> headerParams, Request.Builder reqBuilder) {
-        for (Entry<String, String> param : headerParams.entrySet()) {
-            reqBuilder.header(param.getKey(), parameterToString(param.getValue()));
-        }
-        for (Entry<String, String> header : defaultHeaderMap.entrySet()) {
-            if (!headerParams.containsKey(header.getKey())) {
-                reqBuilder.header(header.getKey(), parameterToString(header.getValue()));
-            }
-        }
-    }
-
-    /**
-     * Set cookie parameters to the request builder, including default cookies.
-     *
-     * @param cookieParams Cookie parameters in the form of Map
-     * @param reqBuilder   Request.Builder
-     */
-    public void processCookieParams(Map<String, String> cookieParams, Request.Builder reqBuilder) {
-        for (Entry<String, String> param : cookieParams.entrySet()) {
-            reqBuilder.addHeader("Cookie", String.format("%s=%s", param.getKey(), param.getValue()));
-        }
-        for (Entry<String, String> param : defaultCookieMap.entrySet()) {
-            if (!cookieParams.containsKey(param.getKey())) {
-                reqBuilder.addHeader("Cookie", String.format("%s=%s", param.getKey(), param.getValue()));
-            }
-        }
-    }
-
-    /**
-     * Update query and header parameters based on authentication settings.
-     *
-     * @param authNames    The authentications to apply
-     * @param queryParams  List of query parameters
-     * @param headerParams Map of header parameters
-     * @param cookieParams Map of cookie parameters
-     * @param payload      HTTP request body
-     * @param method       HTTP method
-     * @param uri          URI
-     * @throws com.pydio.cells.openapi.ApiException If fails to update the parameters
-     */
-    public void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams,
-                                    Map<String, String> cookieParams, String payload, String method, URI uri) throws ApiException {
-        for (String authName : authNames) {
-            Authentication auth = authentications.get(authName);
-            if (auth == null) {
-                throw new RuntimeException("Authentication undefined: " + authName);
-            }
-            auth.applyToParams(queryParams, headerParams, cookieParams, payload, method, uri);
-        }
-    }
-
-    /**
-     * Build a form-encoding request body with the given form parameters.
-     *
-     * @param formParams Form parameters in the form of Map
-     * @return RequestBody
-     */
-    public RequestBody buildRequestBodyFormEncoding(Map<String, Object> formParams) {
-        okhttp3.FormBody.Builder formBuilder = new okhttp3.FormBody.Builder();
-        for (Entry<String, Object> param : formParams.entrySet()) {
-            formBuilder.add(param.getKey(), parameterToString(param.getValue()));
-        }
-        return formBuilder.build();
-    }
-
-    /**
-     * Build a multipart (file uploading) request body with the given form parameters,
-     * which could contain text fields and file fields.
-     *
-     * @param formParams Form parameters in the form of Map
-     * @return RequestBody
-     */
-    public RequestBody buildRequestBodyMultipart(Map<String, Object> formParams) {
-        MultipartBody.Builder mpBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        for (Entry<String, Object> param : formParams.entrySet()) {
-            if (param.getValue() instanceof File file) {
-                addPartToMultiPartBuilder(mpBuilder, param.getKey(), file);
-            } else if (param.getValue() instanceof List list) {
-                for (Object item : list) {
-                    if (item instanceof File) {
-                        addPartToMultiPartBuilder(mpBuilder, param.getKey(), (File) item);
-                    } else {
-                        addPartToMultiPartBuilder(mpBuilder, param.getKey(), param.getValue());
-                    }
-                }
-            } else {
-                addPartToMultiPartBuilder(mpBuilder, param.getKey(), param.getValue());
-            }
-        }
-        return mpBuilder.build();
-    }
-
-    /**
-     * Guess Content-Type header from the given file (defaults to "application/octet-stream").
-     *
-     * @param file The given file
-     * @return The guessed Content-Type
-     */
-    public String guessContentTypeFromFile(File file) {
-        String contentType = URLConnection.guessContentTypeFromName(file.getName());
-        if (contentType == null) {
-            return "application/octet-stream";
-        } else {
-            return contentType;
-        }
-    }
-
-    /**
-     * Add a Content-Disposition Header for the given key and file to the MultipartBody Builder.
-     *
-     * @param mpBuilder MultipartBody.Builder
-     * @param key       The key of the Header element
-     * @param file      The file to add to the Header
-     */
-    private void addPartToMultiPartBuilder(MultipartBody.Builder mpBuilder, String key, File file) {
-        Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + key + "\"; filename=\"" + file.getName() + "\"");
-        MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
-        mpBuilder.addPart(partHeaders, RequestBody.create(file, mediaType));
-    }
-
-    /**
-     * Add a Content-Disposition Header for the given key and complex object to the MultipartBody Builder.
-     *
-     * @param mpBuilder MultipartBody.Builder
-     * @param key       The key of the Header element
-     * @param obj       The complex object to add to the Header
-     */
-    private void addPartToMultiPartBuilder(MultipartBody.Builder mpBuilder, String key, Object obj) {
-        RequestBody requestBody;
-        if (obj instanceof String) {
-            requestBody = RequestBody.create((String) obj, MediaType.parse("text/plain"));
-        } else {
-            String content;
-            if (obj != null) {
-                content = JSON.serialize(obj);
-            } else {
-                content = null;
-            }
-            requestBody = RequestBody.create(content, MediaType.parse("application/json"));
-        }
-
-        Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + key + "\"");
-        mpBuilder.addPart(partHeaders, requestBody);
-    }
-
-    /**
-     * Get network interceptor to add it to the httpClient to track download progress for
-     * async requests.
-     */
-    private Interceptor getProgressInterceptor() {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                final Request request = chain.request();
-                final Response originalResponse = chain.proceed(request);
-                if (request.tag() instanceof ApiCallback callback) {
-                    return originalResponse.newBuilder()
-                            .body(new ProgressResponseBody(originalResponse.body(), callback))
-                            .build();
-                }
-                return originalResponse;
-            }
-        };
-    }
-
-    /**
-     * Apply SSL related settings to httpClient according to the current values of
-     * verifyingSsl and sslCaCert.
-     */
-    private void applySslSettings() {
-        try {
-            TrustManager[] trustManagers;
-            HostnameVerifier hostnameVerifier;
-            if (!verifyingSsl) {
-                trustManagers = new TrustManager[]{
-                        new X509TrustManager() {
-                            @Override
-                            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                            }
-
-                            @Override
-                            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                            }
-
-                            @Override
-                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                                return new java.security.cert.X509Certificate[]{};
-                            }
-                        }
-                };
-                hostnameVerifier = new HostnameVerifier() {
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                };
-            } else {
-                TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-
-                if (sslCaCert == null) {
-                    trustManagerFactory.init((KeyStore) null);
+        /**
+         * Serialize the given Java object into request body according to the object's
+         * class and the request Content-Type.
+         *
+         * @param obj         The Java object
+         * @param contentType The request Content-Type
+         * @return The serialized request body
+         * @throws com.pydio.cells.openapi.ApiException If fail to serialize the given object
+         */
+        public RequestBody serialize (Object obj, String contentType) throws ApiException {
+            if (obj instanceof byte[]) {
+                // Binary (byte array) body parameter support.
+                return RequestBody.create((byte[]) obj, MediaType.parse(contentType));
+            } else if (obj instanceof File) {
+                // File body parameter support.
+                return RequestBody.create((File) obj, MediaType.parse(contentType));
+            } else if ("text/plain".equals(contentType) && obj instanceof String) {
+                return RequestBody.create((String) obj, MediaType.parse(contentType));
+            } else if (isJsonMime(contentType)) {
+                String content;
+                if (obj != null) {
+                    content = JSON.serialize(obj);
                 } else {
-                    char[] password = null; // Any password will work.
-                    CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-                    Collection<? extends Certificate> certificates = certificateFactory.generateCertificates(sslCaCert);
-                    if (certificates.isEmpty()) {
-                        throw new IllegalArgumentException("expected non-empty set of trusted certificates");
-                    }
-                    KeyStore caKeyStore = newEmptyKeyStore(password);
-                    int index = 0;
-                    for (Certificate certificate : certificates) {
-                        String certificateAlias = "ca" + (index++);
-                        caKeyStore.setCertificateEntry(certificateAlias, certificate);
-                    }
-                    trustManagerFactory.init(caKeyStore);
+                    content = null;
                 }
-                trustManagers = trustManagerFactory.getTrustManagers();
-                hostnameVerifier = OkHostnameVerifier.INSTANCE;
+                return RequestBody.create(content, MediaType.parse(contentType));
+            } else if (obj instanceof String) {
+                return RequestBody.create((String) obj, MediaType.parse(contentType));
+            } else {
+                throw new ApiException("Content type \"" + contentType + "\" is not supported");
             }
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagers, trustManagers, new SecureRandom());
-            httpClient = httpClient.newBuilder()
-                    .sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager) trustManagers[0])
-                    .hostnameVerifier(hostnameVerifier)
-                    .build();
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
         }
-    }
 
-    private KeyStore newEmptyKeyStore(char[] password) throws GeneralSecurityException {
-        try {
-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keyStore.load(null, password);
-            return keyStore;
-        } catch (IOException e) {
-            throw new AssertionError(e);
-        }
-    }
-
-    /**
-     * Convert the HTTP request body to a string.
-     *
-     * @param requestBody The HTTP request object
-     * @return The string representation of the HTTP request body
-     * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object into a string
-     */
-    private String requestBodyToString(RequestBody requestBody) throws ApiException {
-        if (requestBody != null) {
+        /**
+         * Download file from the given response.
+         *
+         * @param response An instance of the Response object
+         * @return Downloaded file
+         * @throws com.pydio.cells.openapi.ApiException If fail to read file content from response and write to disk
+         */
+        public File downloadFileFromResponse (Response response) throws ApiException {
             try {
-                final Buffer buffer = new Buffer();
-                requestBody.writeTo(buffer);
-                return buffer.readUtf8();
-            } catch (final IOException e) {
+                File file = prepareDownloadFile(response);
+                BufferedSink sink = Okio.buffer(Okio.sink(file));
+                sink.writeAll(response.body().source());
+                sink.close();
+                return file;
+            } catch (IOException e) {
                 throw new ApiException(e);
             }
         }
 
-        // empty http request body
-        return "";
+        /**
+         * Prepare file for download
+         *
+         * @param response An instance of the Response object
+         * @return Prepared file for the download
+         * @throws java.io.IOException If fail to prepare file for download
+         */
+        public File prepareDownloadFile (Response response) throws IOException {
+            String filename = null;
+            String contentDisposition = response.header("Content-Disposition");
+            if (contentDisposition != null && !"".equals(contentDisposition)) {
+                // Get filename from the Content-Disposition header.
+                Pattern pattern = Pattern.compile("filename=['\"]?([^'\"\\s]+)['\"]?");
+                Matcher matcher = pattern.matcher(contentDisposition);
+                if (matcher.find()) {
+                    filename = sanitizeFilename(matcher.group(1));
+                }
+            }
+
+            String prefix = null;
+            String suffix = null;
+            if (filename == null) {
+                prefix = "download-";
+                suffix = "";
+            } else {
+                int pos = filename.lastIndexOf(".");
+                if (pos == -1) {
+                    prefix = filename + "-";
+                } else {
+                    prefix = filename.substring(0, pos) + "-";
+                    suffix = filename.substring(pos);
+                }
+                // Files.createTempFile requires the prefix to be at least three characters long
+                if (prefix.length() < 3)
+                    prefix = "download-";
+            }
+
+
+            if (tempFolderPath == null)
+                return File.createTempFile(prefix, suffix);
+            else
+                return File.createTempFile(prefix, suffix, new File(tempFolderPath));
+            // TODO this requires android version 26+ but our client still support android version 24+
+//            if (tempFolderPath == null)
+//                return Files.createTempFile(prefix, suffix).toFile();
+//            else
+//                return Files.createTempFile(Paths.get(tempFolderPath), prefix, suffix).toFile();
+        }
+
+        /**
+         * {@link #execute(Call, Type)}
+         *
+         * @param <T>  Type
+         * @param call An instance of the Call object
+         * @return ApiResponse&lt;T&gt;
+         * @throws com.pydio.cells.openapi.ApiException If fail to execute the call
+         */
+        public <T > ApiResponse < T > execute(Call call) throws ApiException {
+            return execute(call, null);
+        }
+
+        /**
+         * Execute HTTP call and deserialize the HTTP response body into the given return type.
+         *
+         * @param returnType The return type used to deserialize HTTP response body
+         * @param <T>        The return type corresponding to (same with) returnType
+         * @param call       Call
+         * @return ApiResponse object containing response status, headers and
+         * data, which is a Java object deserialized from response body and would be null
+         * when returnType is null.
+         * @throws com.pydio.cells.openapi.ApiException If fail to execute the call
+         */
+        public <T > ApiResponse < T > execute(Call call, Type returnType) throws ApiException {
+            try {
+                Response response = call.execute();
+                T data = handleResponse(response, returnType);
+                return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
+            } catch (IOException e) {
+                throw new ApiException(e);
+            }
+        }
+
+        /**
+         * {@link #executeAsync(Call, Type, ApiCallback)}
+         *
+         * @param <T>      Type
+         * @param call     An instance of the Call object
+         * @param callback ApiCallback&lt;T&gt;
+         */
+        public <T > void executeAsync (Call call, ApiCallback < T > callback){
+            executeAsync(call, null, callback);
+        }
+
+        /**
+         * Execute HTTP call asynchronously.
+         *
+         * @param <T>        Type
+         * @param call       The callback to be executed when the API call finishes
+         * @param returnType Return type
+         * @param callback   ApiCallback
+         * @see #execute(Call, Type)
+         */
+        @SuppressWarnings("unchecked")
+        public <T > void executeAsync (Call call,final Type returnType,
+        final ApiCallback<T> callback){
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    callback.onFailure(new ApiException(e), 0, null);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    T result;
+                    try {
+                        result = handleResponse(response, returnType);
+                    } catch (ApiException e) {
+                        callback.onFailure(e, response.code(), response.headers().toMultimap());
+                        return;
+                    } catch (Exception e) {
+                        callback.onFailure(new ApiException(e), response.code(), response.headers().toMultimap());
+                        return;
+                    }
+                    callback.onSuccess(result, response.code(), response.headers().toMultimap());
+                }
+            });
+        }
+
+        /**
+         * Handle the given response, return the deserialized object when the response is successful.
+         *
+         * @param <T>        Type
+         * @param response   Response
+         * @param returnType Return type
+         * @return Type
+         * @throws com.pydio.cells.openapi.ApiException If the response has an unsuccessful status code or
+         *                                              fail to deserialize the response body
+         */
+        public <T > T handleResponse(Response response, Type returnType) throws ApiException {
+            if (response.isSuccessful()) {
+                if (returnType == null || response.code() == 204) {
+                    // returning null if the returnType is not defined,
+                    // or the status code is 204 (No Content)
+                    if (response.body() != null) {
+                        try {
+                            response.body().close();
+                        } catch (Exception e) {
+                            throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+                        }
+                    }
+                    return null;
+                } else {
+                    return deserialize(response, returnType);
+                }
+            } else {
+                String respBody = null;
+                if (response.body() != null) {
+                    try {
+                        respBody = response.body().string();
+                    } catch (IOException e) {
+                        throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+                    }
+                }
+                throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
+            }
+        }
+
+        /**
+         * Build HTTP call with the given options.
+         *
+         * @param baseUrl               The base URL
+         * @param path                  The sub-path of the HTTP URL
+         * @param method                The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
+         * @param queryParams           The query parameters
+         * @param collectionQueryParams The collection query parameters
+         * @param body                  The request body object
+         * @param headerParams          The header parameters
+         * @param cookieParams          The cookie parameters
+         * @param formParams            The form parameters
+         * @param authNames             The authentications to apply
+         * @param callback              Callback for upload/download progress
+         * @return The HTTP call
+         * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object
+         */
+        public Call buildCall (String baseUrl, String path, String
+        method, List < Pair > queryParams, List < Pair > collectionQueryParams, Object
+        body, Map < String, String > headerParams, Map < String, String > cookieParams, Map < String, Object > formParams, String[]
+        authNames, ApiCallback callback) throws ApiException {
+            Request request = buildRequest(baseUrl, path, method, queryParams, collectionQueryParams, body, headerParams, cookieParams, formParams, authNames, callback);
+
+            return httpClient.newCall(request);
+        }
+
+        /**
+         * Build an HTTP request with the given options.
+         *
+         * @param baseUrl               The base URL
+         * @param path                  The sub-path of the HTTP URL
+         * @param method                The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
+         * @param queryParams           The query parameters
+         * @param collectionQueryParams The collection query parameters
+         * @param body                  The request body object
+         * @param headerParams          The header parameters
+         * @param cookieParams          The cookie parameters
+         * @param formParams            The form parameters
+         * @param authNames             The authentications to apply
+         * @param callback              Callback for upload/download progress
+         * @return The HTTP request
+         * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object
+         */
+        public Request buildRequest (String baseUrl, String path, String
+        method, List < Pair > queryParams, List < Pair > collectionQueryParams, Object
+        body, Map < String, String > headerParams, Map < String, String > cookieParams, Map < String, Object > formParams, String[]
+        authNames, ApiCallback callback) throws ApiException {
+            final String url = buildUrl(baseUrl, path, queryParams, collectionQueryParams);
+
+            // prepare HTTP request body
+            RequestBody reqBody;
+            String contentType = headerParams.get("Content-Type");
+            String contentTypePure = contentType;
+            if (contentTypePure != null && contentTypePure.contains(";")) {
+                contentTypePure = contentType.substring(0, contentType.indexOf(";"));
+            }
+            if (!HttpMethod.permitsRequestBody(method)) {
+                reqBody = null;
+            } else if ("application/x-www-form-urlencoded".equals(contentTypePure)) {
+                reqBody = buildRequestBodyFormEncoding(formParams);
+            } else if ("multipart/form-data".equals(contentTypePure)) {
+                reqBody = buildRequestBodyMultipart(formParams);
+            } else if (body == null) {
+                if ("DELETE".equals(method)) {
+                    // allow calling DELETE without sending a request body
+                    reqBody = null;
+                } else {
+                    // use an empty request body (for POST, PUT and PATCH)
+                    reqBody = RequestBody.create("", contentType == null ? null : MediaType.parse(contentType));
+                }
+            } else {
+                reqBody = serialize(body, contentType);
+            }
+
+            List<Pair> updatedQueryParams = new ArrayList<>(queryParams);
+
+            // update parameters with authentication settings
+            updateParamsForAuth(authNames, updatedQueryParams, headerParams, cookieParams, requestBodyToString(reqBody), method, URI.create(url));
+
+            final Request.Builder reqBuilder = new Request.Builder().url(buildUrl(baseUrl, path, updatedQueryParams, collectionQueryParams));
+            processHeaderParams(headerParams, reqBuilder);
+            processCookieParams(cookieParams, reqBuilder);
+
+            // Associate callback with request (if not null) so interceptor can
+            // access it when creating ProgressResponseBody
+            reqBuilder.tag(callback);
+
+            Request request = null;
+
+            if (callback != null && reqBody != null) {
+                ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, callback);
+                request = reqBuilder.method(method, progressRequestBody).build();
+            } else {
+                request = reqBuilder.method(method, reqBody).build();
+            }
+
+            return request;
+        }
+
+        /**
+         * Build full URL by concatenating base path, the given sub path and query parameters.
+         *
+         * @param baseUrl               The base URL
+         * @param path                  The sub path
+         * @param queryParams           The query parameters
+         * @param collectionQueryParams The collection query parameters
+         * @return The full URL
+         */
+        public String buildUrl (String baseUrl, String
+        path, List < Pair > queryParams, List < Pair > collectionQueryParams){
+            final StringBuilder url = new StringBuilder();
+            if (baseUrl != null) {
+                url.append(baseUrl).append(path);
+            } else {
+                String baseURL;
+                if (serverIndex != null) {
+                    if (serverIndex < 0 || serverIndex >= servers.size()) {
+                        throw new ArrayIndexOutOfBoundsException(String.format(
+                                "Invalid index %d when selecting the host settings. Must be less than %d", serverIndex, servers.size()
+                        ));
+                    }
+                    baseURL = servers.get(serverIndex).URL(serverVariables);
+                } else {
+                    baseURL = basePath;
+                }
+                url.append(baseURL).append(path);
+            }
+
+            if (queryParams != null && !queryParams.isEmpty()) {
+                // support (constant) query string in `path`, e.g. "/posts?draft=1"
+                String prefix = path.contains("?") ? "&" : "?";
+                for (Pair param : queryParams) {
+                    if (param.getValue() != null) {
+                        if (prefix != null) {
+                            url.append(prefix);
+                            prefix = null;
+                        } else {
+                            url.append("&");
+                        }
+                        String value = parameterToString(param.getValue());
+                        url.append(escapeString(param.getName())).append("=").append(escapeString(value));
+                    }
+                }
+            }
+
+            if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
+                String prefix = url.toString().contains("?") ? "&" : "?";
+                for (Pair param : collectionQueryParams) {
+                    if (param.getValue() != null) {
+                        if (prefix != null) {
+                            url.append(prefix);
+                            prefix = null;
+                        } else {
+                            url.append("&");
+                        }
+                        String value = parameterToString(param.getValue());
+                        // collection query parameter value already escaped as part of parameterToPairs
+                        url.append(escapeString(param.getName())).append("=").append(value);
+                    }
+                }
+            }
+
+            return url.toString();
+        }
+
+        /**
+         * Set header parameters to the request builder, including default headers.
+         *
+         * @param headerParams Header parameters in the form of Map
+         * @param reqBuilder   Request.Builder
+         */
+        public void processHeaderParams (Map < String, String > headerParams, Request.Builder
+        reqBuilder){
+            for (Entry<String, String> param : headerParams.entrySet()) {
+                reqBuilder.header(param.getKey(), parameterToString(param.getValue()));
+            }
+            for (Entry<String, String> header : defaultHeaderMap.entrySet()) {
+                if (!headerParams.containsKey(header.getKey())) {
+                    reqBuilder.header(header.getKey(), parameterToString(header.getValue()));
+                }
+            }
+        }
+
+        /**
+         * Set cookie parameters to the request builder, including default cookies.
+         *
+         * @param cookieParams Cookie parameters in the form of Map
+         * @param reqBuilder   Request.Builder
+         */
+        public void processCookieParams (Map < String, String > cookieParams, Request.Builder
+        reqBuilder){
+            for (Entry<String, String> param : cookieParams.entrySet()) {
+                reqBuilder.addHeader("Cookie", String.format("%s=%s", param.getKey(), param.getValue()));
+            }
+            for (Entry<String, String> param : defaultCookieMap.entrySet()) {
+                if (!cookieParams.containsKey(param.getKey())) {
+                    reqBuilder.addHeader("Cookie", String.format("%s=%s", param.getKey(), param.getValue()));
+                }
+            }
+        }
+
+        /**
+         * Update query and header parameters based on authentication settings.
+         *
+         * @param authNames    The authentications to apply
+         * @param queryParams  List of query parameters
+         * @param headerParams Map of header parameters
+         * @param cookieParams Map of cookie parameters
+         * @param payload      HTTP request body
+         * @param method       HTTP method
+         * @param uri          URI
+         * @throws com.pydio.cells.openapi.ApiException If fails to update the parameters
+         */
+        public void updateParamsForAuth (String[]
+        authNames, List < Pair > queryParams, Map < String, String > headerParams,
+                Map < String, String > cookieParams, String payload, String method, URI uri) throws
+        ApiException {
+            for (String authName : authNames) {
+                Authentication auth = authentications.get(authName);
+                if (auth == null) {
+                    throw new RuntimeException("Authentication undefined: " + authName);
+                }
+                auth.applyToParams(queryParams, headerParams, cookieParams, payload, method, uri);
+            }
+        }
+
+        /**
+         * Build a form-encoding request body with the given form parameters.
+         *
+         * @param formParams Form parameters in the form of Map
+         * @return RequestBody
+         */
+        public RequestBody buildRequestBodyFormEncoding (Map < String, Object > formParams){
+            okhttp3.FormBody.Builder formBuilder = new okhttp3.FormBody.Builder();
+            for (Entry<String, Object> param : formParams.entrySet()) {
+                formBuilder.add(param.getKey(), parameterToString(param.getValue()));
+            }
+            return formBuilder.build();
+        }
+
+        /**
+         * Build a multipart (file uploading) request body with the given form parameters,
+         * which could contain text fields and file fields.
+         *
+         * @param formParams Form parameters in the form of Map
+         * @return RequestBody
+         */
+        public RequestBody buildRequestBodyMultipart (Map < String, Object > formParams){
+            MultipartBody.Builder mpBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+            for (Entry<String, Object> param : formParams.entrySet()) {
+                if (param.getValue() instanceof File file) {
+                    addPartToMultiPartBuilder(mpBuilder, param.getKey(), file);
+                } else if (param.getValue() instanceof List list) {
+                    for (Object item : list) {
+                        if (item instanceof File) {
+                            addPartToMultiPartBuilder(mpBuilder, param.getKey(), (File) item);
+                        } else {
+                            addPartToMultiPartBuilder(mpBuilder, param.getKey(), param.getValue());
+                        }
+                    }
+                } else {
+                    addPartToMultiPartBuilder(mpBuilder, param.getKey(), param.getValue());
+                }
+            }
+            return mpBuilder.build();
+        }
+
+        /**
+         * Guess Content-Type header from the given file (defaults to "application/octet-stream").
+         *
+         * @param file The given file
+         * @return The guessed Content-Type
+         */
+        public String guessContentTypeFromFile (File file){
+            String contentType = URLConnection.guessContentTypeFromName(file.getName());
+            if (contentType == null) {
+                return "application/octet-stream";
+            } else {
+                return contentType;
+            }
+        }
+
+        /**
+         * Add a Content-Disposition Header for the given key and file to the MultipartBody Builder.
+         *
+         * @param mpBuilder MultipartBody.Builder
+         * @param key       The key of the Header element
+         * @param file      The file to add to the Header
+         */
+        private void addPartToMultiPartBuilder (MultipartBody.Builder mpBuilder, String key, File
+        file){
+            Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + key + "\"; filename=\"" + file.getName() + "\"");
+            MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
+            mpBuilder.addPart(partHeaders, RequestBody.create(file, mediaType));
+        }
+
+        /**
+         * Add a Content-Disposition Header for the given key and complex object to the MultipartBody Builder.
+         *
+         * @param mpBuilder MultipartBody.Builder
+         * @param key       The key of the Header element
+         * @param obj       The complex object to add to the Header
+         */
+        private void addPartToMultiPartBuilder (MultipartBody.Builder mpBuilder, String key, Object
+        obj){
+            RequestBody requestBody;
+            if (obj instanceof String) {
+                requestBody = RequestBody.create((String) obj, MediaType.parse("text/plain"));
+            } else {
+                String content;
+                if (obj != null) {
+                    content = JSON.serialize(obj);
+                } else {
+                    content = null;
+                }
+                requestBody = RequestBody.create(content, MediaType.parse("application/json"));
+            }
+
+            Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + key + "\"");
+            mpBuilder.addPart(partHeaders, requestBody);
+        }
+
+        /**
+         * Get network interceptor to add it to the httpClient to track download progress for
+         * async requests.
+         */
+        private Interceptor getProgressInterceptor () {
+            return new Interceptor() {
+                @Override
+                public Response intercept(Interceptor.Chain chain) throws IOException {
+                    final Request request = chain.request();
+                    final Response originalResponse = chain.proceed(request);
+                    if (request.tag() instanceof ApiCallback callback) {
+                        return originalResponse.newBuilder()
+                                .body(new ProgressResponseBody(originalResponse.body(), callback))
+                                .build();
+                    }
+                    return originalResponse;
+                }
+            };
+        }
+
+        /**
+         * Apply SSL related settings to httpClient according to the current values of
+         * verifyingSsl and sslCaCert.
+         */
+        private void applySslSettings () {
+            try {
+                TrustManager[] trustManagers;
+                HostnameVerifier hostnameVerifier;
+                if (!verifyingSsl) {
+                    trustManagers = new TrustManager[]{
+                            new X509TrustManager() {
+                                @Override
+                                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                                }
+
+                                @Override
+                                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                                }
+
+                                @Override
+                                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                                    return new java.security.cert.X509Certificate[]{};
+                                }
+                            }
+                    };
+                    hostnameVerifier = new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true;
+                        }
+                    };
+                } else {
+                    TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+
+                    if (sslCaCert == null) {
+                        trustManagerFactory.init((KeyStore) null);
+                    } else {
+                        char[] password = null; // Any password will work.
+                        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+                        Collection<? extends Certificate> certificates = certificateFactory.generateCertificates(sslCaCert);
+                        if (certificates.isEmpty()) {
+                            throw new IllegalArgumentException("expected non-empty set of trusted certificates");
+                        }
+                        KeyStore caKeyStore = newEmptyKeyStore(password);
+                        int index = 0;
+                        for (Certificate certificate : certificates) {
+                            String certificateAlias = "ca" + (index++);
+                            caKeyStore.setCertificateEntry(certificateAlias, certificate);
+                        }
+                        trustManagerFactory.init(caKeyStore);
+                    }
+                    trustManagers = trustManagerFactory.getTrustManagers();
+                    hostnameVerifier = OkHostnameVerifier.INSTANCE;
+                }
+
+                SSLContext sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(keyManagers, trustManagers, new SecureRandom());
+                httpClient = httpClient.newBuilder()
+                        .sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager) trustManagers[0])
+                        .hostnameVerifier(hostnameVerifier)
+                        .build();
+            } catch (GeneralSecurityException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private KeyStore newEmptyKeyStore ( char[] password) throws GeneralSecurityException {
+            try {
+                KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+                keyStore.load(null, password);
+                return keyStore;
+            } catch (IOException e) {
+                throw new AssertionError(e);
+            }
+        }
+
+        /**
+         * Convert the HTTP request body to a string.
+         *
+         * @param requestBody The HTTP request object
+         * @return The string representation of the HTTP request body
+         * @throws com.pydio.cells.openapi.ApiException If fail to serialize the request body object into a string
+         */
+        private String requestBodyToString (RequestBody requestBody) throws ApiException {
+            if (requestBody != null) {
+                try {
+                    final Buffer buffer = new Buffer();
+                    requestBody.writeTo(buffer);
+                    return buffer.readUtf8();
+                } catch (final IOException e) {
+                    throw new ApiException(e);
+                }
+            }
+
+            // empty http request body
+            return "";
+        }
     }
-}
