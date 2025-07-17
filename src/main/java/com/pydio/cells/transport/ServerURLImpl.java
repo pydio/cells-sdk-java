@@ -35,6 +35,7 @@ import javax.net.ssl.X509TrustManager;
 public class ServerURLImpl implements ServerURL {
 
     private final static String logTag = "ServerURLImpl";
+    private final static Gson gsonInstance = new Gson();
 
     public static final TrustManager[] SKIP_VERIFY_TRUST_MANAGER = new TrustManager[]{
             new X509TrustManager() {
@@ -168,7 +169,7 @@ public class ServerURLImpl implements ServerURL {
 
     @Override
     public String toJson() {
-        return (new Gson()).toJson(this);
+        return gsonInstance.toJson(this);
     }
 
     public static ServerURL fromJson(String jsonString) {
@@ -179,7 +180,7 @@ public class ServerURLImpl implements ServerURL {
             // }.getType();
             // Map<String, Object> props = new Gson().fromJson(jsonString, type);           
             Map<String, Object> propType = new HashMap<>();
-            Map<String, Object> props = new Gson().fromJson(jsonString, propType.getClass());
+            Map<String, Object> props = gsonInstance.fromJson(jsonString, propType.getClass());
             return ServerURLImpl.fromAddress(props.get("url").toString(), Boolean.parseBoolean(props.get("skipVerify").toString()));
         } catch (MalformedURLException e) {
             throw new RuntimeException("Unable to decode JSON string: " + jsonString, e);
