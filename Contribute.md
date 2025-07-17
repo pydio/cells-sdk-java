@@ -168,7 +168,7 @@ reference.
   at 2 distinct locations while deprecating the legacy one. Some solution can be found
   in [this stackoverflow question](https://stackoverflow.com/questions/5074454/what-is-the-clearest-way-to-deprecate-a-package-in-java)
 
-#### More tweaks
+#### More (legacy, unapplied) tweaks
 
 In Jan. 2023, we also had to do the following to finalize SDK generation:
 => it seems to not be compulsory anymore in Feb 2025 with generator v7.11.0
