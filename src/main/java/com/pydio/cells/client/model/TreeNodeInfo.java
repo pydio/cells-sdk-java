@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 
 public class TreeNodeInfo {
 
+    private static final Gson GSON = new Gson();
+
     private String eTag;
     private long size;
     private long lastEdit;
@@ -71,10 +73,10 @@ public class TreeNodeInfo {
     }
 
     public String encoded() {
-        return new Gson().toJson(this);
+        return GSON.toJson(this);
     }
 
-    public static TreeNodeInfo fromEncoded(String encoded) {
-        return new Gson().fromJson(encoded, TreeNodeInfo.class);
-    }
+//    public static TreeNodeInfo fromEncoded(String encoded) {
+//         return new Gson().fromJson(encoded, TreeNodeInfo.class);
+//     }
 }
