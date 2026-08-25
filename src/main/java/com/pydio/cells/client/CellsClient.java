@@ -318,32 +318,43 @@ public class CellsClient implements Client, SdkNames {
         String thumbName = null;
         String imgThumbsStr = (String) currNode.getMeta().get(SdkNames.META_KEY_IMG_THUMBS);
         if (Str.empty(imgThumbsStr)) {
+            Log.d(logTag, "getThumbFilename: no ImageThumbs metadata for " + currNode.getId());
             return null;
         }
 
         Map<String, Object> thumbData = IoHelpers.fromJsonString(imgThumbsStr);
-        if (thumbData != null && thumbData.containsKey("Processing")
-                && !((boolean) thumbData.get("Processing"))
-                && thumbData.containsKey("thumbnails")
-        ) {
-            @SuppressWarnings("unchecked")
-            ArrayList<Map<String, Object>> thumbs = (ArrayList<Map<String, Object>>) thumbData.get("thumbnails");
+        if (thumbData == null) {
+            Log.w(logTag, "getThumbFilename: could not parse ImageThumbs JSON for " + currNode.getId() + ": " + imgThumbsStr);
+            return null;
+        }
+        boolean isProcessing = thumbData.containsKey("Processing") && (boolean) thumbData.get("Processing");
+        if (isProcessing) {
+            Log.d(logTag, "getThumbFilename: thumbnail still processing for " + currNode.getId());
+            return null;
+        }
+        if (!thumbData.containsKey("thumbnails")) {
+            Log.w(logTag, "getThumbFilename: no 'thumbnails' key for " + currNode.getId() + ". Keys: " + thumbData.keySet());
+            return null;
+        }
 
-            for (Map<String, Object> currThumb : thumbs) {
-                int size = Double.valueOf((double) currThumb.get("size")).intValue();
-                String format = (String) currThumb.get("format");
-                String currName = currNode.getId() + "-" + size + "." + format;
+        @SuppressWarnings("unchecked")
+        ArrayList<Map<String, Object>> thumbs = (ArrayList<Map<String, Object>>) thumbData.get("thumbnails");
 
-                if (thumbName == null) {
-                    thumbName = currName;
-                }
+        for (Map<String, Object> currThumb : thumbs) {
+            int size = Double.valueOf((double) currThumb.get("size")).intValue();
+            String format = (String) currThumb.get("format");
+            String currName = currNode.getId() + "-" + size + "." + format;
 
-                if (size > 0 && size >= dim) {
-                    thumbName = currName;
-                    break;
-                }
+            if (thumbName == null) {
+                thumbName = currName;
+            }
+
+            if (size > 0 && size >= dim) {
+                thumbName = currName;
+                break;
             }
         }
+        Log.d(logTag, "getThumbFilename: resolved '" + thumbName + "' for " + currNode.getId() + " (dim=" + dim + ")");
         return thumbName;
     }
 

@@ -11,10 +11,10 @@ repositories {
 }
 
 // Useful for Java only development
-java.sourceCompatibility = JavaVersion.VERSION_17
-java.targetCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
 
-def sdkVersion = '0.5.0'
+def sdkVersion = '0.5.1'
 ext {
     githubUrl = 'https://github.com/pydio/cells-sdk-java.git'
 }
@@ -26,8 +26,9 @@ java {
     withSourcesJar()
 }
 
-// Skip integration tests by default
+// Skip integration tests and sandbox classes by default
 test {
+    exclude '**/sandbox/*'
     if (System.properties['test.profile'] != 'integration') {
         exclude '**/integration/*'
     }
@@ -37,27 +38,27 @@ test {
 def pomConfig = {
     licenses {
         license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
+            name = "The Apache Software License, Version 2.0"
+            url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution = "repo"
         }
     }
 
     developers {
         developer {
-            id "cdujeu"
-            name "Charles du Jeu"
-            email "charles@ajaxplorer.info"
+            id = "cdujeu"
+            name = "Charles du Jeu"
+            email = "charles@ajaxplorer.info"
         }
         developer {
-            id "bsinou"
-            name "Bruno Sinou"
-            email "bruno.sinou@posteo.de"
+            id = "bsinou"
+            name = "Bruno Sinou"
+            email = "bruno.sinou@posteo.de"
         }
     }
 
     scm {
-        url githubUrl
+        url = githubUrl
     }
 }
 
@@ -65,8 +66,8 @@ publishing {
     publications {
         CellsSdk(MavenPublication) {
             from components.java
-            groupId 'com.pydio.cells'
-            artifactId 'cells-sdk-java'
+            groupId = 'com.pydio.cells'
+            artifactId = 'cells-sdk-java'
             version = sdkVersion
 
             pom.withXml {
@@ -84,9 +85,9 @@ jar {
     manifest {
         attributes('Specification-Title': 'Cells SDK for Java',
                 'Specification-Version': '4.9',
-                'Specification-Vendor': 'Abstrium SAS',
+                'Specification-Vendor': 'Wire France',
                 'Implementation-Title': project.name,
-                'Implementation-Vendor': 'Abstrium SAS',
+                'Implementation-Vendor': 'Wire France',
                 'Implementation-Version': sdkVersion)
     }
 }

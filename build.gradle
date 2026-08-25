@@ -10,13 +10,13 @@ plugins {
     id 'maven-publish'
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
-java.targetCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
 
-def vendorName = "Abstrium SAS"
+def vendorName = "Wire France"
 def sdkJavaRepoURL = 'https://github.com/pydio/cells-sdk-java.git'
 def artifactID = 'cells-sdk-java'
-def sdkJavaSpecVersion = '0.5.0'
+def sdkJavaSpecVersion = '0.5.1'
 def sdkJavaVersion = ownVersions['java.sdk']
 
 // Also publish sources and Javadoc
@@ -42,8 +42,8 @@ publishing {
     publications {
         CellsSdk(MavenPublication) {
             from components.java
-            groupId 'com.pydio.cells'
-            artifactId 'cells-sdk-java'
+            groupId = "com.pydio.cells"
+            artifactId = "cells-sdk-java"
             version = sdkJavaVersion
 
             pom.withXml {
