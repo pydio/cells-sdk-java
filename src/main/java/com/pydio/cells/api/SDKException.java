@@ -89,6 +89,7 @@ public class SDKException extends Exception {
                 || code == ErrorCodes.con_closed
                 || code == ErrorCodes.con_read_failed
                 || code == ErrorCodes.con_write_failed
+                || code == ErrorCodes.ssl_error
                 || code == HttpStatus.BAD_GATEWAY.getValue()
                 || code == HttpStatus.SERVICE_UNAVAILABLE.getValue()
                 || code == HttpStatus.GATEWAY_TIMEOUT.getValue();

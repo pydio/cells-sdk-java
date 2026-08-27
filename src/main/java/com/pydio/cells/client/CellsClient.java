@@ -67,6 +67,7 @@ import com.pydio.cells.utils.Str;
 
 import org.xml.sax.SAXException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -537,6 +538,23 @@ public class CellsClient implements Client, SdkNames {
 
             HttpURLConnection con = transport.withUserAgent(serverUrl.openConnection());
             con.connect();
+            int responseCode = con.getResponseCode();
+            if (responseCode >= 400) {
+                InputStream errStream = con.getErrorStream();
+                String errBody = "";
+                if (errStream != null) {
+                    ByteArrayOutputStream errOut = new ByteArrayOutputStream();
+                    try {
+                        IoHelpers.pipeRead(errStream, errOut);
+                        errBody = IoHelpers.toUtf8String(errOut);
+                    } finally {
+                        IoHelpers.closeQuietly(errStream);
+                        IoHelpers.closeQuietly(errOut);
+                    }
+                }
+                throw new IOException("S3 download returned HTTP " + responseCode
+                        + " for " + ws + file + " — " + errBody);
+            }
             in = con.getInputStream();
 
             if (progressListener == null) {
@@ -545,7 +563,7 @@ public class CellsClient implements Client, SdkNames {
                 return IoHelpers.pipeReadWithIncrementalProgress(in, target, progressListener);
             }
         } catch (IOException e) {
-            if (e.getMessage().contains("ENOSPC")) { // no space left on device
+            if (e.getMessage() != null && e.getMessage().contains("ENOSPC")) {
                 throw SDKException.noSpaceLeft(e);
             }
             throw SDKException.conReadFailed("could not download from " + ws + file, e);

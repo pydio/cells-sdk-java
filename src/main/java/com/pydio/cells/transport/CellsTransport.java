@@ -241,7 +241,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
     }
 
     // TODO better management of exceptions.
-    public Token getTokenFromCode(String code, CustomEncoder encoder) throws Exception {
+    public Token getTokenFromCode(String code, CustomEncoder encoder, String codeVerifier) throws Exception {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
@@ -252,16 +252,35 @@ public class CellsTransport implements ICellsTransport, SdkNames {
             HttpURLConnection con = openAnonConnection(endpointURI.getPath());
 
             // Manage Body as URL encoded form
-            Map<String, String> authData = buildAuthDataMap(code, cfg);
+            Map<String, String> authData = buildAuthDataMap(code, cfg, codeVerifier);
+            Log.d(logTag, "PKCE: token request — client_id=" + authData.get("client_id")
+                    + " redirect_uri=" + authData.get("redirect_uri")
+                    + " code_verifier_len=" + (codeVerifier != null ? codeVerifier.length() : 0));
             // String authHeader = "Basic " + encoder.base64Encode(cd.getClientId() + ":" + cd.getClientSecret());
             addPostData(con, authData, null);
 
-            try { // Real call
-                // TODO double check: do we need to explicitly open the connection before getting the stream ?
-                con.connect();
+            con.connect();
+            int responseCode = con.getResponseCode();
+            if (responseCode >= 400) {
+                InputStream errStream = con.getErrorStream();
+                String errBody = "";
+                if (errStream != null) {
+                    ByteArrayOutputStream errOut = new ByteArrayOutputStream();
+                    try {
+                        IoHelpers.pipeRead(errStream, errOut);
+                        errBody = IoHelpers.toUtf8String(errOut);
+                    } finally {
+                        IoHelpers.closeQuietly(errStream);
+                        IoHelpers.closeQuietly(errOut);
+                    }
+                }
+                throw new IOException("Token endpoint returned HTTP " + responseCode
+                        + " for " + endpointURI + " — " + errBody);
+            }
+            try {
                 in = con.getInputStream();
             } catch (IOException ioe) {
-                throw new IOException("Unable to open connection to ".concat(endpointURI.toString()), ioe);
+                throw new IOException("Unable to read token response from " + endpointURI, ioe);
             }
             out = new ByteArrayOutputStream();
             IoHelpers.pipeRead(in, out);
@@ -273,7 +292,7 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         }
     }
 
-    private Map<String, String> buildAuthDataMap(String code, OAuthConfig cfg) {
+    private Map<String, String> buildAuthDataMap(String code, OAuthConfig cfg, String codeVerifier) {
         Map<String, String> authData = new HashMap<>();
         authData.put("grant_type", "authorization_code");
         authData.put("code", code);
@@ -282,6 +301,9 @@ public class CellsTransport implements ICellsTransport, SdkNames {
         authData.put("client_id", cd.getClientId());
         if (Str.notEmpty(cd.getClientSecret())) {
             authData.put("client_secret", cd.getClientSecret());
+        }
+        if (Str.notEmpty(codeVerifier)) {
+            authData.put("code_verifier", codeVerifier);
         }
         return authData;
     }
